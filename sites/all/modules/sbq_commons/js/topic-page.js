@@ -41,6 +41,10 @@ jQuery(function($) {
 			$('.sbq_topic_positive_statics_right').css("height", '100%');
 
 		})
+		
+		$('textarea').focus(function(){
+			$(this).attr('value','');
+		});
 
 	Drupal.behaviors.druedu_qa = {
      attach: function (context, settings) {

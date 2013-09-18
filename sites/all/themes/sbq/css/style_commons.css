@@ -13,7 +13,7 @@
 .node-type-sbq-topic .last .rate-yesno-btn {background:url(../images/d_05.png) no-repeat; border:0;padding:0;background-color:none; }
 .node-type-sbq-topic .more-link {font-size:15px; text-align:center; line-height:35px; background:url(../images/bg_03.gif) center;width:98%;}
 .node-type-sbq-topic .more-link a{color:#fff;}
-
+.pagination ul {margin-top:10px;}
 /*新添加*/
 .row-fluid {width:100%;}
 #page-header .menu li a {margin-left:8px;}
@@ -39,7 +39,7 @@ h2.block-title{margin:0}
 border-top-right-radius:0px;
 border-bottom-right-radius:5px;
 border-bottom-left-radius:0;}
-.side-contaniner-width { width:710px; float:left; position:relative;margin:0 25px;}
+.side-contaniner-width { width:710px; float:left; position:relative;margin:0 25px 25px 25px;}
 .views-row { ;padding:5px 0; }
 .sbq-news-center {width:710px;float:left;border-bottom:1px dashed #ccc;padding:15px 0 ;}
 .sbq-news-center .views-field-title .field-content a { font-size:16px; color:#000}
@@ -57,7 +57,7 @@ border-bottom-left-radius:0;}
 .side-contaniner-width .profile .user-picture  img{width:100px;height:100px; border-radius:5px; box-shadow:0 0 5px 0 #ccc; margin:10px;}
 .side-contaniner-width .profile  h3{display:none;}
 .side-contaniner-width .profile dl { float:left;}
-.side-contaniner-width .profile a.privatemsg-send-link-profile {display:none;}
+/*发送私信链接*//*.side-contaniner-width .profile a.privatemsg-send-link-profile {display:none;}*/
 .q-author a{float:left;}
 .q-author .commit { font-size:12px; color:#ccc}
 .q-title a {	color:#0078d8; font-size:16px;}
