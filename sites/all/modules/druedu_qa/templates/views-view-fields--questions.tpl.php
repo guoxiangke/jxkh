@@ -57,12 +57,12 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
 		<div class="q-statics-top">
 			<div class="q-vote"><?php print $value; ?></div>
 			<div class="q-answers <?php print $fields['field_computed_answers']->content!='0'?'active':''?>">
-                <b class="triangle_top"></b><span>回答数</span>
-              <span><?php print $fields['field_computed_answers']->content; ?></span>
+                <b class="triangle_top"></b>
+              <span><?php print $fields['field_computed_answers']->content; ?></span><span>回答</span>
               
             </div>
 		</div>
-		<div class="q-views"><?php print $totalcount; ?></div>
+		<?php // <div class="q-views"><?php print $totalcount; ? ></div> ?>
 	</div>
 	</div>
 	<div class="container-fluid clearfix">
