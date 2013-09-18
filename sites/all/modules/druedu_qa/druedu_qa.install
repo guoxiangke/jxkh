@@ -1,0 +1,154 @@
+<?php
+/**
+ * Implements hook_install().
+ */
+function druedu_qa_install() {
+  //auto node title settings for QA
+  variable_set('ant_answer',1);
+  variable_set('ant_pattern_answer','Answer for Q[node:field-answer:nid]: [node:field_answer]-[node:created:raw]');
+  variable_set('ant_php_answer',0);
+
+$druedu_qa_rate_widgets =array(
+  1 => (object) array(
+      'name' => 'qa_vote_up_down',
+      'tag' => 'vote',
+      'title' => 'Vote Up/Down',
+      'node_types' => array(
+        'answer',
+        'question',
+      ),
+      'comment_types' => array(),
+      'options' => array(
+        array(
+          1,
+          '+1',
+        ),
+        array(
+          -1,
+          '-1',
+        ),
+      ),
+      'template' => 'number_up_down',
+      'node_display' => '2',
+      'teaser_display' => FALSE,
+      'comment_display' => '2',
+      'node_display_mode' => '1',
+      'teaser_display_mode' => '1',
+      'comment_display_mode' => '1',
+      'roles' => array(
+        3 => 0,
+        1 => 0,
+        2 => 0,
+      ),
+      'allow_voting_by_author' => 1,
+      'noperm_behaviour' => '1',
+      'displayed' => '1',
+      'displayed_just_voted' => '2',
+      'description' => '',
+      'description_in_compact' => TRUE,
+      'delete_vote_on_second_click' => '0',
+      'use_source_translation' => TRUE,
+      'value_type' => 'points',
+      'theme' => 'rate_template_number_up_down',
+      'css' => 'sites/all/modules/rate/templates/number-up-down/number-up-down.css',
+      'translate' => TRUE,
+    ),
+  2 => (object) array(
+      'name' => 'qa_is_useful',
+      'tag' => 'vote',
+      'title' => 'Is useful',
+      'node_types' => array(
+        'answer',
+        'question',
+      ),
+      'comment_types' => array(),
+      'options' => array(
+        array(
+          '1',
+          'yes',
+        ),
+        array(
+          '-1',
+          'no',
+        ),
+      ),
+      'template' => 'yesno',
+      'node_display' => '2',
+      'teaser_display' => FALSE,
+      'comment_display' => '2',
+      'node_display_mode' => '1',
+      'teaser_display_mode' => '1',
+      'comment_display_mode' => '1',
+      'roles' => array(
+        3 => 0,
+        1 => 0,
+        2 => 0,
+      ),
+      'allow_voting_by_author' => 1,
+      'noperm_behaviour' => '1',
+      'displayed' => '1',
+      'displayed_just_voted' => '2',
+      'description' => '',
+      'description_in_compact' => TRUE,
+      'delete_vote_on_second_click' => '0',
+      'use_source_translation' => TRUE,
+      'value_type' => 'option',
+      'theme' => 'rate_template_yesno',
+      'css' => 'sites/all/modules/rate/templates/yesno/yesno.css',
+      'translate' => FALSE,
+    ),
+);
+
+
+	$rate_widgets = variable_get(RATE_VAR_WIDGETS,NULL);
+
+  if($rate_widgets) {
+    $index = 0;
+    foreach ($rate_widgets as $key => $rate) {
+        $rate_widgets_old[$key] = $rate->name;
+        //$rate_widgets_toArray[$key]  = (array) $value;
+        $index = $key;
+    }
+    foreach ($druedu_qa_rate_widgets as $key => $rate) {
+      //already ,overwirte.
+      if(in_array($rate->name, $rate_widgets_old)) {
+        $rate_widgets[$key] = $rate;
+      }else{
+        $rate_widgets[++$index] = $rate;
+      }
+      //$druedu_qa_rate_widgets_toArray[$key]  = (array) $value;
+    }    
+  }else{
+    $rate_widgets = $druedu_qa_rate_widgets;
+    //variable_set(RATE_VAR_WIDGETS,$druedu_qa_rate_widgets);
+  }
+  variable_set(RATE_VAR_WIDGETS,$rate_widgets);
+  drupal_set_message(t(RATE_VAR_WIDGETS.'has been updated by druedu Q&A system.'), 'status', FALSE);
+
+}
+/**
+ * Implements hook_uninstall().
+ */
+function druedu_qa_uninstall() {
+  //auto node title settings for QA
+  variable_del('ant_answer');
+  variable_del('ant_pattern_answer');
+  variable_del('ant_php_answer');
+
+  $rate_widgets = variable_get(RATE_VAR_WIDGETS,NULL);
+  $druedu_qa_rates = array(
+    1 => 'qa_vote_up_down',
+    2 => 'qa_is_useful',
+  );
+  if($rate_widgets) {
+    foreach ($rate_widgets as $key => $rate) {
+      if(in_array($rate->name, $druedu_qa_rates)) {
+        unset($rate_widgets[$key]);
+        drupal_set_message(t(RATE_VAR_WIDGETS.': '.$rate->name.' has been deleted by druedu Q&A system.'), 'status', FALSE);
+      }
+    } 
+    variable_set(RATE_VAR_WIDGETS,$rate_widgets);
+  }
+}
+
+?>

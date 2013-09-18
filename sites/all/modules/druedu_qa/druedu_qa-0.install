@@ -1,0 +1,1835 @@
+<?php
+
+/**
+ * Implements hook_install().
+ */
+function druedu_qa_install() {
+  module_load_include('inc', 'field', 'field.info');
+  //install
+  //data export from node type .
+$data = array(
+  'bundles' => array(
+    'answer' => (object) array(
+      'type' => 'answer',
+      'name' => 'Answer',
+      'base' => 'node_content',
+      'module' => 'druedu_qa',
+      'description' => '',
+      'help' => '',
+      'has_title' => '1',
+      'title_label' => 'Answer',
+      'custom' => '0',
+      'modified' => '1',
+      'locked' => '1',
+      'disabled' => '0',
+      'orig_type' => 'answer',
+      'disabled_changed' => FALSE,
+      'bc_entity_type' => 'node',
+    ),
+    'question' => (object) array(
+      'type' => 'question',
+      'name' => 'Question',
+      'base' => 'node_content',
+      'module' => 'druedu_qa',
+      'description' => '',
+      'help' => '',
+      'has_title' => '1',
+      'title_label' => 'Question',
+      'custom' => '0',
+      'modified' => '1',
+      'locked' => '1',
+      'disabled' => '0',
+      'orig_type' => 'question',
+      'disabled_changed' => FALSE,
+      'bc_entity_type' => 'node',
+    ),
+  ),
+  'fields' => array(
+    'body' => array(
+      'entity_types' => array(
+        0 => 'node',
+      ),
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'settings' => array(),
+      'translatable' => '1',
+      'storage' => array(
+        'type' => 'field_sql_storage',
+        'settings' => array(),
+        'module' => 'field_sql_storage',
+        'active' => '1',
+        'details' => array(
+          'sql' => array(
+            'FIELD_LOAD_CURRENT' => array(
+              'field_data_body' => array(
+                'value' => 'body_value',
+                'summary' => 'body_summary',
+                'format' => 'body_format',
+              ),
+            ),
+            'FIELD_LOAD_REVISION' => array(
+              'field_revision_body' => array(
+                'value' => 'body_value',
+                'summary' => 'body_summary',
+                'format' => 'body_format',
+              ),
+            ),
+          ),
+        ),
+      ),
+      'field_permissions' => array(
+        'type' => '0',
+      ),
+      'field_name' => 'body',
+      'type' => 'text_with_summary',
+      'module' => 'text',
+      'active' => '1',
+      'locked' => '0',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'columns' => array(
+        'value' => array(
+          'type' => 'text',
+          'size' => 'big',
+          'not null' => FALSE,
+        ),
+        'summary' => array(
+          'type' => 'text',
+          'size' => 'big',
+          'not null' => FALSE,
+        ),
+        'format' => array(
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => FALSE,
+        ),
+      ),
+      'bundles' => array(
+        'node' => array(
+          0 => 'page',
+          1 => 'article',
+          2 => 'group',
+          3 => 'post',
+          4 => 'structure_unit',
+          5 => 'event',
+          6 => 'grade',
+          7 => 'bulletins',
+          8 => 'subject',
+          9 => 'answer',
+          10 => 'question',
+          11 => 'school_page',
+          12 => 'class',
+          13 => 'blog',
+          14 => 'assignment_set',
+        ),
+      ),
+    ),
+    'field_answer' => array(
+      'entity_types' => array(),
+      'foreign keys' => array(
+        'node' => array(
+          'columns' => array(
+            'target_id' => 'nid',
+          ),
+          'table' => 'node',
+        ),
+      ),
+      'indexes' => array(
+        'target_id' => array(
+          0 => 'target_id',
+        ),
+      ),
+      'settings' => array(
+        'handler' => 'base',
+        'handler_settings' => array(
+          'behaviors' => array(
+            'test_field_behavior' => array(
+              'status' => 0,
+            ),
+            'views-select-list' => array(
+              'status' => 0,
+            ),
+          ),
+          'sort' => array(
+            'type' => 'none',
+          ),
+          'target_bundles' => array(
+            'question' => 'question',
+          ),
+        ),
+        'target_type' => 'node',
+      ),
+      'translatable' => '0',
+      'storage' => array(
+        'type' => 'field_sql_storage',
+        'settings' => array(),
+        'module' => 'field_sql_storage',
+        'active' => '1',
+        'details' => array(
+          'sql' => array(
+            'FIELD_LOAD_CURRENT' => array(
+              'field_data_field_answer' => array(
+                'target_id' => 'field_answer_target_id',
+              ),
+            ),
+            'FIELD_LOAD_REVISION' => array(
+              'field_revision_field_answer' => array(
+                'target_id' => 'field_answer_target_id',
+              ),
+            ),
+          ),
+        ),
+      ),
+      'field_permissions' => array(
+        'type' => '0',
+      ),
+      'field_name' => 'field_answer',
+      'type' => 'entityreference',
+      'module' => 'entityreference',
+      'active' => '1',
+      'locked' => '0',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'columns' => array(
+        'target_id' => array(
+          'description' => 'The id of the target entity.',
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+        ),
+      ),
+      'bundles' => array(
+        'node' => array(
+          0 => 'answer',
+        ),
+      ),
+    ),
+    'field_answers' => array(
+      'entity_types' => array(),
+      'foreign keys' => array(
+        'node' => array(
+          'table' => 'node',
+          'columns' => array(
+            'target_id' => 'nid',
+          ),
+        ),
+      ),
+      'indexes' => array(
+        'target_id' => array(
+          0 => 'target_id',
+        ),
+      ),
+      'settings' => array(
+        'handler' => 'base',
+        'handler_settings' => array(
+          'behaviors' => array(
+            'views-select-list' => array(
+              'status' => 0,
+            ),
+          ),
+          'sort' => array(
+            'type' => 'none',
+          ),
+          'target_bundles' => array(
+            'answer' => 'answer',
+          ),
+        ),
+        'target_type' => 'node',
+      ),
+      'translatable' => '0',
+      'storage' => array(
+        'type' => 'field_sql_storage',
+        'settings' => array(),
+        'module' => 'field_sql_storage',
+        'active' => '1',
+        'details' => array(
+          'sql' => array(
+            'FIELD_LOAD_CURRENT' => array(
+              'field_data_field_answers' => array(
+                'target_id' => 'field_answers_target_id',
+              ),
+            ),
+            'FIELD_LOAD_REVISION' => array(
+              'field_revision_field_answers' => array(
+                'target_id' => 'field_answers_target_id',
+              ),
+            ),
+          ),
+        ),
+      ),
+      'field_name' => 'field_answers',
+      'type' => 'entityreference',
+      'module' => 'entityreference',
+      'active' => '1',
+      'locked' => '0',
+      'cardinality' => '-1',
+      'deleted' => '0',
+      'columns' => array(
+        'target_id' => array(
+          'description' => 'The id of the target entity.',
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+        ),
+      ),
+      'bundles' => array(
+        'node' => array(
+          0 => 'question',
+        ),
+      ),
+    ),
+    'field_computed_answers' => array(
+      'translatable' => '0',
+      'entity_types' => array(),
+      'settings' => array(
+        'code' => '$entity_field[0][\'value\'] = count(field_get_items($entity_type, $entity, \'field_answers\'));',
+        'display_format' => '$display_output = $entity_field_item[\'value\'];',
+        'store' => 1,
+        'database' => array(
+          'data_type' => 'varchar',
+          'data_length' => '32',
+          'data_size' => 'normal',
+          'data_precision' => '10',
+          'data_scale' => '2',
+          'data_default' => '0',
+          'data_not_NULL' => 0,
+          'data_index' => 0,
+        ),
+      ),
+      'storage' => array(
+        'type' => 'field_sql_storage',
+        'settings' => array(),
+        'module' => 'field_sql_storage',
+        'active' => '1',
+        'details' => array(
+          'sql' => array(
+            'FIELD_LOAD_CURRENT' => array(
+              'field_data_field_computed_answers' => array(
+                'value' => 'field_computed_answers_value',
+              ),
+            ),
+            'FIELD_LOAD_REVISION' => array(
+              'field_revision_field_computed_answers' => array(
+                'value' => 'field_computed_answers_value',
+              ),
+            ),
+          ),
+        ),
+      ),
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'field_name' => 'field_computed_answers',
+      'type' => 'computed',
+      'module' => 'computed_field',
+      'active' => '1',
+      'locked' => '0',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'columns' => array(
+        'value' => array(
+          'type' => 'varchar',
+          'length' => '32',
+          'not null' => 0,
+          'default' => '0',
+        ),
+      ),
+      'bundles' => array(
+        'node' => array(
+          0 => 'question',
+        ),
+      ),
+    ),
+    'field_mark_question_resolved' => array(
+      'translatable' => '0',
+      'entity_types' => array(),
+      'settings' => array(
+        'allowed_values' => array(
+          0 => '0',
+          1 => '1',
+        ),
+        'allowed_values_function' => '',
+      ),
+      'storage' => array(
+        'type' => 'field_sql_storage',
+        'settings' => array(),
+        'module' => 'field_sql_storage',
+        'active' => '1',
+        'details' => array(
+          'sql' => array(
+            'FIELD_LOAD_CURRENT' => array(
+              'field_data_field_mark_question_resolved' => array(
+                'value' => 'field_mark_question_resolved_value',
+              ),
+            ),
+            'FIELD_LOAD_REVISION' => array(
+              'field_revision_field_mark_question_resolved' => array(
+                'value' => 'field_mark_question_resolved_value',
+              ),
+            ),
+          ),
+        ),
+      ),
+      'foreign keys' => array(),
+      'indexes' => array(
+        'value' => array(
+          0 => 'value',
+        ),
+      ),
+      'field_permissions' => array(
+        'type' => '0',
+      ),
+      'field_name' => 'field_mark_question_resolved',
+      'type' => 'list_boolean',
+      'module' => 'list',
+      'active' => '1',
+      'locked' => '0',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'columns' => array(
+        'value' => array(
+          'type' => 'int',
+          'not null' => FALSE,
+        ),
+      ),
+      'bundles' => array(
+        'node' => array(
+          0 => 'question',
+        ),
+      ),
+    ),
+    'field_tags' => array(
+      'entity_types' => array(),
+      'foreign keys' => array(
+        'tid' => array(
+          'table' => 'taxonomy_term_data',
+          'columns' => array(
+            'tid' => 'tid',
+          ),
+        ),
+      ),
+      'indexes' => array(
+        'tid' => array(
+          0 => 'tid',
+        ),
+      ),
+      'settings' => array(
+        'allowed_values' => array(
+          0 => array(
+            'vocabulary' => 'tags',
+            'parent' => 0,
+          ),
+        ),
+      ),
+      'translatable' => '0',
+      'storage' => array(
+        'type' => 'field_sql_storage',
+        'settings' => array(),
+        'module' => 'field_sql_storage',
+        'active' => '1',
+        'details' => array(
+          'sql' => array(
+            'FIELD_LOAD_CURRENT' => array(
+              'field_data_field_tags' => array(
+                'tid' => 'field_tags_tid',
+              ),
+            ),
+            'FIELD_LOAD_REVISION' => array(
+              'field_revision_field_tags' => array(
+                'tid' => 'field_tags_tid',
+              ),
+            ),
+          ),
+        ),
+      ),
+      'field_permissions' => array(
+        'type' => '0',
+      ),
+      'field_name' => 'field_tags',
+      'type' => 'taxonomy_term_reference',
+      'module' => 'taxonomy',
+      'active' => '1',
+      'locked' => '0',
+      'cardinality' => '5',
+      'deleted' => '0',
+      'columns' => array(
+        'tid' => array(
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => FALSE,
+        ),
+      ),
+      'bundles' => array(
+        'node' => array(
+          0 => 'question',
+        ),
+      ),
+    ),
+  ),
+  'instances' => array(
+    'body' => array(
+      0 => array(
+        'default_value' => NULL,
+        'description' => '',
+        'display' => array(
+          'default' => array(
+            'label' => 'hidden',
+            'type' => 'text_default',
+            'weight' => '0',
+            'settings' => array(),
+            'module' => 'text',
+          ),
+          'entityreference_view_widget' => array(
+            'label' => 'above',
+            'settings' => array(),
+            'type' => 'hidden',
+            'weight' => 0,
+          ),
+          'teaser' => array(
+            'label' => 'hidden',
+            'module' => 'text',
+            'settings' => array(
+              'trim_length' => 600,
+            ),
+            'type' => 'text_summary_or_trimmed',
+            'weight' => 0,
+          ),
+          'notifications' => array(
+            'type' => 'hidden',
+            'label' => 'above',
+            'settings' => array(),
+            'weight' => 0,
+          ),
+        ),
+        'label' => 'Answer',
+        'required' => 1,
+        'settings' => array(
+          'display_summary' => 1,
+          'text_processing' => '1',
+          'user_register_form' => FALSE,
+        ),
+        'widget' => array(
+          'active' => 1,
+          'module' => 'text',
+          'settings' => array(
+            'rows' => '20',
+            'summary_rows' => 5,
+          ),
+          'type' => 'text_textarea_with_summary',
+          'weight' => '-4',
+        ),
+        'field_name' => 'body',
+        'entity_type' => 'node',
+        'bundle' => 'answer',
+        'deleted' => '0',
+      ),
+      1 => array(
+        'default_value' => NULL,
+        'description' => '',
+        'display' => array(
+          'default' => array(
+            'label' => 'hidden',
+            'type' => 'text_default',
+            'weight' => '0',
+            'settings' => array(),
+            'module' => 'text',
+          ),
+          'entityreference_view_widget' => array(
+            'label' => 'above',
+            'settings' => array(),
+            'type' => 'hidden',
+            'weight' => 0,
+          ),
+          'teaser' => array(
+            'label' => 'hidden',
+            'module' => 'text',
+            'settings' => array(
+              'trim_length' => 600,
+            ),
+            'type' => 'text_summary_or_trimmed',
+            'weight' => '0',
+          ),
+          'notifications' => array(
+            'type' => 'hidden',
+            'label' => 'above',
+            'settings' => array(),
+            'weight' => 0,
+          ),
+        ),
+        'label' => 'Body',
+        'required' => FALSE,
+        'settings' => array(
+          'display_summary' => TRUE,
+          'text_processing' => 1,
+          'user_register_form' => FALSE,
+        ),
+        'widget' => array(
+          'module' => 'text',
+          'settings' => array(
+            'rows' => 20,
+            'summary_rows' => 5,
+          ),
+          'type' => 'text_textarea_with_summary',
+          'weight' => '-4',
+        ),
+        'field_name' => 'body',
+        'entity_type' => 'node',
+        'bundle' => 'question',
+        'deleted' => '0',
+      ),
+    ),
+    'field_answer' => array(
+      0 => array(
+        'default_value' => NULL,
+        'default_value_function' => 'entityreference_prepopulate_field_default_value',
+        'description' => '',
+        'display' => array(
+          'default' => array(
+            'label' => 'above',
+            'type' => 'hidden',
+            'weight' => '1',
+            'settings' => array(),
+          ),
+          'entityreference_view_widget' => array(
+            'label' => 'above',
+            'settings' => array(),
+            'type' => 'hidden',
+            'weight' => 0,
+          ),
+          'teaser' => array(
+            'label' => 'above',
+            'settings' => array(),
+            'type' => 'hidden',
+            'weight' => 0,
+          ),
+          'notifications' => array(
+            'type' => 'hidden',
+            'label' => 'above',
+            'settings' => array(),
+            'weight' => 0,
+          ),
+        ),
+        'label' => 'Answer',
+        'required' => 0,
+        'settings' => array(
+          'behaviors' => array(
+            'prepopulate' => array(
+              'action' => 'none',
+              'fallback' => 'none',
+              'skip_perm' => '0',
+              'status' => 1,
+            ),
+            'test_instance_behavior' => array(
+              'status' => 0,
+            ),
+          ),
+          'user_register_form' => FALSE,
+        ),
+        'widget' => array(
+          'active' => 1,
+          'module' => 'entityreference',
+          'settings' => array(
+            'match_operator' => 'CONTAINS',
+            'path' => '',
+            'size' => 60,
+          ),
+          'type' => 'entityreference_autocomplete',
+          'weight' => '-3',
+        ),
+        'field_name' => 'field_answer',
+        'entity_type' => 'node',
+        'bundle' => 'answer',
+        'deleted' => '0',
+      ),
+    ),
+    'field_answers' => array(
+      0 => array(
+        'default_value' => NULL,
+        'default_value_function' => '',
+        'description' => 'hide default. not required when an answer add to it ,update it add one value to it quietly.',
+        'display' => array(
+          'default' => array(
+            'label' => 'hidden',
+            'type' => 'hidden',
+            'weight' => '2',
+            'settings' => array(),
+          ),
+          'entityreference_view_widget' => array(
+            'label' => 'above',
+            'settings' => array(),
+            'type' => 'hidden',
+            'weight' => 0,
+          ),
+          'teaser' => array(
+            'label' => 'above',
+            'settings' => array(),
+            'type' => 'hidden',
+            'weight' => 0,
+          ),
+          'notifications' => array(
+            'type' => 'hidden',
+            'label' => 'above',
+            'settings' => array(),
+            'weight' => 0,
+          ),
+        ),
+        'label' => 'Answers',
+        'required' => 0,
+        'settings' => array(
+          'behaviors' => array(
+            'prepopulate' => array(
+              'status' => 0,
+            ),
+          ),
+          'user_register_form' => FALSE,
+        ),
+        'widget' => array(
+          'active' => 1,
+          'module' => 'entityreference',
+          'settings' => array(
+            'match_operator' => 'CONTAINS',
+            'path' => '',
+            'size' => '60',
+          ),
+          'type' => 'entityreference_autocomplete',
+          'weight' => '31',
+        ),
+        'field_name' => 'field_answers',
+        'entity_type' => 'node',
+        'bundle' => 'question',
+        'deleted' => '0',
+      ),
+    ),
+    'field_computed_answers' => array(
+      0 => array(
+        'label' => 'computed_answers',
+        'widget' => array(
+          'type' => 'computed',
+          'weight' => '32',
+          'settings' => array(),
+          'module' => 'computed_field',
+        ),
+        'settings' => array(
+          'user_register_form' => FALSE,
+        ),
+        'display' => array(
+          'default' => array(
+            'label' => 'above',
+            'type' => 'computed_field_plain',
+            'weight' => '3',
+            'settings' => array(),
+            'module' => 'computed_field',
+          ),
+          'teaser' => array(
+            'type' => 'hidden',
+            'label' => 'above',
+            'settings' => array(),
+            'weight' => 0,
+          ),
+          'notifications' => array(
+            'type' => 'hidden',
+            'label' => 'above',
+            'settings' => array(),
+            'weight' => 0,
+          ),
+        ),
+        'required' => FALSE,
+        'description' => '',
+        'field_name' => 'field_computed_answers',
+        'entity_type' => 'node',
+        'bundle' => 'question',
+        'deleted' => '0',
+      ),
+    ),
+    'field_mark_question_resolved' => array(
+      0 => array(
+        'label' => 'Mark Question Resolved',
+        'widget' => array(
+          'weight' => '33',
+          'type' => 'options_buttons',
+          'module' => 'options',
+          'active' => 1,
+          'settings' => array(),
+        ),
+        'settings' => array(
+          'user_register_form' => FALSE,
+        ),
+        'display' => array(
+          'default' => array(
+            'label' => 'above',
+            'type' => 'list_default',
+            'weight' => '4',
+            'settings' => array(),
+            'module' => 'list',
+          ),
+          'teaser' => array(
+            'type' => 'hidden',
+            'label' => 'above',
+            'settings' => array(),
+            'weight' => 0,
+          ),
+          'notifications' => array(
+            'type' => 'hidden',
+            'label' => 'above',
+            'settings' => array(),
+            'weight' => 0,
+          ),
+        ),
+        'required' => 1,
+        'description' => '',
+        'default_value' => array(
+          0 => array(
+            'value' => '0',
+          ),
+        ),
+        'field_name' => 'field_mark_question_resolved',
+        'entity_type' => 'node',
+        'bundle' => 'question',
+        'deleted' => '0',
+      ),
+    ),
+    'field_tags' => array(
+      0 => array(
+        'default_value' => NULL,
+        'description' => 'A list of tags separated by a comma (","). Limited to 5 tags.',
+        'display' => array(
+          'default' => array(
+            'label' => 'above',
+            'type' => 'taxonomy_term_reference_link',
+            'weight' => '1',
+            'settings' => array(),
+            'module' => 'taxonomy',
+          ),
+          'entityreference_view_widget' => array(
+            'label' => 'above',
+            'settings' => array(),
+            'type' => 'hidden',
+            'weight' => 0,
+          ),
+          'teaser' => array(
+            'label' => 'above',
+            'module' => 'taxonomy',
+            'settings' => array(),
+            'type' => 'taxonomy_term_reference_link',
+            'weight' => '0',
+          ),
+          'notifications' => array(
+            'type' => 'hidden',
+            'label' => 'above',
+            'settings' => array(),
+            'weight' => 0,
+          ),
+        ),
+        'label' => 'Tags',
+        'required' => 1,
+        'settings' => array(
+          'user_register_form' => FALSE,
+        ),
+        'widget' => array(
+          'weight' => '-2',
+          'type' => 'taxonomy_autocomplete',
+          'module' => 'taxonomy',
+          'active' => 0,
+          'settings' => array(
+            'size' => 60,
+            'autocomplete_path' => 'taxonomy/autocomplete',
+          ),
+        ),
+        'field_name' => 'field_tags',
+        'entity_type' => 'node',
+        'bundle' => 'question',
+        'deleted' => '0',
+      ),
+    ),
+  ),
+);
+
+  //TODO: if bundles(content type) exist, break.
+  foreach ($data['bundles'] as $type => $bundle) {
+      //node_type_set_defaults
+    if(in_array($type, node_type_get_types())){
+      node_type_set_defaults($bundle);
+      drupal_set_message(t('Content Type : '. $type .' was created.'));
+      watchdog('druedu_qa', 'create content type : '. $type);
+    }else{
+      node_type_save($bundle);
+      drupal_set_message(t('Content Type : '. $type .' was customed.'));
+      watchdog('druedu_qa', 'custom content type : '. $type);
+    }
+  }
+  foreach ($data['fields'] as $field_name => $field) {
+    $ori_field = field_info_field($field_name);
+    if (empty($ori_field)) {
+       $field = field_create_field($field);
+       watchdog('druedu_qa', 'created field: '.$field_name);
+    }
+  }
+
+  foreach ($data['instances'] as $instances_name => $instances) {
+    foreach ($instances as $key => $instance) {
+      //$instance = field_info_instance('node', 'body', $type->type);
+      $ori_instance = field_info_instance('node', $instances_name, $instance['bundle']);
+      if (empty($ori_instance)) {
+         $instance = field_create_instance($instance);
+         watchdog('druedu_qa', 'created instance: '.$instances_name);
+      }
+    }
+  }
+
+  //Define default flags.
+  module_load_include('inc', 'flag', 'flag');
+  $flag = flag_get_flag('accepted');
+  if (!$flag) {
+    $flag = flag_flag::factory_by_content_type('node');
+    //factory_by_content_type() renamed to factory_by_entity_type()
+    // Unique, machine-readable name.
+    $flag->name = 'accepted';
+    // Exported flag: "Accept".
+    $values = array(
+      'content_type' => 'node',
+      'title' => t('Accept'),
+      'global' => '0',
+      'types' => array(
+        0 => 'answer',
+      ),
+      'flag_short' => 'Accept',
+      'flag_long' => 'Accept this answer.',
+      'flag_message' => 'Accepted.',
+      'unflag_short' => 'Unaccept',
+      'unflag_long' => 'Unaccept this answer.',
+      'unflag_message' => 'Unaccepted.',
+      'unflag_denied_text' => '',
+      'link_type' => 'normal',
+      'roles' => array(
+        'flag' => array(
+          0 => '2',
+        ),
+        'unflag' => array(
+          0 => '2',
+        ),
+      ),
+      'weight' => '-7',
+      'show_on_form' => 0,
+      'access_author' => '',
+      'show_on_page' => 1,
+      'show_on_teaser' => 1,
+      'show_contextual_link' => 0,
+      'i18n' => 0,
+      'api_version' => 2,
+      'locked' => array('title', 'types', 'roles', 'global'),
+    );
+    $flag->form_input($values);
+    $flag->save();
+    $flag->enable();
+    if(!$flag->fid){
+      drupal_set_message(t('Created node flag "accepted" for Q&A'));
+      watchdog('druedu_qa', 'Created node flag for Q&A.');
+    }
+  }
+  //Define default flags end.
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function druedu_qa_uninstall() {
+  //uninstall
+    //data export from node type .
+$data = array(
+  'bundles' => array(
+    'answer' => (object) array(
+      'type' => 'answer',
+      'name' => 'Answer',
+      'base' => 'node_content',
+      'module' => 'druedu_qa',
+      'description' => '',
+      'help' => '',
+      'has_title' => '1',
+      'title_label' => 'Answer',
+      'custom' => '0',
+      'modified' => '1',
+      'locked' => '1',
+      'disabled' => '0',
+      'orig_type' => 'answer',
+      'disabled_changed' => FALSE,
+      'bc_entity_type' => 'node',
+    ),
+    'question' => (object) array(
+      'type' => 'question',
+      'name' => 'Question',
+      'base' => 'node_content',
+      'module' => 'druedu_qa',
+      'description' => '',
+      'help' => '',
+      'has_title' => '1',
+      'title_label' => 'Question',
+      'custom' => '0',
+      'modified' => '1',
+      'locked' => '1',
+      'disabled' => '0',
+      'orig_type' => 'question',
+      'disabled_changed' => FALSE,
+      'bc_entity_type' => 'node',
+    ),
+  ),
+  'fields' => array(
+    'body' => array(
+      'entity_types' => array(
+        0 => 'node',
+      ),
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'settings' => array(),
+      'translatable' => '1',
+      'storage' => array(
+        'type' => 'field_sql_storage',
+        'settings' => array(),
+        'module' => 'field_sql_storage',
+        'active' => '1',
+        'details' => array(
+          'sql' => array(
+            'FIELD_LOAD_CURRENT' => array(
+              'field_data_body' => array(
+                'value' => 'body_value',
+                'summary' => 'body_summary',
+                'format' => 'body_format',
+              ),
+            ),
+            'FIELD_LOAD_REVISION' => array(
+              'field_revision_body' => array(
+                'value' => 'body_value',
+                'summary' => 'body_summary',
+                'format' => 'body_format',
+              ),
+            ),
+          ),
+        ),
+      ),
+      'field_permissions' => array(
+        'type' => '0',
+      ),
+      'field_name' => 'body',
+      'type' => 'text_with_summary',
+      'module' => 'text',
+      'active' => '1',
+      'locked' => '0',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'columns' => array(
+        'value' => array(
+          'type' => 'text',
+          'size' => 'big',
+          'not null' => FALSE,
+        ),
+        'summary' => array(
+          'type' => 'text',
+          'size' => 'big',
+          'not null' => FALSE,
+        ),
+        'format' => array(
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => FALSE,
+        ),
+      ),
+      'bundles' => array(
+        'node' => array(
+          0 => 'page',
+          1 => 'article',
+          2 => 'group',
+          3 => 'post',
+          4 => 'structure_unit',
+          5 => 'event',
+          6 => 'grade',
+          7 => 'bulletins',
+          8 => 'subject',
+          9 => 'answer',
+          10 => 'question',
+          11 => 'school_page',
+          12 => 'class',
+          13 => 'blog',
+          14 => 'assignment_set',
+        ),
+      ),
+    ),
+    'field_answer' => array(
+      'entity_types' => array(),
+      'foreign keys' => array(
+        'node' => array(
+          'columns' => array(
+            'target_id' => 'nid',
+          ),
+          'table' => 'node',
+        ),
+      ),
+      'indexes' => array(
+        'target_id' => array(
+          0 => 'target_id',
+        ),
+      ),
+      'settings' => array(
+        'handler' => 'base',
+        'handler_settings' => array(
+          'behaviors' => array(
+            'test_field_behavior' => array(
+              'status' => 0,
+            ),
+            'views-select-list' => array(
+              'status' => 0,
+            ),
+          ),
+          'sort' => array(
+            'type' => 'none',
+          ),
+          'target_bundles' => array(
+            'question' => 'question',
+          ),
+        ),
+        'target_type' => 'node',
+      ),
+      'translatable' => '0',
+      'storage' => array(
+        'type' => 'field_sql_storage',
+        'settings' => array(),
+        'module' => 'field_sql_storage',
+        'active' => '1',
+        'details' => array(
+          'sql' => array(
+            'FIELD_LOAD_CURRENT' => array(
+              'field_data_field_answer' => array(
+                'target_id' => 'field_answer_target_id',
+              ),
+            ),
+            'FIELD_LOAD_REVISION' => array(
+              'field_revision_field_answer' => array(
+                'target_id' => 'field_answer_target_id',
+              ),
+            ),
+          ),
+        ),
+      ),
+      'field_permissions' => array(
+        'type' => '0',
+      ),
+      'field_name' => 'field_answer',
+      'type' => 'entityreference',
+      'module' => 'entityreference',
+      'active' => '1',
+      'locked' => '0',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'columns' => array(
+        'target_id' => array(
+          'description' => 'The id of the target entity.',
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+        ),
+      ),
+      'bundles' => array(
+        'node' => array(
+          0 => 'answer',
+        ),
+      ),
+    ),
+    'field_answers' => array(
+      'entity_types' => array(),
+      'foreign keys' => array(
+        'node' => array(
+          'table' => 'node',
+          'columns' => array(
+            'target_id' => 'nid',
+          ),
+        ),
+      ),
+      'indexes' => array(
+        'target_id' => array(
+          0 => 'target_id',
+        ),
+      ),
+      'settings' => array(
+        'handler' => 'base',
+        'handler_settings' => array(
+          'behaviors' => array(
+            'views-select-list' => array(
+              'status' => 0,
+            ),
+          ),
+          'sort' => array(
+            'type' => 'none',
+          ),
+          'target_bundles' => array(
+            'answer' => 'answer',
+          ),
+        ),
+        'target_type' => 'node',
+      ),
+      'translatable' => '0',
+      'storage' => array(
+        'type' => 'field_sql_storage',
+        'settings' => array(),
+        'module' => 'field_sql_storage',
+        'active' => '1',
+        'details' => array(
+          'sql' => array(
+            'FIELD_LOAD_CURRENT' => array(
+              'field_data_field_answers' => array(
+                'target_id' => 'field_answers_target_id',
+              ),
+            ),
+            'FIELD_LOAD_REVISION' => array(
+              'field_revision_field_answers' => array(
+                'target_id' => 'field_answers_target_id',
+              ),
+            ),
+          ),
+        ),
+      ),
+      'field_name' => 'field_answers',
+      'type' => 'entityreference',
+      'module' => 'entityreference',
+      'active' => '1',
+      'locked' => '0',
+      'cardinality' => '-1',
+      'deleted' => '0',
+      'columns' => array(
+        'target_id' => array(
+          'description' => 'The id of the target entity.',
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+        ),
+      ),
+      'bundles' => array(
+        'node' => array(
+          0 => 'question',
+        ),
+      ),
+    ),
+    'field_computed_answers' => array(
+      'translatable' => '0',
+      'entity_types' => array(),
+      'settings' => array(
+        'code' => '$entity_field[0][\'value\'] = count(field_get_items($entity_type, $entity, \'field_answers\'));',
+        'display_format' => '$display_output = $entity_field_item[\'value\'];',
+        'store' => 1,
+        'database' => array(
+          'data_type' => 'varchar',
+          'data_length' => '32',
+          'data_size' => 'normal',
+          'data_precision' => '10',
+          'data_scale' => '2',
+          'data_default' => '0',
+          'data_not_NULL' => 0,
+          'data_index' => 0,
+        ),
+      ),
+      'storage' => array(
+        'type' => 'field_sql_storage',
+        'settings' => array(),
+        'module' => 'field_sql_storage',
+        'active' => '1',
+        'details' => array(
+          'sql' => array(
+            'FIELD_LOAD_CURRENT' => array(
+              'field_data_field_computed_answers' => array(
+                'value' => 'field_computed_answers_value',
+              ),
+            ),
+            'FIELD_LOAD_REVISION' => array(
+              'field_revision_field_computed_answers' => array(
+                'value' => 'field_computed_answers_value',
+              ),
+            ),
+          ),
+        ),
+      ),
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'field_name' => 'field_computed_answers',
+      'type' => 'computed',
+      'module' => 'computed_field',
+      'active' => '1',
+      'locked' => '0',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'columns' => array(
+        'value' => array(
+          'type' => 'varchar',
+          'length' => '32',
+          'not null' => 0,
+          'default' => '0',
+        ),
+      ),
+      'bundles' => array(
+        'node' => array(
+          0 => 'question',
+        ),
+      ),
+    ),
+    'field_mark_question_resolved' => array(
+      'translatable' => '0',
+      'entity_types' => array(),
+      'settings' => array(
+        'allowed_values' => array(
+          0 => '0',
+          1 => '1',
+        ),
+        'allowed_values_function' => '',
+      ),
+      'storage' => array(
+        'type' => 'field_sql_storage',
+        'settings' => array(),
+        'module' => 'field_sql_storage',
+        'active' => '1',
+        'details' => array(
+          'sql' => array(
+            'FIELD_LOAD_CURRENT' => array(
+              'field_data_field_mark_question_resolved' => array(
+                'value' => 'field_mark_question_resolved_value',
+              ),
+            ),
+            'FIELD_LOAD_REVISION' => array(
+              'field_revision_field_mark_question_resolved' => array(
+                'value' => 'field_mark_question_resolved_value',
+              ),
+            ),
+          ),
+        ),
+      ),
+      'foreign keys' => array(),
+      'indexes' => array(
+        'value' => array(
+          0 => 'value',
+        ),
+      ),
+      'field_permissions' => array(
+        'type' => '0',
+      ),
+      'field_name' => 'field_mark_question_resolved',
+      'type' => 'list_boolean',
+      'module' => 'list',
+      'active' => '1',
+      'locked' => '0',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'columns' => array(
+        'value' => array(
+          'type' => 'int',
+          'not null' => FALSE,
+        ),
+      ),
+      'bundles' => array(
+        'node' => array(
+          0 => 'question',
+        ),
+      ),
+    ),
+    'field_tags' => array(
+      'entity_types' => array(),
+      'foreign keys' => array(
+        'tid' => array(
+          'table' => 'taxonomy_term_data',
+          'columns' => array(
+            'tid' => 'tid',
+          ),
+        ),
+      ),
+      'indexes' => array(
+        'tid' => array(
+          0 => 'tid',
+        ),
+      ),
+      'settings' => array(
+        'allowed_values' => array(
+          0 => array(
+            'vocabulary' => 'tags',
+            'parent' => 0,
+          ),
+        ),
+      ),
+      'translatable' => '0',
+      'storage' => array(
+        'type' => 'field_sql_storage',
+        'settings' => array(),
+        'module' => 'field_sql_storage',
+        'active' => '1',
+        'details' => array(
+          'sql' => array(
+            'FIELD_LOAD_CURRENT' => array(
+              'field_data_field_tags' => array(
+                'tid' => 'field_tags_tid',
+              ),
+            ),
+            'FIELD_LOAD_REVISION' => array(
+              'field_revision_field_tags' => array(
+                'tid' => 'field_tags_tid',
+              ),
+            ),
+          ),
+        ),
+      ),
+      'field_permissions' => array(
+        'type' => '0',
+      ),
+      'field_name' => 'field_tags',
+      'type' => 'taxonomy_term_reference',
+      'module' => 'taxonomy',
+      'active' => '1',
+      'locked' => '0',
+      'cardinality' => '5',
+      'deleted' => '0',
+      'columns' => array(
+        'tid' => array(
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => FALSE,
+        ),
+      ),
+      'bundles' => array(
+        'node' => array(
+          0 => 'question',
+        ),
+      ),
+    ),
+  ),
+  'instances' => array(
+    'body' => array(
+      0 => array(
+        'default_value' => NULL,
+        'description' => '',
+        'display' => array(
+          'default' => array(
+            'label' => 'hidden',
+            'type' => 'text_default',
+            'weight' => '0',
+            'settings' => array(),
+            'module' => 'text',
+          ),
+          'entityreference_view_widget' => array(
+            'label' => 'above',
+            'settings' => array(),
+            'type' => 'hidden',
+            'weight' => 0,
+          ),
+          'teaser' => array(
+            'label' => 'hidden',
+            'module' => 'text',
+            'settings' => array(
+              'trim_length' => 600,
+            ),
+            'type' => 'text_summary_or_trimmed',
+            'weight' => 0,
+          ),
+          'notifications' => array(
+            'type' => 'hidden',
+            'label' => 'above',
+            'settings' => array(),
+            'weight' => 0,
+          ),
+        ),
+        'label' => 'Answer',
+        'required' => 1,
+        'settings' => array(
+          'display_summary' => 1,
+          'text_processing' => '1',
+          'user_register_form' => FALSE,
+        ),
+        'widget' => array(
+          'active' => 1,
+          'module' => 'text',
+          'settings' => array(
+            'rows' => '20',
+            'summary_rows' => 5,
+          ),
+          'type' => 'text_textarea_with_summary',
+          'weight' => '-4',
+        ),
+        'field_name' => 'body',
+        'entity_type' => 'node',
+        'bundle' => 'answer',
+        'deleted' => '0',
+      ),
+      1 => array(
+        'default_value' => NULL,
+        'description' => '',
+        'display' => array(
+          'default' => array(
+            'label' => 'hidden',
+            'type' => 'text_default',
+            'weight' => '0',
+            'settings' => array(),
+            'module' => 'text',
+          ),
+          'entityreference_view_widget' => array(
+            'label' => 'above',
+            'settings' => array(),
+            'type' => 'hidden',
+            'weight' => 0,
+          ),
+          'teaser' => array(
+            'label' => 'hidden',
+            'module' => 'text',
+            'settings' => array(
+              'trim_length' => 600,
+            ),
+            'type' => 'text_summary_or_trimmed',
+            'weight' => '0',
+          ),
+          'notifications' => array(
+            'type' => 'hidden',
+            'label' => 'above',
+            'settings' => array(),
+            'weight' => 0,
+          ),
+        ),
+        'label' => 'Body',
+        'required' => FALSE,
+        'settings' => array(
+          'display_summary' => TRUE,
+          'text_processing' => 1,
+          'user_register_form' => FALSE,
+        ),
+        'widget' => array(
+          'module' => 'text',
+          'settings' => array(
+            'rows' => 20,
+            'summary_rows' => 5,
+          ),
+          'type' => 'text_textarea_with_summary',
+          'weight' => '-4',
+        ),
+        'field_name' => 'body',
+        'entity_type' => 'node',
+        'bundle' => 'question',
+        'deleted' => '0',
+      ),
+    ),
+    'field_answer' => array(
+      0 => array(
+        'default_value' => NULL,
+        'default_value_function' => 'entityreference_prepopulate_field_default_value',
+        'description' => '',
+        'display' => array(
+          'default' => array(
+            'label' => 'above',
+            'type' => 'hidden',
+            'weight' => '1',
+            'settings' => array(),
+          ),
+          'entityreference_view_widget' => array(
+            'label' => 'above',
+            'settings' => array(),
+            'type' => 'hidden',
+            'weight' => 0,
+          ),
+          'teaser' => array(
+            'label' => 'above',
+            'settings' => array(),
+            'type' => 'hidden',
+            'weight' => 0,
+          ),
+          'notifications' => array(
+            'type' => 'hidden',
+            'label' => 'above',
+            'settings' => array(),
+            'weight' => 0,
+          ),
+        ),
+        'label' => 'Answer',
+        'required' => 0,
+        'settings' => array(
+          'behaviors' => array(
+            'prepopulate' => array(
+              'action' => 'none',
+              'fallback' => 'none',
+              'skip_perm' => '0',
+              'status' => 1,
+            ),
+            'test_instance_behavior' => array(
+              'status' => 0,
+            ),
+          ),
+          'user_register_form' => FALSE,
+        ),
+        'widget' => array(
+          'active' => 1,
+          'module' => 'entityreference',
+          'settings' => array(
+            'match_operator' => 'CONTAINS',
+            'path' => '',
+            'size' => 60,
+          ),
+          'type' => 'entityreference_autocomplete',
+          'weight' => '-3',
+        ),
+        'field_name' => 'field_answer',
+        'entity_type' => 'node',
+        'bundle' => 'answer',
+        'deleted' => '0',
+      ),
+    ),
+    'field_answers' => array(
+      0 => array(
+        'default_value' => NULL,
+        'default_value_function' => '',
+        'description' => 'hide default. not required when an answer add to it ,update it add one value to it quietly.',
+        'display' => array(
+          'default' => array(
+            'label' => 'hidden',
+            'type' => 'hidden',
+            'weight' => '2',
+            'settings' => array(),
+          ),
+          'entityreference_view_widget' => array(
+            'label' => 'above',
+            'settings' => array(),
+            'type' => 'hidden',
+            'weight' => 0,
+          ),
+          'teaser' => array(
+            'label' => 'above',
+            'settings' => array(),
+            'type' => 'hidden',
+            'weight' => 0,
+          ),
+          'notifications' => array(
+            'type' => 'hidden',
+            'label' => 'above',
+            'settings' => array(),
+            'weight' => 0,
+          ),
+        ),
+        'label' => 'Answers',
+        'required' => 0,
+        'settings' => array(
+          'behaviors' => array(
+            'prepopulate' => array(
+              'status' => 0,
+            ),
+          ),
+          'user_register_form' => FALSE,
+        ),
+        'widget' => array(
+          'active' => 1,
+          'module' => 'entityreference',
+          'settings' => array(
+            'match_operator' => 'CONTAINS',
+            'path' => '',
+            'size' => '60',
+          ),
+          'type' => 'entityreference_autocomplete',
+          'weight' => '31',
+        ),
+        'field_name' => 'field_answers',
+        'entity_type' => 'node',
+        'bundle' => 'question',
+        'deleted' => '0',
+      ),
+    ),
+    'field_computed_answers' => array(
+      0 => array(
+        'label' => 'computed_answers',
+        'widget' => array(
+          'type' => 'computed',
+          'weight' => '32',
+          'settings' => array(),
+          'module' => 'computed_field',
+        ),
+        'settings' => array(
+          'user_register_form' => FALSE,
+        ),
+        'display' => array(
+          'default' => array(
+            'label' => 'above',
+            'type' => 'computed_field_plain',
+            'weight' => '3',
+            'settings' => array(),
+            'module' => 'computed_field',
+          ),
+          'teaser' => array(
+            'type' => 'hidden',
+            'label' => 'above',
+            'settings' => array(),
+            'weight' => 0,
+          ),
+          'notifications' => array(
+            'type' => 'hidden',
+            'label' => 'above',
+            'settings' => array(),
+            'weight' => 0,
+          ),
+        ),
+        'required' => FALSE,
+        'description' => '',
+        'field_name' => 'field_computed_answers',
+        'entity_type' => 'node',
+        'bundle' => 'question',
+        'deleted' => '0',
+      ),
+    ),
+    'field_mark_question_resolved' => array(
+      0 => array(
+        'label' => 'Mark Question Resolved',
+        'widget' => array(
+          'weight' => '33',
+          'type' => 'options_buttons',
+          'module' => 'options',
+          'active' => 1,
+          'settings' => array(),
+        ),
+        'settings' => array(
+          'user_register_form' => FALSE,
+        ),
+        'display' => array(
+          'default' => array(
+            'label' => 'above',
+            'type' => 'list_default',
+            'weight' => '4',
+            'settings' => array(),
+            'module' => 'list',
+          ),
+          'teaser' => array(
+            'type' => 'hidden',
+            'label' => 'above',
+            'settings' => array(),
+            'weight' => 0,
+          ),
+          'notifications' => array(
+            'type' => 'hidden',
+            'label' => 'above',
+            'settings' => array(),
+            'weight' => 0,
+          ),
+        ),
+        'required' => 1,
+        'description' => '',
+        'default_value' => array(
+          0 => array(
+            'value' => '0',
+          ),
+        ),
+        'field_name' => 'field_mark_question_resolved',
+        'entity_type' => 'node',
+        'bundle' => 'question',
+        'deleted' => '0',
+      ),
+    ),
+    'field_tags' => array(
+      0 => array(
+        'default_value' => NULL,
+        'description' => 'A list of tags separated by a comma (","). Limited to 5 tags.',
+        'display' => array(
+          'default' => array(
+            'label' => 'above',
+            'type' => 'taxonomy_term_reference_link',
+            'weight' => '1',
+            'settings' => array(),
+            'module' => 'taxonomy',
+          ),
+          'entityreference_view_widget' => array(
+            'label' => 'above',
+            'settings' => array(),
+            'type' => 'hidden',
+            'weight' => 0,
+          ),
+          'teaser' => array(
+            'label' => 'above',
+            'module' => 'taxonomy',
+            'settings' => array(),
+            'type' => 'taxonomy_term_reference_link',
+            'weight' => '0',
+          ),
+          'notifications' => array(
+            'type' => 'hidden',
+            'label' => 'above',
+            'settings' => array(),
+            'weight' => 0,
+          ),
+        ),
+        'label' => 'Tags',
+        'required' => 1,
+        'settings' => array(
+          'user_register_form' => FALSE,
+        ),
+        'widget' => array(
+          'weight' => '-2',
+          'type' => 'taxonomy_autocomplete',
+          'module' => 'taxonomy',
+          'active' => 0,
+          'settings' => array(
+            'size' => 60,
+            'autocomplete_path' => 'taxonomy/autocomplete',
+          ),
+        ),
+        'field_name' => 'field_tags',
+        'entity_type' => 'node',
+        'bundle' => 'question',
+        'deleted' => '0',
+      ),
+    ),
+  ),
+);
+  // delete default content types for Q&A.
+  // $node_types = node_type_get_types();
+  // foreach ($data['bundles'] as $type => $bundle) {
+  //     //node_type_set_defaults
+  //   if(array_key_exists($type, $node_types)){
+  //     node_type_delete($type);
+  //     drupal_set_message(t('Content Type : '. $type .' has been deleted.'));
+  //     watchdog('druedu_qa', 'delete content type : '. $type);
+  //   }
+  // }
+  foreach ($data['instances'] as $instances_name => $instances) {
+    foreach ($instances as $key => $instance) {
+      //$instance = field_info_instance('node', 'body', $type->type);
+      $ori_instance = field_info_instance('node', $instances_name, $instance['bundle']);
+      if (!empty($ori_instance)) {
+         field_delete_instance($ori_instance);
+         watchdog('druedu_qa', 'delete instance: '.$instances_name);
+      }
+    }
+  }
+  // delete default fields for Q&A.
+  // foreach ($data['fields'] as $field_name => $field) {
+  //   $ori_field = field_info_field($field_name);
+  //   watchdog('druedu_qa', 'delete field?: '.$field_name);
+  //   if (!empty($ori_field)) {
+  //      field_delete_field($field_name);
+  //        watchdog('druedu_qa', 'delete field: '.$field_name);
+  //   }
+  // }
+
+  //delete default flags for Q&A.
+  $flag = flag_get_flag('accepted');
+  if ($flag) {
+    $flag->delete();
+    $flag->disable();
+    module_load_include('inc', 'flag', 'includes/flag.admin');
+    _flag_clear_cache();
+    watchdog('druedu_qa', t('Flag @name has been deleted.', array('@name' => $flag->get_title())));
+    drupal_set_message(t('Flag @name has been deleted.', array('@name' => $flag->get_title())));
+  }
+
+}

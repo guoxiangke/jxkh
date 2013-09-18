@@ -1,0 +1,14 @@
+name =  Druedu QA
+description = druedu Q&A core
+core = 7.x
+package = Druedu
+version = "7.x-1.x-dev"
+dependencies[] = druedu_qa_features
+dependencies[] = ajax_comments
+dependencies[] = simplehtmldom
+dependencies[] = rate
+dependencies[] = views_ui
+dependencies[] = auto_nodetitle
+dependencies[] = token
+dependencies[] = statistics
+dependencies[] = publication_date

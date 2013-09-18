@@ -1,0 +1,962 @@
+<?php
+/**
+ * Implements hook_theme().
+ */
+function druedu_qa_theme($existing, $type, $theme, $path) {
+  $module_path = drupal_get_path( 'module', 'druedu_qa' );
+  
+  $themes['views_view__question'] = array(
+    'template'  => 'views-view--question',
+    'path'  => $module_path.'/templates',
+    'base hook' => 'views_view',
+    'type'  => 'module',
+    'theme_path'  => $module_path,
+    'preprocess functions' => array(
+       'template_preprocess',
+       'template_preprocess_views_view',
+    )
+  );
+  $themes['views_view__questions'] = array(
+    'template'  => 'views-view--questions',
+    'path'  => $module_path.'/templates',
+    'base hook' => 'views_view',
+    'type'  => 'module',
+    'theme_path'  => $module_path,
+    'preprocess functions' => array(
+       'template_preprocess',
+       'template_preprocess_views_view',
+    )
+  );
+  //views-view--question--attachment.tpl
+  // $themes['views_view__question_attachment'] = array(
+  //   'template'  => 'views-view--question--attachment',
+  //   'path'  => $module_path.'/templates',
+  //   'base hook' => 'views_view',
+  //   'type'  => 'module',
+  //   'theme_path'  => $module_path,
+  //   'preprocess functions' => array(
+  //      'template_preprocess',
+  //      'template_preprocess_views_view',
+  //   )
+  // );
+  //views-view-fields--question.tpl
+  $themes['views_view_fields__question'] = array(
+    'template'  => 'views-view-fields--question',
+    'path'  => $module_path.'/templates',
+    'base hook' => 'views_view_fields',
+    'type'  => 'module',
+    'theme_path'  => $module_path,
+    'preprocess functions' => array(
+       'template_preprocess',
+       'template_preprocess_views_view_fields',
+       //'mymodule_preprocess_views_view_fields__myview'
+    )
+  );
+  //views-view-fields--question--answers-attachment.tpl
+  $themes['views_view_fields__question__answers_attachment'] = array(
+    'template'  => 'views-view-fields--question--answers-attachment',
+    'path'  => $module_path.'/templates',
+    'base hook' => 'views_view_fields',
+    'type'  => 'module',
+    'theme_path'  => $module_path,
+    'preprocess functions' => array(
+       'template_preprocess',
+       'template_preprocess_views_view_fields',
+    )
+  );
+  //views-view-fields--question.tpl
+  $themes['views_view_fields__questions'] = array(
+    'template'  => 'views-view-fields--questions',
+    'path'  => $module_path.'/templates',
+    'base hook' => 'views_view_fields',
+    'type'  => 'module',
+    'theme_path'  => $module_path,
+    'preprocess functions' => array(
+       'template_preprocess',
+       'template_preprocess_views_view_fields',
+    )
+  );
+  //views-view-field--question--field-tags.tpl
+  $themes['views_view_field__question__field_tags'] = array(
+    'template'  => 'views-view-field--question--field-tags',
+    'path'  => $module_path.'/templates',
+    'base hook' => 'views_view_field',
+    'type'  => 'module',
+    'theme_path'  => $module_path,
+    'preprocess functions' => array(
+       'template_preprocess',
+       'template_preprocess_views_view_field',
+    )
+  );
+  //views-view-field--question--field-tags.tpl
+  $themes['views_view_field__questions__field_tags'] = array(
+    'template'  => 'views-view-field--questions--field-tags',
+    'path'  => $module_path.'/templates',
+    'base hook' => 'views_view_field',
+    'type'  => 'module',
+    'theme_path'  => $module_path,
+    'preprocess functions' => array(
+       'template_preprocess',
+       'template_preprocess_views_view_field',
+    )
+  );
+
+  
+  // views-view-field--question--answers-attachment--ops.tpl.php
+  $themes['views_view_field__question__answers_attachment__ops'] = array(
+    'template'  => 'views-view-field--question--answers-attachment--ops',
+    'path'  => $module_path.'/templates',
+    'base hook' => 'views_view_field',
+    'type'  => 'module',
+    'theme_path'  => $module_path,
+    'preprocess functions' => array(
+       'template_preprocess',
+       'template_preprocess_views_view_field',
+    )
+  );
+  // 'preprocess functions' :
+  // @see views/theme/theme.inc
+  // template_preprocess_views_view 
+  // template_preprocess_views_view_field
+  // template_preprocess_views_view_fields
+  // template_preprocess_views_view_grouping
+  // template_preprocess_views_view_summary
+  // template_preprocess_views_view_summary_unformatted
+  // template_preprocess_views_view_table
+  // template_preprocess_views_view_grid
+  // template_preprocess_views_view_unformatted
+  // template_preprocess_views_view_list
+  // template_preprocess_views_view_rss
+  // template_preprocess_views_view_row_rss
+  // template_preprocess_views_exposed_form
+
+  // template_process_views_view
+  return $themes;
+}
+/**
+ * Implementation of hook_theme_registry_alter().
+ */
+function druedu_qa_theme_registry_alter(&$theme_registry) {
+  //$theme_registry['comment']['path'] = drupal_get_path('module', 'druedu_qa') . '/templates';
+  global $theme_path;
+  $theme_registry['comment__node_answer'] = array(
+    'template' => 'comment--node-answer',
+    'path' => drupal_get_path('module', 'druedu_qa') . '/templates',//'themes/bartik/templates',
+    'render element' => 'elements',
+    'base hook' => 'comment',
+    'type' => 'theme_engine',
+    'theme path' => $theme_path,
+    'preprocess functions' => array(),
+    'process functions' => array(),
+  );
+  $theme_registry['comment__node_question'] = array(
+    'template' => 'comment--node-question',
+    'path' => drupal_get_path('module', 'druedu_qa') . '/templates',//'themes/bartik/templates',
+    'render element' => 'elements',
+    'base hook' => 'comment',
+    'type' => 'theme_engine',
+    'theme path' => $theme_path,
+    'preprocess functions' => array(),
+    'process functions' => array(),
+  );
+  //if i have no right use the flag “Accepted”,please hide it
+  $theme_registry['flag']['path'] =drupal_get_path('module', 'druedu_qa') . '/templates';
+}
+
+/**
+ * Implementation of hook_init().
+ * Redirect the node page(question & answer ) to the view page(integrate a question and anwsers one page) .
+ * eg:'node/1' => 'questions/[nid]'.
+ */
+function druedu_qa_init() {
+  if (arg(0) == 'node' && is_numeric(arg(1)) && arg(2) == NULL) {
+    $node = node_load(arg(1));
+      if ($node) {
+        if ($node->type == 'answer') {
+          if(isset($node->field_answer[LANGUAGE_NONE][0]['target_id'])){ // ajax prepare form node_add_form node_object_prepare()
+            drupal_goto('questions/'. $node->field_answer[LANGUAGE_NONE][0]['target_id']);
+          }
+        }elseif ($node->type == 'question') {
+          drupal_goto('questions/'. $node->nid);
+        }
+    }
+  }
+
+  // // filevault js error bug
+  // drupal_add_js(drupal_get_path('module', 'filevault_ui').'/js/libs/jquery_fileupload/vendor/jquery.ui.widget.js');
+  // //drupal_add_js(drupal_get_path('module', 'filevault_ui').'/js/libs/jquery_fileupload/jquery.iframe-transport.js');
+  // drupal_add_js(drupal_get_path('module', 'filevault_ui').'/js/libs/jquery_fileupload/jquery.fileupload.js');
+
+}
+
+/**
+ * Allow modules to allow or deny access to flagging.
+ *
+ * @param $flag
+ *  The flag object.
+ * @param $content_id
+ *  The id of the entity in question.
+ * @param $action
+ *  The action to test. Either 'flag' or 'unflag'.
+ * @param $account
+ *  The user on whose behalf to test the flagging action.
+ *
+ * @return
+ *   Boolean TRUE if the user is allowed to flag/unflag the given content.
+ *   FALSE otherwise.
+ *
+ * @see flag_flag:access()
+ * 
+ * Implementation of hook_flag_access().
+ * 
+ * The requirement like this:
+ * We use a flag named Accept to flag the best answer for a question, 
+ * and give all the students permission to use this flag,
+ * means to all answers( attention those belongs the another question and the question's author isn't the student) 
+ * which seems not logical..
+ */
+function druedu_qa_flag_access($flag, $content_id, $action, $account) {
+  //only the author of the question has right to use flag "Accepeted" on answers.
+  //TODO: if i have no right use it,please hide it... Done.
+  //@see druedu_preprocess_flag in theme level.
+  //@see druedu_qa_preprocess_flag in module level.
+  //flag 2.0->3.0  $flag->content_type==>entity_type
+  if (($flag->name == 'accepted') && ($flag->entity_type == 'node')  && ($node = node_load($content_id))) {
+    if ($node->type == 'answer') { // the Answer node type machine name must be answer
+      if(isset($node->field_answer[LANGUAGE_NONE][0]['target_id'])){//ajax prepare form node_add_form node_object_prepare()
+        $question_nid = $node->field_answer[LANGUAGE_NONE]['0']['target_id'];
+        $question = node_load($question_nid);
+        return $question->uid == $account->uid ? TRUE : FALSE;
+      }
+    }
+  }
+}
+/**
+ * if i have no right use it,please hide it... 
+ * http://drupal.stackexchange.com/questions/47997/if-i-have-no-right-use-the-flag-accepted-please-hide-it
+ * hook_preprocess_HOOK($variables)
+ */
+function druedu_qa_preprocess_flag(&$variables) {
+  //Set flag_access TRUE.
+  $variables['flag_access'] = TRUE;
+  // dpm($variables);
+  if(isset($variables['flag']->content_type) && $variables['flag']->content_type == 'heartbeat_activity'){
+    return;
+  }
+  $flag = flag_load('accepted');
+  if (!is_null($variables) && isset($variables['content_id']) && !$flag->access($variables['content_id'])) {
+    $variables['flag_access'] = FALSE;
+  }
+} 
+/**
+ * prepare comments for views:single_question_page. and the comments froms both for question and answer node.
+ */
+function druedu_qa_views_post_execute(&$view) {
+   if ($view->name == 'question') {
+     foreach ( $view->result as &$answer_item) { // both for question_item
+       if (!isset($answer_item->comments)) {
+         $node = node_load($answer_item->nid);
+         $comment = comment_node_page_additions($node) ;
+         if(!isset($comment['comments'])) return;
+         $answer_item->comments['#content'] = $comment['comments'];
+         $flag = count($comment['comments']);
+         $answer_item->comments['#content']['#prefix'] = '<div class="comments-wrapper" id="comments-wrapper-'.$node->nid.'">';
+         if($flag) {
+           $answer_item->comments['#content']['#prefix'] .= '<div class="has-comment"><b class="triangle_top"></b></div>';
+         }
+         $answer_item->comments['#content']['#suffix'] = '</div>';
+         $answer_item->comments['#form'] = $comment['comment_form'];
+         if (!$node->comment_count) {
+            // Append comment form if needed.
+            if (user_access('post comments') && $node->comment == COMMENT_NODE_OPEN && (variable_get('comment_form_location_' . $node->type, COMMENT_FORM_BELOW) == COMMENT_FORM_BELOW)) {
+              $build = drupal_get_form("comment_node_{$node->type}_form", (object) array('nid' => $node->nid));
+              $answer_item->comments['#form'] = $build;
+            }
+         }
+       }
+     }
+     //counts answers and show before attachment.
+     if ($view->is_attachment && $counts=count($view->result)){
+       $output = format_plural($counts, '共1 个答案', '共@count 个答案');
+       $view->attachment_before = '<h3>'.$output.'</h3>';
+     }
+     
+     // for answers ,add wrapper for new ajax answer to fill
+     
+      // add js for comments delete use pop modal.
+      //drupal_add_js(drupal_get_path('module', 'druedu_qa') .'/js/delete_popup_comments.js');
+       drupal_add_js(drupal_get_path('module', 'druedu_qa') .'/js/qa_custom.js');
+   }
+}
+/**
+ * Theme preprocess for views-view-question.tpl.php.
+ * prepare comments vars for qustion view page for both question and answers in module Level.
+ * TODO:we should check in theme level 
+ */
+function druedu_qa_preprocess_views_view(&$vars) {
+  $view = $vars['view'];
+  if ($view->name == 'question' && $view->current_display == 'single_question_page' && count($view->args)) {
+    $vars['answer_node_form'] = druedu_node_add('answer');
+  }
+  ///questions, /questions/my-questions, /questions/unanswered, /questions/tagged
+  $args = array('my-questions','unanswered', 'tagged');
+  if ($view->name == 'questions' && isset($view->args[0]) && !in_array($view->args[0], $args)){
+    //dpm($view);
+    drupal_set_title('This page has no result.');
+    $vars['empty'] = '<div class="qa-empty">If you came here using a hyperlink, please check the URL and try again.</div>';
+    //$view->attachment_before =array('#markup'=>'no result found.');
+    //$views= views_get_view('questions');dpm($views,'dpm($view)s');
+  }
+  if ($view->name == 'questions' && $view->current_display == 'page_questions_tagged') {
+    //
+    $query_parameters = drupal_get_query_parameters();
+    drupal_set_title('Questions - '.$query_parameters['field_tags_tid']);
+  }
+  //add css for QA 
+  if($view->name == 'questions' || $view->name == 'question' ){
+    drupal_add_css(drupal_get_path('module', 'druedu_qa').'/css/druedu_qa.css');
+  }
+}
+/**
+ * Returns a node submission form.
+ * @see druedu_prepopulate_answer_node_form_form_alter()
+ */
+function druedu_node_add($type='answer',$question_nid=null) {
+  if(!user_access('create answer content')) return ''; //only user who have premission can add answer.
+  module_load_include('inc', 'node', 'node.pages'); 
+  // maybe add current users info
+  global $user;
+  // create a blank node
+  $node = (object) array('uid' => $user->uid, 'name' => (isset($user->name) ? $user->name : ''), 'type' => $type, 'language' => LANGUAGE_NONE);
+  // Invoke hook_nodapi and hook_node
+  // when use ajax ,set default field value.
+  //TODO more about ajax for node_add_anwser form....
+  if($question_nid){
+     //watchdog('0.druedu_node_add-$question_nid', $question_nid);
+     //watchdog('0.druedu_node_add-$node', '<pre>'.print_r($node,TRUE));
+    //$node->field_answer[LANGUAGE_NONE][0]['target_id'] = $question_nid;
+    //$form_state['redirect'] =array();
+     return drupal_get_form($type . '_node_form', $node);
+  }
+  
+  node_object_prepare($node);
+  // Or you can also use an exiting node, for example
+  // $node = node_load(123);
+  // and the display the form:
+  $output = drupal_get_form($type . '_node_form', $node);
+  return $output;
+}
+
+
+/**
+ * Atering bulletins views at the very beginning of views processing, before
+ * anything is done.
+ *
+ * Adding output to the view can be accomplished by placing text on
+ * $view->attachment_before and $view->attachment_after.
+ * @param $view
+ *   The view object about to be processed.
+ * @param $display_id
+ *   The machine name of the active display.
+ * @param $args
+ *   An array of arguments passed into the view.
+ */
+ /**
+  * the related question view with tags( or| not &)...
+  */
+function druedu_qa_views_pre_view(&$view, &$display_id, &$args) {
+  /**
+  * the related question view with tags( or| not &)...
+  */
+  if ($view->name == 'related_questions') { 
+    //Provide arguments 
+    if ($display_id == 'block') {
+      if (arg(0) == 'question' && arg(1)) {
+        $question_node = node_load(arg(1));
+        if ($question_node && $question_node->type='question') {
+          if ($question_node->field_tags) {
+            $tids = $question_node->field_tags[LANGUAGE_NONE];//[0]['tid']
+            foreach($tids as $key => $value) { 
+              if ($key == 0) {
+                $tid_or = "$value[tid]";
+              } else {
+              $tid_or .= "+$value[tid]";
+              }
+             //$args[] =  $value['tid'];
+            }
+            $args[0] = arg(1);
+            $args[] = $tid_or;
+          }
+        }
+      }
+    }
+  }
+}
+/**
+ * hook_node_view_alter()
+ * remove [23 views] link for every node.
+ */
+function druedu_qa_node_view_alter(&$build) {
+  $node = node_load(arg(1)); //node/nid
+  if ($node && !($node->type == 'question'||$node->type == 'answer')) {
+  //XXX:  only not for Q&A
+  } //all node type need-less the statistics show on page...
+  $build['links']['statistics']['#access'] = FALSE;
+}
+/**
+ * Respond to creation of a new node.
+ *
+ * This hook is invoked from node_save() after the node is inserted into the
+ * node table in the database, after the type-specific hook_insert() is invoked,
+ * and after field_attach_insert() is called.
+ *
+ * @param $node
+ *   The node that is being created.
+ *
+ * @ingroup node_api_hooks
+ */
+function druedu_qa_node_insert($node) {
+  if ($node->type == 'answer') {
+    if (isset($node->field_answer)) {//make sure and make sure...
+      $question = node_load($node->field_answer[LANGUAGE_NONE][0]['target_id']);
+    }
+    if (isset($question->field_answers)) {
+      $question->field_answers[LANGUAGE_NONE][] = array('target_id'=>$node->nid);
+      node_save($question);
+    }
+  }
+}
+
+/**
+ * 1.when del an answer,update the questions...
+ * 2.when del an question,delete all the answers....
+ */
+function druedu_qa_node_delete($node) {
+  if ($node->type == 'answer') {
+    if (isset($node->field_answer)) {//make sure and make sure...
+      $question = node_load($node->field_answer[LANGUAGE_NONE][0]['target_id']);
+    }
+    if (isset($question->field_answers)) {
+      foreach ($question->field_answers[LANGUAGE_NONE] as $key => $value) {
+        if ($value['target_id'] == $node->nid) {
+          unset($question->field_answers[LANGUAGE_NONE][$key]);
+          node_save($question);
+        }
+      }
+    }
+    //if an accepted answer was del,update the Q's field_mark_question_resolved 
+    $flag_name = 'accepted';// here also,the name must match system flag setting in /admin/structure/flags
+    $flag = flag_get_flag($flag_name);
+    if(isset($question->field_mark_question_resolved) && $flag->is_flagged($node->nid)) {
+      $question->field_mark_question_resolved[LANGUAGE_NONE][0]['value']=0;
+      node_save($question);
+    };
+    if(isset($question->nid))
+    $_GET['destination'] = 'node/'.$question->nid;
+  }
+  //comment blow if you want leave the answers while del a question...
+  if ($node->type == 'question') {
+    if (isset($node->field_answers) && !empty($node->field_answers)) {
+      foreach ($node->field_answers[LANGUAGE_NONE] as $key => $value) {
+        //$del_nid = $value['target_id'];
+        //watchdog('Q&A', 'answer:'.$value['target_id'].' was deleted while del question:'.$node->nid);
+        node_delete($value['target_id']);
+      }
+    }
+    //$_GET['destination'] = 'questions';
+  }
+}
+
+/**
+ * Implements hook_exit().
+ * Gathers statistics for page accesses.
+ * set statistics for 'question/%' view page instead of node/% to statistics++.
+ * @see statistics_exit()
+ */
+function druedu_qa_exit() {
+  global $user;
+
+  // When serving cached pages with the 'page_cache_without_database'
+  // configuration, system variables need to be loaded. This is a major
+  // performance decrease for non-database page caches, but with Statistics
+  // module, it is likely to also have 'statistics_enable_access_log' enabled,
+  // in which case we need to bootstrap to the session phase anyway.
+  drupal_bootstrap(DRUPAL_BOOTSTRAP_VARIABLES);
+
+  if (variable_get('statistics_count_content_views', 0)) {
+    // We are counting content views.
+    if (arg(0) == 'question' && is_numeric(arg(1)) && arg(2) == NULL) {
+      // A node has been viewed, so update the node's counters.
+      db_merge('node_counter')
+        ->key(array('nid' => arg(1)))
+        ->fields(array(
+          'daycount' => 1,
+          'totalcount' => 1,
+          'timestamp' => REQUEST_TIME,
+        ))
+        ->expression('daycount', 'daycount + 1')
+        ->expression('totalcount', 'totalcount + 1')
+        ->execute();
+    }
+  }
+}
+
+/**
+ * disable the node/add/answer page.
+ * or drupal_set_message($message,'error') in callback....XXX
+ * "An answer must be linked to a quetion.
+ * Please go to a question page,unless you really know what you are doing!"
+ */
+function druedu_qa_menu_alter(&$items) {
+  $items['node/add/answer']['access callback'] = FALSE;
+}
+
+function druedu_qa_menu(){
+  $items['node/%/remove'] = array(
+    'title' => 'remove node',
+    'page callback' => 'druedu_qa_ajax_unpublish_node',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+function druedu_qa_ajax_unpublish_node($nid){
+  $node = node_load($nid);
+  if(!$node->nid){
+    drupal_access_denied();
+    drupal_exit();
+  }elseif(!in_array($node->type, array('question','answer'))){
+    drupal_access_denied();
+    drupal_exit();
+  }
+
+  global $user;
+  if($node->uid==$user->uid || user_access('administer nodes')){
+    $node->status = 0;
+    node_save($node);
+    drupal_set_message(t('The '.$node->type.' has been removed.'), 'status');
+  }else{
+    drupal_access_denied();
+    drupal_exit();
+  }
+  if($node->type == 'question'){
+    drupal_goto('questions');
+  }elseif($node->type == 'answer'){
+    drupal_goto('question/'.$node->field_answer[LANGUAGE_NONE][0]['target_id']);
+  }
+  
+  return '';
+}
+//TODO XXX
+/**
+ *http://drupal.stackexchange.com/questions/327/how-can-a-module-detect-when-drupal-is-outputting-the-access-denied-page/
+ *  // authorize_access_denied_page()
+ * drupal_add_http_header('Status', '403 Forbidden');
+ * watchdog('access denied', 'authorize.php', NULL, WATCHDOG_WARNING);
+ * drupal_set_title('Access denied');
+ * return t('You are not allowed to access this page.');
+ * XXX or more fast 404.
+ */
+ 
+/**
+ * Implements hook_form_FORM_ID_alter().
+ * @see ajax_comments_form_comment_form_alter
+ */
+function druedu_qa_form_comment_form_alter(&$form, &$form_state, $form_id) {
+   
+  if($form['#node']->type=='question' || $form['#node']->type=='answer') {//
+    $form['actions']['submit']['#ajax']['callback'] = 'druedu_qa_ajax_comments_submit_js';
+    //TODO goto the added-one #id in js
+    // $form['actions']['submit']['#attached'] = array(
+    //   'js' => array(
+    //     drupal_get_path('module', 'druedu_qa') . '/js/delete_popup_comments.js',
+    //   ),
+    // );
+  }
+  // HACK, stop ctools from modifying us in node_comment_form.inc
+  // I don't know why? --guo
+  //$form_state['ctools comment alter'] = FALSE;
+  
+  //#428: blog ajax comment not works too.
+  if($form['#node']->type=='blog') {
+    $form['actions']['submit']['#ajax']['callback'] = '_ajax_comments_submit_js4blog';
+    //prevent gotop when ajax comment committed @see qa_custom.js 
+    drupal_add_js('jQuery(document).ready(function () { $.fn.insertComment = function(args) {
+    $(args.selector).append(args.data);
+  };
+});', 'inline');
+  }
+}
+
+/**
+ * Builds the comment.
+ */
+function druedu_qa_ajax_comments_submit_js($form, &$form_state) {
+  // Return the actual form if it contains errors.
+  if (form_get_errors()) {
+    return $form;
+  }
+  // This is to remove the "Your comment has been posted" status message that
+  // will appear upon refresh. This seems dirty but it means we don't have to
+  // rewrite the whole comment_form_submit(). Please chime in if you think this
+  // is dumb.
+  ajax_comments_remove_status($_SESSION);
+
+  $comment = $form_state['comment'];
+
+  $node = $form['#node'];
+  $notify_text = variable_get('ajax_comments_notify', '') ? theme('ajax_comments_notify_text') : '';
+  $entity[0] = comment_load($comment->cid);
+  $comment_build = entity_view('comment', $entity, 'full');
+
+  if (variable_get('comment_preview_' . $node->type)) {
+    $commands[] = ajax_command_remove('.comment-preview');
+    $commands[] = ajax_command_remove('.messages.ajax-comments.warning');
+  }
+
+  // Don't display as a preview as this is being submitted.
+  unset($comment_build['comment_body']['#object']->in_preview);
+
+  // Are we editing a comment.
+  if (isset($form['cid']['#value'])) {// watchdog('5.1ajax_sumit', ' Are we editing a comment.');
+    // Remove wrapper because the form we replace exists inside the wrapper.
+    unset($comment_build['#prefix']);
+    unset($comment_build['#suffix']);
+
+    // Trim surrounding whitespace so ajax.js doesn't wrap us in a new div.
+    $comment_output = trim(drupal_render($comment_build));
+    $commands[] = ajax_command_replace('#' . $form['#id'], $comment_output);
+  }
+  // Or are we replying to another comment.
+  elseif (isset($form_state['values']['pid'])) { //watchdog('5.2.ajax_sumit', ' Append comment to parent wrapper.');
+    // Append comment to parent wrapper.
+    $comment_output = drupal_render($comment_build);
+    $commands[] = ajax_command_append('#comment-wrapper-' . $comment->pid, $notify_text . $comment_output);
+
+    // Delete the form.
+    $commands[] = ajax_command_invoke('#' . $form['#id'], 'remove');
+  }
+  // Or is this a brand new comment?
+  else {
+    // Append comment to root comment wrapper.
+
+    $comment_output = render($comment_build);
+
+    //XXX: notice the div id #s  -guo
+    // fit for all sites comments form use ajax.
+     $nodes = node_load($node->nid);
+     $comments = druedu_qa_comment_counts_load(array($nodes));
+     if($comments[$node->nid]==1) {//$nodes->comment_count
+      $comment_output = '<div class="has-comment"><b class="triangle_top"></b></div>'.$comment_output;
+     }
+
+    $comment_output = $notify_text.$comment_output;
+    //$comment_output = '<div class="has-comment"><b class="triangle_top"></b></div>'.$comment_output;
+    if($node->type == 'question' || $node->type == 'answer') {
+        //$commands[] = ajax_command_append("#comments-wrapper-".$node->nid, $comment_output); //not use ajax_command_append necause issue jump top of the page
+        $commands[] = ajax_command_invoke(NULL, 'insertComment', array(
+          array('selector' => "#comments-wrapper-".$node->nid, 'data' => $comment_output))
+        );
+    }else {
+      $commands[] = ajax_command_after('#comment-wrapper', $comment_output);
+    }
+   
+    // If we have a default form, update it with a new one.
+    if (variable_get('comment_form_location_' . $node->type, COMMENT_FORM_BELOW) == COMMENT_FORM_BELOW) {
+      $node = $form['#node'];
+      $new_form_state = array();
+      $new_form_state['build_info']['args'][] = (object) array('nid' => $node->nid);
+      // Don't pull from cache.
+      $new_form_state['input'] = array();
+      $new_form_build = drupal_build_form($form['#form_id'], $new_form_state);
+      $new_form_output = drupal_render($new_form_build);
+      //drupal_add_js('comments_sent()', 'inline');
+      $commands[] = ajax_command_replace('#' . $form['#id'], $new_form_output);
+    }
+    // Otherwise, delete it.
+    else {
+      $commands[] = ajax_command_remove('#' . $form['#id']);
+    }
+  }
+  //remove before answer add messages "Your answer has been posted."
+  $commands[] = ajax_command_remove('#messages');
+//  $commands[] = ajax_command_invoke(NULL, "comments_sent");
+
+
+  return array('#type' => 'ajax', '#commands' => $commands);
+}
+
+
+/**
+ * Implements hook_comment_view().
+ * @see ajax_comments_comment_view()
+ */
+function druedu_qa_comment_view($comment, $view_mode, $langcode) {
+  //TRUE is fit for all sites comments form use ajax.
+  if($comment->node_type=='comment_node_answer'||$comment->node_type=='comment_node_question') {
+    // Reply.
+    if (isset($comment->content['links']['comment']['#links']['comment-reply'])) {
+      $comment->content['links']['comment']['#links']['comment-reply']['attributes']['class'] = array('btn', 'btn-small', 'use-ajax');
+      $comment->content['links']['comment']['#links']['comment-reply']['href'] = 'ajax_comments/reply/' . $comment->nid . '/' . $comment->cid;
+    }
+  
+    // Edit.
+    if (isset($comment->content['links']['comment']['#links']['comment-edit'])) {
+      $comment->content['links']['comment']['#links']['comment-edit']['attributes']['class'] = array('btn', 'btn-mini', 'btn-link','use-ajax');
+      $comment->content['links']['comment']['#links']['comment-edit']['href'] = 'ajax_comments/edit/' . $comment->cid;
+    }
+  
+    // Delete. use michale's way of ajax delete...
+    if (isset($comment->content['links']['comment']['#links']['comment-delete'])) {
+      //$comment->content['links']['comment']['#links']['comment-delete']['attributes']['class'] = array('use-ajax','btn', 'btn-mini','btn-link');
+     //$comment->content['links']['comment']['#links']['comment-delete']['href'] = 'comment/' . $comment->cid .'/delete/nojs'; We used ajax menu and alter it
+    }
+  }
+}
+/**
+ * hide somethings when add answers or questions for themer.
+ * hook_form_alter(&$form, &$form_state, $form_id)
+ */
+function druedu_qa_form_alter(&$form, &$form_state, $form_id) {
+
+  if($form_id == 'answer_node_form' || $form_id == 'question_node_form') {
+    $form['author']['#access'] = FALSE;
+    $form['options']['#access'] = FALSE; 
+    $form['comment_settings']['#access'] = FALSE; 
+    //$form['book']['#access'] = FALSE; 
+    $form['additional_settings']['#access'] = FALSE;
+    if($form_id == 'answer_node_form') {
+      $form['field_answer']['#access'] = FALSE;
+      // $form['revision_information']['#access'] = FALSE; 
+    }
+    if($form_id == 'question_node_form') {
+      $form['field_answers']['#access'] = FALSE; 
+      $form['field_mark_question_resolved']['#access'] = FALSE;
+      //$form['field_computed_answers']['#access'] = FALSE;
+    }
+  }
+  // hide the preview botton of Q&A forms.
+  if(isset($form['actions']['preview'])){
+    $form['actions']['preview']['#access'] = FALSE;
+  }
+  if(isset($form['#entity_type']) && $form['#entity_type'] == 'comment'){
+    $form['author']['#access'] = FALSE;
+    $form['subject']['#access'] = FALSE;
+  }
+}
+
+ /**
+ * Implements hook_form_FORM_ID_alter().
+ * ajax form for answer. (node/add/answer)
+ * @see ajax_comments_form_comment_form_alter
+ * TODO more about ajax for node_add_anwser form....
+ */
+function druedu_qa_form_answer_node_form_alter(&$form, &$form_state) {
+  //if (strpos($form_id, '_node_form') !== FALSE) {
+  //dpm($form);
+  $form['options']['sticky']['#default_value'] = 0;
+  $form['options']['promote']['#default_value'] = 0;
+  //}
+
+  $files = array('node');
+  _ajax_register_needed_files($form_state,  $files);
+  // !$form['title']['#default_value'] mean not the edit form.
+  if (!$form['title']['#default_value'] && !isset($form['actions']['submit']['#ajax'])) {
+    $form['actions']['submit']['#ajax'] = array(
+        'callback' => '_ajax_answer_submit_js',
+        'wrapper' => $form['#id'],
+        'method' => 'replace',
+        'effect' => 'fade',
+      );
+  }
+  //set default value for field_answer,when add a new answer on single_question page...
+  // Field we want to populate
+  $field = $form['field_answer'];
+  $default_values_array= $form['field_answer'][LANGUAGE_NONE][0]['target_id']['#default_value'];
+  //&& isset($default_options_array)  why ?????
+  if(!empty($field) && empty($default_values_array)){
+    if($form['#node']->type == 'answer'){
+      $question = node_load(arg(1));// only in question/nid page bottom ,but how about node/add/answer/filed_answer=...
+      $form['field_answer'][LANGUAGE_NONE][0]['target_id']['#value'] = $question->title." (".$question->nid.")";
+    }
+  }
+}
+/**
+ * @see asaf_register_needed_files()
+ */
+function _ajax_register_needed_files(&$form_state, array $files) {
+  if (!isset($form_state['build_info']['files'])) {
+    $form_state['build_info']['files'] = array();
+  }
+
+  foreach ($files as $file) {
+    if ((is_array($file) && isset($file['module']) || (is_string($file) && file_exists($file)))) {
+      $form_state['build_info']['files'][] = $file;
+    }
+    elseif (is_string($file) && module_exists($file)) {
+      // Loading all includes of the module
+      $path = drupal_get_path('module', $file);
+      $destination = DRUPAL_ROOT . '/' . $path;
+
+      $pattern ='/.inc$/';
+      $matches = array_keys(file_scan_directory($destination, $pattern));
+      if (is_array($matches)) {
+        foreach ($matches as $inc) {
+          $parts = explode(DRUPAL_ROOT . '/', $inc);
+          if (isset($parts[1]) && $parts[1]) {
+            $form_state['build_info']['files'][] = $parts[1];
+          }
+        }
+      }
+    }
+  }
+}
+
+ /**
+ * Builds the answer node.
+ * @see druedu_qa_ajax_comments_submit_js
+ */
+function _ajax_answer_submit_js($form, &$form_state) {
+  // Return the actual form if it contains errors.
+  if (form_get_errors()) {
+    return $form;
+  }
+  
+  $node = node_load($form_state['build_info']['args'][0]->nid);
+  //$notify_text = variable_get('ajax_comments_notify', '') ? theme('ajax_comments_notify_text') : '';
+  $text = t('Your answer has been posted.');
+  $status = 'status';
+  unset($_SESSION['messages']['status']);
+  $notify_text = '<div id="messages"><div class="clearfix"><div class="messages ajax-comments ' . $status . '"><h2 class="element-invisible">Status message</h2>' . $text . '</div></div></div>';
+  watchdog('1notify_text', $notify_text, array(), WATCHDOG_NOTICE, 'link');
+  //TODO: where is $notify_text ?
+  // Don't display as a preview as this is being submitted.
+  ////unset($comment_build['comment_body']['#object']->in_preview);
+
+  // Are we editing a comment.
+  // Or are we replying to another comment.
+  // Or is this a brand new comment?
+  {
+    // Append comment to root comment wrapper.
+    $question_nid = $node->field_answer[LANGUAGE_NONE][0]['target_id'];
+
+    //system/ajax bug fix.
+    $_GET['destination']='node/'.$node->nid;
+    $views = views_embed_view('question','answers_attachment',$question_nid);
+    $question = node_load($question_nid);
+    if(!$question->field_computed_answers[LANGUAGE_NONE][0]['value']){
+      $views = '<div class="attachment attachment-before">
+      <h3>'. t('1 answer').'</h3>    </div>'.$views;
+    }else{
+       $commands[] = ajax_command_remove('.view-display-id-answers_attachment .attachment-before');
+       $views = '<div class="attachment attachment-before">
+      <h3>'.format_plural($question->field_computed_answers[LANGUAGE_NONE][0]['value'], t('1 answer'), '@count answers').'</h3>    </div>'.$views;
+    }
+    $commands[] = ajax_command_invoke(NULL, 'disableSubmitButton');
+    $commands[] = ajax_command_html('#answers',   $views . $notify_text);
+    //If we have a default form, update it with a new one.
+    // Otherwise, delete it.
+   {
+    //  $commands[] = ajax_command_remove('#' . $form['#id']);
+    }
+  }
+  return array('#type' => 'ajax', '#commands' => $commands);
+}
+/**
+ * Implements hook_block_info().
+ */
+function druedu_qa_block_info() {
+  $blocks = array();
+  $blocks['count_questions'] = array(
+    'info' => t('Counts of current page of quetions'),
+    //'region' => 'sidebar_right',
+  );
+  return $blocks;
+}
+/**
+ * Implements hook_block_view().
+ */
+function druedu_qa_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 'count_questions':
+      $block['subject'] = t('Total');
+      $block['content'] = druedu_qa_count_questions();
+      break;
+  }
+  return $block;
+}
+
+/**
+ * Get latest visitors for block content
+ */
+ //XXXX
+function druedu_qa_count_questions() {
+  global $user;
+  //questions
+  // questions/my-questions  
+  // questions/unanswered
+  if ($uid = $user->uid) {
+    $query = db_select('node', 'n')
+      ->fields('n', array('nid'))
+      ->condition('n.type ','question')
+      ->condition('n.status ',1);
+   if(arg(0) == 'questions' && arg(1) == 'my-questions' ) {
+        $counts = $query
+          ->condition('n.uid',$uid)
+          ->execute()
+          ->rowCount();
+    }elseif(arg(0) == 'questions' && arg(1) == 'unanswered') {
+      
+   $query = db_select('node', 'n')
+        ->fields('n', array('nid'));//nid;
+      $query->join('field_data_field_mark_question_resolved','f','f.entity_id = n.nid');
+      $counts = $query
+        ->fields('f', array('entity_id'))//nid
+        ->condition('f.field_mark_question_resolved_value ',0)
+        ->execute()
+        ->rowCount();
+    }elseif(arg(0) == 'questions' && is_null(arg(1)) ) {
+      $counts = $query
+          ->execute()
+          ->rowCount();
+   }
+  }
+  return '<span class="counts-q">'.$counts.'</span><span class="counts-tag">'.t('questions').'</span>';
+}
+/**
+ * Implements hook_node_load().
+ */
+function druedu_qa_comment_counts_load($nodes) {
+  $comments_enabled = array();
+
+  // Check if comments are enabled for each node. If comments are disabled,
+  // assign values without hitting the database.
+  foreach ($nodes as $node) {
+    // Store whether comments are enabled for this node.
+    if ($node->comment != COMMENT_NODE_HIDDEN) {
+      $comments_enabled[] = $node->nid;
+    }
+  }
+
+  // For nodes with comments enabled, fetch information from the database.
+  if (!empty($comments_enabled)) {
+    $result = db_query('SELECT nid, cid, last_comment_timestamp, last_comment_name, last_comment_uid, comment_count FROM {node_comment_statistics} WHERE nid IN (:comments_enabled)', array(':comments_enabled' => $comments_enabled));
+    foreach ($result as $record) {
+      // $nodes[$record->nid]->cid = $record->cid;
+      // $nodes[$record->nid]->last_comment_timestamp = $record->last_comment_timestamp;
+      // $nodes[$record->nid]->last_comment_name = $record->last_comment_name;
+      // $nodes[$record->nid]->last_comment_uid = $record->last_comment_uid;
+      $nodes[$record->nid] = $record->comment_count;
+    }
+  }
+  return $nodes;
+}
+
+function compare_objects($obj_a, $obj_b) {
+  foreach ($obj_a as $key => $value) {
+    return $obj_a->key - $obj_b->key;
+  }
+  
+}

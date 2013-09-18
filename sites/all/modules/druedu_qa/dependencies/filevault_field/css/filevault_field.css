@@ -1,0 +1,11 @@
+#dragndrop-area.admin {
+height: auto;
+margin: 10px auto;
+border: 3px dashed gray;
+border-radius: 5px;
+text-align: center;
+padding: 15px 10px;}
+
+.field-widget-filevault-field-ui .remove_file.row-fluid [class*="span"], .field-widget-filevault-field-ui .insert.row-fluid [class*="span"] {
+	float: right;
+}

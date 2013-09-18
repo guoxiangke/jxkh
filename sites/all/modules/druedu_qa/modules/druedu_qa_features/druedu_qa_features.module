@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Druedu QA Features feature.
+ */
+
+include_once 'druedu_qa_features.features.inc';

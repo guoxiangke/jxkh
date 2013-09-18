@@ -1,0 +1,16 @@
+<?php
+function filevault_field_field_schema($field) {
+
+  return array(
+         'columns' => array(
+            'filevault_id' => array(
+              'type' => 'int',
+              'default' => null,
+            ),
+            'filevault_vid' => array(
+              'type' => 'int',
+              'default' => null,
+            ),
+          ),
+  );
+}

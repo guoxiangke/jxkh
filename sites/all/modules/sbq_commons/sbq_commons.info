@@ -1,0 +1,4 @@
+name = Sbq commons
+description = sbq commons function and theme functions.
+dependencies[] = tlcomment
+core = 7.x

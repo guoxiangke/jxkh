@@ -1,0 +1,5 @@
+name = Filevault UI
+description = Creates a filevault block and page.
+dependencies[] = filevault
+package = Druedu
+core = 7.x

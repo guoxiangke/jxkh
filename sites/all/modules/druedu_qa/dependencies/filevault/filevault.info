@@ -1,0 +1,14 @@
+name = File Vault
+description = File Vault entity and basic file handling
+core = 7.x
+package = Druedu
+
+files[] = filevault.type.inc
+files[] = filevault.type.form.inc
+files[] = filevault.webdav.inc
+
+dependencies[] = field
+dependencies[] = views
+configure = admin/structure/filevault/manage
+version = "7.x-1.x-dev"
+core = "7.x"

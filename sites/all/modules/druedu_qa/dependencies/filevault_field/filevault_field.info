@@ -1,0 +1,10 @@
+name = FileVault Field
+description = The module defines the FileVault Field. So any content can reference a file in the FileVault. The field can be attached to any content defined by the Field API
+dependencies[] = filevault
+package = Druedu
+core = 7.x
+files[] = filevault_field.module
+files[] = filevault_field.install
+scripts[] = js/filevault_field.js
+
+stylesheets[all][] = css/filevault_field.css

@@ -1,0 +1,520 @@
+<?php
+/**
+ * @file
+ * Creates a filevault block and page.
+ */
+
+/**
+ * Implements hook_menu().
+ *
+ * Define menu items and page callbacks. This hook enables modules to register
+ * paths in order to define how URL requests are handled. Paths may be registered
+ * for URL handling only, or they can register a link to be placed in a menu
+ * (usually the Navigation menu). A path and its associated information is
+ * commonly called a "menu router item". This hook is rarely called (for example,
+ * when modules are enabled), and its results are cached in the database.
+ * hook_menu() implementations return an associative array whose keys define
+ * paths and whose values are an.
+ *
+ * @return
+ *   An array of menu items. Each menu item has a key corresponding to the Drupal
+ *   path being registered. The corresponding array value is an associative array
+ *   that may contain the following key-value pairs: "title": Required. The
+ *   untranslated title of the menu item. "title callback": Function to generate
+ *   the title; defaults to t(). If you require only the raw string to be output,
+ *   set this to FALSE. "title arguments": Arguments to send to t() or your
+ *   custom callback, with path component substitution as described above.
+ */
+function filevault_ui_menu() {
+
+  $items['filevault/upload'] = array(
+      'page callback' => 'filevault_ui_upload',
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+
+  $items['filevault/block/list/%/%'] = array(
+      'page callback' => 'filevault_ui_block_files_list',
+      'page arguments' => array(3,4),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+
+  $items['filevault/navi'] = array(
+      'page callback' => 'filevault_ui_page',
+      'page arguments' => array(1),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+
+  $items['filevault/navi/%'] = array(
+      'page callback' => 'filevault_ui_page',
+      'page arguments' => array(2),
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_block_info().
+ *
+ * Define all blocks provided by the module. This hook declares to Drupal what
+ * blocks are provided by your module and can optionally specify initial block
+ * configuration settings. In hook_block_info(), each block your module provides
+ * is given a unique identifier referred to as "delta" (the array key in the
+ * return value). Delta values only need to be unique within your module, and
+ * they are used in the following ways: Passed into the other block hooks in your
+ * module as an argument to identify the block being configured or viewed.
+ *
+ * @return
+ *   An associative array whose keys define the delta for each block and whose
+ *   values contain the block descriptions. Each block description is itself an
+ *   associative array, with the following key-value pairs: info: (required) The
+ *   human-readable administrative name of the block. This is used to identify
+ *   the block on administration screens, and is not displayed to
+ *   non-administrative users. cache: (optional) A bitmask describing what kind
+ *   of caching is appropriate for the block.
+ */
+function filevault_ui_block_info() {
+
+  $blocks['filevault_core_block'] = array(
+    'info' => t('Filevault UI Core'),
+    'cache' => DRUPAL_NO_CACHE,
+  );
+
+  $blocks['filevault_ui_block'] = array(
+    'info' => t('Filevault UI Block'),
+    'cache' => DRUPAL_NO_CACHE,
+  );
+
+  $blocks['filevault_ui_modal'] = array(
+    'info' => t('Filevault UI Modal'),
+    'cache' => DRUPAL_NO_CACHE,
+  );
+
+
+  return $blocks;
+}
+
+/**
+ *  Implements hook_theme()
+ *
+ */
+function filevault_ui_theme() {
+  return array(
+    'filevault_core_block' => array(
+            'arguments' => array('filevault_form' => null),
+            'template' => 'filevault-core-block',
+            'path' => drupal_get_path('module', 'filevault_ui')."/templates",
+    ),
+    'filevault_ui_block' => array(
+            'arguments' => null,
+            'template' => 'filevault-ui-block',
+            'path' => drupal_get_path('module', 'filevault_ui')."/templates",
+    ),
+    'filevault_ui_modal' => array(
+            'arguments' => null,
+            'template' => 'filevault-ui-modal',
+            'path' => drupal_get_path('module', 'filevault_ui')."/templates",
+    ),
+    'filevault_ui_page' => array(
+            'arguments' => array('fileobjects' => null, 'filesfound' => false, 'path' => ''),
+            'template' => 'filevault-ui-page',
+            'path' => drupal_get_path('module', 'filevault_ui')."/templates",
+    ),
+    'filevault_ui_fileobject' => array(
+            'arguments' => array('fileobject' => null, 'display' => 'icon', 'path' => ''),
+            'template' => 'filevault-ui-fileobject',
+            'path' => drupal_get_path('module', 'filevault_ui')."/templates",
+    ),
+  );
+}
+
+/**
+ * Implements hook_block_view($delta = '').
+ *
+ * Return a rendered or renderable view of a block.
+ *
+ * @param $delta
+ *   Which block to render. This is a unique identifier for the block within the
+ *   module, defined in.
+ *
+ * @return
+ *   An array containing the following elements: subject: The default localized
+ *   title of the block. If the block does not have a default title, this should
+ *   be set to NULL. content: The content of the block's body. This may be a
+ *   renderable array (preferable) or a string containing rendered HTML content.
+ *   For a detailed usage example, see block_example.module.
+ */
+function filevault_ui_block_view($delta = '') {
+  $block = array();
+
+  switch ($delta) {
+     case 'filevault_core_block':
+       $block['subject'] = t('Filevault Core Block');
+       $block['content'] = theme('filevault_core_block', array('filevault_form' => drupal_get_form('filevault_ui_form')));
+       break;
+     case 'filevault_ui_block':
+       $block['subject'] = t('Filevault UI Block');
+       $block['content'] = theme('filevault_ui_block', null );
+       break;
+     case 'filevault_ui_modal':
+       $block['subject'] = t('Filevault UI Modal');
+       $block['content'] = theme('filevault_ui_modal', null );
+       break;
+  }
+  return $block;
+}
+
+/**
+ * Implements MODULE_preprocess_HOOK().
+ */
+function filevault_ui_preprocess_block(&$variables) {
+
+  // Get module path
+  $path = drupal_get_path('module', 'filevault_ui');
+
+  // Add JScrollbar lib
+  drupal_add_js( $path.'/js/libs/jquery_jscrollpane/jquery.jscrollpane.min.js' );
+  drupal_add_css( $path.'/js/libs/jquery_jscrollpane/jquery.jscrollpane.css' );
+
+  switch ($variables['elements']['#block']->delta) {
+    case 'filevault_core_block':
+      drupal_add_js( $path.'/js/filevault_core_block/filevault_core_block.js' );
+      break;
+
+    case 'filevault_ui_block':
+      // Template engine. See http://olado.github.com/doT/
+      drupal_add_js( $path.'/js/libs/template_engine/doT.min.js' );
+      drupal_add_js( $path.'/js/filevault_ui_block/filevault_ui_block.js' );
+      break;
+
+    case 'filevault_ui_modal':
+      // Template engine. See http://olado.github.com/doT/
+      drupal_add_js( $path.'/js/libs/template_engine/doT.min.js' );
+      drupal_add_js( $path.'/js/filevault_ui_modal/filevault_ui_modal.js' );
+      break;
+
+    default:
+      break;
+  }
+
+}
+
+/**
+ * Generate the nesseary JSON for the filelist in the FileVault block
+ *
+ */
+function filevault_ui_block_files_list($start,$end){
+
+  // if start is not a number. Let's start at the beginning
+  if(!is_numeric($end)){
+    $end = 8;
+  }
+
+  // Load the current users files
+  global $user;
+  $query = new EntityFieldQuery();
+  $entities = $query->entityCondition('entity_type', 'filevault')
+                    ->propertyCondition('uid', $user->uid,'=')
+                    ->range($start,$end)
+                    ->propertyOrderBy('updated', 'desc')
+                    ->execute();
+
+  // did we find any files?
+  if(count($entities)== 0 ){
+
+    // Output [] as JSON
+    drupal_json_output(array());
+
+    // We are done... Slut prut.
+    drupal_exit();
+  }
+
+  // Load the returned entities
+  $files = entity_load('filevault', array_keys($entities['filevault']));
+  
+  // Generate the needed info for the frontend
+  $json = array();
+  foreach($files as $file) {
+
+    $filename = $file->filename;
+    if(strlen($filename) > 15){
+      $filename = substr($filename, 0, 12)."...";
+    }
+
+    if($file->mime_type == "image/png" || $file->mime_type == "image/jpeg" ) {
+      $json[] = array(
+        'id' => $file->id,
+        'vid' => $file->vid,
+        'thumbnail' => image_style_url("thumbnail", $file->uri), //file_create_url($file->uri),
+        'embedded' => image_style_url("embedded", $file->uri), //file_create_url($file->uri),
+        'original' => file_create_url($file->uri),
+        'mime_type' => $file->mime_type,
+        'filename' => $filename,
+        'fullname' => $file->filename
+      );
+      continue;
+    }
+
+    if(strpos($file->mime_type,'mp4') !== false) {
+      $json[] = array(
+        'original' => file_create_url($file->uri),
+        'mime_type' => $file->mime_type,
+        'filename' => $filename,
+        'fullname' => $file->filename
+      );
+      continue;
+    }
+
+    $json[] = array(
+      'original' => file_create_url($file->uri),
+      'mime_type' => $file->mime_type,
+      'filename' => $filename,
+      'fullname' => $file->filename
+    );
+
+  }
+
+  // Output as JSON
+  $json = array_reverse($json);
+  drupal_json_output($json);
+
+  // We are done... Slut prut.
+  drupal_exit();
+}
+
+/**
+ *  filevault_ui_form
+ *  Creates the filevault upload form, including drag'n'drop
+ */
+function filevault_ui_form($form, &$form_state) {
+
+  // Get module path
+  $path = drupal_get_path('module', 'filevault_ui');
+
+  // The File Upload user interface plugin
+
+  $form['#attached']['js'][] = array('data' => $path . '/js/libs/jquery_fileupload/vendor/jquery.ui.widget.js','type' => 'file');
+
+  // The Iframe Transport is required for browsers without support for XHR file uploads
+  $form['#attached']['js'][] = array('data' => $path . '/js/libs/jquery_fileupload/jquery.iframe-transport.js','type' => 'file');
+
+  // The basic File Upload plugin
+  $form['#attached']['js'][] = array('data' => $path . '/js/libs/jquery_fileupload/jquery.fileupload.js','type' => 'file');
+
+  // The File Upload file processing plugin
+  //$form['#attached']['js'][] = array('data' => $path . '/js/libs/jquery_fileupload/jquery.fileupload-fp.js','type' => 'file');
+
+
+  // The localization script
+  // $form['#attached']['js'][] = array('data' => $path . '/js/libs/jquery_fileupload/locale.js','type' => 'file');
+
+  // Setup the content type ( Binary ) and path
+  $form['#attributes'] = array('enctype' => 'multipart/form-data');
+  $form['#action'] = $GLOBALS['base_path'].'filevault/upload';
+
+  // Add the file selector
+  $form['file'] = array(
+    '#type' => 'file',
+    '#title' => t('Add File'),
+    '#description' => t('Upload a file'),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Upload'),
+    '#weight' => 100,
+  );
+
+  $form['actions']['reset'] = array(
+    '#markup' => '<input id="reset" type="reset" value="reset" />',
+    '#weight' => 101,
+  );
+
+  // Return the form
+  return $form;
+}
+
+/**
+ *  filevault_upload
+ *  Handles the ajax connection and uploads from the JS in the browser
+ */
+function filevault_ui_upload() {
+
+  require('filevault.upload.class.php');
+
+  $options = array(
+    'script_url' => drupal_get_path('module', 'filevault_ui').'/',
+    'upload_dir' => drupal_get_path('module', 'filevault_ui').'/files/',
+    'upload_url' => drupal_get_path('module', 'filevault_ui').'/files/',
+    'user_dirs' => false,
+    'mkdir_mode' => 0755,
+    'param_name' => 'files',
+    // Set the following option to 'POST', if your server does not support
+    // DELETE requests. This is a parameter sent to the client:
+    'delete_type' => 'DELETE',
+    'access_control_allow_origin' => '*',
+    // Enable to provide file downloads via GET requests to the PHP script:
+    'download_via_php' => false,
+    // Defines which files can be displayed inline when downloaded:
+    'inline_file_types' => '/\.(gif|jpe?g|png)$/i',
+    // Defines which files (based on their names) are accepted for upload:
+    'accept_file_types' => '/.+$/i',
+    // The php.ini settings upload_max_filesize and post_max_size
+    // take precedence over the following max_file_size setting:
+    'max_file_size' => null,
+    'min_file_size' => 1,
+    // The maximum number of files for the upload directory:
+    'max_number_of_files' => null,
+    // Image resolution restrictions:
+    'max_width' => null,
+    'max_height' => null,
+    'min_width' => 1,
+    'min_height' => 1,
+    // Set the following option to false to enable resumable uploads:
+    'discard_aborted_uploads' => true,
+    // Set to true to rotate images based on EXIF meta data, if available:
+    'orient_image' => false,
+    'image_versions' => array(
+      // Uncomment the following version to restrict the size of
+      // uploaded images:
+      /*
+      '' => array(
+        'max_width' => 1920,
+        'max_height' => 1200,
+        'jpeg_quality' => 95
+      ),
+      */
+      // Uncomment the following to create medium sized images:
+      /*
+      'medium' => array(
+        'max_width' => 800,
+        'max_height' => 600,
+        'jpeg_quality' => 80
+      ),
+      */
+      /*'thumbnail' => array(
+        'max_width' => 80,
+        'max_height' => 80
+      )*/
+    )
+  );
+
+  $upload_handler = new UploadHandler($options,true);
+}
+
+
+/**
+ * Implements hook_init().
+ *
+ * Perform setup tasks for non-cached page requests. This hook is run at the
+ * beginning of the page request. It is typically used to set up global
+ * parameters that are needed later in the request. When this hook is called, the
+ * theme and all modules are already loaded in memory. This hook is not run on
+ * cached pages. To add CSS or JS that should be present on all pages, modules
+ * should not implement this hook, but declare these files in their .info file.
+ */
+function filevault_ui_init() {
+  // TODO: remove the Following Sample Code and put Your Custom Code instead.
+// // Since this file should only be loaded on the front page, it cannot be
+// // declared in the info file.
+// if (drupal_is_front_page()) {
+//   drupal_add_css(drupal_get_path('module', 'foo') . '/foo.css');
+// }
+}
+
+
+/**
+ * Proprocess'er for a fileobject
+ *
+ */
+function filevault_ui_preprocess_filevault_ui_fileobject(&$variables, $hook) {
+
+  // Set the label
+  $variables['label']=$variables['fileobject']->name;
+
+
+  // Directory setup
+  if($variables['fileobject']->type == "D"){
+    $variables['type'] = "directory";
+  }
+
+  // Files setup
+  if($variables['fileobject']->type == "F"){
+
+    $filevault_path = $variables['path']."/".$variables['label'];
+    $file = filevault_read_file_object($filevault_path);
+
+    // Setup basic variables
+    $variables['original'] = file_create_url( $file[0]->uri );
+    $variables['size'] = file_create_url( $file[0]->size );
+
+    switch ($file[0]->mime_type ) {
+      case 'image/jpeg':
+        $variables['type'] = "image";
+        $variables['thumbnail'] = image_style_url('fw_icon', $file[0]->uri );
+        $variables['embedded'] = image_style_url('embedded', $file[0]->uri );
+        break;
+
+      case 'image/png':
+        $variables['type'] = "image";
+        $variables['thumbnail'] = image_style_url('fw_icon', $file[0]->uri );
+        $variables['embedded'] = image_style_url('embedded', $file[0]->uri );
+        break;
+
+      case 'video/mp4':
+        $variables['type'] = "video";
+        //$variables['poster'] = somefile
+        break;
+
+      default:
+        $variables['type'] = "document";
+        break;
+    }
+
+  }
+
+dpm($variables);
+
+$variables['path'] .= "/".$variables['fileobject']->name;
+}
+
+function filevault_ui_preprocess_filevault_ui_page(&$variables, $hook) {
+
+  drupal_add_js( drupal_get_path('module', 'filevault_ui')."/js/page/filevault_navi.js" );
+
+}
+
+
+
+/**
+ * Menu callpack for a page
+ *
+ * @param  string $path [description]
+ * @return [type]       [description]
+ */
+function filevault_ui_page($path){
+
+  //Get the user object
+  global $user;
+
+  // Create the filevault path
+  $filevault_path = str_replace("filevault/navi",$user->uid, request_path());
+
+  // Get the fileobejcts on the requested path
+  $fileobjects = filevault_list_files($filevault_path);
+
+  // Did we find any files?
+  $filesfound = false;
+  if(count($fileobjects) > 0){
+    $filesfound = true;
+  }
+
+  // return the themed page
+  return theme('filevault_ui_page', array('fileobjects' => $fileobjects, 'filesfound' => $filesfound, 'path' => $filevault_path));
+}
+
+

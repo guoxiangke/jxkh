@@ -1,0 +1,30 @@
+
+<!-- saved from url=(0087)https://drupal.org/files/user_relationships-php_notice_and_oneway_logic-1898026-1.patch -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head><body><pre style="word-wrap: break-word; white-space: pre-wrap;">From e48722aabb9a6401d8042b7cb66159329426080a Mon Sep 17 00:00:00 2001
+From: Trevor Simonton &lt;trevor@westernascent.com&gt;
+Date: Thu, 24 Jan 2013 13:30:21 -0700
+Subject: [PATCH] Issue #1898026 by tmsimont: Removed 'Do not allow access if this is a oneway relationship requested by another user' logic that was causing PHP Notice
+
+---
+ user_relationships_ui/user_relationships_ui.module |    4 ----
+ 1 files changed, 0 insertions(+), 4 deletions(-)
+
+diff --git a/user_relationships_ui/user_relationships_ui.module b/user_relationships_ui/user_relationships_ui.module
+index 11dac85..27d9d19 100644
+--- a/user_relationships_ui/user_relationships_ui.module
++++ b/user_relationships_ui/user_relationships_ui.module
+@@ -168,10 +168,6 @@ function user_relationships_ui_check_access($type, $account = NULL, $relationshi
+       }
+       break;
+     case 'delete':
+-      // Do not allow access if this is a oneway relationship requested by another user.
+-      if (is_object($relationship_type) &amp;&amp; $relationship_type-&gt;is_oneway &amp;&amp; $relationship_type-&gt;requester_id != $user-&gt;uid) {
+-        return FALSE;
+-      }
+       if ($account-&gt;uid == $user-&gt;uid &amp;&amp; user_relationships_user_access('delete @relationship relationships', $relationship_type)) {
+         return TRUE;
+       }
+-- 
+1.7.4.msysgit.0
+
+</pre></body></html>

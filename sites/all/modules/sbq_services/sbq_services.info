@@ -1,0 +1,4 @@
+name = Sbq Services
+description = sbq services resources definition
+dependencies[] = services
+core = 7.x

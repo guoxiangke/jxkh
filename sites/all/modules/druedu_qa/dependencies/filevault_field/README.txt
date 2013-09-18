@@ -1,0 +1,1 @@
+The module defines the FileVault Field. So any content can reference a file in the FileVault. The field can be attached to any content defined by the Field API

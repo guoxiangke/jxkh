@@ -1,0 +1,425 @@
+<?php
+/**
+ * @file
+ * The module defines the FileVault Field. So any content can reference a file in
+ * the FileVault. The field can be attached to any content defined by the Field
+ * API.
+ */
+
+/**
+ * Implements hook_field_info().
+ *
+ * Define Field API field types.
+ *
+ * @return
+ *   An array whose keys are field type names and whose values are arrays
+ *   describing the field type, with the following key/value pairs: label: The
+ *   human-readable name of the field type. description: A short description for
+ *   the field type. settings: An array whose keys are the names of the settings
+ *   available for the field type, and whose values are the default values for
+ *   those settings. instance_settings: An array whose keys are the names of the
+ *   settings available for instances of the field type, and whose values are the
+ *   default values for those settings.
+ */
+function filevault_field_field_info() {
+
+    return array(
+      'filevault_field' => array(
+        'label' => t('FileVault file'),
+        'description' => t('Add a file from your vault'),
+        'settings' => array('max_length' => 16),
+        'default_widget' => 'filevault_field_widget',
+        'default_formatter' => 'filevault_field_formatter_preview',
+      ),
+    );
+}
+
+/**
+ * Implements hook_field_validate($entity_type, $entity, $field, $instance, $langcode, $items, &$errors).
+ *
+ * Validate this module's field data. If there are validation problems, add to
+ * the $errors array (passed by reference). There is no return value.
+ *
+ * @param $entity_type
+ *   The type of $entity.
+ * @param $entity
+ *   The entity for the operation.
+ * @param $field
+ *   The field structure for the operation.
+ * @param $instance
+ *   The instance structure for $field on $entity's bundle.
+ * @param $langcode
+ *   The language associated with $items.
+ * @param $items
+ *   $entity->{$field['field_name']}[$langcode], or an empty array if unset.
+ * @param $errors
+ *   The array of errors (keyed by field name, language code, and delta) that
+ *   have already been reported for the entity. The function should add its
+ *   errors to this array. Each error is an associative array with the following
+ *   keys and values: error: An error code (should be a string prefixed with the
+ *   module name). message: The human readable message to be displayed.
+ */
+function filevault_field_field_validate($entity_type, $entity, $field, $instance, $langcode, $items, &$errors) {
+  // Does the uder have read access to the file
+  // Is it the user's own file?
+}
+
+/**
+ * Implements hook_field_is_empty($item, $field).
+ *
+ * Define what constitutes an empty item for a field type.
+ *
+ * @param $item
+ *   An item that may or may not be empty.
+ * @param $field
+ *   The field to which $item belongs.
+ *
+ * @return
+ *   TRUE if $field's type considers $item not to contain any data; FALSE
+ *   otherwise.
+ */
+function filevault_field_field_is_empty($item, $field) {
+
+  if (isset($item['filevault_id']) && empty($item['filevault_id']) && (string) $item['filevault_id'] !== '0') {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+/**
+ * Implements hook_field_presave($entity_type, $entity, $field, $instance, $langcode, &$items).
+ *
+ * Define custom presave behavior for this module's field types. Make changes or
+ * additions to field values by altering the $items parameter by reference. There
+ * is no return value.
+ *
+ * @param $entity_type
+ *   The type of $entity.
+ * @param $entity
+ *   The entity for the operation.
+ * @param $field
+ *   The field structure for the operation.
+ * @param $instance
+ *   The instance structure for $field on $entity's bundle.
+ * @param $langcode
+ *   The language associated with $items.
+ * @param $items
+ *   $entity->{$field['field_name']}[$langcode], or an empty array if unset.
+ */
+function filevault_field_field_presave($entity_type, $entity, $field, $instance, $langcode, &$items) {
+  // TODO: remove the Following Sample Code and put Your Custom Code instead.
+
+  // if ($field['type'] == 'number_decimal') {
+  //   // Let PHP round the value to ensure consistent behavior across storage
+  //   // backends.
+  //   foreach ($items as $delta => $item) {
+  //     if (isset($item['value'])) {
+  //       $items[$delta]['value'] = round($item['value'], $field['settings']['scale']);
+  //     }
+  //   }
+  // }
+}
+
+/**
+ * Implements hook_field_formatter_info().
+ *
+ * Expose Field API formatter types. Formatters handle the display of field
+ * values. Formatter hooks are typically called by the Field Attach API
+ * field_attach_prepare_view() and field_attach_view() functions.
+ *
+ * @return
+ *   An array describing the formatter types implemented by the module. The keys
+ *   are formatter type names. To avoid name clashes, formatter type names should
+ *   be prefixed with the name of the module that exposes them. The values are
+ *   arrays describing the formatter type, with the following key/value pairs:
+ *   label: The human-readable name of the formatter type. description: A short
+ *   description for the formatter type. field types: An array of field types the
+ *   formatter supports.
+ */
+function filevault_field_field_formatter_info() {
+  // TODO: remove the Following Sample Code and put Your Custom Code instead.
+  //
+return array(
+  'filevault_field_formatter_preview' => array(
+    'label' => t('Preview'),
+    'field types' => array('filevault_field'),
+  ),
+  'filevault_field_formatter_link' => array(
+    'label' => t('Link'),
+    'field types' => array('filevault_field'),
+  ),
+
+);
+}
+
+/**
+ * Implements hook_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display).
+ *
+ * Build a renderable array for a field value.
+ *
+ * @param $entity_type
+ *   The type of $entity.
+ * @param $entity
+ *   The entity being displayed.
+ * @param $field
+ *   The field structure.
+ * @param $instance
+ *   The field instance.
+ * @param $langcode
+ *   The language associated with $items.
+ * @param $items
+ *   Array of values for this field.
+ * @param $display
+ *   The display settings to use, as found in the 'display' entry of instance
+ *   definitions. The array notably contains the following keys and values; type:
+ *   The name of the formatter to use. settings: The array of formatter settings.
+ *
+ * @return
+ *   A renderable array for the $items, as an array of child elements keyed by
+ *   numeric indexes starting from 0.
+ */
+function filevault_field_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+
+  switch ($display['type']) {
+    case 'filevault_field_formatter_preview':
+      foreach ($items as $delta => $item) {
+           if ($item['filevault_id']) {
+                $File = entity_load('filevault',array( $item['filevault_id']) );
+                $element[$delta]['#markup'] = '<img src="'.image_style_url('medium', $File[$item['filevault_id']]->uri).'">';
+           }
+      }
+      break;
+    case 'filevault_field_formatter_link':
+      foreach ($items as $delta => $item) {
+           if ($item['filevault_id']) {
+                $File = entity_load('filevault',array( $item['filevault_id']) );
+                $element[$delta]['#markup'] = l($File[$item['filevault_id']]->filename, file_create_url($File[$item['filevault_id']]->uri));
+           }
+      }
+      break;
+  }
+  return $element;
+}
+
+/**
+ * Implements hook_field_widget_info().
+ *
+ * Expose Field API widget types.
+ *
+ * @return
+ *   An array describing the widget types implemented by the module. The keys are
+ *   widget type names. To avoid name clashes, widget type names should be
+ *   prefixed with the name of the module that exposes them. The values are
+ *   arrays describing the widget type, with the following key/value pairs:
+ *   label: The human-readable name of the widget type. description: A short
+ *   description for the widget type. field types: An array of field types the
+ *   widget supports. settings: An array whose keys are the names of the settings
+ *   available for the widget type, and whose.
+ */
+function filevault_field_field_widget_info() {
+  $widgets = array();
+  $widgets['filevault_field'] = array(
+    'label' => t('FileVault File'),
+    'field types' => array('filevault_field'),
+    'settings' => array('size' => 60),
+    'behaviors' => array(
+      'multiple values' => FIELD_BEHAVIOR_DEFAULT,
+      'default value' => FIELD_BEHAVIOR_DEFAULT,
+    ),
+  );
+
+  $widgets['filevault_field_ui'] = array(
+    'label' => t('FileVault File UI'),
+    'field types' => array('filevault_field'),
+    'settings' => array('size' => 60),
+    'behaviors' => array(
+      'multiple values' => FIELD_BEHAVIOR_CUSTOM,
+      'default value' => FIELD_BEHAVIOR_DEFAULT,
+    ),
+  );
+
+  return $widgets;
+
+}
+
+/**
+ * Implements hook_field_widget_error().
+ */
+function filevault_field_widget_error($element, $error, $form, &$form_state) {
+  switch ($error['error']) {
+    case 'filevault_field_invalid':
+      form_error($element, $error['message']);
+      break;
+  }
+}
+
+/**
+ * Implements hook_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element).
+ *
+ * Return the form for a single field widget. Field widget form elements should
+ * be based on the passed-in $element, which contains the base form element
+ * properties derived from the field configuration. Field API will set the
+ * weight, field name and delta values for each form element. If there are
+ * multiple values for this field, the Field API will invoke this hook as many
+ * times as needed. Note that, depending on the context in which the widget is
+ * being included (regular entity form, field configuration form, advanced search
+ * form...
+ *
+ * @param $form
+ *   The form structure where widgets are being attached to. This might be a full
+ *   form structure, or a sub-element of a larger form.
+ * @param $form_state
+ *   An associative array containing the current state of the form.
+ * @param $field
+ *   The field structure.
+ * @param $instance
+ *   The field instance.
+ * @param $langcode
+ *   The language associated with $items.
+ * @param $items
+ *   Array of default values for this field.
+ * @param $delta
+ *   The order of this item in the array of subelements (0, 1, 2, etc).
+ * @param $element
+ *   A form element array containing basic properties for the widget:
+ *   #entity_type: The name of the entity the field is attached to. #bundle: The
+ *   name of the field bundle the field is contained in. #field_name: The name of
+ *   the field. #language: The language the field is being edited in.
+ *   #field_parents: The 'parents' space for the field in the form. Most widgets
+ *   can simply overlook this property. This identifies the location where the
+ *   field values are placed within $form_state['values'], and is used to access
+ *   processing information for the field through the field_form_get_state() and
+ *   field_form_set_state() functions. #columns: A list of field storage columns
+ *   of the field. #title: The sanitized element label for the field instance,
+ *   ready for output.
+ *
+ * @return
+ *   The form elements for a single widget for this field.
+ */
+function filevault_field_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+
+  switch ($instance['widget']['type']) {
+
+    case 'filevault_field':
+
+      $element['filevault_id'] = array(
+        '#attributes' => array('class' => array('filevault_id'), 'title' => t('')),
+        '#type' => 'textfield',
+        '#size' => 10,
+        '#maxlength' => 10,
+        '#title' => t('FileVault ID'),
+        '#default_value' => isset($items[$delta]) ? $items[$delta]['filevault_id'] : NULL,
+      );
+
+      $element['filevault_vid'] = array(
+        '#attributes' => array('class' => array('filevault_vid'), 'title' => t('')),
+        '#type' => 'textfield',
+        '#size' => 10,
+        '#maxlength' => 10,
+        '#title' => t('FileVault VID'),
+        '#default_value' => isset($items[$delta]) ? $items[$delta]['filevault_vid'] : NULL,
+      );
+
+      break;
+
+    case 'filevault_field_ui':
+      $default_value = _get_default_value_and_json_parse($items);
+      $ui_field_output = '';
+
+      $element['filevault_id'] = array(
+        '#prefix' => theme('filevault_fields_ui', array('files' => $ui_field_output)),
+        '#type' => 'hidden',
+        '#element_validate' => array('filevault_field_ui_validate'),
+        '#default_value' => $default_value['string'],
+      );
+
+      $element['filevault_vid'] = array(
+        '#type' => 'hidden',
+        '#default_value' => 0,
+      );
+      drupal_add_js(drupal_get_path('module', 'filevault_field') .'/js/filevault_field_ui_widget.js');
+      drupal_add_js(array('field_name' => $element['#field_name'],'language' => $element['#language']), 'setting');
+
+      break;
+  }
+
+  return $element;
+}
+
+function _get_default_value_and_json_parse($items) {
+  $default_value = array('string' => '', 'array' => array());
+  foreach($items as $key => $item) {   
+    $file = entity_load('filevault',array($item['filevault_id']) );
+    //MORE INFORMATION TO INTEGRETED WITH CKEDITOR
+    $file[$item['filevault_id']]->type = $file[$item['filevault_id']]->mime_type ;
+    unset($file[$item['filevault_id']]->mime_type);
+    //CASE IMAGE
+    if(strstr($file[$item['filevault_id']]->type, 'image')) {
+      $file[$item['filevault_id']]->embedded = file_create_url($file[$item['filevault_id']]->uri);
+    }
+    //CASE VIDEO
+    elseif(strstr($file[$item['filevault_id']]->type, 'video')) {
+      $file[$item['filevault_id']]->original = file_create_url($file[$item['filevault_id']]->uri);
+    }
+    //CASE AUDIO
+    else {
+      $file[$item['filevault_id']]->original = file_create_url($file[$item['filevault_id']]->uri);
+    }
+    $json_file = json_encode($file[$item['filevault_id']]);
+    $default_value['array'][] = $json_file;
+    $default_value['string'] .= $json_file .';';
+    //$theme_file_arguments = array('count' => $key+1, 'filename' => $file[$item['filevault_id']]->filename);
+    //$ui_field_output .= theme('filevault_fields_field', array('file' => $theme_file_arguments));
+  }
+  return $default_value;
+}
+
+function filevault_field_ui_validate($element, &$form_state) {
+  $entities = explode(';', $element['#value']);
+  $messages = form_get_errors('error');
+  if(!empty($entities)) {
+    unset($entities[sizeof($entities)-1]);
+    $field_name = $element['#parents'][0];
+    $entities_info = array();
+    $entities = array_unique($entities);
+    foreach ($entities as $key => $entity) {
+      $entity = json_decode($entity);
+      $entities_info[]['filevault_id'] = $entity->id;
+      if(empty($messages)) {
+        $entities_info[]['filevault_vid'] = 0;
+      }
+    }
+    //no error validation pass
+    if(empty($messages)) {
+      $form_state['values'][$field_name][LANGUAGE_NONE] = $entities_info;
+    }
+    else {
+      $default_value = _get_default_value_and_json_parse($entities_info);
+      $form_state['input'][$field_name][LANGUAGE_NONE]['filevault_id'] = $default_value['string'];
+      $form_state['values'][$field_name][LANGUAGE_NONE] = $default_value['array'];
+    }
+  }
+  drupal_add_js(drupal_get_path('module', 'filevault_field') .'/js/filevault_field_ui_widget.js');
+  drupal_add_js(array('field_name' => $element['#parents'][0], 'language' => 'und'), 'setting');
+}
+
+/** Implementation of hook_theme
+ *
+ */
+function filevault_field_theme($existing, $type, $theme, $path) {
+
+  return array(
+    'filevault_fields_ui' => array(
+      'template' => 'filevault-fields-ui',
+      'arguments' => array('files' => null),
+      'path' => drupal_get_path('module', 'filevault_field')."/templates",
+    ),
+    'filevault_fields_field' => array(
+      'template' => 'filevault-fields-field',
+      'arguments' => array('file' => null),
+      'path' => drupal_get_path('module', 'filevault_field')."/templates",
+    ),
+  );
+}
+
