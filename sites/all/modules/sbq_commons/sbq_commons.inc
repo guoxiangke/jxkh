@@ -69,13 +69,13 @@ function sbq_comment_print_comment($cid) {
   '.theme('username', array('account' => $account)).'
   </span>
   </div>  
-
+ '.$edit_link.'
   <div class="views-field views-field-created"> 
     <span class="field-content">'.format_date($comment->created, $type = 'sbq_date_medium_revert', $format = '', $timezone = NULL, $langcode = NULL).'
     </span>
   </div>  
   <div class="views-field views-field-comment-body">        <div class="field-content">'.$comment->comment_body[LANGUAGE_NONE][0]['safe_value'].'
-</div>      </div> '.$edit_link.'
+</div>      </div>
 
 </div>';
   // <div class="views-field views-field-value">        

@@ -1,6 +1,6 @@
 jQuery(function($) {
 	$('.sbq-center-box .comment-form').hide();
-var arrow_speed = 300;
+	var arrow_speed = 300;
 		$('#technology-arrow').on({
 			mouseenter: function() {
 				$(this).animate( { 'left' : '30px' }, arrow_speed);
@@ -55,4 +55,5 @@ function ToggleSlideTopic(context) {
 	});
 }
 
+	ToggleSlideTopic();
 });
