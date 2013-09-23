@@ -142,21 +142,6 @@ foreach ( $view->result as $q_a_item) {//both for question & answers.
         <a class="comment_button btn btn-mini" data-trigger="click" data-placement='bottom'><i class="icon-comments icon-small"></i><?php echo t('comments');?></a>
       </div>
 
-        <!--odd version <div class="q-feedback">
-        <a class="fed_button btn btn-mini btn-link" data-trigger="click" data-content="<?php print htmlentities($value_1); ?>"><i class="icon-pencil icon-small"></i>Feedback</a>
-        </div> -->
-
-       <!-- <a class="fed_button btn btn-mini btn-link"   data-content="<?php //print htmlentities($value_1); ?>"><i class="icon-pencil icon-small"></i>sdf</a> -->
-    <?php global $user;
-      if($user->uid <> $q_a_item->users_node_uid) {
-        //print render($value_1); 去除是否有用，对你？ dale4sbq
-      }
-    ?>
-
-<!--         <div class="feedback-wrapper">
-           <?//php print($value_1)?>
-        </div> -->
-
      </div>
      
     <div class="comment_textarea">

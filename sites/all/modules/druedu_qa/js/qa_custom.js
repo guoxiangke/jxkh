@@ -1,5 +1,12 @@
 jQuery(function($) {
 	ToggleSlide('');
+	function CKupdate() {
+		if( typeof CKEDITOR != 'undefined')
+		for ( instance in CKEDITOR.instances ) {
+			// CKEDITOR.instances[instance].updateElement();
+			CKEDITOR.instances[instance].setData('');
+		}
+	}
 // 	$('#answer-node-form button[type="submit"]').attr('disabled', 'disabled');
 
 //  	//Upload a file or insert on ckeditor enabled submit button
@@ -42,9 +49,9 @@ jQuery(function($) {
      attach: function (context, settings) {
 			// $('.comments-wrapper .has-comment').after('<b class="triangle_top"></b>');
 			ToggleSlide(context);
-			//CKupdate();//Always ckeditor not $('#edit-body-und-0-value').val(' ');	
+			CKupdate();//Always ckeditor not $('#edit-body-und-0-value').val(' ');
+			// $('#answer-node-form textarea').attr('value', '');
 			var checked = false;
-
 			// for ( instance in CKEDITOR.instances )
 			// 	 CKcheck(CKEDITOR.instances[instance]);
 		}
@@ -54,9 +61,8 @@ jQuery(function($) {
 		$(args.selector).append(args.data);
 	};
 
-
 	$.fn.disableSubmitButton = function() {
-		$('#answer-node-form button[type="submit"]').attr('disabled', 'disabled');
+		// $('#answer-node-form button[type="submit"]').attr('disabled', 'disabled');
 		$('#files_uploaded_container .remove_file').each(function(){
 			$(this).click();
 		});
