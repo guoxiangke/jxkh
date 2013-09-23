@@ -42,11 +42,9 @@ jQuery(function($) {
 
 		})
 		
-		$('textarea').focus(function(){
-			$(this).attr('value','');
-		});
 
-	Drupal.behaviors.druedu_qa = {
+
+	Drupal.behaviors.druedu_sbq_topic = {
      attach: function (context, settings) {
 			ToggleSlideTopic(context);
 		}
