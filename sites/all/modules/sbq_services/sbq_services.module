@@ -4,10 +4,10 @@
  * Implements hook_services_resources.
  */
 function sbq_services_services_resources() {
-    module_load_include('inc', 'sbq_services', 'resources/sbq_user_resource');
-    $resources = array(
-        '#api_version' => 3002,
-    );
-    $resources  += _sbq_user_resource_definition();
-    return $resources;
+  module_load_include('inc', 'sbq_services', 'resources/sbq_user_resource');
+  $resources = array(
+      '#api_version' => 3002,
+  );
+  $resources += _sbq_user_resource_definition();
+  return $resources;
 }
