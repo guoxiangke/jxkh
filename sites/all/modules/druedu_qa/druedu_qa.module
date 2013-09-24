@@ -837,31 +837,96 @@ function _ajax_answer_submit_js($form, &$form_state) {
   // Are we editing a comment.
   // Or are we replying to another comment.
   // Or is this a brand new comment?
-  {
-    // Append comment to root comment wrapper.
-    $question_nid = $node->field_answer[LANGUAGE_NONE][0]['target_id'];
+  // {
+  //   // Append comment to root comment wrapper.
+  //   $question_nid = $node->field_answer[LANGUAGE_NONE][0]['target_id'];
 
-    //system/ajax bug fix.
-    $_GET['destination']='node/'.$node->nid;
-    $views = views_embed_view('question','answers_attachment',$question_nid);
-    $question = node_load($question_nid);
-    if(!$question->field_computed_answers[LANGUAGE_NONE][0]['value']){
-      $views = '<div class="attachment attachment-before">
-      <h3>'. t('1 answer').'</h3>    </div>'.$views;
-    }else{
-       $commands[] = ajax_command_remove('.view-display-id-answers_attachment .attachment-before');
-       $views = '<div class="attachment attachment-before">
-      <h3>'.format_plural($question->field_computed_answers[LANGUAGE_NONE][0]['value'], t('1 answer'), '@count answers').'</h3>    </div>'.$views;
-    }
-    $commands[] = ajax_command_invoke(NULL, 'disableSubmitButton');
-    $commands[] = ajax_command_html('#answers',   $views . $notify_text);
-    //If we have a default form, update it with a new one.
-    // Otherwise, delete it.
-   {
-    //  $commands[] = ajax_command_remove('#' . $form['#id']);
-    }
-  }
+  //   //system/ajax bug fix.
+  //   $_GET['destination']='node/'.$node->nid;
+  //   $views = views_embed_view('question','answers_attachment',$question_nid);
+  //   $question = node_load($question_nid);
+  //   if(!$question->field_computed_answers[LANGUAGE_NONE][0]['value']){
+  //     $views = '<div class="attachment attachment-before">
+  //     <h3>'. t('1 answer').'</h3>    </div>'.$views;
+  //   }else{
+  //      $commands[] = ajax_command_remove('.view-display-id-answers_attachment .attachment-before');
+  //      $views = '<div class="attachment attachment-before">
+  //     <h3>'.format_plural($question->field_computed_answers[LANGUAGE_NONE][0]['value'], t('1 answer'), '@count answers').'</h3>    </div>'.$views;
+  //   }
+  //   $commands[] = ajax_command_invoke(NULL, 'disableSubmitButton');
+  //   $commands[] = ajax_command_html('#answers',   $views . $notify_text);
+  //   //If we have a default form, update it with a new one.
+  //   // Otherwise, delete it.
+  //  {
+  //   //  $commands[] = ajax_command_remove('#' . $form['#id']);
+  //   }
+  // }
+  $commands[] = ajax_command_append('#answers .view-content',   druedu_qa_print_views_answer());
   return array('#type' => 'ajax', '#commands' => $commands);
+}
+function druedu_qa_print_views_answer() {
+  return '<div class="views-row views-row-gxk views-row-odd views-row-last clearfix">
+    
+<div class="question clearfix">
+    <div class="q-body clearfix">
+    <div class="votes pull-left"><div class="field-content"><div class="rate-widget-2 rate-widget clear-block rate-user rate-widget-yesno rate-3zPoxqL_cFzBDaVL8q44Zo4zER5PLsSKKsABx7MIq88 rate-processed" id="rate-node-2746-2-1"><ul><li class="first"><a class="rate-button rate-yesno-btn" id="rate-button-25" rel="nofollow" href="/system/ajax?destination=node/2749&amp;rate=CfjVInp_whGYQax6PKSXvekhhC59bAHyHvD14kUnqpU" title="+1">+1</a>0</li>
+<li class="last"><a class="rate-button rate-yesno-btn" id="rate-button-26" rel="nofollow" href="/system/ajax?destination=node/2749&amp;rate=2idzE9BjxapSfs5yOzDf90KJjwygcXbEmPZhc6yxF_c" title="-1">-1</a>0</li>
+</ul></div></div></div>
+      <div class="q-margin">
+    <div class="q-content span12">
+      <div class="q-body">我是新插进来的，需要动态数据！！！注意div结构！
+</div>
+            <div class="tags"><span class="tags-label">Tags:</span>
+            </div>
+
+      <div class="q-info clearfix">
+        <div class="q-author-block pull-right">
+                      <div class="author-item q-author pull-left">
+              <a href="/users/1"><img typeof="foaf:Image" src="http://dev.jxkh.com/sites/default/files/styles/profile_small/public/pictures/avatar_default.png?itok=WrGGMjVs" width="30" height="30" alt=""></a>              <div class="commit pull-left">
+                <div class="timestamp"><span class="create"><a href="/users/1" title="View user profile." class="username" xml:lang="" about="/users/1" typeof="sioc:UserAccount" property="foaf:name" datatype="">admin</a></span><span>09:07 2013/09/24</span></div>
+              </div>
+            </div>
+            
+        </div>
+
+          <div class="links">
+                <span class="accept"><span class="flag-wrapper flag-accepted flag-accepted-2746">
+      <a href="/flag/flag/accepted/2746?destination=node/2749&amp;token=uYzkOXb5TdtjMuwExBas1M5OHzksfFTV28v5k1EpHZg" title="" class="flag flag-action flag-link-toggle flag-processed" rel="nofollow">接受该解答</a><span class="flag-throbber">&nbsp;</span>
+    </span>
+</span>
+                        <span class="edit"><a href="/node/2746/edit?destination=node/2749">edit</a></span>
+                        <span class="delete"><a href="/node/2746/delete?destination=node/2749">delete</a></span>
+              </div> 
+      </div>
+
+         <div class="comments_answer">
+     <div class="comments-wrapper" id="comments-wrapper-2746"></div>     <div class="clearfix">
+      <div class="q-feedback">
+        <a class="comment_button btn btn-mini" data-trigger="click" data-placement="bottom"><i class="icon-comments icon-small"></i>comments</a>
+      </div>
+
+     </div>
+     
+    <div class="comment_textarea">
+      <a href="#" class="close"><i class="icon-remove-sign"></i></a>
+      <form class="comment-form" action="/comment/reply/2746" method="post" id="comment-form--52" accept-charset="UTF-8"><div><div class="field-type-text-long field-name-comment-body field-widget-text-textarea form-wrapper" id="edit-comment-body--52"><div id="comment-body-add-more-wrapper--52"><div class="control-group form-type-textarea form-item-comment-body-und-0-value form-item">
+  <label for="edit-comment-body-und-0-value--52" class="control-label">Comment <span class="form-required" title="This field is required.">*</span></label>
+<div class="controls"> <div class="form-textarea-wrapper resizable textarea-processed resizable-textarea"><textarea class="text-full form-textarea required" id="edit-comment-body-und-0-value--52" name="comment_body[und][0][value]" cols="60" rows="5"></textarea><div class="grippie"></div></div>
+</div></div>
+</div></div><input type="hidden" name="form_build_id" value="form-JHJIpdU2tJ9W8_gg_tgZDba5FfZEaUi28OzLZYg4z_E">
+<input type="hidden" name="form_token" value="tIFFlSQ-f-wtTDyfnWQoPTHodo5u1Y1MU90rNiYg6g4">
+<input type="hidden" name="form_id" value="comment_node_answer_form">
+<button class="btn btn-primary form-submit ajax-processed" id="edit-submit--54" name="op" value="Save" type="submit">Save</button>
+</div></form>    </div>
+   </div>
+   
+
+    </div>
+    </div>
+  </div>
+</div>
+
+  </div>';
 }
 /**
  * Implements hook_block_info().

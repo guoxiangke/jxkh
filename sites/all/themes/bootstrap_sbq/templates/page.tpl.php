@@ -2,7 +2,7 @@
   <div class="navbar-inner">
     <div class="container">
       <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-collapse">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -21,7 +21,7 @@
       <?php endif; ?>
 
       <?php if (!empty($primary_nav) || !empty($secondary_nav) || !empty($page['navigation'])): ?>
-        <div class="nav-collapse collapse">
+        <div class="navbar-collapse collapse">
           <nav role="navigation">
             <?php if (!empty($primary_nav)): ?>
               <?php print render($primary_nav); ?>
@@ -52,7 +52,7 @@
   <div class="row-fluid">
 
     <?php if (!empty($page['sidebar_first'])): ?>
-      <aside class="span2" role="complementary">
+      <aside class="col-md-3" role="complementary">
         <?php print render($page['sidebar_first']); ?>
       </aside>  <!-- /#sidebar-first -->
     <?php endif; ?>  
@@ -82,7 +82,7 @@
     </section>
 
     <?php if (!empty($page['sidebar_second'])): ?>
-      <aside class="span4" role="complementary">
+      <aside class="col-md-4" role="complementary">
         <?php print render($page['sidebar_second']); ?>
       </aside>  <!-- /#sidebar-second -->
     <?php endif; ?>

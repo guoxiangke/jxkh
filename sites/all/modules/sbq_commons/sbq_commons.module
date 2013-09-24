@@ -364,3 +364,32 @@ function sbq_commons_relationships_ui_actions_between($viewer, $viewed) {
   }
   return $list;
 }
+
+
+
+function sbq_commons_node_submit(&$node, $form, $form_state) {
+  switch ($node->type) {
+    case 'question':
+      $full_tags = $form_state['input']['field_tags'][LANGUAGE_NONE];
+      foreach (array('，', '。', ' ', '.') as $it) {
+        $full_tags = str_replace($it, ',', $full_tags);
+      }
+      $full_items = explode(',', $full_tags);
+      $orgin_item = array(
+          'tid' => $node->field_tags[LANGUAGE_NONE][0]['tid'],
+          'vid' => $node->field_tags[LANGUAGE_NONE][0]['vid'],
+          'vocabulary_machine_name' => $node->field_tags[LANGUAGE_NONE][0]['vocabulary_machine_name'],
+      );
+      if (isset($full_items) && !empty($full_items)) {
+        unset($node->field_tags[LANGUAGE_NONE]);
+        foreach ($full_items as $items) {
+          $orgin_item['name'] = $items;
+          $node->field_tags[LANGUAGE_NONE][] = $orgin_item;
+        }
+      }
+      break;
+
+    default:
+      break;
+  }
+}

@@ -261,8 +261,6 @@ function ajax_comments_submit_js4child($form, &$form_state) {
     $comment_output = drupal_render($comment_build);
     $commands[] = ajax_command_append('#comment-wrapper-' . $comment->pid, $notify_text . $comment_output);
 
-    watchdog('CID', $comment->cid, array(), WATCHDOG_NOTICE, 'link');
-
     $comment_replay_cotent = sbq_comment_print_comment($comment->cid);
 
 
@@ -271,7 +269,6 @@ function ajax_comments_submit_js4child($form, &$form_state) {
 
     // Delete the form.
     // $commands[] = ajax_command_invoke('#' . $form['#id'], 'remove');
-    // $commands[] = ajax_command_invoke('#' . $form['#id'], 'emptyTextarea');
       $node = $form['#node'];
 
       $new_form_state = array();
