@@ -371,7 +371,7 @@ function sbq_commons_node_submit(&$node, $form, $form_state) {
   switch ($node->type) {
     case 'question':
       $full_tags = $form_state['input']['field_tags'][LANGUAGE_NONE];
-      foreach (array('，', '。', ' ', '.') as $it) {
+      foreach (array('，', '。', ' ', '.', '、','、','\\','／','/') as $it) {
         $full_tags = str_replace($it, ',', $full_tags);
       }
       $full_items = explode(',', $full_tags);

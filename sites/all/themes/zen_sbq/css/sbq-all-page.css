@@ -1,0 +1,34 @@
+
+ul {
+list-style-type: none;
+}
+form .description {
+	display: none;
+}
+
+.sbq-slide-row {
+width: 30%;
+float: left;
+}
+#block-user-login .form-item-name label,#block-user-login .form-item-pass label{
+	display: none;
+}
+
+/*layout for all--guo*/
+#main {
+padding-top: 7em;
+}
+.bs-docs-nav {
+text-shadow: 0 -1px 0 rgba(0,0,0,.15);
+background-color: #563d7c;
+border-color: #463265;
+box-shadow: 0 1px 0 rgba(255,255,255,.1);
+}
+.region-header {
+	width: 10%;
+	float: left;
+}
+#block-views-exposure-platform-block-index ,#block-views-friend-activities-index{
+	width: 50%;
+	float: left;
+}

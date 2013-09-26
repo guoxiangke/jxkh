@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @file
  * Main view template.
@@ -55,13 +54,14 @@
     </div>
   <?php endif; ?>
 
+
   <?php if ($rows): ?>
     <div class="view-content">
       <?php print $rows; ?>
     </div>
   <?php elseif ($empty): ?>
-    <div class="view-empty">
-      <?php print $empty; ?>
+    <div class="view-content view-empty"> 
+        <?php print $empty; ?>
     </div>
   <?php endif; ?>
 
@@ -70,6 +70,7 @@
   <?php endif; ?>
 
   <?php if ($attachment_after): ?>
+
     <div id = "answers" class="attachment attachment-after">
       <?php print $attachment_after; ?>
     </div>
@@ -90,10 +91,10 @@
       <?php print $feed_icon; ?>
     </div>
   <?php endif; ?>
-  
-   <?php if (isset($answer_node_form)): ?>
+
+  <?php if (isset($answer_node_form)): ?>
     <div class="answer-node-form">
-      <?php print render($answer_node_form); // render answer_node_form for question ?>
+      <?php print render($answer_node_form); // render answer_node_form for question  ?>
     </div>
   <?php endif; ?>
 </div><?php /* class view */ ?>
