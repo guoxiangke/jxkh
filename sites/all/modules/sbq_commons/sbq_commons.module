@@ -10,6 +10,11 @@ define('FOLLOWER_PATIENT', 2);
 // 医患群体关注
 define('FRIEND_DOCTOR_PATIENT', 3);
 
+//rid
+define('USER_DOCTOR_RID', 4);
+define('USER_PATIENT_RID', 5);
+define('USER_CERTIFIED_DOCTOR_RID', 5);
+
 /**
  * Implements hook_form_alter().
  */
@@ -244,6 +249,14 @@ function sbq_commons_menu_alter(&$items) {
         'file' => drupal_get_path('module', 'user_relationships_ui') . '/user_relationships_ui.forms.inc',
     );
   }
+
+
+  //@url http://192.168.0.150:800/redmine/issues/49
+  //@og_ui_menu //user_is_logged_in ==>group_subscribe4sbq
+  $items['group/%/%/subscribe']['access callback'] = 'group_subscribe4sbq';
+  $items['group/%/%/subscribe']['access arguments'] = array(1, 2);
+  // $items['group/%/%/unsubscribe']['access callback'] = 'group_unsubscribe4sbq';
+
 }
 
 /**
@@ -392,4 +405,63 @@ function sbq_commons_node_submit(&$node, $form, $form_state) {
     default:
       break;
   }
+}
+/**
+ * @see hook_menu_alter for group subscribe
+  //15:54 2013/10/8
+  //http://192.168.0.150:800/redmine/issues/49
+ */
+
+function group_subscribe4sbq($group_type,$gid)
+{
+  if($group_type == 'node'){
+    $node = node_load($gid);
+    if($node) {
+    // define('USER_DOCTOR_RID', 4);
+    // define('USER_PATIENT_RID', 5);
+    // define('USER_CERTIFIED_DOCTOR_RID', 5);
+      // 医生只能加入医生小组
+      global $user;
+      $group_types = array('doctor_group','general_group');
+      if(in_array($node->type, $group_types)) {
+        if(in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($user->roles))) {
+          return TRUE;
+        }
+        if(in_array(USER_PATIENT_RID, array_keys($user->roles)) && $node->type == 'general_group') {
+          return TRUE;
+        }
+        drupal_set_message("You are not allow subscribe this $node->type!", 'warning', FALSE);
+        return FALSE;       
+      }
+    }
+  }
+  return user_is_logged_in();
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ //http://192.168.0.150:800/redmine/issues/49
+ */
+function sbq_commons_preprocess_field(&$variables) {
+  $field_name = $variables['element']['#field_name'];  
+  if ($field_name == 'group_group') {
+    // Your code here.
+    // dpm($variables);
+    $node = $variables['element']['#object'];
+    //@see group_subscribe4sbq()
+    global $user;
+    $group_types = array('doctor_group','general_group');
+    if(in_array($node->type, $group_types)) {
+      if(in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($user->roles))) {
+        return TRUE;
+      }
+      if(in_array(USER_PATIENT_RID, array_keys($user->roles)) && $node->type == 'general_group') {
+        return TRUE;
+      }
+      drupal_set_message("You are not allow subscribe this $node->type!", 'warning', FALSE);
+      $variables['items'] = array();      
+    }
+  }
+  //end @see
+  
 }

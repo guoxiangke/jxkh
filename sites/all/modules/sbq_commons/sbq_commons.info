@@ -1,4 +1,5 @@
 name = Sbq commons
 description = sbq commons function and theme functions.
 dependencies[] = tlcomment
+dependencies[] = og_ui
 core = 7.x
