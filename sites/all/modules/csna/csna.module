@@ -124,6 +124,35 @@ function csna_callback($provider) {
         'name' => $name,
         'status' => 1,
       );
+      {
+        if(isset($data['weibo'])) {
+          $info = $data['weibo'];
+        // Load the files contents
+        $image = file_get_contents(str_replace('/50/', '/180/', $info->profile_image_url).'.jpg');
+        $path = variable_get('user_picture_path', 'pictures');
+        $timezone = variable_get('date_default_timezone', 'Asia/Chongqing');
+        // Returns the new file object
+        $file = file_save_data($image, "public://$path/picture-".$data['uid']."-".time().".jpg", FILE_EXISTS_RENAME); 
+        //- See more at: http://rowlandsgroup.com/articles/2012/02/nick-schuch/programmatically-insert-local-files-managed-files#sthash.6IpSojlJ.dpuf
+          $edit = array(
+            // 'open_gender'=>$userInfo['gender'],
+            //profile_image_url format http://tp1.sinaimg.cn/1691862500/50/1267524211/1
+            'picture'=>$file->fid,        
+            'signature'=>$info->description,
+            'signature_format' => 'plain_text',
+            // 'gender' =>
+            'language' => 'zh-hans',
+            'timezone ' => $timezone,
+            'roles' => array(
+              DRUPAL_AUTHENTICATED_RID => 'authenticated user',
+              5 => 'patient',
+            ),
+            'name' => $name,
+            'status' => 1,
+          );
+        }
+      }
+
       $account = user_save(NULL, $edit);
       user_set_authmaps($account, array('authname_csna' => $identity));
     }

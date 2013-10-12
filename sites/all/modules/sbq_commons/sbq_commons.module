@@ -13,16 +13,15 @@ define('FRIEND_DOCTOR_PATIENT', 3);
 //rid
 define('USER_DOCTOR_RID', 4);
 define('USER_PATIENT_RID', 5);
-define('USER_CERTIFIED_DOCTOR_RID', 5);
+define('USER_CERTIFIED_DOCTOR_RID', 7);
 
 /**
  * Implements hook_form_alter().
  */
 function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
-  
+
   // watchdog('sbq_commons', $form_id, array(), WATCHDOG_NOTICE, 'link');
-  if($form_id == 'privatemsg_new') {
-    // dpm($form);
+  if ($form_id == 'privatemsg_new') {
     $form['recipient']['#access'] = FALSE;
     $form['subject']['#access'] = FALSE;
   }
@@ -38,54 +37,64 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
   if (isset($form['field_image'])) {
     $form['field_image'][LANGUAGE_NONE]['#title'] = t('image');
   }
-  //hide no use of comment of sbq_topic
-  if ($form_id == 'comment_node_sbq_topic_form') {
-    $form['subject']['#access'] = FALSE;
-    $form['author']['#access'] = FALSE;
-    $form['actions']['submit']['#value'] = '发表观点';
-    $form['actions']['preview']['#access'] = FALSE;
-    // $form['comment_body'][LANGUAGE_NONE][0]['#title'] = '';
-    $form['comment_body'][LANGUAGE_NONE][0]['#default_value'] = '我支持的观点：禁止发布含有辱骂、国情等敏感词汇';
-    // vote logic  for topic!
-    $node = $form['#node'];
-    $rate_widget_id = sbq_commons_get_rid_by_name('vote_sbq_topic');
-    if ($rate_widget_id)
-      $rate_result = rate_get_results('node', $node->nid, $rate_widget_id);
+  switch ($form_id) {
+    case 'comment_node_sbq_topic_form':
+      $form['subject']['#access'] = FALSE;
+      $form['author']['#access'] = FALSE;
+      $form['actions']['submit']['#value'] = '发表观点';
+      $form['actions']['preview']['#access'] = FALSE;
+      // $form['comment_body'][LANGUAGE_NONE][0]['#title'] = '';
+      $form['comment_body'][LANGUAGE_NONE][0]['#default_value'] = '我支持的观点：禁止发布含有辱骂、国情等敏感词汇';
+      // vote logic  for topic!
+      $node = $form['#node'];
+      $rate_widget_id = sbq_commons_get_rid_by_name('vote_sbq_topic');
+      if ($rate_widget_id)
+        $rate_result = rate_get_results('node', $node->nid, $rate_widget_id);
 
-    if (isset($rate_result['user_vote'])) {
-      $form['sbq_topic_voted'] = array('#type' => 'hidden', '#value' => 0);
-      switch ($rate_result['user_vote']) {
-        case '支持':
-          $form['field_field_sbq_topic_type'][LANGUAGE_NONE]['#default_value'] = 1;
-          $form['sbq_topic_voted'] = array('#type' => 'hidden', '#value' => 1);
-          break;
-        case '反对':
-          $form['field_field_sbq_topic_type'][LANGUAGE_NONE]['#default_value'] = 0;
-          $form['sbq_topic_voted'] = array('#type' => 'hidden', '#value' => -1);
-          break;
-        default:
-          # code...
-          break;
+      if (isset($rate_result['user_vote'])) {
+        $form['sbq_topic_voted'] = array('#type' => 'hidden', '#value' => 0);
+        switch ($rate_result['user_vote']) {
+          case '支持':
+            $form['field_field_sbq_topic_type'][LANGUAGE_NONE]['#default_value'] = 1;
+            $form['sbq_topic_voted'] = array('#type' => 'hidden', '#value' => 1);
+            break;
+          case '反对':
+            $form['field_field_sbq_topic_type'][LANGUAGE_NONE]['#default_value'] = 0;
+            $form['sbq_topic_voted'] = array('#type' => 'hidden', '#value' => -1);
+            break;
+          default:
+            # code...
+            break;
+        }
       }
-    }
-  }
-  //hide profle when register
-  if ($form_id == 'user_register_form') {
-    $form['profile_doctor_profile']['#access'] = FALSE;
-    $form['profile_customer_profile']['#access'] = FALSE;
-    // unset($form['profile_doctor_profile']);
-  }
 
-  if ($form_id == 'user_login_block') {
-    # code...
-    $form['actions']['#prefix'] = '<div class="input-prepend input-append">';
-    $form['actions']['#suffix'] = '</div>';
-    $form['links']['#markup'] = '<ul>
+      break;
+    case 'user_register_form':
+
+      $form['profile_doctor_profile']['#access'] = FALSE;
+      $form['profile_customer_profile']['#access'] = FALSE;
+      break;
+    case 'user_login_block':
+      # code...
+      $form['actions']['#prefix'] = '<div class="input-prepend input-append">';
+      $form['actions']['#suffix'] = '</div>';
+      $form['links']['#markup'] = '<ul>
                         <li class="last">
                         <a href="/user/password" title="' . t('Request new password via e-mail.') . '">
                         ' . t('Request new password') . '
                         </a></li></ul>';
-    $form['links']['#weight'] = '100';
+      $form['links']['#weight'] = '100';
+      break;
+    case 'general_group_node_form':
+    case 'doctor_group_node_form':
+      $form['actions']['submit']['#value'] = t('申请');
+      break;
+    default:
+      break;
+  }
+  if (isset($_GET['og_group_ref']) && $form_id == 'post_node_form') {
+    $form['actions']['submit']['#submit'][] = 'sbq_commons_node_form_redirect_handle';
+    $form['#redirect'] = 'node/' . $_GET['og_group_ref'];
   }
 }
 
@@ -135,7 +144,6 @@ function sbq_commons_form_comment_form_alter(&$form, &$form_state, $form_id) {
   }
   // HACK, stop ctools from modifying us in node_comment_form.inc
   $form_state['ctools comment alter'] = FALSE;
-  // dpm($form);
 }
 
 /**
@@ -189,6 +197,16 @@ function sbq_commons_preprocess_page(&$variables) {
       }
     }
   }
+  switch ($_GET['q']) {
+    case 'node/add/doctor-group':
+      drupal_set_title(t('申请医生小组'));
+      break;
+    case 'node/add/general-group':
+      drupal_set_title(t('申请患者小组'));
+      break;
+    default:
+      break;
+  }
   return $variables;
 }
 
@@ -199,7 +217,6 @@ function sbq_commons_preprocess_page(&$variables) {
  */
 function sbq_commons_user_view($account, $view_mode, $langcode) {
   global $user;
-  // dpm($user);
   if (($account->uid == $user->uid) && user_relationships_user_access('maintain @relationship relationships')) {
     _user_relationships_ui_set_notifications($account);
     return;
@@ -249,14 +266,15 @@ function sbq_commons_menu_alter(&$items) {
         'file' => drupal_get_path('module', 'user_relationships_ui') . '/user_relationships_ui.forms.inc',
     );
   }
-
-
   //@url http://192.168.0.150:800/redmine/issues/49
   //@og_ui_menu //user_is_logged_in ==>group_subscribe4sbq
   $items['group/%/%/subscribe']['access callback'] = 'group_subscribe4sbq';
   $items['group/%/%/subscribe']['access arguments'] = array(1, 2);
   // $items['group/%/%/unsubscribe']['access callback'] = 'group_unsubscribe4sbq';
 
+  if (isset($items['taxonomy/autocomplete'])) {
+    $items['taxonomy/autocomplete']['page callback'] = 'sbq_commons_taxonomy_autocomplete';
+  }
 }
 
 /**
@@ -378,60 +396,56 @@ function sbq_commons_relationships_ui_actions_between($viewer, $viewed) {
   return $list;
 }
 
-
-
 function sbq_commons_node_submit(&$node, $form, $form_state) {
-  switch ($node->type) {
-    case 'question':
-      $full_tags = $form_state['input']['field_tags'][LANGUAGE_NONE];
-      foreach (array('，', '。', ' ', '.', '、','、','\\','／','/') as $it) {
+  foreach ($form_state['field'] as $field_key => $field) {
+    if (isset($field[LANGUAGE_NONE]) && $field[LANGUAGE_NONE]['field']['type'] == 'taxonomy_term_reference' && $field[LANGUAGE_NONE]['instance']['widget']['type'] == 'taxonomy_autocomplete') {
+      $full_tags = $form_state['input'][$field_key][LANGUAGE_NONE];
+      foreach (array('，', '。', ' ', '.', '、', '、', '\\', '／', '/') as $it) {
         $full_tags = str_replace($it, ',', $full_tags);
       }
       $full_items = explode(',', $full_tags);
       $orgin_item = array(
-          'tid' => $node->field_tags[LANGUAGE_NONE][0]['tid'],
-          'vid' => $node->field_tags[LANGUAGE_NONE][0]['vid'],
-          'vocabulary_machine_name' => $node->field_tags[LANGUAGE_NONE][0]['vocabulary_machine_name'],
+          'tid' => $node->{$field_key}[LANGUAGE_NONE][0]['tid'],
+          'vid' => $node->{$field_key}[LANGUAGE_NONE][0]['vid'],
+          'vocabulary_machine_name' => $node->{$field_key}[LANGUAGE_NONE][0]['vocabulary_machine_name'],
       );
       if (isset($full_items) && !empty($full_items)) {
-        unset($node->field_tags[LANGUAGE_NONE]);
+        unset($node->{$field_key}[LANGUAGE_NONE]);
         foreach ($full_items as $items) {
           $orgin_item['name'] = $items;
-          $node->field_tags[LANGUAGE_NONE][] = $orgin_item;
+          $node->{$field_key}[LANGUAGE_NONE][] = $orgin_item;
         }
       }
-      break;
-
-    default:
-      break;
+    }
   }
 }
+
 /**
  * @see hook_menu_alter for group subscribe
   //15:54 2013/10/8
   //http://192.168.0.150:800/redmine/issues/49
  */
-
-function group_subscribe4sbq($group_type,$gid)
-{
-  if($group_type == 'node'){
+function group_subscribe4sbq($group_type, $gid) {
+  if ($group_type == 'node') {
     $node = node_load($gid);
-    if($node) {
-    // define('USER_DOCTOR_RID', 4);
-    // define('USER_PATIENT_RID', 5);
-    // define('USER_CERTIFIED_DOCTOR_RID', 5);
-      // 医生只能加入医生小组
+    if ($node) {
+      // define('USER_DOCTOR_RID', 4);
+      // define('USER_PATIENT_RID', 5);
+      // define('USER_CERTIFIED_DOCTOR_RID', 7);
+      // 医生can加入医生/患者小组      
+      // 患者只能加入患者小组
       global $user;
-      $group_types = array('doctor_group','general_group');
-      if(in_array($node->type, $group_types)) {
-        if(in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($user->roles))) {
+      // dpm($user,USER_CERTIFIED_DOCTOR_RID);
+      $group_types = array('doctor_group', 'general_group');
+      if (in_array($node->type, $group_types)) {
+        if (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($user->roles))) {
           return TRUE;
         }
-        if(in_array(USER_PATIENT_RID, array_keys($user->roles)) && $node->type == 'general_group') {
+        if (in_array(USER_PATIENT_RID, array_keys($user->roles)) && $node->type == 'general_group') {
           return TRUE;
         }
         drupal_set_message("You are not allow subscribe this $node->type!", 'warning', FALSE);
-        return FALSE;       
+        return FALSE;
       }
     }
   }
@@ -440,28 +454,154 @@ function group_subscribe4sbq($group_type,$gid)
 
 /**
  * Implements hook_preprocess_HOOK().
- //http://192.168.0.150:800/redmine/issues/49
+  //http://192.168.0.150:800/redmine/issues/49
  */
 function sbq_commons_preprocess_field(&$variables) {
-  $field_name = $variables['element']['#field_name'];  
+  $field_name = $variables['element']['#field_name'];
   if ($field_name == 'group_group') {
     // Your code here.
-    // dpm($variables);
     $node = $variables['element']['#object'];
     //@see group_subscribe4sbq()
     global $user;
-    $group_types = array('doctor_group','general_group');
-    if(in_array($node->type, $group_types)) {
-      if(in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($user->roles))) {
+    $group_types = array('doctor_group', 'general_group');
+    if (in_array($node->type, $group_types)) {
+      if (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($user->roles))) {
         return TRUE;
       }
-      if(in_array(USER_PATIENT_RID, array_keys($user->roles)) && $node->type == 'general_group') {
+      if (in_array(USER_PATIENT_RID, array_keys($user->roles)) && $node->type == 'general_group') {
         return TRUE;
       }
       drupal_set_message("You are not allow subscribe this $node->type!", 'warning', FALSE);
-      $variables['items'] = array();      
+      $variables['items'] = array();
     }
   }
   //end @see
-  
+}
+
+/**
+ * 
+ * @param type $field_name
+ * @param type $tags_typed 
+ * @see taxonomy_menu()
+ */
+function sbq_commons_taxonomy_autocomplete($field_name = '', $tags_typed = '') {
+  // If the request has a '/' in the search text, then the menu system will have
+  // split it into multiple arguments, recover the intended $tags_typed.
+  $args = func_get_args();
+  // Shift off the $field_name argument.
+  array_shift($args);
+  $tags_typed = implode('/', $args);
+
+  // Make sure the field exists and is a taxonomy field.
+  if (!($field = field_info_field($field_name)) || $field['type'] !== 'taxonomy_term_reference') {
+    // Error string. The JavaScript handler will realize this is not JSON and
+    // will display it as debugging information.
+    print t('Taxonomy field @field_name not found.', array('@field_name' => $field_name));
+    exit;
+  }
+
+  // The user enters a comma-separated list of tags. We only autocomplete the last tag.
+  foreach (array('，', '。', ' ', '.', '、', '、', '\\', '／', '/') as $it) {
+    $tags_typed = str_replace($it, ',', $tags_typed);
+  }
+  $tags_typed = drupal_explode_tags($tags_typed);
+
+  $tag_last = drupal_strtolower(array_pop($tags_typed));
+
+  $term_matches = array();
+  if ($tag_last != '') {
+    // Part of the criteria for the query come from the field's own settings.
+    $vids = array();
+    $vocabularies = taxonomy_vocabulary_get_names();
+    foreach ($field['settings']['allowed_values'] as $tree) {
+      $vids[] = $vocabularies[$tree['vocabulary']]->vid;
+    }
+
+    $query = db_select('taxonomy_term_data', 't');
+    $query->addTag('translatable');
+    $query->addTag('term_access');
+
+    // Do not select already entered terms.
+    if (!empty($tags_typed)) {
+      $query->condition('t.name', $tags_typed, 'NOT IN');
+    }
+    // Select rows that match by term name.
+    $tags_return = $query
+            ->fields('t', array('tid', 'name'))
+            ->condition('t.vid', $vids)
+            ->condition('t.name', '%' . db_like($tag_last) . '%', 'LIKE')
+            ->range(0, 10)
+            ->execute()
+            ->fetchAllKeyed();
+
+    $prefix = count($tags_typed) ? drupal_implode_tags($tags_typed) . ', ' : '';
+
+    foreach ($tags_return as $tid => $name) {
+      $n = $name;
+      // Term names containing commas or quotes must be wrapped in quotes.
+      if (strpos($name, ',') !== FALSE || strpos($name, '"') !== FALSE) {
+        $n = '"' . str_replace('"', '""', $name) . '"';
+      }
+      $term_matches[$prefix . $n] = check_plain($name);
+    }
+  }
+
+  drupal_json_output($term_matches);
+}
+
+/**
+ * node form redirect
+ * @param type $form
+ * @param array $form_state 
+ */
+function sbq_commons_node_form_redirect_handle(&$form, &$form_state) {
+  $form_state['redirect'] = $form['#redirect'];
+}
+
+/**
+ * count user members group
+ * @param type $gid
+ * @return type 
+ * @see og_ui_handler_area_og_membership_overview::render
+ */
+function sbq_commons_count_group_members($gid, $group_type = 'node') {
+  $base_query = new EntityFieldQuery();
+  $base_query
+          ->entityCondition('entity_type', 'og_membership')
+          ->propertyCondition('group_type', $group_type, '=')
+          ->propertyCondition('gid', $gid, '=')
+          ->count()
+          ->propertyCondition('entity_type', 'user', '=')
+          ->execute();
+  return $base_query;
+}
+
+/**
+ * count group_content 
+ * @param type $gid
+ * @param type $group_type
+ * @return type 
+ * @see og_ui_handler_area_og_membership_overview::render
+ */
+function sbq_commons_count_group_content($gid, $group_type = 'node') {
+  $base_query = new EntityFieldQuery();
+  $base_query
+          ->entityCondition('entity_type', 'og_membership')
+          ->propertyCondition('group_type', $group_type, '=')
+          ->propertyCondition('gid', $gid, '=')
+          ->count()
+          ->propertyCondition('entity_type', 'node', '=')
+          ->execute();
+  return $base_query;
+}
+/**
+ * for group content contextual_links
+ * @param type $build 
+ */
+function sbq_commons_node_view_alter(&$build) {
+  //for group content contextual_links
+  $node = $build['#node'];
+  if (!empty($node->nid) && $node->type == 'post') {
+    $build['#contextual_links']['node'] = array('node', array($node->nid));
+  }
 }

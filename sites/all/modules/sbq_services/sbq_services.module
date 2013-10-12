@@ -4,10 +4,21 @@
  * Implements hook_services_resources.
  */
 function sbq_services_services_resources() {
-  module_load_include('inc', 'sbq_services', 'resources/sbq_user_resource');
+  module_load_include('inc', 'sbq_services', 'resources/grow_records_resource');
   $resources = array(
       '#api_version' => 3002,
   );
-  $resources += _sbq_user_resource_definition();
+  $resources += grow_records_resource_definition();
   return $resources;
 }
+
+//function sbq_services_services_request_postprocess_alter($controller, $args, &$result) {
+//
+//}
+//
+//function sbq_services_node_submit($node, $form, $form_state){
+//  dpm($_POST);
+//  dpm($node);
+//  dpm($form);
+//  dpm($form_state);
+//}
