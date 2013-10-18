@@ -16,7 +16,7 @@
 	}elseif($id==3 || $id==6) {// 
 		echo '<div class="item">';
 	}?>
-  <div <?php if ($classes_array[$id]) { print ' class="' . $classes_array[$id] .'"';  } ?>>
+  <div <?php if ($classes_array[$id]) { print ' class="' . $classes_array[$id] ." sbq-slide-row-".($id%3).'"';  } ?>>
     <?php print $row; //echo "rows-$id";//?>
 
   </div>

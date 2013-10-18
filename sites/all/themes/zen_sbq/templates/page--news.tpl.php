@@ -66,7 +66,7 @@
     ?>
 
   <div id="main" class="row">
-  <div class="sbq-layout">
+  <div class="sbq-layout sbq-page-news-layout">
 
     <?php if ($sidebar_first): ?>
       <?php print $sidebar_first; ?>

@@ -20,3 +20,20 @@
 /* SMACSS theme rules */
 /* @import "theme-A.css"; */
 /* @import "theme-B.css"; */
+.two-sidebars #content {
+float: left;
+width: 46.666667%;
+margin-left: 20%;
+margin-right: -80%;
+}
+.sbq-columns-3  #content {
+	float: left;
+	width: 46.666667%;
+	margin-left: 20%;
+	margin-right: -80%;
+}
+.two-sidebars .region-sidebar-second {
+	float: left;
+	margin-left: 66.6666666%;
+	margin-right: -100%;
+}

@@ -283,5 +283,5 @@ function theme_csna_providers($providers) {
   foreach ($providers as $provider_id => $provider) {
     $items[] = l($provider['display_title'], 'csna/' . $provider_id, array('html' => TRUE));
   }
-  return '<span>使用其他账户登录</span>'.theme('item_list', array('items' => $items));
+  return '<span class="sbq_login_thirdpart">使用其他账户登录</span>'.theme('item_list', array('items' => $items,'attributes' =>array('class'=>'sbq_custom_login')));
 }

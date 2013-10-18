@@ -19,6 +19,12 @@ define('USER_CERTIFIED_DOCTOR_RID', 7);
  * Implements hook_form_alter().
  */
 function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
+  //禁止评论 for post 
+  if ($form_id == 'post_node_form') {
+    global $user;
+    if (isset($form['uid']['#value']) && $user->uid != $form['uid']['#value'])
+      $form['comment_settings']['#access'] = TRUE;
+  }
 
   // watchdog('sbq_commons', $form_id, array(), WATCHDOG_NOTICE, 'link');
   if ($form_id == 'privatemsg_new') {
@@ -37,6 +43,7 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
   if (isset($form['field_image'])) {
     $form['field_image'][LANGUAGE_NONE]['#title'] = t('image');
   }
+
   switch ($form_id) {
     case 'comment_node_sbq_topic_form':
       $form['subject']['#access'] = FALSE;
@@ -75,19 +82,29 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
       $form['profile_customer_profile']['#access'] = FALSE;
       break;
     case 'user_login_block':
-      # code...
-      $form['actions']['#prefix'] = '<div class="input-prepend input-append">';
-      $form['actions']['#suffix'] = '</div>';
-      $form['links']['#markup'] = '<ul>
-                        <li class="last">
-                        <a href="/user/password" title="' . t('Request new password via e-mail.') . '">
-                        ' . t('Request new password') . '
-                        </a></li></ul>';
-      $form['links']['#weight'] = '100';
+      //@see template.php in zen_sbq
       break;
     case 'general_group_node_form':
     case 'doctor_group_node_form':
       $form['actions']['submit']['#value'] = t('申请');
+      break;
+    case 'sbq_og_ui_confirm_subscribe':
+      $form['actions']['submit']['#ajax'] = array(
+          'callback' => 'sbq_og_ui_confirm_subscribe_ajax_submit',
+          'wrapper' => 'sbq_og_ui_confirm_subscribe',
+          'method' => 'replace',
+          'effect' => 'fade',
+          'file' => 'sbq_commons_og_ui.inc',
+      );
+      break;
+    case 'sbq_og_ui_confirm_unsubscribe':
+      $form['actions']['submit']['#ajax'] = array(
+          'callback' => 'sbq_og_ui_confirm_unsubscribe_ajax_submit',
+          'wrapper' => 'sbq_og_ui_confirm_unsubscribe',
+          'method' => 'replace',
+          'effect' => 'fade',
+          'file' => 'sbq_commons_og_ui.inc',
+      );
       break;
     default:
       break;
@@ -133,7 +150,8 @@ function sbq_commons_form_comment_form_alter(&$form, &$form_state, $form_id) {
         'effect' => 'fade',
         'file' => 'sbq_commons.inc',
     );
-  } else {// main comment ajax behavior
+  }
+  else {// main comment ajax behavior
     $form['actions']['submit']['#ajax'] = array(
         'callback' => 'ajax_comments_submit_js4sbq',
         'wrapper' => $form['#id'],
@@ -153,6 +171,7 @@ function sbq_commons_init() {
   // Load sbq_commons.inc from the node module.
   drupal_add_js(drupal_get_path('module', 'sbq_commons') . '/js/sbq-commons.js');
   module_load_include('inc', 'sbq_commons', 'sbq_commons');
+  module_load_include('inc', 'sbq_commons', 'sbq_commons_og_ui');
   if (arg(0) == 'node' && is_numeric(arg(1))) {
     $node = node_load(arg(1));
     if ($node && $node->type == 'sbq_topic') {
@@ -191,7 +210,8 @@ function sbq_commons_preprocess_page(&$variables) {
       if (isset($variables['tabs']['#secondary'][4])) {
         unset($variables['tabs']['#secondary'][4]);
       }
-    } elseif (in_array('patient', $user->roles)) {
+    }
+    elseif (in_array('patient', $user->roles)) {
       if (isset($variables['tabs']['#secondary'][3])) {
         unset($variables['tabs']['#secondary'][3]);
       }
@@ -265,6 +285,9 @@ function sbq_commons_menu_alter(&$items) {
         'page arguments' => array(1),
         'file' => drupal_get_path('module', 'user_relationships_ui') . '/user_relationships_ui.forms.inc',
     );
+  }
+  if (isset($items['doctor/register'])) {
+    $items['doctor/register']['page callback'] = 'sbq_commons_doctor_register';
   }
   //@url http://192.168.0.150:800/redmine/issues/49
   //@og_ui_menu //user_is_logged_in ==>group_subscribe4sbq
@@ -342,15 +365,18 @@ function sbq_commons_relationships_ui_check_access_by_roles($user, $account, $re
   if (in_array('doctor', $user->roles)) {
     if (in_array('doctor', $account->roles) && $relationship == FOLLOWER_DOCTOR) {
       return TRUE;
-    } elseif (in_array('patient', $account->roles) && $relationship == FRIEND_DOCTOR_PATIENT) {
+    }
+    elseif (in_array('patient', $account->roles) && $relationship == FRIEND_DOCTOR_PATIENT) {
       # code...
       return TRUE;
     }
-  } elseif (in_array('patient', $user->roles)) {
+  }
+  elseif (in_array('patient', $user->roles)) {
     # code...
     if (in_array('patient', $account->roles) && $relationship == FOLLOWER_PATIENT) {
       return TRUE;
-    } elseif (in_array('doctor', $account->roles) && $relationship == FRIEND_DOCTOR_PATIENT) {
+    }
+    elseif (in_array('doctor', $account->roles) && $relationship == FRIEND_DOCTOR_PATIENT) {
       # code...
       return TRUE;
     }
@@ -377,7 +403,7 @@ function sbq_commons_relationships_ui_actions_between($viewer, $viewed) {
     $relationships = $type[$action];
     $list[] = t('You have sent a new @rel_name request to this user. (!pending_requests)', array(
         '!pending_requests' => l(t('pending requests'), "relationships/sent"),
-            ) + user_relationships_type_translations($relationships));
+        ) + user_relationships_type_translations($relationships));
   }
   if ($action == FOLLOWER_DOCTOR || $action == FOLLOWER_PATIENT) {
     $relationship = $type[$action];
@@ -527,12 +553,12 @@ function sbq_commons_taxonomy_autocomplete($field_name = '', $tags_typed = '') {
     }
     // Select rows that match by term name.
     $tags_return = $query
-            ->fields('t', array('tid', 'name'))
-            ->condition('t.vid', $vids)
-            ->condition('t.name', '%' . db_like($tag_last) . '%', 'LIKE')
-            ->range(0, 10)
-            ->execute()
-            ->fetchAllKeyed();
+        ->fields('t', array('tid', 'name'))
+        ->condition('t.vid', $vids)
+        ->condition('t.name', '%' . db_like($tag_last) . '%', 'LIKE')
+        ->range(0, 10)
+        ->execute()
+        ->fetchAllKeyed();
 
     $prefix = count($tags_typed) ? drupal_implode_tags($tags_typed) . ', ' : '';
 
@@ -567,12 +593,12 @@ function sbq_commons_node_form_redirect_handle(&$form, &$form_state) {
 function sbq_commons_count_group_members($gid, $group_type = 'node') {
   $base_query = new EntityFieldQuery();
   $base_query
-          ->entityCondition('entity_type', 'og_membership')
-          ->propertyCondition('group_type', $group_type, '=')
-          ->propertyCondition('gid', $gid, '=')
-          ->count()
-          ->propertyCondition('entity_type', 'user', '=')
-          ->execute();
+      ->entityCondition('entity_type', 'og_membership')
+      ->propertyCondition('group_type', $group_type, '=')
+      ->propertyCondition('gid', $gid, '=')
+      ->count()
+      ->propertyCondition('entity_type', 'user', '=')
+      ->execute();
   return $base_query;
 }
 
@@ -586,14 +612,15 @@ function sbq_commons_count_group_members($gid, $group_type = 'node') {
 function sbq_commons_count_group_content($gid, $group_type = 'node') {
   $base_query = new EntityFieldQuery();
   $base_query
-          ->entityCondition('entity_type', 'og_membership')
-          ->propertyCondition('group_type', $group_type, '=')
-          ->propertyCondition('gid', $gid, '=')
-          ->count()
-          ->propertyCondition('entity_type', 'node', '=')
-          ->execute();
+      ->entityCondition('entity_type', 'og_membership')
+      ->propertyCondition('group_type', $group_type, '=')
+      ->propertyCondition('gid', $gid, '=')
+      ->count()
+      ->propertyCondition('entity_type', 'node', '=')
+      ->execute();
   return $base_query;
 }
+
 /**
  * for group content contextual_links
  * @param type $build 
@@ -604,4 +631,55 @@ function sbq_commons_node_view_alter(&$build) {
   if (!empty($node->nid) && $node->type == 'post') {
     $build['#contextual_links']['node'] = array('node', array($node->nid));
   }
+  if (og_is_group_type($build['#entity_type'], $build['#bundle'])) {
+    $form_sub = sbq_og_ui_subscribe($build['#entity_type'], $node->nid);
+    if ($form_sub) {
+      $build['sbq_og_subscribe'] = $form_sub;
+    }
+    else {
+      $build['sbq_og_unsubscribe'] = sbq_og_ui_unsubscribe($build['#entity_type'], $node->nid);
+    }
+
+    if (isset($build['group_group'])) {
+      unset($build['group_group'][0]);
+    }
+  }
+  
+}
+
+function sbq_commons_block_view_alter(&$data, $block) {
+  global $user;
+  switch ($block->delta) {
+    case 'mydoctor2-block':
+      if (in_array('certified doctor', $user->roles)) {
+        $data['subject'] = '我的病友';
+      }
+      else if (in_array('patient', $user->roles)) {
+        $data['subject'] = '我的医生';
+      }
+      break;
+    default:
+      break;
+  }
+}
+/**
+ * Build sbq_commons_doctor_register form.
+ * 
+ * @param array $form_state
+ * @return array The created form. 
+ */
+function sbq_commons_doctor_register($profiles) {
+  module_load_include('pages.inc', 'user', 'user');
+  $output = drupal_get_form('user_register_form');
+  $login = drupal_get_form('user_login');
+  $content = array(
+      '#prefix' => '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+                      <div class="modal-dialog">
+                           <div class="modal-content"> ',
+      'user_login' => $login,
+      'user_doctor_register' => $output,
+      '#suffix' => '</div></div></div>'
+  );
+  $content = render($content);
+  die($content);
 }

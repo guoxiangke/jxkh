@@ -81,6 +81,7 @@ exclude[css][] = 'modules/user/user.css'
 stylesheets[all][] = bootstrap/css/bootstrap.min.css
 stylesheets[all][] = css/styles.css
 stylesheets[all][] = css/sbq-all-page.css
+stylesheets[all][] = css/new-list.css
 
 ; Built-in conditional stylesheet support has been removed from Zen 7.x-5.x.
 ; Instead, Zen now adds conditional-comment-included classes to the html
