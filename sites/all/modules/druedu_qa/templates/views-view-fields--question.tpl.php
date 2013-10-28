@@ -76,7 +76,7 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
     <div class="votes pull-left"><?php print $value_1; ?></div>
       <div class="q-margin">
     <div class="q-content span12">
-      <div class="q-body"><?php print $body; ?></div>
+      <div class="q-body"><p><?php print $body; ?></p></div>
       <?php if(!empty($field_attachments)):?>
       <div class="q-files"><?php print $field_attachments; ?></div>
       <?php endif;?>
@@ -151,7 +151,7 @@ foreach ( $view->result as $q_a_item) {//both for question & answers.
      <?php print render($q_a_item->comments['#content']);?>
      <div class="clearfix">
       <div class="q-feedback">
-        <a class="comment_button btn btn-mini" data-trigger="click" data-placement='bottom'><i class="icon-comments icon-small"></i><?php echo t('comments');?></a>
+        <a class="comment_button btn btn-mini" data-trigger="click" data-placement='bottom'><i class="icon-comment icon-small"></i><?php echo t('comments');?></a>
       </div>
 
        <!--  <div class="q-feedback">

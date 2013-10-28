@@ -1,9 +1,10 @@
 ﻿
-ul {
-list-style-type: none;
+.item-list ul li
+,ul li {
+  list-style: none;
 }
 form .description {
-	display: none;
+  display: none;
 }
 
 .sbq-slide-row {
@@ -11,13 +12,11 @@ width: 30%;
 float: left;
 }
 #block-user-login .form-item-name label,#block-user-login .form-item-pass label{
-	display: none;
+  display: none;
 }
 
 /*layout for all--guo*/
-#main {
-padding-top: 7em;
-}
+
 .bs-docs-nav {
 text-shadow: 0 -1px 0 rgba(0,0,0,.15);
 background-color: #563d7c;
@@ -25,12 +24,12 @@ border-color: #463265;
 box-shadow: 0 1px 0 rgba(255,255,255,.1);
 }
 .region-header {
-	width: 10%;
-	float: left;
+  width: 10%;
+  float: left;
 }
 #block-views-exposure-platform-block-index ,#block-views-friend-activities-index{
-	width: 50%;
-	float: left;
+  width: 50%;
+  float: left;
 }
 /* 全局样式 
    编写日期：2013-10-12
@@ -42,10 +41,10 @@ box-shadow: 0 1px 0 rgba(255,255,255,.1);
   width: 980px;
 }
 #main ,.sbq-columns-3{
-	margin: 0;
+  margin: 0;
 }
 .sbq-layout {
-	padding: 0 10px;
+  padding: 0 10px;
 }
 
 @media (min-width: 980px) {
@@ -211,11 +210,511 @@ box-shadow: 0 1px 0 rgba(255,255,255,.1);
     margin-left: 91.66666666666666%;
   }
 }
-.sidebar-first #content {
-	width: 75%;
+
+.clearfix {
+  clear: both;
+}
+/*add by syy*/
+
+
+/*导航里的样式*/
+
+/*body背景图*/
+body { font-family:"Microsoft YaHei UI"; font-size:14px; color:#333; background: url(../img/lodin_15.png);}
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {font-family:"Microsoft YaHei UI";}
+/*导航左侧部分样式*/
+#site-name{text}
+#header{
+  background:url(../img/lodin_01.png) repeat-x 0 0;
+  height:46px;
+  border:none;
+}
+#header .navbar-header{
+  background:red;
+  padding-left:27px;
+  background:#fff;
+}
+#logo .header__logo-image,#header .header__site-name{
+  background:#fff;
+  margin-top:9px;
+  height:67px;
+
+}
+#header .container .navbar-header{width:230px;}
+#header .container .navbar-header .header__logo .header__logo-image{display:;}
+#header .container .navbar-header .header__logo{ background:url(../img/lodin_04.png) no-repeat 0 10px ;  width:230px;display:inline-block;}
+
+
+.header__name-and-slogan h1.header__site-name{display:none;}
+#header .header__site-name{
+  width:130px;
+}
+.header__site-name a:hover{
+  text-decoration:none;
+}
+#header .header__site-name,#header .header__site-slogan{
+  float:left;
+  margin-top: 0;
+}
+#header .header__site-slogan{
+  background:url(../img/lodin_07.png) no-repeat 0 0;
+  float:left;margin-top:13px;
+  margin-left:12px;
+  text-indent:-9999px;
+  width:155px;
+  height:24px;
+}
+
+/*导航右侧部分样式*/
+.header .container .header__secondary-menu .nav .menu__item a:hover {background:none;text-decoration:underline}
+#header .header__secondary-menu{
+  float:left;
+  margin-left:170px;
+  padding:0;margin-top:0;
+  margin-top:-17px;
+}
+#header .header__secondary-menu a{
+  color:#fff;
+  font:normal normal normal 10px/2em '微软雅黑';
+}
+
+/*main 里的样式*/
+
+#main .sbq-page-news-layout{
+  margin-top:-13px;
+  /*padding-left:15px;*/
+}
+#main .region-sidebar-first{
+  padding:0;
+ /* margin-left:5px;*/
+  padding-bottom:125px;
+  margin-top:-13px;
+  margin-left:-10px;
+  /*border:1px solid #ccc;*/
+  border-top:none;
+}
+#block-user-login .item-list ul.sbq_doctor_register_button{
+  background:url(../img/inputg.png) no-repeat -8px -10px;
+  height:37px;
+  width:191px;
+  text-align:center;
+  font:normal normal normal 14px/2em '微软雅黑';
+  line-height:36px;
+  margin-left:27px;
+  margin-top:40px;
+}
+#block-user-login .item-list ul.sbq_doctor_register_button li{
+margin:0;
+}
+#block-user-login .item-list ul.sbq_doctor_register_button a{
+  color:#fff;
+}
+#block-user-login .form-type-textfield {
+  width:190px;
+  margin:0px;
+  margin-left:27px;
+  border-top:1px dashed #ccc;
+  padding-top:19px;
+  margin-top:21px;
+}
+#block-user-login .form-type-password{
+  width:190px;
+  margin:0;
+  margin-left:27px;
+  margin-top:17px;
+}
+#block-user-login .form-type-checkbox{
+  margin:0;
+  margin-left:27px;
+  font:normal normal normal 10px/2em '微软雅黑';
+  color:#999999;
+  height:30px;
+  line-height:30px;
+  float:left;
+  padding:0;
+}
+#block-user-login .form-type-checkbox .option{
+  padding-top:4px;
+  display:block;
+  float:right;
+}
+#block-user-login .item-list ul.sbq_request_pass_button{
+  /*width:61px;*/
+  float:left;
+  margin:0;
+  height:39px;
+  line-height:39px;
+  font:normal normal normal 10px/2em '微软雅黑';
+  color:#32679b;
+  padding-top:6px;
+  margin-left:20px;
+}
+#block-user-login .form-wrapper{
+  clear:both;
+}
+#block-user-login .form-wrapper input{
+  background:url(../img/inputg.png) no-repeat -8px -10px;
+  width:191px;
+  margin-left:27px;
+  text-align:center;
+  font:normal normal normal 14px/0.5em '微软雅黑';
+  color:#fff;
+  height:37px;
+  border:0;
+  border-radius:0;
+  margin-top:0;
+  padding:0
+}
+#block-user-login .item-list ul.sbq_customer_register_button{
+  background:url(../img/inputg.png) no-repeat -209px -13px;
+  width:190px;
+  margin-left:27px;
+  height:34px;
+  padding-left:40px;
+  font:normal normal normal 14px/2em '微软雅黑';
+}
+#block-user-login .item-list ul.sbq_customer_register_button li a{
+  color:#fff;
+}
+#block-user-login span.sbq_login_thirdpart{
+  color:#7e7e7e;
+  margin-left:27px;
+  display:block;
+  border-top:1px dashed #ccc;
+  margin-top:23px;
+  font:normal normal normal 10px/2em '微软雅黑';
+  padding-top:4px;
+  width:190px;
+}
+
+#block-user-login .item-list ul.sbq_custom_login{
+  margin-left:27px;
+  border-bottom:1px dashed #ccc;
+  height:35px;
+  width:190px;
+}
+#block-user-login .item-list ul.sbq_custom_login li{
+  width:21px;
+  height:19px;
+  float:left;
+  margin:0;
+  padding:0;
+  margin-right:9px;
+  
+}
+#block-user-login .item-list ul.sbq_anonymous_visit_button{
+  clear:both;
+background:url(../img/inputg.png) no-repeat -209px -13px;
+  width:191px;
+  height:34px;
+  margin-left:27px;
+  padding-top:5px;
+ text-align:center;
+}
+#block-user-login .item-list ul.sbq_anonymous_visit_button li{margin:0}
+#block-user-login .item-list ul.sbq_anonymous_visit_button a{
+  font:normal normal normal 14px/1em '微软雅黑';
+  color:#fff;
+}
+#block-devel-switch-user{
+  clear:both;
+}
+
+/*main 里右侧的内容*/
+#content{
+  display:block;
+}
+.view-index-activity-blok-image div.field-content{
+  margin-left:31px;
+  margin-top:-17px;
+}
+
+/*曝光台*/
+#content #block-views-exposure-platform-slideshow{
+  background:#fff;
+  width:718px;
+  height:273px;
+  position:relative;
+  margin-left:7px;
+}
+#content #block-views-exposure-platform-slideshow .block-title{
+  background:url(../img/bgt.png) no-repeat 0 0;
+  text-indent:-9999px;
+  margin-top:50px;
+  margin-bottom:10px;
+}
+#myCarousel .carousel-inner{
+  padding-left:26px;
+}
+#myCarousel .carousel-inner .sbq-slide-row{
+  margin-right:43px;
+  
+  width:190px;
+}
+#myCarousel .carousel-inner .sbq-slide-row img{
+  border:1px solid #ccc;
+  padding:5px;
+}
+#myCarousel .carousel-inner .sbq-slide-row-2{
+  margin-right:0px; 
+}
+#myCarousel .carousel-inner .field-content{
+  margin-bottom:11px;
+}
+
+#myCarousel .carousel-inner .sbq-slide-row .views-field-title span a{
+  color:#000;
+  font:normal normal normal 14px/0.5em '微软雅黑';
+}
+#myCarousel .carousel-indicators{
+  position:absolute;
+  left:350px;
+  top:156px;
+  height:40px;
+  padding-top:10px;
+}
+#myCarousel .carousel-indicators li{
+  background:gray;
+}
+#myCarousel a.left{
+  display:none;
+}
+#myCarousel a.right{
+  display:none;
+}
+#myCarousel .carousel-indicators .active{
+  background:#029835;
+}
+/*红黑榜*/
+#content #block-views-exposure-platform-block-index{
+  background:#fff url(../img/ss_06.png) no-repeat 0 0;
+  width:353px;
+  float:left;
+  margin-left:10px;
+  _display:inline;
+  margin-top:15px;
+}
+#content #block-views-exposure-platform-block-index .block-title{
+  text-indent:-9999px;
+  height:31px;
+  margin:0;
+}
+#block-views-exposure-platform-block-index .view-content{
+  padding-top:26px;
+  padding-left:33px;
+}
+#content #block-views-exposure-platform-block-index .view-exposure-platform .view-content .field-content{
+  height:33px;
+  display:block;
+  
+}
+#content #block-views-exposure-platform-block-index .view-exposure-platform .view-content .field-content a{
+  font:normal normal normal 14px/0.5em '微软雅黑';
+  color:#343434;
+}
+
+/*红榜单*/
+#content #block-views-friend-activities-index{
+  background:url(../img/ss_08.png) no-repeat 0 0;
+  _display:inline;
+  width:353px;
+  margin-left:10px;
+  margin-top:15px;
+}
+#content #block-views-friend-activities-index .block-title{
+  text-indent:-9999px;
+  height:31px;
+  margin:0;
+}
+#block-views-friend-activities-index .view-content{
+  padding-top:26px;
+  padding-left:33px;
+  background:#fff;
+}
+#content #block-views-friend-activities-index .view-friend-activities .view-content .field-content{
+  height:33px;
+  display:block;
+}
+#content #block-views-friend-activities-index .view-friend-activities .view-content .field-content a{
+  font:normal normal normal 14px/0.5em '微软雅黑';
+  color:#343434;
+}
+
+.navbar-fixed-top, .navbar-fixed-bottom {
+position: absolute;
+right: 0;
+left: 0;
+border-width: 0 0 1px;
+}
+
+/* 全站通用页底
+   编写日期:2013-10-17
+*/
+#footer{
+  background:#fff;
+}
+#footer-right,#footer-left{
+  display:none;
+}
+#about-links ul{
+  padding:0;text-align:center
+}
+#about-links ul li {
+  display:inline-block;
+  color:#ccc;
+  font-size:12px
+}
+#about-links ul li a {
+  color:#ccc;
+  font-size:12px;
+  margin:0px 10px
+}
+#about-links ul li a:hover {
+  color:#333;
+  text-decoration: underline;
+}
+.region-footer{
+  padding:0px; 
+  background: url(../img/lodin_31.png);
+  border-top:1px solid #e9e9e9;
+}
+#footer-copy {
+  text-align:center;
+  background:url(../img/line_12.png) no-repeat center top;
+  padding-top:20px;
+  color:#ccc;
+  padding-bottom:40px;
+  font-size:12px;
+}
+#footer-copy  a {
+  color:#ccc;
+  font-size:12px
+}
+#footer-copy  a:hover {
+  color:#333;
+  text-decoration: underline;
+}
+
+/*首页  医生快速通道*/
+#sbq_doctor_quick_register .modal-dialog {width:800px;}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-header .close {margin-top:0px;color:#fff;text-shadow:0 1px 0 #000;opacity:10;}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-header h4.modal-title {font-size:18px;color:#fff;text-shadow:0 1px 1px #000;margin-left:20px;}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-header {background:url(../img/lodin_01.png) repeat-x;height:46px;border-top-left-radius:5px;border-top-right-radius:5px;padding:10px;}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #user_login_form {width:190px;float:left;margin-right:45px;margin-top:27px;}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #user_login_form #user-login div input{border-left:0;}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #user_login_form .form-item-name label{display:none}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #user_login_form .form-type-password label{display:none}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #doctor_register_form .user-info-from-cookie div .form-actions{border-top:1px solid #f2f2f2;padding-top:10px;}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #doctor_register_form .user-info-from-cookie div .form-actions input{background:url(../img/inputg.png) no-repeat -209px -13px;width:190px;height:34px;text-shadow:0 1px 1px #000;color:#fff;border-radius:0;border:0;padding:0;margin-left:80px;}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #user_login_form #user-login div .form-actions input{background:url(../img/inputg.png) no-repeat -8px -13px;width:190px;height:34px;text-shadow:0 1px 1px #000;color:#fff;border-radius:0;border:0;} 
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body {background:url(../img/ruk-bg.png) no-repeat 18px 15px;float:left;}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #doctor_register_form{width:450px;float:right;margin-top:27px}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #doctor_register_form .user-info-from-cookie div span.input-group-addon{display:none;}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #doctor_register_form .user-info-from-cookie div label{display:inline-block;width:70px;text-align:center;margin-right:10px;font-weight:normal}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #doctor_register_form .user-info-from-cookie div input{width:230px;border-radius:0}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #doctor_register_form .user-info-from-cookie div .field-name-field-doctor-license div .form-wrapper legend {text-align:center;width:100px;margin-bottom:0; font-size:14px;}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #doctor_register_form .user-info-from-cookie div .field-name-field-doctor-license div .form-wrapper .fieldset-wrapper .form-type-managed-file {margin-top:0;}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #doctor_register_form .user-info-from-cookie div .field-name-field-doctor-license div .form-wrapper .fieldset-wrapper .form-type-managed-file label {display:none;}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #doctor_register_form .user-info-from-cookie div .field-name-field-doctor-license div .form-wrapper .fieldset-wrapper .form-type-managed-file .form-managed-file .image-widget-data input[type="file"] {display:inline-block;}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-footer {border-top:0;}
+/*注册新用户*/
+.page-customer-register #page .content_warpper #content {padding-left:21px;padding-right:21px;margin-top:-15px;min-height:505px;}
+.page-customer-register #page .content_warpper #content div #edit-account .input-group-addon {display:none;}
+.page-customer-register #page .content_warpper #content div #edit-account .form-type-password-confirm .form-type-password {width:38.3em}
+.page-customer-register #page .content_warpper #content div #edit-account .form-type-password-confirm .form-type-password .password-strength {margin-bottom:1.4em;margin-top:0;}
+.page-customer-register #page .content_warpper #content div #edit-account div .form-control {width:38%;}
+.page-customer-register #page .content_warpper #content div #edit-account div label {font-weight:normal;text-align:center;width:80px;display:inline-block;}
+.page-customer-register #page .content_warpper #content .breadcrumb {display:none;}
+.page-customer-register #page .content_warpper #content h1.page__title { font-size:18px; color:#060;text-shadow:0 1px 1px #ccc;border-bottom:1px solid #f2f2f2;padding-bottom:10px;}
+.page-customer-register #page .content_warpper #content div .form-actions .btn {border:0;border-radius:0;color:#fff;text-shadow:0 1px 1px #000;width:190px;height:37px;margin-left:80px;background:url(../img/inputg.png) no-repeat -209px -10px}
+
+
+/*new*/
+.sbq_custom_login li{
+  float: left;
+
+}
+#user-login ul{
+   height: 35px;
+   padding: 5px 0;
+   position: relative;
+   border-bottom: 1px dashed #ccc;
+}
+.item-list ul li{
+  margin: 0 0 0 10px !important;
+}
+.sbq_login_thirdpart{
+  width: 100%;
+  padding: 10px 0 0;
+  display: block;
+  border-top: 1px dashed #ccc;
+}
+.form-item .captcha label,.fieldset-description{
+  display:none !important;
+}
+.form-wrapper legend{
+  float: left;
+  width: 72px;
+}
+.fieldset-wrapper{
+  position: relative;
+  margin: -20px 0 0 82px;
+}
+/*#doctor_register_form .fieldset-wrapper input{
+  width: 200px !important;
+}*/
+fieldset.captcha {
+  border: none  !important;
+  padding: 0px  ;
+}
+
+.captcha  label{
+  display:none !important;
+}
+
+.captcha legend span{
+  display: inline-block;
+  text-align: center;
+  margin-right: 10px;
+  font-weight: normal;
+  font-size: 14px;
+}
+
+.captcha .fieldset-wrapper input {
+  width: 138px !important;
+}
+#doctor_register_form .form-required {
+  display: none;
+}
+
+.captcha img{
+  float: right;
+  position: absolute;
+  right: 137px;
+}
+
+fieldset.captcha{
+  margin: 1.5em 0;
+}
+#doctor_register_form .field-name-field-doctor-phone {
+  padding: 1.5em 0;
 }
 
 
-.clearfix {
-	clear: both;
+
+#user_login_form ul {
+  margin: 0;
+}
+
+ul.sbq_custom_login li.first {
+  margin: 0 !important;
+}
+
+/**dale**/
+#block-user-login .form-item-captcha-response input {
+  background-image: none; 
+}
+
+.password-suggestions {
+  display: none;
 }

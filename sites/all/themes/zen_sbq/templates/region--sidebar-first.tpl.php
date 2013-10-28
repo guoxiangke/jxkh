@@ -9,6 +9,8 @@
 ?>
 <?php if ($content): ?>
   <section class="<?php print $classes; ?> col-md-3">
+    <div class="sidebar_warpper_left">
     <?php print $content; ?>
+   </div>
   </section>
 <?php endif; ?>

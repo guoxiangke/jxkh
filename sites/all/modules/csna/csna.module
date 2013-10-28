@@ -6,7 +6,6 @@
  * framework and API to allow other modules to define specific authentication
  * methods from Chinese Social Networks through a supported OAuth protocol.
  */
-
 define('CSNA_OAUTH2', 'oauth2');
 
 /**
@@ -14,28 +13,28 @@ define('CSNA_OAUTH2', 'oauth2');
  */
 function csna_menu() {
   $items['csna/%csna_provider'] = array(
-    'title' => 'CSNA Redirect',
-    'page callback' => 'csna_redirect',
-    'page arguments' => array(1),
-    'access callback' => 'user_is_anonymous',
-    'type' => MENU_CALLBACK,
+      'title' => 'CSNA Redirect',
+      'page callback' => 'csna_redirect',
+      'page arguments' => array(1),
+      'access callback' => 'user_is_anonymous',
+      'type' => MENU_CALLBACK,
   );
 
   $items['csna/%csna_provider/callback'] = array(
-    'title' => 'Authentication callback',
-    'page callback' => 'csna_callback',
-    'page arguments' => array(1),
-    'access callback' => 'user_is_anonymous',
-    'type' => MENU_CALLBACK,
+      'title' => 'Authentication callback',
+      'page callback' => 'csna_callback',
+      'page arguments' => array(1),
+      'access callback' => 'user_is_anonymous',
+      'type' => MENU_CALLBACK,
   );
 
   $items['admin/config/services/csna'] = array(
-    'title' => 'Chinese Social Networks Authentication settings (CSNA)',
-    'description' => 'Configure the CSNA key or secrect code settings for third party authentication API providers.',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('csna_admin_settings'),
-    'access arguments' => array('administer csna'),
-    'file' => 'csna.admin.inc',
+      'title' => 'Chinese Social Networks Authentication settings (CSNA)',
+      'description' => 'Configure the CSNA key or secrect code settings for third party authentication API providers.',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('csna_admin_settings'),
+      'access arguments' => array('administer csna'),
+      'file' => 'csna.admin.inc',
   );
 
   return $items;
@@ -61,10 +60,10 @@ function csna_provider_load($provider_id) {
  */
 function csna_permission() {
   return array(
-    'administer csna' => array(
-      'title' => t('Administer CSNA'),
-      'description' => t('Perform administration tasks for CSNA.'),
-    ),
+      'administer csna' => array(
+          'title' => t('Administer CSNA'),
+          'description' => t('Perform administration tasks for CSNA.'),
+      ),
   );
 }
 
@@ -74,9 +73,9 @@ function csna_permission() {
 function csna_theme($existing, $type, $theme, $path) {
   $providers = csna_providers();
   return array(
-    'csna_providers' => array(
-      'arguments' => array('providers' => $providers),
-    ),
+      'csna_providers' => array(
+          'arguments' => array('providers' => $providers),
+      ),
   );
 }
 
@@ -85,9 +84,9 @@ function csna_theme($existing, $type, $theme, $path) {
  */
 function csna_redirect($provider) {
   $parameters = array(
-    'client_id' => $provider['key'],
-    'redirect_uri' => $provider['callback'],
-    'response_type' => 'code',
+      'client_id' => $provider['key'],
+      'redirect_uri' => $provider['callback'],
+      'response_type' => 'code',
   );
   drupal_goto($provider['authorize_uri'], array('query' => $parameters));
 }
@@ -121,34 +120,33 @@ function csna_callback($provider) {
         } while (user_load_by_name($name));
       }
       $edit = array(
-        'name' => $name,
-        'status' => 1,
-      );
-      {
-        if(isset($data['weibo'])) {
+          'name' => $name,
+          'status' => 1,
+      ); {
+        if (isset($data['weibo'])) {
           $info = $data['weibo'];
-        // Load the files contents
-        $image = file_get_contents(str_replace('/50/', '/180/', $info->profile_image_url).'.jpg');
-        $path = variable_get('user_picture_path', 'pictures');
-        $timezone = variable_get('date_default_timezone', 'Asia/Chongqing');
-        // Returns the new file object
-        $file = file_save_data($image, "public://$path/picture-".$data['uid']."-".time().".jpg", FILE_EXISTS_RENAME); 
-        //- See more at: http://rowlandsgroup.com/articles/2012/02/nick-schuch/programmatically-insert-local-files-managed-files#sthash.6IpSojlJ.dpuf
+          // Load the files contents
+          $image = file_get_contents(str_replace('/50/', '/180/', $info->profile_image_url) . '.jpg');
+          $path = variable_get('user_picture_path', 'pictures');
+          $timezone = variable_get('date_default_timezone', 'Asia/Chongqing');
+          // Returns the new file object
+          $file = file_save_data($image, "public://$path/picture-" . $data['uid'] . "-" . time() . ".jpg", FILE_EXISTS_RENAME);
+          //- See more at: http://rowlandsgroup.com/articles/2012/02/nick-schuch/programmatically-insert-local-files-managed-files#sthash.6IpSojlJ.dpuf
           $edit = array(
-            // 'open_gender'=>$userInfo['gender'],
-            //profile_image_url format http://tp1.sinaimg.cn/1691862500/50/1267524211/1
-            'picture'=>$file->fid,        
-            'signature'=>$info->description,
-            'signature_format' => 'plain_text',
-            // 'gender' =>
-            'language' => 'zh-hans',
-            'timezone ' => $timezone,
-            'roles' => array(
-              DRUPAL_AUTHENTICATED_RID => 'authenticated user',
-              5 => 'patient',
-            ),
-            'name' => $name,
-            'status' => 1,
+              // 'open_gender'=>$userInfo['gender'],
+              //profile_image_url format http://tp1.sinaimg.cn/1691862500/50/1267524211/1
+              'picture' => $file->fid,
+              'signature' => $info->description,
+              'signature_format' => 'plain_text',
+              // 'gender' =>
+              'language' => 'zh-hans',
+              'timezone ' => $timezone,
+              'roles' => array(
+                  DRUPAL_AUTHENTICATED_RID => 'authenticated user',
+                  5 => 'patient',
+              ),
+              'name' => $name,
+              'status' => 1,
           );
         }
       }
@@ -184,12 +182,10 @@ function csna_execute_user_login($account) {
 function csna_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'user_login' || $form_id == 'user_login_block' || $form_id == 'user_register_form') {
     $providers = csna_providers();
-    if (isset($form['submitted']['user_login_block']['#suffix']) && !empty($form['submitted']['user_login_block']['#suffix'])) {
-      $form['submitted']['user_login_block']['#suffix'] .= theme('csna_providers', $providers);
-    }
-    else {
-      $form['submitted']['user_login_block']['#suffix'] = theme('csna_providers', $providers);
-    }
+    $form['csna_login'] = array(
+        '#markup' => theme('csna_providers', $providers),
+        '#weight' => 1000,
+    );
   }
 }
 
@@ -232,13 +228,13 @@ function csna_providers($valid = FALSE) {
 
     foreach ($providers as $provider_id => & $provider) {
       $defaults = array(
-        'provider_id' => $provider_id,
-        'base' => $provider_id,
-        'title' => '',
-        'description' => '',
-        'active' => FALSE,
-        'callback' => $base_url . url('csna/' . $provider_id . '/callback'),
-        'file' => '',
+          'provider_id' => $provider_id,
+          'base' => $provider_id,
+          'title' => '',
+          'description' => '',
+          'active' => FALSE,
+          'callback' => $base_url . url('csna/' . $provider_id . '/callback'),
+          'file' => '',
       );
 
       $provider += $defaults;
@@ -283,5 +279,5 @@ function theme_csna_providers($providers) {
   foreach ($providers as $provider_id => $provider) {
     $items[] = l($provider['display_title'], 'csna/' . $provider_id, array('html' => TRUE));
   }
-  return '<span class="sbq_login_thirdpart">使用其他账户登录</span>'.theme('item_list', array('items' => $items,'attributes' =>array('class'=>'sbq_custom_login')));
+  return '<span class="sbq_login_thirdpart">使用其他账户登录</span>' . theme('item_list', array('items' => $items, 'attributes' => array('class' => 'sbq_custom_login')));
 }

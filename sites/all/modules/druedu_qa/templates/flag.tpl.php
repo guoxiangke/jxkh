@@ -30,7 +30,9 @@
  * advanced theming you may have to remove all the whitespace.
  */
   //if i have no right use the flag “Accepted”,please hide it
-  if($flag_access) {
+if($answer_flagged) {
+  echo '<span color="red">已被提问者接受为最佳答案！</span>';
+}elseif($flag_access) {
 ?>
 <span class="<?php print $flag_wrapper_classes; ?>">
   <?php if ($link_href): ?>

@@ -26,7 +26,13 @@
   <meta property="wb:webmaster" content="9f98f4dfca7d0618" />
   <meta property="qc:admins" content="6250526456630167216375" />
 
-  <?php print $styles; ?>
+  <?php print $styles; ?>  
+  <!-- HTML5 element support for IE6-8 -->
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script> 
+    <script src="//v3.bootcss.com/assets/js/html5shiv.js"></script>
+    <script src="//v3.bootcss.com/assets/js/respond.min.js"></script>
+  <![endif]-->
   <?php print $scripts; ?>
   <?php if ($add_html5_shim and !$add_respond_js): ?>
     <!--[if lt IE 9]>

@@ -135,8 +135,8 @@
  */
 function _zen_layout_col_md($columns = 1) {
   $class = FALSE;
-  
-  switch($columns) {
+
+  switch ($columns) {
     case 1:
       $class = '12';
       break;
@@ -147,7 +147,7 @@ function _zen_layout_col_md($columns = 1) {
       $class = '5';
       break;
   }
-  
+
   return $class;
 }
 
@@ -217,10 +217,11 @@ function zen_sbq_preprocess_page(&$variables) {
   }
   if (arg(0) == 'node' && is_numeric(arg(1))) {
     $node = node_load(arg(1));
-    if ($node->nid)
+    if (isset($node->nid)) {
       $variables['page_id'] = 'page-node-' . $node->nid;
-    if ($node->nid)
       $variables['page_class'] = 'page-' . $node->type;
+    }
+      
   }
 }
 
@@ -442,32 +443,32 @@ function zen_sbq_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'user_login_block') {
 
     // @see user_login_block
-      $items = array();
-      if (variable_get('user_register', USER_REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL)) {
+    $items = array();
+    if (variable_get('user_register', USER_REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL)) {
 //        $items[] = l(t('Create new doctor account'), 'doctor/register', array('attributes' => array('title' => t('Create a new user account.'))));
-              $items[] = '<a href="#user_doctor_register"  data-toggle="modal" class="user_doctor_register_ajax">'.t('Create new doctor account').'</a>';
-      }
-      $form['doctor_register'] = array('#markup' => theme('item_list', array('items' => $items,'attributes' =>array('class'=>'sbq_doctor_register_button'))),'#weight' => -10);
+      $items[] = '<a href="/doctor/register"  data-toggle="modal" class="user_doctor_register_ajax">' . t('Create new doctor account') . '</a>';
+    }
+    $form['doctor_register'] = array('#markup' => theme('item_list', array('items' => $items, 'attributes' => array('class' => 'sbq_doctor_register_button'))), '#weight' => -10);
 
-      $items = array();
-      if (variable_get('user_register', USER_REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL)) {
-        $items[] = l(t('Create new account'), 'customer/register', array('attributes' => array('title' => t('Create a new user account.'))));
-      }
-      $form['links'] = array('#markup' => theme('item_list', array('items' => $items,'attributes' =>array('class'=>'sbq_customer_register_button'))));
+    $items = array();
+    if (variable_get('user_register', USER_REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL)) {
+      $items[] = l(t('Create new account'), 'customer/register', array('attributes' => array('title' => t('Create a new user account.'))));
+    }
+    $form['links'] = array('#markup' => theme('item_list', array('items' => $items, 'attributes' => array('class' => 'sbq_customer_register_button'))));
 
     $items = array();
     $items[] = l(t('Request new password'), 'user/password', array('attributes' => array('title' => t('Request new password via e-mail.'))));
 
-      # code...
-      // $form['actions']['#prefix'] = '<div class="input-prepend input-append">';
-      // $form['actions']['#suffix'] = '</div>';
-      $form['remember_me_a'] = array('#markup' => theme('item_list', array('items' => $items,'attributes' =>array('class'=>'sbq_request_pass_button'))));
+    # code...
+    // $form['actions']['#prefix'] = '<div class="input-prepend input-append">';
+    // $form['actions']['#suffix'] = '</div>';
+    $form['remember_me_a'] = array('#markup' => theme('item_list', array('items' => $items, 'attributes' => array('class' => 'sbq_request_pass_button'))));
 
-      $items = array();
-      if (variable_get('user_register', USER_REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL)) {
-        $items[] = l(t('Visit anonymous'), 'center', array('attributes' => array('title' => t('Create a new user account.'))));
-      }
-      $form['anonymous_link'] = array('#markup' => theme('item_list', array('items' => $items,'attributes' =>array('class'=>'sbq_anonymous_visit_button'))),'#weight' => 10);
+    $items = array();
+    if (variable_get('user_register', USER_REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL)) {
+      $items[] = l(t('Visit anonymous'), 'center', array('attributes' => array('title' => t('Create a new user account.'))));
+    }
+    $form['anonymous_link'] = array('#markup' => theme('item_list', array('items' => $items, 'attributes' => array('class' => 'sbq_anonymous_visit_button'))), '#weight' => 10);
 
     $form['actions']['#weight'] = 6;
     $form['links']['#weight'] = 7;
@@ -480,4 +481,97 @@ function zen_sbq_form_alter(&$form, &$form_state, $form_id) {
     if (arg(1) == 'register')
       $form['submitted']['user_login_block']['#access'] = FALSE;
   }
+
+}
+
+
+
+
+
+function zen_sbq_form_element_label($variables) {
+  $element = $variables['element'];
+  // This is also used in the installer, pre-database setup.
+  $t = get_t();
+  
+  // If title and required marker are both empty, output no label.
+  if ((!isset($element['#title']) || $element['#title'] === '') && empty($element['#required'])) {
+    return '';
+  }
+
+  // If the element is required, a required marker is appended to the label.
+  $required = !empty($element['#required']) ? theme('form_required_marker', array('element' => $element)) : '';
+  if($element['#name'] == 'pass[pass1]'){
+    $element['#title'] = t('设定密码');
+  }
+  $title = filter_xss_admin($element['#title']);
+
+  $attributes = array();
+  // Style the label as class option to display inline with the element.
+  if ($element['#title_display'] == 'after') {
+    $attributes['class'] = 'option';
+  }
+  // Show label only to screen readers to avoid disruption in visual flows.
+  elseif ($element['#title_display'] == 'invisible') {
+    $attributes['class'] = 'element-invisible';
+  }
+
+  if (!empty($element['#id'])) {
+    $attributes['for'] = $element['#id'];
+  }
+
+  // The leading whitespace helps visually separate fields from inline labels.
+  return ' <label' . drupal_attributes($attributes) . '>' . $t('!title !required', array('!title' => $title, '!required' => $required)) . "</label>\n";
+}
+
+function zen_sbq_block_view_user_login_alter(&$data, $block) {
+    global $user;
+    if (!$user->uid && !(arg(0) == 'user' && (arg(1) == 'login'))) {
+        $block->subject = t('User login');
+        $block->content = drupal_get_form('user_login_block');
+    }
+}
+
+
+
+/**
+ * Preprocess function for the yesno template.
+ * QA
+ */
+function zen_sbq_preprocess_rate_template_yesno(&$variables) {
+  extract($variables);
+  $up_classes = 'rate-yesno-btn';
+  $down_classes = 'rate-yesno-btn';
+  if (isset($results['user_vote'])) {
+    if($results['user_vote']>0) {
+      $up_classes .= ' rate-voted rate-voted-yes';
+    }elseif($results['user_vote']<0) {
+      $down_classes .= ' rate-voted rate-voted-no';
+      // dpm($down_classes,'down_cl1asses');
+    }
+  }
+  $buttons = array();
+  foreach ($links as $link) {
+    // if($variables['content_id']== 2928 ) dpm($link,'link');
+    if($link['value']>0) {
+      $button = theme('rate_button', array('text' => $link['text'], 'href' => $link['href'], 'class' => $up_classes));
+    }else {
+      $button = theme('rate_button', array('text' => $link['text'], 'href' => $link['href'], 'class' => $down_classes));
+    }
+    
+    $button .= $link['votes'];
+    $buttons[] = $button;
+  }
+  $variables['buttons'] = $buttons;
+
+  $info = array();
+  if ($mode == RATE_CLOSED) {
+    $info[] = t('Voting is closed.');
+  }
+  if ($mode != RATE_COMPACT && $mode != RATE_COMPACT_DISABLED) {
+    if (isset($results['user_vote'])) {
+      $info[] = t('You voted \'@option\'.', array('@option' => t($results['user_vote'])));
+    }
+  }
+  $variables['info'] = implode(' ', $info);
+
 }

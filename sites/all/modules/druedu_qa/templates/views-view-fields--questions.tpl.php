@@ -65,8 +65,8 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
 		<?php // <div class="q-views"><?php print $totalcount; ? ></div> ?>
 	</div>
 	</div>
-	<div class="container-fluid clearfix">
-	<div class="q-main clearfix">
+	<div class="container-fluid">
+	<div class="q-main">
 		<div class="q-title"><?php print $title; ?></div>
 		<div class="q-body span12"><?php print $body; ?></div>
 
