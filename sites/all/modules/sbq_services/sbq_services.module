@@ -4,12 +4,12 @@
  * Implements hook_services_resources.
  */
 function sbq_services_services_resources() {
-  module_load_include('inc', 'sbq_services', 'resources/grow_records_resource');
-  $resources = array(
-      '#api_version' => 3002,
-  );
-  $resources += grow_records_resource_definition();
-  return $resources;
+    module_load_include('inc', 'sbq_services', 'resources/grow_records_resource');
+    $resources = array(
+        '#api_version' => 3002,
+    );
+    $resources += grow_records_resource_definition();
+    return $resources;
 }
 
 //function sbq_services_services_request_postprocess_alter($controller, $args, &$result) {
@@ -22,3 +22,37 @@ function sbq_services_services_resources() {
 //  dpm($form);
 //  dpm($form_state);
 //}
+
+function sbq_services_node_submit($node, $form, &$form_state) {
+    // Decompose the selected menu parent option into 'menu_name' and 'plid', if
+    // the form used the default parent selection widget.
+//  if (!empty($form_state['values']['menu']['parent'])) {
+//    list($node->menu['menu_name'], $node->menu['plid']) = explode(':', $form_state['values']['menu']['parent']);
+//  }
+
+    dpm($node);
+    dpm($form);
+    dpm($form_state);
+}
+
+/**
+ * @file Documentation about Services alter hooks.
+ */
+
+/**
+ * Allow to alter arguments before they are passed to service callback.
+ *
+ * @param $controller
+ *   Controller definition
+ * @param $args
+ *   Array of arguments
+ * @param $options
+ *
+ * @see services_controller_execute()
+ * @see services.runtime.inc
+ */
+function sbq_services_request_preprocess_alter($controller, &$args, $options) {
+    dvm($controller);
+    dvm($args);
+    dvm($options);
+}

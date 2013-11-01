@@ -336,6 +336,10 @@ function sbq_commons_modal_html($data, $id = 'sbq_modal', $title = '') {
  * @see captcha_form_alter
  */
 function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_times = 3, $mintue = 10) {
+    $url = explode('/', $_GET['q']);
+    if(isset($url[0]) && $url[0] == 'api'){
+        return ;
+    }
     $pre_times = $fail_times - 1;
     $pre_ind = $fail_times - 2;
     // Visitor does not have permission to skip CAPTCHAs.
@@ -352,7 +356,7 @@ function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_time
                 ->condition('event', 'failed_login_attempt_ip')
                 ->condition('identifier', $current_ip)
                 ->range(0, $fail_times)
-                ->orderBy('timestamp')
+                ->orderBy('timestamp', 'desc')
                 ->execute();
         if ($fail_login->rowCount() < $pre_times) {
             //drupal_rebuild_form($form_id, $form_state);
@@ -378,5 +382,143 @@ function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_time
     // Get placement in form and insert in form.
     $captcha_placement = _captcha_get_captcha_placement($form_id, $form);
     _captcha_insert_captcha_element($form, $captcha_placement, $captcha_element);
+    
+}
 
+/**
+ * Remove relationship request.
+ */
+function sbq_commons_user_relationships_ui_remove_ajax($viewer_id, $rid, $viewd_id) {
+    $user = user_load($viewer_id);
+    $relationship = user_relationships_load($rid);
+    if (!user_relationships_ui_check_access('delete', NULL, $relationship)) {
+        drupal_access_denied();
+        exit();
+    }
+    if (!user_relationships_load($rid)) {
+        sbq_commons_ajax_response('success', '找不到此关系！', NULL, render($html));
+    }
+    user_relationships_delete_relationship($relationship, $user);
+    drupal_set_message(user_relationships_get_message('removed', $relationship));
+    $html = sbq_commons_user_relationship_view(user_load($viewd_id), NULL, NULL);
+    sbq_commons_ajax_response('success', 'success', NULL, render($html));
+}
+
+/**
+ * Process relationship request.
+ */
+function sbq_commons_user_relationships_ui_request_ajax($viewer_id, $rid, $viewed_id) {
+    //#578372 leave all form values in the object for other functions to use
+    $relationship = new stdClass;
+    $relationship->requester = user_load($viewer_id);
+    $relationship->requestee = user_load($viewed_id);
+    $relationship->type = user_relationships_type_load($rid);
+    $relationship = user_relationships_request_relationship($relationship);
+    if ($relationship === FALSE || !$relationship) {
+        sbq_commons_ajax_response('success', '不能建立此关系', NULL, render($html));
+    }
+    //  drupal_set_message(user_relationships_get_message(($relationship->approved ? 'pre_approved' : 'submitted'), $relationship));
+    $html = sbq_commons_user_relationship_view(user_load($viewed_id), NULL, NULL);
+    sbq_commons_ajax_response('success', 'success', NULL, render($html));
+}
+
+/**
+ * Process relationship request.
+ */
+function sbq_commons_user_relationships_ui_pending_requested_ajax($viewer_id, $rid, $viewed_id, $action) {
+    $user = user_load($viewer_id);
+    $relationships = user_relationships_load(array('rid' => $rid), array('include_user_info' => TRUE));
+    $relationship = $relationships[$rid];
+    $requester = $relationship->requester;
+    $requestee = $relationship->requestee;
+
+    switch ($action) {
+        case 'approve':
+            if (!user_relationships_ui_check_access('approve', NULL, $relationship)) {
+                drupal_access_denied();
+                exit();
+            }
+            $relationship->approved = TRUE;
+            user_relationships_save_relationship($relationship, $action);
+            //drupal_set_message(user_relationships_get_message('accepted', $relationship));
+
+            $html = sbq_commons_user_relationship_view(user_load($viewed_id), NULL, NULL);
+            sbq_commons_ajax_response('success', 'success', NULL, render($html));
+            break;
+
+        case 'cancel':
+            if (!user_relationships_ui_check_access('request', NULL, $relationship)) {
+                drupal_access_denied();
+                exit();
+            }
+            user_relationships_delete_relationship($relationship, $user, $form_state['values']['action']);
+            //drupal_set_message(user_relationships_get_message($form_state['values']['action'], $relationship));
+
+            break;
+
+        case 'disapprove':
+            if (!user_relationships_ui_check_access('approve', NULL, $relationship)) {
+                drupal_access_denied();
+                exit();
+            }
+            user_relationships_delete_relationship($relationship, $user, $form_state['values']['action']);
+            // drupal_set_message(user_relationships_get_message($form_state['values']['action'], $relationship));
+            $html = sbq_commons_user_relationship_view(user_load($viewed_id), NULL, NULL);
+            sbq_commons_ajax_response('success', 'success', NULL, render($html));
+            break;
+
+        default:
+            drupal_set_message(user_relationships_get_message('default'));
+    }
+
+    //$form_state['redirect'] = str_replace('destination=', '', drupal_get_destination());
+}
+
+function sbq_commons_user_relationship_view($account, $view_mode, $langcode) {
+    global $user;
+    if (($account->uid == $user->uid) && user_relationships_user_access('maintain @relationship relationships')) {
+        _user_relationships_ui_set_notifications($account);
+        return;
+    }
+
+    $output = array();
+    if ($list = sbq_commons_relationships_ui_actions_between($user, $account, array('remove' => 1))) {
+        $output['relations'] = array(
+            '#title' => t('Your relationships to this user'),
+            '#type' => 'user_profile_item',
+            '#markup' => theme('item_list', array('items' => $list)),
+            '#attributes' => array('class' => array('user_relationships_ui')),
+        );
+    }
+    if ($actions = sbq_commons_relationships_ui_actions_between($user, $account, array('add' => 1, 'requested' => 1, 'received' => 1))) {
+        $output['actions'] = array(
+            '#title' => t('Relationship actions'),
+            '#type' => 'user_profile_item',
+            '#markup' => theme('item_list', array('items' => $actions)),
+            '#attributes' => array('class' => array('user_relationships_ui_actions')),
+        );
+    }
+    if (sizeof($output)) {
+        $account->content['user_relationships_ui'] = array(
+            '#type' => 'user_profile_category',
+            '#title' => t('Relationships'),
+            '#weight' => 10,
+        );
+        $account->content['user_relationships_ui'] = array_merge($account->content['user_relationships_ui'], $output);
+        $account->content['user_relationships_ui']['#prefix'] = '<div id="sbq_commons_user_relationship_view">';
+        $account->content['user_relationships_ui']['#suffix'] = '</div>';
+    }
+    return $account->content['user_relationships_ui'];
+}
+/*
+ * response format
+ */
+function sbq_commons_ajax_response($status, $message, $data, $html) {
+    $response = array(
+        'status' => $status,
+        'message' => $message,
+        'data' => $data,
+        'html' => $html,
+    );
+    die(json_encode($response));
 }
