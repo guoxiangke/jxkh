@@ -29,10 +29,10 @@ function sbq_services_node_submit($node, $form, &$form_state) {
 //  if (!empty($form_state['values']['menu']['parent'])) {
 //    list($node->menu['menu_name'], $node->menu['plid']) = explode(':', $form_state['values']['menu']['parent']);
 //  }
-
-    dpm($node);
-    dpm($form);
-    dpm($form_state);
+//
+//    dpm($node);
+//    dpm($form);
+//    dpm($form_state);
 }
 
 /**
@@ -52,7 +52,7 @@ function sbq_services_node_submit($node, $form, &$form_state) {
  * @see services.runtime.inc
  */
 function sbq_services_request_preprocess_alter($controller, &$args, $options) {
-    dvm($controller);
-    dvm($args);
-    dvm($options);
+//    dvm($controller);
+//    dvm($args);
+//    dvm($options);
 }

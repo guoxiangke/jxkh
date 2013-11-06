@@ -10,3 +10,5 @@ sites/*/files/languages
 sites/*/files/styles
 sites/*/files/temp
 sites/*/private
+sites/*/files
+sites/all/modules/test/

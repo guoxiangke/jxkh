@@ -130,3 +130,50 @@ function STARTERKIT_preprocess_block(&$variables, $hook) {
   //}
 }
 // */
+
+/**
+ * Implements hook_form_alter().
+ */
+function zen_kh_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'user_login_block') {
+    // @see user_login_block
+    $items = array();
+    if (variable_get('user_register', USER_REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL)) {
+//        $items[] = l(t('Create new doctor account'), 'doctor/register', array('attributes' => array('title' => t('Create a new user account.'))));
+      $items[] = '<a href="/doctor/register"  data-toggle="modal" class="user_doctor_register_ajax">' . t('Create new doctor account') . '</a>';
+    }
+    $form['doctor_register'] = array('#markup' => theme('item_list', array('items' => $items, 'attributes' => array('class' => 'sbq_doctor_register_button'))), '#weight' => -10);
+
+    $items = array();
+    if (variable_get('user_register', USER_REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL)) {
+      $items[] = l(t('Create new account'), 'customer/register', array('attributes' => array('title' => t('Create a new user account.'))));
+    }
+    $form['links'] = array('#markup' => theme('item_list', array('items' => $items, 'attributes' => array('class' => 'sbq_customer_register_button'))));
+
+    $items = array();
+    $items[] = l(t('Request new password'), 'user/password', array('attributes' => array('title' => t('Request new password via e-mail.'))));
+
+    # code...
+    // $form['actions']['#prefix'] = '<div class="input-prepend input-append">';
+    // $form['actions']['#suffix'] = '</div>';
+    $form['remember_me_a'] = array('#markup' => theme('item_list', array('items' => $items, 'attributes' => array('class' => 'sbq_request_pass_button'))));
+
+    $items = array();
+    if (variable_get('user_register', USER_REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL)) {
+      $items[] = l(t('Visit anonymous'), 'center', array('attributes' => array('title' => t('Create a new user account.'))));
+    }
+    $form['anonymous_link'] = array('#markup' => theme('item_list', array('items' => $items, 'attributes' => array('class' => 'sbq_anonymous_visit_button'))), '#weight' => 10);
+
+    $form['actions']['#weight'] = 6;
+    $form['links']['#weight'] = 7;
+    $form['submitted']['#weight'] = 8;
+    $form['name']['#attributes']['placeholder'] = '邮箱/用户名';
+    $form['pass']['#attributes']['placeholder'] = '请输入密码';
+  }
+  //hide csna links in role register(doctor/register customer/register)
+  if ($form_id == 'user_login' || $form_id == 'user_login_block' || $form_id == 'user_register_form') {
+    if (arg(1) == 'register')
+      $form['submitted']['user_login_block']['#access'] = FALSE;
+  }
+
+}

@@ -953,6 +953,7 @@ function druedu_qa_count_questions() {
   //questions
   // questions/my-questions  
   // questions/unanswered
+  $counts = 0;
   $query = db_select('node', 'n')
       ->fields('n', array('nid'))
       ->condition('n.type ', 'question')

@@ -37,6 +37,23 @@ function grow_records_resource_definition() {
             'access arguments' => array('create', array(array('type' => 'grow_records'))),
             'access arguments append' => FALSE,
         ),
+        'delete' => array(
+            'help' => t('Delete a node'),
+            'file' => array('type' => 'inc', 'module' => 'sbq_services', 'name' => 'resources/grow_records_resource'),
+            'callback' => '_delete',
+            'args' => array(
+                array(
+                    'name' => 'nid',
+                    'optional' => FALSE,
+                    'source' => array('path' => 0),
+                    'type' => 'int',
+                    'description' => 'The nid of the node to delete',
+                ),
+            ),
+            'access callback' => '_node_resource_access',
+            'access arguments' => array('delete'),
+            'access arguments append' => TRUE,
+        ),
         'index' => array(
             'help' => 'List all nodes',
             'file' => array('type' => 'inc', 'module' => 'sbq_services', 'name' => 'resources/grow_records_resource'),
@@ -86,11 +103,10 @@ function grow_records_resource_definition() {
  */
 
 function _create($node) {
-    $node = _grow_records_format($node, 'node');
-    $node = _node_resource_create($node);
-    //return node_load($node['nid']);
-
-    return _grow_records_format(node_load($node['nid']));
+    $node  = _grow_records_format($node, 'node');
+    $node  = _node_resource_create($node);
+    $nodes = _grow_records_format(node_load($node['nid']));
+    return reset($nodes);
 }
 
 /*
@@ -107,7 +123,12 @@ function _retrieve($nid) {
         // cause never ending recursion in rendering.
         unset($node->uri);
     }
-    return _grow_records_format($node);
+    $data = _grow_records_format($node);
+    return reset($data);
+}
+
+function _delete($nid) {
+    return _node_resource_delete($nid);
 }
 
 /*
@@ -115,26 +136,30 @@ function _retrieve($nid) {
  */
 
 function _index($page, $fields, $parameters, $page_size = 10) {
+    global $user;
     $query = new EntityFieldQuery();
     $query->entityCondition('entity_type', 'node')
             ->propertyCondition('status', 1)
             ->propertyCondition('type', 'grow_records');
     if ($parameters['uid']) {
         $query->propertyCondition('uid', $parameters['uid']);
+    } else {
+        $query->propertyCondition('uid', $user->uid);
     }
-    // return $parameters;
     if ($parameters['created']) {
         if (is_array($parameters['created'])) {
-            $query->fieldCondition('field_grow_records_local_id', 'value', $parameters['created'][0], '>');
-            $query->fieldCondition('field_grow_records_local_id', 'value', $parameters['created'][1], '<');
+            $query->propertyCondition('created', 0, '>');
+            $query->propertyCondition('created', time(), '<');
         } else {
-            $query->fieldCondition('field_grow_records_local_id', 'value', $parameters['created'], '=');
+            $query->propertyCondition('created', $parameters['created'], '=');
         }
     }
     $fiter_query = $query;
     $result      = $query->execute();
-    $count       = isset($result['node']) ? count($result['node']) : 0;
-    $result      = $fiter_query->range($page * $page_size, $page_size)->execute();
+
+    $count  = isset($result['node']) ? count($result['node']) : 0;
+    $result = $fiter_query->range($page * $page_size, $page_size)->execute();
+
     if (isset($result['node'])) {
         $ids            = array_keys($result['node']);
         $data['charts'] = _grow_records_format(node_load_multiple($ids));
@@ -150,7 +175,7 @@ function _index($page, $fields, $parameters, $page_size = 10) {
  */
 
 function _grow_records_format($data, $target) {
-    if ($target == 'node') {
+    if (isset($target) && $target == 'node') {
         $node = array(
             'type' => 'grow_records',
             'title' => $data['title'],
@@ -181,7 +206,7 @@ function _grow_records_format($data, $target) {
             'field_grow_records_local_id' => array(
                 'und' => array(
                     array(
-                        'value' => array('date' => date('Y-m-d H:i:s', $data['local_id']))
+                        'value' => $data['local_id']
                     )
                 )
             ),
