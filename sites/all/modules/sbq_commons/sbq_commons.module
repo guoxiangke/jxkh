@@ -11,6 +11,7 @@ define('FOLLOWER_PATIENT', 2);
 define('FRIEND_DOCTOR_PATIENT', 3);
 
 //rid
+define('USER_ADMINSTRATOR_RID', 3);
 define('USER_DOCTOR_RID', 4);
 define('USER_PATIENT_RID', 5);
 define('USER_CERTIFIED_DOCTOR_RID', 7);
@@ -101,7 +102,7 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
     switch ($form_id) {
         case 'question_node_form':
             $form['body']['#access'] = FALSE;
-            $form['title']['#type'] = 'textarea';
+            $form['title']['#type']  = 'textarea';
 
             break;
         case 'post_node_form'://禁止评论 for post 
@@ -634,6 +635,7 @@ function group_subscribe4sbq($group_type, $gid) {
             // define('USER_DOCTOR_RID', 4);
             // define('USER_PATIENT_RID', 5);
             // define('USER_CERTIFIED_DOCTOR_RID', 7);
+            // define('USER_ADMINSTRATOR_RID', 3);
             // 医生can加入医生/患者小组      
             // 患者只能加入患者小组
             global $user;
@@ -645,7 +647,9 @@ function group_subscribe4sbq($group_type, $gid) {
                 if (in_array(USER_PATIENT_RID, array_keys($user->roles)) && $node->type == 'general_group') {
                     return TRUE;
                 }
-                drupal_set_message(t('You are not allow subscribe this %group!',array('%group' =>$node->type)), 'warning', FALSE);
+                if (in_array(USER_ADMINSTRATOR_RID, $user->roles) || $user->uid == 1)
+                    return TRUE;
+                drupal_set_message(t('You are not allow subscribe this %group!', array('%group' => $node->type)), 'warning', FALSE);
                 return FALSE;
             }
         }
@@ -672,7 +676,9 @@ function sbq_commons_preprocess_field(&$variables) {
             if (in_array(USER_PATIENT_RID, array_keys($user->roles)) && $node->type == 'general_group') {
                 return TRUE;
             }
-            drupal_set_message(t('You are not allow subscribe this %group!',array('%group' =>$node->type)), 'warning', FALSE);
+            if (in_array(USER_ADMINSTRATOR_RID, $user->roles) || $user->uid == 1)
+                return TRUE;
+            drupal_set_message(t('You are not allow subscribe this %group!', array('%group' => $node->type)), 'warning', FALSE);
             $variables['items'] = array();
         }
     }
@@ -807,12 +813,11 @@ function sbq_commons_node_view_alter(&$build) {
         $build['#contextual_links']['node'] = array('node', array($node->nid));
     }
     if (og_is_group_type($build['#entity_type'], $build['#bundle']) && ($build['#bundle'] == 'general_group' || $build['#bundle'] == 'doctor_group')) {
-
-        if (isset($build['group_group'])) {
+        $og_ui_status_link = sbq_og_ui_status_link($build['#entity_type'], $node->nid);
+        if ($og_ui_status_link !== FALSE) {
+            $build['ajax_link']['#markup'] = $og_ui_status_link;
             unset($build['group_group'][0]);
         }
-        // ajax加入/退出 小组
-        $build['ajax_link']['#markup'] = sbq_og_ui_status_link($build['#entity_type'], $node->nid);
     }
 }
 
@@ -1015,18 +1020,17 @@ function sbq_commons_module_implements_alter(&$implementations, $hook) {
 //    $implementations['sbq_commons'] = $group;
 //  }
 }
+
 /**
-暂时隐藏的QA功能，发布时带图片，匿名问答！
+  暂时隐藏的QA功能，发布时带图片，匿名问答！
  * Implements hook_form_FORM_ID_alter() for question_node_form().
  */
 function sbq_commons_form_question_node_form_alter(&$form, &$form_state, $form_id) {
-    $switch = FALSE;
-    $form['field_image']['#access'] = $switch;
+    $switch                                 = FALSE;
+    $form['field_image']['#access']         = $switch;
     $form['field_qa_attachment']['#access'] = $switch;
     $form['field_ask_anonymous']['#access'] = $switch;
 }
-
-
 
 /**
  * Theme preprocess for views-view-question.tpl.php.
@@ -1034,28 +1038,27 @@ function sbq_commons_form_question_node_form_alter(&$form, &$form_state, $form_i
  * TODO:we should check in theme level 
  */
 function sbq_commons_preprocess_views_view(&$vars) {
-  $view = $vars['view'];
-  if ($view->name == 'user_center' && $view->current_display == 'my') {
-    $vars['question_node_form'] = druedu_node_add('question');
-
-  }
-  // ///questions, /questions/my-questions, /questions/unanswered, /questions/tagged
-  // $args = array('my-questions', 'unanswered', 'tagged');
-  // if ($view->name == 'questions' && isset($view->args[0]) && !in_array($view->args[0], $args)) {
-  //   //dpm($view);
-  //   drupal_set_title('This page has no result.');
-  //   $vars['empty'] = '<div class="qa-empty">If you came here using a hyperlink, please check the URL and try again.</div>';
-  //   //$view->attachment_before =array('#markup'=>'no result found.');
-  //   //$views= views_get_view('questions');dpm($views,'dpm($view)s');
-  // }
-  // if ($view->name == 'questions' && $view->current_display == 'page_questions_tagged') {
-  //   //
-  //   $query_parameters = drupal_get_query_parameters();
-  //   drupal_set_title('Questions - ' . $query_parameters['field_tags_tid']);
-  // }
-  // //add css for QA 
-  // if ($view->name == 'questions' || $view->name == 'question') {
-  //   // drupal_add_css(drupal_get_path('module', 'druedu_qa') . '/css/druedu_qa.css');
-  //   drupal_add_css(drupal_get_path('module', 'druedu_qa') . '/css/questions.css');
-  // }
+    $view = $vars['view'];
+    if ($view->name == 'user_center' && $view->current_display == 'my') {
+        $vars['question_node_form'] = druedu_node_add('question');
+    }
+    // ///questions, /questions/my-questions, /questions/unanswered, /questions/tagged
+    // $args = array('my-questions', 'unanswered', 'tagged');
+    // if ($view->name == 'questions' && isset($view->args[0]) && !in_array($view->args[0], $args)) {
+    //   //dpm($view);
+    //   drupal_set_title('This page has no result.');
+    //   $vars['empty'] = '<div class="qa-empty">If you came here using a hyperlink, please check the URL and try again.</div>';
+    //   //$view->attachment_before =array('#markup'=>'no result found.');
+    //   //$views= views_get_view('questions');dpm($views,'dpm($view)s');
+    // }
+    // if ($view->name == 'questions' && $view->current_display == 'page_questions_tagged') {
+    //   //
+    //   $query_parameters = drupal_get_query_parameters();
+    //   drupal_set_title('Questions - ' . $query_parameters['field_tags_tid']);
+    // }
+    // //add css for QA 
+    // if ($view->name == 'questions' || $view->name == 'question') {
+    //   // drupal_add_css(drupal_get_path('module', 'druedu_qa') . '/css/druedu_qa.css');
+    //   drupal_add_css(drupal_get_path('module', 'druedu_qa') . '/css/questions.css');
+    // }
 }

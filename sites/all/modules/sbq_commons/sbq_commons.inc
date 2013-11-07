@@ -508,7 +508,7 @@ function sbq_commons_user_relationship_view($account, $view_mode, $langcode) {
         $account->content['user_relationships_ui']['#prefix'] = '<div id="sbq_commons_user_relationship_view">';
         $account->content['user_relationships_ui']['#suffix'] = '</div>';
     }
-    return $account->content['user_relationships_ui'];
+    return isset($account->content['user_relationships_ui']) ? $account->content['user_relationships_ui'] : '';
 }
 /*
  * response format

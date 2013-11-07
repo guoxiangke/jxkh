@@ -37,6 +37,30 @@ function grow_records_resource_definition() {
             'access arguments' => array('create', array(array('type' => 'grow_records'))),
             'access arguments append' => FALSE,
         ),
+        'update' => array(
+            'help' => 'Update a node',
+            'file' => array('type' => 'inc', 'module' => 'sbq_services', 'name' => 'resources/grow_records_resource'),
+            'callback' => '_update',
+            'args' => array(
+                array(
+                    'name' => 'nid',
+                    'optional' => FALSE,
+                    'source' => array('path' => 0),
+                    'type' => 'int',
+                    'description' => 'The nid of the node to update',
+                ),
+                array(
+                    'name' => 'node',
+                    'optional' => FALSE,
+                    'source' => 'data',
+                    'description' => 'The node data to update',
+                    'type' => 'array',
+                ),
+            ),
+            'access callback' => '_node_resource_access',
+            'access arguments' => array('update'),
+            'access arguments append' => TRUE,
+        ),
         'delete' => array(
             'help' => t('Delete a node'),
             'file' => array('type' => 'inc', 'module' => 'sbq_services', 'name' => 'resources/grow_records_resource'),
@@ -110,6 +134,17 @@ function _create($node) {
 }
 
 /*
+ * update
+ */
+
+function _update($id, $data) {
+    $node  = _grow_records_format($data, 'node');
+    $new   = _node_resource_update($id, $node);
+    $nodes = _grow_records_format(node_load($new['nid']));
+    return reset($nodes);
+}
+
+/*
  * get single grow_records
  */
 
@@ -135,7 +170,8 @@ function _delete($nid) {
  * get grow_records list
  */
 
-function _index($page, $fields, $parameters, $page_size = 10) {
+function _index($page, $fields, $parameters, $pagesize) {
+
     global $user;
     $query = new EntityFieldQuery();
     $query->entityCondition('entity_type', 'node')
@@ -146,7 +182,7 @@ function _index($page, $fields, $parameters, $page_size = 10) {
     } else {
         $query->propertyCondition('uid', $user->uid);
     }
-    if ($parameters['created']) {
+    if (isset($parameters['created'])) {
         if (is_array($parameters['created'])) {
             $query->propertyCondition('created', 0, '>');
             $query->propertyCondition('created', time(), '<');
@@ -157,16 +193,23 @@ function _index($page, $fields, $parameters, $page_size = 10) {
     $fiter_query = $query;
     $result      = $query->execute();
 
-    $count  = isset($result['node']) ? count($result['node']) : 0;
-    $result = $fiter_query->range($page * $page_size, $page_size)->execute();
+    $count = isset($result['node']) ? count($result['node']) : 0;
+    if ($pagesize == -1) {
+        $result        = $fiter_query->execute();
+        $data['count'] = $count;
+    } else {
+        $result        = $fiter_query->range($page * $pagesize, $pagesize)->execute();
+        $data['count'] = ceil($count / $pagesize);
+    }
+
 
     if (isset($result['node'])) {
-        $ids            = array_keys($result['node']);
-        $data['charts'] = _grow_records_format(node_load_multiple($ids));
+        $ids    = array_keys($result['node']);
+        $charts = _grow_records_format(node_load_multiple($ids), NULL, $fields);
     }
-    $data['count']    = ceil($count / $page_size);
-    $data['index']    = $page;
-    $data['pagesize'] = $page_size;
+    $data['charts']   = $charts;
+    $data['page']     = $page;
+    $data['pagesize'] = $pagesize;
     return $data;
 }
 
@@ -174,43 +217,66 @@ function _index($page, $fields, $parameters, $page_size = 10) {
  * request response data format
  */
 
-function _grow_records_format($data, $target) {
+function _grow_records_format($data, $target, $fields = '*') {
     if (isset($target) && $target == 'node') {
-        $node = array(
-            'type' => 'grow_records',
-            'title' => $data['title'],
-            'body' => array(
-                'und' => array(
-                    array('value' => $data['body'])
-                ),
-            ),
-            'field_grow_records_file' => array(
-                'und' => array(
-                    array('fid' => $data['fid'])
-                ),
-            ),
-            'field_grow_records_flags' => array(
-                'und' => array(
-                    array(
-                        'value' => $data['flags']
-                    )
-                )
-            ),
-            'field_grow_records_circle' => array(
-                'und' => array(
-                    array(
-                        'value' => $data['circle']
-                    )
-                )
-            ),
-            'field_grow_records_local_id' => array(
-                'und' => array(
-                    array(
-                        'value' => $data['local_id']
-                    )
-                )
-            ),
-        );
+        foreach ($data as $k => $v) {
+            switch ($k) {
+                case 'title':
+                    $node['title']                       = $v;
+                    break;
+                case 'body':
+                    $node['body']['und'][0]['value']                        = $v;
+                    break;
+                case 'fid':
+                    $node['field_grow_records_file']['und'][0]['fid']     = $v;
+                    break;
+                case 'flags':
+                    $node['field_grow_records_flags']['und'][0]['value']    = $v;
+                    break;
+                case 'circle':
+                    $node['field_grow_records_circle']['und'][0]['value']   = $v;
+                    break;
+                case 'local_id':
+                    $node['field_grow_records_local_id']['und'][0]['value'] = $v;
+                    break;
+            }
+        }
+        $node['type'] = 'grow_records';
+//        $node         = array(
+//            'type' => 'grow_records',
+//            'title' => $data['title'],
+//            'body' => array(
+//                'und' => array(
+//                    array('value' => $data['body'])
+//                ),
+//            ),
+//            'field_grow_records_file' => array(
+//                'und' => array(
+//                    array('fid' => $data['fid'])
+//                ),
+//            ),
+//            'field_grow_records_flags' => array(
+//                'und' => array(
+//                    array(
+//                        'value' => $data['flags']
+//                    )
+//                )
+//            ),
+//            'field_grow_records_circle' => array(
+//                'und' => array(
+//                    array(
+//                        'value' => $data['circle']
+//                    )
+//                )
+//            ),
+//            'field_grow_records_local_id' => array(
+//                'und' => array(
+//                    array(
+//                        'value' => $data['local_id']
+//                    )
+//                )
+//            ),
+//        );
         //$node['field_grow_records_local_id'][LANGUAGE_NONE][0]['value']['date'] = date('Y-m-d H:i:s', $data['local_id']);
         return $node;
     } else {
@@ -222,7 +288,7 @@ function _grow_records_format($data, $target) {
         }
         $format_data = array();
         foreach ($data as $node) {
-            $format_data[] = array(
+            $chart = array(
                 'chart_id' => $node->nid,
                 'title' => $node->title,
                 'body' => $node->body[LANGUAGE_NONE][0]['value'],
@@ -233,6 +299,15 @@ function _grow_records_format($data, $target) {
                 'create_time' => $node->created,
                 'modify_time' => $node->changed,
             );
+            if ($fields != '*') {
+                $field_chart = array();
+                foreach (explode(',', $fields) as $field) {
+                    $field_chart[$field] = $chart[$field];
+                }
+                $format_data[] = $field_chart;
+            } else {
+                $format_data[] = $chart;
+            }
         }
         return $format_data;
     }

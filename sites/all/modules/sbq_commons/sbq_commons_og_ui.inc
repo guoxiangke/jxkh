@@ -20,7 +20,7 @@ function sbq_og_ui_status_link($group_type, $gid, $field_name = NULL) {
         return $output;
     }
 
-    return 'error';
+    return FALSE;
 }
 
 function sbq_og_ui_subscribe_ajax($group_type, $gid) {
