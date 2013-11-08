@@ -1,82 +1,297 @@
-.sbq-clearfix {*zoom:1}.sbq-clearfix:before, .sbq-clearfix:after {display:table;line-height:0;content:""}.sbq-clearfix:after {clear:both}
-#header, #content, #navigation, .region-sidebar-first, .region-sidebar-second, #footer{ padding: 0}
-#header{ height: 60px; background: url(../images/hbg.png) repeat-x 0 0; padding-top: 26px}
-html{ background-color: #f3f3f3}
-.sbq-width{ width: 960px}
-.sbq-center{ margin: 0 auto}
-.sbq-border{ border: 1px solid #d2d2d2}
-a{ text-decoration: none; color: #000}
-a:hover{ color: #16b4c7}
-li{ list-style: none;}
-#footer{height:160px;background-color:#4d4d4d}
-
+.sbq-clearfix {
+	*zoom:1
+}
+.sbq-clearfix:before,.sbq-clearfix:after {
+	display:table;
+	line-height:0;
+	content:""
+}
+.sbq-clearfix:after {
+	clear:both
+}
+#header,#content,#navigation,.region-sidebar-first,.region-sidebar-second,#footer {
+	padding:0
+}
+#header {
+	height:60px;
+	background:url(../images/hbg.png) repeat-x 0 0;
+	padding-top:26px
+}
+html {
+	background-color:#f3f3f3
+}
+.sbq-width {
+	width:960px
+}
+.sbq-center {
+	margin:0 auto
+}
+.sbq-border {
+	border:1px solid #d2d2d2
+}
+a {
+	text-decoration:none;
+	color:#000
+}
+a:hover {
+	color:#16b4c7
+}
+li {
+	list-style:none;
+}
+#footer {
+	height:160px;
+	background-color:#4d4d4d
+}
 .header__logo {
-    display: block;
-    height: 55px;
-    width: 53px;/* background: url(../../images/logo.png) no-repeat 0 0;*/
+	display:block;
+	height:55px;
+	width:53px;
+	/* background:url(../../images/logo.png) no-repeat 0 0;
+	*/
 }
-
 .header__name-and-slogan {
-    margin-left: 10px;
-    width: 245px;
+	margin-left:10px;
+	width:245px;
 }
-.header__site-name {float: left;}
-
-#navigation {position: static; float: left; width: auto; height: 14px; margin-top: 26px;margin-left: 100px;}
-#navigation .links li, #navigation .menu li{ line-height: 1em;padding: 0 45px 0 0;}
-#navigation .links li a, #navigation .menu li a{ line-height: 1em; font-size: 14px; color: #fff; text-decoration: none;}
-#navigation .links li a:hover, #navigation .menu li a:hover{}
-
-#secondary-menu{ position: absolute; right: 0; top: -25px; font-size: 12px; color: #fff}
-#secondary-menu a{ color: #fff;}
-.header__region.region.region-header{ float: right; width: 206px; height: 36px; margin-top: 12px; clear: none; background: url(../images/search.png) no-repeat 0 0;}
-#edit-search-block-form--2{ border: none;margin: 6px 0 0 5px;padding-left: 5px;width: 160px;}
-.header__site-name{ font-size: 30px; line-height: 1em; margin-top: 15px}
-.header__site-link,.header__site-link:visited{color: #fff}
-.header__site-link:hover{ text-decoration: none;}
-
-.header__site-slogan {margin: 25px 0 0 11px; float: left; color: #fff; font-size: 16px;}
-
-#edit-actions input{ width: 24px; height: 24px; background: url(../images/search.png) 243px -5px; text-indent: -1000em; border: medium none;}
-#header .sbq-center.sbq-width.sbq-clearfix{position: relative;}
-#main{ padding-top: 19px;}
-
-.sidebar-first .region-sidebar-first{ width: 220px; background-color: #fff}
-
-.sbq-btn1{ width: 184px; height: 34px; border: none;padding: 0; font-size: 14px; color: #fff}
-#edit-submit--2{ background: url(../images/btn1.png) no-repeat 0 -223px;}
-.sidebar-first #content{margin-left: 231px; width: 733px;}
-
-#about-links ul{ margin: 0}
-#about-links li {display: inline;}
-
-.block-views .views-row a{ font-size: 14px; }
-.sbq_customer_register_button a{background: url(../images/btn1.png) no-repeat 0 bottom; display: block;width: 184px; height: 34px;font-size: 14px; color: #fff; text-align: center; line-height: 34px;}
-#block-user-login ul{ padding: 0}
-.sbq_login_thirdpart{ font-size: 14px; display: block; border-top: 1px solid #d4d4d4; padding-top: 23px; padding-left: 15px}
-#block-user-login .sbq_doctor_register_button{ height: 34px; padding-top: 90px; padding-bottom: 23px; margin: 0; background: url(../images/abg.png) no-repeat 0 0; border-bottom: 1px solid #d4d4d4}
-.user_doctor_register_ajax { display: block;background: url(../images/btn1.png) no-repeat 0 0; text-align: center; line-height: 34px; color: #fff; margin: 0 auto}
-.user_doctor_register_ajax:hover{ color: #fff}
-#content #sbq-bd-list .block-views{ float: left; width: 50% }
-#block-views-exposure-platform-block-index{ background-color: #fff}
-#block-views-exposure-platform-slideshow .view-exposure-platform{ height: 212px; overflow: hidden; padding:17px 0 17px 19px}
-#block-views-exposure-platform-slideshow .view-content{ height: 176px; overflow: hidden;}
-.sbq-slide-row{ width: 220px; height: 176px; float: left; margin-right: 17px}
-.views-field-title a{ font-size: 14px; line-height: 30px;}
-#block-views-exposure-platform-slideshow .block-title{ font-size: 30px;font-weight: normal;height: 1em;line-height: 1em; margin-bottom: 9px}
-
-.view-id-index_activity_blok_image{ width: 756px; height: 398px; background: url(../images/slb.png) no-repeat -12px -50px;}
-.view-id-index_activity_blok_image .field-content{ width: 718px; height: 312px; margin-left: 8px; overflow: hidden; padding-top: 9px}
-.view-id-index_activity_blok_image .field-content img{ width: 718px; height: 318px;}
-
-#block-views-exposure-platform-slideshow{ margin-top: -34px}
-
-#sbq-bd-list .view-id-exposure_platform,#sbq-bd-list .view-id-friend_activities{padding: 0 18px;width: 329px; }
-#sbq-bd-list .block-title{ border-bottom: 3px solid #16b4c7; text-indent: 0.7em;}
-
-#edit-name,#edit-pass{ width: 186px; height: 36px; line-height: 36px; font-size: 14px; border: none; background: url(../images/user.png) no-repeat 0 0; padding-left: 28px}
-#edit-pass{ background: url(../images/user.png) no-repeat 0 0;}
-
-#user-login-form .form-item,#user-login-form .form-actions,#user-login-form .item-list,.sbq_request_pass_button{ width: 186px; margin: 0 auto}
-#user-login-form .form-item-name{ margin: 30px auto 24px auto}
-.form-item-remember-me label,.sbq_request_pass_button{ font-size: 12px;vertical-align: top;}
+.header__site-name {
+	float:left;
+}
+#navigation {
+	position:static;
+	float:left;
+	width:auto;
+	height:14px;
+	margin-top:26px;
+	margin-left:100px;
+}
+#navigation .links li,#navigation .menu li {
+	line-height:1em;
+	padding:0 45px 0 0;
+}
+#navigation .links li a,#navigation .menu li a {
+	line-height:1em;
+	font-size:14px;
+	color:#fff;
+	text-decoration:none;
+}
+#navigation .links li a:hover,#navigation .menu li a:hover {
+	}#secondary-menu {
+	position:absolute;
+	right:0;
+	top:-25px;
+	font-size:12px;
+	color:#fff
+}
+#secondary-menu a {
+	color:#fff;
+}
+.header__region.region.region-header {
+	float:right;
+	width:206px;
+	height:36px;
+	margin-top:12px;
+	clear:none;
+	background:url(../images/search.png) no-repeat 0 0;
+}
+#edit-search-block-form--2 {
+	border:none;
+	margin:6px 0 0 5px;
+	padding-left:5px;
+	width:160px;
+}
+.header__site-name {
+	font-size:30px;
+	line-height:1em;
+	margin-top:15px
+}
+.header__site-link,.header__site-link:visited {
+	color:#fff
+}
+.header__site-link:hover {
+	text-decoration:none;
+}
+.header__site-slogan {
+	margin:25px 0 0 11px;
+	float:left;
+	color:#fff;
+	font-size:16px;
+}
+#edit-actions input {
+	width:24px;
+	height:24px;
+	background:url(../images/search.png) 243px -5px;
+	text-indent:-1000em;
+	border:medium none;
+}
+#header .sbq-center.sbq-width.sbq-clearfix {
+	position:relative;
+}
+#main {
+	padding-top:19px;
+}
+.sidebar-first .region-sidebar-first {
+	width:220px;
+	background-color:#fff
+}
+.sbq-btn1 {
+	width:184px;
+	height:34px;
+	border:none;
+	padding:0;
+	font-size:14px;
+	color:#fff
+}
+#edit-submit--2 {
+	background:url(../images/btn1.png) no-repeat 0 -223px;
+}
+.sidebar-first #content {
+	margin-left:231px;
+	width:733px;
+}
+#about-links,#footer-copy {
+	text-align:center;
+	color:#fff;
+}
+#about-links ul {
+	margin:0
+}
+#about-links li {
+	display:inline;
+	padding:0 10px
+}
+#about-links a,#footer-copy a {
+	color:#fff;
+	font-size:14px;
+}
+#footer-copy {
+	margin-top:32px
+}
+.block-views .views-row a {
+	font-size:14px;
+}
+.sbq_customer_register_button a {
+	background:url(../images/btn1.png) no-repeat 0 bottom;
+	display:block;
+	width:184px;
+	height:34px;
+	font-size:14px;
+	color:#fff;
+	text-align:center;
+	line-height:34px;
+}
+#block-user-login ul {
+	padding:0
+}
+.sbq_login_thirdpart {
+	font-size:14px;
+	display:block;
+	border-top:1px solid #d4d4d4;
+	padding-top:23px;
+	padding-left:15px
+}
+#block-user-login .sbq_doctor_register_button {
+	height:34px;
+	padding-top:90px;
+	padding-bottom:23px;
+	margin:0;
+	background:url(../images/abg.png) no-repeat 0 0;
+	border-bottom:1px solid #d4d4d4
+}
+.user_doctor_register_ajax {
+	display:block;
+	background:url(../images/btn1.png) no-repeat 0 0;
+	text-align:center;
+	line-height:34px;
+	color:#fff;
+	margin:0 auto
+}
+.user_doctor_register_ajax:hover {
+	color:#fff
+}
+#content #sbq-bd-list .block-views {
+	float:left;
+	width:50%
+}
+#block-views-exposure-platform-block-index {
+	background-color:#fff
+}
+#block-views-exposure-platform-slideshow .view-exposure-platform {
+	height:212px;
+	overflow:hidden;
+	padding:17px 0 17px 19px;
+	background-color:#fff
+}
+#block-views-exposure-platform-slideshow .view-content {
+	height:176px;
+	overflow:hidden;
+}
+.sbq-slide-row {
+	width:220px;
+	height:176px;
+	float:left;
+	margin-right:17px
+}
+.views-field-title a {
+	font-size:14px;
+	line-height:30px;
+}
+#block-views-exposure-platform-slideshow .block-title {
+	font-size:30px;
+	font-weight:normal;
+	height:1em;
+	line-height:1em;
+	margin-bottom:9px;
+	text-indent:-1000em;
+	background:url(../images/bgt.png) no-repeat 0 0;
+}
+.view-id-index_activity_blok_image {
+	width:756px;
+	height:398px;
+	background:url(../images/slb.png) no-repeat -12px -50px;
+}
+.view-id-index_activity_blok_image .field-content {
+	width:718px;
+	height:312px;
+	margin-left:8px;
+	overflow:hidden;
+	padding-top:9px
+}
+.view-id-index_activity_blok_image .field-content img {
+	width:718px;
+	height:318px;
+}
+#block-views-exposure-platform-slideshow {
+	margin-top:-34px
+}
+#sbq-bd-list .view-id-exposure_platform,#sbq-bd-list .view-id-friend_activities {
+	padding:0 18px;
+	width:329px;
+}
+#sbq-bd-list .block-title {
+	border-bottom:3px solid #16b4c7;
+	text-indent:0.7em;
+}
+#edit-name,#edit-pass {
+	width:186px;
+	height:36px;
+	line-height:36px;
+	font-size:14px;
+	border:none;
+	background:url(../images/user.png) no-repeat 0 0;
+	padding-left:28px
+}
+#edit-pass {
+	background:url(../images/user.png) no-repeat 0 0;
+}
+#user-login-form .form-item,#user-login-form .form-actions,#user-login-form .item-list,.sbq_request_pass_button {
+	width:186px;
+	margin:0 auto
+}
+#user-login-form .form-item-name {
+	margin:30px auto 24px auto
+}
+.form-item-remember-me label,.sbq_request_pass_button {
+	font-size:12px;
+	vertical-align:top;
+}
