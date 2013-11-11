@@ -266,11 +266,11 @@ li {
 	background-color:#fff
 }
 #sbq-bd-list #block-views-exposure-platform-block-index h2{
-	background: url(../images/black.png) no-repeat 19px center;
+	background: url(../images/red.png) no-repeat 19px center;
 	text-indent: -1000em;
 }
 #sbq-bd-list #block-views-friend-activities-index h2{
-	background: url(../images/red.png) no-repeat 19px center;
+	background: url(../images/black.png) no-repeat 19px center;
 	text-indent: -1000em;
 }
 #block-views-exposure-platform-block-index .view-content,
