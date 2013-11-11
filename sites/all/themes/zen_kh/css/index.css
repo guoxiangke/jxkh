@@ -426,3 +426,7 @@ text-align:center;}
 .sbq_custom_login li:nth-child(4) a:hover{
 	background:#16b4c7 url("../images/kaixin1.png") no-repeat scroll center center;
 }
+#sbq-hhb-title .block__title{
+	background: url("../images/hhb.png") no-repeat scroll 19px center;
+    text-indent: -1000em;
+}
