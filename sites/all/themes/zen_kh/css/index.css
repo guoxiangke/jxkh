@@ -15,7 +15,8 @@
 #header {
 	height:60px;
 	background:url(../images/hbg.png) repeat-x 0 -26px;
-	margin-top:26px
+	margin-top:25px;
+	/*margin-bottom:-25px;*/
 }
 html {
 	background-color:#f3f3f3
@@ -39,10 +40,11 @@ a:hover {
 li {
 	list-style:none;
 }
-#footer {
+#footer.region-footer {
 	height:160px;
 	background-color:#4d4d4d
 }
+#footer-right,#footer-left{ display:none;}
 .header__logo {
 	display:block;
 	height:55px;
@@ -52,7 +54,7 @@ li {
 }
 .header__name-and-slogan {
 	margin-left:10px;
-	width:245px;
+	width:250px;
 }
 .header__site-name {
 	float:left;
@@ -79,7 +81,7 @@ li {
 	}
 	#secondary-menu {
 		position: fixed; top: 0;left: 0;z-index: 10;
-		height: 26px; width: 100%; float: none;
+		height: 25px; width: 100%; float: none;
 		background:url(../images/hbg.png) repeat-x 0 0;
 	font-size:12px;
 	color:#fff
@@ -120,7 +122,7 @@ li {
 	color:#fff;
 	font-size:16px;
 }
-#edit-actions input {
+#edit-actions input#edit-submit {
 	width:24px;
 	height:24px;
 	background:url(../images/search.png) 243px -5px;
@@ -131,7 +133,7 @@ li {
 	position:relative;
 }
 #main {
-	/*margin-top:-26px;*/
+	padding-top:19px;
 }
 #page{
 	margin-bottom: 33px;
@@ -161,9 +163,11 @@ li {
 	margin-left:231px;
 	width:733px;
 }
+#about-links{ margin-top:45px;}
 #about-links,#footer-copy {
 	text-align:center;
 	color:#fff;
+	font-size: 14px;
 }
 #about-links ul {
 	margin:0
@@ -177,7 +181,7 @@ li {
 	font-size:14px;
 }
 #footer-copy {
-	margin-top:32px
+	margin-top:28px
 }
 .block-views .views-row a {
 	font-size:14px;
@@ -191,6 +195,7 @@ li {
 	color:#fff;
 	text-align:center;
 	line-height:34px;
+	margin:0 auto;
 }
 #block-user-login{margin: 0}
 #block-user-login ul {
@@ -203,7 +208,8 @@ li {
   display: table;
 }
 #block-user-login ul.sbq_custom_login{
-	margin: 0 0 110px 0
+	margin: 0 0 110px 0;
+	padding-left:19px;
 }
 #block-user-login ul.sbq_custom_login li{
 	display: inline-block; 
@@ -212,6 +218,9 @@ li {
 	height: 40px;
 	text-indent: -1000em;
 	margin-right: 8px;
+}
+#block-user-login ul.sbq_request_pass_button a{
+	color:#16B4C7;
 }
 #block-user-login ul.sbq_custom_login li.last{
 	margin-right: 0
@@ -237,7 +246,8 @@ li {
 	text-align:center;
 	line-height:34px;
 	color:#fff;
-	margin:0 auto
+	margin:0 auto;
+	width:184px;
 }
 .user_doctor_register_ajax:hover {
 	color:#fff
@@ -328,9 +338,9 @@ li {
 	padding-left:28px
 }
 #edit-pass {
-	background:url(../images/user.png) no-repeat 0 0;
+	background:url(../images/lock.png) no-repeat 0 0;
 }
-#user-login-form .form-item,#user-login-form .form-actions,#user-login-form .item-list,.sbq_request_pass_button {
+#user-login-form .form-item,#user-login-form .form-actions,.sbq_request_pass_button {
 	width:186px;
 	margin:0 auto
 }
@@ -342,7 +352,23 @@ li {
 	font-size:12px;
 	vertical-align:top;
 }
-.form-item-remember-me label{
+#user-login-form .form-item-remember-me label{
 	display: inline;
 }
 #user-login-form .form-item-remember-me{ display: inline;margin-left: 17px;}
+
+.sbq_anonymous_visit_button a{ display:block;
+	background: url("../images/btn1.png") no-repeat scroll 0 -223px;
+    border: medium none;
+    color: #FFFFFF;
+    font-size: 14px;
+    height: 34px;
+    line-height:34px;
+    padding: 0;
+    width: 184px;
+    margin:0 auto;
+text-align:center;}
+
+.region.region-sidebar-first.column.sidebar{
+	border:1px solid #d1d1d1;
+}
