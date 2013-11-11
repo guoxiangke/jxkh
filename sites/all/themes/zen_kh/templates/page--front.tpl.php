@@ -97,13 +97,13 @@
         <h2 class="block__title block-title">红黑榜-一个不可告人的秘密</h2>
       </div>
       <div id="sbq-bd-list" class="sbq-clearfix sbq-border">
-        <div id="block-views-exposure-platform-block-index" class="block block-views contextual-links-region odd">
-          <h2 class="block__title block-title">黑榜单</h2>
-        <?php echo views_embed_view('exposure_platform', $display_id = 'block_index');?>
-        </div>
         <div id="block-views-friend-activities-index" class="block block-views contextual-links-region last even">
           <h2 class="block__title block-title">红榜单</h2>
         <?php echo views_embed_view('friend_activities', $display_id = 'index');?>
+        </div>
+        <div id="block-views-exposure-platform-block-index" class="block block-views contextual-links-region odd">
+          <h2 class="block__title block-title">黑榜单</h2>
+        <?php echo views_embed_view('exposure_platform', $display_id = 'block_index');?>
         </div>
       </div>
 
