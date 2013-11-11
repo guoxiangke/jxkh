@@ -104,6 +104,10 @@ li {
 	margin:6px 0 0 5px;
 	padding-left:5px;
 	width:160px;
+	height:26px;
+}
+#edit-search-block-form--2:focus{
+	border:none;
 }
 .header__site-name {
 	font-size:30px;
@@ -125,7 +129,7 @@ li {
 #edit-actions input#edit-submit {
 	width:24px;
 	height:24px;
-	background:url(../images/search.png) 243px -5px;
+	background:url(../images/search.png) 241px -5px;
 	text-indent:-1000em;
 	border:medium none;
 }
@@ -208,8 +212,7 @@ li {
   display: table;
 }
 #block-user-login ul.sbq_custom_login{
-	margin: 0 0 110px 0;
-	padding-left:19px;
+	margin: 0 0 36px 19px;
 }
 #block-user-login ul.sbq_custom_login li{
 	display: inline-block; 
@@ -226,6 +229,7 @@ li {
 	margin-right: 0
 }
 .sbq_login_thirdpart {
+	color:#8d8d8d;
 	font-size:14px;
 	display:block;
 	border-top:1px solid #d4d4d4;
@@ -269,9 +273,18 @@ li {
 	background: url(../images/red.png) no-repeat 19px center;
 	text-indent: -1000em;
 }
-#block-views-exposure-platform-block-index .view-content,#block-views-friend-activities-index .view-content{
+#block-views-exposure-platform-block-index .view-content,
+#block-views-friend-activities-index .view-content{
 	padding-top: 15px;
+	/*background:url(../images/lt.png) no-repeat 0 27px;*/
 } 
+
+.sbq-index-block.sbq-index-block-activities li {
+    list-style: decimal outside none;
+    height:32px;
+     word-wrap: break-word;
+}
+.sbq-index-block.sbq-index-block-activities li .views-row { height:32px;}
 #block-views-exposure-platform-slideshow .view-exposure-platform {
 	height:212px;
 	overflow:hidden;
@@ -290,7 +303,7 @@ li {
 }
 .views-field-title a {
 	font-size:14px;
-	line-height:30px;
+	line-height:32px;
 }
 #block-views-exposure-platform-slideshow .block-title {
 	font-size:30px;
@@ -320,9 +333,13 @@ li {
 #block-views-exposure-platform-slideshow {
 	margin-top:-34px
 }
-#sbq-bd-list .view-id-exposure_platform,#sbq-bd-list .view-id-friend_activities {
-	padding:0 18px;
-	width:329px;
+.sbq-index-block.sbq-index-block-activities{
+	margin:0;
+}
+#sbq-bd-list .view-id-exposure_platform,
+#sbq-bd-list .view-id-friend_activities {
+	padding:0 0 0 18px;
+	width:347px;
 }
 #sbq-bd-list .block-title {
 	border-bottom:3px solid #16b4c7;
@@ -353,9 +370,10 @@ li {
 	vertical-align:top;
 }
 #user-login-form .form-item-remember-me label{
+	color:#8d8d8d;
 	display: inline;
 }
-#user-login-form .form-item-remember-me{ display: inline;margin-left: 17px;}
+#user-login-form .form-item-remember-me{ margin-left: 17px; width:50%; float:left;}
 
 .sbq_anonymous_visit_button a{ display:block;
 	background: url("../images/btn1.png") no-repeat scroll 0 -223px;
@@ -371,4 +389,40 @@ text-align:center;}
 
 .region.region-sidebar-first.column.sidebar{
 	border:1px solid #d1d1d1;
+}
+#block-user-login ul.sbq_custom_login{
+	width:184px;
+	background:url(../images/tl.png) no-repeat 0 0;
+}
+#block-user-login ul.sbq_custom_login a{display:block; width:40px; height:40px; outline:none;}
+
+#user-login-form .form-actions.form-wrapper {
+    margin-top: 10px;
+}
+#user-login-form .form-type-password{
+	margin-bottom:5px;
+}
+.sbq_custom_login li:nth-child(1) a {
+    background: url("../images/qq.png") no-repeat scroll center center;
+}
+.sbq_custom_login li:nth-child(2) a {
+    background: url("../images/sina.png") no-repeat scroll center center;
+}
+.sbq_custom_login li:nth-child(3) a {
+    background: url("../images/renren.png") no-repeat scroll center center;
+}
+.sbq_custom_login li:nth-child(4) a {
+    background: url("../images/kaxin.png") no-repeat scroll center center;
+}
+.sbq_custom_login li:nth-child(1) a:hover{
+	background:#16b4c7 url("../images/qq1.png") no-repeat scroll center center;
+}
+.sbq_custom_login li:nth-child(2) a:hover{
+	background:#16b4c7 url("../images/sina1.png") no-repeat scroll center center;
+}
+.sbq_custom_login li:nth-child(3) a:hover{
+	background:#16b4c7 url("../images/renren1.png") no-repeat scroll center center;
+}
+.sbq_custom_login li:nth-child(4) a:hover{
+	background:#16b4c7 url("../images/kaixin1.png") no-repeat scroll center center;
 }
