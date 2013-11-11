@@ -14,8 +14,8 @@
 }
 #header {
 	height:60px;
-	background:url(../images/hbg.png) repeat-x 0 0;
-	padding-top:26px
+	background:url(../images/hbg.png) repeat-x 0 -26px;
+	margin-top:26px
 }
 html {
 	background-color:#f3f3f3
@@ -76,16 +76,19 @@ li {
 	text-decoration:none;
 }
 #navigation .links li a:hover,#navigation .menu li a:hover {
-	}#secondary-menu {
-	position:absolute;
-	right:0;
-	top:-25px;
+	}
+	#secondary-menu {
+		position: fixed; top: 0;left: 0;z-index: 10;
+		height: 26px; width: 100%; float: none;
+		background:url(../images/hbg.png) repeat-x 0 0;
 	font-size:12px;
 	color:#fff
 }
 #secondary-menu a {
 	color:#fff;
 }
+#secondary-menu h2{ display: none;}
+#secondary-menu ul{ width: 960px; margin: 0 auto; display: block; text-align: right;}
 .header__region.region.region-header {
 	float:right;
 	width:206px;
@@ -331,11 +334,15 @@ li {
 	width:186px;
 	margin:0 auto
 }
+#user-login-form .form-item label{ display: none;}
 #user-login-form .form-item-name {
 	margin:30px auto 24px auto
 }
 .form-item-remember-me label,.sbq_request_pass_button {
 	font-size:12px;
 	vertical-align:top;
+}
+.form-item-remember-me label{
+	display: inline;
 }
 #user-login-form .form-item-remember-me{ display: inline;margin-left: 17px;}
