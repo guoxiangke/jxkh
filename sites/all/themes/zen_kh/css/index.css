@@ -128,7 +128,10 @@ li {
 	position:relative;
 }
 #main {
-	padding-top:19px;
+	/*margin-top:-26px;*/
+}
+#page{
+	margin-bottom: 33px;
 }
 .sidebar-first .region-sidebar-first {
 	width:220px;
@@ -144,6 +147,12 @@ li {
 }
 #edit-submit--2 {
 	background:url(../images/btn1.png) no-repeat 0 -223px;
+	width:184px;
+	height:34px;
+	border:none;
+	padding:0;
+	font-size:14px;
+	color:#fff
 }
 .sidebar-first #content {
 	margin-left:231px;
@@ -180,8 +189,29 @@ li {
 	text-align:center;
 	line-height:34px;
 }
+#block-user-login{margin: 0}
 #block-user-login ul {
-	padding:0
+	padding:0;
+}
+#block-user-login .sbq_custom_login:before,
+#block-user-login .sbq_custom_login:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+#block-user-login ul.sbq_custom_login{
+	margin: 0 0 110px 0
+}
+#block-user-login ul.sbq_custom_login li{
+	display: inline-block; 
+	float: left;
+	width: 40px;
+	height: 40px;
+	text-indent: -1000em;
+	margin-right: 8px;
+}
+#block-user-login ul.sbq_custom_login li.last{
+	margin-right: 0
 }
 .sbq_login_thirdpart {
 	font-size:14px;
@@ -211,11 +241,24 @@ li {
 }
 #content #sbq-bd-list .block-views {
 	float:left;
-	width:50%
+	width:50%;
+	margin-bottom: 0;
+	padding-bottom: 40px;
 }
 #block-views-exposure-platform-block-index {
 	background-color:#fff
 }
+#sbq-bd-list #block-views-exposure-platform-block-index h2{
+	background: url(../images/black.png) no-repeat 19px center;
+	text-indent: -1000em;
+}
+#sbq-bd-list #block-views-friend-activities-index h2{
+	background: url(../images/red.png) no-repeat 19px center;
+	text-indent: -1000em;
+}
+#block-views-exposure-platform-block-index .view-content,#block-views-friend-activities-index .view-content{
+	padding-top: 15px;
+} 
 #block-views-exposure-platform-slideshow .view-exposure-platform {
 	height:212px;
 	overflow:hidden;
@@ -295,3 +338,4 @@ li {
 	font-size:12px;
 	vertical-align:top;
 }
+#user-login-form .form-item-remember-me{ display: inline;margin-left: 17px;}
