@@ -202,3 +202,69 @@ function sbq_og_ui_unsubscribe($group_type, $gid) {
         return;
     }
 }
+
+/**
+ * 显示小组成员提升/移除管理员ajax连接
+ * @param type $group_type
+ * @param type $gid
+ * @param type $memberid
+ */
+function sbq_group_upgrade_remove_member_status($group_type, $gid, $og_membership_id) {
+    drupal_add_library('system', 'drupal.ajax');
+    $group = entity_load_single($group_type, $gid);
+    if ($og_membership_id) {
+        $account = user_load($og_membership_id);
+    } else {
+        global $user;
+        $account = user_load($user->uid);
+    }
+    list(,, $bundle) = entity_extract_ids($group_type, $group);
+    $og_roles      = og_roles($group_type, $bundle, $gid, FALSE, FALSE);
+    $entities      = og_membership_load_multiple(array(), array('etid' => $account->uid, 'gid' => $gid, 'state' => 1));
+    $og_membership = reset($entities);
+
+    if ($og_roles) {
+        $current_role = og_get_user_roles($group_type, $gid, $account->uid);
+    }
+    $link = '';
+    foreach ($og_roles as $rid => $role) {
+        if (isset($current_role[$rid])) {
+            $href       = "group/{$group_type}/{$gid}/membership/action-role/{$og_membership->id}/{$rid}/0/ajax";
+            $attributes = array(
+                'attributes' => array('class' => array('use-ajax')),
+            );
+            $link .= l('移除', $href, $attributes) . $role;
+        } else {
+            $l = l('提升', "group/{$group_type}/{$gid}/membership/action-role/{$og_membership->id}/{$rid}/1/ajax", array(
+                'attributes' => array('class' => array('use-ajax')),
+                    )
+            );
+            $link .= $l . $role;
+        }
+    }
+
+    return '<div id="og_action_role">' . $link . '</div>';
+}
+
+/**
+ * 提升/移除小组成员角色
+ * @param type $group_type
+ * @param type $gid
+ * @param type $og_membership
+ * @param type $action_role
+ * @param type $role_status
+ */
+function group_membership_action_role_ajax($group_type, $gid, $og_membership, $action_role, $role_status) {
+    $roles = og_get_user_roles($group_type, $gid, $og_membership->etid);
+    if ((int) $role_status === 0) {
+        if (in_array($action_role, array_keys($roles))) {
+            og_role_revoke($group_type, $gid, $og_membership->etid, $action_role);
+        }
+    } elseif ((int) $role_status === 1) {
+        if (!in_array($action_role, array_keys($roles))) {
+            og_role_grant($group_type, $gid, $og_membership->etid, $action_role);
+        }
+    }
+    $commands[] = ajax_command_replace('#og_action_role', sbq_group_upgrade_remove_member_status($group_type, $gid, $og_membership->etid));
+    return array('#type' => 'ajax', '#commands' => $commands);
+}

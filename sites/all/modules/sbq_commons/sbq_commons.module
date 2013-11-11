@@ -18,6 +18,9 @@ define('USER_CERTIFIED_DOCTOR_RID', 7);
 
 function sbq_commons_menu() {
     module_load_all_includes('module', 'user_relationships_ui');
+    module_load_include('inc', 'og_ui');
+
+    //module_load_all_includes('module','og');
     $items['relationship/ajax/%/remove/%/%']  = array(
         'title' => 'Remove relationship',
         'access callback' => 'user_relationships_ui_check_access',
@@ -78,7 +81,15 @@ function sbq_commons_menu() {
         'title' => 'Leave group',
     );
 
-
+    $items['group/%/%/membership/action-role/%og_membership/%/%/ajax'] = array(
+        'delivery callback' => 'ajax_deliver',
+        'type' => MENU_CALLBACK,
+        'page callback' => 'group_membership_action_role_ajax',
+        'page arguments' => array(1, 2, 5, 6, 7),
+        'access callback' => 'og_ui_user_access_group',
+        'access arguments' => array('manage members', 1, 2, 5),
+        'file' => 'sbq_commons_og_ui.inc',
+    );
     return $items;
 }
 
@@ -86,6 +97,7 @@ function sbq_commons_menu() {
  * Implements hook_form_alter().
  */
 function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
+
 // watchdog('sbq_commons', $form_id, array(), WATCHDOG_NOTICE, 'link');
     if (isset($form['comment_body'])) {
         $form['comment_body'][LANGUAGE_NONE][0]['#title'] = t('Comment');
@@ -100,16 +112,26 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
         $form['field_image'][LANGUAGE_NONE]['#title'] = t('image');
     }
     switch ($form_id) {
+        case 'og_ui_edit_membership':
+            $view                               = sbq_group_upgrade_remove_member_status('node', 19850, 126);
+            $form['view']['#markup']            = $view;
+            break;
         case 'question_node_form':
-            $form['body']['#access'] = FALSE;
-            $form['title']['#type']  = 'textarea';
-
+            $form['title']['#access']           = FALSE;
+            $form['body']['und']['0']['#title'] = t('问题');
             break;
         case 'post_node_form'://禁止评论 for post 
             global $user;
             if (isset($form['uid']['#value']) && $user->uid != $form['uid']['#value']) {
                 $form['comment_settings']['#access'] = TRUE;
             }
+
+            if (isset($_GET['og_group_ref'])) {
+                $form['actions']['submit']['#submit'][] = 'sbq_commons_node_form_redirect_handle';
+                $form['#redirect']                      = 'node/' . $_GET['og_group_ref'];
+            }
+            $form['title']['#title']                                  = t('标题');
+            $form['og_group_ref']['und'][0]['default']['#title']      = '请选择帖子发布的小组';
             break;
         case 'privatemsg_new':
             $form['recipient']['#access']                             = FALSE;
@@ -207,10 +229,6 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
 //            break;
         default:
             break;
-    }
-    if (isset($_GET['og_group_ref']) && $form_id == 'post_node_form') {
-        $form['actions']['submit']['#submit'][] = 'sbq_commons_node_form_redirect_handle';
-        $form['#redirect']                      = 'node/' . $_GET['og_group_ref'];
     }
 
     // 验证码判断
@@ -592,34 +610,44 @@ function sbq_commons_node_submit(&$node, &$form, &$form_state) {
             foreach (array('，', '。', ' ', '.', '、', '、', '\\', '／', '/') as $it) {
                 $full_tags = str_replace($it, ',', $full_tags);
             }
-            $full_items              = explode(',', $full_tags);
-            $tid                     = $node->{$field_key}[LANGUAGE_NONE][0]['tid'];
-            $vid                     = $node->{$field_key}[LANGUAGE_NONE][0]['vid'];
-            $vocabulary_machine_name = $node->{$field_key}[LANGUAGE_NONE][0]['vocabulary_machine_name'];
-            if (isset($full_items) && !empty($full_items)) {
-                unset($node->{$field_key}[LANGUAGE_NONE]);
-                $full_items = array_unique($full_items);
-                foreach ($full_items as $items) {
-                    $term = taxonomy_term_load_multiple(array(), array('name' => $items, 'vid' => $vid));
-                    if ($term) {
-                        $term       = reset($term);
-                        $orgin_item = array(
-                            'tid' => $term->tid,
-                            'vid' => $term->vid,
-                            'vocabulary_machine_name' => $term->vocabulary_machine_name,
-                        );
-                    } else {
-                        $orgin_item = array(
-                            'tid' => 'autocreate',
-                            'vid' => $vid,
-                            'vocabulary_machine_name' => $vocabulary_machine_name,
-                        );
+
+            if (isset($node->{$field_key})) {
+                $full_items              = explode(',', $full_tags);
+                $tid                     = $node->{$field_key}[LANGUAGE_NONE][0]['tid'];
+                $vid                     = $node->{$field_key}[LANGUAGE_NONE][0]['vid'];
+                $vocabulary_machine_name = $node->{$field_key}[LANGUAGE_NONE][0]['vocabulary_machine_name'];
+                if (isset($full_items) && !empty($full_items)) {
+                    unset($node->{$field_key}[LANGUAGE_NONE]);
+                    $full_items = array_unique($full_items);
+                    foreach ($full_items as $items) {
+                        $term = taxonomy_term_load_multiple(array(), array('name' => $items, 'vid' => $vid));
+                        if ($term) {
+                            $term       = reset($term);
+                            $orgin_item = array(
+                                'tid' => $term->tid,
+                                'vid' => $term->vid,
+                                'vocabulary_machine_name' => $term->vocabulary_machine_name,
+                            );
+                        } else {
+                            $orgin_item = array(
+                                'tid' => 'autocreate',
+                                'vid' => $vid,
+                                'vocabulary_machine_name' => $vocabulary_machine_name,
+                            );
+                        }
+                        $orgin_item['name']                  = $items;
+                        $node->{$field_key}[LANGUAGE_NONE][] = $orgin_item;
                     }
-                    $orgin_item['name']                  = $items;
-                    $node->{$field_key}[LANGUAGE_NONE][] = $orgin_item;
                 }
             }
         }
+    }
+
+    // for question node title
+    if ($node->type == 'question') {
+        $max_length  = 29;
+        $subject     = trim(truncate_utf8(decode_entities(strip_tags(check_markup($node->body['und'][0]['value']))), $max_length, TRUE));
+        $node->title = $subject;
     }
 }
 

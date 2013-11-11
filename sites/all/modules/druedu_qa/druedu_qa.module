@@ -250,6 +250,7 @@ function druedu_qa_preprocess_flag(&$variables) {
     $variables['flag_access'] = FALSE;
   }
   $answer_node = node_load($variables['entity_id']);
+  if(!isset($answer_node->field_answer[LANGUAGE_NONE]['0']['target_id'])) return;
   $question_nid = $answer_node->field_answer[LANGUAGE_NONE]['0']['target_id'];
   $question = node_load($question_nid);
   global $user;
@@ -754,6 +755,7 @@ function druedu_qa_comment_view($comment, $view_mode, $langcode) {
 function druedu_qa_form_alter(&$form, &$form_state, $form_id) {
 
   if ($form_id == 'answer_node_form' || $form_id == 'question_node_form') {
+    
     $form['author']['#access'] = FALSE;
     $form['options']['#access'] = FALSE;
     $form['comment_settings']['#access'] = FALSE;
