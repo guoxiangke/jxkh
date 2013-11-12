@@ -205,13 +205,16 @@ function sbq_og_ui_unsubscribe($group_type, $gid) {
 
 /**
  * 显示小组成员提升/移除管理员ajax连接
- * @param type $group_type
- * @param type $gid
- * @param type $memberid
+ * @param type $group_type node
+ * @param type $gid node id
+ * @param type $og_membership_id  userid 
  */
 function sbq_group_upgrade_remove_member_status($group_type, $gid, $og_membership_id) {
     drupal_add_library('system', 'drupal.ajax');
     $group = entity_load_single($group_type, $gid);
+    if(!$group || !og_is_group($group_type, $group)){
+        return NULL;
+    }
     if ($og_membership_id) {
         $account = user_load($og_membership_id);
     } else {
@@ -220,9 +223,15 @@ function sbq_group_upgrade_remove_member_status($group_type, $gid, $og_membershi
     }
     list(,, $bundle) = entity_extract_ids($group_type, $group);
     $og_roles      = og_roles($group_type, $bundle, $gid, FALSE, FALSE);
-    $entities      = og_membership_load_multiple(array(), array('etid' => $account->uid, 'gid' => $gid, 'state' => 1));
-    $og_membership = reset($entities);
-
+//    get null why？
+//    $entities      = og_membership_load_multiple(array(), array('etid' => $account->uid, 'gid' => $gid, 'state' => 1));
+//    $og_membership = reset($entities);
+    $og_membership = og_get_membership($group_type, $gid, 'user', $account->uid);
+    if(!$og_membership){
+         if(!og_user_access($group_type, $gid, $og_membership->id)){
+             return NULL;
+         }
+    }
     if ($og_roles) {
         $current_role = og_get_user_roles($group_type, $gid, $account->uid);
     }
@@ -265,6 +274,7 @@ function group_membership_action_role_ajax($group_type, $gid, $og_membership, $a
             og_role_grant($group_type, $gid, $og_membership->etid, $action_role);
         }
     }
+    og_invalidate_cache(array($gid));
     $commands[] = ajax_command_replace('#og_action_role', sbq_group_upgrade_remove_member_status($group_type, $gid, $og_membership->etid));
     return array('#type' => 'ajax', '#commands' => $commands);
 }
