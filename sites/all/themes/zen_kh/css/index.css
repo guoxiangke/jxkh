@@ -239,7 +239,7 @@ li {
 #block-user-login .sbq_doctor_register_button {
 	height:34px;
 	padding-top:90px;
-	padding-bottom:23px;
+	padding-bottom:47px;
 	margin:0;
 	background:url(../images/abg.png) no-repeat 0 0;
 	border-bottom:1px solid #d4d4d4
@@ -286,24 +286,24 @@ li {
 }
 .sbq-index-block.sbq-index-block-activities li .views-row { height:32px;}
 #block-views-exposure-platform-slideshow .view-exposure-platform {
-	height:212px;
+	height:250px;
 	overflow:hidden;
 	padding:17px 0 17px 19px;
 	background-color:#fff
 }
 #block-views-exposure-platform-slideshow .view-content {
-	height:176px;
+	height:208px;
 	overflow:hidden;
 }
 .sbq-slide-row {
 	width:220px;
-	height:176px;
+	height:208px;
 	float:left;
 	margin-right:17px
 }
 .views-field-title a {
 	font-size:14px;
-	line-height:32px;
+	line-height:22px;
 }
 #block-views-exposure-platform-slideshow .block-title {
 	font-size:30px;
@@ -339,7 +339,7 @@ li {
 #sbq-bd-list .view-id-exposure_platform,
 #sbq-bd-list .view-id-friend_activities {
 	padding:0 0 0 18px;
-	width:347px;
+	width:365px;
 }
 #sbq-bd-list .block-title {
 	border-bottom:3px solid #16b4c7;
@@ -429,4 +429,357 @@ text-align:center;}
 #sbq-hhb-title .block__title{
 	background: url("../images/hhb.png") no-repeat scroll 19px center;
     text-indent: -1000em;
+}
+#myCarousel{
+position: relative;
+}
+#myCarousel .item:before,
+#myCarousel .item:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+.carousel-inner{position:relative;width:100%;overflow:hidden}
+.carousel-inner > .item {
+    display: none;
+    position: relative;
+    -webkit-transition:.6s ease-in-out left;
+    transition:.6s ease-in-out left
+}
+.carousel-inner > .active {
+    left: 0;
+}
+.carousel-inner > .active, .carousel-inner > .next, .carousel-inner > .prev {
+    display: block;
+}
+#myCarousel .carousel-indicators {
+    height:12px;
+    margin: 0;
+    padding: 0;
+    left: 50%;
+    margin-left: -25%;
+    position: absolute;
+    bottom: 10px;
+    text-align: center;
+    width: 50%;
+    z-index: 15;
+}
+*,*:before,*:after{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
+.carousel-indicators li {
+    border: 1px solid #FFFFFF;
+    border-radius: 10px;
+    cursor: pointer;
+    display: inline-block;
+    height: 10px;
+    margin: 1px;
+    text-indent: -999px;
+    width: 10px;
+}
+#myCarousel .carousel-indicators li {
+    background: none repeat scroll 0 0 #808080;
+}
+.carousel-indicators .active {
+    background-color: #FFFFFF;
+    height: 12px;
+    margin: 0;
+    width: 12px;
+}
+#myCarousel .carousel-indicators .active {
+    background: none repeat scroll 0 0 #029835;
+}
+
+
+.carousel-inner {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+.carousel-inner > .item {
+  display: none;
+  position: relative;
+  -webkit-transition: 0.6s ease-in-out left;
+  transition: 0.6s ease-in-out left;
+}
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  line-height: 1;
+}
+.carousel-inner > .active,
+.carousel-inner > .next,
+.carousel-inner > .prev {
+  display: block;
+}
+.carousel-inner > .active {
+  left: 0;
+}
+.carousel-inner > .next,
+.carousel-inner > .prev {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.carousel-inner > .next {
+  left: 100%;
+}
+.carousel-inner > .prev {
+  left: -100%;
+}
+.carousel-inner > .next.left,
+.carousel-inner > .prev.right {
+  left: 0;
+}
+.carousel-inner > .active.left {
+  left: -100%;
+}
+.carousel-inner > .active.right {
+  left: 100%;
+}
+/*医生快速通道弹框*/
+#sbq_doctor_quick_register{}
+#sbq_doctor_quick_register .modal-dialog {
+    width: 800px;
+}
+.modal {
+	position:fixed;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	z-index:1040;
+	display:none;
+	overflow:auto;
+	overflow-y:scroll
+}
+.modal.fade .modal-dialog {
+	-webkit-transform:translate(0,-25%);
+	-ms-transform:translate(0,-25%);
+	transform:translate(0,-25%);
+	-webkit-transition:-webkit-transform .3s ease-out;
+	-moz-transition:-moz-transform .3s ease-out;
+	-o-transition:-o-transform .3s ease-out;
+	transition:transform .3s ease-out
+}
+.modal.in .modal-dialog {
+	-webkit-transform:translate(0,0);
+	-ms-transform:translate(0,0);
+	transform:translate(0,0)
+}
+.modal-dialog {
+	z-index:1050;
+	width:auto;
+	padding:10px;
+	margin-right:auto;
+	margin-left:auto
+}
+.modal-content {
+	position:relative;
+	background-color:#fff;
+	border:1px solid #999;
+	border:1px solid rgba(0,0,0,0.2);
+	border-radius:6px;
+	outline:0;
+	-webkit-box-shadow:0 3px 9px rgba(0,0,0,0.5);
+	box-shadow:0 3px 9px rgba(0,0,0,0.5);
+	background-clip:padding-box
+}
+.modal-backdrop {
+	position:fixed;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	z-index:1030;
+	background-color:#000
+}
+.modal-backdrop.fade {
+	opacity:0;
+	filter:alpha(opacity=0)
+}
+.modal-backdrop.in {
+	opacity:.5;
+	filter:alpha(opacity=50)
+}
+.modal-header {
+	min-height:16.428571429px;
+	padding:15px;
+	border-bottom:1px solid #e5e5e5
+}
+.modal-header .close {
+	margin-top:-2px
+}
+.modal-title {
+	margin:0;
+	line-height:1.428571429
+}
+.modal-body {
+	position:relative;
+	padding:20px
+}
+.modal-footer {
+	padding:19px 20px 20px;
+	margin-top:15px;
+	text-align:right;
+	border-top:1px solid #e5e5e5
+}
+.modal-footer:before,.modal-footer:after {
+	display:table;
+	content:" "
+}
+.modal-footer:after {
+	clear:both
+}
+.modal-footer:before,.modal-footer:after {
+	display:table;
+	content:" "
+}
+.modal-footer:after {
+	clear:both
+}
+.modal-footer .btn+.btn {
+	margin-bottom:0;
+	margin-left:5px
+}
+.modal-footer .btn-group .btn+.btn {
+	margin-left:-1px
+}
+.modal-footer .btn-block+.btn-block {
+	margin-left:0
+}
+@media screen and (min-width:768px) {
+	.modal-dialog {
+	right:auto;
+	left:50%;
+	width:600px;
+	padding-top:30px;
+	padding-bottom:30px
+}
+.modal-content {
+	-webkit-box-shadow:0 5px 15px rgba(0,0,0,0.5);
+	box-shadow:0 5px 15px rgba(0,0,0,0.5)
+}
+}
+.modal-header {
+    border-bottom: 1px solid #E5E5E5;
+    min-height: 16.4286px;
+    padding: 15px;
+}
+
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-header {
+    background: url("../images/lodin_01.png") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    height: 46px;
+    padding: 10px;
+}
+.close {
+    color: #000000;
+    float: right;
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 1;
+    opacity: 0.2;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+button.close {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 0 none;
+    cursor: pointer;
+    padding: 0;
+}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-header .close {
+    color: #FFFFFF;
+    margin-top: 0;
+    opacity: 10;
+    text-shadow: 0 1px 0 #000000;
+}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-header h4.modal-title {
+    color: #FFFFFF;
+    font-size: 18px;
+    margin-left: 20px;
+    text-shadow: 0 1px 1px #000000;
+}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body {
+    background: url("../images/ruk-bg.png") no-repeat scroll 18px 15px rgba(0, 0, 0, 0);
+    float: left;
+}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #doctor_register_form {
+    float: right;
+    margin-top: 27px;
+    width: 450px;
+}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #user_login_form {
+    float: left;
+    margin-right: 45px;
+    margin-top: 27px;
+    width: 190px;
+}
+label {
+    display: inline-block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.input-group {
+    border-collapse: separate;
+    display: table;
+    position: relative;
+}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #user_login_form .form-item-name label {
+    display: none;
+}
+.input-group-addon, .input-group-btn {
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 1%;
+}
+
+.input-group-addon {
+    background-color: #EEEEEE;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1;
+    padding: 6px 12px;
+    text-align: center;
+}
+.glyphicon {
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    position: relative;
+    top: 1px;
+}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #doctor_register_form .user-info-from-cookie div label {
+    display: inline-block;
+    font-weight: normal;
+    margin-right: 10px;
+    text-align: center;
+    width: 70px;
+}
+#doctor_register_form .form-required {
+    display: none;
+}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #doctor_register_form .user-info-from-cookie div span.input-group-addon {
+    display: none;
+}
+.form-control{display:block;width:100%;height:34px;padding:6px 12px;font-size:14px;line-height:1.428571429;color:#555;vertical-align:middle;background-color:#fff;border:1px solid #ccc;border-radius:4px;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.075)
+.input-group .form-control {
+    margin-bottom: 0;
+    width: 100%;
+}
+.input-group-addon, .input-group-btn, .input-group .form-control {
+    display: table-cell;
+}
+.input-group .form-control:last-child, .input-group-addon:last-child, .input-group-btn:last-child > .btn, .input-group-btn:last-child > .dropdown-toggle, .input-group-btn:first-child > .btn:not(:first-child) {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #doctor_register_form .user-info-from-cookie div input {
+    border-radius: 0;
+    width: 230px;
 }
