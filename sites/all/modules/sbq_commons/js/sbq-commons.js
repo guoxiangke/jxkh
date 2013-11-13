@@ -13,6 +13,7 @@ jQuery(function($) {
             var self = $(this);
             self.parent().parent().find("li.first").append('<div id="status" style="background: url(/misc/throbber.gif) no-repeat 5px -16px; width:21px; height:16px;display: inline-block;"> </div>');
             $.get(href + '?ajax=true', function(data) {
+                $('#block-user-login').clone().appendTo('#sbq_doctor_quick_register .modal-body');
                 self.parent().parent().find("li #status").remove()
                 $('body').append(data);
                // $('#sbq_doctor_quick_register').hide();
