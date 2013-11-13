@@ -101,10 +101,11 @@ li {
 }
 #edit-search-block-form--2 {
 	border:none;
-	margin:6px 0 0 5px;
-	padding-left:5px;
+	margin:0 0 0 5px;
+	padding:0 0 0 5px;
 	width:160px;
-	height:26px;
+	height:28px;
+	line-height: 28px;
 }
 #edit-search-block-form--2:focus{
 	border:none;
@@ -126,12 +127,13 @@ li {
 	color:#fff;
 	font-size:16px;
 }
-#edit-actions input#edit-submit {
+#search-block-form input#edit-submit {
 	width:24px;
 	height:24px;
-	background:url(../images/search.png) 241px -5px;
+	background:url(../images/search.png) 241px -4px;
 	text-indent:-1000em;
 	border:medium none;
+	margin-top: 4px;
 }
 #header .sbq-center.sbq-width.sbq-clearfix {
 	position:relative;
@@ -154,14 +156,16 @@ li {
 	font-size:14px;
 	color:#fff
 }
-#edit-submit--2 {
+#edit-submit--2,
+#edit-submit--3 {
 	background:url(../images/btn1.png) no-repeat 0 -223px;
 	width:184px;
 	height:34px;
 	border:none;
 	padding:0;
 	font-size:14px;
-	color:#fff
+	color:#fff;
+	margin-bottom: 23px
 }
 .sidebar-first #content {
 	margin-left:231px;
@@ -241,6 +245,7 @@ li {
 	padding-top:90px;
 	padding-bottom:47px;
 	margin:0;
+	position: relative;
 	background:url(../images/abg.png) no-repeat 0 0;
 	border-bottom:1px solid #d4d4d4
 }
@@ -253,8 +258,16 @@ li {
 	margin:0 auto;
 	width:184px;
 }
+.sbq_doctor_register_button #status{
+	position: absolute;
+	right: 20px;
+	bottom: 22px
+}
 .user_doctor_register_ajax:hover {
 	color:#fff
+}
+#content #sbq-bd-list ul{
+	padding-left: 30px;
 }
 #content #sbq-bd-list .block-views {
 	float:left;
@@ -265,6 +278,10 @@ li {
 #block-views-friend-activities-index {
 	background-color:#fff
 }
+#block-views-exposure-platform-block-index{
+	background-color:#f6f6f6
+}
+
 #sbq-bd-list #block-views-exposure-platform-block-index h2{
 	background: url(../images/black.png) no-repeat 19px center;
 	text-indent: -1000em;
@@ -289,7 +306,8 @@ li {
 	height:250px;
 	overflow:hidden;
 	padding:17px 0 17px 19px;
-	background-color:#fff
+	background-color:#fff;
+	border: 1px solid #D2D2D2;
 }
 #block-views-exposure-platform-slideshow .view-content {
 	height:208px;
@@ -345,7 +363,7 @@ li {
 	border-bottom:3px solid #16b4c7;
 	text-indent:0.7em;
 }
-#edit-name,#edit-pass {
+#block-user-login #edit-name,#edit-pass {
 	width:186px;
 	height:36px;
 	line-height:36px;
@@ -388,7 +406,7 @@ li {
 text-align:center;}
 
 .region.region-sidebar-first.column.sidebar{
-	border:1px solid #d1d1d1;
+	border:1px solid #d1d1d1!important;
 }
 #block-user-login ul.sbq_custom_login{
 	width:184px;
@@ -426,9 +444,16 @@ text-align:center;}
 .sbq_custom_login li:nth-child(4) a:hover{
 	background:#16b4c7 url("../images/kaixin1.png") no-repeat scroll center center;
 }
+#sbq-hhb-title h1{
+	display: none;
+}
 #sbq-hhb-title .block__title{
 	background: url("../images/hhb.png") no-repeat scroll 19px center;
-    text-indent: -1000em;
+    text-indent: 10em;
+    font-size: 14px;
+    font-weight: normal;
+    height: 50px;
+    line-height: 60px
 }
 #myCarousel{
 position: relative;
@@ -538,7 +563,9 @@ position: relative;
   left: 100%;
 }
 /*医生快速通道弹框*/
-#sbq_doctor_quick_register{}
+#sbq_doctor_quick_register{
+	font-size: 14px;
+}
 #sbq_doctor_quick_register .modal-dialog {
     width: 800px;
 }
@@ -650,16 +677,16 @@ position: relative;
 }
 @media screen and (min-width:768px) {
 	.modal-dialog {
-	right:auto;
-	left:50%;
-	width:600px;
-	padding-top:30px;
-	padding-bottom:30px
-}
-.modal-content {
-	-webkit-box-shadow:0 5px 15px rgba(0,0,0,0.5);
-	box-shadow:0 5px 15px rgba(0,0,0,0.5)
-}
+		right:auto;
+		left:50%;
+		width:600px;
+		padding-top:30px;
+		padding-bottom:30px
+	}
+	.modal-content {
+		-webkit-box-shadow:0 5px 15px rgba(0,0,0,0.5);
+		box-shadow:0 5px 15px rgba(0,0,0,0.5)
+	}
 }
 .modal-header {
     border-bottom: 1px solid #E5E5E5;
@@ -689,31 +716,32 @@ button.close {
     cursor: pointer;
     padding: 0;
 }
-#sbq_doctor_quick_register .modal-dialog .modal-content .modal-header .close {
+#sbq_doctor_quick_register .modal-header .close {
     color: #FFFFFF;
     margin-top: 0;
     opacity: 10;
     text-shadow: 0 1px 0 #000000;
 }
-#sbq_doctor_quick_register .modal-dialog .modal-content .modal-header h4.modal-title {
+#sbq_doctor_quick_register .modal-header h4.modal-title {
     color: #FFFFFF;
     font-size: 18px;
     margin-left: 20px;
     text-shadow: 0 1px 1px #000000;
 }
-#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body {
-    background: url("../images/ruk-bg.png") no-repeat scroll 18px 15px rgba(0, 0, 0, 0);
+#sbq_doctor_quick_register .modal-content .modal-body {
+    background: url("../images/ruk-bg.png") no-repeat scroll 23px 15px rgba(0, 0, 0, 0);
     float: left;
+    overflow:hidden;
 }
-#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #doctor_register_form {
+#sbq_doctor_quick_register #doctor_register_form {
     float: right;
     margin-top: 27px;
     width: 450px;
 }
-#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #user_login_form {
+#sbq_doctor_quick_register #block-user-login {
     float: left;
     margin-right: 45px;
-    margin-top: 27px;
+    margin-top: 15px;
     width: 190px;
 }
 label {
@@ -726,7 +754,7 @@ label {
     display: table;
     position: relative;
 }
-#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #user_login_form .form-item-name label {
+#sbq_doctor_quick_register #user_login_form .form-item-name label {
     display: none;
 }
 .input-group-addon, .input-group-btn {
@@ -754,20 +782,25 @@ label {
     position: relative;
     top: 1px;
 }
-#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #doctor_register_form .user-info-from-cookie div label {
+#user-register-form .form-item label {
     display: inline-block;
     font-weight: normal;
     margin-right: 10px;
     text-align: center;
     width: 70px;
+    font-size:14px;
 }
-#doctor_register_form .form-required {
+#user-register-form .captcha.form-wrapper label,
+#user-register-form .form-item label.option,.form-item #edit-agree{
+	width: auto;
+}
+#doctor_register_form .form-required,#sbq_doctor_quick_register #doctor_register_form #edit-profile-doctor-private-profile-field-doctor-license-und-ajax-wrapper label {
     display: none;
 }
-#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #doctor_register_form .user-info-from-cookie div span.input-group-addon {
+#sbq_doctor_quick_register #doctor_register_form .user-info-from-cookie div span.input-group-addon {
     display: none;
 }
-.form-control{display:block;width:100%;height:34px;padding:6px 12px;font-size:14px;line-height:1.428571429;color:#555;vertical-align:middle;background-color:#fff;border:1px solid #ccc;border-radius:4px;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.075)
+.form-text{width:100%;height:34px;padding:6px 12px;font-size:14px;line-height:1.428571429;color:#555;vertical-align:middle;background-color:#fff;border:1px solid #ccc;border-radius:4px;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.075)}
 .input-group .form-control {
     margin-bottom: 0;
     width: 100%;
@@ -775,11 +808,139 @@ label {
 .input-group-addon, .input-group-btn, .input-group .form-control {
     display: table-cell;
 }
-.input-group .form-control:last-child, .input-group-addon:last-child, .input-group-btn:last-child > .btn, .input-group-btn:last-child > .dropdown-toggle, .input-group-btn:first-child > .btn:not(:first-child) {
+.input-group .form-control:last-child,
+.input-group-addon:last-child, 
+.input-group-btn:last-child > .btn, 
+.input-group-btn:last-child > .dropdown-toggle, 
+.input-group-btn:first-child > .btn:not(:first-child) {
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
 }
-#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #doctor_register_form .user-info-from-cookie div input {
+#user-register-form div input {
     border-radius: 0;
     width: 230px;
+}
+#user-register-form .description{
+	display: none;
+}
+.fieldset-wrapper {
+    margin: -20px 0 0 82px;
+    position: relative;
+}
+#edit-profile-doctor-private-profile-field-doctor-license-und-0-upload-button{
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857;
+    margin-bottom: 0;
+    padding: 6px 12px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+	-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none
+}
+.btn:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px}.btn:hover,.btn:focus{color:#333;text-decoration:none}
+.btn:active,.btn.active{background-image:none;outline:0;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125)}
+
+
+#sbq_doctor_quick_register .modal-dialog .modal-content .modal-body #doctor_register_form .user-info-from-cookie div .form-actions input {
+    background: url("../img/inputg.png") no-repeat scroll -209px -13px rgba(0, 0, 0, 0);
+    border: 0 none;
+    border-radius: 0;
+    color: #FFFFFF;
+    height: 34px;
+    margin-left: 80px;
+    padding: 0;
+    text-shadow: 0 1px 1px #000000;
+    width: 190px;
+}
+/*个人中心*/
+.two-sidebars #content{
+	width: 500px;
+}
+ul,li{margin: 0;padding: 0}
+#block-sbq-commons-sbq-user-profile{width: 173px;padding: 4px;}
+#block-sbq-commons-sbq-user-profile #sbq_picture{width:80px; height:80px;float: left;}
+#block-sbq-commons-sbq-user-profile #sbq_name{ 
+	float: left;
+    width: 50%;
+   }
+
+
+
+.block-quicktabs.contextual-links-region h2,
+.contextual-links-region h2{ 
+	width: 90px;height: 30px; 
+	background-color: #1dc7db; 
+	color: #fff; 
+	font-weight: normal; 
+	text-align: center;
+	line-height: 30px; 
+	font-size: 16px;}
+ul.quicktabs-tabs.quicktabs-style-arrows{border-bottom: 2px solid #1dc7db;margin-bottom: 0;
+height: 27px;
+line-height: 27px;}
+
+.block-quicktabs .view-content>div:after,
+.block-quicktabs .view-content>div:before{
+	content: "";
+	display: table;
+	clear: both;
+}
+.quicktabs_main.quicktabs-style-arrows{
+	border: 1px solid #cccccc;
+	border-top: none;
+	padding: 0 11px;
+	position: relative;
+}
+.quicktabs_main.quicktabs-style-arrows .more-link{
+	position: absolute;
+	right: 0;
+	top: -23px;
+	z-index:10;
+}
+.more-link a{color: #737373}
+.block-quicktabs .view-content > div{
+	height: 32px;line-height: 32px;
+	border-bottom: 1px dashed #cacaca
+}
+html{
+	font-size: 14px;
+}
+.block-quicktabs .view-content .views-field{
+	float: left;
+	color: #a3a3a3
+}
+.block-quicktabs .views-field-title{
+	width: 239px;
+}
+.block-quicktabs .views-field-value{
+	width: 63px;
+	padding-left: 21px;
+	background: url(../images/thumbs-up.png) no-repeat 0 center;
+}
+.block-quicktabs .views-field-field-mark-question-resolved,.block-quicktabs .views-field-comment-count{
+	width: 44px
+}
+.block-quicktabs .views-field-created{
+	width: 130px; text-align: right;
+}
+
+.contextual-links-region h2{
+width: 100%;
+text-align:left;
+text-indent: 1em;
+}
+ul.quicktabs-tabs li{
+	font-weight: normal;
+}
+ul.quicktabs-tabs li.active{
+	font-weight: bold;
+}
+.two-sidebars .region-sidebar-second{
+	width: 260px;
+	margin-left: 710px;
 }

@@ -556,41 +556,66 @@ function sbq_commons_ajax_response($status, $message, $data, $html) {
 }
 
 function _sbq_commons_block_html($delta) {
+    global $user;
     switch ($delta) {
         case 'sbq_user_profile':
-            global $user;
-            if(!$user->uid){
-                return ;
+            if (!$user->uid) {
+                return;
             }
-            $picture    = theme('user_picture', array(
-                'account' => $user));
-            $list       = userpoints_get_points_list();
-            $cpl        = render($list);
+            $account = user_load($user->uid);
+            if ($image   = $account->picture->uri) {
+                $picture = theme('image_style', array(
+                    'path' => $image,
+                    'style_name' => 'sc80',
+                ));
+            } else {
+                $default_image_uri = variable_get('user_picture_default');
+                $image             = file_create_url($default_image_uri);
+                $picture           = theme('image_style', array(
+                    'path' => $default_image_uri,
+                    'style_name' => 'sc80',
+                ));
+            }
+
+
+
+//            $picture      = theme('user_picture', array(
+//                'account' => $account,
+//                'style_name' => 'sc80'));
+            //积分
+            $list         = userpoints_get_points_list();
+            $cpl          = render($list);
+            //操作
+            $opt_link     = l('操作', 'user/');
+            $message_link = l('消息', 'user/');
+            //勋章
+            $user_badges  = '';
+            if (module_exists('user_badges')) {
+                $user_badges = user_badges_for_uid($user->uid);
+            }
             $block_html = <<<EOF
-                   <div id="sbq_picture">
-                       $picture
-                   </div>
-                    <div id="sbq_name">
-                       $user->name
-                   </div>
-                    $cpl
-                    <div id="point">
-                     <span>勋章</span>
-                      <span></span>
-                   </div>
+                   <i class="option">$opt_link</i>
+                   <i class="message">$message_link</i>
+                   <div id="sbq_picture">$picture</div>
+                   <div id="sbq_name">$user->name</div>
+                   $cpl
+                   <div id="user_badges"><span>勋章</span>$user_badges</div>
 EOF;
             break;
         case 'sbq_quick_ask':
-            global $user;
-            if(!$user->uid){
-                return ;
+            if (!$user->uid) {
+                return;
             }
             module_load_include('inc', 'node', 'node.pages');
-            $node = (object) array( 'uid' => $user->uid, 'name' => (isset($user->name) ? $user->name : ''), 'type' => 'question', 'language' => LANGUAGE_NONE);
+            $node               = (object) array(
+                        'uid' => $user->uid,
+                        'name' => (isset($user->name) ? $user->name : ''),
+                        'type' => 'question',
+                        'language' => LANGUAGE_NONE);
             $question_node_form = drupal_get_form('question_node_form', $node);
 
             $question_node_form['field_tags']['und']['#value'] = '快速提问';
-            $question_node_form['field_tags']['#type'] = 'hidden';
+            $question_node_form['field_tags']['#type']         = 'hidden';
             unset($question_node_form['body']['und']['0']['format']);
             unset($question_node_form['body']['und']['0']['summary']);
             unset($question_node_form['field_departments']);
