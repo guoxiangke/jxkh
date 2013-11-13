@@ -152,9 +152,14 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
             break;
         case 'question_node_form':
             $form['title']['#access']           = FALSE;
-            $form['body']['und']['0']['#title'] = t('问题');
+            if(arg(0) == 'user') { // Quick Ask form for User Center
+                $form['body']['und']['0']['#title'] = t('快速提问');
+            }
+            else {
+                $form['body']['und']['0']['#title'] = t('问题');
+            }
             break;
-        case 'post_node_form'://禁止评论 for post 
+        case 'post_node_form'://禁止评论 for post
             global $user;
             if (isset($form['uid']['#value']) && $user->uid != $form['uid']['#value']) {
                 $form['comment_settings']['#access'] = TRUE;
@@ -245,7 +250,7 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
                 'effect' => 'fade',
                 'file' => 'sbq_commons_og_ui.inc',
             );
-            // $form['link'] = sbq_og_ui_status_link($group_type, $gid);   
+            // $form['link'] = sbq_og_ui_status_link($group_type, $gid);
             break;
         case 'sbq_og_ui_confirm_unsubscribe':
             $form['actions']['submit']['#ajax'] = array(
@@ -439,7 +444,7 @@ function sbq_commons_menu_alter(&$items) {
 }
 
 /**
- * relationships_ui_check_access 
+ * relationships_ui_check_access
  */
 function sbq_commons_relationships_ui_check_access($type, $account = NULL, $relationship_type = NULL) {
     global $user;
@@ -465,7 +470,7 @@ function sbq_commons_relationships_ui_check_access($type, $account = NULL, $rela
 }
 
 /**
- * use user-roles check_access 
+ * use user-roles check_access
  */
 function sbq_commons_relationships_ui_check_access_by_roles($user, $account, $relationship) {
     // 当前用户为医生
@@ -752,7 +757,7 @@ function group_subscribe4sbq($group_type, $gid) {
             // define('USER_PATIENT_RID', 5);
             // define('USER_CERTIFIED_DOCTOR_RID', 7);
             // define('USER_ADMINSTRATOR_RID', 3);
-            // 医生can加入医生/患者小组      
+            // 医生can加入医生/患者小组
             // 患者只能加入患者小组
             global $user;
             $group_types = array(
@@ -808,9 +813,9 @@ function sbq_commons_preprocess_field(&$variables) {
 }
 
 /**
- * 
+ *
  * @param type $field_name
- * @param type $tags_typed 
+ * @param type $tags_typed
  * @see taxonomy_menu()
  */
 function sbq_commons_taxonomy_autocomplete($field_name = '', $tags_typed = '') {
@@ -893,7 +898,7 @@ function sbq_commons_taxonomy_autocomplete($field_name = '', $tags_typed = '') {
 /**
  * node form redirect
  * @param type $form
- * @param array $form_state 
+ * @param array $form_state
  */
 function sbq_commons_node_form_redirect_handle(&$form, &$form_state) {
     $form_state['redirect'] = $form['#redirect'];
@@ -902,7 +907,7 @@ function sbq_commons_node_form_redirect_handle(&$form, &$form_state) {
 /**
  * count user members group
  * @param type $gid
- * @return type 
+ * @return type
  * @see og_ui_handler_area_og_membership_overview::render
  */
 function sbq_commons_count_group_members($gid, $group_type = 'node') {
@@ -918,10 +923,10 @@ function sbq_commons_count_group_members($gid, $group_type = 'node') {
 }
 
 /**
- * count group_content 
+ * count group_content
  * @param type $gid
  * @param type $group_type
- * @return type 
+ * @return type
  * @see og_ui_handler_area_og_membership_overview::render
  */
 function sbq_commons_count_group_content($gid, $group_type = 'node') {
@@ -938,7 +943,7 @@ function sbq_commons_count_group_content($gid, $group_type = 'node') {
 
 /**
  * for group content contextual_links
- * @param type $build 
+ * @param type $build
  */
 function sbq_commons_node_view_alter(&$build) {
 //for group content contextual_links
@@ -987,9 +992,9 @@ function sbq_commons_block_view_alter(&$data, $block) {
 
 /**
  * Build sbq_commons_doctor_register form.
- * 
+ *
  * @param array $form_state
- * @return array The created form. 
+ * @return array The created form.
  * @see _profile2_regpath_user_register
  */
 function sbq_commons_doctor_register($profiles) {
@@ -1041,7 +1046,7 @@ function sbq_commons_views_query_alter(&$view, &$query) {
 
     global $user;
 
-// for user recommend friend 
+// for user recommend friend
     if ($view->name == 'sbq_friends') {
         // 推荐医生，病人
         if ($view->current_display == 'recommend_friendship' || $view->current_display == 'add') {
@@ -1081,7 +1086,7 @@ function sbq_commons_views_query_alter(&$view, &$query) {
                 'value' => $filter_query,
                 'operator' => 'not in',
             );
-        }// 推荐朋友 
+        }// 推荐朋友
         elseif ($view->current_display == 'recommend_friend') { // 推荐好友block
             $filter_query   = db_select('user_relationships', 'ur')
                     ->fields('ur', array(
@@ -1128,7 +1133,7 @@ function sbq_commons_views_query_alter(&$view, &$query) {
  * user recommend friend add friend link
  * @global type $user
  * @param type $friend_name
- * @return type 
+ * @return type
  */
 function sbq_commons_add_user_relationships($friend_name) {
     global $user;
@@ -1178,7 +1183,7 @@ function sbq_commons_form_question_node_form_alter(&$form, &$form_state, $form_i
 /**
  * Theme preprocess for views-view-question.tpl.php.
  * prepare comments vars for qustion view page for both question and answers in module Level.
- * TODO:we should check in theme level 
+ * TODO:we should check in theme level
  */
 function sbq_commons_preprocess_views_view(&$vars) {
     $view = $vars['view'];
@@ -1199,7 +1204,7 @@ function sbq_commons_preprocess_views_view(&$vars) {
     //   $query_parameters = drupal_get_query_parameters();
     //   drupal_set_title('Questions - ' . $query_parameters['field_tags_tid']);
     // }
-    // //add css for QA 
+    // //add css for QA
     // if ($view->name == 'questions' || $view->name == 'question') {
     //   // drupal_add_css(drupal_get_path('module', 'druedu_qa') . '/css/druedu_qa.css');
     //   drupal_add_css(drupal_get_path('module', 'druedu_qa') . '/css/questions.css');
@@ -1213,6 +1218,10 @@ function sbq_commons_preprocess_views_view(&$vars) {
 function sbq_commons_block_info() {
     $blocks['sbq_user_profile'] = array(
         'info' => t('user: sbq_user_profile'),
+        'cache' => DRUPAL_CACHE_PER_ROLE, // default
+    );
+    $blocks['sbq_quick_ask'] = array(
+        'info' => t('user: sbq_quick_ask'),
         'cache' => DRUPAL_CACHE_PER_ROLE, // default
     );
     return $blocks;
@@ -1236,7 +1245,10 @@ function sbq_commons_block_view($delta = '') {
     switch ($delta) {
         case 'sbq_user_profile':
             $block['subject'] = '';
-           
+            $block['content'] = _sbq_commons_block_html($delta);
+            break;
+        case 'sbq_quick_ask':
+            $block['subject'] = '';
             $block['content'] = _sbq_commons_block_html($delta);
             break;
     }

@@ -58,55 +58,55 @@ function sbq_comment_print_comment($cid) {
     // $edit_link = drupal_render($edit_link);
 
     return '<div class="views-row reply_comment_wrapper">
-      
-  <div class="views-field views-field-picture">        <div class="field-content">  
+
+  <div class="views-field views-field-picture">        <div class="field-content">
   ' . theme('user_picture', array(
                 'account' => $comment)) . '
-</div>      </div>  
+</div>      </div>
   <div class="views-field views-field-name">
   <span class="field-content">
   ' . theme('username', array(
                 'account' => $account)) . '
   </span>
-  </div>  
+  </div>
  ' . $edit_link . '
-  <div class="views-field views-field-created"> 
+  <div class="views-field views-field-created">
     <span class="field-content">' . format_date($comment->created, $type     = 'sbq_date_medium_revert', $format   = '', $timezone = NULL, $langcode = NULL) . '
     </span>
-  </div>  
+  </div>
   <div class="views-field views-field-comment-body">        <div class="field-content">' . $comment->comment_body[LANGUAGE_NONE][0]['safe_value'] . '
 </div>      </div>
 
 </div>';
-    // <div class="views-field views-field-value">        
-    //  <div class="field-content">'.render($up_down).'</div>     
-    // </div>  
+    // <div class="views-field views-field-value">
+    //  <div class="field-content">'.render($up_down).'</div>
+    // </div>
     // return theme('comment',$comment);
 }
 
 /**
- * print views item like comment for sbq 
+ * print views item like comment for sbq
  */
 function sbq_topic_views_comment_print($comment) {
     $account     = user_load($comment->uid);
     $up_down     = rate_generate_widget('1', 'comment', $comment->cid, $mode        = RATE_FULL, $include_div = TRUE, $just_voted  = FALSE, $displayed   = NULL);
 
     return '<div class="views-row views-row-1 views-row-odd views-row-first views-row-last">
-      
+
   <div class="views-field views-field-picture">        <div class="field-content"> ' . theme('user_picture', array(
                 'account' => $comment)) . '
 </div>
-  </div>  
+  </div>
   <div class="views-field views-field-name">        <span class="field-content">' . theme('username', array(
                 'account' => $account)) . '</span>
-  </div>  
+  </div>
   <div class="views-field views-field-created">        <span class="field-content">' . format_date($comment->created, $type     = 'sbq_date_medium_revert', $format   = '', $timezone = NULL, $langcode = NULL) . '</span>
-  </div>  
+  </div>
   <div class="views-field views-field-comment-body">        <div class="field-content">' . $comment->subject . '
 </div>
-  </div>  
+  </div>
   <div class="views-field views-field-cid">        <span class="field-content">129</span>
-  </div>  
+  </div>
   <div class="views-field views-field-value">        <div class="field-content"><div class="rate-widget-1 rate-widget clear-block rate-user rate-widget-yesno rate-processed"  disabled = "disabled"><ul><li class="first"><a disabled = "disabled" class="rate-button rate-yesno-btn disabled-a"  rel="nofollow" href="javascript:void(0);" title="您不可以支持自己">支持</a>0</li>
 <li class="last"><a disabled = "disabled" class="rate-button rate-yesno-btn  disabled-a " id="rate-button-84" rel="nofollow" href="javascript:void(0);" title="您不可以反对自己">反对</a>0</li>
 </ul></div></div>
@@ -568,10 +568,10 @@ function _sbq_commons_block_html($delta) {
             $cpl        = render($list);
             $block_html = <<<EOF
                    <div id="sbq_picture">
-                       $picture 
+                       $picture
                    </div>
                     <div id="sbq_name">
-                       $user->name 
+                       $user->name
                    </div>
                     $cpl
                     <div id="point">
@@ -579,6 +579,25 @@ function _sbq_commons_block_html($delta) {
                       <span></span>
                    </div>
 EOF;
+            break;
+        case 'sbq_quick_ask':
+            global $user;
+            if(!$user->uid){
+                return ;
+            }
+            module_load_include('inc', 'node', 'node.pages');
+            $node = (object) array( 'uid' => $user->uid, 'name' => (isset($user->name) ? $user->name : ''), 'type' => 'question', 'language' => LANGUAGE_NONE);
+            $question_node_form = drupal_get_form('question_node_form', $node);
+
+            $question_node_form['field_tags']['und']['#value'] = '快速提问';
+            $question_node_form['field_tags']['#type'] = 'hidden';
+            unset($question_node_form['body']['und']['0']['format']);
+            unset($question_node_form['body']['und']['0']['summary']);
+            unset($question_node_form['field_departments']);
+
+            $block_html = '<div class="sbq-question-node-add-form">'
+                    . render($question_node_form)
+                    . '</div>';
             break;
         default:
             break;
