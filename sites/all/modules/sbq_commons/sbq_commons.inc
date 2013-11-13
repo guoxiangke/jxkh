@@ -559,10 +559,15 @@ function _sbq_commons_block_html($delta) {
     switch ($delta) {
         case 'sbq_user_profile':
             global $user;
+            if(!$user->uid){
+                return ;
+            }
             $picture    = theme('user_picture', array(
                 'account' => $user));
             $list       = userpoints_get_points_list();
             $cpl        = render($list);
+            $b = user_badges_get_badges($user->uid);
+            dpm($b);
             $block_html = <<<EOF
                    <div id="sbq_picture">
                        $picture 
