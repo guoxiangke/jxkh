@@ -5,7 +5,8 @@
 //  reference of comment_num_new() comment.module
 //    http://drupal.stackexchange.com/questions/8582/how-to-show-node-comment-count-in-node-tpl
 function sbq_comment_get_replys($pid) {
-    return db_query('select cid as pid from comment where pid = :pid order by cid desc limit 0,3', array(':pid' => $pid))->fetchAll();
+    return db_query('select cid as pid from comment where pid = :pid order by cid desc limit 0,3', array(
+                ':pid' => $pid))->fetchAll();
 }
 
 function sbq_comment_pager_reply($pid) {
@@ -41,14 +42,14 @@ function sbq_comment_print_comment($cid) {
     //  if ($comment = db_fetch_object(db_rewrite_sql(db_query($sql, $cid), 'c')) {
     //    return theme('comment__node_sbq_topic', $comment);
     //  }
-    $comment = comment_load($cid);
-    $account = user_load($comment->uid);
+    $comment     = comment_load($cid);
+    $account     = user_load($comment->uid);
     //function rate_generate_widget($widget_id, $content_type, $content_id, $mode = RATE_FULL, $include_div = TRUE, $just_voted = FALSE, $displayed = NULL)
-    $up_down = rate_generate_widget('1', 'comment', $cid, $mode = RATE_FULL, $include_div = TRUE, $just_voted = FALSE, $displayed = NULL);
+    $up_down     = rate_generate_widget('1', 'comment', $cid, $mode        = RATE_FULL, $include_div = TRUE, $just_voted  = FALSE, $displayed   = NULL);
 
     $comment_links = comment_links($comment, node_load($comment->nid));
     unset($comment_links['comment-reply']);
-    $edit_link = '';
+    $edit_link     = '';
     // $edit_link = array(
     //     '#theme' => 'links__comment__comment',
     //     '#links' => $comment_links,
@@ -59,16 +60,18 @@ function sbq_comment_print_comment($cid) {
     return '<div class="views-row reply_comment_wrapper">
       
   <div class="views-field views-field-picture">        <div class="field-content">  
-  ' . theme('user_picture', array('account' => $comment)) . '
+  ' . theme('user_picture', array(
+                'account' => $comment)) . '
 </div>      </div>  
   <div class="views-field views-field-name">
   <span class="field-content">
-  ' . theme('username', array('account' => $account)) . '
+  ' . theme('username', array(
+                'account' => $account)) . '
   </span>
   </div>  
  ' . $edit_link . '
   <div class="views-field views-field-created"> 
-    <span class="field-content">' . format_date($comment->created, $type = 'sbq_date_medium_revert', $format = '', $timezone = NULL, $langcode = NULL) . '
+    <span class="field-content">' . format_date($comment->created, $type     = 'sbq_date_medium_revert', $format   = '', $timezone = NULL, $langcode = NULL) . '
     </span>
   </div>  
   <div class="views-field views-field-comment-body">        <div class="field-content">' . $comment->comment_body[LANGUAGE_NONE][0]['safe_value'] . '
@@ -85,17 +88,19 @@ function sbq_comment_print_comment($cid) {
  * print views item like comment for sbq 
  */
 function sbq_topic_views_comment_print($comment) {
-    $account = user_load($comment->uid);
-    $up_down = rate_generate_widget('1', 'comment', $comment->cid, $mode = RATE_FULL, $include_div = TRUE, $just_voted = FALSE, $displayed = NULL);
+    $account     = user_load($comment->uid);
+    $up_down     = rate_generate_widget('1', 'comment', $comment->cid, $mode        = RATE_FULL, $include_div = TRUE, $just_voted  = FALSE, $displayed   = NULL);
 
     return '<div class="views-row views-row-1 views-row-odd views-row-first views-row-last">
       
-  <div class="views-field views-field-picture">        <div class="field-content"> ' . theme('user_picture', array('account' => $comment)) . '
+  <div class="views-field views-field-picture">        <div class="field-content"> ' . theme('user_picture', array(
+                'account' => $comment)) . '
 </div>
   </div>  
-  <div class="views-field views-field-name">        <span class="field-content">' . theme('username', array('account' => $account)) . '</span>
+  <div class="views-field views-field-name">        <span class="field-content">' . theme('username', array(
+                'account' => $account)) . '</span>
   </div>  
-  <div class="views-field views-field-created">        <span class="field-content">' . format_date($comment->created, $type = 'sbq_date_medium_revert', $format = '', $timezone = NULL, $langcode = NULL) . '</span>
+  <div class="views-field views-field-created">        <span class="field-content">' . format_date($comment->created, $type     = 'sbq_date_medium_revert', $format   = '', $timezone = NULL, $langcode = NULL) . '</span>
   </div>  
   <div class="views-field views-field-comment-body">        <div class="field-content">' . $comment->subject . '
 </div>
@@ -126,8 +131,8 @@ function ajax_comments_submit_js4sbq($form, &$form_state) {
     // is dumb.
     ajax_comments_remove_status($_SESSION);
 
-    $comment = $form_state['comment'];
-    $node = $form['#node'];
+    $comment     = $form_state['comment'];
+    $node        = $form['#node'];
     $notify_text = variable_get('ajax_comments_notify', '') ? theme('ajax_comments_notify_text') : '';
 
     $comment_build = comment_view($comment, $node);
@@ -140,21 +145,27 @@ function ajax_comments_submit_js4sbq($form, &$form_state) {
     // Don't display as a preview as this is being submitted.
     unset($comment_build['comment_body']['#object']->in_preview);
 // vote logic  for topic!
-    $node = $form['#node'];
+    $node           = $form['#node'];
     $rate_widget_id = sbq_commons_get_rid_by_name('vote_sbq_topic');
     if ($rate_widget_id)
-        $rate_result = rate_get_results('node', $node->nid, $rate_widget_id);
+        $rate_result    = rate_get_results('node', $node->nid, $rate_widget_id);
 
     if (isset($rate_result['user_vote'])) {
-        $form['sbq_topic_voted'] = array('#type' => 'hidden', '#value' => 0);
+        $form['sbq_topic_voted'] = array(
+            '#type' => 'hidden',
+            '#value' => 0);
         switch ($rate_result['user_vote']) {
             case '支持':
                 $form['field_field_sbq_topic_type'][LANGUAGE_NONE]['#default_value'] = 1;
-                $form['sbq_topic_voted'] = array('#type' => 'hidden', '#value' => 1);
+                $form['sbq_topic_voted']                                             = array(
+                    '#type' => 'hidden',
+                    '#value' => 1);
                 break;
             case '反对':
                 $form['field_field_sbq_topic_type'][LANGUAGE_NONE]['#default_value'] = 0;
-                $form['sbq_topic_voted'] = array('#type' => 'hidden', '#value' => -1);
+                $form['sbq_topic_voted']                                             = array(
+                    '#type' => 'hidden',
+                    '#value' => -1);
                 break;
             default:
                 # code...
@@ -176,34 +187,35 @@ function ajax_comments_submit_js4sbq($form, &$form_state) {
 
         // Trim surrounding whitespace so ajax.js doesn't wrap us in a new div.
         $comment_output = trim(drupal_render($comment_build));
-        $commands[] = ajax_command_replace('#' . $form['#id'], $comment_output);
+        $commands[]     = ajax_command_replace('#' . $form['#id'], $comment_output);
     }
     // Or are we replying to another comment.
     elseif (isset($form_state['values']['pid'])) {
         // Append comment to parent wrapper.
         $comment_output = drupal_render($comment_build);
-        $commands[] = ajax_command_append('#comment-wrapper-' . $comment->pid, $notify_text . $comment_output);
+        $commands[]     = ajax_command_append('#comment-wrapper-' . $comment->pid, $notify_text . $comment_output);
         // Delete the form.
-        $commands[] = ajax_command_invoke('#' . $form['#id'], 'remove');
+        $commands[]     = ajax_command_invoke('#' . $form['#id'], 'remove');
     }
     // Or is this a brand new comment?
     else {
         // Append comment to root comment wrapper.
-        $comment_output = drupal_render($comment_build);
-        $commands[] = ajax_command_append('#comment-wrapper', $notify_text . $comment_output);
+        $comment_output     = drupal_render($comment_build);
+        $commands[]         = ajax_command_append('#comment-wrapper', $notify_text . $comment_output);
         $comment_output4sqb = sbq_topic_views_comment_print($comment);
         watchdog('wrapper4sbq', $wrapper4sbq, array(), WATCHDOG_NOTICE, 'link');
-        $commands[] = ajax_command_prepend(".$wrapper4sbq .view-content", $comment_output4sqb);
+        $commands[]         = ajax_command_prepend(".$wrapper4sbq .view-content", $comment_output4sqb);
 
         // If we have a default form, update it with a new one.
         if (variable_get('comment_form_location_' . $node->type, COMMENT_FORM_BELOW) == COMMENT_FORM_BELOW) {
-            $node = $form['#node'];
-            $new_form_state = array();
-            $new_form_state['build_info']['args'][] = (object) array('nid' => $node->nid);
+            $node                                   = $form['#node'];
+            $new_form_state                         = array();
+            $new_form_state['build_info']['args'][] = (object) array(
+                        'nid' => $node->nid);
             // Don't pull from cache.
-            $new_form_state['input'] = array();
-            $new_form_build = drupal_build_form($form['#form_id'], $new_form_state);
-            $new_form_output = drupal_render($new_form_build);
+            $new_form_state['input']                = array();
+            $new_form_build                         = drupal_build_form($form['#form_id'], $new_form_state);
+            $new_form_output                        = drupal_render($new_form_build);
 
             $commands[] = ajax_command_replace('#' . $form['#id'], $new_form_output);
         }
@@ -213,7 +225,9 @@ function ajax_comments_submit_js4sbq($form, &$form_state) {
         }
     }
 
-    return array('#type' => 'ajax', '#commands' => $commands);
+    return array(
+        '#type' => 'ajax',
+        '#commands' => $commands);
 }
 
 /**
@@ -231,8 +245,8 @@ function ajax_comments_submit_js4child($form, &$form_state) {
     // is dumb.
     ajax_comments_remove_status($_SESSION);
 
-    $comment = $form_state['comment'];
-    $node = $form['#node'];
+    $comment     = $form_state['comment'];
+    $node        = $form['#node'];
     $notify_text = variable_get('ajax_comments_notify', '') ? theme('ajax_comments_notify_text') : '';
 
     $comment_build = comment_view($comment, $node);
@@ -253,13 +267,13 @@ function ajax_comments_submit_js4child($form, &$form_state) {
 
         // Trim surrounding whitespace so ajax.js doesn't wrap us in a new div.
         $comment_output = trim(drupal_render($comment_build));
-        $commands[] = ajax_command_replace('#' . $form['#id'], $comment_output);
+        $commands[]     = ajax_command_replace('#' . $form['#id'], $comment_output);
     }
     // Or are we replying to another comment.
     elseif (isset($form_state['values']['pid'])) {
         // Append comment to parent wrapper.
         $comment_output = drupal_render($comment_build);
-        $commands[] = ajax_command_append('#comment-wrapper-' . $comment->pid, $notify_text . $comment_output);
+        $commands[]     = ajax_command_append('#comment-wrapper-' . $comment->pid, $notify_text . $comment_output);
 
         $comment_replay_cotent = sbq_comment_print_comment($comment->cid);
 
@@ -271,12 +285,14 @@ function ajax_comments_submit_js4child($form, &$form_state) {
         // $commands[] = ajax_command_invoke('#' . $form['#id'], 'remove');
         $node = $form['#node'];
 
-        $new_form_state = array();
-        $new_form_state['build_info']['args'][] = (object) array('nid' => $node->nid, 'pid' => $comment->pid);
+        $new_form_state                         = array();
+        $new_form_state['build_info']['args'][] = (object) array(
+                    'nid' => $node->nid,
+                    'pid' => $comment->pid);
         // Don't pull from cache.
-        $new_form_state['input'] = array();
-        $new_form_build = drupal_build_form($form['#form_id'], $new_form_state);
-        $new_form_output = drupal_render($new_form_build);
+        $new_form_state['input']                = array();
+        $new_form_build                         = drupal_build_form($form['#form_id'], $new_form_state);
+        $new_form_output                        = drupal_render($new_form_build);
 
         $commands[] = ajax_command_replace('#' . $form['#id'], $new_form_output);
     }
@@ -284,18 +300,19 @@ function ajax_comments_submit_js4child($form, &$form_state) {
     else {
         // Append comment to root comment wrapper.
         $comment_output = drupal_render($comment_build);
-        $commands[] = ajax_command_append('#comment-wrapper', $notify_text . $comment_output);
+        $commands[]     = ajax_command_append('#comment-wrapper', $notify_text . $comment_output);
 
         // If we have a default form, update it with a new one.
         if (variable_get('comment_form_location_' . $node->type, COMMENT_FORM_BELOW) == COMMENT_FORM_BELOW) {
             $node = $form['#node'];
 
-            $new_form_state = array();
-            $new_form_state['build_info']['args'][] = (object) array('nid' => $node->nid);
+            $new_form_state                         = array();
+            $new_form_state['build_info']['args'][] = (object) array(
+                        'nid' => $node->nid);
             // Don't pull from cache.
-            $new_form_state['input'] = array();
-            $new_form_build = drupal_build_form($form['#form_id'], $new_form_state);
-            $new_form_output = drupal_render($new_form_build);
+            $new_form_state['input']                = array();
+            $new_form_build                         = drupal_build_form($form['#form_id'], $new_form_state);
+            $new_form_output                        = drupal_render($new_form_build);
 
             $commands[] = ajax_command_replace('#' . $form['#id'], $new_form_output);
         }
@@ -305,7 +322,9 @@ function ajax_comments_submit_js4child($form, &$form_state) {
         }
     }
 
-    return array('#type' => 'ajax', '#commands' => $commands);
+    return array(
+        '#type' => 'ajax',
+        '#commands' => $commands);
 }
 
 function sbq_commons_modal_html($data, $id = 'sbq_modal', $title = '') {
@@ -337,11 +356,11 @@ function sbq_commons_modal_html($data, $id = 'sbq_modal', $title = '') {
  */
 function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_times = 3, $mintue = 10) {
     $url = explode('/', $_GET['q']);
-    if(isset($url[0]) && $url[0] == 'api'){
-        return ;
+    if (isset($url[0]) && $url[0] == 'api') {
+        return;
     }
-    $pre_times = $fail_times - 1;
-    $pre_ind = $fail_times - 2;
+    $pre_times     = $fail_times - 1;
+    $pre_ind       = $fail_times - 2;
     // Visitor does not have permission to skip CAPTCHAs.
     module_load_include('inc', 'captcha');
     // Get CAPTCHA type and module for given form_id.
@@ -362,7 +381,7 @@ function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_time
             //drupal_rebuild_form($form_id, $form_state);
             return;
         }
-        $result = $fail_login->fetchAll();
+        $result      = $fail_login->fetchAll();
         $time_length = (time() - $result[$pre_ind]->timestamp) / 60;
         if ($time_length > $mintue) {
             return;
@@ -382,14 +401,13 @@ function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_time
     // Get placement in form and insert in form.
     $captcha_placement = _captcha_get_captcha_placement($form_id, $form);
     _captcha_insert_captcha_element($form, $captcha_placement, $captcha_element);
-    
 }
 
 /**
  * Remove relationship request.
  */
 function sbq_commons_user_relationships_ui_remove_ajax($viewer_id, $rid, $viewd_id) {
-    $user = user_load($viewer_id);
+    $user         = user_load($viewer_id);
     $relationship = user_relationships_load($rid);
     if (!user_relationships_ui_check_access('delete', NULL, $relationship)) {
         drupal_access_denied();
@@ -409,11 +427,11 @@ function sbq_commons_user_relationships_ui_remove_ajax($viewer_id, $rid, $viewd_
  */
 function sbq_commons_user_relationships_ui_request_ajax($viewer_id, $rid, $viewed_id) {
     //#578372 leave all form values in the object for other functions to use
-    $relationship = new stdClass;
+    $relationship            = new stdClass;
     $relationship->requester = user_load($viewer_id);
     $relationship->requestee = user_load($viewed_id);
-    $relationship->type = user_relationships_type_load($rid);
-    $relationship = user_relationships_request_relationship($relationship);
+    $relationship->type      = user_relationships_type_load($rid);
+    $relationship            = user_relationships_request_relationship($relationship);
     if ($relationship === FALSE || !$relationship) {
         sbq_commons_ajax_response('success', '不能建立此关系', NULL, render($html));
     }
@@ -426,11 +444,13 @@ function sbq_commons_user_relationships_ui_request_ajax($viewer_id, $rid, $viewe
  * Process relationship request.
  */
 function sbq_commons_user_relationships_ui_pending_requested_ajax($viewer_id, $rid, $viewed_id, $action) {
-    $user = user_load($viewer_id);
-    $relationships = user_relationships_load(array('rid' => $rid), array('include_user_info' => TRUE));
-    $relationship = $relationships[$rid];
-    $requester = $relationship->requester;
-    $requestee = $relationship->requestee;
+    $user          = user_load($viewer_id);
+    $relationships = user_relationships_load(array(
+        'rid' => $rid), array(
+        'include_user_info' => TRUE));
+    $relationship  = $relationships[$rid];
+    $requester     = $relationship->requester;
+    $requestee     = $relationship->requestee;
 
     switch ($action) {
         case 'approve':
@@ -482,37 +502,49 @@ function sbq_commons_user_relationship_view($account, $view_mode, $langcode) {
     }
 
     $output = array();
-    if ($list = sbq_commons_relationships_ui_actions_between($user, $account, array('remove' => 1))) {
+    if ($list   = sbq_commons_relationships_ui_actions_between($user, $account, array(
+        'remove' => 1))) {
         $output['relations'] = array(
             '#title' => t('Your relationships to this user'),
             '#type' => 'user_profile_item',
-            '#markup' => theme('item_list', array('items' => $list)),
-            '#attributes' => array('class' => array('user_relationships_ui')),
+            '#markup' => theme('item_list', array(
+                'items' => $list)),
+            '#attributes' => array(
+                'class' => array(
+                    'user_relationships_ui')),
         );
     }
-    if ($actions = sbq_commons_relationships_ui_actions_between($user, $account, array('add' => 1, 'requested' => 1, 'received' => 1))) {
+    if ($actions = sbq_commons_relationships_ui_actions_between($user, $account, array(
+        'add' => 1,
+        'requested' => 1,
+        'received' => 1))) {
         $output['actions'] = array(
             '#title' => t('Relationship actions'),
             '#type' => 'user_profile_item',
-            '#markup' => theme('item_list', array('items' => $actions)),
-            '#attributes' => array('class' => array('user_relationships_ui_actions')),
+            '#markup' => theme('item_list', array(
+                'items' => $actions)),
+            '#attributes' => array(
+                'class' => array(
+                    'user_relationships_ui_actions')),
         );
     }
     if (sizeof($output)) {
-        $account->content['user_relationships_ui'] = array(
+        $account->content['user_relationships_ui']            = array(
             '#type' => 'user_profile_category',
             '#title' => t('Relationships'),
             '#weight' => 10,
         );
-        $account->content['user_relationships_ui'] = array_merge($account->content['user_relationships_ui'], $output);
+        $account->content['user_relationships_ui']            = array_merge($account->content['user_relationships_ui'], $output);
         $account->content['user_relationships_ui']['#prefix'] = '<div id="sbq_commons_user_relationship_view">';
         $account->content['user_relationships_ui']['#suffix'] = '</div>';
     }
     return isset($account->content['user_relationships_ui']) ? $account->content['user_relationships_ui'] : '';
 }
+
 /*
  * response format
  */
+
 function sbq_commons_ajax_response($status, $message, $data, $html) {
     $response = array(
         'status' => $status,
@@ -521,4 +553,32 @@ function sbq_commons_ajax_response($status, $message, $data, $html) {
         'html' => $html,
     );
     die(json_encode($response));
+}
+
+function _sbq_commons_block_html($delta) {
+    switch ($delta) {
+        case 'sbq_user_profile':
+            global $user;
+            $picture    = theme('user_picture', array(
+                'account' => $user));
+            $list       = userpoints_get_points_list();
+            $cpl        = render($list);
+            $block_html = <<<EOF
+                   <div id="sbq_picture">
+                       $picture 
+                   </div>
+                    <div id="sbq_name">
+                       $user->name 
+                   </div>
+                    $cpl
+                    <div id="point">
+                     <span>勋章</span>
+                      <span></span>
+                   </div>
+EOF;
+            break;
+        default:
+            break;
+    }
+    return isset($block_html) ? $block_html : '';
 }
