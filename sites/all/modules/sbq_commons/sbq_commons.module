@@ -1224,6 +1224,10 @@ function sbq_commons_block_info() {
         'info' => t('user: sbq_quick_ask'),
         'cache' => DRUPAL_CACHE_PER_ROLE, // default
     );
+    $blocks['sbq_user_menu'] = array(
+        'info' => t('user: sbq_user_menu'),
+        'cache' => DRUPAL_CACHE_PER_ROLE, // default
+    );
     return $blocks;
 }
 
@@ -1248,6 +1252,10 @@ function sbq_commons_block_view($delta = '') {
             $block['content'] = _sbq_commons_block_html($delta);
             break;
         case 'sbq_quick_ask':
+            $block['subject'] = '';
+            $block['content'] = _sbq_commons_block_html($delta);
+            break;
+        case 'sbq_user_menu':
             $block['subject'] = '';
             $block['content'] = _sbq_commons_block_html($delta);
             break;

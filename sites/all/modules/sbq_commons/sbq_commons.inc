@@ -563,7 +563,8 @@ function _sbq_commons_block_html($delta) {
                 return;
             }
             $account = user_load($user->uid);
-            if ($image   = $account->picture->uri) {
+            if (isset($account->picture->uri)) {
+                $image   = $account->picture->uri;
                 $picture = theme('image_style', array(
                     'path' => $image,
                     'style_name' => 'sc80',
@@ -576,12 +577,6 @@ function _sbq_commons_block_html($delta) {
                     'style_name' => 'sc80',
                 ));
             }
-
-
-
-//            $picture      = theme('user_picture', array(
-//                'account' => $account,
-//                'style_name' => 'sc80'));
             //积分
             $list         = userpoints_get_points_list();
             $cpl          = render($list);
@@ -624,6 +619,23 @@ EOF;
                     . render($question_node_form)
                     . '</div>';
             break;
+
+        case 'sbq_user_menu':
+            if (!$user->uid) {
+                return;
+            }
+
+            $block_html = '<div class="sbq-user-menu">'
+                    . '<ul class="menu">'
+                    . '<li class="menu__item is-leaf first leaf sbq-user-menu-post"><a href="#" class="menu__link">我的帖子</a></li>'
+                    . '<li class="menu__item is-leaf leaf sbq-user-menu-status"><a href="#" class="menu__link">我的动态</a></li>'
+                    . '<li class="menu__item is-leaf leaf sbq-user-menu-blog"><a href="#" class="menu__link">我的文章</a></li>'
+                    . '<li class="menu__item is-leaf leaf sbq-user-menu-group"><a href="#" class="menu__link">我的小组</a></li>'
+                    . '<li class="menu__item is-leaf last leaf sbq-user-menu-relationship"><a href="#" class="menu__link">我的圈子</a></li>'
+                    . '</ul>'
+                    . '</div>';
+            break;
+
         default:
             break;
     }
