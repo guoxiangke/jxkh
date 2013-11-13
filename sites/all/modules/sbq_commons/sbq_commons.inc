@@ -566,8 +566,6 @@ function _sbq_commons_block_html($delta) {
                 'account' => $user));
             $list       = userpoints_get_points_list();
             $cpl        = render($list);
-            $b = user_badges_get_badges($user->uid);
-            dpm($b);
             $block_html = <<<EOF
                    <div id="sbq_picture">
                        $picture 
