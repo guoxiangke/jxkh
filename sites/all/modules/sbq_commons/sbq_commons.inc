@@ -624,12 +624,14 @@ EOF;
           . '</div>';
       break;
     case 'recommond_doctors':
+
       if (!$user->uid) {
         return;
       }
       $ids = _sbq_commons_user_recommonds_friends_ids(USER_CERTIFIED_DOCTOR_RID);
       $friends = user_load_multiple($ids);
-      $block_html = '';
+
+      $block_html = '<div class="view"> <div class="view-content">';
       foreach ($friends as $key => $value) {
         $account_profile = profile2_load_by_user($value, 'doctor_profile'); //@todo暂时无医院信息
         $picture = sbq_commons_user_avart($value);
@@ -654,7 +656,7 @@ EOF;
       }
       if ($block_html) {
         $more = t('more');
-        $block_html .= '<div class="more-link"><a href="/user">' . $more . '</a></div>';
+        $block_html .= '</div><div class="more-link"><a href="/news/%2A">more</a></div></div>';
       }
       break;
     case 'recommond_patients':
@@ -663,7 +665,7 @@ EOF;
       }
       $ids = _sbq_commons_user_recommonds_friends_ids(USER_PATIENT_RID);
       $friends = user_load_multiple($ids);
-      $block_html = '';
+      $block_html = '<div class="view"> <div class="view-content">';
       foreach ($friends as $key => $value) {
         $account_profile = profile2_load_by_user($value, 'doctor_profile');
         $picture = sbq_commons_user_avart($value);
@@ -673,7 +675,7 @@ EOF;
           $user_badges = user_badges_for_uid($user->uid);
         }
         $block_html .= <<<EOF
-          <div class="sbq-recommond-friends">
+          <div class="sbq-recommond-friends ">
             <div class="picture">
               $picture
             </div>
@@ -684,11 +686,12 @@ EOF;
               <span class="follow">$follow</span>
             </div>
           </div>
+
 EOF;
       }
       if ($block_html) {
         $more = t('more');
-        $block_html .= '<div class="more-link"><a href="/user">' . $more . '</a></div>';
+        $block_html .= '</div><div class="more-link"><a href="/news/%2A">more</a></div></div>';
       }
       break;
     default:
