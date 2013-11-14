@@ -21,6 +21,18 @@ function sbq_commons_menu() {
   module_load_include('inc', 'og_ui');
 
   //module_load_all_includes('module','og');
+  $items['user/ajax/tags/%/add']  = array(
+    'title' => 'Add Disease tags for User Center',
+    'page callback' => 'sbq_commons_user_disease_tag_add_ajax',
+    'page arguments' => array(3),
+    'type' => MENU_CALLBACK,
+  );
+  $items['user/ajax/tags/%/delete']  = array(
+    'title' => 'Delete Disease tags for User Center',
+    'page callback' => 'sbq_commons_user_disease_tag_delete_ajax',
+    'page arguments' => array(3),
+    'type' => MENU_CALLBACK,
+  );
   $items['relationship/ajax/%/remove/%/%'] = array(
       'title' => 'Remove relationship',
       'access callback' => 'user_relationships_ui_check_access',
@@ -1135,6 +1147,8 @@ function sbq_commons_views_query_alter(&$view, &$query) {
 function sbq_commons_add_user_relationships($friend_name) {
   global $user;
   $friend = user_load_by_name($friend_name);
+  if (!$friend)
+    return;
   $action = sbq_commons_relationships_ui_actions_between($user, $friend, array(
       'add' => 1 ));
   if (isset($action[0])) {
@@ -1143,11 +1157,11 @@ function sbq_commons_add_user_relationships($friend_name) {
     $href = ltrim($match[2][0], "/");
     if (in_array(USER_PATIENT_RID, array_keys($user->roles))) {
       // $link = l('医生', $href, array('class' => 'sbq_add_friend'));
-      $link = l('添加', $href, array(
+      $link = l('+关注', $href, array(
           'class' => 'sbq_add_friend' ));
     } elseif (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($user->roles))) {
       // $link = l('好友', $href, array('class' => 'sbq_add_friend'));
-      $link = l('添加', $href, array(
+      $link = l('+关注', $href, array(
           'class' => 'sbq_add_friend' ));
     }
   }
@@ -1268,7 +1282,7 @@ function sbq_commons_block_view($delta = '') {
       $block['subject'] = '推荐医生';
       $block['content'] = _sbq_commons_block_html($delta);
       break;
-    case 'recommond_doctors':
+    case 'recommond_patients':
       $block['subject'] = '推荐患者';
       $block['content'] = _sbq_commons_block_html($delta);
       break;

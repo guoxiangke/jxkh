@@ -58,7 +58,7 @@
 	    <li data-target="#sbq-user-carousel" data-slide-to="1"></li>
 	    <li data-target="#sbq-user-carousel" data-slide-to="2"></li>
 	  </ol>
-    <div class="view-content">
+    <div class="view-content carousel-inner">
       <?php print $rows; ?>
     </div>
   <?php elseif ($empty): ?>

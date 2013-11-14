@@ -570,16 +570,16 @@ function _sbq_commons_block_html($delta) {
       //操作
       $opt_link = l('操作', 'user/');
       $message_link = l('消息', 'user/');
+
       //勋章
       $user_badges = '';
       if (module_exists('user_badges')) {
         $user_badges = user_badges_for_uid($user->uid);
-        // dpm($user_badges);
       }
       $block_html = <<<EOF
                    <i class="option">$opt_link</i>
                    <i class="message">$message_link</i>
-                   <div id="sbq_picture"><a href="user/$user->uid">$picture</a></div>
+                   <div id="sbq_picture">$picture</div>
                    <div id="sbq_name">$user->name</div>
                    $cpl
                    <div id="user_badges"><span>勋章</span>$user_badges</div>
@@ -624,15 +624,58 @@ EOF;
           . '</div>';
       break;
     case 'recommond_doctors':
-    case 'recommond_patients':
+      if (!$user->uid) {
+        return;
+      }
       $ids = _sbq_commons_user_recommonds_friends_ids(USER_CERTIFIED_DOCTOR_RID);
+      $friends = user_load_multiple($ids);
+      $block_html = '';
+      foreach ($friends as $key => $value) {
+        $account_profile = profile2_load_by_user($value, 'doctor_profile'); //@todo暂时无医院信息
+        $picture = sbq_commons_user_avart($value);
+        $follow = sbq_commons_add_user_relationships($value->name);
+        $user_badges = ''; //需要添加
+        if (module_exists('user_badges')) {
+          $user_badges = user_badges_for_uid($user->uid);
+        }
+        $block_html .= <<<EOF
+          <div class="recommond_friends">
+            $picture
+            <span class="user_name">$value->name</span>
+             <span class="badges">勋章</span>
+            <span class="hospital">北京儿童医院</span>
+            <span class="follow">$follow</span>
+          </div>
+EOF;
+      }
+      break;
+    case 'recommond_patients':
+      if (!$user->uid) {
+        return;
+      }
+      $ids = _sbq_commons_user_recommonds_friends_ids(USER_PATIENT_RID);
+      $friends = user_load_multiple($ids);
+      $block_html = '';
+      foreach ($friends as $key => $value) {
+        $account_profile = profile2_load_by_user($value, 'doctor_profile');
+        $picture = sbq_commons_user_avart($value);
+        $follow = sbq_commons_add_user_relationships($value->name);
+        $user_badges = '';
+        if (module_exists('user_badges')) {
+          $user_badges = user_badges_for_uid($user->uid);
+        }
+        $block_html .= <<<EOF
+          <div class="recommond_friends">
+            $picture
+            <span class="user_name">$value->name</span>
+            <span class="badges">勋章</span>
+            <span class="attention">疾病</span>
+            <span class="follow">$follow</span>
+          </div>
+EOF;
+      }
 
-      $block_html = '<div class="recommond_friends">';
-      $block_html .= ''.sbq_commons_user_avart().'';
-      $block_html .= '<span id="user_name">' . $user->name . '</span>';
-      $block_html .= '<span id="hospital">' . $user->name . '</span>';
-      $block_html .= '<span id="follow">关注</span>';
-      $block_html .= '</div>';
+
       break;
     default:
       break;
@@ -640,7 +683,7 @@ EOF;
   return isset($block_html) ? $block_html : '';
 }
 
-function _sbq_commons_user_recommonds_friends_ids($roles, $account = null) {
+function _sbq_commons_user_recommonds_friends_ids($roles, $num = 2, $account = null) {
   if (!$account) {
     global $user;
     $account = $user;
@@ -649,7 +692,7 @@ function _sbq_commons_user_recommonds_friends_ids($roles, $account = null) {
       "select uid from {users} u where " .
       "u.uid not in ( select requester_id from user_relationships " .
       "where requester_id <> {$account->uid} or requestee_id <> {$user->uid})" .
-      "and u.uid in ( select uid from users_roles where rid = {$roles}) limit 0,5 ");
+      "and u.uid in ( select uid from users_roles where rid = {$roles}) limit 0,{$num} ");
   $result = $query_user->fetchAllAssoc('uid');
   return $result ? array_keys($result) : array();
 }
@@ -680,6 +723,21 @@ function sbq_commons_user_avart($account = null) {
         'style_name' => 'sc80',
     ));
   }
+  return '<a href="user/' . $account->uid . '">' . $picture . '</a>';
+}
 
-  return $picture;
+/*
+ * Add Disease tags for User Center
+ */
+function sbq_commons_user_disease_tag_add_ajax($tag_name='') {
+  //TODO: Add tag to this user, create new tag when not there.
+    # code...
+}
+
+/*
+ * Delete Disease tags for User Center
+ */
+function sbq_commons_user_disease_tag_delete_ajax($tag_name='') {
+  //TODO: Delete tag from this user
+    # code...
 }
