@@ -1241,10 +1241,12 @@ function sbq_commons_block_info() {
   );
   $blocks['recommond_doctors'] = array(
       'info' => t('user relationships: recommond_doctors'),
+      'region' => 'sidebar_first', // Not usually provided.
       'cache' => DRUPAL_CACHE_PER_ROLE, // default
   );
   $blocks['recommond_patients'] = array(
       'info' => t('user relationships: recommond_patients'),
+      'region' => 'sidebar_first', // Not usually provided.
       'cache' => DRUPAL_CACHE_PER_ROLE, // default
   );
   return $blocks;

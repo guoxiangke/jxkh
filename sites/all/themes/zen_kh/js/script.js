@@ -19,7 +19,7 @@ Drupal.behaviors.my_custom_behavior = {
   	//alert('test-请删除本行，从本行开始添加js！注意封装、及用途注释。谢谢~');
     // Place your code here.
     $.getScript('http://dev.shangbq.com/sites/all/themes/zen_kh/js/Carousel.js',function(){
-    	$('#myCarousel').carousel({
+    	$('#myCarousel,#sbq-user-carousel').carousel({
 		  interval: 3000
 		})
     })

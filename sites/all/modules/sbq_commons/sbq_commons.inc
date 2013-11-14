@@ -648,6 +648,10 @@ EOF;
           </div>
 EOF;
       }
+       if($block_html){
+        $more = t('more');
+        $block_html .= '<div class="more-link"><a href="/user">'.$more.'</a></div>';
+      }
       break;
     case 'recommond_patients':
       if (!$user->uid) {
@@ -674,8 +678,10 @@ EOF;
           </div>
 EOF;
       }
-
-
+      if($block_html){
+        $more = t('more');
+        $block_html .= '<div class="more-link"><a href="/user">'.$more.'</a></div>';
+      }
       break;
     default:
       break;
@@ -729,15 +735,17 @@ function sbq_commons_user_avart($account = null) {
 /*
  * Add Disease tags for User Center
  */
-function sbq_commons_user_disease_tag_add_ajax($tag_name='') {
+
+function sbq_commons_user_disease_tag_add_ajax($tag_name = '') {
   //TODO: Add tag to this user, create new tag when not there.
-    # code...
+  # code...
 }
 
 /*
  * Delete Disease tags for User Center
  */
-function sbq_commons_user_disease_tag_delete_ajax($tag_name='') {
+
+function sbq_commons_user_disease_tag_delete_ajax($tag_name = '') {
   //TODO: Delete tag from this user
-    # code...
+  # code...
 }
