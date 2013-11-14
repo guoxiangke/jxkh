@@ -95,10 +95,9 @@ li {
 .header__region.region.region-header {
 	position: absolute;
 	right: 0;
-	bottom: 14px;
+	bottom: 8px;
 	width:206px;
 	height:36px;
-	margin-top:12px;
 	clear:none;
 	background:url(../images/search.png) no-repeat 0 0;
 }
@@ -159,7 +158,7 @@ li {
 	font-size:14px;
 	color:#fff
 }
-#edit-submit--2,
+#block-user-login #edit-actions--2 #edit-submit--2,
 #edit-submit--3 {
 	background:url(../images/btn1.png) no-repeat 0 -223px;
 	width:184px;
@@ -168,7 +167,8 @@ li {
 	padding:0;
 	font-size:14px;
 	color:#fff;
-	margin-bottom: 23px
+	margin-bottom: 23px;
+	line-height: 23px
 }
 .sidebar-first #content {
 	margin-left:231px;
@@ -211,7 +211,9 @@ li {
 	line-height:34px;
 	margin:0 auto 23px auto;
 }
-#block-user-login{margin: 0}
+#block-user-login{margin: 0;
+padding-bottom: 30px;
+}
 #block-user-login ul {
 	padding:0;
 }
@@ -460,7 +462,8 @@ text-align:center;}
     font-size: 14px;
     font-weight: normal;
     height: 50px;
-    line-height: 60px
+    line-height: 60px;
+    color:#545454;
 }
 #myCarousel{
 position: relative;
@@ -521,6 +524,18 @@ position: relative;
     background: none repeat scroll 0 0 #16b4c7;
 }
 
+
+.carousel-inner {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+.carousel-inner > .item {
+  display: none;
+  position: relative;
+  -webkit-transition: 0.6s ease-in-out left;
+  transition: 0.6s ease-in-out left;
+}
 .carousel-inner > .item > img,
 .carousel-inner > .item > a > img {
   display: block;
@@ -528,11 +543,25 @@ position: relative;
   height: auto;
   line-height: 1;
 }
+.carousel-inner > .active,
+.carousel-inner > .next,
+.carousel-inner > .prev {
+  display: block;
+}
+.carousel-inner > .active {
+  left: 0;
+}
 .carousel-inner > .next,
 .carousel-inner > .prev {
   position: absolute;
   top: 0;
   width: 100%;
+}
+.carousel-inner > .next {
+  left: 100%;
+}
+.carousel-inner > .prev {
+  left: -100%;
 }
 .carousel-inner > .next.left,
 .carousel-inner > .prev.right {
@@ -866,8 +895,11 @@ ul,li{margin: 0;padding: 0}
 margin-right: 9px;}
 #block-sbq-commons-sbq-user-profile #sbq_name{ 
 	float: left;
-    width: 45%;
+    width: 59%;
     margin-top: 21px;
+}
+.not-front #block-sbq-commons-sbq-user-profile #sbq_name{
+	width: 45%
 }
 #block-views-disease-block{
 	padding: 10px 4px 0 4px;
@@ -1011,7 +1043,14 @@ outline: none;
 #block-sbq-commons-sbq-user-profile i.message a{background: url(../images/inbox.png) no-repeat right 0;}
 #block-sbq-commons-sbq-user-profile #user_badges{
 	font-size: 12px;
-	color: #868d8b
+	color: #868d8b;
+	
+}
+#block-views-blog-block{
+	position: relative;
+}
+.front #block-sbq-commons-sbq-user-profile #user_badges{
+	padding:0 4px
 }
 .userpoints-points{ font-size: 10px; }
 .userpoints-points em{font-style: normal;}
@@ -1066,18 +1105,18 @@ bottom: 10px;
 	border: 1px solid #60d8e6
 }
 #edit-body-und-0-value{
-	width: 431px;
-	height: 50px;
+	width: 443px;
+	height: 54px;
 	padding: 7px;
 	color: #a3a3a3;
 	resize:none;
-	max-width: 431px;
-	max-height: 50px;
-	min-width: 431px;
-	min-height: 50px;
+	max-width: 443px;
+	max-height: 54px;
+	min-width: 443px;
+	min-height: 54px;
 	border: none;
 }
-#body-add-more-wrapper .grippie,#edit-field-tags{ display: none;}
+/*#body-add-more-wrapper .grippie,#edit-field-tags{ display: none;}*/
 #block-sbq-commons-sbq-user-menu .is-active{
 	background-color: #1dc7db;
 	color: #fff
@@ -1088,7 +1127,7 @@ bottom: 10px;
 #block-sbq-commons-sbq-quick-ask #edit-actions--2{
 	position: absolute;right: 0;
 	bottom: 0;
-	z-index: 10
+	z-index: 1
 }
 #edit-actions--2 #edit-submit--2{
 	width: 56px;
@@ -1098,5 +1137,81 @@ bottom: 10px;
 	color: #FFF;
 	line-height: 56px;
 	text-align: center;
-	margin: 0
+	margin: 0;
+	border: none;
+}
+#block-sbq-commons-recommond-doctors,
+#block-sbq-commons-recommond-patients{
+	padding-bottom: 10px;
+	position: relative;
+}
+#block-sbq-commons-recommond-doctors .more-link,
+#block-sbq-commons-recommond-patients .more-link,
+#block-views-blog-block .more-link{
+	top: 4px;
+	right: 10px;
+
+}
+
+#block-sbq-commons-recommond-doctors .sbq_recommond_friends,
+#block-sbq-commons-recommond-patients .sbq_recommond_friends,
+#block-sbq-commons-recommond-doctors .sbq-recommond-friends,
+#block-sbq-commons-recommond-patients .sbq-recommond-friends{ 
+	height: 62px;
+	overflow: hidden;
+	padding:0 10px;
+	margin-top: 10px;
+	font-size: 12px;
+}
+.sbq_recommond_friends:after,
+.sbq_recommond_friends:before,
+.sbq-recommond-friends:after,
+.sbq-recommond-friends:before{
+	content: "";
+	display: table;
+}
+.sbq_recommond_friends:after,
+.sbq-recommond-friends:after{
+	clear: both;
+}
+.sbq_recommond_friends .picture,
+.sbq-recommond-friends .picture{
+	display: block;
+	float: left;
+	width: 62px;
+	height: 62px;
+	margin-right: 7px;
+	overflow: hidden;
+}
+.sbq_recommond_friends .picture img,
+.sbq-recommond-friends .picture img{
+	width: 60px;
+	height: 60px;
+	max-height: 60px;
+	max-width: 60px;
+	border: 1px solid #585858
+}
+.sbq_recommond_friends .badges,
+.sbq-recommond-friends .badges{
+	display: none;
+}
+.sbq_recommond_friends span,
+.sbq-recommond-friends span{
+	display: block;
+	height: 20px;
+	line-height: 20px;
+	font-weight: bold;
+	color: #585858
+}
+.sbq_recommond_friends a,
+.sbq-recommond-friends a{
+	color: #585858
+}
+#block-sbq-commons-recommond-doctors .more-link a,
+#block-sbq-commons-recommond-patients .more-link a{
+	color: #fff
+}
+.sbq_recommond_friends span.hospital,
+.sbq-recommond-friends span.hospital{
+	font-weight: normal;
 }
