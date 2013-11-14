@@ -177,3 +177,13 @@ function zen_kh_form_alter(&$form, &$form_state, $form_id) {
   }
 
 }
+
+
+function zen_kh_preprocess_html(&$variables) {
+  global $user;
+  if(!$user->uid) {
+    //http://adaptivethemes.com/how-to-add-css-files-in-drupal-7
+    //http://friendlymachine.net/posts/2011/add-stylesheet-drupal-theme
+    drupal_add_css(drupal_get_path('theme', 'zen_kh') . '/css/register.css', array('group' => CSS_THEME));
+  }  
+}

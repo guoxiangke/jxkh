@@ -23,6 +23,9 @@ Drupal.behaviors.my_custom_behavior = {
 		  interval: 3000
 		})
     })
+    $('#sbq_doctor_quick_register button.close').live('click',function(){
+    	$('#sbq_doctor_quick_register').hide();
+    })
   }
 };
 

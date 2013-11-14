@@ -80,6 +80,7 @@ li {
 #navigation .links li a:hover,#navigation .menu li a:hover {
 	}
 	#secondary-menu {
+		line-height: 25px;
 		position: fixed; top: 0;left: 0;z-index: 10;
 		height: 25px; width: 100%; float: none;
 		background:url(../images/hbg.png) repeat-x 0 0;
@@ -275,7 +276,7 @@ li {
 	margin-bottom: 0;
 	padding-bottom: 40px;
 }
-#block-views-friend-activities-index {
+#block-views-friend-activities-index,.region.region-sidebar-first.column.sidebar {
 	background-color:#fff
 }
 #block-views-exposure-platform-block-index{
@@ -362,6 +363,7 @@ li {
 #sbq-bd-list .block-title {
 	border-bottom:3px solid #16b4c7;
 	text-indent:0.7em;
+	height: 57px;line-height: 57px;
 }
 #block-user-login #edit-name,#edit-pass {
 	width:186px;
@@ -478,7 +480,7 @@ position: relative;
     display: block;
 }
 #myCarousel .carousel-indicators {
-    height:12px;
+    height:15px;
     margin: 0;
     padding: 0;
     left: 50%;
@@ -492,25 +494,24 @@ position: relative;
 *,*:before,*:after{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
 .carousel-indicators li {
     border: 1px solid #FFFFFF;
-    border-radius: 10px;
+    border-radius: 15px;
     cursor: pointer;
     display: inline-block;
-    height: 10px;
+    height: 15px;
     margin: 1px;
     text-indent: -999px;
-    width: 10px;
+    width: 15px;
 }
 #myCarousel .carousel-indicators li {
     background: none repeat scroll 0 0 #808080;
 }
 .carousel-indicators .active {
-    background-color: #FFFFFF;
-    height: 12px;
-    margin: 0;
-    width: 12px;
+    background-color: #16b4c7;
+    height: 15px;
+    width: 15px;
 }
 #myCarousel .carousel-indicators .active {
-    background: none repeat scroll 0 0 #029835;
+    background: none repeat scroll 0 0 #16b4c7;
 }
 
 
@@ -862,12 +863,17 @@ label {
 	width: 500px;
 }
 ul,li{margin: 0;padding: 0}
-#block-sbq-commons-sbq-user-profile{width: 173px;padding: 4px;}
-#block-sbq-commons-sbq-user-profile #sbq_picture{width:80px; height:80px;float: left;}
+#block-sbq-commons-sbq-user-profile{width: 173px;padding: 4px;
+	position: relative;
+
+}
+#block-sbq-commons-sbq-user-profile #sbq_picture{width:80px; height:80px;float: left;
+margin-right: 9px;}
 #block-sbq-commons-sbq-user-profile #sbq_name{ 
 	float: left;
-    width: 50%;
-   }
+    width: 45%;
+    margin-top: 21px;
+}
 
 
 
@@ -879,13 +885,17 @@ ul,li{margin: 0;padding: 0}
 	font-weight: normal; 
 	text-align: center;
 	line-height: 30px; 
-	font-size: 16px;}
+	font-size: 16px;
+	text-indent: 0
+}
 ul.quicktabs-tabs.quicktabs-style-arrows{border-bottom: 2px solid #1dc7db;margin-bottom: 0;
 height: 27px;
 line-height: 27px;}
 
 .block-quicktabs .view-content>div:after,
-.block-quicktabs .view-content>div:before{
+.block-quicktabs .view-content>div:before,
+.region-sidebar-second .block:after,
+.region-sidebar-second .block:before{
 	content: "";
 	display: table;
 	clear: both;
@@ -896,7 +906,7 @@ line-height: 27px;}
 	padding: 0 11px;
 	position: relative;
 }
-.quicktabs_main.quicktabs-style-arrows .more-link{
+.more-link{
 	position: absolute;
 	right: 0;
 	top: -23px;
@@ -907,26 +917,39 @@ line-height: 27px;}
 	height: 32px;line-height: 32px;
 	border-bottom: 1px dashed #cacaca
 }
+.block-quicktabs .view-content .views-row-last{
+	border-bottom: none;
+}
 html{
 	font-size: 14px;
 }
 .block-quicktabs .view-content .views-field{
 	float: left;
-	color: #a3a3a3
+	color: #a3a3a3;
+	height: 32px;
+	overflow: hidden;
 }
-.block-quicktabs .views-field-title{
-	width: 239px;
+.block-quicktabs .views-field-title,
+.block-quicktabs .views-field-title-1{
+	width: 256px;
+	max-width: 256px;
+	padding-left: 14px;
+	overflow: hidden;
+	background: url(../images/dot.png) no-repeat 4px center;
 }
 .block-quicktabs .views-field-value{
 	width: 63px;
 	padding-left: 21px;
 	background: url(../images/thumbs-up.png) no-repeat 0 center;
 }
-.block-quicktabs .views-field-field-mark-question-resolved,.block-quicktabs .views-field-comment-count{
-	width: 44px
+.block-quicktabs .views-field-field-mark-question-resolved,
+.block-quicktabs .views-field-comment-count{
+	width: 60px
 }
-.block-quicktabs .views-field-created{
-	width: 130px; text-align: right;
+.block-quicktabs .views-field-created,.views-field-created-1{
+	width: 80px; text-align: right;
+	height: 32px;
+	overflow: hidden;
 }
 
 .contextual-links-region h2{
@@ -943,4 +966,70 @@ ul.quicktabs-tabs li.active{
 .two-sidebars .region-sidebar-second{
 	width: 260px;
 	margin-left: 710px;
+}
+ul.quicktabs-tabs.quicktabs-style-arrows li a{
+	background: none
+}
+ul.quicktabs-tabs.quicktabs-style-arrows li.active a,
+ul.quicktabs-tabs.quicktabs-style-arrows li a:hover{
+	background: url(../images/arrows.png) no-repeat center bottom;
+}
+#block-sbq-commons-sbq-user-profile i{
+	position: absolute;
+	top: 3px;
+}
+#block-sbq-commons-sbq-user-profile i.option{
+	right: 20px;
+}
+#block-sbq-commons-sbq-user-profile i.message{
+	right: 3px;
+	
+}
+#block-sbq-commons-sbq-user-profile i a{ text-indent: -1000em;
+display: inline-block;
+width: 15px;
+outline: none;
+}
+
+#block-sbq-commons-sbq-user-profile i.option a{background: url(../images/inbox.png) no-repeat 0 0;}
+#block-sbq-commons-sbq-user-profile i.message a{background: url(../images/inbox.png) no-repeat right 0;}
+#block-sbq-commons-sbq-user-profile #user_badges{
+	font-size: 12px;
+	color: #868d8b
+}
+.userpoints-points{ font-size: 10px; }
+.userpoints-points em{font-style: normal;}
+.menu__item.is-leaf{ list-style: none;height: 40px;
+padding-left: 40px;
+line-height: 40px;
+}
+.menu__item.is-leaf a{
+	color: #737373
+}
+.region-sidebar-second .block{}
+.region-sidebar-second .contextual-links-region{
+	border: 1px solid #cccccc;
+}
+.region-sidebar-second .views-row {
+	padding: 0 10px;
+	height: 26px;
+	line-height: 26px;
+	overflow: hidden;
+	
+}
+.region-sidebar-second .views-row a{
+font-size: 12px;
+}
+#block-views-news-block-2,#block-views-news-block-1{
+	position: relative;
+}
+#block-views-news-block-2 .more-link,#block-views-news-block-1 .more-link{
+	top: 4px;
+	right: 5px
+}
+.block-views .more-link a{
+	color: #fff
+}
+.contextual-links-region .block-views{
+	margin-bottom: 0
 }

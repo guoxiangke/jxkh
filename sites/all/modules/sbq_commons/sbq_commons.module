@@ -10,6 +10,8 @@ define('FOLLOWER_PATIENT', 2);
 // 医患群体关注
 define('FRIEND_DOCTOR_PATIENT', 3);
 
+define('SC_IMAGE_STYALE_80', 'sc150');
+
 //rid
 define('USER_ADMINSTRATOR_RID', 3);
 define('USER_DOCTOR_RID', 4);
@@ -17,113 +19,113 @@ define('USER_PATIENT_RID', 5);
 define('USER_CERTIFIED_DOCTOR_RID', 7);
 
 function sbq_commons_menu() {
-    module_load_all_includes('module', 'user_relationships_ui');
-    module_load_include('inc', 'og_ui');
+  module_load_all_includes('module', 'user_relationships_ui');
+  module_load_include('inc', 'og_ui');
 
-    //module_load_all_includes('module','og');
-    $items['relationship/ajax/%/remove/%/%']  = array(
-        'title' => 'Remove relationship',
-        'access callback' => 'user_relationships_ui_check_access',
-        'access arguments' => array(
-            'delete'),
-        'page callback' => 'sbq_commons_user_relationships_ui_remove_ajax',
-        'page arguments' => array(
-            2,
-            4,
-            5),
-        'type' => MENU_CALLBACK,
-    );
-    $items['relationship/ajax/%/request/%/%'] = array(
-        'title' => 'Create a relationship',
-        'type' => MENU_CALLBACK,
-        'access callback' => 'user_relationships_ui_check_access',
-        'access arguments' => array(
-            'request'),
-        'page callback' => 'sbq_commons_user_relationships_ui_request_ajax',
-        'page arguments' => array(
-            2,
-            4,
-            5),
-    );
-    $items['relationship/ajax/%/pending/%/%'] = array(
-        'title' => 'Received requests',
-        'type' => MENU_CALLBACK,
-        'access callback' => 'user_relationships_ui_check_access',
-        'access arguments' => array(
-            'approve',
-            2),
-        'page callback' => 'sbq_commons_user_relationships_ui_pending_requested_ajax',
-        'page arguments' => array(
-            2,
-            4,
-            5,
-            6),
-        'file' => 'sbq_commons.inc',
-    );
-    $items['relationship/ajax/user/view']     = array(
-        'title' => 'display user view',
-        'access callback' => 'user_relationships_ui_check_access',
-        'access arguments' => array(
-            'view'),
-        'page callback' => 'sbq_commons_user_relationship_view',
-        'type' => MENU_CALLBACK,
-        'file' => 'sbq_commons.inc',
-    );
-    module_load_include('inc', 'og_ui', 'og_ui.pages');
-    $items['group/%/%/subscribe/ajax']        = array(
-        'delivery callback' => 'ajax_deliver',
-        'type' => MENU_CALLBACK,
-        'page callback' => 'sbq_og_ui_subscribe_ajax',
-        'page arguments' => array(
-            1,
-            2),
-        // Function will take care of permissions, as we want to show "you are
-        // already a member of the group" to group members, however it is not
-        // possible to give authenticated group members the "subscribe" permissions.
-        'access callback' => 'group_subscribe4sbq',
-        'access arguments' => array(
-            1,
-            2),
-        'file' => 'sbq_commons_og_ui.inc',
-        // We don't add the group name, as it might be private.
-        'title' => 'Join group'
-    );
+  //module_load_all_includes('module','og');
+  $items['relationship/ajax/%/remove/%/%'] = array(
+      'title' => 'Remove relationship',
+      'access callback' => 'user_relationships_ui_check_access',
+      'access arguments' => array(
+          'delete' ),
+      'page callback' => 'sbq_commons_user_relationships_ui_remove_ajax',
+      'page arguments' => array(
+          2,
+          4,
+          5 ),
+      'type' => MENU_CALLBACK,
+  );
+  $items['relationship/ajax/%/request/%/%'] = array(
+      'title' => 'Create a relationship',
+      'type' => MENU_CALLBACK,
+      'access callback' => 'user_relationships_ui_check_access',
+      'access arguments' => array(
+          'request' ),
+      'page callback' => 'sbq_commons_user_relationships_ui_request_ajax',
+      'page arguments' => array(
+          2,
+          4,
+          5 ),
+  );
+  $items['relationship/ajax/%/pending/%/%'] = array(
+      'title' => 'Received requests',
+      'type' => MENU_CALLBACK,
+      'access callback' => 'user_relationships_ui_check_access',
+      'access arguments' => array(
+          'approve',
+          2 ),
+      'page callback' => 'sbq_commons_user_relationships_ui_pending_requested_ajax',
+      'page arguments' => array(
+          2,
+          4,
+          5,
+          6 ),
+      'file' => 'sbq_commons.inc',
+  );
+  $items['relationship/ajax/user/view'] = array(
+      'title' => 'display user view',
+      'access callback' => 'user_relationships_ui_check_access',
+      'access arguments' => array(
+          'view' ),
+      'page callback' => 'sbq_commons_user_relationship_view',
+      'type' => MENU_CALLBACK,
+      'file' => 'sbq_commons.inc',
+  );
+  module_load_include('inc', 'og_ui', 'og_ui.pages');
+  $items['group/%/%/subscribe/ajax'] = array(
+      'delivery callback' => 'ajax_deliver',
+      'type' => MENU_CALLBACK,
+      'page callback' => 'sbq_og_ui_subscribe_ajax',
+      'page arguments' => array(
+          1,
+          2 ),
+      // Function will take care of permissions, as we want to show "you are
+      // already a member of the group" to group members, however it is not
+      // possible to give authenticated group members the "subscribe" permissions.
+      'access callback' => 'group_subscribe4sbq',
+      'access arguments' => array(
+          1,
+          2 ),
+      'file' => 'sbq_commons_og_ui.inc',
+      // We don't add the group name, as it might be private.
+      'title' => 'Join group'
+  );
 
-    $items['group/%/%/unsubscribe/ajax'] = array(
-        'delivery callback' => 'ajax_deliver',
-        'type' => MENU_CALLBACK,
-        'file' => 'sbq_commons_og_ui.inc',
-        'page callback' => 'sbq_og_ui_unsubscribe_ajax',
-        'page arguments' => array(
-            1,
-            2),
-        'access callback' => 'og_ui_user_access_group',
-        'access arguments' => array(
-            'unsubscribe',
-            1,
-            2),
-        'title' => 'Leave group',
-    );
+  $items['group/%/%/unsubscribe/ajax'] = array(
+      'delivery callback' => 'ajax_deliver',
+      'type' => MENU_CALLBACK,
+      'file' => 'sbq_commons_og_ui.inc',
+      'page callback' => 'sbq_og_ui_unsubscribe_ajax',
+      'page arguments' => array(
+          1,
+          2 ),
+      'access callback' => 'og_ui_user_access_group',
+      'access arguments' => array(
+          'unsubscribe',
+          1,
+          2 ),
+      'title' => 'Leave group',
+  );
 
-    $items['group/%/%/membership/action-role/%og_membership/%/%/ajax'] = array(
-        'delivery callback' => 'ajax_deliver',
-        'type' => MENU_CALLBACK,
-        'page callback' => 'group_membership_action_role_ajax',
-        'page arguments' => array(
-            1,
-            2,
-            5,
-            6,
-            7),
-        'access callback' => 'og_ui_user_access_group',
-        'access arguments' => array(
-            'manage members',
-            1,
-            2,
-            5),
-        'file' => 'sbq_commons_og_ui.inc',
-    );
-    return $items;
+  $items['group/%/%/membership/action-role/%og_membership/%/%/ajax'] = array(
+      'delivery callback' => 'ajax_deliver',
+      'type' => MENU_CALLBACK,
+      'page callback' => 'group_membership_action_role_ajax',
+      'page arguments' => array(
+          1,
+          2,
+          5,
+          6,
+          7 ),
+      'access callback' => 'og_ui_user_access_group',
+      'access arguments' => array(
+          'manage members',
+          1,
+          2,
+          5 ),
+      'file' => 'sbq_commons_og_ui.inc',
+  );
+  return $items;
 }
 
 /**
@@ -132,135 +134,134 @@ function sbq_commons_menu() {
 function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
 
 // watchdog('sbq_commons', $form_id, array(), WATCHDOG_NOTICE, 'link');
-    if (isset($form['comment_body'])) {
-        $form['comment_body'][LANGUAGE_NONE][0]['#title'] = t('Comment');
-    }
-    if (isset($form['body'])) {
-        $form['body'][LANGUAGE_NONE][0]['#title'] = t('Body');
-    }
-    if (isset($form['field_tags'])) {
-        $form['field_tags'][LANGUAGE_NONE]['#title'] = t('Tags');
-    }
-    if (isset($form['field_image'])) {
-        $form['field_image'][LANGUAGE_NONE]['#title'] = t('image');
-    }
-    switch ($form_id) {
-        case 'views_form_og_members_admin_default':
+  if (isset($form['comment_body'])) {
+    $form['comment_body'][LANGUAGE_NONE][0]['#title'] = t('Comment');
+  }
+  if (isset($form['body'])) {
+    $form['body'][LANGUAGE_NONE][0]['#title'] = t('Body');
+  }
+  if (isset($form['field_tags'])) {
+    $form['field_tags'][LANGUAGE_NONE]['#title'] = t('Tags');
+  }
+  if (isset($form['field_image'])) {
+    $form['field_image'][LANGUAGE_NONE]['#title'] = t('image');
+  }
+  switch ($form_id) {
+    case 'views_form_og_members_admin_default':
 //            $view                               = sbq_group_upgrade_remove_member_status('node', 19850, 126);
 //            $form['view']['#markup']            = $view;
-            unset($form['select']['operation']['#options']['action::og_user_roles_action']);
-            break;
-        case 'question_node_form':
-            $form['title']['#access']           = FALSE;
-            if(arg(0) == 'user') { // Quick Ask form for User Center
-                $form['body']['und']['0']['#title'] = t('快速提问');
-            }
-            else {
-                $form['body']['und']['0']['#title'] = t('问题');
-            }
-            break;
-        case 'post_node_form'://禁止评论 for post
-            global $user;
-            if (isset($form['uid']['#value']) && $user->uid != $form['uid']['#value']) {
-                $form['comment_settings']['#access'] = TRUE;
-            }
+      unset($form['select']['operation']['#options']['action::og_user_roles_action']);
+      break;
+    case 'question_node_form':
+      $form['title']['#access'] = FALSE;
+      if (arg(0) == 'user') { // Quick Ask form for User Center
+        $form['body']['und']['0']['#title'] = t('快速提问');
+      } else {
+        $form['body']['und']['0']['#title'] = t('问题');
+      }
+      break;
+    case 'post_node_form'://禁止评论 for post
+      global $user;
+      if (isset($form['uid']['#value']) && $user->uid != $form['uid']['#value']) {
+        $form['comment_settings']['#access'] = TRUE;
+      }
 
-            if (isset($_GET['og_group_ref'])) {
-                $form['actions']['submit']['#submit'][] = 'sbq_commons_node_form_redirect_handle';
-                $form['#redirect']                      = 'node/' . $_GET['og_group_ref'];
-            }
-            $form['title']['#title']                                  = t('标题');
-            $form['og_group_ref']['und'][0]['default']['#title']      = '请选择帖子发布的小组';
-            break;
-        case 'privatemsg_new':
-            $form['recipient']['#access']                             = FALSE;
-            $form['subject']['#access']                               = FALSE;
-            break;
-        case 'comment_node_sbq_topic_form':
-            $form['subject']['#access']                               = FALSE;
-            $form['author']['#access']                                = FALSE;
-            $form['actions']['submit']['#value']                      = '发表观点';
-            $form['actions']['preview']['#access']                    = FALSE;
-            // $form['comment_body'][LANGUAGE_NONE][0]['#title'] = '';
-            $form['comment_body'][LANGUAGE_NONE][0]['#default_value'] = '我支持的观点：禁止发布含有辱骂、国情等敏感词汇';
-            // vote logic  for topic!
-            $node                                                     = $form['#node'];
-            $rate_widget_id                                           = sbq_commons_get_rid_by_name('vote_sbq_topic');
-            if ($rate_widget_id)
-                $rate_result                                              = rate_get_results('node', $node->nid, $rate_widget_id);
+      if (isset($_GET['og_group_ref'])) {
+        $form['actions']['submit']['#submit'][] = 'sbq_commons_node_form_redirect_handle';
+        $form['#redirect'] = 'node/' . $_GET['og_group_ref'];
+      }
+      $form['title']['#title'] = t('标题');
+      $form['og_group_ref']['und'][0]['default']['#title'] = '请选择帖子发布的小组';
+      break;
+    case 'privatemsg_new':
+      $form['recipient']['#access'] = FALSE;
+      $form['subject']['#access'] = FALSE;
+      break;
+    case 'comment_node_sbq_topic_form':
+      $form['subject']['#access'] = FALSE;
+      $form['author']['#access'] = FALSE;
+      $form['actions']['submit']['#value'] = '发表观点';
+      $form['actions']['preview']['#access'] = FALSE;
+      // $form['comment_body'][LANGUAGE_NONE][0]['#title'] = '';
+      $form['comment_body'][LANGUAGE_NONE][0]['#default_value'] = '我支持的观点：禁止发布含有辱骂、国情等敏感词汇';
+      // vote logic  for topic!
+      $node = $form['#node'];
+      $rate_widget_id = sbq_commons_get_rid_by_name('vote_sbq_topic');
+      if ($rate_widget_id)
+        $rate_result = rate_get_results('node', $node->nid, $rate_widget_id);
 
-            if (isset($rate_result['user_vote'])) {
-                $form['sbq_topic_voted'] = array(
-                    '#type' => 'hidden',
-                    '#value' => 0);
-                switch ($rate_result['user_vote']) {
-                    case '支持':
-                        $form['field_field_sbq_topic_type'][LANGUAGE_NONE]['#default_value'] = 1;
-                        $form['sbq_topic_voted']                                             = array(
-                            '#type' => 'hidden',
-                            '#value' => 1);
-                        break;
-                    case '反对':
-                        $form['field_field_sbq_topic_type'][LANGUAGE_NONE]['#default_value'] = 0;
-                        $form['sbq_topic_voted']                                             = array(
-                            '#type' => 'hidden',
-                            '#value' => -1);
-                        break;
-                    default:
-                        break;
-                }
-            }
+      if (isset($rate_result['user_vote'])) {
+        $form['sbq_topic_voted'] = array(
+            '#type' => 'hidden',
+            '#value' => 0 );
+        switch ($rate_result['user_vote']) {
+          case '支持':
+            $form['field_field_sbq_topic_type'][LANGUAGE_NONE]['#default_value'] = 1;
+            $form['sbq_topic_voted'] = array(
+                '#type' => 'hidden',
+                '#value' => 1 );
+            break;
+          case '反对':
+            $form['field_field_sbq_topic_type'][LANGUAGE_NONE]['#default_value'] = 0;
+            $form['sbq_topic_voted'] = array(
+                '#type' => 'hidden',
+                '#value' => -1 );
+            break;
+          default:
+            break;
+        }
+      }
 
-            break;
-        case 'user_register_form':
-            $form['profile_doctor_profile']['#access']   = FALSE;
-            $form['profile_customer_profile']['#access'] = FALSE;
-            //隐藏csna登录
-            $form['csna_login']['#access']               = FALSE;
-            $form['account']['name']['#title']           = t('登录帐户');
-            $form['account']['mail']['#title']           = t('电子邮箱');
-            $form['actions']['submit']['#value']         = t('立即注册');
+      break;
+    case 'user_register_form':
+      $form['profile_doctor_profile']['#access'] = FALSE;
+      $form['profile_customer_profile']['#access'] = FALSE;
+      //隐藏csna登录
+      $form['csna_login']['#access'] = FALSE;
+      $form['account']['name']['#title'] = t('登录帐户');
+      $form['account']['mail']['#title'] = t('电子邮箱');
+      $form['actions']['submit']['#value'] = t('立即注册');
 
-            $form['agree'] = array(
-                '#type' => 'checkbox',
-                '#title' => t('同意' . l('伤不起服务条款', "node/2789", array(
-                            'attributes' => array(
-                                'target' => '_blank',
-                                'class'
-                                => 'argee_regester')))),
-                '#default_value' => TRUE,
-                '#weight' => 99.9
-            );
-            break;
-        case 'user_login_block':
-            //@see template.php in zen_sbq
-            break;
-        case 'general_group_node_form':
-        case 'doctor_group_node_form':
-            if (!isset($form['nid']['#value'])) {
-                $form['actions']['submit']['#value'] = t('申请');
-            }
+      $form['agree'] = array(
+          '#type' => 'checkbox',
+          '#title' => t('同意' . l('伤不起服务条款', "node/2789", array(
+                  'attributes' => array(
+                      'target' => '_blank',
+                      'class'
+                      => 'argee_regester' ) ))),
+          '#default_value' => TRUE,
+          '#weight' => 99.9
+      );
+      break;
+    case 'user_login_block':
+      //@see template.php in zen_sbq
+      break;
+    case 'general_group_node_form':
+    case 'doctor_group_node_form':
+      if (!isset($form['nid']['#value'])) {
+        $form['actions']['submit']['#value'] = t('申请');
+      }
 
-            break;
-        case 'sbq_og_ui_confirm_subscribe':
-            $form['actions']['submit']['#ajax'] = array(
-                'callback' => 'sbq_og_ui_confirm_subscribe_ajax_submit',
-                'wrapper' => 'sbq_og_ui_confirm_subscribe',
-                'method' => 'replace',
-                'effect' => 'fade',
-                'file' => 'sbq_commons_og_ui.inc',
-            );
-            // $form['link'] = sbq_og_ui_status_link($group_type, $gid);
-            break;
-        case 'sbq_og_ui_confirm_unsubscribe':
-            $form['actions']['submit']['#ajax'] = array(
-                'callback' => 'sbq_og_ui_confirm_unsubscribe_ajax_submit',
-                'wrapper' => 'sbq_og_ui_confirm_unsubscribe',
-                'method' => 'replace',
-                'effect' => 'fade',
-                'file' => 'sbq_commons_og_ui.inc',
-            );
-            break;
+      break;
+    case 'sbq_og_ui_confirm_subscribe':
+      $form['actions']['submit']['#ajax'] = array(
+          'callback' => 'sbq_og_ui_confirm_subscribe_ajax_submit',
+          'wrapper' => 'sbq_og_ui_confirm_subscribe',
+          'method' => 'replace',
+          'effect' => 'fade',
+          'file' => 'sbq_commons_og_ui.inc',
+      );
+      // $form['link'] = sbq_og_ui_status_link($group_type, $gid);
+      break;
+    case 'sbq_og_ui_confirm_unsubscribe':
+      $form['actions']['submit']['#ajax'] = array(
+          'callback' => 'sbq_og_ui_confirm_unsubscribe_ajax_submit',
+          'wrapper' => 'sbq_og_ui_confirm_unsubscribe',
+          'method' => 'replace',
+          'effect' => 'fade',
+          'file' => 'sbq_commons_og_ui.inc',
+      );
+      break;
 //        case 'user_relationships_ui_remove' :
 //            dpm($form);
 //            module_load_include('inc', 'user_relationships_ui', 'user_relationships_ui.actions');
@@ -275,26 +276,26 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
 //                'file' => drupal_get_path('module', 'user_relationships_ui') . '/user_relationships_ui.actions.inc',
 //            );
 //            break;
-        default:
-            break;
-    }
+    default:
+      break;
+  }
 
-    // 验证码判断
-    _sbq_commons_captcha_display($form, $form_alter, $form_id);
+  // 验证码判断
+  _sbq_commons_captcha_display($form, $form_alter, $form_id);
 }
 
 function sbq_commons_get_rid_by_name($name) {
-    $rate_widget_id = FALSE;
-    $rate_widgets   = variable_get('rate_widgets', NUll);
-    if (is_array($rate_widgets)) {
-        foreach ($rate_widgets as $rid => $rate) {
-            if ($rate->name == $name) {
-                $rate_widget_id = $rid;
-                break;
-            }
-        }
+  $rate_widget_id = FALSE;
+  $rate_widgets = variable_get('rate_widgets', NUll);
+  if (is_array($rate_widgets)) {
+    foreach ($rate_widgets as $rid => $rate) {
+      if ($rate->name == $name) {
+        $rate_widget_id = $rid;
+        break;
+      }
     }
-    return $rate_widget_id;
+  }
+  return $rate_widget_id;
 }
 
 /**
@@ -303,32 +304,32 @@ function sbq_commons_get_rid_by_name($name) {
 function sbq_commons_form_comment_form_alter(&$form, &$form_state, $form_id) {
 
 // Check to see if this node type uses ajax comments.
-    if (!ajax_comments_node_type_active($form['#node']->type)) {
-        return;
-    }
-    if ($form['#node']->type != 'sbq_topic') {
-        return;
-    }
+  if (!ajax_comments_node_type_active($form['#node']->type)) {
+    return;
+  }
+  if ($form['#node']->type != 'sbq_topic') {
+    return;
+  }
 // child comment ajax behavior
-    if (isset($form['pid']['#value'])) {
-        $form['actions']['submit']['#ajax'] = array(
-            'callback' => 'ajax_comments_submit_js4child',
-            'wrapper' => $form['#id'],
-            'method' => 'replace',
-            'effect' => 'fade',
-            'file' => 'sbq_commons.inc',
-        );
-    } else {// main comment ajax behavior
-        $form['actions']['submit']['#ajax'] = array(
-            'callback' => 'ajax_comments_submit_js4sbq',
-            'wrapper' => $form['#id'],
-            'method' => 'replace',
-            'effect' => 'fade',
-            'file' => 'sbq_commons.inc',
-        );
-    }
+  if (isset($form['pid']['#value'])) {
+    $form['actions']['submit']['#ajax'] = array(
+        'callback' => 'ajax_comments_submit_js4child',
+        'wrapper' => $form['#id'],
+        'method' => 'replace',
+        'effect' => 'fade',
+        'file' => 'sbq_commons.inc',
+    );
+  } else {// main comment ajax behavior
+    $form['actions']['submit']['#ajax'] = array(
+        'callback' => 'ajax_comments_submit_js4sbq',
+        'wrapper' => $form['#id'],
+        'method' => 'replace',
+        'effect' => 'fade',
+        'file' => 'sbq_commons.inc',
+    );
+  }
 // HACK, stop ctools from modifying us in node_comment_form.inc
-    $form_state['ctools comment alter'] = FALSE;
+  $form_state['ctools comment alter'] = FALSE;
 }
 
 /**
@@ -336,16 +337,16 @@ function sbq_commons_form_comment_form_alter(&$form, &$form_state, $form_id) {
  */
 function sbq_commons_init() {
 // Load sbq_commons.inc from the node module.
-    drupal_add_js(drupal_get_path('module', 'sbq_commons') . '/js/sbq-commons.js');
-    module_load_include('inc', 'sbq_commons', 'sbq_commons');
-    module_load_include('inc', 'sbq_commons', 'sbq_commons_og_ui');
-    if (arg(0) == 'node' && is_numeric(arg(1))) {
-        $node = node_load(arg(1));
-        if ($node && $node->type == 'sbq_topic') {
-            drupal_add_css(drupal_get_path('module', 'sbq_commons') . '/css/topic-page.css');
-            drupal_add_js(drupal_get_path('module', 'sbq_commons') . '/js/topic-page.js');
-        }
+  drupal_add_js(drupal_get_path('module', 'sbq_commons') . '/js/sbq-commons.js');
+  module_load_include('inc', 'sbq_commons', 'sbq_commons');
+  module_load_include('inc', 'sbq_commons', 'sbq_commons_og_ui');
+  if (arg(0) == 'node' && is_numeric(arg(1))) {
+    $node = node_load(arg(1));
+    if ($node && $node->type == 'sbq_topic') {
+      drupal_add_css(drupal_get_path('module', 'sbq_commons') . '/css/topic-page.css');
+      drupal_add_js(drupal_get_path('module', 'sbq_commons') . '/js/topic-page.js');
     }
+  }
 }
 
 /**
@@ -353,16 +354,16 @@ function sbq_commons_init() {
  */
 function sbq_commons_admin_paths_alter(&$paths) {
 // Treat all user pages as administrative.
-    /*
-     * $paths['user'] = TRUE;
-     * $paths['user/*'] = TRUE;
-     */
+  /*
+   * $paths['user'] = TRUE;
+   * $paths['user/*'] = TRUE;
+   */
 // Treat the forum topic node form as a non-administrative page.
-    /*
-     * $paths['node/add/forum'] = FALSE;
-     */
-    $paths['node/add']   = FALSE;
-    $paths['node/add/*'] = FALSE;
+  /*
+   * $paths['node/add/forum'] = FALSE;
+   */
+  $paths['node/add'] = FALSE;
+  $paths['node/add/*'] = FALSE;
 }
 
 /**
@@ -371,30 +372,30 @@ function sbq_commons_admin_paths_alter(&$paths) {
   2.rewrite access to create relationships menu. user hook_menu_alter()
  */
 function sbq_commons_preprocess_page(&$variables) {
-    global $user;
-    if (arg(0) == 'user' && (arg(2) == 'relationships')) {
-        if (in_array('doctor', $user->roles)) {
-            if (isset($variables['tabs']['#secondary'][4])) {
-                unset($variables['tabs']['#secondary'][4]);
-            }
-        } elseif (in_array('patient', $user->roles)) {
-            if (isset($variables['tabs']['#secondary'][3])) {
-                unset($variables['tabs']['#secondary'][3]);
-            }
-        }
+  global $user;
+  if (arg(0) == 'user' && (arg(2) == 'relationships')) {
+    if (in_array('doctor', $user->roles)) {
+      if (isset($variables['tabs']['#secondary'][4])) {
+        unset($variables['tabs']['#secondary'][4]);
+      }
+    } elseif (in_array('patient', $user->roles)) {
+      if (isset($variables['tabs']['#secondary'][3])) {
+        unset($variables['tabs']['#secondary'][3]);
+      }
     }
+  }
 
-    switch ($_GET['q']) {
-        case 'node/add/doctor-group':
-            drupal_set_title(t('申请医生小组'));
-            break;
-        case 'node/add/general-group':
-            drupal_set_title(t('申请患者小组'));
-            break;
-        default:
-            break;
-    }
-    return $variables;
+  switch ($_GET['q']) {
+    case 'node/add/doctor-group':
+      drupal_set_title(t('申请医生小组'));
+      break;
+    case 'node/add/general-group':
+      drupal_set_title(t('申请患者小组'));
+      break;
+    default:
+      break;
+  }
+  return $variables;
 }
 
 /**
@@ -403,7 +404,7 @@ function sbq_commons_preprocess_page(&$variables) {
   TODO: hide dc-ur for c2c or d2d | hide not use of UR in when see others page.different roles
  */
 function sbq_commons_user_view($account, $view_mode, $langcode) {
-    sbq_commons_user_relationship_view($account, $view_mode, $langcode);
+  sbq_commons_user_relationship_view($account, $view_mode, $langcode);
 }
 
 /**
@@ -411,90 +412,90 @@ function sbq_commons_user_view($account, $view_mode, $langcode) {
  */
 function sbq_commons_menu_alter(&$items) {
 
-    foreach (user_relationships_types_load() as $rtid => $relationship) {
-        $items["relationship/%user/request/{$rtid}"] = array(
-            'title' => $relationship->rtid,
-            'title callback' => 'user_relationships_ui_title_callback',
-            'type' => MENU_CALLBACK,
-            'access callback' => 'sbq_commons_relationships_ui_check_access',
-            'access arguments' => array(
-                'request',
-                1,
-                3),
-            'page callback' => 'user_relationships_ui_request_ajax',
-            'page arguments' => array(
-                1),
-            'file' => drupal_get_path('module', 'user_relationships_ui') . '/user_relationships_ui.forms.inc',
-        );
-    }
-    if (isset($items['doctor/register'])) {
-        $items['doctor/register']['page callback'] = 'sbq_commons_doctor_register';
-    }
+  foreach (user_relationships_types_load() as $rtid => $relationship) {
+    $items["relationship/%user/request/{$rtid}"] = array(
+        'title' => $relationship->rtid,
+        'title callback' => 'user_relationships_ui_title_callback',
+        'type' => MENU_CALLBACK,
+        'access callback' => 'sbq_commons_relationships_ui_check_access',
+        'access arguments' => array(
+            'request',
+            1,
+            3 ),
+        'page callback' => 'user_relationships_ui_request_ajax',
+        'page arguments' => array(
+            1 ),
+        'file' => drupal_get_path('module', 'user_relationships_ui') . '/user_relationships_ui.forms.inc',
+    );
+  }
+  if (isset($items['doctor/register'])) {
+    $items['doctor/register']['page callback'] = 'sbq_commons_doctor_register';
+  }
 //@url http://192.168.0.150:800/redmine/issues/49
 //@og_ui_menu //user_is_logged_in ==>group_subscribe4sbq
-    $items['group/%/%/subscribe']['access callback']  = 'group_subscribe4sbq';
-    $items['group/%/%/subscribe']['access arguments'] = array(
-        1,
-        2);
+  $items['group/%/%/subscribe']['access callback'] = 'group_subscribe4sbq';
+  $items['group/%/%/subscribe']['access arguments'] = array(
+      1,
+      2 );
 // $items['group/%/%/unsubscribe']['access callback'] = 'group_unsubscribe4sbq';
 
-    if (isset($items['taxonomy/autocomplete'])) {
-        $items['taxonomy/autocomplete']['page callback'] = 'sbq_commons_taxonomy_autocomplete';
-    }
+  if (isset($items['taxonomy/autocomplete'])) {
+    $items['taxonomy/autocomplete']['page callback'] = 'sbq_commons_taxonomy_autocomplete';
+  }
 }
 
 /**
  * relationships_ui_check_access
  */
 function sbq_commons_relationships_ui_check_access($type, $account = NULL, $relationship_type = NULL) {
-    global $user;
-    if (!is_object($account)) {
-        $account = $user;
-    }
-    if (!is_object($relationship_type)) {
-        $relationship_type = user_relationships_type_load($relationship_type);
-    }
-    if (user_access('administer user relationships')) {
-        return TRUE;
-    }
+  global $user;
+  if (!is_object($account)) {
+    $account = $user;
+  }
+  if (!is_object($relationship_type)) {
+    $relationship_type = user_relationships_type_load($relationship_type);
+  }
+  if (user_access('administer user relationships')) {
+    return TRUE;
+  }
 // If the user does not any have permission, deny access.
-    if (!user_relationships_can_receive($account)) {
-        return FALSE;
-    }
-    switch ($type) {
-        case 'request':
-            return sbq_commons_relationships_ui_check_access_by_roles($user, $account, $relationship_type->rtid);
-            break;
-    }
+  if (!user_relationships_can_receive($account)) {
     return FALSE;
+  }
+  switch ($type) {
+    case 'request':
+      return sbq_commons_relationships_ui_check_access_by_roles($user, $account, $relationship_type->rtid);
+      break;
+  }
+  return FALSE;
 }
 
 /**
  * use user-roles check_access
  */
 function sbq_commons_relationships_ui_check_access_by_roles($user, $account, $relationship) {
-    // 当前用户为医生
-    if (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($user->roles))) {
-        // 被被请求者为医生
-        if (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($account->roles)) && $relationship == FOLLOWER_DOCTOR) {
-            return TRUE;
-        } // 被被请求者为病人
-        elseif (in_array(USER_PATIENT_RID, array_keys($account->roles)) && $relationship == FRIEND_DOCTOR_PATIENT) {
+  // 当前用户为医生
+  if (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($user->roles))) {
+    // 被被请求者为医生
+    if (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($account->roles)) && $relationship == FOLLOWER_DOCTOR) {
+      return TRUE;
+    } // 被被请求者为病人
+    elseif (in_array(USER_PATIENT_RID, array_keys($account->roles)) && $relationship == FRIEND_DOCTOR_PATIENT) {
 # code...
-            return TRUE;
-        }
-    }// 当前用户为病人
-    elseif (in_array(USER_PATIENT_RID, array_keys($user->roles))) {
-        //被被请求者为病人
-        if (in_array(USER_PATIENT_RID, array_keys($user->roles)) && $relationship == FOLLOWER_PATIENT) {
-            return TRUE;
-        }//被被请求者为医生
-        elseif (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($account->roles)) && $relationship == FRIEND_DOCTOR_PATIENT) {
-# code...
-            return TRUE;
-        }
+      return TRUE;
     }
-    return FALSE;
+  }// 当前用户为病人
+  elseif (in_array(USER_PATIENT_RID, array_keys($user->roles))) {
+    //被被请求者为病人
+    if (in_array(USER_PATIENT_RID, array_keys($user->roles)) && $relationship == FOLLOWER_PATIENT) {
+      return TRUE;
+    }//被被请求者为医生
+    elseif (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($account->roles)) && $relationship == FRIEND_DOCTOR_PATIENT) {
+# code...
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 
 /**
@@ -504,244 +505,244 @@ function sbq_commons_relationships_ui_actions_between($viewer, $viewed, $action_
     'add' => 1,
     'remove' => 1,
     'requested' => 1,
-    'received' => 1)) {
-    $list = array();
-    if ($viewer->uid == $viewed->uid) {
-        return;
-    }
-    module_load_include('inc', 'user_relationships_ui', 'user_relationships_ui.forms');
+    'received' => 1 )) {
+  $list = array();
+  if ($viewer->uid == $viewed->uid) {
+    return;
+  }
+  module_load_include('inc', 'user_relationships_ui', 'user_relationships_ui.forms');
 
-    if (isset($action_types['requested'])) {
-        $relationships = user_relationships_load(array(
-            'requester_id' => $viewer->uid,
-            'requestee_id' => $viewed->uid,
-            'approved' => FALSE));
+  if (isset($action_types['requested'])) {
+    $relationships = user_relationships_load(array(
+        'requester_id' => $viewer->uid,
+        'requestee_id' => $viewed->uid,
+        'approved' => FALSE ));
+    foreach ($relationships as $relationship) {
+      $list[] = t('You have sent a new @rel_name request to this user. (!pending_requests)', array(
+          '!pending_requests' => l(t('pending requests'), "relationships/sent"),
+          ) + user_relationships_type_translations($relationship));
+    }
+  }
+
+  if (isset($action_types['received'])) {
+    $relationships = user_relationships_load(array(
+        'requester_id' => $viewed->uid,
+        'requestee_id' => $viewer->uid,
+        'approved' => FALSE ));
+    foreach ($relationships as $relationship) {
+      if (user_relationships_user_access('maintain @relationship relationships', $relationship)) {
+        $list[] = t('This user has requested to be your @rel_name. (!pending_requests)', array(
+            '!pending_requests' => l(t('pending requests'), "user/{$viewer->uid}/relationships/received"),
+            ) + user_relationships_type_translations($relationship));
+        $list[] = t('This user has requested to be your @rel_name. (!approve_requests, !dis_approve_requests)', array(
+            '!approve_requests' => l('同意', 'relationship/ajax/' . $viewer->uid . '/pending/' . $relationship->rid . '/' . $viewed->uid . '/approve', array(
+                'html' => TRUE,
+                'attributes' => array(
+                    'class' => array(
+                        'relationship_ajax_action' ) ),
+                )
+            ),
+            '!dis_approve_requests' => l('拒绝', 'relationship/ajax/' . $viewer->uid . '/pending/' . $relationship->rid . '/' . $viewed->uid . '/disapprove', array(
+                'html' => TRUE,
+                'attributes' => array(
+                    'class' => array(
+                        'relationship_ajax_action' ) ),
+                )
+            )
+            )
+        );
+      }
+    }
+  }
+
+
+  if (isset($action_types['add'])) {
+    $relationships = user_relationships_get_requestable_rtypes($viewer, $viewed, 'full');
+    if ($relationships) {
+      // If configured, create direct links.
+      if (variable_get('user_relationships_show_direct_links', 1)) {
+        // Create a single link, or one for each relationship type.
         foreach ($relationships as $relationship) {
-            $list[] = t('You have sent a new @rel_name request to this user. (!pending_requests)', array(
-                '!pending_requests' => l(t('pending requests'), "relationships/sent"),
-                    ) + user_relationships_type_translations($relationship));
-        }
-    }
-
-    if (isset($action_types['received'])) {
-        $relationships = user_relationships_load(array(
-            'requester_id' => $viewed->uid,
-            'requestee_id' => $viewer->uid,
-            'approved' => FALSE));
-        foreach ($relationships as $relationship) {
-            if (user_relationships_user_access('maintain @relationship relationships', $relationship)) {
-                $list[] = t('This user has requested to be your @rel_name. (!pending_requests)', array(
-                    '!pending_requests' => l(t('pending requests'), "user/{$viewer->uid}/relationships/received"),
-                        ) + user_relationships_type_translations($relationship));
-                $list[] = t('This user has requested to be your @rel_name. (!approve_requests, !dis_approve_requests)', array(
-                    '!approve_requests' => l('同意', 'relationship/ajax/' . $viewer->uid . '/pending/' . $relationship->rid . '/' . $viewed->uid . '/approve', array(
-                        'html' => TRUE,
-                        'attributes' => array(
-                            'class' => array(
-                                'relationship_ajax_action')),
-                            )
-                    ),
-                    '!dis_approve_requests' => l('拒绝', 'relationship/ajax/' . $viewer->uid . '/pending/' . $relationship->rid . '/' . $viewed->uid . '/disapprove', array(
-                        'html' => TRUE,
-                        'attributes' => array(
-                            'class' => array(
-                                'relationship_ajax_action')),
-                            )
-                    )
-                        )
-                );
+          if (sbq_commons_relationships_ui_check_access_by_roles($viewer, $viewed, $relationship->rtid)) {
+            if (sbq_commons_relationships_ui_request_validate($viewer, $viewed, $relationship->rtid)) {
+              $list[] = l(
+                  t("Become %name's @rel_name", array(
+                      '%name' => format_username($viewed) ) + user_relationships_type_translations($relationship)), "relationship/ajax/{$viewer->uid}/request/{$relationship->rtid}/{$viewed->uid}", array(
+                  'html' => TRUE,
+                  'attributes' => array(
+                      'class' => array(
+                          'relationship_ajax_action' ) ),
+                  )
+              );
             }
+          }
         }
+      }
+      // just one generic link pointing to a page with dropdown.
+      else {
+        $list[] = theme('user_relationships_request_relationship_link', array(
+            'relate_to' => $viewed ));
+      }
     }
+  }
 
-
-    if (isset($action_types['add'])) {
-        $relationships = user_relationships_get_requestable_rtypes($viewer, $viewed, 'full');
-        if ($relationships) {
-            // If configured, create direct links.
-            if (variable_get('user_relationships_show_direct_links', 1)) {
-                // Create a single link, or one for each relationship type.
-                foreach ($relationships as $relationship) {
-                    if (sbq_commons_relationships_ui_check_access_by_roles($viewer, $viewed, $relationship->rtid)) {
-                        if (sbq_commons_relationships_ui_request_validate($viewer, $viewed, $relationship->rtid)) {
-                            $list[] = l(
-                                    t("Become %name's @rel_name", array(
-                                        '%name' => format_username($viewed)) + user_relationships_type_translations($relationship)), "relationship/ajax/{$viewer->uid}/request/{$relationship->rtid}/{$viewed->uid}", array(
-                                'html' => TRUE,
-                                'attributes' => array(
-                                    'class' => array(
-                                        'relationship_ajax_action')),
-                                    )
-                            );
-                        }
-                    }
-                }
-            }
-            // just one generic link pointing to a page with dropdown.
-            else {
-                $list[] = theme('user_relationships_request_relationship_link', array(
-                    'relate_to' => $viewed));
-            }
+  if (isset($action_types['remove'])) {
+    $relationships = user_relationships_load(array(
+        'between' => array(
+            $viewer->uid,
+            $viewed->uid ) ));
+    foreach ($relationships as $relationship) {
+      if ($relationship->approved && !isset($list[$relationship->rid]) && user_relationships_ui_check_access('view', NULL, $relationship)) {
+        if (user_relationships_ui_check_access('delete', NULL, $relationship)) {
+          // @see user_relationships_remove_link
+          $list[$relationship->rid] = t('@rel_name (!remove_link)', array(
+              '@rel_name' => user_relationships_type_get_name($relationship) . ($relationship->is_oneway ? ($relationship->requester_id == $viewer->uid ? t(' (You to Them)') : t(' (Them to You)')) : NULL),
+              '!remove_link' => l(t('移除'), 'relationship/ajax/' . $viewer->uid . '/remove/' . $relationship->rid . '/' . $viewed->uid, array(
+                  'attributes' => array(
+                      'class' => array(
+                          'class' => 'relationship_ajax_action' ) ) )),
+              //   '!remove_link' => drupal_get_form('sbq_user_relationships_ui_remove_ajax', $viewer, $relationship)
+          ));
+        } else {
+          $list[$relationship->rid] = user_relationships_type_get_name($relationship) . ($relationship->is_oneway ? ($relationship->requester_id == $viewer->uid ? t(' (You to Them)') : t(' (Them to You)')) : NULL);
         }
+      }
     }
-
-    if (isset($action_types['remove'])) {
-        $relationships = user_relationships_load(array(
-            'between' => array(
-                $viewer->uid,
-                $viewed->uid)));
-        foreach ($relationships as $relationship) {
-            if ($relationship->approved && !isset($list[$relationship->rid]) && user_relationships_ui_check_access('view', NULL, $relationship)) {
-                if (user_relationships_ui_check_access('delete', NULL, $relationship)) {
-                    // @see user_relationships_remove_link
-                    $list[$relationship->rid] = t('@rel_name (!remove_link)', array(
-                        '@rel_name' => user_relationships_type_get_name($relationship) . ($relationship->is_oneway ? ($relationship->requester_id == $viewer->uid ? t(' (You to Them)') : t(' (Them to You)')) : NULL),
-                        '!remove_link' => l(t('移除'), 'relationship/ajax/' . $viewer->uid . '/remove/' . $relationship->rid . '/' . $viewed->uid, array(
-                            'attributes' => array(
-                                'class' => array(
-                                    'class' => 'relationship_ajax_action')))),
-                            //   '!remove_link' => drupal_get_form('sbq_user_relationships_ui_remove_ajax', $viewer, $relationship)
-                    ));
-                } else {
-                    $list[$relationship->rid] = user_relationships_type_get_name($relationship) . ($relationship->is_oneway ? ($relationship->requester_id == $viewer->uid ? t(' (You to Them)') : t(' (Them to You)')) : NULL);
-                }
-            }
-        }
-    }
+  }
 
 
-    return $list;
+  return $list;
 }
 
 /**
  * @see user_relationships_ui_request_validate
  */
 function sbq_commons_relationships_ui_request_validate($requester, &$requestee, $rtid) {
-    $rtype = user_relationships_type_load($rtid);
+  $rtype = user_relationships_type_load($rtid);
 
-    //check that a type has been chosen
-    $current_relationships = user_relationships_load(array(
-        'between' => array(
-            $requester->uid,
-            $requestee->uid)), array(
-        'sort' => 'rtid'));
-    //check for multiple relationships
-    if (!variable_get('user_relationships_allow_multiple', TRUE) && count($current_relationships)) {
-        form_set_error('rtid', user_relationships_get_message('too_many_relationships'));
-        if (isset($_GET['ajax'])) {
-            drupal_goto();
-        } else {
-            return;
-        }
+  //check that a type has been chosen
+  $current_relationships = user_relationships_load(array(
+      'between' => array(
+          $requester->uid,
+          $requestee->uid ) ), array(
+      'sort' => 'rtid' ));
+  //check for multiple relationships
+  if (!variable_get('user_relationships_allow_multiple', TRUE) && count($current_relationships)) {
+    form_set_error('rtid', user_relationships_get_message('too_many_relationships'));
+    if (isset($_GET['ajax'])) {
+      drupal_goto();
+    } else {
+      return;
     }
-    //check user is allowed to request this type
-    if (!user_relationships_can_request($requester, $rtype)) {
-        // relationship_type_not_allowed
-        return FALSE;
-    }
+  }
+  //check user is allowed to request this type
+  if (!user_relationships_can_request($requester, $rtype)) {
+    // relationship_type_not_allowed
+    return FALSE;
+  }
 
-    //check user is allowed to receive this type
-    if (!user_relationships_can_receive($requestee, $rtype)) {
-        return FALSE;
-    }
+  //check user is allowed to receive this type
+  if (!user_relationships_can_receive($requestee, $rtype)) {
+    return FALSE;
+  }
 
-    //check if this request contradicts existing relationships or requests of this type
-    //gather rtids of relationships that have already been requested from requester to requestee
-    $test_relationships = array();
-    foreach ($current_relationships as $key => $value) {
-        foreach ($value as $val_rel) {
-            //existing two way relationships count no matter the direction
-            if (!$val_rel->is_oneway) {
-                $test_relationships[$key] = $key;
-                continue;
-            }
-            //if it's one way, but not reciprocal, then it counts no matter the direction
-            if (!$val_rel->is_reciprocal) {
-                $test_relationships[$key] = $key;
-                continue;
-            }
-            //remaining case is a reciprocal relationship - it counts unless the request is in the opposite direction
-            if ($requester->uid == $val_rel->requester_id) {
-                $test_relationships[$key] = $key;
-            }
-        }
+  //check if this request contradicts existing relationships or requests of this type
+  //gather rtids of relationships that have already been requested from requester to requestee
+  $test_relationships = array();
+  foreach ($current_relationships as $key => $value) {
+    foreach ($value as $val_rel) {
+      //existing two way relationships count no matter the direction
+      if (!$val_rel->is_oneway) {
+        $test_relationships[$key] = $key;
+        continue;
+      }
+      //if it's one way, but not reciprocal, then it counts no matter the direction
+      if (!$val_rel->is_reciprocal) {
+        $test_relationships[$key] = $key;
+        continue;
+      }
+      //remaining case is a reciprocal relationship - it counts unless the request is in the opposite direction
+      if ($requester->uid == $val_rel->requester_id) {
+        $test_relationships[$key] = $key;
+      }
     }
-    //check if there aren't any available (not yet used) types that can be established
-    $select = db_select('user_relationship_types');
-    $select->addExpression('COUNT(*)', 'count');
-    if ($test_relationships) {
-        $select->condition('rtid', $test_relationships, 'NOT IN');
-    }
-    if (!$select->execute()->fetchField()) {
-        // too_many_relationships
-        return FALSE;
-    }
-    //check if desired relationship type is among the unused ones
-    elseif (isset($test_relationships[$rtid])) {
-        // 'existing_relationship' : 'existing_request';
-        return FALSE;
-    }
+  }
+  //check if there aren't any available (not yet used) types that can be established
+  $select = db_select('user_relationship_types');
+  $select->addExpression('COUNT(*)', 'count');
+  if ($test_relationships) {
+    $select->condition('rtid', $test_relationships, 'NOT IN');
+  }
+  if (!$select->execute()->fetchField()) {
+    // too_many_relationships
+    return FALSE;
+  }
+  //check if desired relationship type is among the unused ones
+  elseif (isset($test_relationships[$rtid])) {
+    // 'existing_relationship' : 'existing_request';
+    return FALSE;
+  }
 
-    return TRUE;
+  return TRUE;
 }
 
 function sbq_commons_node_submit(&$node, &$form, &$form_state) {
-    foreach ($form_state['field'] as $field_key => $field) {
-        if (isset($field[LANGUAGE_NONE]) && $field[LANGUAGE_NONE]['field']['type'] == 'taxonomy_term_reference' && $field[LANGUAGE_NONE]['instance']['widget']['type'] == 'taxonomy_autocomplete') {
-            $full_tags = $form_state['input'][$field_key][LANGUAGE_NONE];
-            foreach (array(
-        '，',
-        '。',
-        ' ',
-        '.',
-        '、',
-        '、',
-        '\\',
-        '／',
-        '/') as $it) {
-                $full_tags = str_replace($it, ',', $full_tags);
-            }
+  foreach ($form_state['field'] as $field_key => $field) {
+    if (isset($field[LANGUAGE_NONE]) && $field[LANGUAGE_NONE]['field']['type'] == 'taxonomy_term_reference' && $field[LANGUAGE_NONE]['instance']['widget']['type'] == 'taxonomy_autocomplete') {
+      $full_tags = $form_state['input'][$field_key][LANGUAGE_NONE];
+      foreach (array(
+      '，',
+      '。',
+      ' ',
+      '.',
+      '、',
+      '、',
+      '\\',
+      '／',
+      '/' ) as $it) {
+        $full_tags = str_replace($it, ',', $full_tags);
+      }
 
-            if (isset($node->{$field_key})) {
-                $full_items              = explode(',', $full_tags);
-                $tid                     = $node->{$field_key}[LANGUAGE_NONE][0]['tid'];
-                $vid                     = $node->{$field_key}[LANGUAGE_NONE][0]['vid'];
-                $vocabulary_machine_name = $node->{$field_key}[LANGUAGE_NONE][0]['vocabulary_machine_name'];
-                if (isset($full_items) && !empty($full_items)) {
-                    unset($node->{$field_key}[LANGUAGE_NONE]);
-                    $full_items = array_unique($full_items);
-                    foreach ($full_items as $items) {
-                        $term = taxonomy_term_load_multiple(array(), array(
-                            'name' => $items,
-                            'vid' => $vid));
-                        if ($term) {
-                            $term       = reset($term);
-                            $orgin_item = array(
-                                'tid' => $term->tid,
-                                'vid' => $term->vid,
-                                'vocabulary_machine_name' => $term->vocabulary_machine_name,
-                            );
-                        } else {
-                            $orgin_item = array(
-                                'tid' => 'autocreate',
-                                'vid' => $vid,
-                                'vocabulary_machine_name' => $vocabulary_machine_name,
-                            );
-                        }
-                        $orgin_item['name']                  = $items;
-                        $node->{$field_key}[LANGUAGE_NONE][] = $orgin_item;
-                    }
-                }
+      if (isset($node->{$field_key})) {
+        $full_items = explode(',', $full_tags);
+        $tid = $node->{$field_key}[LANGUAGE_NONE][0]['tid'];
+        $vid = $node->{$field_key}[LANGUAGE_NONE][0]['vid'];
+        $vocabulary_machine_name = $node->{$field_key}[LANGUAGE_NONE][0]['vocabulary_machine_name'];
+        if (isset($full_items) && !empty($full_items)) {
+          unset($node->{$field_key}[LANGUAGE_NONE]);
+          $full_items = array_unique($full_items);
+          foreach ($full_items as $items) {
+            $term = taxonomy_term_load_multiple(array(), array(
+                'name' => $items,
+                'vid' => $vid ));
+            if ($term) {
+              $term = reset($term);
+              $orgin_item = array(
+                  'tid' => $term->tid,
+                  'vid' => $term->vid,
+                  'vocabulary_machine_name' => $term->vocabulary_machine_name,
+              );
+            } else {
+              $orgin_item = array(
+                  'tid' => 'autocreate',
+                  'vid' => $vid,
+                  'vocabulary_machine_name' => $vocabulary_machine_name,
+              );
             }
+            $orgin_item['name'] = $items;
+            $node->{$field_key}[LANGUAGE_NONE][] = $orgin_item;
+          }
         }
+      }
     }
+  }
 
-    // for question node title
-    if ($node->type == 'question') {
-        $max_length  = 29;
-        $subject     = trim(truncate_utf8(decode_entities(strip_tags(check_markup($node->body['und'][0]['value']))), $max_length, TRUE));
-        $node->title = $subject;
-    }
+  // for question node title
+  if ($node->type == 'question') {
+    $max_length = 29;
+    $subject = trim(truncate_utf8(decode_entities(strip_tags(check_markup($node->body['und'][0]['value']))), $max_length, TRUE));
+    $node->title = $subject;
+  }
 }
 
 /**
@@ -750,35 +751,35 @@ function sbq_commons_node_submit(&$node, &$form, &$form_state) {
   //http://192.168.0.150:800/redmine/issues/49
  */
 function group_subscribe4sbq($group_type, $gid) {
-    if ($group_type == 'node') {
-        $node = node_load($gid);
-        if ($node) {
-            // define('USER_DOCTOR_RID', 4);
-            // define('USER_PATIENT_RID', 5);
-            // define('USER_CERTIFIED_DOCTOR_RID', 7);
-            // define('USER_ADMINSTRATOR_RID', 3);
-            // 医生can加入医生/患者小组
-            // 患者只能加入患者小组
-            global $user;
-            $group_types = array(
-                'doctor_group',
-                'general_group');
-            if (in_array($node->type, $group_types)) {
-                if (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($user->roles))) {
-                    return TRUE;
-                }
-                if (in_array(USER_PATIENT_RID, array_keys($user->roles)) && $node->type == 'general_group') {
-                    return TRUE;
-                }
-                if (in_array(USER_ADMINSTRATOR_RID, $user->roles) || $user->uid == 1)
-                    return TRUE;
-                drupal_set_message(t('You are not allow subscribe this %group!', array(
-                    '%group' => $node->type)), 'warning', FALSE);
-                return FALSE;
-            }
+  if ($group_type == 'node') {
+    $node = node_load($gid);
+    if ($node) {
+      // define('USER_DOCTOR_RID', 4);
+      // define('USER_PATIENT_RID', 5);
+      // define('USER_CERTIFIED_DOCTOR_RID', 7);
+      // define('USER_ADMINSTRATOR_RID', 3);
+      // 医生can加入医生/患者小组
+      // 患者只能加入患者小组
+      global $user;
+      $group_types = array(
+          'doctor_group',
+          'general_group' );
+      if (in_array($node->type, $group_types)) {
+        if (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($user->roles))) {
+          return TRUE;
         }
+        if (in_array(USER_PATIENT_RID, array_keys($user->roles)) && $node->type == 'general_group') {
+          return TRUE;
+        }
+        if (in_array(USER_ADMINSTRATOR_RID, $user->roles) || $user->uid == 1)
+          return TRUE;
+        drupal_set_message(t('You are not allow subscribe this %group!', array(
+            '%group' => $node->type )), 'warning', FALSE);
+        return FALSE;
+      }
     }
-    return user_is_logged_in();
+  }
+  return user_is_logged_in();
 }
 
 /**
@@ -786,29 +787,29 @@ function group_subscribe4sbq($group_type, $gid) {
   //http://192.168.0.150:800/redmine/issues/49
  */
 function sbq_commons_preprocess_field(&$variables) {
-    $field_name = $variables['element']['#field_name'];
-    if ($field_name == 'group_group') {
+  $field_name = $variables['element']['#field_name'];
+  if ($field_name == 'group_group') {
 // Your code here.
-        $node        = $variables['element']['#object'];
+    $node = $variables['element']['#object'];
 //@see group_subscribe4sbq()
-        global $user;
-        $group_types = array(
-            'doctor_group',
-            'general_group');
-        if (in_array($node->type, $group_types)) {
-            if (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($user->roles))) {
-                return TRUE;
-            }
-            if (in_array(USER_PATIENT_RID, array_keys($user->roles)) && $node->type == 'general_group') {
-                return TRUE;
-            }
-            if (in_array(USER_ADMINSTRATOR_RID, $user->roles) || $user->uid == 1)
-                return TRUE;
-            drupal_set_message(t('You are not allow subscribe this %group!', array(
-                '%group' => $node->type)), 'warning', FALSE);
-            $variables['items'] = array();
-        }
+    global $user;
+    $group_types = array(
+        'doctor_group',
+        'general_group' );
+    if (in_array($node->type, $group_types)) {
+      if (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($user->roles))) {
+        return TRUE;
+      }
+      if (in_array(USER_PATIENT_RID, array_keys($user->roles)) && $node->type == 'general_group') {
+        return TRUE;
+      }
+      if (in_array(USER_ADMINSTRATOR_RID, $user->roles) || $user->uid == 1)
+        return TRUE;
+      drupal_set_message(t('You are not allow subscribe this %group!', array(
+          '%group' => $node->type )), 'warning', FALSE);
+      $variables['items'] = array();
     }
+  }
 //end @see
 }
 
@@ -821,78 +822,78 @@ function sbq_commons_preprocess_field(&$variables) {
 function sbq_commons_taxonomy_autocomplete($field_name = '', $tags_typed = '') {
 // If the request has a '/' in the search text, then the menu system will have
 // split it into multiple arguments, recover the intended $tags_typed.
-    $args       = func_get_args();
+  $args = func_get_args();
 // Shift off the $field_name argument.
-    array_shift($args);
-    $tags_typed = implode('/', $args);
+  array_shift($args);
+  $tags_typed = implode('/', $args);
 
 // Make sure the field exists and is a taxonomy field.
-    if (!($field = field_info_field($field_name)) || $field['type'] !== 'taxonomy_term_reference') {
+  if (!($field = field_info_field($field_name)) || $field['type'] !== 'taxonomy_term_reference') {
 // Error string. The JavaScript handler will realize this is not JSON and
 // will display it as debugging information.
-        print t('Taxonomy field @field_name not found.', array(
-            '@field_name' => $field_name));
-        exit;
-    }
+    print t('Taxonomy field @field_name not found.', array(
+        '@field_name' => $field_name ));
+    exit;
+  }
 
 // The user enters a comma-separated list of tags. We only autocomplete the last tag.
-    foreach (array(
-'，',
-'。',
-' ',
-'.',
-'、',
-'、',
-'\\',
-'／',
-'/') as $it) {
-        $tags_typed = str_replace($it, ',', $tags_typed);
-    }
-    $tags_typed = drupal_explode_tags($tags_typed);
+  foreach (array(
+  '，',
+  '。',
+  ' ',
+  '.',
+  '、',
+  '、',
+  '\\',
+  '／',
+  '/' ) as $it) {
+    $tags_typed = str_replace($it, ',', $tags_typed);
+  }
+  $tags_typed = drupal_explode_tags($tags_typed);
 
-    $tag_last = drupal_strtolower(array_pop($tags_typed));
+  $tag_last = drupal_strtolower(array_pop($tags_typed));
 
-    $term_matches = array();
-    if ($tag_last != '') {
+  $term_matches = array();
+  if ($tag_last != '') {
 // Part of the criteria for the query come from the field's own settings.
-        $vids         = array();
-        $vocabularies = taxonomy_vocabulary_get_names();
-        foreach ($field['settings']['allowed_values'] as $tree) {
-            $vids[] = $vocabularies[$tree['vocabulary']]->vid;
-        }
+    $vids = array();
+    $vocabularies = taxonomy_vocabulary_get_names();
+    foreach ($field['settings']['allowed_values'] as $tree) {
+      $vids[] = $vocabularies[$tree['vocabulary']]->vid;
+    }
 
-        $query = db_select('taxonomy_term_data', 't');
-        $query->addTag('translatable');
-        $query->addTag('term_access');
+    $query = db_select('taxonomy_term_data', 't');
+    $query->addTag('translatable');
+    $query->addTag('term_access');
 
 // Do not select already entered terms.
-        if (!empty($tags_typed)) {
-            $query->condition('t.name', $tags_typed, 'NOT IN');
-        }
-// Select rows that match by term name.
-        $tags_return = $query
-                ->fields('t', array(
-                    'tid',
-                    'name'))
-                ->condition('t.vid', $vids)
-                ->condition('t.name', '%' . db_like($tag_last) . '%', 'LIKE')
-                ->range(0, 10)
-                ->execute()
-                ->fetchAllKeyed();
-
-        $prefix = count($tags_typed) ? drupal_implode_tags($tags_typed) . ', ' : '';
-
-        foreach ($tags_return as $tid => $name) {
-            $n = $name;
-// Term names containing commas or quotes must be wrapped in quotes.
-            if (strpos($name, ',') !== FALSE || strpos($name, '"') !== FALSE) {
-                $n = '"' . str_replace('"', '""', $name) . '"';
-            }
-            $term_matches[$prefix . $n] = check_plain($name);
-        }
+    if (!empty($tags_typed)) {
+      $query->condition('t.name', $tags_typed, 'NOT IN');
     }
+// Select rows that match by term name.
+    $tags_return = $query
+        ->fields('t', array(
+            'tid',
+            'name' ))
+        ->condition('t.vid', $vids)
+        ->condition('t.name', '%' . db_like($tag_last) . '%', 'LIKE')
+        ->range(0, 10)
+        ->execute()
+        ->fetchAllKeyed();
 
-    drupal_json_output($term_matches);
+    $prefix = count($tags_typed) ? drupal_implode_tags($tags_typed) . ', ' : '';
+
+    foreach ($tags_return as $tid => $name) {
+      $n = $name;
+// Term names containing commas or quotes must be wrapped in quotes.
+      if (strpos($name, ',') !== FALSE || strpos($name, '"') !== FALSE) {
+        $n = '"' . str_replace('"', '""', $name) . '"';
+      }
+      $term_matches[$prefix . $n] = check_plain($name);
+    }
+  }
+
+  drupal_json_output($term_matches);
 }
 
 /**
@@ -901,7 +902,7 @@ function sbq_commons_taxonomy_autocomplete($field_name = '', $tags_typed = '') {
  * @param array $form_state
  */
 function sbq_commons_node_form_redirect_handle(&$form, &$form_state) {
-    $form_state['redirect'] = $form['#redirect'];
+  $form_state['redirect'] = $form['#redirect'];
 }
 
 /**
@@ -911,15 +912,15 @@ function sbq_commons_node_form_redirect_handle(&$form, &$form_state) {
  * @see og_ui_handler_area_og_membership_overview::render
  */
 function sbq_commons_count_group_members($gid, $group_type = 'node') {
-    $base_query = new EntityFieldQuery();
-    $base_query
-            ->entityCondition('entity_type', 'og_membership')
-            ->propertyCondition('group_type', $group_type, '=')
-            ->propertyCondition('gid', $gid, '=')
-            ->count()
-            ->propertyCondition('entity_type', 'user', '=')
-            ->execute();
-    return $base_query;
+  $base_query = new EntityFieldQuery();
+  $base_query
+      ->entityCondition('entity_type', 'og_membership')
+      ->propertyCondition('group_type', $group_type, '=')
+      ->propertyCondition('gid', $gid, '=')
+      ->count()
+      ->propertyCondition('entity_type', 'user', '=')
+      ->execute();
+  return $base_query;
 }
 
 /**
@@ -930,15 +931,15 @@ function sbq_commons_count_group_members($gid, $group_type = 'node') {
  * @see og_ui_handler_area_og_membership_overview::render
  */
 function sbq_commons_count_group_content($gid, $group_type = 'node') {
-    $base_query = new EntityFieldQuery();
-    $base_query
-            ->entityCondition('entity_type', 'og_membership')
-            ->propertyCondition('group_type', $group_type, '=')
-            ->propertyCondition('gid', $gid, '=')
-            ->count()
-            ->propertyCondition('entity_type', 'node', '=')
-            ->execute();
-    return $base_query;
+  $base_query = new EntityFieldQuery();
+  $base_query
+      ->entityCondition('entity_type', 'og_membership')
+      ->propertyCondition('group_type', $group_type, '=')
+      ->propertyCondition('gid', $gid, '=')
+      ->count()
+      ->propertyCondition('entity_type', 'node', '=')
+      ->execute();
+  return $base_query;
 }
 
 /**
@@ -948,46 +949,46 @@ function sbq_commons_count_group_content($gid, $group_type = 'node') {
 function sbq_commons_node_view_alter(&$build) {
 //for group content contextual_links
 
-    $node = $build['#node'];
-    if (!empty($node->nid) && $node->type == 'post') {
-        $build['#contextual_links']['node'] = array(
-            'node',
-            array(
-                $node->nid));
+  $node = $build['#node'];
+  if (!empty($node->nid) && $node->type == 'post') {
+    $build['#contextual_links']['node'] = array(
+        'node',
+        array(
+            $node->nid ) );
+  }
+  if (og_is_group_type($build['#entity_type'], $build['#bundle']) && ($build['#bundle'] == 'general_group' || $build['#bundle'] == 'doctor_group')) {
+    $og_ui_status_link = sbq_og_ui_status_link($build['#entity_type'], $node->nid);
+    if ($og_ui_status_link !== FALSE) {
+      $build['ajax_link']['#markup'] = $og_ui_status_link;
+      unset($build['group_group'][0]);
     }
-    if (og_is_group_type($build['#entity_type'], $build['#bundle']) && ($build['#bundle'] == 'general_group' || $build['#bundle'] == 'doctor_group')) {
-        $og_ui_status_link = sbq_og_ui_status_link($build['#entity_type'], $node->nid);
-        if ($og_ui_status_link !== FALSE) {
-            $build['ajax_link']['#markup'] = $og_ui_status_link;
-            unset($build['group_group'][0]);
-        }
-    }
+  }
 }
 
 function sbq_commons_block_view_alter(&$data, $block) {
-    global $user;
-    switch ($block->delta) {
-        case 'sbq_friends-friendship':
-            if (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($user->roles))) {
-                $data['subject'] = '我的病友';
-            } else if (in_array(USER_PATIENT_RID, array_keys($user->roles))) {
-                $data['subject'] = '我的医生';
-            }
-            break;
-        case 'sbq_friends-recommend_friendship':
-            if (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($user->roles))) {
-                $data['subject'] = '推荐病人';
-            } else if (in_array(USER_PATIENT_RID, array_keys($user->roles))) {
-                $data['subject'] = '推荐医生';
-            }
-            break;
+  global $user;
+  switch ($block->delta) {
+    case 'sbq_friends-friendship':
+      if (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($user->roles))) {
+        $data['subject'] = '我的病友';
+      } else if (in_array(USER_PATIENT_RID, array_keys($user->roles))) {
+        $data['subject'] = '我的医生';
+      }
+      break;
+    case 'sbq_friends-recommend_friendship':
+      if (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($user->roles))) {
+        $data['subject'] = '推荐病人';
+      } else if (in_array(USER_PATIENT_RID, array_keys($user->roles))) {
+        $data['subject'] = '推荐医生';
+      }
+      break;
 
-        case 'sbq_friends-recommend_friend':
-            $data['subject'] = '推荐好友';
-            break;
-        default:
-            break;
-    }
+    case 'sbq_friends-recommend_friend':
+      $data['subject'] = '推荐好友';
+      break;
+    default:
+      break;
+  }
 }
 
 /**
@@ -998,8 +999,8 @@ function sbq_commons_block_view_alter(&$data, $block) {
  * @see _profile2_regpath_user_register
  */
 function sbq_commons_doctor_register($profiles) {
-    module_load_include('pages.inc', 'user', 'user');
-    if (isset($_GET['ajax'])) {
+  module_load_include('pages.inc', 'user', 'user');
+  if (isset($_GET['ajax'])) {
 //        $user_login         = drupal_get_form('user_login');
 //        $html               = '<div class="item-list">';
 //        $html .= '<ul><li class="last"><a href="/user/password" title="通过电子邮件重设密码。">忘记密码？</a></li></ul>';
@@ -1008,24 +1009,24 @@ function sbq_commons_doctor_register($profiles) {
 //            '#markup' => $html,
 //            '#weight' => 99,
 //        );
-        $build = array(
-            'user_register_form' => array(
-                '#prefix' => '<div id="doctor_register_form">',
-                'user_register' => drupal_get_form('user_register_form'),
-                '#suffix' => '</div>'
-            ),
+    $build = array(
+        'user_register_form' => array(
+            '#prefix' => '<div id="doctor_register_form">',
+            'user_register' => drupal_get_form('user_register_form'),
+            '#suffix' => '</div>'
+        ),
 //            'user_login_form' => array(
 //                '#prefix' => '<div id="user_login_form">',
 //                'user_login' => $user_login,
 //                '#suffix' => '</div>'
 //            ),
-        );
-        $html  = sbq_commons_modal_html(drupal_render($build), 'sbq_doctor_quick_register', t('医生快速通道'));
-        die($html);
-    }
-    $output = drupal_get_form('user_register_form');
-    _profile2_regpath_set_title($profiles, 'register_title');
-    return $output;
+    );
+    $html = sbq_commons_modal_html(drupal_render($build), 'sbq_doctor_quick_register', t('医生快速通道'));
+    die($html);
+  }
+  $output = drupal_get_form('user_register_form');
+  _profile2_regpath_set_title($profiles, 'register_title');
+  return $output;
 }
 
 /**
@@ -1043,90 +1044,88 @@ function sbq_commons_doctor_register($profiles) {
  * @see hook_views_query_substitutions()
  */
 function sbq_commons_views_query_alter(&$view, &$query) {
-
-    global $user;
-
+  global $user;
 // for user recommend friend
-    if ($view->name == 'sbq_friends') {
-        // 推荐医生，病人
-        if ($view->current_display == 'recommend_friendship' || $view->current_display == 'add') {
-            $filter_query   = db_select('user_relationships', 'ur')
-                    ->fields('ur', array(
-                        'requestee_id'))
-                    ->condition('requester_id', $user->uid)
-                    ->execute()
-                    ->fetchCol();
-            $filter_query[] = $user->uid;
-            $condition      = &$query->where[1]['conditions'];
-            foreach ($condition as &$cond) {
-                if (is_string($cond['field']) && $cond['field'] == 'users_roles.rid') {
-                    if (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($user->roles))) {
-                        $cond = array(
-                            'field' => 'users_roles.rid',
-                            'value' => USER_PATIENT_RID,
-                            'operator' => '=',
-                        );
-                    } elseif (in_array(USER_PATIENT_RID, array_keys($user->roles))) {
-                        $cond = array(
-                            'field' => 'users_roles.rid',
-                            'value' => USER_CERTIFIED_DOCTOR_RID,
-                            'operator' => '=',
-                        );
-                    } else {
-                        $cond = array(
-                            'field' => 'users_roles.rid',
-                            'value' => '0',
-                            'operator' => '=',
-                        );
-                    }
-                }
-            }
-            $condition[] = array(
-                'field' => 'users.uid',
-                'value' => $filter_query,
-                'operator' => 'not in',
+  if ($view->name == 'sbq_friends') {
+    // 推荐医生，病人
+    if ($view->current_display == 'recommend_friendship' || $view->current_display == 'add') {
+      $filter_query = db_select('user_relationships', 'ur')
+          ->fields('ur', array(
+              'requestee_id' ))
+          ->condition('requester_id', $user->uid)
+          ->execute()
+          ->fetchCol();
+      $filter_query[] = $user->uid;
+      $condition = &$query->where[1]['conditions'];
+      foreach ($condition as &$cond) {
+        if (is_string($cond['field']) && $cond['field'] == 'users_roles.rid') {
+          if (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($user->roles))) {
+            $cond = array(
+                'field' => 'users_roles.rid',
+                'value' => USER_PATIENT_RID,
+                'operator' => '=',
             );
-        }// 推荐朋友
-        elseif ($view->current_display == 'recommend_friend') { // 推荐好友block
-            $filter_query   = db_select('user_relationships', 'ur')
-                    ->fields('ur', array(
-                        'requestee_id'))
-                    ->condition('requester_id', $user->uid)
-                    ->execute()
-                    ->fetchCol();
-            $filter_query[] = $user->uid;
-            $condition      = &$query->where[1]['conditions'];
-            foreach ($condition as &$cond) {
-                if (is_string($cond['field']) && $cond['field'] == 'users_roles.rid') {
-                    if (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($user->roles))) {
-                        $cond = array(
-                            'field' => 'users_roles.rid',
-                            'value' => USER_CERTIFIED_DOCTOR_RID,
-                            'operator' => '=',
-                        );
-                    } elseif (in_array(USER_PATIENT_RID, array_keys($user->roles))) {
-                        $cond = array(
-                            'field' => 'users_roles.rid',
-                            'value' => USER_PATIENT_RID,
-                            'operator' => '=',
-                        );
-                    } else {
-                        $cond = array(
-                            'field' => 'users_roles.rid',
-                            'value' => '0',
-                            'operator' => '=',
-                        );
-                    }
-                }
-            }
-
-            $condition[] = array(
-                'field' => 'users.uid',
-                'value' => $filter_query,
-                'operator' => 'not in',
+          } elseif (in_array(USER_PATIENT_RID, array_keys($user->roles))) {
+            $cond = array(
+                'field' => 'users_roles.rid',
+                'value' => USER_CERTIFIED_DOCTOR_RID,
+                'operator' => '=',
             );
+          } else {
+            $cond = array(
+                'field' => 'users_roles.rid',
+                'value' => '0',
+                'operator' => '=',
+            );
+          }
         }
+      }
+      $condition[] = array(
+          'field' => 'users.uid',
+          'value' => $filter_query,
+          'operator' => 'not in',
+      );
+    }// 推荐朋友
+    elseif ($view->current_display == 'recommend_friend') { // 推荐好友block
+      $filter_query = db_select('user_relationships', 'ur')
+          ->fields('ur', array(
+              'requestee_id' ))
+          ->condition('requester_id', $user->uid)
+          ->execute()
+          ->fetchCol();
+      $filter_query[] = $user->uid;
+      $condition = &$query->where[1]['conditions'];
+      foreach ($condition as &$cond) {
+        if (is_string($cond['field']) && $cond['field'] == 'users_roles.rid') {
+          if (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($user->roles))) {
+            $cond = array(
+                'field' => 'users_roles.rid',
+                'value' => USER_CERTIFIED_DOCTOR_RID,
+                'operator' => '=',
+            );
+          } elseif (in_array(USER_PATIENT_RID, array_keys($user->roles))) {
+            $cond = array(
+                'field' => 'users_roles.rid',
+                'value' => USER_PATIENT_RID,
+                'operator' => '=',
+            );
+          } else {
+            $cond = array(
+                'field' => 'users_roles.rid',
+                'value' => '0',
+                'operator' => '=',
+            );
+          }
+        }
+      }
+
+      $condition[] = array(
+          'field' => 'users.uid',
+          'value' => $filter_query,
+          'operator' => 'not in',
+      );
     }
+  }
 }
 
 /**
@@ -1136,25 +1135,25 @@ function sbq_commons_views_query_alter(&$view, &$query) {
  * @return type
  */
 function sbq_commons_add_user_relationships($friend_name) {
-    global $user;
-    $friend = user_load_by_name($friend_name);
-    $action = sbq_commons_relationships_ui_actions_between($user, $friend, array(
-        'add' => 1));
-    if (isset($action[0])) {
-        $preg = '/<a(.*?)href="(.*?)"(.*?)>(.*?)<\/a>/i';
-        preg_match_all($preg, $action[0], $match);
-        $href = ltrim($match[2][0], "/");
-        if (in_array(USER_PATIENT_RID, array_keys($user->roles))) {
-            // $link = l('医生', $href, array('class' => 'sbq_add_friend'));
-            $link = l('添加', $href, array(
-                'class' => 'sbq_add_friend'));
-        } elseif (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($user->roles))) {
-            // $link = l('好友', $href, array('class' => 'sbq_add_friend'));
-            $link = l('添加', $href, array(
-                'class' => 'sbq_add_friend'));
-        }
+  global $user;
+  $friend = user_load_by_name($friend_name);
+  $action = sbq_commons_relationships_ui_actions_between($user, $friend, array(
+      'add' => 1 ));
+  if (isset($action[0])) {
+    $preg = '/<a(.*?)href="(.*?)"(.*?)>(.*?)<\/a>/i';
+    preg_match_all($preg, $action[0], $match);
+    $href = ltrim($match[2][0], "/");
+    if (in_array(USER_PATIENT_RID, array_keys($user->roles))) {
+      // $link = l('医生', $href, array('class' => 'sbq_add_friend'));
+      $link = l('添加', $href, array(
+          'class' => 'sbq_add_friend' ));
+    } elseif (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($user->roles))) {
+      // $link = l('好友', $href, array('class' => 'sbq_add_friend'));
+      $link = l('添加', $href, array(
+          'class' => 'sbq_add_friend' ));
     }
-    return isset($link) ? render($link) : '';
+  }
+  return isset($link) ? render($link) : '';
 }
 
 function sbq_commons_module_implements_alter(&$implementations, $hook) {
@@ -1174,10 +1173,10 @@ function sbq_commons_module_implements_alter(&$implementations, $hook) {
  * Implements hook_form_FORM_ID_alter() for question_node_form().
  */
 function sbq_commons_form_question_node_form_alter(&$form, &$form_state, $form_id) {
-    $switch                                 = FALSE;
-    $form['field_image']['#access']         = $switch;
-    $form['field_qa_attachment']['#access'] = $switch;
-    $form['field_ask_anonymous']['#access'] = $switch;
+  $switch = FALSE;
+  $form['field_image']['#access'] = $switch;
+  $form['field_qa_attachment']['#access'] = $switch;
+  $form['field_ask_anonymous']['#access'] = $switch;
 }
 
 /**
@@ -1186,29 +1185,29 @@ function sbq_commons_form_question_node_form_alter(&$form, &$form_state, $form_i
  * TODO:we should check in theme level
  */
 function sbq_commons_preprocess_views_view(&$vars) {
-    $view = $vars['view'];
-    if ($view->name == 'user_center' && $view->current_display == 'my') {
-        $vars['question_node_form'] = druedu_node_add('question');
-    }
-    // ///questions, /questions/my-questions, /questions/unanswered, /questions/tagged
-    // $args = array('my-questions', 'unanswered', 'tagged');
-    // if ($view->name == 'questions' && isset($view->args[0]) && !in_array($view->args[0], $args)) {
-    //   //dpm($view);
-    //   drupal_set_title('This page has no result.');
-    //   $vars['empty'] = '<div class="qa-empty">If you came here using a hyperlink, please check the URL and try again.</div>';
-    //   //$view->attachment_before =array('#markup'=>'no result found.');
-    //   //$views= views_get_view('questions');dpm($views,'dpm($view)s');
-    // }
-    // if ($view->name == 'questions' && $view->current_display == 'page_questions_tagged') {
-    //   //
-    //   $query_parameters = drupal_get_query_parameters();
-    //   drupal_set_title('Questions - ' . $query_parameters['field_tags_tid']);
-    // }
-    // //add css for QA
-    // if ($view->name == 'questions' || $view->name == 'question') {
-    //   // drupal_add_css(drupal_get_path('module', 'druedu_qa') . '/css/druedu_qa.css');
-    //   drupal_add_css(drupal_get_path('module', 'druedu_qa') . '/css/questions.css');
-    // }
+  $view = $vars['view'];
+  if ($view->name == 'user_center' && $view->current_display == 'my') {
+    $vars['question_node_form'] = druedu_node_add('question');
+  }
+  // ///questions, /questions/my-questions, /questions/unanswered, /questions/tagged
+  // $args = array('my-questions', 'unanswered', 'tagged');
+  // if ($view->name == 'questions' && isset($view->args[0]) && !in_array($view->args[0], $args)) {
+  //   //dpm($view);
+  //   drupal_set_title('This page has no result.');
+  //   $vars['empty'] = '<div class="qa-empty">If you came here using a hyperlink, please check the URL and try again.</div>';
+  //   //$view->attachment_before =array('#markup'=>'no result found.');
+  //   //$views= views_get_view('questions');dpm($views,'dpm($view)s');
+  // }
+  // if ($view->name == 'questions' && $view->current_display == 'page_questions_tagged') {
+  //   //
+  //   $query_parameters = drupal_get_query_parameters();
+  //   drupal_set_title('Questions - ' . $query_parameters['field_tags_tid']);
+  // }
+  // //add css for QA
+  // if ($view->name == 'questions' || $view->name == 'question') {
+  //   // drupal_add_css(drupal_get_path('module', 'druedu_qa') . '/css/druedu_qa.css');
+  //   drupal_add_css(drupal_get_path('module', 'druedu_qa') . '/css/questions.css');
+  // }
 }
 
 /**
@@ -1216,49 +1215,65 @@ function sbq_commons_preprocess_views_view(&$vars) {
  * This hook declares what blocks are provided by the module.
  */
 function sbq_commons_block_info() {
-    $blocks['sbq_user_profile'] = array(
-        'info' => t('user: sbq_user_profile'),
-        'cache' => DRUPAL_CACHE_PER_ROLE, // default
-    );
-    $blocks['sbq_quick_ask'] = array(
-        'info' => t('user: sbq_quick_ask'),
-        'cache' => DRUPAL_CACHE_PER_ROLE, // default
-    );
-    $blocks['sbq_user_menu'] = array(
-        'info' => t('user: sbq_user_menu'),
-        'cache' => DRUPAL_CACHE_PER_ROLE, // default
-    );
-    return $blocks;
+  $blocks['sbq_user_profile'] = array(
+      'info' => t('user: sbq_user_profile'),
+      'cache' => DRUPAL_CACHE_PER_ROLE, // default
+  );
+  $blocks['sbq_quick_ask'] = array(
+      'info' => t('user: sbq_quick_ask'),
+      'cache' => DRUPAL_CACHE_PER_ROLE, // default
+  );
+  $blocks['sbq_user_menu'] = array(
+      'info' => t('user: sbq_user_menu'),
+      'cache' => DRUPAL_CACHE_PER_ROLE, // default
+  );
+  $blocks['recommond_doctors'] = array(
+      'info' => t('user relationships: recommond_doctors'),
+      'cache' => DRUPAL_CACHE_PER_ROLE, // default
+  );
+  $blocks['recommond_patients'] = array(
+      'info' => t('user relationships: recommond_patients'),
+      'cache' => DRUPAL_CACHE_PER_ROLE, // default
+  );
+  return $blocks;
 }
 
-function sbq_commons_block_configure($delta = '') {
-    $form = array();
-    if ($delta == 'sbq_user_profile') {
-        $form['block_example_string'] = array(
-            '#type' => 'textfield',
-            '#title' => t('Block contents'),
-            '#size' => 60,
-            '#description' => t('This text will appear in the example block.'),
-                //'#default_value' => variable_get('block_example_string', t('Some example content.')),
-        );
-    }
-    return $form;
-}
+//function sbq_commons_block_configure($delta = '') {
+//    $form = array();
+//    if ($delta == 'sbq_user_profile') {
+//        $form['block_example_string'] = array(
+//            '#type' => 'textfield',
+//            '#title' => t('Block contents'),
+//            '#size' => 60,
+//            '#description' => t('This text will appear in the example block.'),
+//                //'#default_value' => variable_get('block_example_string', t('Some example content.')),
+//        );
+//    }
+//    return $form;
+//}
 
 function sbq_commons_block_view($delta = '') {
-    switch ($delta) {
-        case 'sbq_user_profile':
-            $block['subject'] = '';
-            $block['content'] = _sbq_commons_block_html($delta);
-            break;
-        case 'sbq_quick_ask':
-            $block['subject'] = '';
-            $block['content'] = _sbq_commons_block_html($delta);
-            break;
-        case 'sbq_user_menu':
-            $block['subject'] = '';
-            $block['content'] = _sbq_commons_block_html($delta);
-            break;
-    }
-    return isset($block) ?$block:'';
+  switch ($delta) {
+    case 'sbq_user_profile':
+      $block['subject'] = '';
+      $block['content'] = _sbq_commons_block_html($delta);
+      break;
+    case 'sbq_quick_ask':
+      $block['subject'] = '';
+      $block['content'] = _sbq_commons_block_html($delta);
+      break;
+    case 'sbq_user_menu':
+      $block['subject'] = '';
+      $block['content'] = _sbq_commons_block_html($delta);
+      break;
+    case 'recommond_doctors':
+      $block['subject'] = '推荐医生';
+      $block['content'] = _sbq_commons_block_html($delta);
+      break;
+    case 'recommond_doctors':
+      $block['subject'] = '推荐患者';
+      $block['content'] = _sbq_commons_block_html($delta);
+      break;
+  }
+  return isset($block) ? $block : '';
 }
