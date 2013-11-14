@@ -639,18 +639,22 @@ EOF;
           $user_badges = user_badges_for_uid($user->uid);
         }
         $block_html .= <<<EOF
-          <div class="recommond_friends">
-            $picture
-            <span class="user_name">$value->name</span>
-             <span class="badges">勋章</span>
-            <span class="hospital">北京儿童医院</span>
-            <span class="follow">$follow</span>
+          <div class="sbq_recommond_friends">
+            <div class="picture">
+              $picture
+            </div>
+            <div class="details">
+              <span class="name">$value->name</span>
+              <span class="badges">勋章</span>
+              <span class="hospital">北京儿童医院</span>
+              <span class="follow">$follow</span>
+            </div>
           </div>
 EOF;
       }
-       if($block_html){
+      if ($block_html) {
         $more = t('more');
-        $block_html .= '<div class="more-link"><a href="/user">'.$more.'</a></div>';
+        $block_html .= '<div class="more-link"><a href="/user">' . $more . '</a></div>';
       }
       break;
     case 'recommond_patients':
@@ -669,18 +673,22 @@ EOF;
           $user_badges = user_badges_for_uid($user->uid);
         }
         $block_html .= <<<EOF
-          <div class="recommond_friends">
-            $picture
-            <span class="user_name">$value->name</span>
-            <span class="badges">勋章</span>
-            <span class="attention">疾病</span>
-            <span class="follow">$follow</span>
+          <div class="sbq-recommond-friends">
+            <div class="picture">
+              $picture
+            </div>
+            <div class="details">
+              <span class="name">$value->name</span>
+              <span class="badges">勋章</span>
+              <span class="attention">疾病</span>
+              <span class="follow">$follow</span>
+            </div>
           </div>
 EOF;
       }
-      if($block_html){
+      if ($block_html) {
         $more = t('more');
-        $block_html .= '<div class="more-link"><a href="/user">'.$more.'</a></div>';
+        $block_html .= '<div class="more-link"><a href="/user">' . $more . '</a></div>';
       }
       break;
     default:
