@@ -574,7 +574,7 @@ function _sbq_commons_block_html($delta) {
       $user_badges = '';
       if (module_exists('user_badges')) {
         $user_badges = user_badges_for_uid($user->uid);
-        dpm($user_badges);
+        // dpm($user_badges);
       }
       $block_html = <<<EOF
                    <i class="option">$opt_link</i>
