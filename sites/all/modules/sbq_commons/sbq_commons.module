@@ -10,8 +10,6 @@ define('FOLLOWER_PATIENT', 2);
 // 医患群体关注
 define('FRIEND_DOCTOR_PATIENT', 3);
 
-define('SC_IMAGE_STYALE_80', 'sc150');
-
 //rid
 define('USER_ADMINSTRATOR_RID', 3);
 define('USER_DOCTOR_RID', 4);
