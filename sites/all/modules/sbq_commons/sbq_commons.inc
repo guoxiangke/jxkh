@@ -617,7 +617,7 @@ EOF;
           . '<ul class="menu">'
           . '<li class="menu__item is-leaf first leaf sbq-user-menu-post"><a href="#" class="menu__link">我的帖子</a></li>'
           . '<li class="menu__item is-leaf leaf sbq-user-menu-status"><a href="#" class="menu__link">我的动态</a></li>'
-          . '<li class="menu__item is-leaf leaf sbq-user-menu-blog"><a href="#" class="menu__link">我的文章</a></li>'
+          . '<li class="menu__item is-leaf leaf sbq-user-menu-blog is-active"><a href="#" class="menu__link is-active active">我的文章</a></li>'
           . '<li class="menu__item is-leaf leaf sbq-user-menu-group"><a href="#" class="menu__link">我的小组</a></li>'
           . '<li class="menu__item is-leaf last leaf sbq-user-menu-relationship"><a href="#" class="menu__link">我的圈子</a></li>'
           . '</ul>'
@@ -626,7 +626,7 @@ EOF;
     case 'recommond_doctors':
     case 'recommond_patients':
       $ids = _sbq_commons_user_recommonds_friends_ids(USER_CERTIFIED_DOCTOR_RID);
-    
+
       $block_html = '<div class="recommond_friends">';
       $block_html .= ''.sbq_commons_user_avart().'';
       $block_html .= '<span id="user_name">' . $user->name . '</span>';
@@ -680,6 +680,6 @@ function sbq_commons_user_avart($account = null) {
         'style_name' => 'sc80',
     ));
   }
- 
+
   return $picture;
 }
