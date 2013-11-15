@@ -1,66 +1,69 @@
 <?php
 
 function sbq_og_ui_status_link($group_type, $gid, $field_name = NULL) {
-    // Make sure Drupal Ajax framework javascript is around
-    drupal_add_library('system', 'drupal.ajax');
-    if (sbq_og_ui_subscribe($group_type, $gid, $field_name)) {
-        $output = l(
-                t('加入小组'), "group/{$group_type}/{$gid}/subscribe/ajax"
-                , array(
-            'attributes' => array('class' => 'use-ajax og_ui_status'),
-                )
-        );
-        return $output;
-    } elseif (sbq_og_ui_unsubscribe($group_type, $gid, $field_name)) {
-        $output = l(
-                t('退出小组'), "group/{$group_type}/{$gid}/unsubscribe/ajax", array(
-            'attributes' => array('class' => 'use-ajax og_ui_status'),
-                )
-        );
-        return $output;
-    }
+  // Make sure Drupal Ajax framework javascript is around
+  drupal_add_library('system', 'drupal.ajax');
+  if (sbq_og_ui_subscribe($group_type, $gid, $field_name)) {
+    $output = l(
+        t('加入小组'), "group/{$group_type}/{$gid}/subscribe/ajax", array( 'attributes' => array(
+            'class' => 'use-ajax og_ui_status' ), )
+    );
+    return $output;
+  } elseif (sbq_og_ui_unsubscribe($group_type, $gid, $field_name)) {
+    $output = l(
+        t('退出小组'), "group/{$group_type}/{$gid}/unsubscribe/ajax", array( 'attributes' => array(
+            'class' => 'use-ajax og_ui_status' ), )
+    );
+    return $output;
+  }
 
-    return FALSE;
+  return FALSE;
 }
 
 function sbq_og_ui_subscribe_ajax($group_type, $gid) {
-    global $user;
-    if (!$user->uid) {
-        die('no login');
+  global $user;
+  if (!$user->uid) {
+    die('no login');
+  }
+  $account = clone $user;
+  $wrapper = entity_metadata_wrapper($group_type, $gid);
+  $entity = entity_load_single($group_type, $gid);
+  list($id, $vid, $bundle) = entity_extract_ids($group_type, $entity);
+  $field_name = og_get_best_group_audience_field('user', $user->uid, $group_type, $bundle);
+
+  // Indicate the OG membership state (active or pending).
+  $state = og_user_access($group_type, $gid, 'subscribe without approval') ? OG_STATE_ACTIVE : OG_STATE_PENDING;
+
+  if ($wrapper->access('view')) {
+    $label = $wrapper->label();
+  } else {
+    $label = t('Private group');
+    if ($state == OG_STATE_ACTIVE) {
+      // Determine if a user can subscribe to a private group, when OG-access
+      // module is enabled, and the group is set to private.
+      $state = variable_get('og_ui_deny_subscribe_without_approval', TRUE) ? OG_STATE_PENDING : OG_STATE_ACTIVE;
     }
-    $account    = clone $user;
-    $wrapper    = entity_metadata_wrapper($group_type, $gid);
-    $entity     = entity_load_single($group_type, $gid);
-    list($id, $vid, $bundle) = entity_extract_ids($group_type, $entity);
-    $field_name = og_get_best_group_audience_field('user', $user->uid, $group_type, $bundle);
+  }
 
-    // Indicate the OG membership state (active or pending).
-    $state = og_user_access($group_type, $gid, 'subscribe without approval') ? OG_STATE_ACTIVE : OG_STATE_PENDING;
+  // Add group membership form.
+  $og_membership = og_membership_create($group_type, $gid, 'user', $account->uid, $field_name, array(
+      'state' => $state ));
+  $og_membership->save();
 
-    if ($wrapper->access('view')) {
-        $label = $wrapper->label();
-    } else {
-        $label = t('Private group');
-        if ($state == OG_STATE_ACTIVE) {
-            // Determine if a user can subscribe to a private group, when OG-access
-            // module is enabled, and the group is set to private.
-            $state = variable_get('og_ui_deny_subscribe_without_approval', TRUE) ? OG_STATE_PENDING : OG_STATE_ACTIVE;
-        }
-    }
-
-    // Add group membership form.
-    $og_membership = og_membership_create($group_type, $gid, 'user', $account->uid, $field_name, array('state' => $state));
-    $og_membership->save();
-
-    $commands[] = ajax_command_replace('.og_ui_status', sbq_og_ui_status_link($group_type, $gid));
-    return array('#type' => 'ajax', '#commands' => $commands);
+  $commands[] = ajax_command_replace('.og_ui_status', sbq_og_ui_status_link($group_type, $gid));
+  return array(
+      '#type' => 'ajax',
+      '#commands' => $commands );
 }
 
 function sbq_og_ui_unsubscribe_ajax($group_type, $gid) {
-    og_ungroup($group_type, $gid);
-    og_invalidate_cache(array($gid));
-    $commands[] = ajax_command_replace('.og_ui_status', sbq_og_ui_status_link($group_type, $gid));
-    return array('#type' => 'ajax', '#commands' => $commands);
+  og_ungroup($group_type, $gid);
+  og_invalidate_cache(array(
+      $gid ));
+  $commands[] = ajax_command_replace('.og_ui_status', sbq_og_ui_status_link($group_type, $gid));
+  return array(
+      '#type' => 'ajax',
+      '#commands' => $commands );
 }
 
 /**
@@ -78,100 +81,109 @@ function sbq_og_ui_unsubscribe_ajax($group_type, $gid) {
  *   will be used.
  */
 function sbq_og_ui_subscribe($entity_type, $etid, $field_name = NULL) {
-    global $user;
-    $entity_info = entity_get_info($entity_type);
-    if (!$entity_type || !$entity_info) {
-        // Not a valid entity type.
-        return;
-    }
-    $entity = entity_load_single($entity_type, $etid);
-    if (!$entity || !og_is_group($entity_type, $entity)) {
-        // Not a valid entity, or not a group.
-        return;
-    }
+  global $user;
+  $entity_info = entity_get_info($entity_type);
+  if (!$entity_type || !$entity_info) {
+    // Not a valid entity type.
+    return;
+  }
+  $entity = entity_load_single($entity_type, $etid);
+  if (!$entity || !og_is_group($entity_type, $entity)) {
+    // Not a valid entity, or not a group.
+    return;
+  }
 
-    list($id, $vid, $bundle) = entity_extract_ids($entity_type, $entity);
+  list($id, $vid, $bundle) = entity_extract_ids($entity_type, $entity);
 
+  if (empty($field_name)) {
+    $field_name = og_get_best_group_audience_field('user', $user->uid, $entity_type, $bundle);
     if (empty($field_name)) {
-        $field_name = og_get_best_group_audience_field('user', $user->uid, $entity_type, $bundle);
-        if (empty($field_name)) {
-            // User entity has no group audience field.
-            return;
-        }
+      // User entity has no group audience field.
+      return;
     }
+  }
 
-    $field    = field_info_field($field_name);
-    $instance = field_info_instance('user', $field_name, 'user');
-    $account  = user_load($user->uid);
+  $field = field_info_field($field_name);
+  $instance = field_info_instance('user', $field_name, 'user');
+  $account = user_load($user->uid);
 
-    if (empty($instance) || !field_access('view', $field, 'user', $account)) {
-        // Field name given is incorrect, or user doesn't have access to the field.
-        return;
+  if (empty($instance) || !field_access('view', $field, 'user', $account)) {
+    // Field name given is incorrect, or user doesn't have access to the field.
+    return;
+  }
+
+  if (!$user->uid) {
+    // Anonymous user can't request membership.
+    $dest = drupal_get_destination();
+    if (variable_get('user_register', 1)) {
+      drupal_set_message(t('In order to join any group, you must <a href="!login">login</a>. After you have successfully done so, you will need to request membership again.', array(
+          '!login' => url("user/login", array(
+              'query' => $dest )) )));
+    } else {
+      drupal_set_message(t('In order to join any group, you must <a href="!login">login</a> or <a href="!register">register</a> a new account. After you have successfully done so, you will need to request membership again.', array(
+          '!register' => url("user/register", array(
+              'query' => $dest )),
+          '!login' => url("user/login", array(
+              'query' => $dest )) )));
     }
+    return;
+  }
 
-    if (!$user->uid) {
-        // Anonymous user can't request membership.
-        $dest = drupal_get_destination();
-        if (variable_get('user_register', 1)) {
-            drupal_set_message(t('In order to join any group, you must <a href="!login">login</a>. After you have successfully done so, you will need to request membership again.', array('!login' => url("user/login", array('query' => $dest)))));
-        } else {
-            drupal_set_message(t('In order to join any group, you must <a href="!login">login</a> or <a href="!register">register</a> a new account. After you have successfully done so, you will need to request membership again.', array('!register' => url("user/register", array('query' => $dest)), '!login' => url("user/login", array('query' => $dest)))));
-        }
-        return;
+  $redirect = FALSE;
+  $message = '';
+
+  $params = array();
+  $params['@user'] = format_username($user);
+  // Show the group name only if user has access to it.
+  $params['@group'] = entity_access('view', $entity_type, $entity) ? entity_label($entity_type, $entity) : t('Private group');
+
+  if (og_is_member($entity_type, $id, 'user', $user, array(
+          OG_STATE_BLOCKED ))) {
+    // User is blocked, access denied.
+    drupal_access_denied();
+    return;
+  }
+  if (og_is_member($entity_type, $id, 'user', $user, array(
+          OG_STATE_PENDING ))) {
+    // User is pending, return them back.
+    $message = $user->uid == $user->uid ? t('You already have a pending membership for the group @group.', $params) : t('@user already has a pending membership for the  the group @group.', $params);
+    $redirect = TRUE;
+  }
+
+  if (og_is_member($entity_type, $id, 'user', $user, array(
+          OG_STATE_ACTIVE ))) {
+    // User is already a member, return them back.
+    $message = $user->uid == $user->uid ? t('You are already a member of the group @group.', $params) : t('@user is already a member of the group @group.', $params);
+    $redirect = TRUE;
+  }
+
+  if (!$message && $field['cardinality'] != FIELD_CARDINALITY_UNLIMITED) {
+    // Check if user is already registered as active or pending in the maximum
+    // allowed values.
+    $wrapper = entity_metadata_wrapper('user', $account->uid);
+    if ($field['cardinality'] == 1) {
+      $count = $wrapper->{$field_name}->value() ? 1 : 0;
+    } else {
+      $count = $wrapper->{$field_name}->count();
     }
-
-    $redirect = FALSE;
-    $message  = '';
-
-    $params           = array();
-    $params['@user']  = format_username($user);
-    // Show the group name only if user has access to it.
-    $params['@group'] = entity_access('view', $entity_type, $entity) ? entity_label($entity_type, $entity) : t('Private group');
-
-    if (og_is_member($entity_type, $id, 'user', $user, array(OG_STATE_BLOCKED))) {
-        // User is blocked, access denied.
-        drupal_access_denied();
-        return;
+    if ($count >= $field['cardinality']) {
+      $message = t('You cannot register to this group, as you have reached your maximum allowed subscriptions.');
+      $redirect = TRUE;
     }
-    if (og_is_member($entity_type, $id, 'user', $user, array(OG_STATE_PENDING))) {
-        // User is pending, return them back.
-        $message  = $user->uid == $user->uid ? t('You already have a pending membership for the group @group.', $params) : t('@user already has a pending membership for the  the group @group.', $params);
-        $redirect = TRUE;
-    }
+  }
 
-    if (og_is_member($entity_type, $id, 'user', $user, array(OG_STATE_ACTIVE))) {
-        // User is already a member, return them back.
-        $message  = $user->uid == $user->uid ? t('You are already a member of the group @group.', $params) : t('@user is already a member of the group @group.', $params);
-        $redirect = TRUE;
-    }
+  if ($redirect) {
+    // drupal_set_message($message, 'warning');
+    // $url = entity_uri($entity_type, $entity);
+    // drupal_goto($url['path'], $url['options']);
+    return;
+  }
 
-    if (!$message && $field['cardinality'] != FIELD_CARDINALITY_UNLIMITED) {
-        // Check if user is already registered as active or pending in the maximum
-        // allowed values.
-        $wrapper = entity_metadata_wrapper('user', $account->uid);
-        if ($field['cardinality'] == 1) {
-            $count = $wrapper->{$field_name}->value() ? 1 : 0;
-        } else {
-            $count = $wrapper->{$field_name}->count();
-        }
-        if ($count >= $field['cardinality']) {
-            $message  = t('You cannot register to this group, as you have reached your maximum allowed subscriptions.');
-            $redirect = TRUE;
-        }
-    }
-
-    if ($redirect) {
-        // drupal_set_message($message, 'warning');
-        // $url = entity_uri($entity_type, $entity);
-        // drupal_goto($url['path'], $url['options']);
-        return;
-    }
-
-    if (og_user_access($entity_type, $id, 'subscribe', $user) || og_user_access($entity_type, $id, 'subscribe without approval', $user)) {
-        // Show the user a subscription confirmation.
-        //return drupal_get_form('sbq_og_ui_confirm_subscribe', $entity_type, $id, $user, $field_name);
-        return TRUE;
-    }
+  if (og_user_access($entity_type, $id, 'subscribe', $user) || og_user_access($entity_type, $id, 'subscribe without approval', $user)) {
+    // Show the user a subscription confirmation.
+    //return drupal_get_form('sbq_og_ui_confirm_subscribe', $entity_type, $id, $user, $field_name);
+    return TRUE;
+  }
 }
 
 /**
@@ -182,25 +194,27 @@ function sbq_og_ui_subscribe($entity_type, $etid, $field_name = NULL) {
  * ban another group member from the "people" page.
  */
 function sbq_og_ui_unsubscribe($group_type, $gid) {
-    global $user;
-    $account = clone $user;
-    $group   = entity_load_single($group_type, $gid);
-    if (!$group || !og_is_group($group_type, $group)) {
-        // Not a valid entity, or not a group.
-        //   drupal_not_found();
-        return;
-    }
+  global $user;
+  $account = clone $user;
+  $group = entity_load_single($group_type, $gid);
+  if (!$group || !og_is_group($group_type, $group)) {
+    // Not a valid entity, or not a group.
+    //   drupal_not_found();
+    return;
+  }
 
-    // Check the user isn't the manager of the group.
-    if ($group->uid != $user->uid) {
-        if (og_is_member($group_type, $gid, 'user', $account, array(OG_STATE_ACTIVE, OG_STATE_PENDING))) {
-            // Show the user a subscription confirmation.
-            //return drupal_get_form('sbq_og_ui_confirm_unsubscribe', $group_type, $group);
-            return TRUE;
-        }
-        //  drupal_access_denied();
-        return;
+  // Check the user isn't the manager of the group.
+  if ($group->uid != $user->uid) {
+    if (og_is_member($group_type, $gid, 'user', $account, array(
+            OG_STATE_ACTIVE,
+            OG_STATE_PENDING ))) {
+      // Show the user a subscription confirmation.
+      //return drupal_get_form('sbq_og_ui_confirm_unsubscribe', $group_type, $group);
+      return TRUE;
     }
+    //  drupal_access_denied();
+    return;
+  }
 }
 
 /**
@@ -210,49 +224,55 @@ function sbq_og_ui_unsubscribe($group_type, $gid) {
  * @param type $og_membership_id  userid 
  */
 function sbq_group_upgrade_remove_member_status($group_type, $gid, $og_membership_id) {
-    drupal_add_library('system', 'drupal.ajax');
-    $group = entity_load_single($group_type, $gid);
-    if(!$group || !og_is_group($group_type, $group)){
-        return NULL;
-    }
-    if ($og_membership_id) {
-        $account = user_load($og_membership_id);
-    } else {
-        global $user;
-        $account = user_load($user->uid);
-    }
-    list(,, $bundle) = entity_extract_ids($group_type, $group);
-    $og_roles      = og_roles($group_type, $bundle, $gid, FALSE, FALSE);
+  drupal_add_library('system', 'drupal.ajax');
+  $group = entity_load_single($group_type, $gid);
+  if (!$group || !og_is_group($group_type, $group)) {
+    return NULL;
+  }
+  if ($og_membership_id) {
+    $account = user_load($og_membership_id);
+  } else {
+    global $user;
+    $account = user_load($user->uid);
+  }
+  list(,, $bundle) = entity_extract_ids($group_type, $group);
+  $og_roles = og_roles($group_type, $bundle, $gid, FALSE, FALSE);
 //    get null why？
 //    $entities      = og_membership_load_multiple(array(), array('etid' => $account->uid, 'gid' => $gid, 'state' => 1));
 //    $og_membership = reset($entities);
-    $og_membership = og_get_membership($group_type, $gid, 'user', $account->uid);
-    if(!$og_membership){
-         if(!og_user_access($group_type, $gid, $og_membership->id)){
-             return NULL;
-         }
+  $og_membership = og_get_membership($group_type, $gid, 'user', $account->uid);
+  if (!$og_membership) {
+    if (!og_user_access($group_type, $gid, $og_membership->id)) {
+      return NULL;
     }
-    if ($og_roles) {
-        $current_role = og_get_user_roles($group_type, $gid, $account->uid);
+  }
+  if ($og_roles) {
+    $current_role = og_get_user_roles($group_type, $gid, $account->uid);
+  }
+  $link = '';
+  foreach ($og_roles as $rid => $role) {
+    if (isset($current_role[$rid])) {
+      $href = "group/{$group_type}/{$gid}/membership/action-role/{$og_membership->id}/{$rid}/0/ajax";
+      $attributes = array(
+          'attributes' => array(
+              'class' => array(
+                  'use-ajax'
+              )
+          ),
+      );
+      $link .= l('移除', $href, $attributes) . $role;
+    } else {
+      $l = l('提升', "group/{$group_type}/{$gid}/membership/action-role/{$og_membership->id}/{$rid}/1/ajax", array(
+          'attributes' => array(
+              'class' => array(
+                  'use-ajax' ) ),
+          )
+      );
+      $link .= $l . $role;
     }
-    $link = '';
-    foreach ($og_roles as $rid => $role) {
-        if (isset($current_role[$rid])) {
-            $href       = "group/{$group_type}/{$gid}/membership/action-role/{$og_membership->id}/{$rid}/0/ajax";
-            $attributes = array(
-                'attributes' => array('class' => array('use-ajax')),
-            );
-            $link .= l('移除', $href, $attributes) . $role;
-        } else {
-            $l = l('提升', "group/{$group_type}/{$gid}/membership/action-role/{$og_membership->id}/{$rid}/1/ajax", array(
-                'attributes' => array('class' => array('use-ajax')),
-                    )
-            );
-            $link .= $l . $role;
-        }
-    }
+  }
 
-    return '<div id="og_action_role">' . $link . '</div>';
+  return '<div id="og_action_role">' . $link . '</div>';
 }
 
 /**
@@ -264,17 +284,94 @@ function sbq_group_upgrade_remove_member_status($group_type, $gid, $og_membershi
  * @param type $role_status
  */
 function group_membership_action_role_ajax($group_type, $gid, $og_membership, $action_role, $role_status) {
-    $roles = og_get_user_roles($group_type, $gid, $og_membership->etid);
-    if ((int) $role_status === 0) {
-        if (in_array($action_role, array_keys($roles))) {
-            og_role_revoke($group_type, $gid, $og_membership->etid, $action_role);
-        }
-    } elseif ((int) $role_status === 1) {
-        if (!in_array($action_role, array_keys($roles))) {
-            og_role_grant($group_type, $gid, $og_membership->etid, $action_role);
-        }
+  $roles = og_get_user_roles($group_type, $gid, $og_membership->etid);
+  if ((int) $role_status === 0) {
+    if (in_array($action_role, array_keys($roles))) {
+      og_role_revoke($group_type, $gid, $og_membership->etid, $action_role);
     }
-    og_invalidate_cache(array($gid));
-    $commands[] = ajax_command_replace('#og_action_role', sbq_group_upgrade_remove_member_status($group_type, $gid, $og_membership->etid));
-    return array('#type' => 'ajax', '#commands' => $commands);
+  } elseif ((int) $role_status === 1) {
+    if (!in_array($action_role, array_keys($roles))) {
+      og_role_grant($group_type, $gid, $og_membership->etid, $action_role);
+    }
+  }
+  og_invalidate_cache(array( $gid ));
+  $commands[] = ajax_command_replace('#og_action_role', sbq_group_upgrade_remove_member_status($group_type, $gid, $og_membership->etid));
+  return array( '#type' => 'ajax', '#commands' => $commands );
+}
+
+/**
+ * 
+ * @global type $user
+ * @param type $viewed_id
+ * @param type $type add,remove array('add','remove')
+ * @param type $account
+ * @return type
+ * @todo between user relatioship ajax
+ * @todo sbq_commons_relationships_ui_actions_between update
+ */
+function sbq_commons_user_relationships_ajax($viewed_id, $type = 'add', $account = NULL) {
+  drupal_add_library('system', 'drupal.ajax');
+  if (!$account) {
+    global $user;
+    $account = $user;
+  }
+  if (!$viewed = user_load($viewed_id))
+    return;
+  if ($type == 'add') {
+    $action = sbq_commons_relationships_ui_actions_between($account, $viewed, array(
+        'add' => 1 ));
+    if (!isset($action[0])) {
+      return;
+    }
+    $preg = '/<a(.*?)href="(.*?)"(.*?)>(.*?)<\/a>/i';
+    preg_match_all($preg, $action[0], $match);
+    $ajax_token = time() . rand(0, 10000);
+    $link = l('+关注', ltrim($match[2][0], "/") . '?destination=' . $ajax_token, array(
+        'attributes' => array( 'class' => 'use-ajax ' . $ajax_token ) ));
+  } elseif ($type == 'remove') {
+    $action = sbq_commons_relationships_ui_actions_between($account, $viewed, array(
+        'remove' => 1 ));
+   // dpm($action);
+    if (!empty($action)) {
+      return;
+    }
+    $preg = '/<a(.*?)href="(.*?)"(.*?)>(.*?)<\/a>/i';
+    preg_match_all($preg, $action[0], $match);
+    $ajax_token = time() . rand(0, 10000);
+    $link = l('+移除', ltrim($match[2][0], "/") . '?destination=' . $ajax_token, array(
+        'attributes' => array( 'class' => 'use-ajax ' . $ajax_token ) ));
+  }
+  return isset($link) ? render($link) : '';
+}
+
+/**
+ * Process relationship request.
+ */
+function sbq_commons_user_relationships_ui_request_ajax($viewer_id, $rid, $viewed_id) {
+  //#578372 leave all form values in the object for other functions to use
+  $relationship = new stdClass;
+  $relationship->requester = user_load($viewer_id);
+  $relationship->requestee = user_load($viewed_id);
+  $relationship->type = user_relationships_type_load($rid);
+  $relationship = user_relationships_request_relationship($relationship);
+
+  if ($relationship === FALSE || !$relationship) {
+    // sbq_commons_ajax_response('success', '不能建立此关系', NULL, render($html));
+  }
+  //  drupal_set_message(user_relationships_get_message(($relationship->approved ? 'pre_approved' : 'submitted'), $relationship));
+  // $html = sbq_commons_user_relationship_view(user_load($viewed_id), NULL, NULL);
+  //sbq_commons_ajax_response('success', 'success', NULL, render($html));
+  //$g = strstr('destination=', $_GET);
+//  dpm($_GET);
+  $path = $_GET['q'];
+  if ($position = strpos($path, 'destination=')) {
+    if ($token = substr($path, $position, strlen($path))) {
+      $token = str_replace('destination=', '', $token);
+      $commands[] = ajax_command_replace('.' . $token, '已关注');
+//      $f = sbq_commons_user_relationships_ajax($viewed_id, 'remove');
+//      dpm($f);
+      return array( '#type' => 'ajax', '#commands' => $commands );
+    }
+  }
+  ajax_deliver('success');
 }

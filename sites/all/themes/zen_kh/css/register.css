@@ -3,7 +3,8 @@
 .page-user-login #content,
 .page-customer-register #content,
 .page-user-password #content,
-.page-doctor-register #content{
+.page-doctor-register #content,
+#content{
 	background:#FFF;
 	border:1px solid #e5e5e5 !important;
 	padding:15px;
@@ -23,46 +24,39 @@
 	display:none;
 }
 	/*注册*/
-	#content .form-type-password,
+	.password-strength-text,
+	.password-strength-title,
+	.password-indicator {display:none}
 	#content .form-type-password {
 		width:100%
 	}
-	#content .password-strength,
     #content .password-strength {
 		margin-top:0.2em;
 	}
-	#content .password-confirm,
 	#content .password-confirm {
 		margin-top:0.2em;
 	}
-	#content .confirm-parent,
 	#content .confirm-parent {
 		margin:1.0em 0;
 	}
-	#content .user-info-from-cookie fieldset,
 	#content .user-info-from-cookie fieldset {
 		border:none;
 	}
-	#content .user-info-from-cookie fieldset legend ,
 	#content .user-info-from-cookie fieldset legend {
-		padding-left:17px;
+	float:left;
 	}
-	#content .user-info-from-cookie fieldset .fieldset-wrapper .form-type-textfield label ,
 	#content .user-info-from-cookie fieldset .fieldset-wrapper .form-type-textfield label {
 		display:none;
 	}
 	#content .user-info-from-cookie fieldset .fieldset-wrapper .fieldset-description {
 		display:none;
 	}
-	#content .user-info-from-cookie fieldset .fieldset-wrapper ,
 	#content .user-info-from-cookie fieldset .fieldset-wrapper {
-		margin:-37px 0 0 82px;
+		margin:-31px 0 0 82px;
 	}
-	#content .user-info-from-cookie fieldset .fieldset-wrapper .form-item-captcha-response div.description,
 	#content .user-info-from-cookie fieldset .fieldset-wrapper .form-item-captcha-response div.description{
 		display:none;
 	}
-	#content .user-info-from-cookie fieldset .fieldset-wrapper  img,
 	.page-doctor-register .user-info-from-cookie fieldset .fieldset-wrapper div,
 	#content .user-info-from-cookie fieldset .fieldset-wrapper  img,
 	#content .user-info-from-cookie fieldset .fieldset-wrapper div {
@@ -70,7 +64,6 @@
 	}
 	
 	#user-register-form .form-type-checkbox {text-align:center;}
-	#user-register-form div input[type="submit"],
 	#user-register-form div input[type="submit"]{
 		background: url(../images/btn1.png) no-repeat 0 bottom;
 		display: block;
@@ -105,10 +98,9 @@
 	#user-login div .form-item-pass .description{
 		display:inline-block;
 	}
-	#user-login div .form-item-name label,
 	#user-login div .form-item-pass label
 	{
-		width:100px;
+		width:85px;
 		
 	}
 	#user-login .item-list ul.sbq_custom_login {margin:1.5em 1.0em}
@@ -128,3 +120,7 @@
 	/*医生注册*/
 	#user-register-form .form-item label{}
 	#user-register-form .form-type-managed-file div {float:left;}
+	#user-register-form .form-required {display:none;}
+	#user-register-form .fieldset-wrapper .form-type-managed-file .description {display:none}	
+	#user-register-form .form-type-managed-file label {display:none;}
+	#user-register-form .fieldset-wrapper .form-type-managed-file .form-managed-file input[type="submit"]{display:inline-block}

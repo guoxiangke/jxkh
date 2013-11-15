@@ -21,41 +21,38 @@ function sbq_commons_menu() {
   module_load_include('inc', 'og_ui');
 
   //module_load_all_includes('module','og');
-  $items['user/ajax/tags/%/add']  = array(
-    'title' => 'Add Disease tags for User Center',
-    'page callback' => 'sbq_commons_user_disease_tag_add_ajax',
-    'page arguments' => array(3),
-    'type' => MENU_CALLBACK,
+  $items['user/ajax/tags/%/add'] = array(
+      'title' => 'Add Disease tags for User Center',
+      'page callback' => 'sbq_commons_user_disease_tag_add_ajax',
+      'page arguments' => array(
+          3 ),
+      'type' => MENU_CALLBACK,
   );
-  $items['user/ajax/tags/%/delete']  = array(
-    'title' => 'Delete Disease tags for User Center',
-    'page callback' => 'sbq_commons_user_disease_tag_delete_ajax',
-    'page arguments' => array(3),
-    'type' => MENU_CALLBACK,
+  $items['user/ajax/tags/%/delete'] = array(
+      'title' => 'Delete Disease tags for User Center',
+      'page callback' => 'sbq_commons_user_disease_tag_delete_ajax',
+      'page arguments' => array(
+          3 ),
+      'type' => MENU_CALLBACK,
   );
   $items['relationship/ajax/%/remove/%/%'] = array(
       'title' => 'Remove relationship',
       'access callback' => 'user_relationships_ui_check_access',
-      'access arguments' => array(
-          'delete' ),
+      'access arguments' => array('delete' ),
       'page callback' => 'sbq_commons_user_relationships_ui_remove_ajax',
-      'page arguments' => array(
-          2,
-          4,
-          5 ),
+      'page arguments' => array(2,4,5 ),
       'type' => MENU_CALLBACK,
   );
+  // 关注
   $items['relationship/ajax/%/request/%/%'] = array(
+      'delivery callback' => 'ajax_deliver',
       'title' => 'Create a relationship',
       'type' => MENU_CALLBACK,
       'access callback' => 'user_relationships_ui_check_access',
-      'access arguments' => array(
-          'request' ),
+      'access arguments' => array( 'request' ),
       'page callback' => 'sbq_commons_user_relationships_ui_request_ajax',
-      'page arguments' => array(
-          2,
-          4,
-          5 ),
+      'page arguments' => array( 2, 4, 5 ),
+      'file' => 'sbq_commons_og_ui.inc',
   );
   $items['relationship/ajax/%/pending/%/%'] = array(
       'title' => 'Received requests',
@@ -722,8 +719,8 @@ function sbq_commons_node_submit(&$node, &$form, &$form_state) {
       '/' ) as $it) {
         $full_tags = str_replace($it, ',', $full_tags);
       }
-
-      if (isset($node->{$field_key})) {
+      
+      if (isset($node->{$field_key}) && !empty($node->{$field_key})) {
         $full_items = explode(',', $full_tags);
         $tid = $node->{$field_key}[LANGUAGE_NONE][0]['tid'];
         $vid = $node->{$field_key}[LANGUAGE_NONE][0]['vid'];
@@ -1146,36 +1143,6 @@ function sbq_commons_views_query_alter(&$view, &$query) {
       );
     }
   }
-}
-
-/**
- * user recommend friend add friend link
- * @global type $user
- * @param type $friend_name
- * @return type
- */
-function sbq_commons_add_user_relationships($friend_name) {
-  global $user;
-  $friend = user_load_by_name($friend_name);
-  if (!$friend)
-    return;
-  $action = sbq_commons_relationships_ui_actions_between($user, $friend, array(
-      'add' => 1 ));
-  if (isset($action[0])) {
-    $preg = '/<a(.*?)href="(.*?)"(.*?)>(.*?)<\/a>/i';
-    preg_match_all($preg, $action[0], $match);
-    $href = ltrim($match[2][0], "/");
-    if (in_array(USER_PATIENT_RID, array_keys($user->roles))) {
-      // $link = l('医生', $href, array('class' => 'sbq_add_friend'));
-      $link = l('+关注', $href, array(
-          'class' => 'sbq_add_friend' ));
-    } elseif (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($user->roles))) {
-      // $link = l('好友', $href, array('class' => 'sbq_add_friend'));
-      $link = l('+关注', $href, array(
-          'class' => 'sbq_add_friend' ));
-    }
-  }
-  return isset($link) ? render($link) : '';
 }
 
 function sbq_commons_module_implements_alter(&$implementations, $hook) {

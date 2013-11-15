@@ -301,11 +301,9 @@ function ajax_comments_submit_js4child($form, &$form_state) {
     // Append comment to root comment wrapper.
     $comment_output = drupal_render($comment_build);
     $commands[] = ajax_command_append('#comment-wrapper', $notify_text . $comment_output);
-
     // If we have a default form, update it with a new one.
     if (variable_get('comment_form_location_' . $node->type, COMMENT_FORM_BELOW) == COMMENT_FORM_BELOW) {
       $node = $form['#node'];
-
       $new_form_state = array();
       $new_form_state['build_info']['args'][] = (object) array(
               'nid' => $node->nid );
@@ -313,7 +311,6 @@ function ajax_comments_submit_js4child($form, &$form_state) {
       $new_form_state['input'] = array();
       $new_form_build = drupal_build_form($form['#form_id'], $new_form_state);
       $new_form_output = drupal_render($new_form_build);
-
       $commands[] = ajax_command_replace('#' . $form['#id'], $new_form_output);
     }
     // Otherwise, delete it.
@@ -328,8 +325,6 @@ function ajax_comments_submit_js4child($form, &$form_state) {
 }
 
 function sbq_commons_modal_html($data, $id = 'sbq_modal', $title = '') {
-
-
   $html = '<div id="' . $id . '" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: block;">';
   $html .= '<div class="modal-dialog">';
   $html .= '<div class="modal-content">';
@@ -419,24 +414,6 @@ function sbq_commons_user_relationships_ui_remove_ajax($viewer_id, $rid, $viewd_
   user_relationships_delete_relationship($relationship, $user);
   drupal_set_message(user_relationships_get_message('removed', $relationship));
   $html = sbq_commons_user_relationship_view(user_load($viewd_id), NULL, NULL);
-  sbq_commons_ajax_response('success', 'success', NULL, render($html));
-}
-
-/**
- * Process relationship request.
- */
-function sbq_commons_user_relationships_ui_request_ajax($viewer_id, $rid, $viewed_id) {
-  //#578372 leave all form values in the object for other functions to use
-  $relationship = new stdClass;
-  $relationship->requester = user_load($viewer_id);
-  $relationship->requestee = user_load($viewed_id);
-  $relationship->type = user_relationships_type_load($rid);
-  $relationship = user_relationships_request_relationship($relationship);
-  if ($relationship === FALSE || !$relationship) {
-    sbq_commons_ajax_response('success', '不能建立此关系', NULL, render($html));
-  }
-  //  drupal_set_message(user_relationships_get_message(($relationship->approved ? 'pre_approved' : 'submitted'), $relationship));
-  $html = sbq_commons_user_relationship_view(user_load($viewed_id), NULL, NULL);
   sbq_commons_ajax_response('success', 'success', NULL, render($html));
 }
 
@@ -545,7 +522,7 @@ function sbq_commons_user_relationship_view($account, $view_mode, $langcode) {
  * response format
  */
 
-function sbq_commons_ajax_response($status, $message, $data, $html) {
+function sbq_commons_ajax_response($status, $message, $data = '', $html = '') {
   $response = array(
       'status' => $status,
       'message' => $message,
@@ -570,7 +547,6 @@ function _sbq_commons_block_html($delta) {
       //操作
       $opt_link = l('操作', 'user/');
       $message_link = l('消息', 'user/');
-
       //勋章
       $user_badges = '';
       if (module_exists('user_badges')) {
@@ -594,15 +570,14 @@ EOF;
               'uid' => $user->uid,
               'name' => (isset($user->name) ? $user->name : ''),
               'type' => 'question',
-              'language' => LANGUAGE_NONE );
+              'language' => LANGUAGE_NONE
+      );
       $question_node_form = drupal_get_form('question_node_form', $node);
-
       $question_node_form['field_tags']['und']['#value'] = '快速提问';
       $question_node_form['field_tags']['#type'] = 'hidden';
       unset($question_node_form['body']['und']['0']['format']);
       unset($question_node_form['body']['und']['0']['summary']);
       unset($question_node_form['field_departments']);
-
       $block_html = '<div class="sbq-question-node-add-form">'
           . render($question_node_form)
           . '</div>';
@@ -615,11 +590,11 @@ EOF;
 
       $block_html = '<div class="sbq-user-menu">'
           . '<ul class="menu">'
-          . '<li class="menu__item is-leaf first leaf sbq-user-menu-post"><a href="#" class="menu__link">我的帖子</a></li>'
-          . '<li class="menu__item is-leaf leaf sbq-user-menu-status"><a href="#" class="menu__link">我的动态</a></li>'
-          . '<li class="menu__item is-leaf leaf sbq-user-menu-blog is-active"><a href="#" class="menu__link is-active active">我的文章</a></li>'
-          . '<li class="menu__item is-leaf leaf sbq-user-menu-group"><a href="#" class="menu__link">我的小组</a></li>'
-          . '<li class="menu__item is-leaf last leaf sbq-user-menu-relationship"><a href="#" class="menu__link">我的圈子</a></li>'
+          . '<li class="menu__item is-leaf first leaf sbq-user-menu-post"><a href="#" class="menu__link">我的帖子</a><span class="sbq-count"><a href="#" class="sbq-count-link">5条</span></li>'
+          . '<li class="menu__item is-leaf leaf sbq-user-menu-status"><a href="#" class="menu__link">我的动态</a><span class="sbq-count"><a href="#" class="sbq-count-link">5条</span></li>'
+          . '<li class="menu__item is-leaf leaf sbq-user-menu-blog is-active"><a href="#" class="menu__link is-active active">我的文章</a><span class="sbq-count"><a href="#" class="sbq-count-link">5篇</span></li>'
+          . '<li class="menu__item is-leaf leaf sbq-user-menu-group"><a href="#" class="menu__link">我的小组</a><span class="sbq-count"><a href="#" class="sbq-count-link">5个</span></li>'
+          . '<li class="menu__item is-leaf last leaf sbq-user-menu-relationship"><a href="#" class="menu__link">我的圈子</a><span class="sbq-count"><a href="#" class="sbq-count-link">5条</span></li>'
           . '</ul>'
           . '</div>';
       break;
@@ -630,12 +605,18 @@ EOF;
       }
       $ids = _sbq_commons_user_recommonds_friends_ids(USER_CERTIFIED_DOCTOR_RID);
       $friends = user_load_multiple($ids);
-
       $block_html = '<div class="view"> <div class="view-content">';
       foreach ($friends as $key => $value) {
-        $account_profile = profile2_load_by_user($value, 'doctor_profile'); //@todo暂时无医院信息
+        //勋章
+        $user_badges = '';
+        if (module_exists('user_badges')) {
+          $user_badges = user_badges_for_uid($value->uid);
+        }
+        // $account_profile = profile2_load_by_user($value, 'doctor_profile'); //@todo暂时无医院信息
+        //@todo暂时无医院信息
+
         $picture = sbq_commons_user_avart($value);
-        $follow = sbq_commons_add_user_relationships($value->name);
+        $follow = sbq_commons_user_relationships_ajax($value->uid);
         $user_badges = ''; //需要添加
         if (module_exists('user_badges')) {
           $user_badges = user_badges_for_uid($user->uid);
@@ -647,7 +628,7 @@ EOF;
             </div>
             <div class="details">
               <span class="name">$value->name</span>
-              <span class="badges">勋章</span>
+              <span class="badges">{$user_badges}</span>
               <span class="hospital">北京儿童医院</span>
               <span class="follow">$follow</span>
             </div>
@@ -655,8 +636,7 @@ EOF;
 EOF;
       }
       if ($block_html) {
-        $more = t('more');
-        $block_html .= '</div><div class="more-link"><a href="/news/%2A">more</a></div></div>';
+        $block_html .= '</div><div class="more-link"><a href="/user">更多</a></div></div>';
       }
       break;
     case 'recommond_patients':
@@ -669,11 +649,19 @@ EOF;
       foreach ($friends as $key => $value) {
         $account_profile = profile2_load_by_user($value, 'doctor_profile');
         $picture = sbq_commons_user_avart($value);
-        $follow = sbq_commons_add_user_relationships($value->name);
+        $follow = sbq_commons_user_relationships_ajax($value->uid);
         $user_badges = '';
         if (module_exists('user_badges')) {
           $user_badges = user_badges_for_uid($user->uid);
         }
+        // 关注疾病
+        $account_disease = '';
+        if ($profile = profile2_load_by_user($value, 'main')) {
+          foreach ($profile->field_tags_disease['und'] as $tid) {
+            $term = taxonomy_term_load($tid);
+            $account_disease .= $term->name;
+          }
+        }   
         $block_html .= <<<EOF
           <div class="sbq-recommond-friends ">
             <div class="picture">
@@ -681,17 +669,15 @@ EOF;
             </div>
             <div class="details">
               <span class="name">$value->name</span>
-              <span class="badges">勋章</span>
+              <span class="badges">$user_badges</span>
               <span class="attention">疾病</span>
               <span class="follow">$follow</span>
             </div>
           </div>
-
 EOF;
       }
       if ($block_html) {
-        $more = t('more');
-        $block_html .= '</div><div class="more-link"><a href="/news/%2A">more</a></div></div>';
+        $block_html .= '</div><div class="more-link"><a href="/user">更多</a></div></div>';
       }
       break;
     default:
@@ -707,8 +693,9 @@ function _sbq_commons_user_recommonds_friends_ids($roles, $num = 2, $account = n
   }
   $query_user = db_query(
       "select uid from {users} u where " .
-      "u.uid not in ( select requester_id from user_relationships " .
-      "where requester_id <> {$account->uid} or requestee_id <> {$user->uid})" .
+      "u.uid not in ( select requestee_id from user_relationships " .
+      "where requester_id = {$account->uid}) " .
+      "and u.uid not in( select requester_id from user_relationships where requestee_id = {$account->uid}) " .
       "and u.uid in ( select uid from users_roles where rid = {$roles}) limit 0,{$num} ");
   $result = $query_user->fetchAllAssoc('uid');
   return $result ? array_keys($result) : array();
@@ -718,7 +705,7 @@ function _sbq_commons_user_recommonds_friends_ids($roles, $num = 2, $account = n
  * user avart
  */
 
-function sbq_commons_user_avart($account = null) {
+function sbq_commons_user_avart($account = null, $style_name = "sc80") {
   if (!$account) {
     global $user;
     $account = user_load($user->uid);
@@ -740,7 +727,7 @@ function sbq_commons_user_avart($account = null) {
         'style_name' => 'sc80',
     ));
   }
-  return '<a href="user/' . $account->uid . '">' . $picture . '</a>';
+  return '<a href="/user/' . $account->uid . '">' . $picture . '</a>';
 }
 
 /*
