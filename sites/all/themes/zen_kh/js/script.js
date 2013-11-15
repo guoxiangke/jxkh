@@ -26,6 +26,11 @@ Drupal.behaviors.my_custom_behavior = {
         interval: 5000
       })
     })
+    $('.views-field-field-tags-disease li').hover(function(){
+        $(this).children('span').toggleClass('show');
+        $(this).children('a').toggleClass('hover');
+
+      })
     $('#sbq_doctor_quick_register button.close').live('click',function(){
     	$('#sbq_doctor_quick_register').hide();
     })
