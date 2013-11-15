@@ -23,6 +23,7 @@
 #content span.form-required{
 	display:none;
 }
+#user-register-form fieldset .fieldset-wrapper .form-type-textfield input[type="text"] {width:100px;}
 	/*注册*/
 	.password-strength-text,
 	.password-strength-title,
@@ -64,6 +65,20 @@
 	}
 	
 	#user-register-form .form-type-checkbox {text-align:center;}
+	#user-register-form .field-name-field-doctor-license .image-widget-data {margin:10px 0 0 0}
+	#user-register-form .field-name-field-doctor-license .image-widget-data input[type="file"]{width:271px;border:1px solid #ccc;padding:1px;}
+	#user-register-form .field-name-field-doctor-license .image-widget-data input[type="submit"]{
+		display: block;
+		width: 80px;
+		height: 28px;
+		font-size: 14px;
+		text-align: center;
+		line-height: 0px;
+		background:#fff;
+		color: #000;
+		border:1px solid #ccc;
+		
+	 }
 	#user-register-form div input[type="submit"]{
 		background: url(../images/btn1.png) no-repeat 0 bottom;
 		display: block;
