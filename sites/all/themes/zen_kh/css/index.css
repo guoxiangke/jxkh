@@ -334,10 +334,11 @@ padding-bottom: 30px;
 #block-views-exposure-platform-slideshow .block-title {
 	font-size:30px;
 	font-weight:normal;
-	height:1em;
-	line-height:1em;
+	height:29px;
+	font-size: 14px;
 	margin-bottom:9px;
 	text-indent:10em;
+	line-height: 39px;
 	background:url(../images/bgt.png) no-repeat 19px 0;
 }
 .view-id-index_activity_blok_image {
@@ -799,13 +800,43 @@ label {
 }
 .views-field-field-tags-disease li{
 	display: inline-block;*display:inline; zoom:1; 
-	padding: 0 7px;
 	height: 20px;
 	line-height: 20px;
 	text-align: center;
-	background-color: #1dc7db;
 	margin:0 7px 7px 0;
+	position: relative;
 	
+}
+.views-field-field-tags-disease li a{
+	padding: 0 7px;
+	display: inline-block;*display:inline; zoom:1; 
+	background-color: #1dc7db;
+}
+.views-field-field-tags-disease li a:hover{
+	background-color: #168a9b
+}
+.views-field-field-tags-disease .sba-user-tag-del{
+	position: absolute;
+	right: -5px;
+	top: -5px;
+	z-index: 2;
+	display: block;
+	width: 10px;
+	height: 10px;
+}
+.views-field-field-tags-disease .sba-user-tag-del a{
+	display: block;
+	background-color: #26a0ae;
+	color: #fff;
+	height: 10px;
+	width: 10px;
+	border-radius: 10px;
+	line-height: 9px;
+	text-align: center;
+	padding: 0
+}
+.views-field-field-tags-disease .sba-user-tag-del a:hover{
+
 }
 .block-views .views-field-field-tags-disease li a,
 .block-views .views-field-field-tags-disease li a:hover{
@@ -967,6 +998,11 @@ html{
 	font-size: 14px;
 	font-family: "microsoft yahei"
 }
+#quicktabs-container-user_qa,
+#block-quicktabs-user-group,
+#block-quicktabs-message{
+	font-size: 12px;
+}
 .block-quicktabs .view-content .views-field{
 	float: left;
 	color: #a3a3a3;
@@ -986,16 +1022,35 @@ html{
 	padding-left: 21px;
 	background: url(../images/thumbs-up.png) no-repeat 0 center;
 }
-.block-quicktabs .views-field-field-mark-question-resolved,
-.block-quicktabs .views-field-comment-count{
+.block-quicktabs .views-field-field-mark-question-resolved
+{
 	width: 60px
+}
+.block-quicktabs .views-field-comment-count{
+	padding-left: 19px;
+	width: 77px;
+	background: url(../images/writing.png) no-repeat 0 center;
 }
 .block-quicktabs .views-field-created,.views-field-created-1{
 	width: 80px; text-align: right;
 	height: 32px;
 	overflow: hidden;
 }
-
+#block-views-message-block .views-field-message-render{
+	max-width: 300px;
+}
+#block-views-message-block p{
+	margin: 0
+}
+#block-views-message-block .views-field-timestamp{
+	max-width: 134px;
+	overflow: hidden;
+	float: right;
+	text-align: right;
+}
+#block-views-message-block .views-field-timestamp em{
+	font-style: normal;
+}
 .contextual-links-region h2{
 width: 100%;
 text-align:left;
@@ -1099,7 +1154,7 @@ background-color: #f2feff
 right: 17px;
 bottom: 10px;
 }
-#sbq-user-carousel .carousel-indicators li{width: 6px;height: 6px; border-radius: 6px; background-color: #c6c6c6}
+#sbq-user-carousel .carousel-indicators li{width: 8px;height:8px; border-radius: 8px; background-color: #c6c6c6}
 #sbq-user-carousel .carousel-indicators li.active{background-color: #16B4C7;}
 #body-add-more-wrapper .form-textarea-wrapper{
 	border: 1px solid #60d8e6
@@ -1116,7 +1171,7 @@ bottom: 10px;
 	min-height: 54px;
 	border: none;
 }
-/*#body-add-more-wrapper .grippie,#edit-field-tags{ display: none;}*/
+#body-add-more-wrapper .grippie,#edit-field-tags{ display: none;}
 #block-sbq-commons-sbq-user-menu .is-active{
 	background-color: #1dc7db;
 	color: #fff
@@ -1126,7 +1181,7 @@ bottom: 10px;
 }
 #block-sbq-commons-sbq-quick-ask #edit-actions--2{
 	position: absolute;right: 0;
-	bottom: 0;
+	top:26px;
 	z-index: 1
 }
 #edit-actions--2 #edit-submit--2{

@@ -135,6 +135,16 @@ function sbq_commons_menu() {
           5 ),
       'file' => 'sbq_commons_og_ui.inc',
   );
+  $items['qa'] = array(
+      'title' => t('Questions'),
+      'page callback' => 'druedu_qa_empty_page',
+      // 'page arguments' => array(1),
+      'description' => 'questions page',
+      'menu_name' => 'main-menu',
+      'access callback' => TRUE,
+      'type' => MENU_NORMAL_ITEM,
+      'file' => 'sbq_commons.inc',
+  );
   return $items;
 }
 
@@ -1186,7 +1196,7 @@ function sbq_commons_module_implements_alter(&$implementations, $hook) {
  */
 function sbq_commons_form_question_node_form_alter(&$form, &$form_state, $form_id) {
   $switch = FALSE;
-  $form['field_image']['#access'] = $switch;
+  $form['field_image']['#access'] = TRUE;
   $form['field_qa_attachment']['#access'] = $switch;
   $form['field_ask_anonymous']['#access'] = $switch;
 }

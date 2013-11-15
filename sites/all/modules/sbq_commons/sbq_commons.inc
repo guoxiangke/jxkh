@@ -760,3 +760,12 @@ function sbq_commons_user_disease_tag_delete_ajax($tag_name = '') {
   //TODO: Delete tag from this user
   # code...
 }
+
+/**
+ * QA index page 
+ * return empty page for zen_kh theme 
+ * Use tabs blocks to theme this page 
+ */
+function druedu_qa_empty_page() {
+  return '';
+}
