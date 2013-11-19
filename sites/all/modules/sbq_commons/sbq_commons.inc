@@ -590,11 +590,12 @@ EOF;
 
       $block_html = '<div class="sbq-user-menu">'
           . '<ul class="menu">'
-          . '<li class="menu__item is-leaf first leaf sbq-user-menu-post"><a href="#" class="menu__link">我的帖子</a><span class="sbq-count"><a href="#" class="sbq-count-link">5条</span></li>'
-          . '<li class="menu__item is-leaf leaf sbq-user-menu-status"><a href="#" class="menu__link">我的动态</a><span class="sbq-count"><a href="#" class="sbq-count-link">5条</span></li>'
-          . '<li class="menu__item is-leaf leaf sbq-user-menu-blog is-active"><a href="#" class="menu__link is-active active">我的文章</a><span class="sbq-count"><a href="#" class="sbq-count-link">5篇</span></li>'
-          . '<li class="menu__item is-leaf leaf sbq-user-menu-group"><a href="#" class="menu__link">我的小组</a><span class="sbq-count"><a href="#" class="sbq-count-link">5个</span></li>'
-          . '<li class="menu__item is-leaf last leaf sbq-user-menu-relationship"><a href="#" class="menu__link">我的圈子</a><span class="sbq-count"><a href="#" class="sbq-count-link">5条</span></li>'
+          . '<li class="menu__item is-leaf first leaf sbq-user-menu-post"><a href="#block-quicktabs-user-group" class="menu__link">我的帖子</a><span class="sbq-count"><a href="#" class="sbq-count-link">5条</span></li>'
+          . '<li class="menu__item is-leaf leaf sbq-user-menu-status"><a href="#block-quicktabs-message" class="menu__link">我的动态</a><span class="sbq-count"><a href="#" class="sbq-count-link">5条</span></li>'
+          . '<li class="menu__item is-leaf leaf sbq-user-menu-blog is-active"><a href="/user/'.$user->uid.'/blog" class="menu__link is-active active">我的文章</a><span class="sbq-count"><a href="#" class="sbq-count-link">5篇</span></li>'
+          . '<li class="menu__item is-leaf leaf sbq-user-menu-group"><a href="/groups/my" class="menu__link">我的小组</a><span class="sbq-count"><a href="#" class="sbq-count-link">5个</span></li>'
+          . '<li class="menu__item is-leaf last leaf sbq-user-menu-relationship"><a href="/user/'.$user->uid.'/relationship" class="menu__link">我的圈子</a><span class="sbq-count"><a href="#" class="sbq-count-link">5条</span></li>'
+          . '<li class="menu__item is-leaf last leaf sbq-user-menu-points"><a href="/user/'.$user->uid.'/points" class="menu__link">我的积分</a><span class="sbq-count"><a href="#" class="sbq-count-link">1000</span></li>'
           . '</ul>'
           . '</div>';
       break;
@@ -756,16 +757,16 @@ function sbq_commons_user_disease_tag_delete_ajax($tag_name = '') {
 }
 
 /**
- * QA index page 
- * return empty page for zen_kh theme 
- * Use tabs blocks to theme this page 
+ * QA index page
+ * return empty page for zen_kh theme
+ * Use tabs blocks to theme this page
  */
 function druedu_qa_empty_page() {
   return '';
 }
 
 /*
- * 
+ *
  */
 
 function sbq_commons_app_down() {

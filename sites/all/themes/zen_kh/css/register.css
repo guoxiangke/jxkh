@@ -66,7 +66,7 @@
 		display:inline-block;margin-right:10px
 	}
 	
-	#user-register-form .form-type-checkbox {text-align:center;}
+	#user-register-form .form-type-checkbox {text-align:left;margin-left:80px;}
 	#user-register-form .field-name-field-doctor-license .image-widget-data {margin:10px 0 0 0}
 	#user-register-form .field-name-field-doctor-license .image-widget-data input[type="file"]{width:135px;padding:1px;}
 	#user-register-form .field-name-field-doctor-license .image-widget-data input[type="submit"]{
@@ -79,6 +79,7 @@
 		background:#fff;
 		color: #000;
 		border:1px solid #ccc;
+		margin:0;
 		
 	 }
 	#user-register-form div input[type="submit"]{
@@ -91,7 +92,7 @@
 		text-align: center;
 		line-height: 34px;
 		border:0;
-		margin:0 auto;
+		margin-left:60px;
 	 }
 	/*忘记密码*/
 	#user-pass div #edit-actions input[type="submit"]{
