@@ -38,9 +38,9 @@ function sbq_commons_menu() {
   $items['relationship/ajax/%/remove/%/%'] = array(
       'title' => 'Remove relationship',
       'access callback' => 'user_relationships_ui_check_access',
-      'access arguments' => array('delete' ),
+      'access arguments' => array( 'delete' ),
       'page callback' => 'sbq_commons_user_relationships_ui_remove_ajax',
-      'page arguments' => array(2,4,5 ),
+      'page arguments' => array( 2, 4, 5 ),
       'type' => MENU_CALLBACK,
   );
   // 关注
@@ -140,6 +140,14 @@ function sbq_commons_menu() {
       'menu_name' => 'main-menu',
       'access callback' => TRUE,
       'type' => MENU_NORMAL_ITEM,
+      'file' => 'sbq_commons.inc',
+  );
+
+  $items['app/download'] = array(
+      //'title' => t('app下载'),
+      'page callback' => 'sbq_commons_app_down',
+      'access callback' => TRUE,
+      'type' => MENU_CALLBACK,
       'file' => 'sbq_commons.inc',
   );
   return $items;
@@ -719,7 +727,7 @@ function sbq_commons_node_submit(&$node, &$form, &$form_state) {
       '/' ) as $it) {
         $full_tags = str_replace($it, ',', $full_tags);
       }
-      
+
       if (isset($node->{$field_key}) && !empty($node->{$field_key})) {
         $full_items = explode(',', $full_tags);
         $tid = $node->{$field_key}[LANGUAGE_NONE][0]['tid'];
@@ -1226,6 +1234,14 @@ function sbq_commons_block_info() {
       'region' => 'sidebar_first', // Not usually provided.
       'cache' => DRUPAL_CACHE_PER_ROLE, // default
   );
+  $blocks['app_page'] = array(
+      'info' => t('phone:app_page'),
+      'status' => 1,
+      'region' => 'sidebar_second', // Not usually provided.
+      'visibility' => BLOCK_VISIBILITY_LISTED,
+      'pages' => 'node/20113',
+      'cache' => DRUPAL_CACHE_PER_ROLE, // default
+  );
   return $blocks;
 }
 
@@ -1265,6 +1281,18 @@ function sbq_commons_block_view($delta = '') {
       $block['subject'] = '推荐患者';
       $block['content'] = _sbq_commons_block_html($delta);
       break;
+    case 'app_page':
+      $block['subject'] = '';
+      $block['content'] = _sbq_commons_block_html($delta);
+      break;
   }
   return isset($block) ? $block : '';
+}
+
+function sbq_commons_theme() {
+  return array(
+      'app_dowunload' => array(
+          'template' => '/templates/app--download'
+      ),
+  );
 }

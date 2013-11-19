@@ -652,7 +652,7 @@ EOF;
         $follow = sbq_commons_user_relationships_ajax($value->uid);
         $user_badges = '';
         if (module_exists('user_badges')) {
-          $user_badges = user_badges_for_uid($user->uid);
+          $user_badges = user_badges_for_uid($value->uid);
         }
         // 关注疾病
         $account_disease = '';
@@ -661,7 +661,7 @@ EOF;
             $term = taxonomy_term_load($tid);
             $account_disease .= $term->name;
           }
-        }   
+        }
         $block_html .= <<<EOF
           <div class="sbq-recommond-friends ">
             <div class="picture">
@@ -679,6 +679,13 @@ EOF;
       if ($block_html) {
         $block_html .= '</div><div class="more-link"><a href="/user">更多</a></div></div>';
       }
+      break;
+    case 'app_page':
+      $block_html = '<div class="second-code">'
+          . '<h2>扫描二维码 即可下载应用</h2>'
+          . '<image src="/'.  drupal_get_path('module', 'sbq_commons').'/images/products_mobileload.png">'
+          . '</div>'
+          . '<iframe width="260" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=260&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1854950561&verifier=375b89d6&dpc=1"></iframe>';
       break;
     default:
       break;
@@ -755,4 +762,13 @@ function sbq_commons_user_disease_tag_delete_ajax($tag_name = '') {
  */
 function druedu_qa_empty_page() {
   return '';
+}
+
+/*
+ * 
+ */
+
+function sbq_commons_app_down() {
+
+  return theme('app_dowunload');
 }

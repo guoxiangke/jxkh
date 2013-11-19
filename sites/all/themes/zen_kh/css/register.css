@@ -4,7 +4,7 @@
 .page-customer-register #content,
 .page-user-password #content,
 .page-doctor-register #content,
-#content{
+.page-node #content{
 	background:#FFF;
 	border:1px solid #e5e5e5 !important;
 	padding:15px;
@@ -17,13 +17,13 @@
 #content nav.breadcrumb{
 	display:none;
 }
-#content ul.tabs-primary{
+/*#content ul.tabs-primary{
 	display:none;
-}
+}*/
 #content span.form-required{
 	display:none;
 }
-#user-register-form fieldset .fieldset-wrapper .form-type-textfield input[type="text"] {width:100px;}
+#user-register-form fieldset .fieldset-wrapper .form-type-textfield input[type="text"] {width:90px;}
 	/*注册*/
 	.password-strength-text,
 	.password-strength-title,
@@ -53,8 +53,10 @@
 		display:none;
 	}
 	#content .user-info-from-cookie fieldset .fieldset-wrapper {
-		margin:-31px 0 0 82px;
+		width:245px;
+		margin:-31px 0 0 72px;
 	}
+	#content .user-info-from-cookie fieldset .fieldset-wrapper .reload-captcha-wrapper {float:right;}
 	#content .user-info-from-cookie fieldset .fieldset-wrapper .form-item-captcha-response div.description{
 		display:none;
 	}
@@ -66,7 +68,7 @@
 	
 	#user-register-form .form-type-checkbox {text-align:center;}
 	#user-register-form .field-name-field-doctor-license .image-widget-data {margin:10px 0 0 0}
-	#user-register-form .field-name-field-doctor-license .image-widget-data input[type="file"]{width:271px;border:1px solid #ccc;padding:1px;}
+	#user-register-form .field-name-field-doctor-license .image-widget-data input[type="file"]{width:135px;padding:1px;}
 	#user-register-form .field-name-field-doctor-license .image-widget-data input[type="submit"]{
 		display: block;
 		width: 80px;
@@ -120,6 +122,15 @@
 	}
 	#user-login .item-list ul.sbq_custom_login {margin:1.5em 1.0em}
 	#user-login .item-list li {display:inline-block}
+	.page-user-login #user-login #edit-name{
+	width:186px;
+	height:36px;
+	line-height:36px;
+	font-size:14px;
+	border:none;
+	background:url(../images/user.png) no-repeat 0 0;
+	padding-left:28px
+}
 	#user-login input[type="submit"]{
 		background: url(../images/btn1.png) no-repeat 0 -223px;
 		display: block;
@@ -139,3 +150,56 @@
 	#user-register-form .fieldset-wrapper .form-type-managed-file .description {display:none}	
 	#user-register-form .form-type-managed-file label {display:none;}
 	#user-register-form .fieldset-wrapper .form-type-managed-file .form-managed-file input[type="submit"]{display:inline-block}
+	
+	
+	
+	
+/*app.download*/
+.page-app #page {background:#fff;}
+.page-app #content{width:700px;}
+.page-app .sidebars .region-sidebar-second{width:250px;margin-left:715px;}
+#page.second-code {margin-top:0}
+/* 产品页 */
+.sbq_apps_top {margin-bottom:10px; padding:15px 25px 10px; background:#F8F8F8; overflow:hidden;}
+.sbq_apps_top .image {float:left; margin-right:20px;height:135px;}
+.sbq_apps_top h2 {margin-bottom:5px; font-size:1.1em; font-weight:bold;}
+.sbq_apps_top a {margin:0 20px 8px 0; color:#F60; font-size:1em;}
+.sbq_apps_top a.android_href {margin:10px 20px 8px 0; color:#F60; font-size:1em;display:block;}
+.sbq_apps_top a.sbq_web_href {margin:0 20px 8px 0; color:#F60; font-size:1em;display:block;}
+.sbq_apps_top a:hover {text-decoration:underline;}
+.sbq_apps_top i {display:inline-block}
+/* 快用下载 */
+.sbq_apps_top a.ky {display:inline-block; height:24px; padding-left:28px; background:url(../images/ky_logo.gif) no-repeat 0 50%; font-size:1em; font-weight:normal; cursor:pointer;}
+
+.project ,.special{margin:0 0 10px;}
+.project h3 ,.special h3{padding:5px 10px; border-bottom:1px dashed #DADADA; font-size:1.1em; font-weight:bold;}
+
+.info p {margin:10px 20px 30px 20px;}
+.special dl{margin:10px 20px;}
+.info dl {margin:10px 20px;}
+
+
+.jcarousel-container {position:relative;}
+.jcarousel-clip {z-index:2; padding:0; margin:0; overflow:hidden; position:relative;}
+.jcarousel-list {z-index:1; overflow:hidden; position:relative; top:0; left:0; margin:0; padding:0;}
+.jcarousel-list li, .jcarousel-item {float:left;}
+/**
+ * 方向按钮
+ */
+ 
+#carousel-example-generic .carousel-inner {left:65px;}
+#carousel-example-generic  .left{float:left;position:relative;top:-200px;left:10px;}
+#carousel-example-generic  .right{float:right;position:relative;top:-200px;}
+.jcarousel-next {z-index:3; display:none;}
+.jcarousel-prev {z-index:3;	display:none;}
+
+.other_products {margin:15px 0 0; background:#F7F7F7;}
+.other_products li {/*background:url(images/wx/line2.gif) no-repeat 100% 50%;*/ text-align:center;}
+.other_products li a {display:block; width:84px; height:84px; margin:0 auto;}
+.other_products li span {font-weight:bold;}
+.ad_video {margin-bottom:10px;}
+.product_mobileload p {margin:15px 0 10px; text-align:center;}
+
+.apple {display:inline-block; height:26px;  background:url(../images/icon_apple_logo.gif) no-repeat 3px 0; line-height:26px; cursor:pointer;}
+.android {display:inline-block; height:26px;background:url(../images/icon_android_logo.gif) no-repeat 3px 0; line-height:26px;}
+.sbq_web {display:inline-block; height:26px;  background:url(../images/icon_web.gif) no-repeat 0 0; line-height:26px;}
