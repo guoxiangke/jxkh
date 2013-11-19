@@ -1,0 +1,47 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2013-11-19, 11:59:41
+    Author     : CHECHAO
+*/
+
+.sbq_apps_top{
+    background: #ffffff; 
+}
+.sbq_apps_top .image{
+    display: inline-block;
+    height: 170px;
+    float: left;
+}
+.sbq_apps_top .image img{
+    display: inline-block;
+    margin-top: 21px;
+    margin-left: 20px;
+}
+
+.sbq_apps_top .down{
+    display: inline-block;
+    height: 170px;
+    margin-left: 25px;
+}
+.sbq_apps_top .down h2{
+    font-size: 16px;
+    line-height: 50px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.sbq_apps_top .down a {
+    color: orange;
+    display: inline-block;
+    margin-top: 3px;
+}
+.sbq_apps_top .down a.quick_href{
+    margin-left: 25px;
+}
+.sbq_apps_top .down a.android_href{
+    display: block; 
+    margin-left: 5px;
+}

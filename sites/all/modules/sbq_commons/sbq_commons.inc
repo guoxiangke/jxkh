@@ -682,9 +682,10 @@ EOF;
       }
       break;
     case 'app_page':
+      drupal_add_css(drupal_get_path('module', 'sbq_commons').'/css/app-download.css');
       $block_html = '<div class="second-code">'
           . '<h2>扫描二维码 即可下载应用</h2>'
-          . '<image src="/'.  drupal_get_path('module', 'sbq_commons').'/images/products_mobileload.png">'
+          . '<image src="/' . drupal_get_path('module', 'sbq_commons') . '/images/products_mobileload.png">'
           . '</div>'
           . '<iframe width="260" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=260&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1854950561&verifier=375b89d6&dpc=1"></iframe>';
       break;
@@ -710,50 +711,67 @@ function _sbq_commons_user_recommonds_friends_ids($roles, $num = 2, $account = n
 }
 
 /*
- * user avart
- */
-
-function sbq_commons_user_avart($account = null, $style_name = "sc80") {
-  if (!$account) {
-    global $user;
-    $account = user_load($user->uid);
-  }
-  if (!$account->uid) {
-    return;
-  }
-  if (isset($account->picture->uri)) {
-    $image = $account->picture->uri;
-    $picture = theme('image_style', array(
-        'path' => $image,
-        'style_name' => 'sc80',
-    ));
-  } else {
-    $default_image_uri = variable_get('user_picture_default');
-    $image = file_create_url($default_image_uri);
-    $picture = theme('image_style', array(
-        'path' => $default_image_uri,
-        'style_name' => 'sc80',
-    ));
-  }
-  return '<a href="/user/' . $account->uid . '">' . $picture . '</a>';
-}
-
-/*
  * Add Disease tags for User Center
  */
-
 function sbq_commons_user_disease_tag_add_ajax($tag_name = '') {
-  //TODO: Add tag to this user, create new tag when not there.
-  # code...
+  global $user;
+
+  if (strlen(trim($tag_name)) > 0) {
+    //get term id by name
+    $vocabulary = taxonomy_vocabulary_machine_name_load('diseases');
+    $term = taxonomy_get_term_by_name($tag_name, $vocabulary);
+
+    //if term not found, create
+    $count = count($term);
+    if ($count == 0) {
+      $term = new stdClass();
+      $term->name = $tag_name;
+      $term->vid = $vocabulary->vid;
+      taxonomy_term_save($term);
+    }
+    $tid = $term->tid;
+
+    //set term to the user
+    $profile = profile2_load_by_user($user->uid, 'main');
+    $profile->field_tags_disease['und'][$count+1] = array('tid'=>$tid, 'taxonomy_term'=>$term);
+    profile2_save($profile);
+  }
+
+  $commands = array();
+  $commands[] = ajax_command_replace(NULL, theme('status_messages'));
+  $page = array('#type' => 'ajax', '#commands' => $commands);
+  ajax_deliver($page);
+
 }
 
 /*
  * Delete Disease tags for User Center
  */
+function sbq_commons_user_disease_tag_delete_ajax($uid = 0, $tag_name = '') {
+  global $user;
 
-function sbq_commons_user_disease_tag_delete_ajax($tag_name = '') {
-  //TODO: Delete tag from this user
-  # code...
+  if (strlen(trim($tag_name)) > 0) {
+    //get term id by name
+    $vocabulary = taxonomy_vocabulary_machine_name_load('diseases');
+    $term = taxonomy_get_term_by_name($tag_name, $vocabulary);
+    $count = count($term);
+    $tid = $term->tid;
+
+    //unset term from the user
+    $profile = profile2_load_by_user($user->uid, 'main');
+    foreach ($profile->field_tags_disease['und'] as $key => $value) {
+      if ($value['tid'] == $tid) {
+        $delete_key = $key;
+      }
+    }
+    unset($profile->field_tags_disease['und'][$delete_key]);
+    profile2_save($profile);
+  }
+
+  $commands = array();
+  $commands[] = ajax_command_replace(NULL, theme('status_messages'));
+  $page = array('#type' => 'ajax', '#commands' => $commands);
+  ajax_deliver($page);
 }
 
 /**

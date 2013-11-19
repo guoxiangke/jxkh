@@ -26,6 +26,7 @@ function sbq_commons_menu() {
       'page callback' => 'sbq_commons_user_disease_tag_add_ajax',
       'page arguments' => array(
           3 ),
+      'access callback' => TRUE,
       'type' => MENU_CALLBACK,
   );
   $items['user/ajax/tags/%/delete'] = array(
@@ -33,6 +34,7 @@ function sbq_commons_menu() {
       'page callback' => 'sbq_commons_user_disease_tag_delete_ajax',
       'page arguments' => array(
           3 ),
+      'access callback' => TRUE,
       'type' => MENU_CALLBACK,
   );
   $items['relationship/ajax/%/remove/%/%'] = array(
@@ -1295,4 +1297,33 @@ function sbq_commons_theme() {
           'template' => '/templates/app--download'
       ),
   );
+}
+
+/*
+ * user avart
+ */
+
+function sbq_commons_user_avart($account = null, $style_name = "sc80") {
+  if (!$account) {
+    global $user;
+    $account = user_load($user->uid);
+  }
+  if (!$account->uid) {
+    return;
+  }
+  if (isset($account->picture->uri)) {
+    $image = $account->picture->uri;
+    $picture = theme('image_style', array(
+        'path' => $image,
+        'style_name' => $style_name,
+    ));
+  } else {
+    $default_image_uri = variable_get('user_picture_default');
+    $image = file_create_url($default_image_uri);
+    $picture = theme('image_style', array(
+        'path' => $default_image_uri,
+        'style_name' => $style_name,
+    ));
+  }
+  return '<a href="/user/' . $account->uid . '">' . $picture . '</a>';
 }
