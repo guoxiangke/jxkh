@@ -1,0 +1,97 @@
+/*user-login-form*/
+#user-login-form .captcha {
+	width: 186px;
+	margin: 0 auto;
+	padding: 0px 0px 23px 0px;
+	border: none;
+}
+#user-login-form .captcha .fieldset-description {
+	display: none;
+}
+#user-login-form .captcha legend {
+	float: left;
+}
+#user-login-form .captcha .fieldset-legend {
+	float: left;
+	width: 50px;
+	height: 36px;
+	line-height: 36px;
+}
+#user-login-form .captcha .fieldset-wrapper {
+	margin: 0px;
+	padding: 0px;
+}
+#user-login-form .captcha .fieldset-wrapper .reload-captcha-wrapper,
+#user-login-form .captcha .fieldset-wrapper .description {
+	display: none;
+}
+#user-login-form .captcha .fieldset-wrapper .form-text {
+	background-color: #FFFFFF;
+	border: 1px solid #CCCCCC;
+	border-radius: 0px;
+	box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.071);
+	color: #555555;
+	font-size: 14px;
+	height: 34px;
+	line-height: 1.43;
+	padding: 6px 12px;
+	vertical-align: middle;
+	width: 100%;
+}
+/*user-info-from-cookie*/
+#sbq_doctor_quick_register .user-info-from-cookie .form-wrapper {
+	margin: 1.5em 0px;
+	padding: 0px;
+	border: none;
+}
+#sbq_doctor_quick_register .user-info-from-cookie legend {
+	float: left;
+}
+#sbq_doctor_quick_register .user-info-from-cookie .fieldset-wrapper {
+	float: left;
+	/*width: 300px;*/
+	margin: 0px;
+	padding: 0px;
+}
+#sbq_doctor_quick_register .user-info-from-cookie .form-wrapper .fieldset-legend {
+	display: inline-block;
+	font-size: 14px;
+	font-weight: 400;
+	margin-right: 10px;
+	text-align: center;
+	width: 70px;
+}
+#sbq_doctor_quick_register .user-info-from-cookie .field-widget-image-image .form-item {
+	margin: 0px;
+}
+#sbq_doctor_quick_register .user-info-from-cookie .field-widget-image-image .image-widget-data {
+	margin: 0px !important;
+}
+/*#sbq_doctor_quick_register #edit-profile-doctor-private-profile-field-doctor-license-und-0-upload-button {
+	border-radius: 0px;
+}*/
+#sbq_doctor_quick_register .user-info-from-cookie .captcha .fieldset-wrapper {
+	width: 300px;
+}
+#sbq_doctor_quick_register .user-info-from-cookie .captcha .form-item {
+	float: left;
+	margin: 0px;
+}
+#sbq_doctor_quick_register .fieldset-description,
+#sbq_doctor_quick_register .reload-captcha-wrapper,
+#sbq_doctor_quick_register .captcha label {
+	display: none;
+}
+#sbq_doctor_quick_register .user-info-from-cookie .captcha img {
+	margin: 0px 0px 0px 10px;
+	height: 34px;
+}
+#sbq_doctor_quick_register .modal-header {
+	background: url(../images/quick_register_head.png) repeat-x !important;
+}
+#edit-profile-doctor-private-profile-field-doctor-license-und-0-upload-button {
+	display: none !important;
+}
+.front .sbq_doctor_register_button #status {
+	display: none !important;
+}
