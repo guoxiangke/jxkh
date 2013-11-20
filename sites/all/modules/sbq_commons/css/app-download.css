@@ -134,7 +134,8 @@ and open the template in the editor.
 	margin: 0px;
 	border-bottom: 1px #dadada dotted;
 	background: none;
-	color: #000000;
+	color: #000000 !important;
+	background: #FFF !important;
 	font-size: 15px;
 	font-family: "Microsoft Yahei", "微软雅黑" !important;
 	text-indent: 1em;

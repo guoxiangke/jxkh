@@ -594,16 +594,12 @@ EOF;
           . '<li class="menu__item is-leaf leaf sbq-user-menu-status"><a href="#block-quicktabs-message" class="menu__link">我的动态</a><span class="sbq-count"><a href="#" class="sbq-count-link">5条</span></li>'
           . '<li class="menu__item is-leaf leaf sbq-user-menu-blog active"><a href="/user/'.$user->uid.'/blog" class="menu__link is-active active">我的文章</a><span class="sbq-count"><a href="#" class="sbq-count-link">5篇</span></li>'
           . '<li class="menu__item is-leaf leaf sbq-user-menu-group"><a href="/groups/my" class="menu__link">我的小组</a><span class="sbq-count"><a href="#" class="sbq-count-link">5个</span></li>'
-          . '<li class="menu__item is-leaf last leaf sbq-user-menu-relationship"><a href="/user/'.$user->uid.'/relationship" class="menu__link">我的圈子</a><span class="sbq-count"><a href="#" class="sbq-count-link">5条</span></li>'
-          . '<li class="menu__item is-leaf last leaf sbq-user-menu-points"><a href="/user/'.$user->uid.'/points" class="menu__link">我的积分</a><span class="sbq-count"><a href="#" class="sbq-count-link">1000</span></li>'
+          . '<li class="menu__item is-leaf last leaf sbq-user-menu-relationship"><a href="/user/' . $user->uid . '/relationship" class="menu__link">我的圈子</a><span class="sbq-count"><a href="#" class="sbq-count-link">5条</span></li>'
+          . '<li class="menu__item is-leaf last leaf sbq-user-menu-points"><a href="/user/' . $user->uid . '/points" class="menu__link">我的积分</a><span class="sbq-count"><a href="#" class="sbq-count-link">1000</span></li>'
           . '</ul>'
           . '</div>';
       break;
     case 'recommond_doctors':
-
-      if (!$user->uid) {
-        return;
-      }
       $ids = _sbq_commons_user_recommonds_friends_ids(USER_CERTIFIED_DOCTOR_RID);
       $friends = user_load_multiple($ids);
       $block_html = '<div class="view"> <div class="view-content">';
@@ -682,7 +678,7 @@ EOF;
       }
       break;
     case 'app_page':
-      drupal_add_css(drupal_get_path('module', 'sbq_commons').'/css/app-download.css');
+      drupal_add_css(drupal_get_path('module', 'sbq_commons') . '/css/app-download.css');
       $block_html = '<div class="second-code">'
           . '<h2>扫描二维码 即可下载应用</h2>'
           . '<image src="/' . drupal_get_path('module', 'sbq_commons') . '/images/products_mobileload.png">'
@@ -713,6 +709,7 @@ function _sbq_commons_user_recommonds_friends_ids($roles, $num = 2, $account = n
 /*
  * Add Disease tags for User Center
  */
+
 function sbq_commons_user_disease_tag_add_ajax($tag_name = '') {
   global $user;
   $li_html = '';
@@ -752,7 +749,7 @@ function sbq_commons_user_disease_tag_add_ajax($tag_name = '') {
 
   $commands = array();
   $commands[] = ajax_command_replace(NULL, $li_html);
-  $page = array('#type' => 'ajax', '#commands' => $commands);
+  $page = array( '#type' => 'ajax', '#commands' => $commands );
   ajax_deliver($page);
 }
 
@@ -776,7 +773,7 @@ function sbq_commons_user_disease_tag_delete_ajax($tid = 0) {
 
   $commands = array();
   $commands[] = ajax_command_replace(NULL, theme('status_messages'));
-  $page = array('#type' => 'ajax', '#commands' => $commands);
+  $page = array( '#type' => 'ajax', '#commands' => $commands );
   ajax_deliver($page);
 }
 
