@@ -18,7 +18,7 @@ Drupal.behaviors.my_custom_behavior = {
   attach: function(context, settings) {
   	//alert('test-请删除本行，从本行开始添加js！注意封装、及用途注释。谢谢~');
     // Place your code here.
-    $.getScript('http://dev.shangbq.com/sites/all/themes/zen_kh/js/Carousel.js',function(){
+    $.getScript('http://dev.shangbq.com/sites/all/themes/zen_kh/js/bootstrap.min.js',function(){
       $('#myCarousel').carousel({
   		  interval: 4000
   		})
@@ -53,7 +53,7 @@ Drupal.behaviors.my_custom_behavior = {
     })
 
     /*个人中心提交问题*/
-    $('#edit-submit--2').click(function(event) {
+    $('#block-sbq-commons-sbq-quick-ask #edit-submit--2').click(function() {
       /* Act on the event */
       var qs = $.trim($('#edit-body-und-0-value').val());
       if(qs){
@@ -69,7 +69,13 @@ Drupal.behaviors.my_custom_behavior = {
       }
       return false;
     });
+
+    /*个人中心滚动监听*/
+    $('body').attr({'data-spy':'scroll','data-target':'#block-sbq-commons-sbq-user-menu'});
+    $(document.body).scrollspy({ target: '#block-sbq-commons-sbq-user-menu' })
   }
+
+
 };
 
 

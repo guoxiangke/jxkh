@@ -68,6 +68,7 @@ stylesheets[all][] = css/index.css
 ; Optionally add some JavaScripts to your theme.
 
 scripts[] = js/script.js
+scripts[] = js/bootstrap.min.js
 
 
 
