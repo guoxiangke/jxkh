@@ -6,7 +6,7 @@
 .page-doctor-register #content,
 .page-node #content{
 	background:#FFF;
-	border:1px solid #e5e5e5 !important;
+	/*border:1px solid #e5e5e5 !important;*/
 	padding:15px;
 }
 #content h1.page__title{

@@ -11,26 +11,78 @@
 // - https://drupal.org/node/1446420
 // - http://www.adequatelygood.com/2010/3/JavaScript-Module-Pattern-In-Depth
 (function ($, Drupal, window, document, undefined) {
+$.fn.fixedDiv = function(actCls){
+  var pos = 0,
+      that = $(this),
+      topVal;
 
+  if(that.length > 0){
+      topVal = that.offset().top;
+  }
+
+  function fix(){
+      pos = $(document).scrollTop();
+
+      if (pos > topVal) {
+          that.addClass(actCls);
+          if (!window.XMLHttpRequest) {
+              that.css({
+                  position: 'absolute',
+                  top     : pos
+              });
+          }
+      } else {
+          that.removeClass(actCls);
+          if (!window.XMLHttpRequest) {
+              that.css({
+                  position: 'static',
+                  top     : 'auto'
+              });
+          }
+      }
+  }
+  fix();
+
+  $(window).scroll(fix);
+}
 
 // To understand behaviors, see https://drupal.org/node/756722#behaviors
 Drupal.behaviors.my_custom_behavior = {
   attach: function(context, settings) {
   	//alert('test-请删除本行，从本行开始添加js！注意封装、及用途注释。谢谢~');
     // Place your code here.
-    $.getScript('http://dev.shangbq.com/sites/all/themes/zen_kh/js/bootstrap.min.js',function(){
-      $('#myCarousel').carousel({
-  		  interval: 4000
-  		})
-      $('#sbq-user-carousel').carousel({
-        interval: 5000
-      })
+    
+    $('#myCarousel').carousel({
+		  interval: 4000
+		})
+    $('#sbq-user-carousel').carousel({
+      interval: 5000
     })
+    /*个人中心滚动监听*/
+    $('#block-sbq-commons-sbq-user-menu ul').addClass('nav');;
+    $('body').attr({'data-spy':'scroll','data-target':'#block-sbq-commons-sbq-user-menu'})
+
+
     $('.views-field-field-tags-disease li').hover(function(){
         $(this).children('span').toggleClass('show');
         $(this).children('a').toggleClass('hover');
 
-      })
+    })
+
+    /*个人中心添加标签*/
+    $('#sbq-user-disease-add').focus(function() {
+      var tval = $.trim($(this).val());
+      if(tval == '回车添加标签'){
+        $(this).val('');
+      }
+    });
+    $('#sbq-user-disease-add').blur(function() {
+      var tbval = $.trim($(this).val());
+      if(tbval == ''){
+        $(this).val('回车添加标签');
+      }
+    });
+
     $('#sbq_doctor_quick_register button.close').live('click',function(){
     	$('#sbq_doctor_quick_register').hide();
     })
@@ -69,10 +121,8 @@ Drupal.behaviors.my_custom_behavior = {
       }
       return false;
     });
-
-    /*个人中心滚动监听*/
-    $('body').attr({'data-spy':'scroll','data-target':'#block-sbq-commons-sbq-user-menu'});
-    $(document.body).scrollspy({ target: '#block-sbq-commons-sbq-user-menu' })
+    //个人中心滚动菜单固定
+    $('#block-sbq-commons-sbq-user-menu').fixedDiv('fixed')
   }
 
 

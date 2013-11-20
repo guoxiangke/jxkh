@@ -7,7 +7,13 @@
  * @see https://drupal.org/node/1728096
  */
 
-
+function zen_kh_preprocess_page(&$vars, $hook) {
+  if (isset($vars['node'])) {
+    // If the node type is "blog_madness" the template suggestion will be "page--blog-madness.tpl.php".
+    // $vars['theme_hook_suggestions'][] = 'page__'. $vars['node']->type;
+    array_unshift($vars['theme_hook_suggestions'],'page__node__'. $vars['node']->type);
+  }
+}
 /**
  * Override or insert variables into the maintenance page template.
  *

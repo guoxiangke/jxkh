@@ -715,11 +715,13 @@ function _sbq_commons_user_recommonds_friends_ids($roles, $num = 2, $account = n
  */
 function sbq_commons_user_disease_tag_add_ajax($tag_name = '') {
   global $user;
+  $li_html = '';
 
-  if (strlen(trim($tag_name)) > 0) {
+  if (strlen(trim($tag_name)) > 0 && $user->uid > 0) {
     //get term id by name
     $vocabulary = taxonomy_vocabulary_machine_name_load('diseases');
-    $term = taxonomy_get_term_by_name($tag_name, $vocabulary);
+    $v_name = $vocabulary->machine_name;
+    $term = taxonomy_get_term_by_name($tag_name, $v_name);
 
     //if term not found, create
     $count = count($term);
@@ -728,35 +730,39 @@ function sbq_commons_user_disease_tag_add_ajax($tag_name = '') {
       $term->name = $tag_name;
       $term->vid = $vocabulary->vid;
       taxonomy_term_save($term);
+      $tid = $term->tid;
+    } else {
+      foreach ($term as $key => $value) {
+        $tid = $value->tid;
+      }
     }
-    $tid = $term->tid;
 
     //set term to the user
     $profile = profile2_load_by_user($user->uid, 'main');
-    $profile->field_tags_disease['und'][$count+1] = array('tid'=>$tid, 'taxonomy_term'=>$term);
+    $index = count($profile->field_tags_disease['und']);
+    $profile->field_tags_disease['und'][$index] = array('tid'=>$tid);
     profile2_save($profile);
+    $li_html = '<li>'
+    .'<a href="/%E7%96%BE%E7%97%85/'.urlencode($tag_name).'" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">'.$tag_name.'</a>'
+    .'<span class="sba-user-tag-del">'
+    .'<a href="/user/ajax/tags/'.$tid.'/delete">-</a>'
+    .'</span>'
+    .'</li>';
   }
 
   $commands = array();
-  $commands[] = ajax_command_replace(NULL, theme('status_messages'));
+  $commands[] = ajax_command_replace(NULL, $li_html);
   $page = array('#type' => 'ajax', '#commands' => $commands);
   ajax_deliver($page);
-
 }
 
 /*
  * Delete Disease tags for User Center
  */
-function sbq_commons_user_disease_tag_delete_ajax($uid = 0, $tag_name = '') {
+function sbq_commons_user_disease_tag_delete_ajax($tid = 0) {
   global $user;
 
-  if (strlen(trim($tag_name)) > 0) {
-    //get term id by name
-    $vocabulary = taxonomy_vocabulary_machine_name_load('diseases');
-    $term = taxonomy_get_term_by_name($tag_name, $vocabulary);
-    $count = count($term);
-    $tid = $term->tid;
-
+  if ($tid > 0 && $user->uid > 0) {
     //unset term from the user
     $profile = profile2_load_by_user($user->uid, 'main');
     foreach ($profile->field_tags_disease['und'] as $key => $value) {
