@@ -4,55 +4,55 @@
  * Implements hook_services_resources.
  */
 function sbq_services_services_resources() {
-    module_load_include('inc', 'sbq_services', 'resources/grow_records_resource');
-    $resources = array(
-        '#api_version' => 3002,
-    );
-    $resources += grow_records_resource_definition();
-    return $resources;
+  module_load_include('inc', 'sbq_services', 'resources/grow_records_resource');
+  $resources = array(
+      '#api_version' => 3002,
+  );
+  $resources += grow_records_resource_definition();
+  return $resources;
 }
 
-//function sbq_services_services_request_postprocess_alter($controller, $args, &$result) {
-//
-//}
-//
-//function sbq_services_node_submit($node, $form, $form_state){
-//  dpm($_POST);
-//  dpm($node);
-//  dpm($form);
-//  dpm($form_state);
-//}
-
-function sbq_services_node_submit($node, $form, &$form_state) {
-    // Decompose the selected menu parent option into 'menu_name' and 'plid', if
-    // the form used the default parent selection widget.
-//  if (!empty($form_state['values']['menu']['parent'])) {
-//    list($node->menu['menu_name'], $node->menu['plid']) = explode(':', $form_state['values']['menu']['parent']);
-//  }
-//
-//    dpm($node);
-//    dpm($form);
-//    dpm($form_state);
+function sbq_services_services_resources_alter(&$resources, $endpoint) {
+  $resources['user']['actions']['login']['callback'] = '_sbq_services_user_login';
 }
 
-/**
- * @file Documentation about Services alter hooks.
+/*
+ * @see _user_resource_login
  */
 
-/**
- * Allow to alter arguments before they are passed to service callback.
- *
- * @param $controller
- *   Controller definition
- * @param $args
- *   Array of arguments
- * @param $options
- *
- * @see services_controller_execute()
- * @see services.runtime.inc
- */
-function sbq_services_request_preprocess_alter($controller, &$args, $options) {
-//    dvm($controller);
-//    dvm($args);
-//    dvm($options);
+function _sbq_services_user_login($username, $password) {
+  global $user;
+
+  $account = _user_resource_login($username, $password);
+  if (!$user->uid) {
+    return $account;
+  }
+
+  $return = new stdClass();
+  $return->uid = $account->user->uid;
+  $return->sessid = session_id();
+  $return->session_name = session_name();
+  $users = _sbq_services_user_format($account->user);
+  $return->user = reset($users);
+  return $return;
+}
+
+function _sbq_services_user_format($accounts) {
+  if (!is_array($account)) {
+    $accounts = array( $accounts );
+  }
+  $format = array();
+  foreach ($accounts as $account) {
+    $obj = new stdClass();
+    $obj->name = $account->name;
+    $obj->mail = $account->mail;
+    if (isset($account->picture->uri)) {
+      $obj->picture = $account->picture->uri;
+    } else {
+      $default_image_uri = variable_get('user_picture_default');
+      $obj->picture = file_create_url($default_image_uri);
+    }
+    $format[] = $obj;
+  }
+  return $format;
 }

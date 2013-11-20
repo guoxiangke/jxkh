@@ -687,7 +687,7 @@ EOF;
           . '<h2>扫描二维码 即可下载应用</h2>'
           . '<image src="/' . drupal_get_path('module', 'sbq_commons') . '/images/products_mobileload.png">'
           . '</div>'
-          . '<iframe width="260" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=260&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1854950561&verifier=375b89d6&dpc=1"></iframe>';
+          . '<iframe width="270" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=270&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1854950561&verifier=375b89d6&dpc=1"></iframe>';
       break;
     default:
       break;
