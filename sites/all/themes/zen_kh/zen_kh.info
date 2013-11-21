@@ -72,7 +72,7 @@ stylesheets[all][] = css/reilationship.css
 ; Optionally add some JavaScripts to your theme.
 
 scripts[] = js/bootstrap.min.js
-;scripts[] = js/script.js
+scripts[] = js/script.js
 
 
 
