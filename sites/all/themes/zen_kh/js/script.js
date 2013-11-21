@@ -11,40 +11,7 @@
 // - https://drupal.org/node/1446420
 // - http://www.adequatelygood.com/2010/3/JavaScript-Module-Pattern-In-Depth
 (function ($, Drupal, window, document, undefined) {
-$.fn.fixedDiv = function(actCls){
-  var pos = 0,
-      that = $(this),
-      topVal;
 
-  if(that.length > 0){
-      topVal = that.offset().top;
-  }
-
-  function fix(){
-      pos = $(document).scrollTop();
-
-      if (pos > topVal) {
-          that.addClass(actCls);
-          if (!window.XMLHttpRequest) {
-              that.css({
-                  position: 'absolute',
-                  top     : pos
-              });
-          }
-      } else {
-          that.removeClass(actCls);
-          if (!window.XMLHttpRequest) {
-              that.css({
-                  position: 'static',
-                  top     : 'auto'
-              });
-          }
-      }
-  }
-  fix();
-
-  $(window).scroll(fix);
-}
 
 // To understand behaviors, see https://drupal.org/node/756722#behaviors
 Drupal.behaviors.my_custom_behavior = {
@@ -60,8 +27,45 @@ Drupal.behaviors.my_custom_behavior = {
     })
     /*个人中心滚动监听*/
     $('#block-sbq-commons-sbq-user-menu ul').addClass('nav');;
-    $('body').attr({'data-spy':'scroll','data-target':'#block-sbq-commons-sbq-user-menu'})
+    $('body.section-users').attr({'data-spy':'scroll','data-target':'#block-sbq-commons-sbq-user-menu'})
+    if($('body.section-users').length>0){
+      $.fn.fixedDiv = function(actCls){
+        var pos = 0,
+            that = $(this),
+            topVal;
 
+        if(that.length > 0){
+            topVal = that.offset().top;
+        }
+
+        function fix(){
+            pos = $(document).scrollTop();
+
+            if (pos > topVal) {
+                that.addClass(actCls);
+                if (!window.XMLHttpRequest) {
+                    that.css({
+                        position: 'absolute',
+                        top     : pos
+                    });
+                }
+            } else {
+                that.removeClass(actCls);
+                if (!window.XMLHttpRequest) {
+                    that.css({
+                        position: 'static',
+                        top     : 'auto'
+                    });
+                }
+            }
+        }
+        fix();
+        $(window).scroll(fix);
+      }
+      //个人中心滚动菜单固定
+      $('#block-sbq-commons-sbq-user-menu').fixedDiv('fixed')
+    }
+    
 
     $('.views-field-field-tags-disease li').hover(function(){
         $(this).children('span').toggleClass('show');
@@ -121,8 +125,7 @@ Drupal.behaviors.my_custom_behavior = {
       }
       return false;
     });
-    //个人中心滚动菜单固定
-    $('#block-sbq-commons-sbq-user-menu').fixedDiv('fixed')
+    
   }
 
 
