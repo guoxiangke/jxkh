@@ -25,7 +25,7 @@ a:focus{
 	/*margin-bottom:-25px;*/
 }
 html {
-	background-color:#f3f3f3
+	background:url(../images/bg.png) repeat 0 0;
 }
 .sbq-width {
 	width:960px
@@ -48,7 +48,7 @@ li {
 }
 #footer.region-footer {
 	height:160px;
-	background-color:#4d4d4d
+	background: url(../images/fbg.jpg) repeat 0 0;
 }
 #footer-right,#footer-left{ display:none;}
 .header__logo {
@@ -80,11 +80,16 @@ li {
 #navigation .links li a,#navigation .menu li a {
 	line-height:1em;
 	font-size:14px;
-	color:#fff;
+	color:#deeff2;
 	text-decoration:none;
 }
+#navigation .links li.active a,#navigation .menu li.active a,
 #navigation .links li a:hover,#navigation .menu li a:hover {
-	}
+	color: #fff
+}
+#navigation .links li.active a,#navigation .menu li.active a{
+	font-weight: bold;
+}
 	#secondary-menu {
 		line-height: 25px;
 		position: fixed; top: 0;left: 0;z-index: 10;
@@ -151,6 +156,10 @@ li {
 }
 #page{
 	padding-bottom: 10px;
+}
+.two-sidebars .region-sidebar-first{
+	width: 182px;
+	margin-right: -182px;
 }
 .sidebar-first .region-sidebar-first,
 .not-logged-in.two-sidebars .region-sidebar-first {
@@ -367,7 +376,7 @@ padding-bottom: 30px;
 }
 .view-id-index_activity_blok_image .field-content {
 	width:718px;
-	height:323px;
+	height:328px;
 	margin-left:5px;
 	overflow:hidden;
 	padding-top:5px
@@ -489,7 +498,8 @@ text-align:center;}
     width: auto;
     text-align: left;
 }
-#myCarousel{
+#myCarousel,
+#block-views-new-groups-doctor-new{
 position: relative;
 }
 #myCarousel .item:before,
@@ -854,12 +864,14 @@ label {
 .views-field-field-tags-disease .show{
 	display: block;
 }
-.block-views .views-field-field-tags-disease li a,
-.block-views .views-field-field-tags-disease li a:hover{
+.block-views .views-field-field-tags-disease li a{
 	color: #168A9B;
 	font-size: 12px;
 }
-
+.block-views .views-field-field-tags-disease li a:hover{
+	background-color: #168a9b;
+	color: #fff
+}
 .views-field-field-tags-disease span.sba-user-tag-del a{
 	display: block;
 	background-color: #26a0ae;
@@ -947,7 +959,7 @@ label {
 
 .two-sidebars #content{
 	width: 500px;
-	margin-left: 188px;
+	margin-left: 191px;
 }
 .not-logged-in.section-qa #content{
 	padding: 0;
@@ -987,7 +999,7 @@ margin-right: 9px;}
 	width: 45%
 }
 #block-views-disease-block{
-	padding: 10px 4px 0 4px;
+	padding: 10px 5px 0 5px;
 	margin-bottom: 10px;
 }
 #block-views-disease-block .view-footer{
@@ -1012,7 +1024,8 @@ margin-right: 9px;}
 #block-views-questions-tags-block h2,
 .block__title.block-title,
 .section-square #page-title,
-#block-views-news-block-2 h2
+#block-views-news-block-2 h2,
+.page-groups #page-title
 { 
 	width: 90px;height: 30px; 
 	background-color: #1dc7db; 
@@ -1024,7 +1037,12 @@ margin-right: 9px;}
 	text-indent: 0
 }
 .section-square #content .block__title.block-title,
-#block-quicktabs-wonderful-qa .block__title.block-title{
+#block-quicktabs-wonderful-qa .block__title.block-title,
+.page-square #page-title,
+.page-groups #page-title,
+#block-quicktabs-user-qa h2,
+#block-quicktabs-user-group h2,
+#block-views-blog-my-blog-block h2{
 	font-weight: bold;
 	font-size: 16px;
 }
@@ -1035,9 +1053,11 @@ margin-right: 9px;}
 .region-sidebar-second .block__title.block-title{
 	font-weight: bold;
 }
-ul.quicktabs-tabs.quicktabs-style-arrows{border-bottom: 2px solid #1dc7db;margin-bottom: 0;
-height: 29px;
-line-height: 29px;}
+ul.quicktabs-tabs.quicktabs-style-arrows{
+	margin-bottom: 0;
+	height: 29px;
+	line-height: 29px;
+}
 
 .block-quicktabs .view-content>div:after,
 .block-quicktabs .view-content>div:before,
@@ -1088,6 +1108,17 @@ html{
 #block-quicktabs-message{
 	font-size: 12px;
 }
+#block-quicktabs-message ul.quicktabs-tabs.quicktabs-style-arrows{
+	height: 29px;
+	line-height: 29px;
+}
+#block-quicktabs-message a#quicktabs-tab-message-0{
+	background-color: #1DC7DB;
+    height: 29px;
+    display: block;
+    color: #fff;
+    font-size: 16px;
+}
 .block-quicktabs .view-content .views-field{
 	float: left;
 	color: #a3a3a3;
@@ -1101,10 +1132,14 @@ html{
 .view-display-id-group_front_page .views-field-comment-count{
 	background: url("../images/message.png") no-repeat scroll 0 center;
 }
+
+#block-views-news-block-2 .view-display-id-block_2{
+	border: 1px solid #ccc;
+	border-top: none;
+}
 #block-views-blog-my-blog-block .view-display-id-my_blog_block,
-#block-views-news-block-2 .view-display-id-block_2,
 #block-views-sbq-activity-block-block{
-	border: 1px solid #ccc
+	border: 1px solid #ccc;
 }
 .page-square #content h1.page__title{
 	border-bottom: none;
@@ -1166,7 +1201,8 @@ html{
 }
 
 #block-views-blog-block-1 .view-display-id-block_1{
-	border-top: 1px solid #CCCCCC
+	border-top: 1px solid #CCCCCC;
+	border-top: none;
 }
 #block-views-blog-block-1 .block__title.block-title{
 	background: url(../images/arrows.png) no-repeat bottom center;
@@ -1192,7 +1228,8 @@ html{
 	font-style: normal;
 }
 .region-sidebar-second.column h2,
-#block-views-news-block-2 h2{
+#block-views-news-block-2 h2,
+#block-views-test-block h2{
 width: 100%;
 text-align:left;
 text-indent: 1em;
@@ -1210,6 +1247,9 @@ ul.quicktabs-tabs li.active{
 	width: 260px;
 	margin-left: 700px;
 }
+ul.quicktabs-tabs.quicktabs-style-arrows{
+	border-bottom: none;
+}
 ul.quicktabs-tabs.quicktabs-style-arrows li a{
 	background: none;
 	color: #8d8d8d;
@@ -1218,19 +1258,28 @@ ul.quicktabs-tabs.quicktabs-style-arrows li a{
 	height: 29px;
 	line-height: 29px;
 }
-ul.quicktabs-tabs.quicktabs-style-arrows li.active a,
+#quicktabs-container-wonderful_qa,
+#quicktabs-container-qa{
+	border-top: 2px solid #1DC7DB
+}
 ul.quicktabs-tabs.quicktabs-style-arrows li a:hover{
 	background: url(../images/arrows.png) no-repeat center bottom;
 	padding-bottom: 6px;
 	color: #585858;
 	padding-top: 0
 }
+#block-views-blog-my-blog-block h2{
+	padding: 0 10px;
+	font-weight: bold;
+	width: auto;
+	display: inline-block;
+}
 #block-sbq-commons-sbq-user-profile i{
 	position: absolute;
 	top: 3px;
 }
 #block-sbq-commons-sbq-user-profile i.option{
-	right: 20px;
+	right: 25px;
 }
 #block-sbq-commons-sbq-user-profile i.message{
 	right: 3px;
@@ -1368,13 +1417,15 @@ outline: none;
 {
 	color: #fff
 }
-.region-sidebar-second .block{}
+.region-sidebar-second .block{
+	margin-bottom: 10px;
+}
 .region-sidebar-second .contextual-links-region,
 .section-qa .region-sidebar-second.column>div{
-	border: 1px solid #cccccc;
 }
 .region-sidebar-second .views-field,
-#block-views-wiki-block .views-row{
+#block-views-wiki-block .views-row,
+#block-views-test-block .views-row{
 	height: 26px;
 	line-height: 26px;
 	overflow: hidden;
@@ -1393,20 +1444,23 @@ font-size: 12px;
 #block-sbq-commons-sbq-user-profile{
 	position: relative;
 }
-#block-views-news-block-2 .more-link,#block-views-news-block-1 .more-link{
+#block-views-news-block-2 .more-link,#block-views-news-block-1 .more-link,
+#block-views-new-groups-doctor-new .more-link{
 	top: 4px;
 	right: 5px
 }
 .view.more-link a{
 	color: #fff
 }
-.contextual-links-region .block-views{
+.contextual-links-region .block-views,
+#block-views-test-block{
 	margin-bottom: 0
 }
-#sbq-user-carousel .view-content,#sbq-user-carousel .view-content img{width: 260px; height: 190px;max-width: 260px; max-height: 190px;overflow: hidden;}
+#sbq-user-carousel .view-content,#sbq-user-carousel .view-content img{width: 258px; height: 190px;max-width: 258px; max-height: 190px;overflow: hidden;}
 .carousel-indicators{ margin: 0; position: absolute; z-index: 1}
-#sbq-user-disease-add{ height: 30px;line-height: 30px; width: 166px;margin: 0 auto;padding: 0 7px;
-background-color: #f2feff
+#sbq-user-disease-add{ height: 30px;line-height: 30px; width: 169px;margin: 0 auto;padding: 0 7px;
+background-color: #f2feff;
+color: #9aa2a3
 }
 #sbq-user-carousel .carousel-indicators{
 right: 17px;
@@ -1421,7 +1475,8 @@ bottom: 10px;
 	color: #585858
 }
 #body-add-more-wrapper .form-textarea-wrapper{
-	border: 1px solid #60d8e6
+	border: 1px solid #60d8e6;
+	background: url(../images/pb.png) no-repeat 0 0;
 }
 #edit-body-und-0-value{
 	width: 443px;
@@ -1459,10 +1514,13 @@ bottom: 10px;
 	margin: 0;
 	border: none;
 }
-#block-sbq-commons-recommond-doctors,
 #block-sbq-commons-recommond-patients{
-	padding-bottom: 10px;
 	position: relative;
+}
+
+#block-sbq-commons-recommond-patients .view,
+#block-sbq-commons-recommond-doctors .view{
+	padding-top: 10px;
 }
 #block-sbq-commons-recommond-doctors .more-link,
 #block-sbq-commons-recommond-patients .more-link,
@@ -1470,6 +1528,13 @@ bottom: 10px;
 	top: 4px;
 	right: 10px;
 
+}
+#block-sbq-commons-recommond-doctors .more-link a,
+#block-sbq-commons-recommond-patients .more-link a,
+#block-views-blog-block .more-link a,
+#block-views-new-groups-doctor-new .more-link a{
+	padding-right: 15px;
+	background: url(../images/wm.png) no-repeat right center;
 }
 
 #block-sbq-commons-recommond-doctors .sbq_recommond_friends,
@@ -1479,7 +1544,7 @@ bottom: 10px;
 	height: 62px;
 	overflow: hidden;
 	padding:0 10px;
-	margin-top: 10px;
+	margin-bottom: 10px;
 	font-size: 12px;
 }
 .sbq_recommond_friends:after,
@@ -1535,6 +1600,9 @@ bottom: 10px;
 }
 
 /*问答*/
+#block-views-my-qa-all-qa-block{
+	margin-bottom: 10px;
+}
 #quicktabs-container-qa .views-field-title{ width: 384px;max-width: 384px;}
 /*.not-logged-in.section-qa #quicktabs-container-qa .views-field-title{width: 176px; max-width: 176px;}*/
 #quicktabs-container-qa .views-field-name{width: 50px; max-width: 50px;}
@@ -1558,18 +1626,22 @@ bottom: 10px;
 .section-qa .region-sidebar-second,
 .section-users .region-sidebar-second{
 	width: 260px;
-	margin-left: 701px;
+	margin-left: 700px;
+}
+#block-quicktabs-wonderful-qa{
+	margin-bottom: 10px;
 }
 #sbq-qa-carousel{
 	position: relative;
+	height: 188px;
 }
 #sbq-qa-carousel .carousel-indicators{
-	bottom: 10px;
-	left: 39%;
+	bottom: -8px;
+	left: 256px;
 }
 #sbq-qa-carousel .carousel-indicators li{
-	width: 8px;
-	height: 8px;
+	width: 10px;
+	height: 10px;
 	background-color: #cfcfcf
 }
 #sbq-qa-carousel .carousel-indicators li.active{
@@ -1602,15 +1674,16 @@ bottom: 10px;
 }
 #block-views-my-qa-wonderful-block .views-field-body{
 	width: 376px;
-	height: 120px;
+	height: 130px;
 	overflow: hidden;
 	line-height: 20px;
 	position: relative;
 }
 #block-views-my-qa-wonderful-block .views-field-body span{
-	/*display: block;
-	height: 100px;
-	overflow: hidden;*/
+	display: block;
+    height: 110px;
+    overflow: hidden;
+    line-height: 22px;
 }
 #block-views-my-qa-wonderful-block .views-field-body a{
 	position: absolute;
@@ -1655,7 +1728,8 @@ bottom: 10px;
 	text-align: right;
 }
 #block-views-my-qa-recommend-block .views-row,
-#block-views-questions-tags-block .views-row{
+#block-views-questions-tags-block .views-row,
+#block-views-test-block .views-row{
 	padding: 0 10px;
 	font-size: 12px;
 }
@@ -1729,7 +1803,8 @@ bottom: 10px;
 	padding:10px 10px 0 10px;
 }
 .section-groups .view-display-id-group_front_page .views-field-title a{
-	color: #0b5e6a
+	color: #0b5e6a;
+	font-weight: normal;
 }
 .view-display-id-group_front_page .views-field-title{
 	height: 22px;
@@ -1791,14 +1866,19 @@ bottom: 10px;
 .pager li{ 
 	border: 1px solid #168a9b;
 	font-size:12px;
-	color: #fff
+	color: #fff;
+	display: inline-block;
+	height: 26px;
+	text-align: center;
+	line-height: 26px;
+	padding: 0 10px;
 }
-.pager li.pager-current,
-.pager li.pager-ellipsis{
+.pager li.pager-current{
 	font-weight:normal;
 	background-color: #168a9b;
 }
-.pager li a{
+.pager li a,
+.pager li.pager-ellipsis{
 	color: #168a9b
 }
 
@@ -1818,7 +1898,18 @@ bottom: 10px;
 #block-views-new-groups-doctor-new,
 #block-sbq-commons-recommond-doctors{
 	position: relative;
-	border: 1px solid #ccc
+	
+}
+#block-views-new-groups-doctor-new .view,
+#block-sbq-commons-recommond-doctors .view,
+#block-views-my-qa-recommend-block .view,
+#block-views-questions-tags-block .view,
+#block-views-news-block-1 .view,
+#block-views-wiki-block .view,
+#block-sbq-commons-recommond-patients .view,
+#block-views-blog-block .view{
+	border: 1px solid #ccc;
+	border-top: none;
 }
 #block-views-new-groups-doctor-hot .views-field,
 #block-views-new-groups-general-hot .views-field,
@@ -1844,14 +1935,14 @@ bottom: 10px;
 
 .view-id-og_user_groups .views-row,
 .view-id-og_extras_groups .views-row{
-	width: 218px;
+	width: 211px;
 	float: left;
 	height: 100px;
 	margin-bottom: 18px;
 	font-size: 12px;
 	overflow: hidden;
 	line-height: 20px;
-	margin-left: 10px;
+	margin-right: 10px;
 	position: relative;
 
 }
@@ -1873,6 +1964,11 @@ bottom: 10px;
 	background: url(../images/b.png) repeat 0 0;
 	display: none;
 	color: #fff
+}
+.view-id-og_user_groups .views-field-body .field-content,
+.view-id-og_extras_groups .views-field-body .field-content{
+	height: 80px;
+	overflow: hidden;
 }
 .view-id-og_user_groups .views-field-field-image,
 .view-id-og_extras_groups .views-field-field-image{
@@ -1931,7 +2027,10 @@ nav.breadcrumb{
 	width: 262px
 }
  #block-views-my-qa-hottest-block .view-id-my_qa,
- #block-views-my-group-hottest-block .view-id-my_group{
+ #block-views-my-group-hottest-block .view-id-my_group,
+ #quicktabs-container-user_group,
+ #quicktabs-container-user_qa,
+ #quicktabs-container-message{
  	border-top: 2px solid #1dc7db;
  }
 #block-views-questions-tags-block h2,
