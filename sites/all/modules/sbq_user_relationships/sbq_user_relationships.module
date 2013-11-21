@@ -1,0 +1,209 @@
+<?php
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+function sbq_user_relationships_menu() {
+  $items['user/relationships'] = array(
+      'title' => t('我的圈子'),
+      'type' => MENU_NORMAL_ITEM,
+      'page callback' => 'sbq_user_relationships_follow_view',
+      'page arguments' => array( 'default' ),
+      'access callback' => 'sbq_user_relationships_access_callback',
+      'file' => 'sbq_user_relationships.inc',
+  );
+  $items['user/relationships/default'] = array(
+      'title' => t('我的圈子'),
+      'type' => MENU_DEFAULT_LOCAL_TASK,
+      'weight' => 1,
+  );
+   $items['user/relationships/default/doctor'] = array(
+      'title' => t('我的医生圈'),
+      'type' => MENU_DEFAULT_LOCAL_TASK,
+//      'page callback' => 'sbq_user_relationships_follow',
+//      'page arguments' => array( 'doctor' ),
+//      'access callback' => 'sbq_user_relationships_access_callback',
+//      'file' => 'sbq_user_relationships.inc',
+  );
+    $items['user/relationships/default/patient'] = array(
+      'title' => t('我的病友圈'),
+      'type' => MENU_LOCAL_TASK,
+      'page callback' => 'sbq_user_relationships_follow_view',
+      'page arguments' => array( 'patient' ),
+      'access callback' => 'sbq_user_relationships_access_callback',
+      'file' => 'sbq_user_relationships.inc',
+  );
+  $items['user/relationships/recommand/doctor'] = array(
+      'title' => t('推荐医生'),
+      'type' => MENU_LOCAL_TASK,
+      'page callback' => 'sbq_user_relationships_follow_view',
+      'page arguments' => array( 'recommand_doctor' ),
+      'access callback' => 'sbq_user_relationships_access_callback',
+      'file' => 'sbq_user_relationships.inc',
+      'weight' => 2,
+  );
+
+  $items['user/relationships/recommand/patient'] = array(
+      'title' => t('推荐病友'),
+      'type' => MENU_LOCAL_TASK,
+      'page callback' => 'sbq_user_relationships_follow_view',
+      'page arguments' => array( 'recommand_doctor' ),
+      'access callback' => 'sbq_user_relationships_access_callback',
+      'file' => 'sbq_user_relationships.inc',
+      'weight' => 3,
+  );
+
+  return $items;
+}
+
+/*
+ * sbq access callback
+ */
+
+function sbq_user_relationships_access_callback($account = NULL) {
+  if (!$account) {
+    global $user;
+    $account = $user;
+  }
+  if ($account->uid == 0) {
+    return FALSE;
+  }
+  return TRUE;
+}
+
+/*
+ * hook_block_info
+ */
+
+function sbq_user_relationships_block_info() {
+  $blocks['follow_doctor'] = array(
+      'info' => t('user relationships:follow_doctor'),
+      'cache' => DRUPAL_NO_CACHE,
+//      'status' => 1,
+//      'visibility' => BLOCK_VISIBILITY_LISTED,
+//      'pages' => 'my/relationships/default',
+  );
+  $blocks['follow_patient'] = array(
+      'info' => t('user relationships:follow_patient'),
+      'cache' => DRUPAL_NO_CACHE,
+//      'status' => 1,
+//      'visibility' => BLOCK_VISIBILITY_LISTED,
+//      'pages' => 'my/relationships/default',
+  );
+
+  return $blocks;
+}
+
+function sbq_user_relationships_block_view($delta = '') {
+  global $user;
+  if (!$user->uid) {
+    return;
+  }
+  switch ($delta) {
+    case 'follow_doctor':
+      $block['subject'] = t('我的医生圈');
+      $block['content'] = sbq_user_relationships_follow($user, USER_CERTIFIED_DOCTOR_RID);
+      break;
+    case 'follow_patient':
+      $block['subject'] = t('我的病友圈');
+      $block['content'] = sbq_user_relationships_follow($user, USER_PATIENT_RID);
+      break;
+    default:
+      break;
+  }
+  return $block;
+}
+
+function sbq_user_relationships_theme() {
+  $tpls = array(
+      'sbq_user_relationships_list' => array(
+          'template' => 'templates/sbq--user--relationships--list',
+          'variables' => array( 'accounts' => array() )
+      ),
+      'sbq_user_relationships_profile' => array(
+          'template' => 'templates/sbq--user--relationships--profile',
+          'variables' => array(
+              'image' => '',
+              'profile' => array(
+//                  'bedges' => '',
+//                  'name' => '',
+//                  'hospital' => '',
+//                  'disease' => '',
+//                  'follow' => ''
+              )
+          )
+      ),
+  );
+
+  return $tpls;
+}
+
+/*
+ * 圈子用户profile
+ * @todo remove test data
+ */
+
+function sbq_user_relationships_profile($account) {
+  module_load_include('inc', 'sbq_commons', 'sbq_commons_og_ui');
+  $image = sbq_commons_user_avart($account);
+  $profile['name'] = $account->name;
+  if (module_exists('user_badges')) {
+    $profile['bedges'] = user_badges_for_uid($account->uid);
+  }
+  $profile['follow'] = sbq_commons_user_relationships_ajax($account->uid);
+  if (in_array(USER_PATIENT_RID, array_keys($account->roles))) {
+    if ($user_item = profile2_load_by_user($account, 'customer_profile') && !empty($user_item) && isset($user_item->field_tags_disease['und'])) {
+      foreach ($user_item->field_tags_disease['und'] as $tid) {
+        $term = taxonomy_term_load($tid);
+        $account_disease .= $term->name . ' ';
+      }
+    }
+    if (isset($account_disease)) {
+      $profile['disease'] = $account_disease;
+    } else {
+      $profile['disease'] = '这是测试疾病标签';
+    }
+  } elseif (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($account->roles))) {
+    if ($user_item = profile2_load_by_user($account, 'doctor_profile') && !empty($user_item) && isset($user_item->field_doctor_hospitals['und'])) {
+      foreach ($user_item->field_doctor_hospitals['und'] as $tid) {
+        $term = taxonomy_term_load($tid);
+        $hospital .= $term->name . ' ';
+      }
+    }
+    if (isset($hospital)) {
+      $profile['hospital'] = $hospital;
+    } else {
+      $profile['hospital'] = '测试北京儿童医院';
+    }
+  }
+
+  return theme('sbq_user_relationships_profile', array( 'image' => $image,
+      'profile' => $profile ));
+}
+
+/*
+ * 我的圈子
+ */
+
+function sbq_user_relationships_follow($account = NULL, $roles = NULL) {
+  if (!$account) {
+    global $user;
+    $account = $user;
+  } elseif (!is_object($account)) {
+    $account = user_load($account);
+  }
+  if ($roles) {
+    $query = db_query("SELECT uid from {users_roles} roles where roles.uid in (SELECT r.requestee_id FROM {user_relationships} r WHERE r.requester_id = {$account->uid}) and  roles.rid=" . $roles)
+        ->fetchAllAssoc('uid');
+  } else {
+    $query = db_query("SELECT r.requestee_id FROM {user_relationships} r WHERE r.requester_id = {$account->uid}")
+        ->fetchAllAssoc('requestee_id');
+  }
+  // @todo remove $query test
+    $query = db_query("SELECT r.requestee_id FROM {user_relationships} r")
+        ->fetchAllAssoc('requestee_id');
+  return theme('sbq_user_relationships_list', array( 'accounts' => user_load_multiple(array_keys($query)) ));
+}

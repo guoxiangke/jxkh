@@ -55,6 +55,7 @@ stylesheets[all][] = css/index.css
 stylesheets[all][] = css/news.css
 
 stylesheets[all][] = css/all.css
+stylesheets[all][] = css/reilationship.css
 
 ; Built-in conditional stylesheet support has been removed from Zen 7.x-5.x.
 ; Instead, Zen now adds conditional-comment-included classes to the html
@@ -71,7 +72,7 @@ stylesheets[all][] = css/all.css
 ; Optionally add some JavaScripts to your theme.
 
 scripts[] = js/bootstrap.min.js
-scripts[] = js/script.js
+;scripts[] = js/script.js
 
 
 
