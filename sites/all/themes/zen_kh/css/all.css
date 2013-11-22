@@ -1,12 +1,43 @@
-/*fixbug*/
+/*------fixbug------*/
 nav {
 	outline: none;
 }
+/*login*/
 .page-customer-register .tabs-primary,
 .page-doctor-register .tabs-primary,
 .page-user-login .tabs-primary,
 .page-customer .tabs-primary {
 	display: none;
+}
+/*page-user*/ 
+.page-user #page-title,
+.page-user .tabs-primary,
+.page-user .field-widget-image-image {
+	display: none;
+}
+.page-user .text-format-wrapper .form-item #block-sbq-commons-sbq-quick-ask #edit-actions--2 {
+	position: relative;
+	right: 0px;
+	top: 26px;
+	z-index: 1;
+}
+.page-user .text-format-wrapper .form-item {
+	margin: 0px;
+}
+.page-user .sbq-user-add-post {
+	float: right;
+	height: 22px;
+	line-height: 22px;
+	margin-right: 260px;
+	background: url(../images/post2.png) no-repeat left -22px;
+	font-size: 16px;
+	padding-left: 29px;
+	display: inline-block;
+	font-weight: 700;
+	margin-bottom: 5px;
+}
+.page-user .sbq-user-add-post a {
+	color: #585858;
 }
 /*user-login-form*/
 #user-login-form .captcha {
