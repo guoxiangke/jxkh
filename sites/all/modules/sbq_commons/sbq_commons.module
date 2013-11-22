@@ -374,6 +374,7 @@ function sbq_commons_init() {
       drupal_add_js(drupal_get_path('module', 'sbq_commons') . '/js/topic-page.js');
     }
   }
+ 
 }
 
 /**

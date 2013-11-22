@@ -11,32 +11,32 @@ and open the template in the editor.
 	display: none;
 }
 /*left*/
-.page-app-download #main {
+.page-node-20121 #main {
 	padding-top: 30px;
 }
-.page-app-download #content {
+.page-node-20121 #content {
 	width: 700px !important;
 	padding: 10px;
 	background: #ffffff;
 	font-family: "Microsoft Yahei", "微软雅黑" !important;
 }
-.page-app-download .sbq_apps {
+.page-node-20121 .sbq_apps {
 	float: left;
 	width: 100%;
 }
-.page-app-download .sbq_apps_top {
+.page-node-20121 .sbq_apps_top {
 	float: left;
 	width: 100%;
 	height: 156px;
 	background: #f8f8f8;
 	overflow: hidden;
 }
-.page-app-download .sbq_apps_top .image {
+.page-node-20121 .sbq_apps_top .image {
 	float: left;
 	margin: 14px 16px 0px 22px;
 	box-sizing: inherit;
 }
-.page-app-download .sbq_apps_top img {
+.page-node-20121 .sbq_apps_top img {
 	float: left;
 	width: 103px !important;
 	height: 103px !important;
@@ -44,16 +44,16 @@ and open the template in the editor.
 	max-width: none;
 	display: block;
 }
-.page-app-download .sbq_apps_top .down {
+.page-node-20121 .sbq_apps_top .down {
 	float: left;
 	width: 500px;
 }
-.page-app-download .sbq_apps_top .down h2 {
+.page-node-20121 .sbq_apps_top .down h2 {
 	line-height: 26px;
 	margin: 14px 0px 10px 0px;
 	font-size: 16px;
 }
-.page-app-download .sbq_apps_top .down a {
+.page-node-20121 .sbq_apps_top .down a {
 	float: left;
 	width: 220px;
 	height: 30px;
@@ -62,25 +62,25 @@ and open the template in the editor.
 	font-size: 12px;
 	color: #ff6701;
 }
-.page-app-download .sbq_apps_top .down a i {
+.page-node-20121 .sbq_apps_top .down a i {
 	float: left;
 	width: 30px;
 	height: 30px;
 	text-align: center;
 }
-.page-app-download .sbq_apps_top .down a img {
+.page-node-20121 .sbq_apps_top .down a img {
 	float: none !important;
 	width: auto !important;
 	height: 26px!important;
 	border: none;
 	font-size: 14px;
 }
-.page-app-download .project {
+.page-node-20121 .project {
 	float: left;
 	width: 100%;
 	line-height: 24px;
 }
-.page-app-download .project h3 {
+.page-node-20121 .project h3 {
 	float: left;
 	width: 100%;
 	height: 36px;
@@ -89,46 +89,60 @@ and open the template in the editor.
 	border-bottom: 1px #d9d9d9 dotted;
 	font-size: 16px;
 }
-.page-app-download .project p {
+.page-node-20121 .project p {
 	float: left;
 	width: 100%;
 	margin: 0px;
 	padding: 10px 0px;
 }
-.page-app-download #carousel-example-generic {
+.page-node-20121 #carousel-example-generic {
 	float: left;
 	width: 100%;
 	margin: 22px 0px 20px 0px;
 	position: relative;
 }
-.page-app-download #carousel-example-generic .carousel-inner {
-	width: 580px;
+.page-node-20121 #carousel-example-generic .carousel-inner {
+	width: 570px;
+	height: 320px;
 	margin: 0 auto;
+	overflow: hidden;
 }
-.page-app-download #carousel-example-generic .carousel-control {
+.page-node-20121 #carousel-example-generic .carousel-inner .item {
+	float: left;
+	width: 190px;
+	height: 320px;
+}
+.page-node-20121 #carousel-example-generic .carousel-inner .item img {
+	float: left;
+	width: 180px;
+	height: 320px;
+	margin: 0px 5px;
+}
+.page-node-20121 #carousel-example-generic .carousel-control {
 	float: left;
 	width: 36px;
 	height: 60px;
 	position: absolute;
 	top: 110px;
+	display: none;
 }
-.page-app-download #carousel-example-generic .left {
+.page-node-20121 #carousel-example-generic .left {
 	left: 0;
 }
-.page-app-download #carousel-example-generic .right {
+.page-node-20121 #carousel-example-generic .right {
 	right: 0;
 }
 /*right*/
-.page-app-download .region-sidebar-second {
+.page-node-20121 .region-sidebar-second {
 	float: left;
 	margin-left: 710px !important;
 	width: 270px!important;
 	background: #FFF;
 }
-.region-sidebar-second .contextual-links-region {
+.page-node-20121 .region-sidebar-second .contextual-links-region {
 	border: none !important;
 }
-.region-sidebar-second .second-code h2 {
+.page-node-20121 .region-sidebar-second .second-code h2 {
 	height: 36px;
 	line-height: 36px;
 	margin: 0px;
@@ -140,13 +154,19 @@ and open the template in the editor.
 	font-family: "Microsoft Yahei", "微软雅黑" !important;
 	text-indent: 1em;
 }
-.region-sidebar-second .second-code img {
+.page-node-20121 .region-sidebar-second .second-code img {
 	float: left;
 	width: 100px;
 	height: 100px;
 	margin: 15px 85px;
 	border: none;
 }
-.page-app-download .block {
+.page-node-20121 .block {
 	margin: 0;
+}
+/*for index.css*/
+.page-node-20121 #content .page__title {
+	font-size: 16px !important;
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 10px;
 }

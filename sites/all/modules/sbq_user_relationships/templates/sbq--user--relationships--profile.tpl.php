@@ -19,3 +19,6 @@
     <?php endforeach; ?>
   </div>
 </div>
+<?php
+  
+?>

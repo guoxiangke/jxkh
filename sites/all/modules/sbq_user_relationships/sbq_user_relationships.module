@@ -7,51 +7,52 @@
  */
 
 function sbq_user_relationships_menu() {
-  $items['user/relationships'] = array(
+
+  $items['user/%user/relationship'] = array(
       'title' => t('我的圈子'),
       'type' => MENU_NORMAL_ITEM,
       'page callback' => 'sbq_user_relationships_follow_view',
-      'page arguments' => array( 'default' ),
+      'page arguments' => array( 'default', 1 ),
       'access callback' => 'sbq_user_relationships_access_callback',
+      'access arguments' => array( 1 ),
       'file' => 'sbq_user_relationships.inc',
   );
-  $items['user/relationships/default'] = array(
+  $items['user/%user/relationship/default'] = array(
       'title' => t('我的圈子'),
       'type' => MENU_DEFAULT_LOCAL_TASK,
       'weight' => 1,
   );
-   $items['user/relationships/default/doctor'] = array(
+  $items['user/%user/relationship/default/doctor'] = array(
       'title' => t('我的医生圈'),
       'type' => MENU_DEFAULT_LOCAL_TASK,
-//      'page callback' => 'sbq_user_relationships_follow',
-//      'page arguments' => array( 'doctor' ),
-//      'access callback' => 'sbq_user_relationships_access_callback',
-//      'file' => 'sbq_user_relationships.inc',
   );
-    $items['user/relationships/default/patient'] = array(
+  $items['user/%user/relationship/default/patient'] = array(
       'title' => t('我的病友圈'),
       'type' => MENU_LOCAL_TASK,
       'page callback' => 'sbq_user_relationships_follow_view',
-      'page arguments' => array( 'patient' ),
+      'page arguments' => array( 'patient', 1 ),
       'access callback' => 'sbq_user_relationships_access_callback',
+      'access arguments' => array( 1 ),
       'file' => 'sbq_user_relationships.inc',
   );
-  $items['user/relationships/recommand/doctor'] = array(
+
+  $items['user/%user/relationship/recommand/doctor'] = array(
       'title' => t('推荐医生'),
       'type' => MENU_LOCAL_TASK,
-      'page callback' => 'sbq_user_relationships_follow_view',
-      'page arguments' => array( 'recommand_doctor' ),
+      'page arguments' => array( 'recommand_doctor', 1 ),
       'access callback' => 'sbq_user_relationships_access_callback',
       'file' => 'sbq_user_relationships.inc',
+      'access arguments' => array( 1 ),
       'weight' => 2,
   );
 
-  $items['user/relationships/recommand/patient'] = array(
+  $items['user/%user/relationship/recommand/patient'] = array(
       'title' => t('推荐病友'),
       'type' => MENU_LOCAL_TASK,
       'page callback' => 'sbq_user_relationships_follow_view',
-      'page arguments' => array( 'recommand_doctor' ),
+      'page arguments' => array( 'recommand_patient', 1 ),
       'access callback' => 'sbq_user_relationships_access_callback',
+      'access arguments' => array( 1 ),
       'file' => 'sbq_user_relationships.inc',
       'weight' => 3,
   );
@@ -63,15 +64,12 @@ function sbq_user_relationships_menu() {
  * sbq access callback
  */
 
-function sbq_user_relationships_access_callback($account = NULL) {
-  if (!$account) {
-    global $user;
-    $account = $user;
+function sbq_user_relationships_access_callback($account) {
+  global $user;
+  if ($user->uid == 1 || $user->uid == $account->uid) {
+    return TRUE;
   }
-  if ($account->uid == 0) {
-    return FALSE;
-  }
-  return TRUE;
+  return FALSE;
 }
 
 /*
@@ -154,6 +152,9 @@ function sbq_user_relationships_profile($account) {
     $profile['bedges'] = user_badges_for_uid($account->uid);
   }
   $profile['follow'] = sbq_commons_user_relationships_ajax($account->uid);
+//  if($profile['follow']){
+//    dpm($profile['follow']);
+//  }
   if (in_array(USER_PATIENT_RID, array_keys($account->roles))) {
     if ($user_item = profile2_load_by_user($account, 'customer_profile') && !empty($user_item) && isset($user_item->field_tags_disease['und'])) {
       foreach ($user_item->field_tags_disease['und'] as $tid) {
@@ -180,6 +181,17 @@ function sbq_user_relationships_profile($account) {
     }
   }
 
+  $items = $profile;
+  unset($profile);
+  $profile['name'] = $items['name'];
+  $profile['bedges'] = $items['bedges'];
+  if (isset($items['hospital'])) {
+    $profile['hospital'] = $items['hospital'];
+  }
+  if (isset($items['disease'])) {
+    $profile['disease'] = $items['disease'];
+  }
+  $profile['follow'] = $items['follow'];
   return theme('sbq_user_relationships_profile', array( 'image' => $image,
       'profile' => $profile ));
 }
@@ -188,7 +200,33 @@ function sbq_user_relationships_profile($account) {
  * 我的圈子
  */
 
-function sbq_user_relationships_follow($account = NULL, $roles = NULL) {
+function sbq_user_relationships_follow($account = NULL, $roles = NULL, $is_page = TRUE, $count_of_page = 10) {
+  if (!$account) {
+    global $user;
+    $account = $user;
+  } elseif (!is_object($account)) {
+    $account = user_load($account);
+  }
+  if ($roles = false) {
+    $query = "SELECT uid from {users_roles} roles where roles.uid in (SELECT r.requestee_id FROM {user_relationships} r WHERE r.requester_id = {$account->uid}) and  roles.rid=" . $roles;
+  } else {
+    $query = "SELECT r.requestee_id as uid FROM {user_relationships} r WHERE r.requester_id = {$account->uid}";
+  }
+  if ($is_page) {
+    $pages = pager_default_initialize(db_query($query)->rowCount(), $count_of_page);
+    $result = db_query_range($query, $pages * $count_of_page, $count_of_page)->fetchAllAssoc('uid');
+  } else {
+    $result = db_query($query)->fetchAllAssoc('uid');
+  }
+  return user_load_multiple(array_keys($result));
+}
+
+/*
+ *  recommond doctor patient
+ */
+
+function sbq_user_relationships_recommond($account = NULL, $roles, $is_page = TRUE, $count_of_page = 10) {
+
   if (!$account) {
     global $user;
     $account = $user;
@@ -196,14 +234,29 @@ function sbq_user_relationships_follow($account = NULL, $roles = NULL) {
     $account = user_load($account);
   }
   if ($roles) {
-    $query = db_query("SELECT uid from {users_roles} roles where roles.uid in (SELECT r.requestee_id FROM {user_relationships} r WHERE r.requester_id = {$account->uid}) and  roles.rid=" . $roles)
-        ->fetchAllAssoc('uid');
+    $query = "SELECT uid from {users_roles} roles "
+        . "where roles.uid NOT IN "
+        . "(SELECT r.requestee_id FROM {user_relationships} r WHERE r.requester_id = {$account->uid}) "
+        . "and roles.uid NOT IN ( SELECT e.requester_id FROM {user_relationships} e where e.requestee_id = {$account->uid}) "
+        . "and  roles.rid={$roles} and roles.uid <> {$account->uid}";
   } else {
-    $query = db_query("SELECT r.requestee_id FROM {user_relationships} r WHERE r.requester_id = {$account->uid}")
-        ->fetchAllAssoc('requestee_id');
+    $query = "SELECT uid from {users_roles} roles "
+        . "where roles.uid NOT IN "
+        . "(SELECT r.requestee_id FROM {user_relationships} r WHERE r.requester_id = {$account->uid}) "
+        . "roles.uid NOT IN ( SELECT e.requester_id FROM {user_relationships} e where e.requestee_id = {$account->uid}) "
+        . "and  roles.rid IN (" . USER_PATIENT_RID . "," . USER_CERTIFIED_DOCTOR_RID . " ) "
+        . "and roles.uid <> {$account->uid}";
   }
-  // @todo remove $query test
-    $query = db_query("SELECT r.requestee_id FROM {user_relationships} r")
-        ->fetchAllAssoc('requestee_id');
-  return theme('sbq_user_relationships_list', array( 'accounts' => user_load_multiple(array_keys($query)) ));
+  if ($is_page) {
+    $pages = pager_default_initialize(db_query($query)->rowCount(), $count_of_page);
+    $result = db_query_range($query, $pages * $count_of_page, $count_of_page)->fetchAllAssoc('uid');
+  } else {
+    $result = db_query($query)->fetchAllAssoc('uid');
+  }
+
+  return user_load_multiple(array_keys($result));
+}
+
+function sbq_user_relationships_preprocess_html() {
+  
 }

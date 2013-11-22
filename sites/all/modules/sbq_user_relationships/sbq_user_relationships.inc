@@ -6,14 +6,22 @@
  * and open the template in the editor.
  */
 
-function sbq_user_relationships_follow_view($display) {
-  global $user;
+function sbq_user_relationships_follow_view($display, $account) {
   switch ($display) {
     case 'default':
-      return sbq_user_relationships_follow($user, USER_CERTIFIED_DOCTOR_RID);
+      $build = theme('sbq_user_relationships_list', array( 'accounts' => sbq_user_relationships_follow($account, USER_CERTIFIED_DOCTOR_RID) ));
+      return $build .= theme('pager');
       break;
     case 'patient':
-      return sbq_user_relationships_follow($user, USER_PATIENT_RID);
+      $build = theme('sbq_user_relationships_list', array( 'accounts' => sbq_user_relationships_follow($account, USER_PATIENT_RID) ));
+      return $build .= theme('pager');
+    case 'recommand_doctor':
+      $build = theme('sbq_user_relationships_list', array( 'accounts' => sbq_user_relationships_recommond($account, USER_CERTIFIED_DOCTOR_RID) ));
+      return $build .= theme('pager');
+    case 'recommand_patient':
+      $build = theme('sbq_user_relationships_list', array( 'accounts' => sbq_user_relationships_recommond($account, USER_PATIENT_RID) ));
+      return $build .= theme('pager');
+
     default:
       break;
   }
