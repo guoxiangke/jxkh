@@ -138,7 +138,7 @@ function sbq_commons_menu() {
       'title' => t('Questions'),
       'page callback' => 'druedu_qa_empty_page',
       // 'page arguments' => array(1),
-      'description' => 'questions page',
+      // 'description' => 'questions page',
       'menu_name' => 'main-menu',
       'access callback' => TRUE,
       'type' => MENU_NORMAL_ITEM,

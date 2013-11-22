@@ -854,7 +854,7 @@ label {
 }
 .views-field-field-tags-disease .sba-user-tag-del{
 	position: absolute;
-	right: 0;
+	right: -5px;
 	top: -5px;
 	z-index: 2;
 	width: 10px;
@@ -975,17 +975,22 @@ label {
 #block-views-blog-my-blog-block .view-content .views-row-last{
 	border-bottom: none
 }
-
+#block-views-message-block .views-field-message-render{
+	padding-left: 14px;
+	background: url("../images/dot.png") no-repeat scroll 4px center
+}
 /*
 .not-logged-in.section-qa .region-sidebar-second{
 	margin-left: 697px;
 }*/
 ul,li{margin: 0;padding: 0}
 .section-users #block-sbq-commons-sbq-user-profile{
-	width: 173px;padding: 4px;
+	width: 180px;
+	padding: 4px 4px 0;
 	position: relative;
 	border-bottom: 1px solid #d4d4d4;
-	margin-bottom: 0
+	margin-bottom: 0;
+	background:url(../images/sb.png) repeat-x 0 0;
 
 }
 #block-sbq-commons-sbq-user-profile #sbq_picture{width:80px; height:80px;float: left;
@@ -1047,7 +1052,8 @@ margin-right: 9px;}
 	font-size: 16px;
 }
 .page-index #page,
-.section-square #page{
+.section-square #page,
+.page-node #page{
 	padding-bottom: 30px;
 }
 .region-sidebar-second .block__title.block-title{
@@ -1055,7 +1061,6 @@ margin-right: 9px;}
 }
 ul.quicktabs-tabs.quicktabs-style-arrows{
 	margin-bottom: 0;
-	height: 29px;
 	line-height: 29px;
 }
 
@@ -1108,16 +1113,12 @@ html{
 #block-quicktabs-message{
 	font-size: 12px;
 }
-#block-quicktabs-message ul.quicktabs-tabs.quicktabs-style-arrows{
-	height: 29px;
-	line-height: 29px;
-}
 #block-quicktabs-message a#quicktabs-tab-message-0{
-	background-color: #1DC7DB;
-    height: 29px;
+    height: 41px;
     display: block;
     color: #fff;
     font-size: 16px;
+    background: url(../images/t.png) repeat-x 0 center;
 }
 .block-quicktabs .view-content .views-field{
 	float: left;
@@ -1262,6 +1263,7 @@ ul.quicktabs-tabs.quicktabs-style-arrows li a{
 #quicktabs-container-qa{
 	border-top: 2px solid #1DC7DB
 }
+ul.quicktabs-tabs.quicktabs-style-arrows li.active a, 
 ul.quicktabs-tabs.quicktabs-style-arrows li a:hover{
 	background: url(../images/arrows.png) no-repeat center bottom;
 	padding-bottom: 6px;
@@ -1273,16 +1275,18 @@ ul.quicktabs-tabs.quicktabs-style-arrows li a:hover{
 	font-weight: bold;
 	width: auto;
 	display: inline-block;
+	background: url(../images/t.png) no-repeat 0 0;
+	height: 41px;
 }
 #block-sbq-commons-sbq-user-profile i{
 	position: absolute;
 	top: 3px;
 }
 #block-sbq-commons-sbq-user-profile i.option{
-	right: 25px;
+	right: 27px;
 }
 #block-sbq-commons-sbq-user-profile i.message{
-	right: 3px;
+	right: 5px;
 	
 }
 #block-sbq-commons-sbq-user-profile i a{ text-indent: -1000em;
@@ -1407,7 +1411,7 @@ outline: none;
 #block-sbq-commons-sbq-user-menu.fixed{
 	position: fixed;
     top: 24px;
-    width: 174px;
+    width: 182px;
     z-index: 1;
     background-color: #fff;
     border: 1px solid #ccc
@@ -1468,11 +1472,15 @@ bottom: 10px;
 }
 #sbq-user-carousel .carousel-indicators li{width: 8px;height:8px; border-radius: 8px; background-color: #c6c6c6}
 #sbq-user-carousel .carousel-indicators li.active{background-color: #16B4C7;}
+#body-add-more-wrapper{
+	background:url(../images/pb.png) no-repeat 57px 28px;
+}
 #body-add-more-wrapper label{
 	background: url(../images/post.png) no-repeat left center;
 	padding-left: 29px;
 	font-size: 16px;
-	color: #585858
+	color: #585858;
+	margin-bottom:15px;
 }
 #body-add-more-wrapper .form-textarea-wrapper{
 	border: 1px solid #60d8e6;
@@ -1500,7 +1508,7 @@ bottom: 10px;
 }
 #block-sbq-commons-sbq-quick-ask #edit-actions--2{
 	position: absolute;right: 0;
-	top:26px;
+	top:36px;
 	z-index: 1
 }
 #block-sbq-commons-sbq-quick-ask #edit-submit--2{
@@ -1532,7 +1540,9 @@ bottom: 10px;
 #block-sbq-commons-recommond-doctors .more-link a,
 #block-sbq-commons-recommond-patients .more-link a,
 #block-views-blog-block .more-link a,
-#block-views-new-groups-doctor-new .more-link a{
+#block-views-new-groups-doctor-new .more-link a,
+#block-views-news-block-1 .more-link a,
+#block-views-news-block-2 .more-link a{
 	padding-right: 15px;
 	background: url(../images/wm.png) no-repeat right center;
 }
@@ -1797,6 +1807,11 @@ bottom: 10px;
 	display: table;
 	clear: both;
 }
+.page-groups-my #page-title{
+	display: inline-block;
+	width: auto;
+	padding: 0 10px;
+}
 .view-id-new_groups,
 .section-groups #content .view-id-og_user_groups,
 .section-groups #content .view-id-og_extras_groups{
@@ -1994,7 +2009,8 @@ bottom: 10px;
 .view-id-og_extras_groups .views-field-group-group a,
 .view-id-og_extras_groups .views-field-group-group{color:#999999;}
 .view-og-user-groups .views-field-title,
-.view-id-og_extras_groups .views-field-title{ font-weight: bold;}
+.view-id-og_extras_groups .views-field-title,
+#block-views-news-block-2 h2{ font-weight: bold;}
 
 /*广场*/
 nav.breadcrumb{
@@ -2030,7 +2046,8 @@ nav.breadcrumb{
  #block-views-my-group-hottest-block .view-id-my_group,
  #quicktabs-container-user_group,
  #quicktabs-container-user_qa,
- #quicktabs-container-message{
+ #quicktabs-container-message,
+ #block-views-blog-my-blog-block .view-display-id-my_blog_block{
  	border-top: 2px solid #1dc7db;
  }
 #block-views-questions-tags-block h2,
@@ -2208,6 +2225,7 @@ nav.breadcrumb{
 	height: 60px;
 	overflow: hidden;
 	float: left;
+	margin-right: 10px;
 }
 .view-new-groups .views-field-title a,
 .view-new-groups .views-field-group-group a{
@@ -2216,4 +2234,62 @@ nav.breadcrumb{
 }
 .view-new-groups .views-field-nothing{
 	color: #585858
+}
+
+.page-node #content{
+	border: 1px solid #ccc !important;
+	padding: 0 6px;
+	color: #585858;
+	font-size: 12px;
+	line-height: 20px;
+}
+.page-node #content p{
+	margin: 0
+}
+.page-node #content .title{
+	font-size: 14px;
+	line-height: 32px;
+	font-weight: bold;
+	color: #585858;
+	margin: 0
+}
+.page-node #content .comments__title{
+	width: 90px;
+	height: 29px;
+	color: #fff;
+	text-align: center;
+	background-color: #1DC7DB
+}
+#comment-wrapper .comment__title{
+
+}
+#comment-form{
+	position: relative;
+}
+#comment-form #edit-actions{
+	position: absolute;
+	top: 25px;
+	right: 0;
+}
+#comment-form textarea{
+	width: 590px;
+	height: 76px;
+	border: 1px solid #cccccc;
+	border-right: none;
+	resize:none;
+	padding:2px 5px;
+}
+#comment-form .grippie{
+	display: none;
+}
+#comment-form #edit-submit{
+	width:76px;
+	height: 76px;
+	border: none;
+	background-color: #168a9b;
+	text-align: center;
+	line-height: 76px;
+	color: #fff;
+	font-size: 16px;
+	padding: 0
 }

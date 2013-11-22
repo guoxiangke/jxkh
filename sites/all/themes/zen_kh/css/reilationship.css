@@ -1,0 +1,131 @@
+/*圈子首页*/ 
+.page-user-relationships #page{
+	background:#fff;
+}
+.page-user-relationships #page-title {
+	display:none;
+}
+.page-user-relationships #content .primary {
+	border-bottom:1px solid #1DC7DB;
+	width:98%;
+	padding:0;
+}
+.page-user-relationships #content .primary > li{
+	font-size:15px;
+	border:0;
+	margin-right:30px;
+	box-shadow: none;
+	border-radius:0;
+	text-shadow:0;
+	margin-left:0;
+}
+.page-user-relationships #content .primary > li a{
+	color:#1DC7DB;
+	border-radius:0;
+	border:0;
+	background: none;
+	text-shadow:0;
+}
+.page-user-relationships #content .primary > li.is-active{
+	background:#1DC7DB;
+}
+.page-user-relationships #content .primary > li.is-active a{
+	color:#fff;
+	text-shadow:none;
+	font-weight:bold;
+}
+.page-user-relationships #content .tabs-secondary {
+	border-bottom:2px solid #1DC7DB;
+	margin-bottom:0;
+	height:40px;
+	line-height:29px;
+	width:98%;
+}
+.page-user-relationships #content .tabs-secondary > li {
+	background:none;
+	border-radius:0;
+	border:0;
+	text-shadow:none;
+}
+.page-user-relationships #content .tabs-secondary > li a{
+	padding-bottom:6px;
+	padding-top:0;
+	height:29px;
+	text-shadow:none;
+	border:0;
+	box-shadow:none;
+	background:none;
+}
+.page-user-relationships #content .tabs-secondary > li a.active {
+	background:url(../images/arrows.png) no-repeat center bottom;
+	padding-bottom:6px;
+	color:#585858;
+	padding-top:0;
+	height:29px;
+	text-shadow:none;
+	border:0;
+	box-shadow:none;
+	font-weight:bold;
+}
+.page-user-relationships #content .tabs-secondary > li a:hover {
+	background:url(../images/arrows.png) no-repeat center bottom;
+	padding-bottom:6px;
+	color:#585858;
+	padding-top:0;
+	height:29px;
+	text-shadow:none;
+	border:0;
+	box-shadow:none;
+	font-weight:bold;
+}
+.page-user-relationships #content .sbq_user_relationships{
+	border-top:0;
+	width:98%;
+}
+.page-user-relationships #content .sbq_user_relationships .sbq-user-relationship-profile{
+	width:227px;
+	border:1px solid #f2f2f2;
+	display:inline-block;
+	margin:6px 0 6px 6px;
+	padding:0;
+	padding:10px;
+}
+.page-user-relationships #content .sbq_user_relationships .sbq-user-relationship-profile .image{
+	width:60px;
+	height:60px;
+	border:1px solid #ccc;
+	float:left;
+}
+.page-user-relationships #content .sbq_user_relationships .sbq-user-relationship-profile .image img{
+	width:60px;
+	height:60px;
+}
+.page-user-relationships #content .sbq_user_relationships .sbq-user-relationship-profile .info {
+	margin-left:10px;
+	float:left;
+	width:130px;
+}
+.page-user-relationships #content .sbq_user_relationships .sbq-user-relationship-profile .info > span{
+}
+.page-user-relationships #content .sbq_user_relationships .sbq-user-relationship-profile .info .name {
+	font-weight:bold;
+}
+.page-user-relationships #content .sbq_user_relationships .sbq-user-relationship-profile .info .bedges{
+	display:inline-block;
+}
+.page-user-relationships #content .sbq_user_relationships .sbq-user-relationship-profile .info .hospital{
+	display:block;
+	color:#ccc;
+}
+.page-user-relationships #content .sbq_user_relationships .sbq-user-relationship-profile .info .disease{
+	display:block;
+	color:#ccc;
+}
+.page-user-relationships #content .sbq_user_relationships .sbq-user-relationship-profile .info .follow{
+	display:block;
+}
+.page-user-relationships #content .sbq_user_relationships .sbq-user-relationship-profile .info .bedges .user_badges img{
+	width:16px;
+	height:16px;
+	margin-right:4px;
+}

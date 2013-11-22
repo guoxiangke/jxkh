@@ -1,3 +1,13 @@
+/*fixbug*/
+nav {
+	outline: none;
+}
+.page-customer-register .tabs-primary,
+.page-doctor-register .tabs-primary,
+.page-user-login .tabs-primary,
+.page-customer .tabs-primary {
+	display: none;
+}
 /*user-login-form*/
 #user-login-form .captcha {
 	width: 186px;
