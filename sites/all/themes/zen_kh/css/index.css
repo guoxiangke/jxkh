@@ -1503,7 +1503,7 @@ bottom: 10px;
 	background-color: #1dc7db;
 	color: #fff
 }
-#block-sbq-commons-sbq-quick-ask{
+#block-sbq-commons-sbq-quick-ask #question-node-form{
 	position: relative;
 }
 #block-sbq-commons-sbq-quick-ask #edit-actions--2{
@@ -2238,10 +2238,13 @@ nav.breadcrumb{
 
 .page-node #content{
 	border: 1px solid #ccc !important;
-	padding: 0 6px;
+	padding: 0 10px;
 	color: #585858;
 	font-size: 12px;
 	line-height: 20px;
+}
+.page-node #content .field-name-field-image img{
+	max-width: 660px;
 }
 .page-node #content p{
 	margin: 0
@@ -2253,12 +2256,20 @@ nav.breadcrumb{
 	color: #585858;
 	margin: 0
 }
-.page-node #content .comments__title{
-	width: 90px;
+.page-node #content .comments__title,
+#node_wiki_full_group_tech h3,
+.node .field-label{
+	display: inline-block;
+	padding: 0 10px;
 	height: 29px;
+	line-height: 29px;
 	color: #fff;
 	text-align: center;
-	background-color: #1DC7DB
+	background-color: #1DC7DB;
+	margin: 20px 0 0 0;
+	font-weight: bold;
+	font-size: 16px;
+	min-width: 90px;
 }
 #comment-wrapper .comment__title{
 
@@ -2285,6 +2296,7 @@ nav.breadcrumb{
 #comment-form #edit-submit{
 	width:76px;
 	height: 76px;
+	font-weight: bold;
 	border: none;
 	background-color: #168a9b;
 	text-align: center;
@@ -2292,4 +2304,40 @@ nav.breadcrumb{
 	color: #fff;
 	font-size: 16px;
 	padding: 0
+}
+#comment-wrapper>div{
+	border-bottom: 1px dashed #cacaca;
+	padding-bottom: 10px
+}
+#comment-wrapper .user-picture img{
+	max-width: 60px;
+	max-height: 60px;
+}
+#comment-wrapper .links.inline{
+	float: right;
+}
+#comment-wrapper .links.inline a{
+	color: #585858
+}
+.comment .username{
+	font-weight: bold;
+	color: #585858
+}
+.comment time{
+	color: #8d8d8d
+}
+#comment-wrapper .rate-widget-yesno .last{
+	margin-left: 15px;
+}
+#comment-wrapper .rate-widget-yesno .first a,
+#comment-wrapper .rate-widget-yesno .last a{
+	padding-left: 23px;
+	border: none;
+	color: #737373
+}
+#comment-wrapper .rate-widget-yesno .first a{
+	background: url(../images/n-thumbs-up.png) no-repeat 0 center;
+}
+#comment-wrapper .rate-widget-yesno .last a{
+	background: url(../images/n-thumbs-up.png) no-repeat -104px center;
 }
