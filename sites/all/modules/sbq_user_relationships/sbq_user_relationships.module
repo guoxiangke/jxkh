@@ -368,7 +368,7 @@ function sbq_user_relationships_action_between_user($viewer, $viewed, $action_ty
 //                          'relationship_ajax_action' ) ),
 //                  )
 //              );
-            //  dpm(user_relationships_type_translations($relationship));
+              //  dpm(user_relationships_type_translations($relationship));
               $list[] = l(
                   t(
                       "Become %name's @rel_name", array(
@@ -419,19 +419,21 @@ function sbq_user_relationships_action_between_user($viewer, $viewed, $action_ty
   return $list;
 }
 
+/*
+ * get my doctor/patient  friends count
+ */
 function sbq_user_relationships_my_relstionships($account = NULL) {
-  return 10;
+
   global $user;
   if (!$account) {
     $account = $user;
   }
-  $account = user_load(2);
-  $approve = count(user_relationships_load(array(), array('requester_id'=>$account->uid, 'approved'=>1))) +  count(user_relationships_load(array(), array('requestee'=>$account->uid, 'approved'=>1)));
-  dpm($approve);
+  $approved = user_relationships_load(array( 'user' => $account->uid, 'approved' => 1,
+      'rtid' => 3 ));
   if (in_array(USER_PATIENT_RID, array_keys($account->roles))) {
-    $count = db_query("SELECT rid FROM {user_relationships} WHERE requester_id = {$account->uid} AND rtid = 2")->rowCount();
+    $no_approved = user_relationships_load(array( 'user' => $account->uid, 'rtid' => 2 ));
   } else if (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($account->roles))) {
-    $count = db_query("SELECT rid FROM {user_relationships} WHERE requester_id = {$account->uid}  AND rtid = 1")->rowCount();
+    $no_approved = user_relationships_load(array( 'user' => $account->uid, 'rtid' => 1 ));
   }
-  return ($approve ? count($approve) : 0) + $count;
+  return count($approved) + count($no_approved);
 }
