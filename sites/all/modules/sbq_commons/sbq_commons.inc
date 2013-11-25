@@ -600,15 +600,21 @@ EOF;
         $points_li_active = ' active';
         $points_link_active = ' is-active active';
       }
+      $user_post_count = sbq_commons_get_count($user->uid, 'post');
+      $user_message_count = 0;
+      $user_blog_count = sbq_commons_get_count($user->uid, 'blog');
+      $user_group_count = 0;
+      $user_relationship_count = 0;
+      $user_point_count = userpoints_get_current_points($user->uid, 'all');
 
       $block_html = '<div class="sbq-user-menu">'
           . '<ul class="menu nav">'
-          . '<li class="menu__item is-leaf first leaf sbq-user-menu-post"><a href="/user/'.$user->uid.'#block-quicktabs-user-group" class="menu__link">我的帖子</a><span class="sbq-count"><a href="#" class="sbq-count-link">5条</a></span></li>'
+          . '<li class="menu__item is-leaf first leaf sbq-user-menu-post"><a href="/user/'.$user->uid.'#block-quicktabs-user-group" class="menu__link">我的帖子</a><span class="sbq-count"><a href="#" class="sbq-count-link">'.$user_post_count.'条</a></span></li>'
           . '<li class="menu__item is-leaf leaf sbq-user-menu-status"><a href="/user/'.$user->uid.'#block-quicktabs-message" class="menu__link">我的动态</a><span class="sbq-count"><a href="#" class="sbq-count-link">5条</a></span></li>'
-          . '<li class="menu__item is-leaf leaf sbq-user-menu-blog"><a href="/user/'.$user->uid.'#block-views-blog-my-blog-block" class="menu__link">我的文章</a><span class="sbq-count"><a href="#" class="sbq-count-link">5篇</a></span></li>'
+          . '<li class="menu__item is-leaf leaf sbq-user-menu-blog"><a href="/user/'.$user->uid.'#block-views-blog-my-blog-block" class="menu__link">我的文章</a><span class="sbq-count"><a href="#" class="sbq-count-link">'.$user_blog_count.'篇</a></span></li>'
           //. '<li class="menu__item is-leaf leaf sbq-user-menu-group"><a href="/groups/my" class="menu__link">我的小组</a><span class="sbq-count"><a href="#" class="sbq-count-link">5个</a></span></li>'
           . '<li class="menu__item is-leaf last leaf sbq-user-menu-relationship'.$relationship_li_active.'"><a href="/user/' . $user->uid . '/relationship" class="menu__link'.$relationship_link_active.'">我的圈子</a><span class="sbq-count"><a href="#" class="sbq-count-link">5条</a></span></li>'
-          . '<li class="menu__item is-leaf last leaf sbq-user-menu-points'.$points_li_active.'"><a href="/user/' . $user->uid . '/points" class="menu__link'.$points_link_active.'">我的积分</a><span class="sbq-count"><a href="#" class="sbq-count-link">1000</a></span></li>'
+          . '<li class="menu__item is-leaf last leaf sbq-user-menu-points'.$points_li_active.'"><a href="/user/' . $user->uid . '/points" class="menu__link'.$points_link_active.'">我的积分</a><span class="sbq-count"><a href="#" class="sbq-count-link">'.$user_point_count.'</a></span></li>'
           . '</ul>'
           . '</div>';
       break;
@@ -806,4 +812,15 @@ function druedu_qa_empty_page() {
 function sbq_commons_app_down() {
 
   return theme('app_dowunload');
+}
+
+/*
+ * get node count by user and type
+ */
+function sbq_commons_get_count ($uid=0, $type='') {
+  $rtn = 0;
+  if ($uid > 0 && strlen(trim($type)) > 0) {
+    $rtn = db_query('SELECT count(nid) FROM {node} WHERE uid = :uid AND type = :type', array(':uid' => $uid, ':type' => $type))->fetchCol();
+  }
+  return $rtn[0];
 }

@@ -25,16 +25,21 @@ nav {
 	margin: 0px;
 }
 .page-user .sbq-user-add-post {
-	float: right;
 	height: 22px;
 	line-height: 22px;
-	margin-right: 260px;
+	position: absolute;
+	right: 260px;
+	top: 0px;
 	background: url(../images/post2.png) no-repeat left -22px;
 	font-size: 16px;
 	padding-left: 29px;
 	display: inline-block;
 	font-weight: 700;
 	margin-bottom: 5px;
+	z-index: 99999;
+}
+.page-user #block-sbq-commons-sbq-quick-ask {
+	position: relative;
 }
 .page-user .sbq-user-add-post a {
 	color: #585858;
@@ -137,7 +142,7 @@ nav {
 	display: none !important;
 }
 /*admin login*/
-.region-bottom a em{
+.region-bottom a em {
 	background: #999;
 	font-size: 24px;
 	font-weight: bold;
