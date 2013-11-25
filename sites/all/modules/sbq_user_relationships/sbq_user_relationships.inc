@@ -10,7 +10,6 @@ function sbq_user_relationships_follow_view($display, $account) {
   switch ($display) {
     case 'default':
       $build = theme('sbq_user_relationships_list', array( 'accounts' => sbq_user_relationships_follow($account, USER_CERTIFIED_DOCTOR_RID) ));
-      dpm(theme('pager'));
       return $build .= theme('pager');
       break;
     case 'patient':
