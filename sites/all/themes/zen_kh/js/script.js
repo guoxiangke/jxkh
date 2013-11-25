@@ -102,6 +102,12 @@ Drupal.behaviors.my_custom_behavior = {
       $('html,body').animate({ scrollTop: btop }, 1000);
       return false;
     });
+    /*我的文章*/
+    $('#block-sbq-commons-sbq-user-menu .sbq-user-menu-blog a').click(function() {
+      var btop = $('#block-views-blog-my-blog-block').offset().top-30;
+      $('html,body').animate({ scrollTop: btop }, 1000);
+      return false;
+    });
     $('.view-og-user-groups .views-row,.view-og-extras-groups .views-row').hover(function(){
       $(this).children('.views-field-body').show();
     },function(){
