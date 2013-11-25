@@ -7,7 +7,8 @@
 	width: 100%;
 	padding: 20px !important;
 	background: #FFF;
-	overflow: hidden;
+	/*	border: none !important;
+*/	overflow: hidden;
 }
 .section-content #content .page__title {
 	line-height: 26px;
@@ -57,12 +58,15 @@
 	float: left;
 	height: 30px;
 	line-height: 26px;
+	margin: 0px !important;
 	padding: 0px 15px;
 	border-top: 2px #1dc7db solid;
-	font-size: 14px;
+	font-size: 14px !important;
 	font-weight: normal;
 	position: relative;
 	top: -2px;
+	background: none !important;
+	color: #585858 !important;
 }
 #comment-wrapper {
 	float: left;
@@ -153,7 +157,6 @@
 }
 /*add_comment*/
 .comment-wrapper .comments__form-title {
-	display: none;
 }
 .comment-wrapper .comment-form .field-widget-text-textarea label {
 	float: left;
@@ -243,10 +246,34 @@
 .comment-wrapper .throbber {
 	display: none;
 }
-
-
-/*临时*/
-
-/*.tabs-primary {
-	display: none;
+#comment-wrapper > div {
+	float: left;
+	margin: 0px;
+	border: none;
+}
+/*activity*/
+.node-type-activity .node-activity .field-label-above {
+	float: left;
+	width: 100%;
+	font-size: 14px;
+}
+.node-type-activity .node-activity .field-label-above .field-label {
+	float: left;
+	width: 100px;
+	margin: 0px;
+	padding: 0px;
+	background: none;
+	color: #666;
+	font-size: 12px;
+	text-align: right !important;
+}
+.node-type-activity .node-activity .field-label-above .field-items {
+	float: left;
+}
+/*#page {
+	box-shadow: 0px 0px 6px 0px #666;
 }*/
+/*news_list*/
+.page-news-hospital-blacklist {
+	border: 1px #F00 solid;
+}

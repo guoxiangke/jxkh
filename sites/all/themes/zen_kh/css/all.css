@@ -136,3 +136,10 @@ nav {
 .front .sbq_doctor_register_button #status {
 	display: none !important;
 }
+/*admin login*/
+.region-bottom a em{
+	background: #999;
+	font-size: 24px;
+	font-weight: bold;
+	font-style: normal !important;
+}

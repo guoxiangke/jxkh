@@ -152,32 +152,21 @@ function sbq_user_relationships_profile($account) {
     $profile['bedges'] = user_badges_for_uid($account->uid);
   }
   $profile['follow'] = sbq_commons_user_relationships_ajax($account->uid);
-//  if($profile['follow']){
-//    dpm($profile['follow']);
-//  }
   if (in_array(USER_PATIENT_RID, array_keys($account->roles))) {
     if ($user_item = profile2_load_by_user($account, 'customer_profile') && !empty($user_item) && isset($user_item->field_tags_disease['und'])) {
       foreach ($user_item->field_tags_disease['und'] as $tid) {
         $term = taxonomy_term_load($tid);
         $account_disease .= $term->name . ' ';
+        $profile['disease'] = $account_disease;
       }
-    }
-    if (isset($account_disease)) {
-      $profile['disease'] = $account_disease;
-    } else {
-      $profile['disease'] = '这是测试疾病标签';
     }
   } elseif (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($account->roles))) {
     if ($user_item = profile2_load_by_user($account, 'doctor_profile') && !empty($user_item) && isset($user_item->field_doctor_hospitals['und'])) {
       foreach ($user_item->field_doctor_hospitals['und'] as $tid) {
         $term = taxonomy_term_load($tid);
         $hospital .= $term->name . ' ';
+        $profile['hospital'] = $hospital;
       }
-    }
-    if (isset($hospital)) {
-      $profile['hospital'] = $hospital;
-    } else {
-      $profile['hospital'] = '测试北京儿童医院';
     }
   }
 
@@ -214,6 +203,7 @@ function sbq_user_relationships_follow($account = NULL, $roles = NULL, $is_page 
   }
   if ($is_page) {
     $pages = pager_default_initialize(db_query($query)->rowCount(), $count_of_page);
+    dpm($pages);
     $result = db_query_range($query, $pages * $count_of_page, $count_of_page)->fetchAllAssoc('uid');
   } else {
     $result = db_query($query)->fetchAllAssoc('uid');
@@ -259,4 +249,161 @@ function sbq_user_relationships_recommond($account = NULL, $roles, $is_page = TR
 
 function sbq_user_relationships_preprocess_html() {
   
+}
+
+/*
+ * create between two user relationships relationships ajax href  
+ */
+
+function sbq_user_relationships_action_ajax($viewed_id, $type = 'all', $account = NULL) {
+  drupal_add_library('system', 'drupal.ajax');
+  if (!$account) {
+    global $user;
+    $account = $user;
+  }
+  if (!$viewed = user_load($viewed_id))
+    return;
+  if ($type == 'add') {
+    $action = sbq_commons_relationships_ui_actions_between($account, $viewed, array(
+        'add' => 1 ));
+    if (!isset($action[0])) {
+      return;
+    }
+    $preg = '/<a(.*?)href="(.*?)"(.*?)>(.*?)<\/a>/i';
+    preg_match_all($preg, $action[0], $match);
+    $ajax_token = time() . rand(0, 10000);
+    $link = l('+关注', ltrim($match[2][0], "/") . '?destination=' . $ajax_token, array(
+        'attributes' => array( 'class' => 'use-ajax ' . $ajax_token ) ));
+  } elseif ($type == 'remove') {
+    $action = sbq_commons_relationships_ui_actions_between($account, $viewed, array(
+        'remove' => 1 ));
+    // dpm($action);
+    if (!empty($action)) {
+      return;
+    }
+    $preg = '/<a(.*?)href="(.*?)"(.*?)>(.*?)<\/a>/i';
+    preg_match_all($preg, $action[0], $match);
+    $ajax_token = time() . rand(0, 10000);
+    $link = l('+移除', ltrim($match[2][0], "/") . '?destination=' . $ajax_token, array(
+        'attributes' => array( 'class' => 'use-ajax ' . $ajax_token ) ));
+  }
+  return isset($link) ? render($link) : '';
+}
+
+/*
+ * between user actions
+ */
+
+function sbq_user_relationships_action_between_user($viewer, $viewed, $action_types = NULL) {
+  if ($viewer->uid == $viewed->uid) {
+    return;
+  }
+  if (!$action_types) {
+    $action_types = array(
+        'add' => 1,
+        'remove' => 1,
+        'requested' => 1,
+        'received' => 1
+    );
+  }
+  $list = array();
+  module_load_include('inc', 'user_relationships_ui', 'user_relationships_ui.forms');
+  if (isset($action_types['requested'])) {
+    $relationships = user_relationships_load(array( 'requester_id' => $viewer->uid,
+        'requestee_id' => $viewed->uid, 'approved' => FALSE ));
+    foreach ($relationships as $relationship) {
+      $list[] = t('You have sent a new @rel_name request to this user. (!pending_requests)', array(
+          '!pending_requests' => l(t('pending requests'), "relationships/sent"),
+          ) + user_relationships_type_translations($relationship));
+    }
+  }
+
+  if (isset($action_types['received'])) {
+    $relationships = user_relationships_load(array(
+        'requester_id' => $viewed->uid,
+        'requestee_id' => $viewer->uid,
+        'approved' => FALSE ));
+    foreach ($relationships as $relationship) {
+      if (user_relationships_user_access('maintain @relationship relationships', $relationship)) {
+        $list[] = t('This user has requested to be your @rel_name. (!pending_requests)', array(
+            '!pending_requests' => l(t('pending requests'), "user/{$viewer->uid}/relationships/received"),
+            ) + user_relationships_type_translations($relationship));
+        $list[] = t('This user has requested to be your @rel_name. (!approve_requests, !dis_approve_requests)', array(
+            '!approve_requests' => l('同意', 'relationship/ajax/' . $viewer->uid . '/pending/' . $relationship->rid . '/' . $viewed->uid . '/approve', array(
+                'html' => TRUE,
+                'attributes' => array(
+                    'class' => array(
+                        'relationship_ajax_action' ) ),
+                )
+            ),
+            '!dis_approve_requests' => l('拒绝', 'relationship/ajax/' . $viewer->uid . '/pending/' . $relationship->rid . '/' . $viewed->uid . '/disapprove', array(
+                'html' => TRUE,
+                'attributes' => array(
+                    'class' => array(
+                        'relationship_ajax_action' ) ),
+                )
+            )
+            )
+        );
+      }
+    }
+  }
+
+
+  if (isset($action_types['add'])) {
+    $relationships = user_relationships_get_requestable_rtypes($viewer, $viewed, 'full');
+    if ($relationships) {
+      // If configured, create direct links.
+      if (variable_get('user_relationships_show_direct_links', 1)) {
+        // Create a single link, or one for each relationship type.
+        foreach ($relationships as $relationship) {
+          if (sbq_commons_relationships_ui_check_access_by_roles($viewer, $viewed, $relationship->rtid)) {
+            if (sbq_commons_relationships_ui_request_validate($viewer, $viewed, $relationship->rtid)) {
+              $list[] = l(
+                  t("Become %name's @rel_name", array(
+                      '%name' => format_username($viewed) ) + user_relationships_type_translations($relationship)), "relationship/ajax/{$viewer->uid}/request/{$relationship->rtid}/{$viewed->uid}", array(
+                  'html' => TRUE,
+                  'attributes' => array(
+                      'class' => array(
+                          'relationship_ajax_action' ) ),
+                  )
+              );
+            }
+          }
+        }
+      }
+      // just one generic link pointing to a page with dropdown.
+      else {
+        $list[] = theme('user_relationships_request_relationship_link', array(
+            'relate_to' => $viewed ));
+      }
+    }
+  }
+
+  if (isset($action_types['remove'])) {
+    $relationships = user_relationships_load(array(
+        'between' => array(
+            $viewer->uid,
+            $viewed->uid ) ));
+    foreach ($relationships as $relationship) {
+      if ($relationship->approved && !isset($list[$relationship->rid]) && user_relationships_ui_check_access('view', NULL, $relationship)) {
+        if (user_relationships_ui_check_access('delete', NULL, $relationship)) {
+          // @see user_relationships_remove_link
+          $list[$relationship->rid] = t('@rel_name (!remove_link)', array(
+              '@rel_name' => user_relationships_type_get_name($relationship) . ($relationship->is_oneway ? ($relationship->requester_id == $viewer->uid ? t(' (You to Them)') : t(' (Them to You)')) : NULL),
+              '!remove_link' => l(t('移除'), 'relationship/ajax/' . $viewer->uid . '/remove/' . $relationship->rid . '/' . $viewed->uid, array(
+                  'attributes' => array(
+                      'class' => array(
+                          'class' => 'relationship_ajax_action' ) ) )),
+              //   '!remove_link' => drupal_get_form('sbq_user_relationships_ui_remove_ajax', $viewer, $relationship)
+          ));
+        } else {
+          $list[$relationship->rid] = user_relationships_type_get_name($relationship) . ($relationship->is_oneway ? ($relationship->requester_id == $viewer->uid ? t(' (You to Them)') : t(' (Them to You)')) : NULL);
+        }
+      }
+    }
+  }
+
+
+  return $list;
 }

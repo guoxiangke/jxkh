@@ -125,7 +125,29 @@ Drupal.behaviors.my_custom_behavior = {
       }
       return false;
     });
-    
+    //评测视频切换
+    $('.sbq_field_title_list .field-item a').click(function() {
+      var tidx = $(this).parents('.field-item').index();
+      $(this).parents('.field-items').find('a.active').removeClass('active');
+      $(this).addClass('active').parents('.sbq_field_title_list').prev('.sbq-field-video-list').find('.field-items').children('.field-item').eq(tidx).show().siblings().hide();
+      return false;
+    });
+    $('#node_wiki_full_group_tech h2').click(function() {
+      var thidx = $(this).index();
+      $(this).addClass('active').siblings('h2').removeClass('active');
+      $(this).parents('#node_wiki_full_group_tech').children('.view-wiki').eq(thidx).show().siblings('.view-wiki').hide();
+    });
+    $('#node_wiki_child_full_group_content .field-label').click(function() {
+      var tdidx = $(this).index();
+      if($('.sbq-field_video_warpper').is('.active')){
+        $(this).parent().removeClass('n');
+        $('.sbq-field_video_warpper').removeClass('active').siblings('.field-type-text-with-summary').addClass('active')
+      }else{
+        $(this).parent().addClass('n');
+        $('.field-type-text-with-summary').removeClass('active').siblings('.sbq-field_video_warpper').addClass('active')
+      }
+      $(this).parents('#node_wiki_child_full_group_content').children('.wiki-field').eq(tdidx).show().siblings('.wiki-field').hide();
+    });
   }
 
 

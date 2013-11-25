@@ -547,6 +547,7 @@ position: relative;
 }
 #myCarousel .carousel-indicators li {
     background: none repeat scroll 0 0 #808080;
+    background: url(../images/idx.png) no-repeat right 0\9;
 }
 .carousel-indicators .active {
     background-color: #16b4c7;
@@ -555,6 +556,7 @@ position: relative;
 }
 #myCarousel .carousel-indicators .active {
     background: none repeat scroll 0 0 #16b4c7;
+    background: url(../images/idx.png) no-repeat left 0\9;
 }
 
 
@@ -1623,7 +1625,8 @@ bottom: 10px;
 .view-display-id-group_front_page .views-field-comment-count{ width: 50px;}
 .section-qa nav.breadcrumb,
 .section-qa #page-title,
-.section-groups nav.breadcrumb{
+.section-groups nav.breadcrumb,
+.page-node #page-title{
 	display:none;
 }
 .section-qa #page{
@@ -2237,14 +2240,18 @@ nav.breadcrumb{
 }
 
 .page-node #content{
-	border: 1px solid #ccc !important;
-	padding: 0 10px;
 	color: #585858;
 	font-size: 12px;
 	line-height: 20px;
 }
+.page-node #content article.node{
+	padding: 8px 10px 0 10px;
+	border: 1px solid #ccc !important;
+	border-top: 2px solid #1dc7db !important
+}
 .page-node #content .field-name-field-image img{
 	max-width: 660px;
+	max-height: 334px;
 }
 .page-node #content p{
 	margin: 0
@@ -2258,7 +2265,8 @@ nav.breadcrumb{
 }
 .page-node #content .comments__title,
 #node_wiki_full_group_tech h3,
-.node .field-label{
+.node .field-label,
+.sbq-field-label{
 	display: inline-block;
 	padding: 0 10px;
 	height: 29px;
@@ -2271,8 +2279,8 @@ nav.breadcrumb{
 	font-size: 16px;
 	min-width: 90px;
 }
-#comment-wrapper .comment__title{
-
+.page-node #content .comments__title{
+	margin-top: 0
 }
 #comment-form{
 	position: relative;
@@ -2340,4 +2348,192 @@ nav.breadcrumb{
 }
 #comment-wrapper .rate-widget-yesno .last a{
 	background: url(../images/n-thumbs-up.png) no-repeat -104px center;
+}
+.page-node #content{
+	padding: 0!important
+}
+.page-node nav.breadcrumb{
+	display: block!important;
+	padding-left: 10px;
+	margin-bottom: 12px;
+	background: url(../images/h.png) no-repeat 10px center;
+}
+.page-node nav.breadcrumb{
+	padding-left: 33px;
+}
+.page-node nav.breadcrumb li{
+	padding-right: 18px;
+	margin-right: 10px;
+	background: url(../images/more.png) no-repeat right center;
+}
+.page-node.node-type-wiki .field-name-field-image{
+	width: 270px;
+	height: 188px;
+	overflow: hidden;
+	float: left;
+	margin-right: 15px;
+	border: 1px solid #ccc
+}
+.page-node.node-type-wiki .field-name-field-image img{
+	max-width: 270px;
+	max-height: 188px;
+}
+.page-node.node-type-wiki .field-name-body h1#sbq-page-title{
+	height: 48px;
+	line-height: 48px;
+	text-align: center;
+	color: #343434;
+	font-size: 20px;
+	font-weight: bold;
+}
+.page-node.node-type-wiki .field-name-body .sbq-field-label{
+	margin-top: 0;
+	background: none;
+	text-align: left;
+	display: block;
+	padding-right: 0;
+	margin-bottom: 6px
+}
+.sbq-field-label span {
+    background-color: #1DC7DB;
+    display: inline-block;
+    float: left;
+    padding: 0 10px;
+}
+.sbq-field-label i {
+    background-color: #1DC7DB;
+    display: inline-block;
+    float: right;
+    height: 1px;
+    margin-left: 10px;
+    margin-top: 14px;
+    width: 42%;
+}
+.page-node .sbq-field_video_warpper:after,
+.page-node .sbq-field_video_warpper:before{
+	clear: both;
+	content: "";
+	display: table;
+}
+.page-node .sbq-field_video_warpper{
+	width: 565px;
+	height: 286px;
+	overflow: hidden;
+	padding: 0 3px;
+	margin-top: 20px;
+}
+.page-node .sbq-field_video_warpper .field-label,
+#node_wiki_child_full_group_content .sbq-group-content-tab .field-label,
+#node_wiki_child_full_group_content .sbq-field_video_warpper{
+	margin-top: 0
+}
+.page-node .sbq-field_video_warpper .field-items{
+	margin-top: 10px;
+}
+.page-node .sbq-field-video-list .field-items{
+	background-color: #222222;
+}
+.page-node .sbq_field_title_list{
+	background-color: #2b2b2b;
+	position: relative;
+}
+.page-node .sbq_field_title_list .more-link{
+	bottom: 5px;
+	top: auto;
+	right: 12px;
+}
+.page-node #content .more-link a{
+	color: #cfcfcf;
+	background: url(../images/wm.png) no-repeat right center;
+}
+.page-node .sbq-field-video-list{
+	width: 318px;
+	float: left;
+}
+.page-node .sbq_field_title_list{
+	width: 240px;
+	float: left;
+	margin-top: 39px;
+	padding:8px 10px;
+	height: 247px;
+}
+.sbq_field_title_list .sbq-wiki-video-field-label{
+	color: #f0f0f0;
+	font-weight: bold;
+}
+.page-node .sbq_field_title_list .field-item a{
+	color: #e0e0e0
+}
+.page-node .sbq_field_title_list .field-item a:hover,
+.page-node .sbq_field_title_list .field-item a.active{
+	color: #16b4c7
+}
+.page-node .sbq-field-video-list .field-items{
+	overflow: hidden;
+}
+.page-node .sbq-field_video_warpper object,
+.page-node .sbq-field_video_warpper embed,
+.page-node .sbq-field_video_warpper .sbq-field-video-list .field-item,
+.page-node .sbq-field_video_warpper .media-youku-outer-wrapper,
+.page-node .sbq-field_video_warpper .media-youku-preview-wrapper{
+	width: 311px!important;
+	height: 240px!important;
+}
+.page-node .sbq-field-video-list .field-item{
+	margin: 4px;
+}
+.page-node .sbq-field_video_warpper .media-youku-preview-wrapper{
+	background-color: #2b2b2b;
+}
+.page-node .sbq_field_title_list .field-item{
+	height: 20px;
+	line-height: 20px;
+}
+.page-node .sbq_field_title_list .field-item img{
+
+	vertical-align: middle;
+}
+
+.page-node #node_wiki_full_group_tech .sbq-group-tech-tab h2{
+	display: inline-block;
+	padding: 0 5px;
+	color: #8d8d8d;
+	cursor: pointer;
+}
+.page-node #node_wiki_full_group_tech .sbq-group-tech-tab h2.active{
+	background: url(../images/arrows.png) no-repeat bottom center;
+	color: #585858
+}
+#node_wiki_full_group_tech .views-row{
+	height: 30px;
+	line-height: 30px;
+	border-bottom: 1px dashed #ccc;
+	overflow: hidden;
+}
+#node_wiki_full_group_tech .views-row.views-row-last{
+	border: none;
+}
+#node_wiki_full_group_tech .views-row a{
+	color: #585858;
+	display: inline-block;
+	width: 565px;
+}
+#node_wiki_full_group_tech .view-id-wiki{
+	border: 1px solid #cccccc;
+	border-top: 2px solid #1dc7db;
+	padding: 0 10px;
+}
+#node_wiki_full_group_tech .view-display-id-report_eva,
+#node_wiki_child_full_group_content .sbq-field_video_warpper{
+	display: none;
+}
+#node_wiki_child_full_group_content .sbq-group-content-tab{
+	background: url(../images/arrows.png) no-repeat 38px 35px;
+	height: 41px;
+}
+#node_wiki_child_full_group_content .sbq-group-content-tab.n{
+	background: url(../images/arrows.png) no-repeat 141px 35px;
+}
+#node_wiki_child_full_group_content .wiki-field{
+	border-top: 2px solid #1dc7db;
 }
