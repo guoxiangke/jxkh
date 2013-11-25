@@ -1,4 +1,3 @@
-
 .sbq-clearfix {
  *zoom:1
 }
@@ -7,7 +6,13 @@ a:focus {
 }
 #page,
 .region-bottom {
-	width: 960px;
+	width: 980px;
+}
+#main {
+	padding-top: 19px;
+}
+#page {
+	padding: 0px 10px 10px 10px;
 }
 .sbq-clearfix:before,
 .sbq-clearfix:after {
@@ -177,12 +182,6 @@ li {
 }
 #header .sbq-center.sbq-width.sbq-clearfix {
 	position: relative;
-}
-#main {
-	padding-top: 19px;
-}
-#page {
-	padding-bottom: 10px;
 }
 .two-sidebars .region-sidebar-first {
 	width: 182px;
@@ -1174,16 +1173,12 @@ ul.quicktabs-tabs.quicktabs-style-arrows {
 #block-views-my-qa-hottest-block .view-id-my_qa,
 #block-views-my-group-hottest-block .view-id-my_group,
 #block-views-blog-block-1 .view-display-id-block_1 {
+	float: left;
+	width: 100%;
 	border: 1px solid #cccccc;
 	border-top: none;
 	padding: 0 11px;
 	position: relative;
-}
-.more-link {
-	position: absolute;
-	right: 0;
-	top: -23px;
-	z-index: 1;
 }
 .view .more-link {
 	font-size: 12px;
@@ -1543,12 +1538,6 @@ ul.quicktabs-tabs.quicktabs-style-arrows li a:hover {
 #block-sbq-commons-sbq-user-profile {
 	position: relative;
 }
-#block-views-news-block-2 .more-link,
-#block-views-news-block-1 .more-link,
-#block-views-new-groups-doctor-new .more-link {
-	top: 4px;
-	right: 5px
-}
 .view.more-link a {
 	color: #fff
 }
@@ -1591,32 +1580,12 @@ ul.quicktabs-tabs.quicktabs-style-arrows li a:hover {
 #sbq-user-carousel .carousel-indicators li.active {
 	background-color: #16B4C7;
 }
-#body-add-more-wrapper {
+/*#body-add-more-wrapper {
 	background: url(../images/pb.png) no-repeat 57px 28px;
-}
-#body-add-more-wrapper label {
-	background: url(../images/post.png) no-repeat left center;
-	padding-left: 29px;
-	font-size: 16px;
-	color: #585858;
-	margin-bottom: 15px;
-}
-#body-add-more-wrapper .form-textarea-wrapper {
-	border: 1px solid #60d8e6;
-	background: url(../images/pb.png) no-repeat 0 0;
-}
-#edit-body-und-0-value {
-	width: 443px;
-	height: 54px;
-	padding: 7px;
-	color: #a3a3a3;
-	resize: none;
-	max-width: 443px;
-	max-height: 54px;
-	min-width: 443px;
-	min-height: 54px;
-	border: none;
-}
+}*/
+
+
+
 #body-add-more-wrapper .grippie,
 #edit-field-tags {
 	display: none;
@@ -1627,23 +1596,6 @@ ul.quicktabs-tabs.quicktabs-style-arrows li a:hover {
 }
 #block-sbq-commons-sbq-quick-ask #question-node-form {
 	position: relative;
-}
-#block-sbq-commons-sbq-quick-ask #edit-actions--2 {
-	position: absolute;
-	right: 0;
-	top: 36px;
-	z-index: 1
-}
-#block-sbq-commons-sbq-quick-ask #edit-submit--2 {
-	width: 56px;
-	height: 56px;
-	background: none;
-	background-color: #168a9b;
-	color: #FFF;
-	line-height: 56px;
-	text-align: center;
-	margin: 0;
-	border: none;
 }
 #block-sbq-commons-recommond-patients {
 	position: relative;
@@ -1657,15 +1609,6 @@ ul.quicktabs-tabs.quicktabs-style-arrows li a:hover {
 #block-views-blog-block .more-link {
 	top: 4px;
 	right: 10px;
-}
-#block-sbq-commons-recommond-doctors .more-link a,
-#block-sbq-commons-recommond-patients .more-link a,
-#block-views-blog-block .more-link a,
-#block-views-new-groups-doctor-new .more-link a,
-#block-views-news-block-1 .more-link a,
-#block-views-news-block-2 .more-link a {
-	padding-right: 15px;
-	background: url(../images/wm.png) no-repeat right center;
 }
 #block-sbq-commons-recommond-doctors .sbq_recommond_friends,
 #block-sbq-commons-recommond-patients .sbq_recommond_friends,
@@ -2185,8 +2128,7 @@ nav.breadcrumb {
 }
 .view-display-id-hottest_block div {
 }
-.view-display-id-hottest_block .more-link a,
-#content .more-link a {
+.view-display-id-hottest_block .more-link a {
 	background: url(../images/more.png) no-repeat right center;
 	padding-right: 14px;
 }
