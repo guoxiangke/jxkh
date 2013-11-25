@@ -203,7 +203,6 @@ function sbq_user_relationships_follow($account = NULL, $roles = NULL, $is_page 
   }
   if ($is_page) {
     $pages = pager_default_initialize(db_query($query)->rowCount(), $count_of_page);
-    dpm($pages);
     $result = db_query_range($query, $pages * $count_of_page, $count_of_page)->fetchAllAssoc('uid');
   } else {
     $result = db_query($query)->fetchAllAssoc('uid');
