@@ -4,7 +4,7 @@
 .section-content #content {
 	float: left;
 	width: 100%;
-	padding: 20px !important;
+	padding: 10px !important;
 	background: #FFF;
 	/*	border: none !important;
 */	overflow: hidden;
@@ -193,7 +193,7 @@
 }
 .comment-wrapper .form-textarea-wrapper {
 	float: left;
-	width: 920px;
+	width: 100%;
 	border-left: 1px #ccc solid;
 	border-right: 1px #ccc solid;
 	border-bottom: 1px #ccc solid;
@@ -207,6 +207,14 @@
 	padding: 5px;
 	border: none !important;
 	font-size: 12px;
+}
+#comment-form textarea {
+ width:;
+	height: 76px;
+	border: 1px solid #cccccc;
+	border-right: none;
+	resize: none;
+	padding: 2px 5px;
 }
 .comment-wrapper .form-actions {
 	float: left;

@@ -7,12 +7,14 @@ a:focus {
 #page,
 .region-bottom {
 	width: 980px;
+	background: #FFF;
 }
 #main {
 	padding-top: 19px;
 }
 #page {
 	padding: 0px 10px 10px 10px;
+	background: #FFFFFF;
 }
 .sbq-clearfix:before,
 .sbq-clearfix:after {
@@ -2083,11 +2085,11 @@ ul.quicktabs-tabs.quicktabs-style-arrows li a:hover {
 nav.breadcrumb {
 	display: none;
 }
-.section-square #page,
+/*.section-square #page,
 .section-users #page,
 .section-content #page {
 	background-color: #fff
-}
+}*/
 .view-display-id-hottest_block .views-row:after,
 .view-display-id-hottest_block .views-row:before {
 	clear: both;
@@ -2302,11 +2304,11 @@ nav.breadcrumb {
 	font-size: 12px;
 	line-height: 20px;
 }
-.page-node #content article.node {
+/*.page-node #content article.node {
 	padding: 8px 10px 0 10px;
 	border: 1px solid #ccc !important;
 	border-top: 2px solid #1dc7db !important
-}
+}*/
 .page-node #content .field-name-field-image img {
 	max-width: 660px;
 	max-height: 334px;
@@ -2348,14 +2350,7 @@ nav.breadcrumb {
 	top: 25px;
 	right: 0;
 }
-#comment-form textarea {
-	width: 590px;
-	height: 76px;
-	border: 1px solid #cccccc;
-	border-right: none;
-	resize: none;
-	padding: 2px 5px;
-}
+
 #comment-form .grippie {
 	display: none;
 }
