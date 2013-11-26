@@ -412,9 +412,19 @@ function sbq_commons_user_relationships_ui_remove_ajax($viewer_id, $rid, $viewd_
     sbq_commons_ajax_response('success', '找不到此关系！', NULL, render($html));
   }
   user_relationships_delete_relationship($relationship, $user);
-  drupal_set_message(user_relationships_get_message('removed', $relationship));
-  $html = sbq_commons_user_relationship_view(user_load($viewd_id), NULL, NULL);
-  sbq_commons_ajax_response('success', 'success', NULL, render($html));
+//  drupal_set_message(user_relationships_get_message('removed', $relationship));
+//  $html = sbq_commons_user_relationship_view(user_load($viewd_id), NULL, NULL);
+//  sbq_commons_ajax_response('success', 'success', NULL, render($html));
+  $path = $_GET['q'];
+
+  if ($position = strpos($path, 'destination=')) {
+    if ($token = substr($path, $position, strlen($path))) {
+      $token = str_replace('destination=', '', $token);
+      $commands[] = ajax_command_replace('.' . $token, '已移除');
+      return array( '#type' => 'ajax', '#commands' => $commands );
+    }
+  }
+  ajax_deliver('success');
 }
 
 /**
@@ -579,7 +589,7 @@ EOF;
       unset($question_node_form['body']['und']['0']['summary']);
       unset($question_node_form['field_departments']);
       $block_html = '<div class="sbq-question-node-add-form">'
-          . '<div class="sbq-user-add-post">'.l('发布文章','node/add/blog').'</div>'
+          . '<div class="sbq-user-add-post">' . l('发布文章', 'node/add/blog') . '</div>'
           . render($question_node_form)
           . '</div>';
       break;
@@ -609,12 +619,12 @@ EOF;
 
       $block_html = '<div class="sbq-user-menu">'
           . '<ul class="menu nav">'
-          . '<li class="menu__item is-leaf first leaf sbq-user-menu-post"><a href="/user/'.$user->uid.'#block-quicktabs-user-group" class="menu__link">我的帖子</a><span class="sbq-count"><a href="#" class="sbq-count-link">'.$user_post_count.'条</a></span></li>'
-          . '<li class="menu__item is-leaf leaf sbq-user-menu-status"><a href="/user/'.$user->uid.'#block-quicktabs-message" class="menu__link">我的动态</a><span class="sbq-count"><a href="#" class="sbq-count-link">5条</a></span></li>'
-          . '<li class="menu__item is-leaf leaf sbq-user-menu-blog"><a href="/user/'.$user->uid.'#block-views-blog-my-blog-block" class="menu__link">我的文章</a><span class="sbq-count"><a href="#" class="sbq-count-link">'.$user_blog_count.'篇</a></span></li>'
+          . '<li class="menu__item is-leaf first leaf sbq-user-menu-post"><a href="/user/' . $user->uid . '#block-quicktabs-user-group" class="menu__link">我的帖子</a><span class="sbq-count"><a href="#" class="sbq-count-link">' . $user_post_count . '条</a></span></li>'
+          . '<li class="menu__item is-leaf leaf sbq-user-menu-status"><a href="/user/' . $user->uid . '#block-quicktabs-message" class="menu__link">我的动态</a><span class="sbq-count"><a href="#" class="sbq-count-link">5条</a></span></li>'
+          . '<li class="menu__item is-leaf leaf sbq-user-menu-blog"><a href="/user/' . $user->uid . '#block-views-blog-my-blog-block" class="menu__link">我的文章</a><span class="sbq-count"><a href="#" class="sbq-count-link">' . $user_blog_count . '篇</a></span></li>'
           //. '<li class="menu__item is-leaf leaf sbq-user-menu-group"><a href="/groups/my" class="menu__link">我的小组</a><span class="sbq-count"><a href="#" class="sbq-count-link">5个</a></span></li>'
-          . '<li class="menu__item is-leaf last leaf sbq-user-menu-relationship'.$relationship_li_active.'"><a href="/user/' . $user->uid . '/relationship" class="menu__link'.$relationship_link_active.'">我的圈子</a><span class="sbq-count"><a href="#" class="sbq-count-link">'.$user_relationship_count.'条</a></span></li>'
-          . '<li class="menu__item is-leaf last leaf sbq-user-menu-points'.$points_li_active.'"><a href="/user/' . $user->uid . '/points" class="menu__link'.$points_link_active.'">我的积分</a><span class="sbq-count"><a href="#" class="sbq-count-link">'.$user_point_count.'</a></span></li>'
+          . '<li class="menu__item is-leaf last leaf sbq-user-menu-relationship' . $relationship_li_active . '"><a href="/user/' . $user->uid . '/relationship" class="menu__link' . $relationship_link_active . '">我的圈子</a><span class="sbq-count"><a href="#" class="sbq-count-link">' . $user_relationship_count . '条</a></span></li>'
+          . '<li class="menu__item is-leaf last leaf sbq-user-menu-points' . $points_li_active . '"><a href="/user/' . $user->uid . '/points" class="menu__link' . $points_link_active . '">我的积分</a><span class="sbq-count"><a href="#" class="sbq-count-link">' . $user_point_count . '</a></span></li>'
           . '</ul>'
           . '</div>';
       break;
@@ -622,7 +632,9 @@ EOF;
       $ids = _sbq_commons_user_recommonds_friends_ids(USER_CERTIFIED_DOCTOR_RID);
       $friends = user_load_multiple($ids);
       $block_html = '<div class="view"> <div class="view-content">';
-      foreach ($friends as $key => $value) {
+      foreach ($friends as
+            $key =>
+            $value) {
         //勋章
         $user_badges = '';
         if (module_exists('user_badges')) {
@@ -662,7 +674,9 @@ EOF;
       $ids = _sbq_commons_user_recommonds_friends_ids(USER_PATIENT_RID);
       $friends = user_load_multiple($ids);
       $block_html = '<div class="view"> <div class="view-content">';
-      foreach ($friends as $key => $value) {
+      foreach ($friends as
+            $key =>
+            $value) {
         $account_profile = profile2_load_by_user($value, 'doctor_profile');
         $picture = sbq_commons_user_avart($value);
         $follow = sbq_commons_user_relationships_ajax($value->uid);
@@ -673,7 +687,8 @@ EOF;
         // 关注疾病
         $account_disease = '';
         if ($profile = profile2_load_by_user($value, 'main')) {
-          foreach ($profile->field_tags_disease['und'] as $tid) {
+          foreach ($profile->field_tags_disease['und'] as
+                $tid) {
             $term = taxonomy_term_load($tid);
             $account_disease .= $term->name;
           }
@@ -748,7 +763,9 @@ function sbq_commons_user_disease_tag_add_ajax($tag_name = '') {
       taxonomy_term_save($term);
       $tid = $term->tid;
     } else {
-      foreach ($term as $key => $value) {
+      foreach ($term as
+            $key =>
+            $value) {
         $tid = $value->tid;
       }
     }
@@ -756,32 +773,38 @@ function sbq_commons_user_disease_tag_add_ajax($tag_name = '') {
     //set term to the user
     $profile = profile2_load_by_user($user->uid, 'main');
     $index = count($profile->field_tags_disease['und']);
-    $profile->field_tags_disease['und'][$index] = array('tid'=>$tid);
+    $profile->field_tags_disease['und'][$index] = array(
+        'tid' => $tid );
     profile2_save($profile);
     $li_html = '<li>'
-    .'<a href="/%E7%96%BE%E7%97%85/'.urlencode($tag_name).'" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">'.$tag_name.'</a>'
-    .'<span class="sba-user-tag-del">'
-    .'<a href="/user/ajax/tags/'.$tid.'/delete">-</a>'
-    .'</span>'
-    .'</li>';
+        . '<a href="/%E7%96%BE%E7%97%85/' . urlencode($tag_name) . '" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">' . $tag_name . '</a>'
+        . '<span class="sba-user-tag-del">'
+        . '<a href="/user/ajax/tags/' . $tid . '/delete">-</a>'
+        . '</span>'
+        . '</li>';
   }
 
   $commands = array();
   $commands[] = ajax_command_replace(NULL, $li_html);
-  $page = array( '#type' => 'ajax', '#commands' => $commands );
+  $page = array(
+      '#type' => 'ajax',
+      '#commands' => $commands );
   ajax_deliver($page);
 }
 
 /*
  * Delete Disease tags for User Center
  */
+
 function sbq_commons_user_disease_tag_delete_ajax($tid = 0) {
   global $user;
 
   if ($tid > 0 && $user->uid > 0) {
     //unset term from the user
     $profile = profile2_load_by_user($user->uid, 'main');
-    foreach ($profile->field_tags_disease['und'] as $key => $value) {
+    foreach ($profile->field_tags_disease['und'] as
+          $key =>
+          $value) {
       if ($value['tid'] == $tid) {
         $delete_key = $key;
       }
@@ -792,7 +815,9 @@ function sbq_commons_user_disease_tag_delete_ajax($tid = 0) {
 
   $commands = array();
   $commands[] = ajax_command_replace(NULL, theme('status_messages'));
-  $page = array( '#type' => 'ajax', '#commands' => $commands );
+  $page = array(
+      '#type' => 'ajax',
+      '#commands' => $commands );
   ajax_deliver($page);
 }
 
@@ -817,10 +842,13 @@ function sbq_commons_app_down() {
 /*
  * get node count by user and type
  */
-function sbq_commons_get_count ($uid=0, $type='') {
+
+function sbq_commons_get_count($uid = 0, $type = '') {
   $rtn = 0;
   if ($uid > 0 && strlen(trim($type)) > 0) {
-    $rtn = db_query('SELECT count(nid) FROM {node} WHERE uid = :uid AND type = :type', array(':uid' => $uid, ':type' => $type))->fetchCol();
+    $rtn = db_query('SELECT count(nid) FROM {node} WHERE uid = :uid AND type = :type', array(
+        ':uid' => $uid,
+        ':type' => $type ))->fetchCol();
   }
   return $rtn[0];
 }

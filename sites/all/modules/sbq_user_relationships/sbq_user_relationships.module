@@ -144,14 +144,15 @@ function sbq_user_relationships_theme() {
  * @todo remove test data
  */
 
-function sbq_user_relationships_profile($account) {
+function sbq_user_relationships_profile($info) {
   module_load_include('inc', 'sbq_commons', 'sbq_commons_og_ui');
+  $account = $info['user'];
   $image = sbq_commons_user_avart($account);
   $profile['name'] = $account->name;
   if (module_exists('user_badges')) {
     $profile['bedges'] = user_badges_for_uid($account->uid);
   }
-  $profile['follow'] = sbq_user_relationships_action_ajax($account->uid);
+  $profile['follow'] = $info['relstionship_action'];
   if (in_array(USER_PATIENT_RID, array_keys($account->roles))) {
     if ($user_item = profile2_load_by_user($account, 'customer_profile') && !empty($user_item) && isset($user_item->field_tags_disease['und'])) {
       foreach ($user_item->field_tags_disease['und'] as $tid) {
@@ -181,46 +182,10 @@ function sbq_user_relationships_profile($account) {
     $profile['disease'] = $items['disease'];
   }
   $profile['follow'] = $items['follow'];
-  return theme('sbq_user_relationships_profile', array( 'image' => $image,
+  $build = theme('sbq_user_relationships_profile', array( 'image' => $image,
       'profile' => $profile ));
-}
 
-/*
- * 我的圈子
- */
-
-function sbq_user_relationships_follow($account = NULL, $roles, $is_page = TRUE, $count_of_page = 10) {
-  if (!$account) {
-    global $user;
-    $account = $user;
-  } elseif (!is_object($account)) {
-    $account = user_load($account);
-  }
-
-  if ($roles) {
-    // current user is doctor
-    if (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($account->roles))) {
-      
-    }//current user is patient
-    else if (in_array(USER_PATIENT_RID, array_keys($account->roles))) {
-      
-    }
-//
-//    $query = "SELECT uid from {users_roles} roles WHERE "
-//        . "roles.uid in (SELECT r.requestee_id FROM {user_relationships} r WHERE r.requester_id = {$account->uid} AND ) "
-//        . "roles.uid in (SELECT r.requester_id FROM {user_relationships} r WHERE r.requestee_id = {$account->uid})"
-//        . "and  roles.rid=" . $roles;
-  } else {
-    $query = "SELECT r.requestee_id as uid FROM {user_relationships} r WHERE r.requester_id = {$account->uid}";
-  }
-  if ($is_page) {
-    $pages = pager_default_initialize(db_query($query)->rowCount(), $count_of_page);
-    $result = db_query_range($query, $pages * $count_of_page, $count_of_page)->fetchAllAssoc('uid');
-  } else {
-    $result = db_query($query)->fetchAllAssoc('uid');
-  }
-  dpm($result);
-  return user_load_multiple(array_keys($result));
+  return $build;
 }
 
 /*
@@ -303,6 +268,8 @@ function sbq_user_relationships_action_ajax($viewed_id, $type = 'all', $account 
  */
 
 function sbq_user_relationships_action_between_user($viewer, $viewed, $action_types = NULL) {
+  drupal_add_library('system', 'drupal.ajax');
+  module_load_include('inc', 'sbq_user_relationships', 'sbq_user_relationships_ui.theme');
   if ($viewer->uid == $viewed->uid) {
     return;
   }
@@ -378,15 +345,28 @@ function sbq_user_relationships_action_between_user($viewer, $viewed, $action_ty
 //                  )
 //              );
               //  dpm(user_relationships_type_translations($relationship));
-              $list[] = l(
-                  t(
-                      "Become %name's @rel_name", array(
-                      '%name' => format_username($viewed) ) + user_relationships_type_translations($relationship)), "relationship/ajax/{$viewer->uid}/request/{$relationship->rtid}/{$viewed->uid}", array(
-                  'html' => TRUE,
-                  'attributes' => array(
-                      'class' => array(
-                          'relationship_ajax_action' ) ),
-                  )
+//              $list[] = l(
+//                  t(
+//                      "Become %name's @rel_name", array(
+//                      '%name' => format_username($viewed) ) + user_relationships_type_translations($relationship)), "relationship/ajax/{$viewer->uid}/request/{$relationship->rtid}/{$viewed->uid}", array(
+//                  'html' => TRUE,
+//                  'attributes' => array(
+//                      'class' => array(
+//                          'relationship_ajax_action' ) ),
+//                  )
+//              );
+
+              $ajax_token = 'relationships_action' . $viewed->uid;
+//              $link = l('+移除', ltrim($match[2][0], "/") . '?destination=' . $ajax_token, array(
+//                  'attributes' => array( 'class' => 'use-ajax ' . $ajax_token ) ));
+//              $list[] = array(
+//                  'relationship_type' => $relationship->name,
+//                  'relationship_action' => l('关注', "relationship/ajax/{$viewer->uid}/request/{$relationship->rtid}/{$viewed->uid}?destination={$ajax_token}", array('attributes' => array( 'class' => 'use-ajax ' . $ajax_token ) )));
+
+              $list[] = array(
+                  'relationship_type' => $relationship->name,
+                  'relationship_action' => theme_sbq_user_relationships_add_user_link(array(
+                      'uid' => $viewer->uid, 'rid' => $relationship->rtid, 'vid' => $viewed->uid ))
               );
             }
           }
@@ -409,14 +389,20 @@ function sbq_user_relationships_action_between_user($viewer, $viewed, $action_ty
       if ($relationship->approved && !isset($list[$relationship->rid]) && user_relationships_ui_check_access('view', NULL, $relationship)) {
         if (user_relationships_ui_check_access('delete', NULL, $relationship)) {
           // @see user_relationships_remove_link
-          $list[$relationship->rid] = t('@rel_name (!remove_link)', array(
-              '@rel_name' => user_relationships_type_get_name($relationship) . ($relationship->is_oneway ? ($relationship->requester_id == $viewer->uid ? t(' (You to Them)') : t(' (Them to You)')) : NULL),
-              '!remove_link' => l(t('移除'), 'relationship/ajax/' . $viewer->uid . '/remove/' . $relationship->rid . '/' . $viewed->uid, array(
-                  'attributes' => array(
-                      'class' => array(
-                          'class' => 'relationship_ajax_action' ) ) )),
-              //   '!remove_link' => drupal_get_form('sbq_user_relationships_ui_remove_ajax', $viewer, $relationship)
-          ));
+//          $list[$relationship->rid] = t('@rel_name (!remove_link)', array(
+//              '@rel_name' => user_relationships_type_get_name($relationship) . ($relationship->is_oneway ? ($relationship->requester_id == $viewer->uid ? t(' (You to Them)') : t(' (Them to You)')) : NULL),
+//              '!remove_link' => l(t('移除'), 'relationship/ajax/' . $viewer->uid . '/remove/' . $relationship->rid . '/' . $viewed->uid, array(
+//                  'attributes' => array(
+//                      'class' => array(
+//                          'class' => 'relationship_ajax_action' ) ) )),
+//              //   '!remove_link' => drupal_get_form('sbq_user_relationships_ui_remove_ajax', $viewer, $relationship)
+//          ));
+        
+          $list[] = array(
+              'relationship_type' => $relationship->name,
+              'relationship_action' => theme_sbq_user_relationships_remove_link(array(
+                  'uid' => $viewer->uid, 'rid' => $relationship->rtid, 'vid' => $viewed->uid ))
+          );
         } else {
           $list[$relationship->rid] = user_relationships_type_get_name($relationship) . ($relationship->is_oneway ? ($relationship->requester_id == $viewer->uid ? t(' (You to Them)') : t(' (Them to You)')) : NULL);
         }
@@ -448,6 +434,10 @@ function sbq_user_relationships_my_relstionships($account = NULL) {
   return count($approved) + count($no_approved);
 }
 
+/*
+ * @see user_relationships_page
+ */
+
 function sbq_user_relstionships_users($account = NULL, $rtid = NULL) {
   global $user;
   if (!$account || !is_object($account) || !$account->uid) {
@@ -474,49 +464,66 @@ function sbq_user_relstionships_users($account = NULL, $rtid = NULL) {
 
   $options = array(
       'include_user_info' => TRUE,
-      'paging' => variable_get('user_relationships_relationships_per_page', 16),
+      'paging' => variable_get('user_relationships_relationships_per_page', 10),
   );
 
   $relationships = user_relationships_load($args, $options);
 
-//  if ($account->uid == $user->uid) {
-//    $msg = isset($relationship_type) ? t("My @rel_name_plural", user_relationships_type_translations($relationship_type)) : t("My relationships");
-//  } else {
-//    $msg = isset($relationship_type) ? t("%username's @rel_name", array( '%username' => format_username($account) ) + user_relationships_type_translations($relationship_type)) : t("%username's relationships", array(
-//            '%username' => format_username($account) ));
-//  }
-//  drupal_set_title($msg, PASS_THROUGH);
-
- // $header = user_relationships_ui_get_table_header(user_relationships_ui_check_access('delete', $account, $relationship_type));
-
   $rows = array();
   foreach ($relationships as $relationship) {
-    $rows[$relationship->rid] = user_relationships_ui_get_table_row($relationship, $account);
-    if (count($rows[$relationship->rid]) < count($header)) {
-      // Add an empty space to the operations table row.
-      $rows[$relationship->rid][] = '&nbsp;';
+    $rows[$relationship->rid] = sbq_user_relationships_user_action($relationship, $account);
+  }
+  return $rows;
+}
+
+/**
+ * 
+ * @global type $user
+ * @param type $relationship
+ * @param type $account
+ * @return type
+ */
+function sbq_user_relationships_user_action($relationship, $account) {
+  global $user;
+  module_load_include('inc', 'sbq_user_relationships', 'sbq_user_relationships_ui.theme');
+
+  $this_user_str = $account->uid == $relationship->requestee_id ? 'requester' : 'requestee';
+ // $that_user_str_id = $account->uid == $relationship->requester_id ? 'requester_id' : 'requestee_id';
+  $this_user = $relationship->{$this_user_str};
+
+  $row = array(
+      'user' => $this_user,
+      check_plain(user_relationships_type_get_name($relationship, FALSE, $relationship->is_oneway && $this_user_str == 'requester')),
+  );
+  $permission = $account->uid == $relationship->requestee_id ? 'request' : 'approve';
+  $links = array();
+  if ($relationship->approved) {
+    if (user_relationships_ui_check_access('delete', $account, $relationship)) {
+      $links[] = theme_sbq_user_relationships_remove_link(array( 'uid' => $account->uid,
+          'rid' => $relationship->rid, 'vid' => $relationship->{$this_user_str.'_id'} ));
+    }
+  } elseif (user_relationships_ui_check_access($permission, $account, $relationship)) {
+    if ($this_user_str == 'requestee') {
+      // Sent requests, display cancel link.
+      $links[] = theme('sbq_user_relationships_pending_request_cancel_link', array(
+          'uid' => $account->uid,
+          'rid' => $relationship->rid ));
+    } else {
+      // Received requests, display approve and decline links.
+      $links[] = theme('sbq_user_relationships_pending_request_approve_link', array(
+          'uid' => $account->uid, 'rid' => $relationship->rid ));
+      $links[] = theme('sbq_user_relationships_pending_request_disapprove_link', array(
+          'uid' => $account->uid, 'rid' => $relationship->rid ));
     }
   }
-  dpm($rows);
-  if (!empty($rtid)) {
-    $empty = t('You do not have any @rel_name_plural.', user_relationships_type_translations($relationship_type));
-  } else {
-    $empty = t('You do not have any relationships with other users.');
+  if (!empty($links)) {
+    $row[] = implode(' ', $links);
+  }
+  if (variable_get('user_relationships_show_user_pictures', 0)) {
+    array_unshift($row, theme('user_picture', array( 'account' => $this_user )));
   }
 
-  $output = array(
-      'list' => array(
-          '#theme' => 'table',
-          '#rows' => $rows,
-          '#header' => $header,
-          '#empty' => $empty,
-          '#attributes' => array( 'class' => array( 'user-relationships-listing-table' ) ),
-      ),
-      // Theme pager so that it uses the correct pager query.
-      'pager' => array(
-          '#markup' => theme('pager'),
-      )
-  );
 
-  return $output;
+
+  return $row;
 }

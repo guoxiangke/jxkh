@@ -3,7 +3,7 @@ description = "API for Sbq User Relationships."
 package = "Sbq User Relationships"
 core = 7.x
 
-files[]=user_relationships.test
+files[]=sbq_user_relationships_ui.theme.inc
 
 ; Information added by drupal.org packaging script on 2013-01-23
 version = "7.x-1.22"

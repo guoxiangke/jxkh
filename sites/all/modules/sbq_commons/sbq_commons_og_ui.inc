@@ -368,8 +368,6 @@ function sbq_commons_user_relationships_ui_request_ajax($viewer_id, $rid, $viewe
     if ($token = substr($path, $position, strlen($path))) {
       $token = str_replace('destination=', '', $token);
       $commands[] = ajax_command_replace('.' . $token, '已关注');
-//      $f = sbq_commons_user_relationships_ajax($viewed_id, 'remove');
-//      dpm($f);
       return array( '#type' => 'ajax', '#commands' => $commands );
     }
   }

@@ -14,6 +14,8 @@
     </div>
   <?php endif; ?>
   <?php foreach ($accounts as $account) : ?>
-    <?php print sbq_user_relationships_profile($account); ?>
+    <?php 
+    print sbq_user_relationships_profile($account); 
+    ?>
   <?php endforeach; ?>
 </div>

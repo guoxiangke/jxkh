@@ -32,12 +32,12 @@ function sbq_commons_menu() {
   $items['user/ajax/tags/%/delete'] = array(
       'title' => 'Delete Disease tags for User Center',
       'page callback' => 'sbq_commons_user_disease_tag_delete_ajax',
-      'page arguments' => array(
-          3),
+      'page arguments' => array(3),
       'access callback' => TRUE,
       'type' => MENU_CALLBACK,
   );
   $items['relationship/ajax/%/remove/%/%'] = array(
+      'delivery callback' => 'ajax_deliver',
       'title' => 'Remove relationship',
       'access callback' => 'user_relationships_ui_check_access',
       'access arguments' => array('delete'),
