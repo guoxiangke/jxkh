@@ -16,7 +16,6 @@ function sbq_user_relationships_follow_view($display, $account) {
       } elseif (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($account->roles))) {
         $accounts = sbq_user_relstionships_users($account, 1);
       }
-
       $accounts_view = array();
       foreach ($accounts as $key => $account) {
         $accounts_view[] = array(

@@ -421,7 +421,9 @@ function sbq_commons_user_relationships_ui_remove_ajax($viewer_id, $rid, $viewd_
     if ($token = substr($path, $position, strlen($path))) {
       $token = str_replace('destination=', '', $token);
       $commands[] = ajax_command_replace('.' . $token, '已移除');
-      return array( '#type' => 'ajax', '#commands' => $commands );
+      return array(
+          '#type' => 'ajax',
+          '#commands' => $commands );
     }
   }
   ajax_deliver('success');
@@ -633,38 +635,18 @@ EOF;
       $friends = user_load_multiple($ids);
       $block_html = '<div class="view"> <div class="view-content">';
       foreach ($friends as
-            $key =>
             $value) {
-        //勋章
-        $user_badges = '';
-        if (module_exists('user_badges')) {
-          $user_badges = user_badges_for_uid($value->uid);
-        }
-        // $account_profile = profile2_load_by_user($value, 'doctor_profile'); //@todo暂时无医院信息
-        //@todo暂时无医院信息
-
-        $picture = sbq_commons_user_avart($value);
-        $follow = sbq_commons_user_relationships_ajax($value->uid);
-        $user_badges = ''; //需要添加
-        if (module_exists('user_badges')) {
-          $user_badges = user_badges_for_uid($user->uid);
-        }
-        $block_html .= <<<EOF
-          <div class="sbq_recommond_friends">
-            <div class="picture">
-              $picture
-            </div>
-            <div class="details">
-              <span class="name">$value->name</span>
-              <span class="badges">{$user_badges}</span>
-              <span class="hospital">北京儿童医院</span>
-              <span class="follow">$follow</span>
-            </div>
-          </div>
-EOF;
+        $relatioships = sbq_user_relationships_action_between_user($user, $value);
+        $relatioships = reset($relatioships);
+        $accounts_view = array(
+            'user' => user_load($value->uid),
+            'relationship_type' => $relatioships['relationship_type'],
+            'relstionship_action' => $relatioships['relationship_action'],
+        );
+        $block_html .= sbq_user_relationships_profile($accounts_view);
       }
       if ($block_html) {
-        $block_html .= '</div><div class="more-link"><a href="/user">更多</a></div></div>';
+        $block_html .= '</div><div class="more-link"><a href="/user/' . $user->uid . '/relationship/recommand/doctor">更多</a></div></div>';
       }
       break;
     case 'recommond_patients':
@@ -674,41 +656,18 @@ EOF;
       $ids = _sbq_commons_user_recommonds_friends_ids(USER_PATIENT_RID);
       $friends = user_load_multiple($ids);
       $block_html = '<div class="view"> <div class="view-content">';
-      foreach ($friends as
-            $key =>
-            $value) {
-        $account_profile = profile2_load_by_user($value, 'doctor_profile');
-        $picture = sbq_commons_user_avart($value);
-        $follow = sbq_commons_user_relationships_ajax($value->uid);
-        $user_badges = '';
-        if (module_exists('user_badges')) {
-          $user_badges = user_badges_for_uid($value->uid);
-        }
-        // 关注疾病
-        $account_disease = '';
-        if ($profile = profile2_load_by_user($value, 'main')) {
-          foreach ($profile->field_tags_disease['und'] as
-                $tid) {
-            $term = taxonomy_term_load($tid);
-            $account_disease .= $term->name;
-          }
-        }
-        $block_html .= <<<EOF
-          <div class="sbq-recommond-friends ">
-            <div class="picture">
-              $picture
-            </div>
-            <div class="details">
-              <span class="name">$value->name</span>
-              <span class="badges">$user_badges</span>
-              <span class="attention">疾病</span>
-              <span class="follow">$follow</span>
-            </div>
-          </div>
-EOF;
+      foreach ($friends as $value) {
+        $relatioships = sbq_user_relationships_action_between_user($user, $value);
+        $relatioships = reset($relatioships);
+        $accounts_view = array(
+            'user' => user_load($value->uid),
+            'relationship_type' => $relatioships['relationship_type'],
+            'relstionship_action' => $relatioships['relationship_action'],
+        );
+        $block_html .= sbq_user_relationships_profile($accounts_view);
       }
       if ($block_html) {
-        $block_html .= '</div><div class="more-link"><a href="/user">更多</a></div></div>';
+        $block_html .= '</div><div class="more-link"><a href="/user/' . $user->uid . '/relationship/recommand/patient">更多</a></div></div>';
       }
       break;
     case 'app_page':
