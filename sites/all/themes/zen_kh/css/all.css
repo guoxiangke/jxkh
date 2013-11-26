@@ -60,7 +60,10 @@ nav {
 	margin: 0px 0px 15px 0px;
 	position: relative;
 }
-.more-link {
+.page-user #content .block .block {
+	margin: 0px;
+}
+#content .more-link {
 	position: absolute;
 	right: 0;
 	top: -23px;
@@ -221,23 +224,25 @@ nav {
 	display: none !important;
 }
 /*right*/ 
-#block-views-news-block-2 .more-link,
-#block-views-news-block-1 .more-link,
-#block-views-new-groups-doctor-new .more-link {
+.region-sidebar-second {
+	width: 260px !important;
+	margin-left: 700px !important;
 }
-.page-user .sidebars .region-sidebar-second .contextual-links-region .more-link {
+.region-sidebar-second .contextual-links-region .more-link,
+.region-sidebar-second .block-views .more-link {
 	background: #F00;
+	position: absolute;
 	top: 4px;
 	right: 5px;
 	background: url(../images/wm.png) no-repeat right center;
 }
-.page-user .sidebars .region-sidebar-second .contextual-links-region .more-link a {
+.region-sidebar-second .contextual-links-region .more-link a,
+.region-sidebar-second .block-views .more-link a {
 	padding-right: 15px;
 }
-
 /*------20063------*/
-.page-node-20063{ }
-
+.page-node-20063 {
+}
 /*admin login*/
 .region-bottom a em {
 	background: #999;

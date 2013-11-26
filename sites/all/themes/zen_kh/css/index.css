@@ -14,7 +14,6 @@ a:focus {
 }
 #page {
 	padding: 0px 10px 10px 10px;
-	background: #FFFFFF;
 }
 .sbq-clearfix:before,
 .sbq-clearfix:after {
@@ -1698,11 +1697,8 @@ ul.quicktabs-tabs.quicktabs-style-arrows li a:hover {
 .view-display-id-group_front_page .views-field-comment-count {
 	width: 50px;
 }
-.section-qa nav.breadcrumb,
-.section-qa #page-title,
-.section-groups nav.breadcrumb,
-.page-node #page-title {
-	display: none;
+.section-qa nav.breadcrumb, .section-qa #page-title, .section-groups nav.breadcrumb, /*.page-node #page-title*/ {
+ display: none;
 }
 .section-qa #page {
 	background-color: #fff
@@ -1711,11 +1707,7 @@ ul.quicktabs-tabs.quicktabs-style-arrows li a:hover {
 .section-square #content {
 	width: 688px;
 }
-.section-qa .region-sidebar-second,
-.section-users .region-sidebar-second {
-	width: 260px;
-	margin-left: 700px;
-}
+
 #block-quicktabs-wonderful-qa {
 	margin-bottom: 10px;
 }
@@ -2283,14 +2275,14 @@ nav.breadcrumb {
 #comment-wrapper>div {
 	margin: 10px 0;
 }
-#comment-wrapper .user-picture {
+/*#comment-wrapper .user-picture {
 	display: block;
 	width: 60px;
 	height: 60px;
 	overflow: hidden;
 	float: left;
 	margin-right: 10px;
-}
+}*/
 .view-new-groups .views-field-title a,
 .view-new-groups .views-field-group-group a {
 	font-weight: bold;
@@ -2323,7 +2315,7 @@ nav.breadcrumb {
 	color: #585858;
 	margin: 0
 }
-.page-node #content .comments__title,
+/*.page-node #content .comments__title,*/
 #node_wiki_full_group_tech h3,
 .node .field-label,
 .sbq-field-label {
@@ -2341,30 +2333,6 @@ nav.breadcrumb {
 }
 .page-node #content .comments__title {
 	margin-top: 0
-}
-#comment-form {
-	position: relative;
-}
-#comment-form #edit-actions {
-	position: absolute;
-	top: 25px;
-	right: 0;
-}
-
-#comment-form .grippie {
-	display: none;
-}
-#comment-form #edit-submit {
-	width: 76px;
-	height: 76px;
-	font-weight: bold;
-	border: none;
-	background-color: #168a9b;
-	text-align: center;
-	line-height: 76px;
-	color: #fff;
-	font-size: 16px;
-	padding: 0
 }
 #comment-wrapper>div {
 	border-bottom: 1px dashed #cacaca;
@@ -2406,7 +2374,7 @@ nav.breadcrumb {
 	padding: 0!important
 }
 .page-node nav.breadcrumb {
-	display: block!important;
+	display: block;
 	padding-left: 10px;
 	margin-bottom: 12px;
 	background: url(../images/h.png) no-repeat 10px center;
