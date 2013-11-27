@@ -557,7 +557,7 @@ function _sbq_commons_block_html($delta) {
       unset($list['actions']);
       $cpl = render($list);
       //操作
-      $opt_link = l('操作', 'user/');
+      $opt_link = l('操作', 'user/'.$user->uid.'/edit');
       $message_link = l('消息', 'user/');
       //勋章
       $user_badges = '';
@@ -634,8 +634,7 @@ EOF;
       $ids = _sbq_commons_user_recommonds_friends_ids(USER_CERTIFIED_DOCTOR_RID);
       $friends = user_load_multiple($ids);
       $block_html = '<div class="view"> <div class="view-content">';
-      foreach ($friends as
-            $value) {
+      foreach ($friends as $value) {
         $relatioships = sbq_user_relationships_action_between_user($user, $value);
         $relatioships = reset($relatioships);
         $accounts_view = array(
@@ -676,7 +675,8 @@ EOF;
           . '<h2>扫描二维码 即可下载应用</h2>'
           . '<image src="/' . drupal_get_path('module', 'sbq_commons') . '/images/products_mobileload.png">'
           . '</div>'
-          . '<iframe width="270" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=270&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1854950561&verifier=375b89d6&dpc=1"></iframe>';
+          . '<iframe width="270" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=270&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=3910809638&verifier=480ee660&dpc=1"></iframe>';
+    
       break;
     default:
       break;
@@ -722,9 +722,7 @@ function sbq_commons_user_disease_tag_add_ajax($tag_name = '') {
       taxonomy_term_save($term);
       $tid = $term->tid;
     } else {
-      foreach ($term as
-            $key =>
-            $value) {
+      foreach ($term as $key => $value) {
         $tid = $value->tid;
       }
     }
@@ -761,9 +759,7 @@ function sbq_commons_user_disease_tag_delete_ajax($tid = 0) {
   if ($tid > 0 && $user->uid > 0) {
     //unset term from the user
     $profile = profile2_load_by_user($user->uid, 'main');
-    foreach ($profile->field_tags_disease['und'] as
-          $key =>
-          $value) {
+    foreach ($profile->field_tags_disease['und'] as $key => $value) {
       if ($value['tid'] == $tid) {
         $delete_key = $key;
       }

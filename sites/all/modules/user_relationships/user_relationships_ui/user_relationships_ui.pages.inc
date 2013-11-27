@@ -38,7 +38,6 @@ function user_relationships_page($account = NULL, $rtid = NULL) {
   );
 
   $relationships = user_relationships_load($args, $options);
-  dpm($relationships);
   if ($account->uid == $user->uid) {
     $msg = isset($relationship_type)
            ? t("My @rel_name_plural", user_relationships_type_translations($relationship_type))
@@ -62,7 +61,6 @@ function user_relationships_page($account = NULL, $rtid = NULL) {
       $rows[$relationship->rid][] = '&nbsp;';
     }
   }
- dpm($rows);
   if (!empty($rtid)) {
     $empty = t('You do not have any @rel_name_plural.', user_relationships_type_translations($relationship_type));
   }
@@ -134,7 +132,6 @@ function user_relationships_pending_requests_page($column, $account = NULL) {
   $rows = array();
   foreach ($relationships as $relationship) {
     $rows[$relationship->rid] = user_relationships_ui_get_table_row($relationship, $account);
-    dpm($rows);
     if (count($rows[$relationship->rid]) < count($header)) {
       // Add an empty space to the operations table row.
       $rows[$relationship->rid][] = '&nbsp;';
