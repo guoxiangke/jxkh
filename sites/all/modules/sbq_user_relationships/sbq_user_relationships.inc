@@ -8,7 +8,7 @@
 
 function sbq_user_relationships_follow_view($display, $account) {
   global $user;
-  $account = $accounts_view = array();
+  $accounts = $accounts_view = array();
   switch ($display) {
     case 'default':
       if (in_array(USER_PATIENT_RID, array_keys($account->roles))) {
