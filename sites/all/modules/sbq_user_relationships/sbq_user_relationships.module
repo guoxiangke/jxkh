@@ -161,6 +161,7 @@ function sbq_user_relationships_profile($info) {
         $profile['disease'] = $account_disease;
       }
     }
+     $profile['disease'] = '感冒 发烧';
   } elseif (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($account->roles))) {
     if ($user_item = profile2_load_by_user($account, 'doctor_profile') && !empty($user_item) && isset($user_item->field_doctor_hospitals['und'])) {
       foreach ($user_item->field_doctor_hospitals['und'] as $tid) {
@@ -169,6 +170,7 @@ function sbq_user_relationships_profile($info) {
         $profile['hospital'] = $hospital;
       }
     }
+     $profile['hospital'] = '北京儿童精神病专科医院';
   }
 
   $items = $profile;
