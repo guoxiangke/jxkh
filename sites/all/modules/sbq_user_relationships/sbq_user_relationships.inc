@@ -8,7 +8,7 @@
 
 function sbq_user_relationships_follow_view($display, $account) {
   global $user;
-
+  $account = $accounts_view = array();
   switch ($display) {
     case 'default':
       if (in_array(USER_PATIENT_RID, array_keys($account->roles))) {
@@ -16,7 +16,7 @@ function sbq_user_relationships_follow_view($display, $account) {
       } elseif (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($account->roles))) {
         $accounts = sbq_user_relstionships_users($account, 1);
       }
-      $accounts_view = array();
+
       foreach ($accounts as $key => $account) {
         $accounts_view[] = array(
             'user' => user_load($account['user']->uid),
@@ -24,7 +24,7 @@ function sbq_user_relationships_follow_view($display, $account) {
             'relstionship_action' => $account[1],
         );
       }
-      return theme('sbq_user_relationships_list', array( 'accounts' => $accounts_view )). theme('pager');
+      return theme('sbq_user_relationships_list', array( 'accounts' => $accounts_view )) . theme('pager');
       break;
     case 'patient':
       if (in_array(USER_PATIENT_RID, array_keys($account->roles))) {
@@ -33,7 +33,7 @@ function sbq_user_relationships_follow_view($display, $account) {
         $accounts = sbq_user_relstionships_users($account, 3);
       }
 
-      $accounts_view = array();
+
       foreach ($accounts as $key => $account) {
         $accounts_view[] = array(
             'user' => user_load($account['user']->uid),
@@ -41,7 +41,7 @@ function sbq_user_relationships_follow_view($display, $account) {
             'relstionship_action' => $account[1],
         );
       }
-      return theme('sbq_user_relationships_list', array( 'accounts' => $accounts_view )).theme('pager');
+      return theme('sbq_user_relationships_list', array( 'accounts' => $accounts_view )) . theme('pager');
     case 'recommand_doctor':
       $accounts = sbq_user_relationships_recommond($account, USER_CERTIFIED_DOCTOR_RID);
       foreach ($accounts as $viewed) {
