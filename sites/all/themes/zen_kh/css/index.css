@@ -1056,6 +1056,7 @@ label {
 	padding: 0;
 	border: none!important;
 }
+.view-display-id-my_blog .view-content .views-row,
 #block-views-blog-my-blog-block .view-content .views-row {
 	height: 32px;
 	line-height: 32px;
@@ -1240,6 +1241,7 @@ html {
 }
 .block-quicktabs .views-field-title,
 .block-quicktabs .views-field-title-1,
+.view-display-id-my_blog .views-field-title,
 #block-views-blog-my-blog-block .views-field-title {
 	width: 286px;
 	max-width: 286px;
@@ -1247,6 +1249,7 @@ html {
 	overflow: hidden;
 	background: url(../images/dot.png) no-repeat 4px center;
 }
+.view-display-id-my_blog .views-field-title,
 #block-views-blog-my-blog-block .views-field-title {
 	float: left;
 }
@@ -1310,6 +1313,7 @@ html {
 	margin: 0
 }
 #block-views-message-block .views-field-timestamp,
+.view-display-id-my_blog .views-field-created,
 #block-views-blog-my-blog-block .views-field-created {
 	max-width: 134px;
 	overflow: hidden;
@@ -2108,6 +2112,7 @@ nav.breadcrumb {
  #quicktabs-container-user_group,
  #quicktabs-container-user_qa,
  #quicktabs-container-message,
+ .view-display-id-my_blog,
  #block-views-blog-my-blog-block .view-display-id-my_blog_block {
 	border-top: 2px solid #1dc7db;
 }
