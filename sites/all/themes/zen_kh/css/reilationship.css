@@ -114,7 +114,6 @@
 	font-weight:bold;
 }
 .page-user-relationship #content .sbq_user_relationships .sbq-user-relationship-profile .info .bedges{
-	display:inline-block;
 }
 .page-user-relationship #content .sbq_user_relationships .sbq-user-relationship-profile .info .hospital{
 	display:block;
@@ -131,4 +130,105 @@
 	width:16px;
 	height:16px;
 	margin-right:4px;
+}
+/*个人中心-推荐医生-推荐患者*/
+#block-sbq-commons-recommond-doctors .sbq-user-relationship-profile {
+	border-bottom:1px dashed #f2f2f2;
+	width:96%;
+	margin:0 2%;
+	overflow: hidden;
+}
+#block-sbq-commons-recommond-doctors .sbq-user-relationship-profile .image {
+	width:60px;
+	height:60px;
+	border:1px solid #b7b7b7;
+	margin:6px 10px 10px  5px;
+	float:left;
+} 
+#block-sbq-commons-recommond-doctors .sbq-user-relationship-profile .info{
+	float:left;
+
+}
+#block-sbq-commons-recommond-doctors .sbq-user-relationship-profile .info .name{
+	font-size:12px;
+	font-weight: bold;
+
+}
+#block-sbq-commons-recommond-doctors .sbq-user-relationship-profile .info .hospital{
+	font-size:12px;
+	color:#333;
+}
+#block-sbq-commons-recommond-doctors .sbq-user-relationship-profile .info .bedges .user_badges img {
+	width:16px;
+	height:16px;
+	margin-right:4px;
+}
+#block-sbq-commons-recommond-doctors .sbq-user-relationship-profile .info .follow{
+	display:block;
+}
+#block-sbq-commons-recommond-doctors .sbq-user-relationship-profile .info .follow a{
+	font-size:12px;
+	color:#000;
+	font-weight: bold;
+}
+#block-sbq-commons-recommond-patients .sbq-user-relationship-profile {
+	border-bottom:1px dashed #f2f2f2;
+	width:96%;
+	margin:0 2%;
+	overflow: hidden;
+}
+#block-sbq-commons-recommond-patients .sbq-user-relationship-profile .image {
+	width:60px;
+	height:60px;
+	border:1px solid #b7b7b7;
+	margin:6px 10px 10px  5px;
+	float:left;
+} 
+#block-sbq-commons-recommond-patients .sbq-user-relationship-profile .info{
+	float:left;
+
+}
+#block-sbq-commons-recommond-patients .sbq-user-relationship-profile .info .name{
+	font-size:12px;
+	font-weight: bold;
+
+}
+#block-sbq-commons-recommond-patients .sbq-user-relationship-profile .info .disease{
+	font-size:12px;
+	color:#333;
+}
+#block-sbq-commons-recommond-patients .sbq-user-relationship-profile .info .bedges .user_badges img {
+	width:16px;
+	height:16px;
+	margin-right:4px;
+}
+#block-sbq-commons-recommond-patients .sbq-user-relationship-profile .info .follow{
+	display:block;
+}
+#block-sbq-commons-recommond-patients .sbq-user-relationship-profile .info .follow a{
+	font-size:12px;
+	color:#000;
+	font-weight: bold;
+}
+/*勋章*/
+.sbq-bedges{
+	margin:20px 0 20px 20px ;
+}
+.sbq-bedges .bedges {
+	width:22%;
+	margin:0 1%;
+	float:left;
+	background:#f9f9f9;
+	border-radius:5px;
+	box-shadow:0 0 5px #ccc;
+	padding:15px;
+
+}
+.sbq-bedges .bedges .picture {
+	text-align:center;
+	border-bottom:1px dashed #ccc;
+}
+.sbq-bedges .bedges .info{
+	padding-top:1em;
+
 }
