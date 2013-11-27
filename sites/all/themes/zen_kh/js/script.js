@@ -18,7 +18,7 @@ Drupal.behaviors.my_custom_behavior = {
   attach: function(context, settings) {
   	//alert('test-请删除本行，从本行开始添加js！注意封装、及用途注释。谢谢~');
     // Place your code here.
-    
+
     $('#myCarousel').carousel({
 		  interval: 4000
 		})
@@ -65,9 +65,9 @@ Drupal.behaviors.my_custom_behavior = {
       //个人中心滚动菜单固定
       $('#block-sbq-commons-sbq-user-menu').fixedDiv('fixed')
     }
-    
 
-    $('.views-field-field-tags-disease li').hover(function(){
+
+    $('.views-field-field-tags-disease li').live('hover', function(){
         $(this).children('span').toggleClass('show');
         $(this).children('a').toggleClass('hover');
 
@@ -122,8 +122,8 @@ Drupal.behaviors.my_custom_behavior = {
         var today = new Date();
         var todayString = today.getFullYear() +'-'+today.getMonth() + '-' + today.getDate();
         var nqs  = '<div class="views-row views-row-1 views-row-odd views-row-first">';
-            nqs += '<div class="views-field views-field-title"><span class="field-content">'+qs+'</span>  </div>';  
-            nqs += '  <div class="views-field views-field-value">        <span class="field-content">0</span>  </div> '; 
+            nqs += '<div class="views-field views-field-title"><span class="field-content">'+qs+'</span>  </div>';
+            nqs += '  <div class="views-field views-field-value">        <span class="field-content">0</span>  </div> ';
             nqs += '  <div class="views-field views-field-field-mark-question-resolved">        <div class="field-content">未解决</div>  </div>  ';
             nqs += '  <div class="views-field views-field-created">        <span class="field-content">'+todayString+'</span>  </div>  </div>';
 

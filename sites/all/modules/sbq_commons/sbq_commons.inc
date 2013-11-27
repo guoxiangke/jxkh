@@ -736,7 +736,7 @@ function sbq_commons_user_disease_tag_add_ajax($tag_name = '') {
         'tid' => $tid );
     profile2_save($profile);
     $li_html = '<li>'
-        . '<a href="#' . urlencode($tag_name) . '" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">' . $tag_name . '</a>'
+        . '<a href="#" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">' . $tag_name . '</a>'
         . '<span class="sba-user-tag-del">'
         . '<a href="/user/ajax/tags/' . $tid . '/delete">-</a>'
         . '</span>'
