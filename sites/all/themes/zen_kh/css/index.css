@@ -43,7 +43,7 @@ li { list-style: none; }
 #secondary-menu { line-height: 25px; position: fixed; top: 0; left: 0; z-index: 10; height: 25px; width: 100%; float: none; background: url(../images/hbg.png) repeat-x 0 0; font-size: 12px; color: #fff }
 #secondary-menu a { color: #fff; }
 #secondary-menu h2 { display: none; }
-#secondary-menu ul { width: 960px; margin: 0 auto; display: block; text-align: right; }
+#secondary-menu ul { float:none; width: 960px; margin: 0 auto; display: block; text-align: right; }
 .header__region.region.region-header { position: absolute; right: 0; bottom: 8px; width: 206px; height: 36px; clear: none; background: url(../images/search.png) no-repeat 0 0; }
 #edit-search-block-form--2 { border: none; margin: 0 0 0 5px; padding: 0 0 0 5px; width: 160px; height: 28px; line-height: 28px; }
 #edit-search-block-form--2:focus { border: none; }

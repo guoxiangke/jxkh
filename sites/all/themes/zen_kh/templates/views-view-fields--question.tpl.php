@@ -73,9 +73,63 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
 	<div class="title"><?php print $title; ?></div>
 	<?php endif?>
 	<div class="q-body clearfix">
-		<div class="votes pull-left"><?php print $value_1; ?></div>
 		<div class="q-margin">
+			<div class="q-info clearfix">
+				<div class="q-author-block pull-right">
+					<?php
+          if($node->created == $node->changed){
+            //not be changed,only show who create it.
+            ?>
+					<div class="author-item q-author pull-left"> <?php print $picture; ?>
+						<div class="commit pull-left">
+							<div class="timestamp"><span class="create"><?php print $name; //Created by ?></span></div>
+						</div>
+					</div>
+					<?php
+          }elseif($node->revision_uid == $node->uid){
+            //only show the author had edit it.
+            ?>
+					<div class="author-item q-author pull-left"> <?php print $picture; ?>
+						<div class="commit pull-left">
+							<div class="timestamp"><span class="create"><?php print $name; //Edited by ?></span></div>
+						</div>
+					</div>
+					<?php
+          }else{
+            //show who edit ,who create.
+            $editor = user_load($node->revision_uid);
+             ?>
+					<div class="author-item q-author pull-left"> <?php print $picture; ?>
+						<div class="commit pull-left"> 
+							<!--                 <div class="timestamp"><span class="create">Create</span>< ?php //print $created; ?></div>
+                <div class="username">< ?php //print $name; ?></div> -->
+							
+							<div class="timestamp"><span class="create"><?php print $name; //Created by ?></span></div>
+						</div>
+					</div>
+					<?php
+          }
+          ?>
+				</div>
+				<div class="links">
+					<?php if(0&&user_access('Authorized to share a node')) : ?>
+					<span class="share"><a class="btn btn-mini use-ajax" href="<?php print $share_a_node; ?>"><?php print t('Share this question') ?></a></span>
+					<?php endif;?>
+					<?php if(isset($accept_link)): ?>
+					<span class="accept"><?php print $accept_link; ?></span>
+					<?php endif;?>
+					<?php if(!empty($edit_node)): ?>
+					<span class="edit"><?php print $edit_node; ?></span>
+					<?php endif;?>
+					<?php if(!empty($delete_node)): ?>
+					<span class="delete"><?php print $delete_node; ?></span>
+					<?php endif;?>
+				</div>
+			</div>
 			<div class="q-content span12">
+				<div class="head_wrap"><span><?php print format_date($node->revision_timestamp, 'sbq_date_medium_revert'); ?></span>
+					<div class="votes pull-left"><?php print $value_1; ?></div>
+				</div>
 				<div class="q-body">
 					<p><?php print $body; ?></p>
 				</div>
@@ -85,64 +139,12 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
 				<div class="tags"><span class="tags-label"><?php echo t('Tags');?>:</span>
 					<?php if(isset($field_tags)) print $field_tags; ?>
 				</div>
-				<div class="q-info clearfix">
-					<div class="q-author-block pull-right">
-						<?php
-          if($node->created == $node->changed){
-            //not be changed,only show who create it.
-            ?>
-						<div class="author-item q-author pull-left"> <?php print $picture; ?>
-							<div class="commit pull-left">
-								<div class="timestamp"><span class="create"><?php print $name; //Created by ?></span><span><?php print $created; ?></span></div>
-							</div>
-						</div>
-						<?php
-          }elseif($node->revision_uid == $node->uid){
-            //only show the author had edit it.
-            ?>
-						<div class="author-item q-author pull-left"> <?php print $picture; ?>
-							<div class="commit pull-left">
-								<div class="timestamp"><span class="edit"><?php print $name; //Edited by ?></span><span><?php print format_date($node->revision_timestamp, 'sbq_date_medium_revert'); ?></span></div>
-							</div>
-						</div>
-						<?php
-          }else{
-            //show who edit ,who create.
-            $editor = user_load($node->revision_uid);
-             ?>
-						<div class="author-item q-author pull-left"> <?php print $picture; ?>
-							<div class="commit pull-left"> 
-								<!--                 <div class="timestamp"><span class="create">Create</span>< ?php //print $created; ?></div>
-                <div class="username">< ?php //print $name; ?></div> -->
-								
-								<div class="timestamp"><span class="create"><?php print $name; //Created by ?></span><span><?php print $created; ?></span></div>
-							</div>
-						</div>
-						<?php
-          }
-          ?>
-					</div>
-					<div class="links">
-						<?php if(0&&user_access('Authorized to share a node')) : ?>
-						<span class="share"><a class="btn btn-mini use-ajax" href="<?php print $share_a_node; ?>"><?php print t('Share this question') ?></a></span>
-						<?php endif;?>
-						<?php if(isset($accept_link)): ?>
-						<span class="accept"><?php print $accept_link; ?></span>
-						<?php endif;?>
-						<?php if(!empty($edit_node)): ?>
-						<span class="edit"><?php print $edit_node; ?></span>
-						<?php endif;?>
-						<?php if(!empty($delete_node)): ?>
-						<span class="delete"><?php print $delete_node; ?></span>
-						<?php endif;?>
-					</div>
-				</div>
 				<?php
 foreach ( $view->result as $q_a_item) {//both for question & answers.
  if(isset($q_a_item->comments) && isset($q_a_item->comments['#form']['nid']) && $row->nid==$q_a_item->comments['#form']['nid']['#value']){
    ?>
 				<div class="comments_<?php echo $q_a_item->_field_data['nid']['entity']->type;//question/answer?>"> <?php print render($q_a_item->comments['#content']);?>
-					<div class="clearfix">
+					<div class="comments_btn">
 						<div class="q-feedback"> <a class="comment_button btn btn-mini" data-trigger="click" data-placement='bottom'><i class="icon-comment icon-small"></i><?php echo t('comments');?></a> </div>
 						
 						<!--  <div class="q-feedback">
