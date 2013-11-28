@@ -69,6 +69,7 @@
 	border:0;
 	box-shadow:none;
 	font-weight:bold;
+	
 }
 .page-user-relationship #content .tabs-secondary > li a:hover {
 	background:url(../images/arrows.png) no-repeat center bottom;
@@ -215,20 +216,23 @@
 	margin:20px 0 20px 20px ;
 }
 .sbq-bedges .bedges {
-	width:22%;
-	margin:0 1%;
+	width:48%;
+	margin:0 1% 10px 1%;
 	float:left;
-	background:#f9f9f9;
-	border-radius:5px;
-	box-shadow:0 0 5px #ccc;
 	padding:15px;
+	border-bottom:1px solid #ccc;
+
 
 }
 .sbq-bedges .bedges .picture {
 	text-align:center;
-	border-bottom:1px dashed #ccc;
+	border-right:1px dashed #ccc;
+	width:158px;
+	float:left;
 }
 .sbq-bedges .bedges .info{
 	padding-top:1em;
-
+	float:left;
+	padding-left:10px;
+	width:260px;
 }

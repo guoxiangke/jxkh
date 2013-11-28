@@ -128,14 +128,14 @@ li { list-style: none; }
 #block-user-login ul.sbq_custom_login a { display: block; width: 40px; height: 40px; outline: none; }
 #user-login-form .form-actions.form-wrapper { margin-top: 10px; }
 #user-login-form .form-type-password { margin-bottom: 5px; }
-.sbq_custom_login li:nth-child(1) a { background: url("../images/qq.png") no-repeat scroll center center; }
-.sbq_custom_login li:nth-child(2) a { background: url("../images/sina.png") no-repeat scroll center center; }
+.sbq_custom_login li:nth-child(2) a { background: url("../images/qq.png") no-repeat scroll center center; }
+.sbq_custom_login li:nth-child(4) a { background: url("../images/sina.png") no-repeat scroll center center; }
 .sbq_custom_login li:nth-child(3) a { background: url("../images/renren.png") no-repeat scroll center center; }
-.sbq_custom_login li:nth-child(4) a { background: url("../images/kaxin.png") no-repeat scroll center center; }
-.sbq_custom_login li:nth-child(1) a:hover { background: #16b4c7 url("../images/qq1.png") no-repeat scroll center center; }
-.sbq_custom_login li:nth-child(2) a:hover { background: #16b4c7 url("../images/sina1.png") no-repeat scroll center center; }
+.sbq_custom_login li:nth-child(1) a { background: url("../images/kaxin.png") no-repeat scroll center center; }
+.sbq_custom_login li:nth-child(2) a:hover { background: #16b4c7 url("../images/qq1.png") no-repeat scroll center center; }
+.sbq_custom_login li:nth-child(4) a:hover { background: #16b4c7 url("../images/sina1.png") no-repeat scroll center center; }
 .sbq_custom_login li:nth-child(3) a:hover { background: #16b4c7 url("../images/renren1.png") no-repeat scroll center center; }
-.sbq_custom_login li:nth-child(4) a:hover { background: #16b4c7 url("../images/kaixin1.png") no-repeat scroll center center; }
+.sbq_custom_login li:nth-child(1) a:hover { background: #16b4c7 url("../images/kaixin1.png") no-repeat scroll center center; }
 #myCarousel,
 #block-views-new-groups-doctor-new { position: relative; }
 #myCarousel .item:before,
