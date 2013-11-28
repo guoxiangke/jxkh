@@ -62,7 +62,6 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
 	<div class="title"><?php print $title; ?></div>
 	<?php endif?>
 	<div class="q-body clearfix">
-		<div class="votes pull-left"><?php print $value; ?></div>
 		<div class="q-margin">
 			<div class="q-info clearfix">
 				<div class="q-author-block pull-right">
@@ -93,7 +92,7 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
               );
               print theme_image_style($variables); ?>
 						<div class="commit pull-left">
-							<div class="timestamp"><span class="edit">Edited by <?php print l(format_username($editor),'user/'.$editor->uid); ?></span><span><?php print format_date($node->revision_timestamp, 'sbq_date_medium_revert'); ?> </span></div>
+							<div class="timestamp"><span class="create">Edited by <?php print l(format_username($editor),'user/'.$editor->uid); ?></span><!--<span><?php //print format_date($node->revision_timestamp, 'sbq_date_medium_revert'); ?></span>--></div>
 						</div>
 					</div>
 					<div class="author-item q-author pull-left"> <?php print $picture; ?>
@@ -110,18 +109,19 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
 				</div>
 			</div>
 			<div class="q-content span12">
-				<div class="head_wrap"> <span class="time"><?php print $created; ?></span>
-					<div class="links">
-						<?php if(!empty($edit_node)): ?>
-						<span class="edit"><?php print $edit_node; ?></span>
-						<?php endif;?>
-						<?php if(!empty($delete_node)): ?>
-						<span class="delete"><?php print $delete_node; ?></span>
-						<?php endif;?>
-					</div>
+				<div class="head_wrap"><span class="time"><?php print $created; ?></span>
+					<div class="votes pull-left"><?php print $value; ?></div>
 				</div>
 				<div class="q-body">
 					<p><?php print $body; ?></p>
+				</div>
+				<div class="links">
+					<?php if(!empty($edit_node)): ?>
+					<span class="edit"><?php print $edit_node; ?></span>
+					<?php endif;?>
+					<?php if(!empty($delete_node)): ?>
+					<span class="delete"><?php print $delete_node; ?></span>
+					<?php endif;?>
 				</div>
 				<?php if(!empty($field_attachments)):?>
 				<div class="q-files"><?php print $field_attachments; ?></div>
@@ -138,7 +138,7 @@ foreach ( $view->result as $q_a_item) {//both for question & answers.
  if(isset($q_a_item->comments) && $row->nid==$q_a_item->comments['#form']['nid']['#value']){
    ?>
 				<div class="comments_<?php echo $q_a_item->_field_data['nid']['entity']->type;//question/answer?>"> <?php print render($q_a_item->comments['#content']);?>
-					<div class="clearfix">
+					<div class="comments_btn">
 						<div class="q-feedback"> <a class="comment_button btn btn-mini" data-trigger="click" data-placement='bottom'><i class="icon-comment icon-small"></i><?php echo t('comments');?></a> </div>
 					</div>
 					<div class="comment_textarea"> <a href="#" class="close"><i class="icon-remove-sign"></i></a> <?php print (render($q_a_item->comments['#form'])); ?> </div>
