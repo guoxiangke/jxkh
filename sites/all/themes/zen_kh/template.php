@@ -171,8 +171,9 @@ function zen_kh_form_alter(&$form, &$form_state, $form_id) {
     $form['anonymous_link'] = array('#markup' => theme('item_list', array('items' => $items, 'attributes' => array('class' => 'sbq_anonymous_visit_button'))), '#weight' => 10000);
 
     $form['actions']['#weight'] = 6;
-    $form['links']['#weight'] = 7;
-    $form['submitted']['#weight'] = 8;
+    $form['links']['#weight'] = 7; 
+    $form['captcha']['#weight'] = 6;   
+    $form['submitted']['#weight'] = 9;
     $form['name']['#attributes']['placeholder'] = '邮箱/用户名';
     $form['pass']['#attributes']['placeholder'] = '请输入密码';
   }
@@ -191,6 +192,21 @@ function zen_kh_preprocess_html(&$variables) {
     //http://adaptivethemes.com/how-to-add-css-files-in-drupal-7
     //http://friendlymachine.net/posts/2011/add-stylesheet-drupal-theme
     drupal_add_css(drupal_get_path('theme', 'zen_kh') . '/css/register.css', array('group' => CSS_THEME));
+
+    //module_load_include('inc', 'profile2_regpath', 'registration_form');
+
+    $customer_register_form = drupal_get_form('user_register_form');
+    // $customer_profiles = profile2_regpath_get_profiles('customer');
+    // $customer_register_form = _profile2_regpath_user_register($customer_profiles);
+    $variables['customer_register_form'] = drupal_render($customer_register_form);
+
+    $doctor_register_form = drupal_get_form('user_register_form');
+    // $doctor_profiles = profile2_regpath_get_profiles('doctor');
+    // $doctor_register_form = _profile2_regpath_user_register($doctor_profiles);
+    $variables['doctor_register_form'] = drupal_render($doctor_register_form);
+
+    $user_login_form = drupal_get_form('user_login');
+    $variables['user_login_form'] = drupal_render($user_login_form);
   }
 }
 
