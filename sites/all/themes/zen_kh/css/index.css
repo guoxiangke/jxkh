@@ -87,6 +87,8 @@ li { list-style: none; }
 .user_doctor_register_ajax:hover { color: #fff }
 #content #sbq-bd-list ul { padding-left: 30px; }
 #content #sbq-bd-list .block-views { float: left; width: 50%; margin-bottom: 0; padding-bottom: 40px; }
+#block-views-friend-activities-index,#block-views-exposure-platform-block-index{position: relative;}
+.page-index #block-views-friend-activities-index .more-link,.page-index #block-views-exposure-platform-block-index .more-link{right:10px;top:18px;}
 #block-views-friend-activities-index,
 .region.region-sidebar-first.column.sidebar { background-color: #fff }
 #block-views-exposure-platform-block-index { background-color: #f6f6f6 }

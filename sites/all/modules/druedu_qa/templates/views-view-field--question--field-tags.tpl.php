@@ -24,6 +24,6 @@
 ?>
 <?php
   foreach ($row->field_field_tags as $key => $tag) {
-    print '<span><a href="'.url('questions/tagged/').'?field_tags_tid='.$tag['rendered']['#title'].'">'.$tag['rendered']['#title'].'</a></span>';
+    print '<span class="sbq-qa-flag"><a href="'.url('questions/tagged/').'?field_tags_tid='.$tag['rendered']['#title'].'">'.$tag['rendered']['#title'].'</a></span>';
   }
 ?>
