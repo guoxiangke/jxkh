@@ -2,6 +2,17 @@
 nav {
 	outline: none;
 }
+/*all*/
+.page-index #page {
+	background: none;
+}
+.sidebar-second #content {
+	float: left;
+	width: 688px;
+	padding: 15px !important;
+	border: 1px #CCCCCC solid !important;
+	overflow: hidden;
+}
 /*login*/
 .page-customer-register .tabs-primary,
 .page-doctor-register .tabs-primary,
@@ -249,4 +260,9 @@ nav {
 	font-size: 24px;
 	font-weight: bold;
 	font-style: normal !important;
+}
+.region-bottom li {
+	float: left;
+	width: 100%;
+	line-height: 30px;
 }

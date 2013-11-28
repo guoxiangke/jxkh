@@ -29,7 +29,8 @@ $field->content should not contain any markup.
 If the variable contains markup, edit the View, go to "FORMAT", "Show:" and click "Settings", and uncheck "Provide default field wrapper elements" to remove all the generated markup for this View.
 */ //to see the fileds.
 ?>
-<?php /*foreach ($fields as $id => $field): ?>
+<?php 
+/*foreach ($fields as $id => $field): ?>
   <?php if (!empty($field->separator)): ?>
     <?php print $field->separator; ?>
   <?php endif; ?>
@@ -38,8 +39,10 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
     <?php print $field->label_html; ?>
     <?php print $field->content; ?>
   <?php print $field->wrapper_suffix; ?>
-<?php endforeach; */?>
+<?php endforeach; */
+?>
 <?php
+// dpm($fields);
   foreach ($fields as $id => $field) {
     $$id = $field->wrapper_prefix.$field->label_html.$field->content.$field->wrapper_suffix;
     if (!empty($field->separator)){
@@ -51,75 +54,28 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
   $node = node_load($nid);//answer node /q-node
   global $base_url, $user;
   $share_a_node = $base_url.'/node/'.$row->nid.'/share/'.$user->uid.'/nojs';
-  $accept_class = "";
-  if(isset($accept_link)){ 
-  	$accept_class .= " is-accept";
+
+  //field_ask_anonymous
+      // $q_author = $name;
+    if($fields['field_ask_anonymous']->content == 1) {
+      $name = '<a href="#">匿名提问</a>';
+    }  
+  //user pic default
+  if(!strlen($picture)) {
+    $account = user_load($fields['nid']->raw);
+    $picture = variable_get('user_picture_default', '');
+    $picture = theme('image_style',array('style_name' => 'profile_small', 'path' => $picture));
   }
 ?>
 
-<div class="question clearfix<?php print $accept_class; ?>">
+<div class="question clearfix">
 	<?php if($node->type == 'question'):?>
 	<div class="title"><?php print $title; ?></div>
 	<?php endif?>
 	<div class="q-body clearfix">
-		<div class="votes pull-left"><?php print $value; ?></div>
+		<div class="votes pull-left"><?php print $value_1; ?></div>
 		<div class="q-margin">
-			<div class="q-info clearfix">
-				<div class="q-author-block pull-right">
-					<?php
-          if($node->created == $node->changed){
-            //not be changed,only show who create it.
-            ?>
-					<div class="author-item q-author pull-left"> <?php print $picture; ?>
-						<div class="commit pull-left">
-							<div class="timestamp"><span class="create"><?php print $name; //Created by ?></span></div>
-						</div>
-					</div>
-					<?php
-          }elseif($node->revision_uid == $node->uid){
-            //only show the author had edit it.
-            ?>
-					<?php
-          }else{
-            //show who edit ,who create.
-            $editor = user_load($node->revision_uid);
-             ?>
-					<div class="author-item q-author q-edit pull-left">
-						<?php 
-              $variables = array(
-                'style_name' => 'profile_small',
-                'path' =>$editor->picture->uri,
-
-              );
-              print theme_image_style($variables); ?>
-						<div class="commit pull-left">
-							<div class="timestamp"><span class="edit">Edited by <?php print l(format_username($editor),'user/'.$editor->uid); ?></span><span><?php print format_date($node->revision_timestamp, 'sbq_date_medium_revert'); ?> </span></div>
-						</div>
-					</div>
-					<div class="author-item q-author pull-left"> <?php print $picture; ?>
-						<div class="commit pull-left"> 
-							<!--                 <div class="timestamp"><span class="create">Create</span><?php print $created; ?></div>
-                <div class="username"><?php print $name; ?></div> -->
-							
-							<div class="timestamp"><span class="create"><?php print $name; //Created by ?></span><span><?php print $created; ?></span></div>
-						</div>
-					</div>
-					<?php
-          }
-          ?>
-				</div>
-			</div>
 			<div class="q-content span12">
-				<div class="head_wrap"> <span class="time"><?php print $created; ?></span>
-					<div class="links">
-						<?php if(!empty($edit_node)): ?>
-						<span class="edit"><?php print $edit_node; ?></span>
-						<?php endif;?>
-						<?php if(!empty($delete_node)): ?>
-						<span class="delete"><?php print $delete_node; ?></span>
-						<?php endif;?>
-					</div>
-				</div>
 				<div class="q-body">
 					<p><?php print $body; ?></p>
 				</div>
@@ -129,17 +85,76 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
 				<div class="tags"><span class="tags-label"><?php echo t('Tags');?>:</span>
 					<?php if(isset($field_tags)) print $field_tags; ?>
 				</div>
-				<?php if(isset($accept_link)): ?>
-				<span class="accept"><?php print $accept_link; ?></span>
-				<?php endif;?>
+				<div class="q-info clearfix">
+					<div class="q-author-block pull-right">
+						<?php
+          if($node->created == $node->changed){
+            //not be changed,only show who create it.
+            ?>
+						<div class="author-item q-author pull-left"> <?php print $picture; ?>
+							<div class="commit pull-left">
+								<div class="timestamp"><span class="create"><?php print $name; //Created by ?></span><span><?php print $created; ?></span></div>
+							</div>
+						</div>
+						<?php
+          }elseif($node->revision_uid == $node->uid){
+            //only show the author had edit it.
+            ?>
+						<div class="author-item q-author pull-left"> <?php print $picture; ?>
+							<div class="commit pull-left">
+								<div class="timestamp"><span class="edit"><?php print $name; //Edited by ?></span><span><?php print format_date($node->revision_timestamp, 'sbq_date_medium_revert'); ?></span></div>
+							</div>
+						</div>
+						<?php
+          }else{
+            //show who edit ,who create.
+            $editor = user_load($node->revision_uid);
+             ?>
+						<div class="author-item q-author pull-left"> <?php print $picture; ?>
+							<div class="commit pull-left"> 
+								<!--                 <div class="timestamp"><span class="create">Create</span>< ?php //print $created; ?></div>
+                <div class="username">< ?php //print $name; ?></div> -->
+								
+								<div class="timestamp"><span class="create"><?php print $name; //Created by ?></span><span><?php print $created; ?></span></div>
+							</div>
+						</div>
+						<?php
+          }
+          ?>
+					</div>
+					<div class="links">
+						<?php if(0&&user_access('Authorized to share a node')) : ?>
+						<span class="share"><a class="btn btn-mini use-ajax" href="<?php print $share_a_node; ?>"><?php print t('Share this question') ?></a></span>
+						<?php endif;?>
+						<?php if(isset($accept_link)): ?>
+						<span class="accept"><?php print $accept_link; ?></span>
+						<?php endif;?>
+						<?php if(!empty($edit_node)): ?>
+						<span class="edit"><?php print $edit_node; ?></span>
+						<?php endif;?>
+						<?php if(!empty($delete_node)): ?>
+						<span class="delete"><?php print $delete_node; ?></span>
+						<?php endif;?>
+					</div>
+				</div>
 				<?php
-      if(user_is_logged_in())
 foreach ( $view->result as $q_a_item) {//both for question & answers.
- if(isset($q_a_item->comments) && $row->nid==$q_a_item->comments['#form']['nid']['#value']){
+ if(isset($q_a_item->comments) && isset($q_a_item->comments['#form']['nid']) && $row->nid==$q_a_item->comments['#form']['nid']['#value']){
    ?>
 				<div class="comments_<?php echo $q_a_item->_field_data['nid']['entity']->type;//question/answer?>"> <?php print render($q_a_item->comments['#content']);?>
 					<div class="clearfix">
 						<div class="q-feedback"> <a class="comment_button btn btn-mini" data-trigger="click" data-placement='bottom'><i class="icon-comment icon-small"></i><?php echo t('comments');?></a> </div>
+						
+						<!--  <div class="q-feedback">
+        <a class="fed_button btn btn-mini btn-link" data-trigger="click" data-content="<?php //print htmlentities($value_1); ?>"><i class="icon-pencil icon-small"></i>Feedback</a>
+        </div> 
+ --> 
+						<!-- <a class="fed_button btn btn-mini btn-link"   data-content="<?php //print htmlentities($value_1); ?>"><i class="icon-pencil icon-small"></i>sdf</a> --> 
+						
+						<!--         <div class="feedback-wrapper">
+           <?//php print($value_1)?>
+        </div> --> 
+						
 					</div>
 					<div class="comment_textarea"> <a href="#" class="close"><i class="icon-remove-sign"></i></a> <?php print (render($q_a_item->comments['#form'])); ?> </div>
 				</div>
