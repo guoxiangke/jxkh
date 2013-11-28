@@ -250,10 +250,7 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
       $form['agree'] = array(
           '#type' => 'checkbox',
           '#title' => t('同意' . l('伤不起服务条款', "node/2789", array(
-                  'attributes' => array(
-                      'target' => '_blank',
-                      'class'
-                      => 'argee_regester' ) ))),
+                  'attributes' => array( 'target' => '_blank', 'class' => 'argee_regester' ) ))),
           '#default_value' => TRUE,
           '#weight' => 99.9
       );
@@ -974,11 +971,30 @@ function sbq_commons_node_view_alter(&$build) {
         array(
             $node->nid ) );
   }
-  if (og_is_group_type($build['#entity_type'], $build['#bundle']) && ($build['#bundle'] == 'general_group' || $build['#bundle'] == 'doctor_group')) {
-    $og_ui_status_link = sbq_og_ui_status_link($build['#entity_type'], $node->nid);
-    if ($og_ui_status_link !== FALSE) {
-      $build['ajax_link']['#markup'] = $og_ui_status_link;
-      unset($build['group_group'][0]);
+//  if (og_is_group_type($build['#entity_type'], $build['#bundle']) && ($build['#bundle'] == 'general_group' || $build['#bundle'] == 'doctor_group')) {
+//    $og_ui_status_link = sbq_og_ui_status_link($build['#entity_type'], $node->nid);
+//    if ($og_ui_status_link !== FALSE) {
+//      $build['ajax_link']['#markup'] = $og_ui_status_link;
+//      unset($build['group_group'][0]);
+//    }
+//  }
+
+  if (og_is_group_type($build['#entity_type'], $build['#bundle'])) {
+    switch ($build['#bundle']) {
+      case 'general_group':
+      case 'doctor_group':
+        $og_ui_status_link = sbq_og_ui_status_link($build['#entity_type'], $node->nid);
+        if ($og_ui_status_link !== FALSE) {
+          $build['ajax_link']['#markup'] = $og_ui_status_link;
+          unset($build['group_group'][0]);
+        }
+        break;
+      case 'activity':
+        $build['group_group'][0]['#title'] = '加入活动';
+        break;
+
+      default:
+        break;
     }
   }
 }

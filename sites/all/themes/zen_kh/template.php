@@ -166,7 +166,7 @@ function zen_kh_form_alter(&$form, &$form_state, $form_id) {
 
     $items = array();
     if (variable_get('user_register', USER_REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL)) {
-      $items[] = l(t('Visit anonymous'), 'center', array('attributes' => array('title' => t('Create a new user account.'))));
+      $items[] = l(t('Visit anonymous'), 'qa', array('attributes' => array('title' => t('Create a new user account.'))));
     }
     $form['anonymous_link'] = array('#markup' => theme('item_list', array('items' => $items, 'attributes' => array('class' => 'sbq_anonymous_visit_button'))), '#weight' => 10000);
 

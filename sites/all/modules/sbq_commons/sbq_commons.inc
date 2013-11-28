@@ -558,7 +558,8 @@ function _sbq_commons_block_html($delta) {
       $cpl = render($list);
       //操作
       $opt_link = l('操作', 'user/'.$user->uid.'/edit');
-      $message_link = l('消息', 'user/');
+     // $message_link = l('消息', 'user/');
+      $message_link = '';
       //勋章
       $user_badges = '';
       if (module_exists('user_badges')) {
@@ -566,7 +567,7 @@ function _sbq_commons_block_html($delta) {
       }
       $block_html = <<<EOF
                    <i class="option">$opt_link</i>
-                   <i class="message">$message_link</i>
+                 <!--  <i class="message">$message_link</i> -->
                    <div id="sbq_picture">$picture</div>
                    <div id="sbq_name">$user->name</div>
                    $cpl
@@ -621,11 +622,13 @@ EOF;
 
       $block_html = '<div class="sbq-user-menu">'
           . '<ul class="menu nav">'
-          . '<li class="menu__item is-leaf first leaf sbq-user-menu-post"><a href="/user/' . $user->uid . '#block-quicktabs-user-group" class="menu__link">我的帖子</a><span class="sbq-count"><a href="#" class="sbq-count-link">' . $user_post_count . '条</a></span></li>'
+          . '<li class="menu__item is-leaf first leaf sbq-user-menu-post">'
+          . '<a href="/user/' . $user->uid . '#block-quicktabs-user-group" class="menu__link">我的帖子</a>'
+          . '<span class="sbq-count"><a href="#" class="sbq-count-link">' . $user_post_count . '条</a></span></li>'
           . '<li class="menu__item is-leaf leaf sbq-user-menu-status"><a href="/user/' . $user->uid . '#block-quicktabs-message" class="menu__link">我的动态</a><span class="sbq-count"><a href="#" class="sbq-count-link">5条</a></span></li>'
           . '<li class="menu__item is-leaf leaf sbq-user-menu-blog"><a href="/user/' . $user->uid . '#block-views-blog-my-blog-block" class="menu__link">我的文章</a><span class="sbq-count"><a href="#" class="sbq-count-link">' . $user_blog_count . '篇</a></span></li>'
           //. '<li class="menu__item is-leaf leaf sbq-user-menu-group"><a href="/groups/my" class="menu__link">我的小组</a><span class="sbq-count"><a href="#" class="sbq-count-link">5个</a></span></li>'
-          . '<li class="menu__item is-leaf last leaf sbq-user-menu-relationship' . $relationship_li_active . '"><a href="/user/' . $user->uid . '/relationship" class="menu__link' . $relationship_link_active . '">我的圈子</a><span class="sbq-count"><a href="#" class="sbq-count-link">' . $user_relationship_count . '条</a></span></li>'
+          . '<li class="menu__item is-leaf last leaf sbq-user-menu-relationship' . $relationship_li_active . '"><a href="/user/' . $user->uid . '/relationship" class="menu__link' . $relationship_link_active . '">我的圈子</a><span class="sbq-count"><a href="#" class="sbq-count-link">' . $user_relationship_count . '个</a></span></li>'
           . '<li class="menu__item is-leaf last leaf sbq-user-menu-points' . $points_li_active . '"><a href="/user/' . $user->uid . '/points" class="menu__link' . $points_link_active . '">我的积分</a><span class="sbq-count"><a href="#" class="sbq-count-link">' . $user_point_count . '</a></span></li>'
           . '</ul>'
           . '</div>';
