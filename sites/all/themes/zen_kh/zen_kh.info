@@ -52,8 +52,9 @@ stylesheets[all][] = system.theme.css
 ; Then we add our own stylesheet.
 stylesheets[all][] = css/styles.css
 stylesheets[all][] = css/index.css
-stylesheets[all][] = css/news.css
 stylesheets[all][] = css/all.css
+stylesheets[all][] = css/news.css
+
 
 stylesheets[all][] = css/reilationship.css
 stylesheets[all][] = css/register.css
