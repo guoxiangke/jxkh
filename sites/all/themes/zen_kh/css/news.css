@@ -1,14 +1,14 @@
 /*news*/
-.section-content #page { }
-.section-content #content { float: left; width: 688px; padding: 15px !important; /*background: #FFF;*/ border: 1px #CCCCCC solid !important; overflow: hidden; }
-.section-content #content .breadcrumb { display: none !important; }
-.section-content #content .page__title { line-height: 26px; padding: 0px 0px 10px 0px; font-size: 20px; border-bottom: 1px solid #E5E5E5; font-weight: normal; text-align: center; }
-.section-content #content .view-mode-full { float: left; width: 100%; margin: 20px 0px 0px 0px; }
-/*.section-content */#content .view-mode-full .links { float: left; margin: 10px 0px 0px 0px; color: #666 }
-/*.section-content */#content .view-mode-full .links a { padding: 0px 5px; color: #0066CC; }
-.section-content #content .view-mode-full .field-type-text-with-summary { line-height: 26px; font-size: 14px; }
-.section-content #content .view-mode-full .field-type-text-with-summary p { margin: 1em 0px; text-indent: 2em; }
-.section-content #content .field-name-field-image { text-align: center; }
+.section-news #page { }
+.section-news #content { float: left; width: 688px; padding: 15px !important; /*background: #FFF;*/ border: 1px #CCCCCC solid !important; overflow: hidden; }
+.section-news #content .breadcrumb { display: none !important; }
+.section-news #content .page__title { line-height: 26px; padding: 0px 0px 10px 0px; font-size: 20px; border-bottom: 1px solid #E5E5E5; font-weight: normal; text-align: center; }
+.section-news #content .view-mode-full { float: left; width: 100%; margin: 20px 0px 0px 0px; }
+/*.section-news */#content .view-mode-full .links { float: left; margin: 10px 0px 0px 0px; color: #666 }
+/*.section-news */#content .view-mode-full .links a { padding: 0px 5px; color: #0066CC; }
+.section-news #content .view-mode-full .field-type-text-with-summary { line-height: 26px; font-size: 14px; }
+.section-news #content .view-mode-full .field-type-text-with-summary p { margin: 1em 0px; text-indent: 2em; }
+.section-news #content .field-name-field-image { text-align: center; }
 /*comment*/
 .comment-wrapper { float: left; width: 100%; margin: 10px 0px 0px 0px; }
 .comment-wrapper .title_wrap { float: left; width: 100%; height: 30px; border-top: 2px #E5E5E5 solid; border-bottom: 1px #E5E5E5 solid; }
@@ -47,18 +47,10 @@
 .comment-wrapper .form-type-textarea { margin: 0px; }
 .comment-wrapper .form-textarea-wrapper { float: left; width: 100%; border-left: 1px #ccc solid; border-right: 1px #ccc solid; border-bottom: 1px #ccc solid; }
 .comment-wrapper .grippie { display: none; }
-/*.comment-wrapper .comment-form.form-type-textarea textarea {
-	width: 100% !important;
-	line-height: 22px;
-	padding: 5px;
-	border: none !important;
-	font-size: 12px;
-	background: #F00;
-}*/
 #comments textarea { width: 579px; height: 75px; line-height: 22px; border: none; border-right: none; resize: none; padding: 5px; }
-.comment-wrapper .form-actions { float: left; width: 76px; height: 76px; line-height: 30px; margin: 0px; position: absolute; bottom: 0; right: 0; }
-.comment-wrapper .form-actions input { float: left; width: 76px; height: 76px; line-height: 76px; margin: 0px; padding: 0px; text-align: center; border: none !important; background: #168A9B; color: #FFF; font-size: 16px; }
-.comment-wrapper .message { float: left; width: 76px; height: 76px; line-height: 76px; margin: 0px; padding: 0px; text-align: center; background: #E5E5E5; color: #666; font-size: 16px; position: absolute; bottom: 0; right: 0; }
+#comments .form-actions { float: left; width: 76px; height: 76px; line-height: 30px; margin: 0px; position: absolute; bottom: 0; right: 0; background: #168A9B; }
+#comments .form-submit { float: left; width: 76px; height: 76px; line-height: 76px; margin: 0px; padding: 0px; text-align: center; border: none !important; background: #168A9B; color: #FFF; font-size: 16px; }
+#comments .message { float: left; width: 76px; height: 76px; line-height: 76px; margin: 0px; padding: 0px; text-align: center; background: #E5E5E5; color: #666; font-size: 16px; position: absolute; bottom: 0; right: 0; }
 #comment-form .grippie { display: none; }
 .comment-wrapper .throbber { display: none; }
 #comment-wrapper > div { float: left; margin: 0px; border: none; }
@@ -101,13 +93,14 @@
 .node-type-activity .node-activity .field-type-text-with-summary p { margin: 1em 0px !important; }
 .node-type-activity .node-activity .field-type-text-with-summary a { color: #0066CC; }
 /*------page-questions-------*/
+.page-qa #page-title { display: none; }
 .page-qa #content { padding: 0px !important; border: none !important; }
 .page-qa .ajax-progress { display: none; }
 .page-questions #content .view-question { float: left; width: 100%; }
 .page-questions #content .view-content { float: left; width: 100%; }
 .page-questions #content .question .title,
 .page-questions #content .question .title h2 { float: left; width: 100%; line-height: 30px; margin: 0px; font-size: 16px; font-weight: bold; }
-.page-questions #content .question .title { border-bottom: 2px #E5E5E5 solid; margin: 0px 0px 10px 0px; }
+.page-questions #content .question .title { border-bottom: 2px solid #1DC7DB; margin: 0px 0px 10px 0px; }
 /*questions list first*/
 
 .page-questions #content .view-display-id-single_question_page > .view-content .q-body .q-body { font-size: 14px; }
@@ -117,26 +110,52 @@
 /*.page-questions #content .view-content .question > .q-body {
 	margin: 10px 0px 0px 0px;
 }*/
-.page-questions #content .question .q-body > .pull-left { float: left; width: 20px; margin: 0px 10px 0px 0px; }
+.page-questions #content .question .q-body > .pull-left { float: left; width: 20px; margin: 0px 0px 0px 10px; }
 /*all questions right*/
-.page-questions #content .question .q-body .q-margin { float: left; width: 626px; position: relative; }
-.page-questions #content .question .q-body { float: left; width: 100%; padding: 5px 0px; word-break: break-all; font-size: 12px; }
+.page-questions #content .question .q-body .q-margin { float: left; width: 100%; position: relative; }
+.page-questions #content .question .q-body { float: left; width: 100%; line-height: 22px; padding: 5px 0px; word-break: break-all; font-size: 12px; }
 .page-questions #content .question .q-body p { margin: 0px; }
 .page-questions #content .question .tags { float: left; width: 100%; }
+.page-questions #content .question .links { float: left; width: 100%; display: none; }
+.page-questions #content .question .links .delete { float: right; }
+.page-questions #content .question .links a { border: none; color: #0066CC; }
 .page-questions #content .question .q-info { float: left; width: 60px; margin: 0px 10px 0px 0px; }
 .page-questions #content .question .q-info .author-item a,
 .page-questions #content .question .q-info .author-item img { float: left; width: 60px; height: 60px; border: none; }
-.page-questions #content .question .q-info .author-item span { float: left; width: 100%; margin: 0px; padding: 0px; font-size: 10px; color: #999; }
-.page-questions #content .question .q-info .create a { float: left; width: 100%; height: auto; line-height: 20px; font-size: 12px; text-align: center; font-weight: normal; word-break: break-all; word-wrap: break-word; }
-.page-questions #content .question .q-content { float: left; width: 556px; }
-/*.is-accept { background: #0CC; }
-*/.links,
-.comments_answer { float: left; width: 100%; }
+.page-questions #content .question .q-info .author-item span { float: left; width: 100%; margin: 0px; padding: 0px; }
+.page-questions #content .question .q-info .create a { float: left; width: 100%; height: auto; line-height: 20px; margin: 0px; padding: 0px; border-radius: 0; color: #0066CC; font-size: 12px; text-align: center; font-weight: normal; word-break: break-all; word-wrap: break-word; }
+.page-questions #content .question .q-content { float: left; width: 586px; overflow: hidden; }
+.page-questions #content .question .q-content .head_wrap { float: left; width: 100%; height: 26px; line-height: 26px; border-bottom: 1px #CCCCCC dotted; overflow: hidden; }
+.page-questions #content .question .q-content .head_wrap .time { float: left; color: #999; }
+.page-questions #content .question .q-content .head_wrap .votes { float: right; }
+.page-questions #content .question .q-content .head_wrap .votes ul { float: left; }
+.page-questions #content .question .q-content .head_wrap .votes ul li { float: left; margin: 0px 0px 0px 5px; }
+/*.is-accept { background: #0CC; }*/
+
+.page-questions #content .question .accept { float: left; width: 100%; }
 /*all answers*/
+.page-questions #content .attachment { float: left; width: 100%; }
+.page-questions #content .attachment h3 { float: left; width: 100%; height: 32px; line-height: 30px; margin: 0px; font-size: 14px; font-weight: normal; background: url(../images/t2.png) -14px 100% no-repeat; }
 .page-questions #content .view-question #answers .views-row { float: left; width: 100%; padding: 0px; background: none; border-bottom: 1px #CCCCCC dashed; }
 /*all edit*/
-.page-questions #content .question .field-widget-text-textarea label { float: left; width: 100%; height: 30px; line-height: 30px; margin: 0px; padding: 0px 0px 8px 0px; background: url(../images/t2.png) no-repeat -22px bottom; font-size: 14px; font-weight: bold; text-indent: 10px; }
 /*questions edit*/
+.page-questions #content .question .comments-wrapper { float: left; width: 100%; }
+.page-questions #content .question .comment_textarea label { float: left; width: 100%; height: 30px; line-height: 30px; margin: 0px; padding: 0px 0px 8px 0px; background: url(../images/t2.png) no-repeat -22px bottom; font-size: 14px; font-weight: bold; text-indent: 10px; }
+.page-questions #content .question .comment_textarea label .form-required { display: none; }
+.page-questions #content .question .comment_textarea .grippie { display: none; }
+.page-questions #content .question .comment_textarea .form-item { float: left; width: 100%; margin: 0px; position: relative; }
+#comments textarea { width: 579px; height: 75px; line-height: 22px; border: none; border-right: none; resize: none; padding: 5px; }
+#comments .form-actions { float: left; width: 76px; height: 76px; line-height: 30px; margin: 0px; position: absolute; bottom: 0; right: 0; background: #168A9B; }
+#comments .form-submit { float: left; width: 76px; height: 76px; line-height: 76px; margin: 0px; padding: 0px; text-align: center; border: none !important; background: #168A9B; color: #FFF; font-size: 16px; }
+#comments .message { float: left; width: 76px; height: 76px; line-height: 76px; margin: 0px; padding: 0px; text-align: center; background: #E5E5E5; color: #666; font-size: 16px; position: absolute; bottom: 0; right: 0; }
+#comment-form .grippie { display: none; }
+.comment-wrapper .throbber { display: none; }
+#comment-wrapper > div { float: left; margin: 0px; border: none; }
+/*comments_btn*/
+.page-questions #content .question .comments_btn { float: left; width: 100%; }
+.page-questions #content .question .comments_btn a { float: left; width: 60px; height: 26px; line-height: 26px; background: #168A9B; text-align: center; color: #FFF; cursor: pointer; }
+.page-questions #content .question .comment_textarea { float: left; width: 100%; }
+.page-questions #content .question .comment_textarea .comment-form { background: none; }
 .page-questions #content .answer-node-form { float: left; width: 100%; margin: 10px 0px 0px 0px; border: none; }
-border: 2px #0066CC solid;
+ border: 2px #0066CC solid;
 background: #999;
