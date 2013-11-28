@@ -171,8 +171,9 @@ function zen_kh_form_alter(&$form, &$form_state, $form_id) {
     $form['anonymous_link'] = array('#markup' => theme('item_list', array('items' => $items, 'attributes' => array('class' => 'sbq_anonymous_visit_button'))), '#weight' => 10000);
 
     $form['actions']['#weight'] = 6;
-    $form['links']['#weight'] = 7;
-    $form['submitted']['#weight'] = 8;
+    $form['links']['#weight'] = 7; 
+    $form['captcha']['#weight'] = 6;   
+    $form['submitted']['#weight'] = 9;
     $form['name']['#attributes']['placeholder'] = '邮箱/用户名';
     $form['pass']['#attributes']['placeholder'] = '请输入密码';
   }
