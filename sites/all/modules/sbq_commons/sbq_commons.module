@@ -309,6 +309,10 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
     case 'answer_node_form':
       $form['body']['und'][0]['#title'] = '回答';
       break;
+    case 'comment_node_answer_form':
+    case 'comment_node_question_form':
+      $form['comment_body']['und'][0]['value']['#title'] = '评论';
+      break;
     default:
       break;
   }
