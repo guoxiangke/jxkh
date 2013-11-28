@@ -109,7 +109,6 @@ function sbq_user_relationship_pending_page($type, $account) {
         'paging' => variable_get('user_relationships_relationships_per_page', 10),
     );
     $relationships = user_relationships_load(array( 'requestee_id' => $account->uid, 'approved' => FALSE ), $options);
-    dpm($relationships);
     $rows = array();
     foreach ($relationships as $relationship) {
       $row = sbq_user_relationships_user_action($relationship, $account);
