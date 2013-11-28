@@ -150,20 +150,6 @@ function sbq_commons_menu() {
       'file' => 'sbq_commons.inc',
   );
 
-//  $items['app/download'] = array(
-//      //'title' => t('app下载'),
-//      'page callback' => 'sbq_commons_app_down',
-//      'access callback' => TRUE,
-//      'type' => MENU_CALLBACK,
-//      'file' => 'sbq_commons.inc',
-//  );
-  $items['bedges'] = array(
-      //'title' => t('app下载'),
-      'page callback' => 'sbq_commons_bedges',
-      'access callback' => TRUE,
-      'type' => MENU_CALLBACK,
-      'file' => 'sbq_commons.inc',
-  );
   return $items;
 }
 
@@ -734,16 +720,7 @@ function sbq_commons_node_submit(&$node, &$form, &$form_state) {
   foreach ($form_state['field'] as $field_key => $field) {
     if (isset($field[LANGUAGE_NONE]) && $field[LANGUAGE_NONE]['field']['type'] == 'taxonomy_term_reference' && $field[LANGUAGE_NONE]['instance']['widget']['type'] == 'taxonomy_autocomplete') {
       $full_tags = $form_state['input'][$field_key][LANGUAGE_NONE];
-      foreach (array(
-      '，',
-      '。',
-      ' ',
-      '.',
-      '、',
-      '、',
-      '\\',
-      '／',
-      '/' ) as $it) {
+      foreach (array( '，', '。', ' ', '.', '、', '、', '\\', '／', '/' ) as $it) {
         $full_tags = str_replace($it, ',', $full_tags);
       }
 
@@ -881,16 +858,7 @@ function sbq_commons_taxonomy_autocomplete($field_name = '', $tags_typed = '') {
   }
 
 // The user enters a comma-separated list of tags. We only autocomplete the last tag.
-  foreach (array(
-  '，',
-  '。',
-  ' ',
-  '.',
-  '、',
-  '、',
-  '\\',
-  '／',
-  '/' ) as $it) {
+  foreach (array('，','。',' ','.','、','、','\\','／','/' ) as $it) {
     $tags_typed = str_replace($it, ',', $tags_typed);
   }
   $tags_typed = drupal_explode_tags($tags_typed);
