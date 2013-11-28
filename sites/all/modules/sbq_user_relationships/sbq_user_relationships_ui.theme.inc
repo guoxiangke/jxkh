@@ -70,11 +70,11 @@ function theme_sbq_user_relationships_remove_link($variables) {
 function theme_sbq_user_relationships_pending_request_approve_link($variables) {
   $uid = $variables['uid'];
   $rid = $variables['rid'];
-  return l(
-      t('Approve'), "user/{$uid}/relationships/requested/{$rid}/approve", array(
-      'title' => array( 'title' => t('Approve') ),
-      'query' => drupal_get_destination(),
-      'attributes' => array( 'class' => array( 'user_relationships_popup_link' ) ),
+  $vid = $variables['vid'];
+  return l(     
+      t('同意'), "user/{$uid}/relationship/action/{$rid}/approve", array(
+      'query' => array( 'destination' => 'pending_request_approve_link' . $vid ),
+      'attributes' => array( 'class' => array( 'use-ajax pending_request_approve_link' . $vid ) ),
       )
   );
 }
@@ -85,11 +85,11 @@ function theme_sbq_user_relationships_pending_request_approve_link($variables) {
 function theme_sbq_user_relationships_pending_request_disapprove_link($variables) {
   $uid = $variables['uid'];
   $rid = $variables['rid'];
+  $vid = $variables['vid'];
   return l(
-      t('Decline'), "user/{$uid}/relationships/requested/{$rid}/disapprove", array(
-      'title' => array( 'title' => t('Decline') ),
-      'query' => drupal_get_destination(),
-      'attributes' => array( 'class' => array( 'user_relationships_popup_link' ) ),
+      t('拒绝'), "user/{$uid}/relationship/action/{$rid}/disapprove", array(
+      'query' => array( 'destination' => 'pending_request_disapprove_link' . $vid ),
+      'attributes' => array( 'class' => array( 'use-ajax pending_request_disapprove_link' . $vid ) ),
       )
   );
 }
@@ -100,11 +100,11 @@ function theme_sbq_user_relationships_pending_request_disapprove_link($variables
 function theme_sbq_user_relationships_pending_request_cancel_link($variables) {
   $uid = $variables['uid'];
   $rid = $variables['rid'];
-  return l(
-      t('Cancel'), "user/{$uid}/relationships/requested/{$rid}/cancel", array(
-      'title' => array( 'title' => t('Cancel') ),
-      'query' => drupal_get_destination(),
-      'attributes' => array( 'class' => array( 'user_relationships_popup_link' ) ),
+  $vid = $variables['vid'];
+  $ajax_token = 'pending_request_cancel' . $vid;
+  return l(t('取消'), 'user/' . $uid . '/relationship/action/' . $rid . '/cancel', array(
+      'query' => array( 'destination' => $ajax_token ),
+      'attributes' => array( 'class' => 'use-ajax ' . $ajax_token )
       )
   );
 }

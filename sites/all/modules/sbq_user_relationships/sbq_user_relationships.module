@@ -57,6 +57,56 @@ function sbq_user_relationships_menu() {
       'weight' => 3,
   );
 
+  foreach (array( 'received', 'sent' ) as $item) {
+    $items['user/%user/relationship/' . $item] = array(
+        //'title' => t('收到的请求'),
+        'type' => MENU_LOCAL_TASK,
+        'page callback' => 'sbq_user_relationship_pending_page',
+        'page arguments' => array( $item, 1 ),
+        'access callback' => 'sbq_user_relationships_access_callback',
+        'access arguments' => array( 1 ),
+        'file' => 'sbq_user_relationships.inc',
+        'weight' => 3,
+    );
+  }        // user/    2/relationship/378                /cancle
+
+  foreach (array('cancel', 'approve', 'disapprove') as $key => $item) {
+    $items['user/%user/relationship/action/%user_relationships/'.$item] = array(
+      'delivery callback' => 'ajax_deliver',
+      // 'title' => 'Approve Relationship',
+      'type' => MENU_CALLBACK,
+      'access callback' => 'sbq_user_relationships_access_callback',
+      'access arguments' => array( 1 ),
+      //  'access callback' => TRUE,
+      'page callback' => 'sbq_user_relationships_ui_pending_requested_ajax',
+      'page arguments' => array( 1, 4, 5 ),
+      'file' => 'sbq_user_relationships.inc',
+  );
+  }
+//  $items['user/%user/relationship/action/%user_relationships/cancel'] = array(
+//      'delivery callback' => 'ajax_deliver',
+//      // 'title' => 'Approve Relationship',
+//      'type' => MENU_CALLBACK,
+//      'access callback' => 'sbq_user_relationships_access_callback',
+//      'access arguments' => array( 1 ),
+//      //  'access callback' => TRUE,
+//      'page callback' => 'sbq_user_relationships_ui_pending_requested_ajax',
+//      'page arguments' => array( 1, 4, 5 ),
+//      'file' => 'sbq_user_relationships.inc',
+//  );
+
+//  $items["user/%user/relationships/requested/%user_relationships/%"] = array(
+//      'title' => 'Approve Relationship',
+//      'type' => MENU_CALLBACK,
+//      'access callback' => 'user_relationships_ui_check_access',
+//      'access arguments' => array( 'request', 1 ),
+//      'page callback' => 'user_relationships_ui_pending_requested_ajax',
+//      'page arguments' => array( 5, 1, 4 ),
+//      'file' => 'user_relationships_ui.forms.inc',
+//  );
+//   user/2/relationship/user_relationships/cancel
+
+
   return $items;
 }
 
@@ -125,17 +175,25 @@ function sbq_user_relationships_theme() {
           'template' => 'templates/sbq--user--relationships--profile',
           'variables' => array(
               'image' => '',
-              'profile' => array(
-//                  'bedges' => '',
-//                  'name' => '',
-//                  'hospital' => '',
-//                  'disease' => '',
-//                  'follow' => ''
-              )
+              'profile' => array()
           )
       ),
   );
-
+  $items = array(
+//      'sbq_user_relationships_approval_status',
+//      'sbq_user_relationships_request_relationship_link',
+//      'sbq_user_relationships_request_relationship_direct_link',
+      'sbq_user_relationships_remove_link',
+      'sbq_user_relationships_pending_request_approve_link',
+      'sbq_user_relationships_pending_request_disapprove_link',
+      'sbq_user_relationships_pending_request_cancel_link',
+//      'sbq_user_relationships_user_link',
+      'sbq_user_relationships_add_user_link',
+  );
+  foreach ($items as $key => $value) {
+    $tpls[$value]['file'] = 'sbq_user_relationships_ui.theme.inc';
+    $tpls[$value]['variables'] = array( 'uid' => NULL, 'rid' => NULL, 'vid' => NULL );
+  }
   return $tpls;
 }
 
@@ -161,7 +219,7 @@ function sbq_user_relationships_profile($info) {
         $profile['disease'] = $account_disease;
       }
     }
-     $profile['disease'] = '感冒 发烧';
+    $profile['disease'] = '感冒 发烧';
   } elseif (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($account->roles))) {
     if ($user_item = profile2_load_by_user($account, 'doctor_profile') && !empty($user_item) && isset($user_item->field_doctor_hospitals['und'])) {
       foreach ($user_item->field_doctor_hospitals['und'] as $tid) {
@@ -170,7 +228,7 @@ function sbq_user_relationships_profile($info) {
         $profile['hospital'] = $hospital;
       }
     }
-     $profile['hospital'] = '北京儿童精神病专科医院';
+    $profile['hospital'] = '北京儿童精神病专科医院';
   }
 
   $items = $profile;
@@ -224,45 +282,6 @@ function sbq_user_relationships_recommond($account = NULL, $roles, $is_page = TR
   }
 
   return user_load_multiple(array_keys($result));
-}
-
-/*
- * create between two user relationships relationships ajax href  
- */
-
-function sbq_user_relationships_action_ajax($viewed_id, $type = 'all', $account = NULL) {
-  drupal_add_library('system', 'drupal.ajax');
-  if (!$account) {
-    global $user;
-    $account = $user;
-  }
-  if (!$viewed = user_load($viewed_id))
-    return;
-  if ($type == 'add') {
-    $action = sbq_commons_relationships_ui_actions_between($account, $viewed, array(
-        'add' => 1 ));
-    if (!isset($action[0])) {
-      return;
-    }
-    $preg = '/<a(.*?)href="(.*?)"(.*?)>(.*?)<\/a>/i';
-    preg_match_all($preg, $action[0], $match);
-    $ajax_token = time() . rand(0, 10000);
-    $link = l('+关注', ltrim($match[2][0], "/") . '?destination=' . $ajax_token, array(
-        'attributes' => array( 'class' => 'use-ajax ' . $ajax_token ) ));
-  } elseif ($type == 'remove') {
-    $action = sbq_commons_relationships_ui_actions_between($account, $viewed, array(
-        'remove' => 1 ));
-    // dpm($action);
-    if (!empty($action)) {
-      return;
-    }
-    $preg = '/<a(.*?)href="(.*?)"(.*?)>(.*?)<\/a>/i';
-    preg_match_all($preg, $action[0], $match);
-    $ajax_token = time() . rand(0, 10000);
-    $link = l('+移除', ltrim($match[2][0], "/") . '?destination=' . $ajax_token, array(
-        'attributes' => array( 'class' => 'use-ajax ' . $ajax_token ) ));
-  }
-  return isset($link) ? render($link) : '';
 }
 
 /*
@@ -336,38 +355,9 @@ function sbq_user_relationships_action_between_user($viewer, $viewed, $action_ty
         foreach ($relationships as $relationship) {
           if (sbq_commons_relationships_ui_check_access_by_roles($viewer, $viewed, $relationship->rtid)) {
             if (sbq_commons_relationships_ui_request_validate($viewer, $viewed, $relationship->rtid)) {
-
-//              $list[] = l(
-//                  t("Become %name's @rel_name", array(
-//                      '%name' => format_username($viewed) ) + user_relationships_type_translations($relationship)), "relationship/ajax/{$viewer->uid}/request/{$relationship->rtid}/{$viewed->uid}", array(
-//                  'html' => TRUE,
-//                  'attributes' => array(
-//                      'class' => array(
-//                          'relationship_ajax_action' ) ),
-//                  )
-//              );
-              //  dpm(user_relationships_type_translations($relationship));
-//              $list[] = l(
-//                  t(
-//                      "Become %name's @rel_name", array(
-//                      '%name' => format_username($viewed) ) + user_relationships_type_translations($relationship)), "relationship/ajax/{$viewer->uid}/request/{$relationship->rtid}/{$viewed->uid}", array(
-//                  'html' => TRUE,
-//                  'attributes' => array(
-//                      'class' => array(
-//                          'relationship_ajax_action' ) ),
-//                  )
-//              );
-
-              $ajax_token = 'relationships_action' . $viewed->uid;
-//              $link = l('+移除', ltrim($match[2][0], "/") . '?destination=' . $ajax_token, array(
-//                  'attributes' => array( 'class' => 'use-ajax ' . $ajax_token ) ));
-//              $list[] = array(
-//                  'relationship_type' => $relationship->name,
-//                  'relationship_action' => l('关注', "relationship/ajax/{$viewer->uid}/request/{$relationship->rtid}/{$viewed->uid}?destination={$ajax_token}", array('attributes' => array( 'class' => 'use-ajax ' . $ajax_token ) )));
-
               $list[] = array(
                   'relationship_type' => $relationship->name,
-                  'relationship_action' => theme_sbq_user_relationships_add_user_link(array(
+                  'relationship_action' => theme('sbq_user_relationships_add_user_link', array(
                       'uid' => $viewer->uid, 'rid' => $relationship->rtid, 'vid' => $viewed->uid ))
               );
             }
@@ -399,7 +389,7 @@ function sbq_user_relationships_action_between_user($viewer, $viewed, $action_ty
 //                          'class' => 'relationship_ajax_action' ) ) )),
 //              //   '!remove_link' => drupal_get_form('sbq_user_relationships_ui_remove_ajax', $viewer, $relationship)
 //          ));
-        
+
           $list[] = array(
               'relationship_type' => $relationship->name,
               'relationship_action' => theme_sbq_user_relationships_remove_link(array(
@@ -487,12 +477,9 @@ function sbq_user_relstionships_users($account = NULL, $rtid = NULL) {
  */
 function sbq_user_relationships_user_action($relationship, $account) {
   global $user;
-  module_load_include('inc', 'sbq_user_relationships', 'sbq_user_relationships_ui.theme');
 
   $this_user_str = $account->uid == $relationship->requestee_id ? 'requester' : 'requestee';
- // $that_user_str_id = $account->uid == $relationship->requester_id ? 'requester_id' : 'requestee_id';
   $this_user = $relationship->{$this_user_str};
-
   $row = array(
       'user' => $this_user,
       check_plain(user_relationships_type_get_name($relationship, FALSE, $relationship->is_oneway && $this_user_str == 'requester')),
@@ -501,21 +488,23 @@ function sbq_user_relationships_user_action($relationship, $account) {
   $links = array();
   if ($relationship->approved) {
     if (user_relationships_ui_check_access('delete', $account, $relationship)) {
-      $links[] = theme_sbq_user_relationships_remove_link(array( 'uid' => $account->uid,
-          'rid' => $relationship->rid, 'vid' => $relationship->{$this_user_str.'_id'} ));
+      $links[] = theme('sbq_user_relationships_remove_link', array( 'uid' => $account->uid,
+          'rid' => $relationship->rid, 'vid' => $relationship->{$this_user_str . '_id'} ));
     }
   } elseif (user_relationships_ui_check_access($permission, $account, $relationship)) {
     if ($this_user_str == 'requestee') {
       // Sent requests, display cancel link.
       $links[] = theme('sbq_user_relationships_pending_request_cancel_link', array(
           'uid' => $account->uid,
-          'rid' => $relationship->rid ));
+          'rid' => $relationship->rid,
+          'vid' => $relationship->{$this_user_str . '_id'} ));
     } else {
       // Received requests, display approve and decline links.
       $links[] = theme('sbq_user_relationships_pending_request_approve_link', array(
-          'uid' => $account->uid, 'rid' => $relationship->rid ));
+          'uid' => $account->uid, 'rid' => $relationship->rid, 'vid'=>$relationship->{$this_user_str . '_id'} ));
       $links[] = theme('sbq_user_relationships_pending_request_disapprove_link', array(
-          'uid' => $account->uid, 'rid' => $relationship->rid ));
+          'uid' => $account->uid, 'rid' => $relationship->rid, 'vid' => $relationship->{$this_user_str . '_id'} ));
+     
     }
   }
   if (!empty($links)) {
@@ -524,8 +513,5 @@ function sbq_user_relationships_user_action($relationship, $account) {
   if (variable_get('user_relationships_show_user_pictures', 0)) {
     array_unshift($row, theme('user_picture', array( 'account' => $this_user )));
   }
-
-
-
   return $row;
 }
