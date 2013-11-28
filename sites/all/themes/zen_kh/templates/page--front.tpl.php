@@ -95,7 +95,7 @@
       <?php print render($page['content']); ?>
       <div id="sbq-hhb-title">
         <h1 class="sbq-hide-element">红黑榜</h1>
-        <h2 class="block__title block-title">一个不可告人的秘密!</h2>
+        <?php  // <h2 class="block__title block-title">一个不可告人的秘密!</h2> ?>
       </div>
       <div id="sbq-bd-list" class="sbq-clearfix sbq-border">
         <div id="block-views-friend-activities-index" class="block block-views contextual-links-region last even">
