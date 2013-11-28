@@ -141,16 +141,19 @@ function csna_callback($provider) {
               // 'gender' =>
               'language' => 'zh-hans',
               'timezone ' => $timezone,
-              'roles' => array(
-                  DRUPAL_AUTHENTICATED_RID => 'authenticated user',
-                  5 => 'patient',
-              ),
+              // 'roles' => array(
+              //     DRUPAL_AUTHENTICATED_RID => 'authenticated user',
+              //     5 => 'patient',
+              // ),
               'name' => $name,
               'status' => 1,
           );
         }
       }
-
+      $edit['roles'] = array(
+        DRUPAL_AUTHENTICATED_RID => 'authenticated user',
+        5 => 'patient',
+      );
       $account = user_save(NULL, $edit);
       user_set_authmaps($account, array('authname_csna' => $identity));
     }

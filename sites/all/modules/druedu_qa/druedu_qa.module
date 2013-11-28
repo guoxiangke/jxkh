@@ -117,7 +117,7 @@ function druedu_qa_theme($existing, $type, $theme, $path) {
   );
   // 'preprocess functions' :
   // @see views/theme/theme.inc
-  // template_preprocess_views_view 
+  // template_preprocess_views_view
   // template_preprocess_views_view_field
   // template_preprocess_views_view_fields
   // template_preprocess_views_view_grouping
@@ -207,13 +207,13 @@ function druedu_qa_init() {
  *   FALSE otherwise.
  *
  * @see flag_flag:access()
- * 
+ *
  * Implementation of hook_flag_access().
- * 
+ *
  * The requirement like this:
- * We use a flag named Accept to flag the best answer for a question, 
+ * We use a flag named Accept to flag the best answer for a question,
  * and give all the students permission to use this flag,
- * means to all answers( attention those belongs the another question and the question's author isn't the student) 
+ * means to all answers( attention those belongs the another question and the question's author isn't the student)
  * which seems not logical..
  */
 function druedu_qa_flag_access($flag, $content_id, $action, $account) {
@@ -234,14 +234,14 @@ function druedu_qa_flag_access($flag, $content_id, $action, $account) {
 }
 
 /**
- * if i have no right use it,please hide it... 
+ * if i have no right use it,please hide it...
  * http://drupal.stackexchange.com/questions/47997/if-i-have-no-right-use-the-flag-accepted-please-hide-it
  * hook_preprocess_HOOK($variables)
  */
 function druedu_qa_preprocess_flag(&$variables) {
   //Set flag_access TRUE.
   $variables['flag_access'] = TRUE;
-  $variables['answer_flagged'] = FALSE; 
+  $variables['answer_flagged'] = FALSE;
   if (isset($variables['flag']->content_type) && $variables['flag']->content_type == 'heartbeat_activity') {
     return;
   }
@@ -258,7 +258,7 @@ function druedu_qa_preprocess_flag(&$variables) {
     $variables['flag_access'] = FALSE;
   }
   if(!$variables['flag_access'] && $variables['status'] == 'flagged') {
-    $variables['answer_flagged'] = TRUE; 
+    $variables['answer_flagged'] = TRUE;
   }
   // dpm($variables);
 }
@@ -268,6 +268,19 @@ function druedu_qa_preprocess_flag(&$variables) {
  */
 function druedu_qa_views_post_execute(&$view) {
   if ($view->name == 'question') {
+    //counts answers and show before attachment.
+    $counts = db_select('field_data_field_answer', 'answer')
+        ->fields('answer', array('entity_id'))
+        ->condition('bundle', 'answer')
+        ->condition('deleted', 0)
+        ->condition('field_answer_target_id', $view->args[0])
+        ->execute()
+        ->rowCount();
+    if ($view->is_attachment && $counts) {
+      $output = format_plural($counts, '共1 个答案', '共@count 个答案');
+      $view->attachment_before = '<h3>' . $output . '</h3>';
+    }
+
     foreach ($view->result as &$answer_item) { // both for question_item
       if (!isset($answer_item->comments)) {
         $node = node_load($answer_item->nid);
@@ -291,18 +304,6 @@ function druedu_qa_views_post_execute(&$view) {
         }
       }
     }
-    //counts answers and show before attachment.
-    $counts = db_select('field_data_field_answer', 'answer')
-        ->fields('answer', array('entity_id'))
-        ->condition('bundle', 'answer')
-        ->condition('deleted', 0)
-        ->condition('field_answer_target_id', $view->args[0])
-        ->execute()
-        ->rowCount();
-    if ($view->is_attachment && $counts) {
-      $output = format_plural($counts, '共1 个答案', '共@count 个答案');
-      $view->attachment_before = '<h3>' . $output . '</h3>';
-    }
 
     // for answers ,add wrapper for new ajax answer to fill
     // add js for comments delete use pop modal.
@@ -314,7 +315,7 @@ function druedu_qa_views_post_execute(&$view) {
 /**
  * Theme preprocess for views-view-question.tpl.php.
  * prepare comments vars for qustion view page for both question and answers in module Level.
- * TODO:we should check in theme level 
+ * TODO:we should check in theme level
  */
 function druedu_qa_preprocess_views_view(&$vars) {
   $view = $vars['view'];
@@ -335,7 +336,7 @@ function druedu_qa_preprocess_views_view(&$vars) {
     $query_parameters = drupal_get_query_parameters();
     drupal_set_title('Questions - ' . $query_parameters['field_tags_tid']);
   }
-  //add css for QA 
+  //add css for QA
   if ($view->name == 'questions' || $view->name == 'question') {
     // drupal_add_css(drupal_get_path('module', 'druedu_qa') . '/css/druedu_qa.css');
     drupal_add_css(drupal_get_path('module', 'druedu_qa') . '/css/questions.css');
@@ -395,7 +396,7 @@ function druedu_qa_views_pre_view(&$view, &$display_id, &$args) {
    * the related question view with tags( or| not &)...
    */
   if ($view->name == 'related_questions') {
-    //Provide arguments 
+    //Provide arguments
     if ($display_id == 'block') {
       if (arg(0) == 'question' && arg(1)) {
         $question_node = node_load(arg(1));
@@ -473,7 +474,7 @@ function druedu_qa_node_delete($node) {
         }
       }
     }
-    //if an accepted answer was del,update the Q's field_mark_question_resolved 
+    //if an accepted answer was del,update the Q's field_mark_question_resolved
     $flag_name = 'accepted'; // here also,the name must match system flag setting in /admin/structure/flags
     $flag = flag_get_flag($flag_name);
     if (isset($question->field_mark_question_resolved) && $flag->is_flagged($node->nid)) {
@@ -614,7 +615,7 @@ function druedu_qa_form_comment_form_alter(&$form, &$form_state, $form_id) {
 //   //#428: blog ajax comment not works too.
 //   if ($form['#node']->type == 'blog') {
 //     $form['actions']['submit']['#ajax']['callback'] = '_ajax_comments_submit_js4blog';
-//     //prevent gotop when ajax comment committed @see qa_custom.js 
+//     //prevent gotop when ajax comment committed @see qa_custom.js
 //     drupal_add_js('jQuery(document).ready(function () { $.fn.insertComment = function(args) {
 //     $(args.selector).append(args.data);
 //   };
@@ -755,15 +756,15 @@ function druedu_qa_comment_view($comment, $view_mode, $langcode) {
 function druedu_qa_form_alter(&$form, &$form_state, $form_id) {
 
   if ($form_id == 'answer_node_form' || $form_id == 'question_node_form') {
-    
+
     $form['author']['#access'] = FALSE;
     $form['options']['#access'] = FALSE;
     $form['comment_settings']['#access'] = FALSE;
-    //$form['book']['#access'] = FALSE; 
+    //$form['book']['#access'] = FALSE;
     $form['additional_settings']['#access'] = FALSE;
     if ($form_id == 'answer_node_form') {
       $form['field_answer']['#access'] = FALSE;
-      // $form['revision_information']['#access'] = FALSE; 
+      // $form['revision_information']['#access'] = FALSE;
     }
     if ($form_id == 'question_node_form') {
       $form['field_answers']['#access'] = FALSE;
@@ -953,7 +954,7 @@ function druedu_qa_block_view($delta = '') {
 function druedu_qa_count_questions() {
   global $user;
   //questions
-  // questions/my-questions  
+  // questions/my-questions
   // questions/unanswered
   $counts = 0;
   $query = db_select('node', 'n')
