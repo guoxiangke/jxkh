@@ -127,7 +127,7 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
 				</div>
 			</div>
 			<div class="q-content span12">
-				<div class="head_wrap"><span><?php print format_date($node->revision_timestamp, 'sbq_date_medium_revert'); ?></span>
+				<div class="head_wrap"><span class="time"><?php print format_date($node->revision_timestamp, 'sbq_date_medium_revert'); ?></span>
 					<div class="votes pull-left"><?php print $value_1; ?></div>
 				</div>
 				<div class="q-body">
