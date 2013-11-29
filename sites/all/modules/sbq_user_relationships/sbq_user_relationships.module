@@ -7,7 +7,7 @@
  */
 
 function sbq_user_relationships_menu() {
-
+  
   $items['user/%user/relationship'] = array(
       'title' => t('我的圈子'),
       'type' => MENU_NORMAL_ITEM,
@@ -514,4 +514,8 @@ function sbq_user_relationships_user_action($relationship, $account) {
     array_unshift($row, theme('user_picture', array( 'account' => $this_user )));
   }
   return $row;
+}
+
+function sbq_commons_menu_link_alter($item){
+  dpm($item);
 }

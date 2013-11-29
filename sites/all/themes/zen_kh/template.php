@@ -146,7 +146,9 @@ function zen_kh_form_alter(&$form, &$form_state, $form_id) {
     $items = array();
     if (variable_get('user_register', USER_REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL)) {
 //        $items[] = l(t('Create new doctor account'), 'doctor/register', array('attributes' => array('title' => t('Create a new user account.'))));
-      $items[] = '<a href="/doctor/register"  data-toggle="modal" class="user_doctor_register_ajax">' . t('Create new doctor account') . '</a>';
+     
+      $items[] = '<a href="#" title="" data-toggle="modal" class="user_doctor_register_ajax" data-target="#sbq_doctor_quick_login_modal">医生快速通道</a>';
+     // $items[] = '<a href="/doctor/register"  data-toggle="modal" class="user_doctor_register_ajax">' . t('Create new doctor account') . '</a>';
     }
     $form['doctor_register'] = array('#markup' => theme('item_list', array('items' => $items, 'attributes' => array('class' => 'sbq_doctor_register_button'))), '#weight' => -10);
 
@@ -204,9 +206,12 @@ function zen_kh_preprocess_html(&$variables) {
     unset($doctor_register_form['profile_customer_profile']);
     unset($doctor_register_form['profile_patient_private_profile']);
     $variables['doctor_register_form'] = drupal_render($doctor_register_form);
-
+    
     $user_login_form = drupal_get_form('user_login');
     $variables['user_login_form'] = drupal_render($user_login_form);
+    
+    $variables['doctor_quick_login_form'] = drupal_render(drupal_get_form('user_register_form'));
+    $variables['user_login_block'] =  drupal_render(drupal_get_form('user_login'));
   }
 }
 
