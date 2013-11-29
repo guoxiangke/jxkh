@@ -50,30 +50,30 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
 ?>
 
 <div class="question clearfix">
-	<div class="pull-left">
-		<div class="q-statics">
-			<div class="q-statics-top">
-				<div class="q-vote"><?php print $value; ?></div>
-				<div class="q-answers <?php print $fields['field_computed_answers']->content!='0'?'active':''?>"> <b class="triangle_top"></b> <span><?php print $fields['field_computed_answers']->content; ?></span><span>回答</span> </div>
-			</div>
-			<?php // <div class="q-views"><?php print $totalcount; ? ></div> ?>
-		</div>
-	</div>
 	<div class="container-fluid">
-		<div class="q-main">
-			<div class="q-title"><?php print $title; ?></div>
-			<div class="q-body span12"><?php print $body; ?></div>
-			<?php //field_ask_anonymous
+		<?php //field_ask_anonymous
 			$q_author = $fields['name']->content;
 			if(isset($fields['field_ask_anonymous']) && $fields['field_ask_anonymous']->content == 1) {
 				$q_author = '<a href="#">匿名提问</a>';
 			}
 		?>
-			<div class="q-author pull-left"> <?php print $picture; ?>
-				<div class="commit pull-left">
-					<div class="timestamp"><span><?php print $q_author; ?></span><span><?php print $published_at; ?></span></div>
-					<!-- 		<div class="username"></div> --> 
+		<div class="q-author pull-left"> <?php print $picture; ?>
+			<div class="commit pull-left">
+				<div class="timestamp"><span><?php print $q_author; ?></span></div>
+				<!-- 		<div class="username"></div> --> 
+			</div>
+		</div>
+		<div class="q-main">
+			<div class="head_wrap">
+				<div class="q-title"><?php print $title; ?></div>
+				<span class="time"><?php print $published_at; ?></span></div>
+			<div class="q-body span12"><?php print $body; ?></div>
+			<div class="q-statics">
+				<div class="q-statics-top">
+					<div class="q-vote"><?php print $value; ?></div>
+					<div class="q-answers <?php print $fields['field_computed_answers']->content!='0'?'active':''?>"><!--<b class="triangle_top"></b>--><span class="number"><?php print $fields['field_computed_answers']->content; ?></span><span>回答</span> </div>
 				</div>
+				<?php // <div class="q-views"><?php print $totalcount; ? ></div> ?>
 			</div>
 			<div class="q-taglink container-fluid">
 				<div class="tags"> <span class="tags-label"><?php echo t('Tags');?>:</span> <?php print $field_tags; ?> </div>

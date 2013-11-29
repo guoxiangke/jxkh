@@ -100,7 +100,7 @@
 .page-questions #content .view-content { float: left; width: 100%; }
 .page-questions #content .question .title,
 .page-questions #content .question .title h2 { float: left; width: 100%; line-height: 30px; margin: 0px; font-size: 16px; font-weight: bold; }
-.page-questions #content .question .title { border-bottom: 2px solid #1DC7DB; margin: 0px 0px 5px 0px; }
+.page-questions #content .question .title { border-bottom: 2px solid #1DC7DB; }
 /*questions list first*/
 
 .page-questions #content .view-display-id-single_question_page > .view-content .q-body .q-body { font-size: 14px; }
@@ -113,13 +113,13 @@
 .page-questions #content .question .q-body > .pull-left { float: left; width: 20px; margin: 0px 0px 0px 5px; }
 /*all questions right*/
 .page-questions #content .question .q-body .q-margin { float: left; width: 100%; position: relative; }
-.page-questions #content .question .q-body { float: left; width: 100%; line-height: 22px; padding: 5px 0px; word-break: break-all; font-size: 12px; }
+.page-questions #content .question .q-body { float: left; width: 100%; line-height: 22px; padding: 10px 0px; word-break: break-all; font-size: 12px; }
 .page-questions #content .question .q-body p { margin: 0px; }
 .page-questions #content .question .tags { float: left; width: 100%; margin: 0px 0px 5px 0px; }
 .page-questions #content .question .tags .tags-label { float: left; width: 35px; }
 .page-questions #content .question .tags a { color: #0066CC; }
 .page-questions #content .question .tags .sbq-qa-flag_wrap { float: left; width: 550px; }
-.page-questions #content .question .tags .sbq-qa-flag { float: left; height: 20px; line-height: 20px; margin: 0px 5px 5px 0px; padding: 0px 5px; position: relative; border: 1px solid #168a9b; border-radius: 3px; color: #168a9b; }
+.page-questions #content .question .tags .sbq-qa-flag { float: left; height: 20px; line-height: 20px; margin: 0px 5px 5px 0px; padding: 0px 5px; position: relative; border: 1px solid #168a9b; border-radius: 3px; color: #168a9b; font-size: 12px; }
 .page-questions #content .question .tags .sbq-qa-flag:hover { background-color: #168a9b; color: #fff; }
 .page-questions #content .question .tags .sbq-qa-flag:hover a { color: #fff; }
 .page-questions #content .question .tags .sbq-qa-flag a { color: #168a9b; line-height: 20px; }
@@ -130,9 +130,9 @@
 .page-questions #content .question .q-info .author-item a,
 .page-questions #content .question .q-info .author-item img { float: left; width: 60px; height: 60px; border: none; }
 .page-questions #content .question .q-info .author-item span { float: left; width: 100%; margin: 0px; padding: 0px; }
-.page-questions #content .question .q-info .create a { float: left; width: 100%; height: auto; line-height: 20px; margin: 0px; padding: 0px; border-radius: 0; color: #0066CC; font-size: 12px; text-align: center; font-weight: normal; word-break: break-all; word-wrap: break-word; }
+.page-questions #content .question .q-info .author-item .create a { float: left; width: 100%; height: 20px; line-height: 20px; margin: 0px; padding: 0px; border-radius: 0; color: #0066CC; font-size: 12px; text-align: center; font-weight: normal; word-break: break-all; word-wrap: break-word; overflow: hidden; }
 .page-questions #content .question .q-content { float: left; width: 586px; overflow: hidden; }
-.page-questions #content .question .q-content .head_wrap { float: left; width: 100%; height: 30px; line-height: 30px; border-bottom: 1px #CCCCCC dotted; overflow: hidden; }
+.page-questions #content .question .head_wrap { float: left; width: 100%; height: 30px; line-height: 30px; border-bottom: 1px #CCCCCC dotted; overflow: hidden; }
 .page-questions #content .question .q-content .head_wrap .time { float: left; color: #999; font-size: 12px; }
 .page-questions #content .question .q-content .head_wrap .votes { float: right; }
 .page-questions #content .question .q-content .head_wrap .votes ul { float: left; margin: 1px 0px 0px 0px; }
@@ -146,8 +146,8 @@
 .page-questions #content .question .accept .flag-throbber { display: none; }
 /*all answers*/
 .page-questions #content .attachment { float: left; width: 100%; }
-.page-questions #content .attachment h3 { float: left; width: 100%; height: 30px; line-height: 30px; margin: 10px 0px 0px 0px; font-size: 14px; font-weight: bold; border-bottom: 2px solid #1DC7DB; }
-.page-questions #content .view-question #answers .views-row { float: left; width: 100%; padding: 0px; background: none; border-bottom: 1px #CCCCCC dashed; }
+.page-questions #content .attachment h3 { float: left; width: 100%; height: 30px; line-height: 30px; margin: 0px; font-size: 14px; font-weight: bold; border-bottom: 2px solid #1DC7DB; }
+.page-questions #content .view-question #answers .views-row { float: left; width: 100%; padding: 0px; background: none; border-bottom: 1px #E5E5E5 solid; }
 /*all edit*/
 /*questions edit*/
 .page-questions #content .question .comments-wrapper { float: left; width: 100%; background: #F3F3F3; }
@@ -177,4 +177,34 @@
 /*------node-type-blog------*/
 .page-questions #content .answer-node-form textarea { width: 100%; line-height: 20px; border: none; border-right: none; padding: 5px; }
 .node-type-blog .blog_usernames_blog { display: none; }
-border: 2px #0066CC solid; background: #999;
+/*------page-questions-tagged------*/
+.page-questions-tagged #page-title { display: none; }
+.page-questions-tagged .view-id-questions { float: left; width: 100%; margin: 10px 0px 0px 0px; }
+.page-questions-tagged .views-exposed-widgets { float: left; width: 100%; margin: 0px; }
+.page-questions-tagged .views-exposed-widgets label { display: none; }
+.page-questions-tagged .views-exposed-widget { float: left; width: 590px; margin: 0px; padding: 0px; }
+.page-questions-tagged .form-type-textfield input { border-radius: 4px; }
+.page-questions-tagged .form-type-textfield input { width: 100%; height: 34px; padding: 2px 12px; font-size: 14px; line-height: 26px; color: #555; border: 2px solid #ccc; border-radius: 4px; background: none !important; }
+.page-questions-tagged .form-type-textfield #autocomplete { margin: -1px 0px 0px 1px; border: 1px #CCCCCC solid; background: #FCFCFC; }
+.page-questions-tagged .form-type-textfield #autocomplete li { padding: 0px 5px; }
+.page-questions-tagged #content .views-submit-button { float: left; width: 60px; height: 34px; margin: 0px 0px 0px 5px; overflow: hidden; }
+.page-questions-tagged #content .views-submit-button .form-submit { float: left; width: 60px; height: 34px; margin: 0px; padding: 0px; text-align: center; border: none !important; background: #168A9B; color: #FFF; font-size: 16px; border-radius: 4px; }
+.page-questions-tagged #content .view-content { float: left; width: 100%; margin: 10px 0px 0px 0px; border-top: 1px #e5e5e5 solid; }
+.page-questions-tagged #content .view-content .question { float: left; width: 100%; padding: 10px 0px; border-bottom: 1px #e5e5e5 solid; }
+.page-questions-tagged #content .view-content .container-fluid { float: left; width: 100%; }
+.page-questions-tagged #content .view-content .container-fluid .q-author { float: left; width: 60px; margin: 0px 10px 0px 0px; }
+.page-questions-tagged #content .view-content .container-fluid .q-author a,
+.page-questions-tagged #content .view-content .container-fluid .q-author img { float: left; width: 60px; height: 60px; border: none; }
+.page-questions-tagged #content .view-content .container-fluid .q-author span { float: left; width: 100%; margin: 0px; padding: 0px; }
+.page-questions-tagged #content .view-content .container-fluid .q-author a { float: left; width: 100%; height: auto; line-height: 20px; margin: 0px; padding: 0px; border-radius: 0; color: #0066CC; font-size: 12px; text-align: center; font-weight: normal; word-break: break-all; word-wrap: break-word; }
+.page-questions-tagged #content .view-content .container-fluid .q-main { float: left; width: 586px; }
+.page-questions-tagged #content .view-content .container-fluid .q-main .q-title { float: left; width: 470px; overflow: hidden; font-size: 14px; font-weight: bold; }
+.page-questions-tagged #content .view-content .container-fluid .q-main .q-title a { color: #0066CC; }
+.page-questions-tagged #content .view-content .container-fluid .q-main .time { float: right; color: #999; font-size: 12px; }
+.page-questions-tagged #content .view-content .container-fluid .q-main .q-statics { float: left; width: 100%; margin: 0px 0px 5px 0px; font-size: 12px; }
+.page-questions-tagged #content .view-content .container-fluid .q-main .q-statics .q-vote,
+.page-questions-tagged #content .view-content .container-fluid .q-main .q-statics .q-answers { float: left; margin: 0px 8px 0px 0px; color: #666; }
+.page-questions-tagged #content .view-content .container-fluid .q-main .q-statics .number { float: left; color: #0066CC; margin-right: 5px; }
+.page-questions-tagged #content .pager { float: left; width: 100%; }
+border: 2px #0066CC solid;
+background: #999;
