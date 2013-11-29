@@ -515,7 +515,3 @@ function sbq_user_relationships_user_action($relationship, $account) {
   }
   return $row;
 }
-
-function sbq_commons_menu_link_alter($item){
-  dpm($item);
-}
