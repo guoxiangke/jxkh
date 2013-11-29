@@ -330,7 +330,7 @@ function sbq_commons_modal_html($data, $id = 'sbq_modal', $title = '') {
   $html .= '<div class="modal-content">';
   $html .= '<div class="modal-header">';
   $html .= '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>';
-  $html .= '<h4 class="modal-title" id="' . $$data . 'Label">' . $title . '</h4>';
+  $html .= '<h4 class="modal-title" id="' . $data . 'Label">' . $title . '</h4>';
   $html .= '</div>';
   $html .= '<div class="modal-body">';
   $html .= $data;
@@ -557,8 +557,8 @@ function _sbq_commons_block_html($delta) {
       unset($list['actions']);
       $cpl = render($list);
       //操作
-      $opt_link = l('操作', 'user/'.$user->uid.'/edit');
-     // $message_link = l('消息', 'user/');
+      $opt_link = l('操作', 'user/' . $user->uid . '/edit');
+      // $message_link = l('消息', 'user/');
       $message_link = '';
       //勋章
       $user_badges = '';
@@ -616,7 +616,8 @@ EOF;
       $user_post_count = sbq_commons_get_count($user->uid, 'post');
       $user_message_count = 0;
       $user_blog_count = sbq_commons_get_count($user->uid, 'blog');
-      $user_qa_count = sbq_commons_get_count($user->uid, 'question') +  sbq_commons_get_count($user->uid, 'answer');;
+      $user_qa_count = sbq_commons_get_count($user->uid, 'question') + sbq_commons_get_count($user->uid, 'answer');
+      ;
 
       //$user_group_count = 0;
       $user_relationship_count = sbq_user_relationships_my_relstionships($user);
@@ -624,7 +625,6 @@ EOF;
 
       $block_html = '<div class="sbq-user-menu">'
           . '<ul class="menu nav">'
-
           . '<li class="menu__item is-leaf first leaf sbq-user-menu-post">'
           . '<a href="/user/' . $user->uid . '#block-quicktabs-user-group" class="menu__link">我的问答</a>'
           . '<span class="sbq-count"><a href="#" class="sbq-count-link">' . $user_qa_count . '条</a></span></li>'
@@ -683,7 +683,7 @@ EOF;
       drupal_add_css(drupal_get_path('module', 'sbq_commons') . '/css/app-download.css');
       $block_html = '<div class="second-code">'
           . '<h2>扫描二维码 即可下载应用</h2>'
-          . '<image src="/' . drupal_get_path('module', 'sbq_commons') . '/images/products_mobileload.png">'
+          . '<image src="/sites/default/files/images/app.png">'
           . '</div>'
           . '<iframe width="270" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=270&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=3910809638&verifier=480ee660&dpc=1"></iframe>';
 
@@ -742,7 +742,7 @@ function sbq_commons_user_disease_tag_add_ajax($tag_name = '') {
     $index = count($profile->field_tags_disease['und']);
     $checked = FALSE;
     foreach ($profile->field_tags_disease['und'] as $key => $value) {
-      if ($value['tid']==$tid) {
+      if ($value['tid'] == $tid) {
         $checked = TRUE;
       }
     }
