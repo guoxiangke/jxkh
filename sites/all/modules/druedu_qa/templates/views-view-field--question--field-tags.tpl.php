@@ -22,8 +22,10 @@
  * the view is modified.
  */// dpm($row->field_field_tags);
 ?>
+<div class="sbq-qa-flag_wrap">
 <?php
   foreach ($row->field_field_tags as $key => $tag) {
     print '<span class="sbq-qa-flag"><a href="'.url('questions/tagged/').'?field_tags_tid='.$tag['rendered']['#title'].'">'.$tag['rendered']['#title'].'</a></span>';
   }
 ?>
+</div>

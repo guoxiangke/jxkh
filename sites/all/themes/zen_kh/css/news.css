@@ -115,9 +115,14 @@
 .page-questions #content .question .q-body .q-margin { float: left; width: 100%; position: relative; }
 .page-questions #content .question .q-body { float: left; width: 100%; line-height: 22px; padding: 5px 0px; word-break: break-all; font-size: 12px; }
 .page-questions #content .question .q-body p { margin: 0px; }
-.page-questions #content .question .tags { float: left; width: 100%; }
-.page-questions #content .question .tags .tags-label { float: left; }
+.page-questions #content .question .tags { float: left; width: 100%; margin: 0px 0px 5px 0px; }
+.page-questions #content .question .tags .tags-label { float: left; width: 35px; }
 .page-questions #content .question .tags a { color: #0066CC; }
+.page-questions #content .question .tags .sbq-qa-flag_wrap { float: left; width: 550px; }
+.page-questions #content .question .tags .sbq-qa-flag { float: left; height: 20px; line-height: 20px; margin: 0px 5px 5px 0px; padding: 0px 5px; position: relative; border: 1px solid #168a9b; border-radius: 3px; color: #168a9b; }
+.page-questions #content .question .tags .sbq-qa-flag:hover { background-color: #168a9b; color: #fff; }
+.page-questions #content .question .tags .sbq-qa-flag:hover a { color: #fff; }
+.page-questions #content .question .tags .sbq-qa-flag a { color: #168a9b; line-height: 20px; }
 .page-questions #content .question .links { float: left; width: 100%; display: none; }
 .page-questions #content .question .links .delete { float: right; }
 .page-questions #content .question .links a { border: none; color: #0066CC; }
@@ -169,6 +174,7 @@
 .page-questions #content .answer-node-form { float: left; width: 100%; margin: 10px 0px 0px 0px; border: none; }
 .page-questions #content .answer-node-form .form-item { margin: 0px; }
 .page-questions #content .answer-node-form label { float: left; width: 100%; height: 36px; line-height: 36px; margin: 0px; padding: 0px 0px 8px 0px; background: url(../images/t2.png) no-repeat -22px bottom; font-size: 16px; font-weight: bold; text-indent: 10px; }
+/*------node-type-blog------*/
 .page-questions #content .answer-node-form textarea { width: 100%; line-height: 20px; border: none; border-right: none; padding: 5px; }
- border: 2px #0066CC solid;
-background: #999;
+.node-type-blog .blog_usernames_blog { display: none; }
+border: 2px #0066CC solid; background: #999;

@@ -1,268 +1,73 @@
 /*------fixbug------*/
-nav {
-	outline: none;
-}
+nav,
+input { outline: none; }
 /*all*/
-.page-index #page {
-	background: none;
-}
-.sidebar-second #content {
-	float: left;
-	width: 688px;
-	padding: 15px !important;
-	border: 1px #CCCCCC solid !important;
-	overflow: hidden;
-}
+.page-index #page { background: none; }
+.sidebar-second #content { float: left; width: 688px; padding: 15px !important; border: 1px #CCCCCC solid !important; overflow: hidden; }
 /*login*/
 .page-customer-register .tabs-primary,
 .page-doctor-register .tabs-primary,
 .page-user-login .tabs-primary,
-.page-customer .tabs-primary {
-	display: none;
-}
+.page-customer .tabs-primary { display: none; }
 /*page-user*/ 
 .page-user #page-title,
 .page-user .tabs-primary,
-.page-user .field-widget-image-image {
-	display: none;
-}
-.page-user .profile {
-	display: none;
-}
-.page-user .text-format-wrapper .form-item {
-	float: left;
-	width: 100%;
-	margin: 0px;
-}
-.page-user .field-widget-text-textarea-with-summary {
-	float: left;
-	width: 100%;
-}
-.page-user .field-widget-text-textarea-with-summary .resizable-textarea {
-	float: left;
-	width: 100%;
-	padding: 6px 0px 0px 0px;
-	background: url(../images/pb2.png) no-repeat left top;
-}
-.page-user #block-sbq-commons-sbq-quick-ask #edit-actions--2 {
-	float: left;
-	width: 56px;
-	height: 56px;
-	position: absolute;
-	right: 0;
-	top: 33px;
-	z-index: 1;
-	overflow: hidden;
-}
-.page-user #block-sbq-commons-sbq-quick-ask #edit-submit--2 {
-	width: 56px;
-	height: 56px;
-	background: none;
-	background-color: #168a9b;
-	color: #FFF;
-	line-height: 56px;
-	text-align: center;
-	margin: 0;
-	border: none;
-}
-.page-user #content .block {
-	float: left;
-	width: 100%;
-	margin: 0px 0px 15px 0px;
-	position: relative;
-}
-.page-user #content .block .block {
-	margin: 0px;
-}
-#content .more-link {
-	position: absolute;
-	right: 0;
-	top: -23px;
-	z-index: 1;
-	background: url(../images/more.png) no-repeat;
-	background-position: right;
-}
-#content .more-link a {
-	padding: 0px 14px 2px 0px;
-}
-.page-user #block-views-blog-my-blog-block .more-link {
-	top: 9px;
-	right: 10px;
-}
-.page-user #edit-body-und-0-value {
-	float: left;
-	width: 444px;
-	height: 56px;
-	line-height: 23px;
-	padding: 5px;
-	color: #a3a3a3;
-	border: none;
-	resize: none;
-	background: transparent;
-}
-.page-user .grippie {
-	float: left;
-}
-.page-user .text-format-wrapper .form-item #block-sbq-commons-sbq-quick-ask #edit-actions--2 {
-	position: relative;
-	right: 0px;
-	top: 26px;
-	z-index: 1;
-}
-.page-user .sbq-user-add-post {
-	height: 22px;
-	line-height: 22px;
-	position: absolute;
-	right: 260px;
-	top: 0px;
-	background: url(../images/post2.png) no-repeat left -22px;
-	font-size: 16px;
-	padding-left: 29px;
-	display: inline-block;
-	font-weight: 700;
-	z-index: 9;
-}
-#body-add-more-wrapper label {
-	height: 22px;
-	line-height: 22px;
-	background: url(../images/post.png) no-repeat left center;
-	padding-left: 29px;
-	font-size: 16px;
-	color: #585858;
-	margin-bottom: 5px;
-}
-.page-user #block-sbq-commons-sbq-quick-ask {
-	position: relative;
-}
-.page-user .sbq-user-add-post a {
-	color: #585858;
-}
+.page-user .field-widget-image-image { display: none; }
+.page-user .profile { display: none; }
+.page-user .text-format-wrapper .form-item { float: left; width: 100%; margin: 0px; }
+.page-user .field-widget-text-textarea-with-summary { float: left; width: 100%; }
+.page-user .field-widget-text-textarea-with-summary .resizable-textarea { float: left; width: 100%; padding: 6px 0px 0px 0px; background: url(../images/pb2.png) no-repeat left top; }
+.page-user #block-sbq-commons-sbq-quick-ask #edit-actions--2 { float: left; width: 56px; height: 56px; position: absolute; right: 0; top: 33px; z-index: 1; overflow: hidden; }
+.page-user #block-sbq-commons-sbq-quick-ask #edit-submit--2 { width: 56px; height: 56px; background: none; background-color: #168a9b; color: #FFF; line-height: 56px; text-align: center; margin: 0; border: none; }
+.page-user #content .block { float: left; width: 100%; margin: 0px 0px 15px 0px; position: relative; }
+.page-user #content .block .block { margin: 0px; }
+#content .more-link { position: absolute; right: 0; top: -23px; z-index: 1; background: url(../images/more.png) no-repeat; background-position: right; }
+#content .more-link a { padding: 0px 14px 2px 0px; }
+.page-user #block-views-blog-my-blog-block .more-link { top: 9px; right: 10px; }
+.page-user #edit-body-und-0-value { float: left; width: 444px; height: 56px; line-height: 23px; padding: 5px; color: #a3a3a3; border: none; resize: none; background: transparent; }
+.page-user .grippie { float: left; }
+.page-user .text-format-wrapper .form-item #block-sbq-commons-sbq-quick-ask #edit-actions--2 { position: relative; right: 0px; top: 26px; z-index: 1; }
+.page-user .sbq-user-add-post { height: 22px; line-height: 22px; position: absolute; right: 260px; top: 0px; background: url(../images/post2.png) no-repeat left -22px; font-size: 16px; padding-left: 29px; display: inline-block; font-weight: 700; z-index: 9; }
+#body-add-more-wrapper label { height: 22px; line-height: 22px; background: url(../images/post.png) no-repeat left center; padding-left: 29px; font-size: 16px; color: #585858; margin-bottom: 5px; }
+.page-user #block-sbq-commons-sbq-quick-ask { position: relative; }
+.page-user .sbq-user-add-post a { color: #585858; }
 /*user-login-form*/
-#user-login-form .captcha {
-	width: 186px;
-	margin: 0 auto;
-	padding: 0px 0px 23px 0px;
-	border: none;
-}
-#user-login-form .captcha .fieldset-description {
-	display: none;
-}
-#user-login-form .captcha legend {
-	float: left;
-}
-#user-login-form .captcha .fieldset-legend {
-	float: left;
-	width: 50px;
-	height: 36px;
-	line-height: 36px;
-}
-#user-login-form .captcha .fieldset-wrapper {
-	margin: 0px;
-	padding: 0px;
-}
+#user-login-form .captcha { width: 186px; margin: 0 auto; padding: 0px 0px 23px 0px; border: none; }
+#user-login-form .captcha .fieldset-description { display: none; }
+#user-login-form .captcha legend { float: left; }
+#user-login-form .captcha .fieldset-legend { float: left; width: 50px; height: 36px; line-height: 36px; }
+#user-login-form .captcha .fieldset-wrapper { margin: 0px; padding: 0px; }
 #user-login-form .captcha .fieldset-wrapper .reload-captcha-wrapper,
-#user-login-form .captcha .fieldset-wrapper .description {
-	display: none;
-}
-#user-login-form .captcha .fieldset-wrapper .form-text {
-	background-color: #FFFFFF;
-	border: 1px solid #CCCCCC;
-	border-radius: 0px;
-	box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.071);
-	color: #555555;
-	font-size: 14px;
-	height: 34px;
-	line-height: 1.43;
-	padding: 6px 12px;
-	vertical-align: middle;
-	width: 100%;
-}
+#user-login-form .captcha .fieldset-wrapper .description { display: none; }
+#user-login-form .captcha .fieldset-wrapper .form-text { background-color: #FFFFFF; border: 1px solid #CCCCCC; border-radius: 0px; box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.071); color: #555555; font-size: 14px; height: 34px; line-height: 1.43; padding: 6px 12px; vertical-align: middle; width: 100%; }
 /*user-info-from-cookie*/
-#sbq_doctor_quick_register .user-info-from-cookie .form-wrapper {
-	margin: 1.5em 0px;
-	padding: 0px;
-	border: none;
-}
-#sbq_doctor_quick_register .user-info-from-cookie legend {
-	float: left;
-}
-#sbq_doctor_quick_register .user-info-from-cookie .fieldset-wrapper {
-	float: left;
-	/*width: 300px;*/
-	margin: 0px;
-	padding: 0px;
-}
-#sbq_doctor_quick_register .user-info-from-cookie .form-wrapper .fieldset-legend {
-	display: inline-block;
-	font-size: 14px;
-	font-weight: 400;
-	margin-right: 10px;
-	text-align: center;
-	width: 70px;
-}
-#sbq_doctor_quick_register .user-info-from-cookie .field-widget-image-image .form-item {
-	margin: 0px;
-}
-#sbq_doctor_quick_register .user-info-from-cookie .field-widget-image-image .image-widget-data {
-	margin: 0px !important;
-}
+#sbq_doctor_quick_register .user-info-from-cookie .form-wrapper { margin: 1.5em 0px; padding: 0px; border: none; }
+#sbq_doctor_quick_register .user-info-from-cookie legend { float: left; }
+#sbq_doctor_quick_register .user-info-from-cookie .fieldset-wrapper { float: left; /*width: 300px;*/
+margin: 0px; padding: 0px; }
+#sbq_doctor_quick_register .user-info-from-cookie .form-wrapper .fieldset-legend { display: inline-block; font-size: 14px; font-weight: 400; margin-right: 10px; text-align: center; width: 70px; }
+#sbq_doctor_quick_register .user-info-from-cookie .field-widget-image-image .form-item { margin: 0px; }
+#sbq_doctor_quick_register .user-info-from-cookie .field-widget-image-image .image-widget-data { margin: 0px !important; }
 /*#sbq_doctor_quick_register #edit-profile-doctor-private-profile-field-doctor-license-und-0-upload-button {
 	border-radius: 0px;
 }*/
-#sbq_doctor_quick_register .user-info-from-cookie .captcha .fieldset-wrapper {
-	width: 300px;
-}
-#sbq_doctor_quick_register .user-info-from-cookie .captcha .form-item {
-	float: left;
-	margin: 0px;
-}
+#sbq_doctor_quick_register .user-info-from-cookie .captcha .fieldset-wrapper { width: 300px; }
+#sbq_doctor_quick_register .user-info-from-cookie .captcha .form-item { float: left; margin: 0px; }
 #sbq_doctor_quick_register .fieldset-description,
 #sbq_doctor_quick_register .reload-captcha-wrapper,
-#sbq_doctor_quick_register .captcha label {
-	display: none;
-}
-#sbq_doctor_quick_register .user-info-from-cookie .captcha img {
-	margin: 0px 0px 0px 10px;
-	height: 34px;
-}
-#sbq_doctor_quick_register .modal-header {
-	background: url(../images/quick_register_head.png) repeat-x !important;
-}
-#edit-profile-doctor-private-profile-field-doctor-license-und-0-upload-button {
-	display: none !important;
-}
-.front .sbq_doctor_register_button #status {
-	display: none !important;
-}
+#sbq_doctor_quick_register .captcha label { display: none; }
+#sbq_doctor_quick_register .user-info-from-cookie .captcha img { margin: 0px 0px 0px 10px; height: 34px; }
+#sbq_doctor_quick_register .modal-header { background: url(../images/quick_register_head.png) repeat-x !important; }
+#edit-profile-doctor-private-profile-field-doctor-license-und-0-upload-button { display: none !important; }
+.front .sbq_doctor_register_button #status { display: none !important; }
 /*right*/ 
-.region-sidebar-second {
-	width: 260px !important;
-	margin-left: 700px !important;
-}
+.region-sidebar-second { width: 260px !important; margin-left: 700px !important; }
 .region-sidebar-second .contextual-links-region .more-link,
-.region-sidebar-second .block-views .more-link {
-	background: #F00;
-	position: absolute;
-	top: 4px;
-	right: 5px;
-	background: url(../images/wm.png) no-repeat right center;
-}
+.region-sidebar-second .block-views .more-link { background: #F00; position: absolute; top: 4px; right: 5px; background: url(../images/wm.png) no-repeat right center; }
 .region-sidebar-second .contextual-links-region .more-link a,
-.region-sidebar-second .block-views .more-link a {
-	padding-right: 15px;
-}
+.region-sidebar-second .block-views .more-link a { padding-right: 15px; }
 /*------20063------*/
-.page-node-20063 {
-}
+.page-node-20063 { }
 /*admin login*/
-.region-bottom a em {
-	background: #999;
-	font-size: 24px;
-	font-weight: bold;
-	font-style: normal !important;
-}
-.region-bottom li {
-	float: left;
-	width: 100%;
-	line-height: 30px;
-}
+.region-bottom a em { background: #999; font-size: 24px; font-weight: bold; font-style: normal !important; }
+.region-bottom li { float: left; width: 100%; line-height: 30px; }
