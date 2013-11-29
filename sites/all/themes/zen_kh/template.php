@@ -210,8 +210,10 @@ function zen_kh_preprocess_html(&$variables) {
     $user_login_form = drupal_get_form('user_login');
     $variables['user_login_form'] = drupal_render($user_login_form);
     
-    $variables['doctor_quick_login_form'] = drupal_render(drupal_get_form('user_register_form'));
-    $variables['user_login_block'] =  drupal_render(drupal_get_form('user_login'));
+    $doctor_quick_login_form = drupal_get_form(doctor_quick_login_form);
+    $variables['doctor_quick_login_form'] = drupal_render($doctor_quick_login_form);
+    $doctor_user_login = drupal_get_form('user_login');
+    $variables['user_login_block'] =  drupal_render($doctor_user_login);
   }
 }
 
