@@ -2,6 +2,7 @@
 sites/*/settings*.php
 sites/default/files
 sites/*/files
+FirePHPCore/
 # Ignore paths that contain user-generated content.
 sites/*/files/css
 sites/*/files/ctools
