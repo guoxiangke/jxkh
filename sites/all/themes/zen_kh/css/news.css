@@ -218,4 +218,5 @@
 .page-node-add #content .form-item textarea { float: left; width: 100%; line-height: 20px; padding: 5px; border: none; border-left: 1px #ccc solid; border-right: 1px #ccc solid; border-bottom: 1px #ccc solid; }
 .page-node-add #content .form-item .description { float: left; font-size: 12px; margin: 0px; }
 .form-actions { }
+/*------temporary------*/
 .page-node-add #content #edit-field-departments { display: none; }

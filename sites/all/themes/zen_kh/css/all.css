@@ -1,6 +1,9 @@
 /*------fixbug------*/
 nav,
 input { outline: none; }
+/*---index--*/
+.front #block-views-exposure-platform-slideshow .block-title { text-indent: -9999px; overflow: hidden; }
+.front #sbq-hhb-title { display: none; }
 /*all*/
 .page-index #page { background: none; }
 .sidebar-second #content { float: left; width: 688px; padding: 15px !important; border: 1px #CCCCCC solid !important; overflow: hidden; }
@@ -79,6 +82,9 @@ input { outline: none; }
 #block-sbq-commons-sbq-user-profile #user_badges .user_badges img { float: left; width: 16px; height: 16px; margin: 0px 2px 0px 0px; border: none; overflow: hidden; }
 #block-views-disease-block { float: left; width: 100%; border-top: 1px solid #cccccc; }
 #block-sbq-commons-sbq-user-menu { float: left; width: 100%; }
+/*user right*/
+.sidebars .info { float: left; width: 170px; }
+.sidebars .name { float: left; width: 100%; }
 /*admin login*/
 .region-bottom a em { background: #999; font-size: 24px; font-weight: bold; font-style: normal !important; }
 .region-bottom li { float: left; width: 100%; line-height: 30px; }
