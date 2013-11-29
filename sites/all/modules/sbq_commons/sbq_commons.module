@@ -14,6 +14,7 @@ define('FRIEND_DOCTOR_PATIENT', 3);
 define('USER_ADMINSTRATOR_RID', 3);
 define('USER_DOCTOR_RID', 4);
 define('USER_PATIENT_RID', 5);
+define('USER_EDITOR_RID', 6);
 define('USER_CERTIFIED_DOCTOR_RID', 7);
 
 function sbq_commons_menu() {
@@ -1175,12 +1176,16 @@ function sbq_commons_module_implements_alter(&$implementations, $hook) {
 }
 
 /**
-  暂时隐藏的QA功能，发布时带图片，匿名问答！
+ * 暂时隐藏的QA功能，发布时带图片，匿名问答！
  * Implements hook_form_FORM_ID_alter() for question_node_form().
  */
 function sbq_commons_form_question_node_form_alter(&$form, &$form_state, $form_id) {
+  global $user;
   $switch = FALSE;
-  $form['field_image']['#access'] = TRUE;
+  $form['field_image']['#access'] = FALSE;
+  if (in_array(USER_EDITOR_RID, array_keys($user->roles)) || $user->uid == 1) {
+    $form['field_image']['#access'] = TRUE;
+  }
   $form['field_qa_attachment']['#access'] = $switch;
   $form['field_ask_anonymous']['#access'] = $switch;
 }
