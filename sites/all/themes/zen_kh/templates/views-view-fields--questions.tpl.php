@@ -60,13 +60,13 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
 		<div class="q-author pull-left"> <?php print $picture; ?>
 			<div class="commit pull-left">
 				<div class="timestamp"><span><?php print $q_author; ?></span></div>
-				<!-- 		<div class="username"></div> --> 
+				<!-- 		<div class="username"></div> -->
 			</div>
 		</div>
 		<div class="q-main">
 			<div class="head_wrap">
 				<div class="q-title"><?php print $title; ?></div>
-				<span class="time"><?php print $published_at; ?></span></div>
+				<span class="time"><?php print $created;//$published_at; ?></span></div>
 			<div class="q-body span12"><?php print $body; ?></div>
 			<div class="q-statics">
 				<div class="q-statics-top">
