@@ -204,7 +204,7 @@ li { list-style: none; }
 .modal-footer .btn-block+.btn-block { margin-left: 0 }
 
 @media screen and (min-width:768px) {
-.modal-dialog { right: auto; left: 50%; width: 600px; padding-top: 30px; padding-bottom: 30px }
+.modal-dialog { right: auto; left: 50%; width: 600px; padding-top: 130px; padding-bottom: 30px }
 .modal-content { -webkit-box-shadow: 0 5px 15px rgba(0,0,0,0.5); box-shadow: 0 5px 15px rgba(0,0,0,0.5) }
 }
 .modal-header { border-bottom: 1px solid #E5E5E5; min-height: 16.4286px; padding: 15px; }
@@ -278,10 +278,10 @@ ul,
 li { margin: 0; padding: 0 }
 .section-users #block-sbq-commons-sbq-user-profile { width: 180px; padding: 4px 4px 0; position: relative; border-bottom: 1px solid #d4d4d4; margin-bottom: 0; background: url(../images/sb.png) repeat-x 0 0; }
 #block-sbq-commons-sbq-user-profile #sbq_picture { width: 80px; height: 80px; float: left; margin-right: 9px; }
-#block-sbq-commons-sbq-user-profile #sbq_name { float: left; width: 59%; margin-top: 21px; }
-.not-front #block-sbq-commons-sbq-user-profile #sbq_name { width: 45% }
+/*#block-sbq-commons-sbq-user-profile #sbq_name { float: left; width: 59%; margin-top: 21px; }*/
+.not-front #block-sbq-commons-sbq-user-profile #sbq_name { width: 80px; height: 20px; line-height: 20px; overflow: hidden; }
 #block-views-disease-block { padding: 10px 5px 0 5px; margin-bottom: 10px; }
-#block-views-disease-block .view-footer { position: relative; background-color: #f2feff }
+#block-views-disease-block .view-footer { width: 100%; position: relative; padding: 2px 0px 0px 0px; }
 #block-views-disease-block #sbq-user-disease-add-submit { position: absolute; right: 13px; top: 8px; width: 19px; height: 16px; background: url(../images/adt.png) no-repeat 0 0; border: none; text-indent: -1000em; z-index: 1 }
 .region-sidebar-second .block-quicktabs.contextual-links-region h2,
 .region-sidebar-second .contextual-links-region h2,
@@ -375,7 +375,8 @@ ul.quicktabs-tabs.quicktabs-style-arrows li.active a,
 ul.quicktabs-tabs.quicktabs-style-arrows li a:hover { background: url(../images/arrows.png) no-repeat center bottom; padding-bottom: 6px; color: #585858; padding-top: 0 }
 #block-views-blog-my-blog-block h2 { padding: 0 10px; font-weight: bold; width: auto; display: inline-block; background: url(../images/t.png) no-repeat 0 0; height: 41px; }
 #block-sbq-commons-sbq-user-profile i { position: absolute; top: 3px; }
-#block-sbq-commons-sbq-user-profile i.option { right: 27px; }
+#block-sbq-commons-sbq-user-profile i.option { right: 5px; }
+/*#block-sbq-commons-sbq-user-profile i.option { right: 27px; }*/
 #block-sbq-commons-sbq-user-profile i.message { right: 5px; }
 #block-sbq-commons-sbq-user-profile i a { text-indent: -1000em; display: inline-block; width: 15px; outline: none; }
 #block-sbq-commons-sbq-user-profile i.option a { background: url(../images/inbox.png) no-repeat 0 0; }
@@ -444,7 +445,7 @@ ul.quicktabs-tabs.quicktabs-style-arrows li a:hover { background: url(../images/
 #sbq-user-carousel .view-content,
 #sbq-user-carousel .view-content img { width: 258px; height: 190px; max-width: 258px; max-height: 190px; overflow: hidden; }
 .carousel-indicators { margin: 0; position: absolute; z-index: 1 }
-#sbq-user-disease-add { height: 30px; line-height: 30px; width: 169px; margin: 0 auto; padding: 0 7px; background-color: #f2feff; color: #9aa2a3 }
+#sbq-user-disease-add { height: 30px; line-height: 30px; width: 100%; margin: 0 auto; padding: 0 7px; background-color: #f2feff; color: #9aa2a3 }
 #sbq-user-carousel .carousel-indicators { right: 17px; bottom: 10px; }
 #sbq-user-carousel .carousel-indicators li { width: 8px; height: 8px; border-radius: 8px; background-color: #c6c6c6 }
 #sbq-user-carousel .carousel-indicators li.active { background-color: #16B4C7; }
@@ -777,3 +778,4 @@ nav.breadcrumb { display: none; }
 /*------index------*/
 #sbq-hhb-title { clear: both; width: 100%; }
 #sbq-hhb-title h1 { width: auto; height: 50px; line-height: 60px; margin: 0px; background: url("../images/hhb.png") no-repeat scroll 19px center; text-indent: -999em; font-size: 14px; font-weight: normal; color: #535353; text-align: left; overflow: hidden; }
+

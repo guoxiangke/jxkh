@@ -596,6 +596,12 @@ EOF;
           . render($question_node_form)
           . '</div>';
       break;
+    case 'sbq_add_ask_link':
+      if (!$user->uid) {
+        return;
+      }
+      $block_html = '<div class="sbq-user-add-question">' . l('我要提问', 'node/add/question') . '</div>';
+      break;
 
     case 'sbq_user_menu':
       if (!$user->uid) {
