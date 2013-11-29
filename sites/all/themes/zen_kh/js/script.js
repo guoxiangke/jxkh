@@ -35,7 +35,11 @@ Drupal.behaviors.my_custom_behavior = {
         $(this).attr('data-toggle', 'modal');
         $(this).attr('data-target', '#sbq_user_login_form_modal');
       };
-
+    });
+    $("#block-user-login .sbq_customer_register_button a").each(function() {
+      $(this).attr('href', '#');
+      $(this).attr('data-toggle', 'modal');
+      $(this).attr('data-target', '#sbq_customer_register_form_modal');
     });
 
     $('#myCarousel').carousel({
