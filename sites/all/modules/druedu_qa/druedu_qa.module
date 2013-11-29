@@ -179,7 +179,7 @@ function druedu_qa_init() {
         }
       }
       elseif ($node->type == 'question') {
-        drupal_goto('questions/' . $node->nid);
+        drupal_goto('question/' . $node->nid);
       }
     }
   }
