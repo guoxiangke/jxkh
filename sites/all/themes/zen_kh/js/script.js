@@ -18,29 +18,29 @@ Drupal.behaviors.my_custom_behavior = {
   attach: function(context, settings) {
   	//alert('test-请删除本行，从本行开始添加js！注意封装、及用途注释。谢谢~');
     // Place your code here.
-    $('#secondary-menu a').each(function() {
-      var link = $(this).attr('href');
-      if (link.indexOf("customer") >=0) {
-        $(this).attr('href', '#');
-        $(this).attr('data-toggle', 'modal');
-        $(this).attr('data-target', '#sbq_customer_register_form_modal');
-      };
-      if (link.indexOf("doctor") >=0) {
-        $(this).attr('href', '#');
-        $(this).attr('data-toggle', 'modal');
-        $(this).attr('data-target', '#sbq_doctor_register_form_modal');
-      };
-      if (link.indexOf("login") >=0) {
-        $(this).attr('href', '#');
-        $(this).attr('data-toggle', 'modal');
-        $(this).attr('data-target', '#sbq_user_login_form_modal');
-      };
-    });
-    $("#block-user-login .sbq_customer_register_button a").each(function() {
-      $(this).attr('href', '#');
-      $(this).attr('data-toggle', 'modal');
-      $(this).attr('data-target', '#sbq_customer_register_form_modal');
-    });
+    // $('#secondary-menu a').each(function() {
+    //   var link = $(this).attr('href');
+    //   if (link.indexOf("customer") >=0) {
+    //     $(this).attr('href', '#');
+    //     $(this).attr('data-toggle', 'modal');
+    //     $(this).attr('data-target', '#sbq_customer_register_form_modal');
+    //   };
+    //   if (link.indexOf("doctor") >=0) {
+    //     $(this).attr('href', '#');
+    //     $(this).attr('data-toggle', 'modal');
+    //     $(this).attr('data-target', '#sbq_doctor_register_form_modal');
+    //   };
+    //   if (link.indexOf("login") >=0) {
+    //     $(this).attr('href', '#');
+    //     $(this).attr('data-toggle', 'modal');
+    //     $(this).attr('data-target', '#sbq_user_login_form_modal');
+    //   };
+    // });
+    // $("#block-user-login .sbq_customer_register_button a").each(function() {
+    //   $(this).attr('href', '#');
+    //   $(this).attr('data-toggle', 'modal');
+    //   $(this).attr('data-target', '#sbq_customer_register_form_modal');
+    // });
 
     $('#myCarousel').carousel({
 		  interval: 4000
