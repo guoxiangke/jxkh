@@ -73,7 +73,7 @@ function remember_me_user_presave(&$edit, $account, $category) {
     $edit['data']['remember_me'] = (bool) $edit['remember_me'];
   }
   else {
-    unset($edit['data']['remember_me']);
+    // unset($edit['data']['remember_me']);
   }
 }
 
