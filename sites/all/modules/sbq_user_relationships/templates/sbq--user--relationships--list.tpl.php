@@ -13,9 +13,13 @@
       <?php echo $title; ?>
     </div>
   <?php endif; ?>
+  
   <?php foreach ($accounts as $account) : ?>
-    <?php 
-    print sbq_user_relationships_profile($account); 
+    <?php
+    print sbq_user_relationships_profile($account);
     ?>
   <?php endforeach; ?>
+  <?php if(!isset($accounts) || empty($accounts)):?>
+  <span class="user-relationship-empty">暂无关系，请添加！</span>
+  <?php endif;?>
 </div>
