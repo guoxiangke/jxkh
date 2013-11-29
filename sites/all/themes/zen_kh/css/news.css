@@ -174,6 +174,19 @@
 .page-questions #content .answer-node-form { float: left; width: 100%; margin: 10px 0px 0px 0px; border: none; }
 .page-questions #content .answer-node-form .form-item { margin: 0px; }
 .page-questions #content .answer-node-form label { float: left; width: 100%; height: 36px; line-height: 36px; margin: 0px; padding: 0px 0px 8px 0px; background: url(../images/t2.png) no-repeat -22px bottom; font-size: 16px; font-weight: bold; text-indent: 10px; }
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*------node-type-blog------*/
 .page-questions #content .answer-node-form textarea { width: 100%; line-height: 20px; border: none; border-right: none; padding: 5px; }
 .node-type-blog .blog_usernames_blog { display: none; }
@@ -223,3 +236,88 @@
 .page-questions-my-answer { }
 /*------temporary------*/
 .page-node-add #content #edit-field-departments { display: none; }
+
+/*------page-questions2-------*/
+.page-qa #page-title { display: none; }
+.page-qa #content { padding: 0px !important; border: none !important; }
+.page-qa .ajax-progress { display: none; }
+.page-question #content .view-question { float: left; width: 100%; }
+.page-question #content .view-content { float: left; width: 100%; }
+.page-question #content .question .title,
+.page-question #content .question .title h2 { float: left; width: 100%; line-height: 30px; margin: 0px; font-size: 16px; font-weight: bold; }
+.page-question #content .question .title { border-bottom: 2px solid #1DC7DB; }
+/*questions list first*/
+
+.page-question #content .view-display-id-single_question_page > .view-content .q-body .q-body { font-size: 14px; }
+/*--all questions list--*/
+
+.page-question #content .question { float: left; width: 100%; }
+/*.page-question #content .view-content .question > .q-body {
+	margin: 10px 0px 0px 0px;
+}*/
+.page-question #content .question .q-body > .pull-left { float: left; width: 20px; margin: 0px 0px 0px 5px; }
+/*all questions right*/
+.page-question #content .question .q-body .q-margin { float: left; width: 100%; position: relative; }
+.page-question #content .question .q-body { float: left; width: 100%; line-height: 22px; padding: 10px 0px; word-break: break-all; font-size: 12px; }
+.page-question #content .question .q-body p { margin: 0px; }
+.page-question #content .question .tags { float: left; width: 100%; margin: 0px 0px 5px 0px; }
+.page-question #content .question .tags .tags-label { float: left; width: 35px; }
+.page-question #content .question .tags a { color: #0066CC; }
+.page-question #content .question .tags .sbq-qa-flag_wrap { float: left; width: 550px; }
+.page-question #content .question .tags .sbq-qa-flag { float: left; height: 20px; line-height: 20px; margin: 0px 5px 5px 0px; padding: 0px 5px; position: relative; border: 1px solid #168a9b; border-radius: 3px; color: #168a9b; font-size: 12px; }
+.page-question #content .question .tags .sbq-qa-flag:hover { background-color: #168a9b; color: #fff; }
+.page-question #content .question .tags .sbq-qa-flag:hover a { color: #fff; }
+.page-question #content .question .tags .sbq-qa-flag a { color: #168a9b; line-height: 20px; }
+.page-question #content .question .links { float: left; width: 100%; display: none; }
+.page-question #content .question .links .delete { float: right; }
+.page-question #content .question .links a { border: none; color: #0066CC; }
+.page-question #content .question .q-info { float: left; width: 60px; margin: 0px 10px 0px 0px; }
+.page-question #content .question .q-info .author-item a,
+.page-question #content .question .q-info .author-item img { float: left; width: 60px; height: 60px; border: none; }
+.page-question #content .question .q-info .author-item span { float: left; width: 100%; margin: 0px; padding: 0px; }
+.page-question #content .question .q-info .author-item .create a { float: left; width: 100%; height: 20px; line-height: 20px; margin: 0px; padding: 0px; border-radius: 0; color: #0066CC; font-size: 12px; text-align: center; font-weight: normal; word-break: break-all; word-wrap: break-word; overflow: hidden; }
+.page-question #content .question .q-content { float: left; width: 586px; overflow: hidden; }
+.page-question #content .question .head_wrap { float: left; width: 100%; height: 30px; line-height: 30px; border-bottom: 1px #CCCCCC dotted; overflow: hidden; }
+.page-question #content .question .q-content .head_wrap .time { float: left; color: #999; font-size: 12px; }
+.page-question #content .question .q-content .head_wrap .votes { float: right; }
+.page-question #content .question .q-content .head_wrap .votes ul { float: left; margin: 1px 0px 0px 0px; }
+.page-question #content .question .q-content .head_wrap .votes ul li { float: left; line-height: 26px; margin: 0px 0px 0px 10px; font-weight: bold; font-size: 12px; }
+.page-question #content .question .q-content .head_wrap .votes ul li a { height: 24px; line-height: 24px; padding: 0px 5px; border-radius: 3px; font-size: 12px; }
+.page-question #content .question .q-content .head_wrap .votes ul .first a { border: 1px #009900 solid; color: #009900 !important; background: #F0FBEB; }
+.page-question #content .question .q-content .head_wrap .votes ul .last a { border: 1px #E6393D solid; color: #E6393D !important; background: #ffebec; }
+/*.is-accept { background: #0CC; }*/
+.page-question #content .question .accept { float: left; width: 100%; line-height: 26px; font-size: 14px; color: #E6393D; font-weight: bold; }
+.page-question #content .question .accept .flag-wrapper a { font-size: 14px; color: #E6393D; font-weight: bold; }
+.page-question #content .question .accept .flag-throbber { display: none; }
+/*all answers*/
+.page-question #content .attachment { float: left; width: 100%; }
+.page-question #content .attachment h3 { float: left; width: 100%; height: 30px; line-height: 30px; margin: 0px; font-size: 14px; font-weight: bold; border-bottom: 2px solid #1DC7DB; }
+.page-question #content .view-question #answers .views-row { float: left; width: 100%; padding: 0px; background: none; border-bottom: 1px #E5E5E5 solid; }
+/*all edit*/
+/*questions edit*/
+.page-question #content .question .comments-wrapper { float: left; width: 100%; background: #F3F3F3; }
+.page-question #content .question .comments-wrapper .comment-text { float: left; width: 100%; padding: 2px 5px; line-height: 22px; }
+/*.page-question #content .question .comments-wrapper .comment-text .field-type-text-long { float: left; width: 100%; }*/
+.page-question #content .question .comment_textarea label { float: left; width: 100%; height: 30px; line-height: 30px; margin: 0px; padding: 0px 0px 8px 0px; background: url(../images/t2.png) no-repeat -22px bottom; font-size: 14px; font-weight: bold; text-indent: 10px; }
+.page-question #content .question .comment_textarea label .form-required { display: none; }
+.page-question #content .question .comment_textarea .grippie { display: none; }
+.page-question #content .question .comment_textarea .form-item { float: left; width: 100%; margin: 0px; position: relative; }
+.page-question #content .form-textarea-wrapper { float: left; width: 100%; border-left: 1px #ccc solid; border-right: 1px #ccc solid; border-bottom: 1px #ccc solid; }
+.page-question #content .question .comment_textarea textarea { width: 100%; height: 90px; line-height: 20px; border: none; border-right: none; resize: none; padding: 5px; }
+.page-question #content .form-actions { float: left; width: 100%; height: 30px; line-height: 30px; margin: 5px 0px 0px 0px; }
+.page-question #content .form-submit { float: right; width: 60px; height: 30px; margin: 0px; padding: 0px; text-align: center; border: none !important; background: #168A9B; color: #FFF; font-size: 16px; }
+.page-question #content .ajax-progress { float: right; margin: 0px -60px 0px 0px; }
+.page-question #content .message { float: right; width: 60px; height: 30px; margin: 0px; padding: 0px; text-align: center; background: #E5E5E5; color: #666; font-size: 14px; }
+.page-question #content .throbber { display: none; }
+.page-question #content .messages--error { margin: 0px; }
+/*comments_btn*/
+.page-question #content .question .comments_btn { float: left; width: 100%; margin: 10px 0px 0px 0px; }
+.page-question #content .question .comments_btn a { float: left; width: 60px; height: 26px; line-height: 26px; background: #168A9B; text-align: center; color: #FFF; cursor: pointer; }
+.page-question #content .question .comment_textarea { float: left; width: 100%; }
+.page-question #content .question .comment_textarea .comment-form { background: none; }
+/*answer-node-form*/
+.page-question #content .answer-node-form { float: left; width: 100%; margin: 10px 0px 0px 0px; border: none; }
+.page-question #content .answer-node-form .form-item { margin: 0px; }
+.page-question #content .answer-node-form label { float: left; width: 100%; height: 36px; line-height: 36px; margin: 0px; padding: 0px 0px 8px 0px; background: url(../images/t2.png) no-repeat -22px bottom; font-size: 16px; font-weight: bold; text-indent: 10px; }
+
+
