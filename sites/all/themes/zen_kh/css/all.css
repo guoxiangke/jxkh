@@ -83,8 +83,11 @@ input { outline: none; }
 #block-views-disease-block { float: left; width: 100%; border-top: 1px solid #cccccc; }
 #block-sbq-commons-sbq-user-menu { float: left; width: 100%; }
 /*user right*/
-.sidebars .info { float: left; width: 170px; }
-.sidebars .name { float: left; width: 100%; }
+.sidebars .info { float: left; width: 170px; margin: 4px 0px 0px 0px; }
+.sidebars .warp-nb { float: left; width: 100%; height: 20px; line-height: 20px; overflow: hidden; }
+.sidebars .name { float: left; max-width: 110px; }
+.sidebars .user_badges { float: left; max-width: 60px; height: 20px; overflow: hidden; }
+.sidebars .user_badges img { float: left; width: 16px; height: 16px; margin: 2px !important; border: none; overflow: hidden; }
 /*admin login*/
 .region-bottom a em { background: #999; font-size: 24px; font-weight: bold; font-style: normal !important; }
 .region-bottom li { float: left; width: 100%; line-height: 30px; }
