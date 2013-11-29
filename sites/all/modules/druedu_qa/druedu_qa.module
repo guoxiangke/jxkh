@@ -277,7 +277,7 @@ function druedu_qa_views_post_execute(&$view) {
         ->execute()
         ->rowCount();
     if ($view->is_attachment && $counts) {
-      $output = format_plural($counts, '共1 个答案', '共@count 个答案');
+      $output = format_plural($counts, '共<span class="sbq-qa-count">1</span>个答案', '共<span class="sbq-qa-count">@count</span>个答案');
       $view->attachment_before = '<h3>' . $output . '</h3>';
     }
 
