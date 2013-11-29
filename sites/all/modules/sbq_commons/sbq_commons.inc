@@ -686,7 +686,7 @@ EOF;
           . '<image src="/' . drupal_get_path('module', 'sbq_commons') . '/images/products_mobileload.png">'
           . '</div>'
           . '<iframe width="270" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=270&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=3910809638&verifier=480ee660&dpc=1"></iframe>';
-    
+
       break;
     default:
       break;
@@ -740,15 +740,23 @@ function sbq_commons_user_disease_tag_add_ajax($tag_name = '') {
     //set term to the user
     $profile = profile2_load_by_user($user->uid, 'main');
     $index = count($profile->field_tags_disease['und']);
-    $profile->field_tags_disease['und'][$index] = array(
-        'tid' => $tid );
-    profile2_save($profile);
-    $li_html = '<li>'
-        . '<a href="#" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">' . $tag_name . '</a>'
-        . '<span class="sba-user-tag-del">'
-        . '<a href="/user/ajax/tags/' . $tid . '/delete">-</a>'
-        . '</span>'
-        . '</li>';
+    $checked = FALSE;
+    foreach ($profile->field_tags_disease['und'] as $key => $value) {
+      if ($value['tid']==$tid) {
+        $checked = TRUE;
+      }
+    }
+    if (!$checked) {
+      $profile->field_tags_disease['und'][$index] = array(
+          'tid' => $tid );
+      profile2_save($profile);
+      $li_html = '<li>'
+          . '<a href="#" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">' . $tag_name . '</a>'
+          . '<span class="sba-user-tag-del">'
+          . '<a href="/user/ajax/tags/' . $tid . '/delete">-</a>'
+          . '</span>'
+          . '</li>';
+    }
   }
 
   $commands = array();
