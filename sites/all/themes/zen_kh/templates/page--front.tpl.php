@@ -104,7 +104,7 @@
         </div>
         <div id="block-views-exposure-platform-block-index" class="block block-views contextual-links-region odd">
           <h2 class="block__title block-title">医界传奇</h2>
-        <?php echo views_embed_view('doctor_legend', $display_id = 'block_index');?>
+        <?php echo views_embed_view('exposure_platform', $display_id = 'block_index');?>
         </div>
       </div>
 
