@@ -88,6 +88,45 @@ input { outline: none; }
 .sidebars .name { float: left; max-width: 110px; }
 .sidebars .user_badges { float: left; max-width: 60px; height: 20px; overflow: hidden; }
 .sidebars .user_badges img { float: left; width: 16px; height: 16px; margin: 2px !important; border: none; overflow: hidden; }
+/*------page-questions-my-answer------*/
+.page-questions-my-answer #content .views-row { border-bottom: 1px dashed #CACACA; font-size: 12px; height: 32px; line-height: 32px; }
+.page-questions-my-answer #content .views-field { color: #A3A3A3; float: left; height: 32px; overflow: hidden; }
+.page-questions-my-answer #content .views-row .views-field-title { width: 286px; height: 32px; max-width: 286px; padding-left: 14px; overflow: hidden; background: url(../images/dot.png) no-repeat 4px center; overflow: hidden; }
+.page-questions-my-answer #content .views-row .views-field-value { width: 50px; padding-left: 21px; background: url(../images/thumbs-up.png) no-repeat 0 center; }
 /*admin login*/
 .region-bottom a em { background: #999; font-size: 24px; font-weight: bold; font-style: normal !important; }
 .region-bottom li { float: left; width: 100%; line-height: 30px; }
+/*#sbq_doctor_quick_login_modal .modal-dialog,
+#sbq_customer_register_form_modal .modal-dialog,
+#sbq_doctor_register_form_modal .modal-dialog,
+#user-login .modal-dialog { width: 460px; }
+.modal-content { float: left; width: 100%; }
+.modal-body { float: left; width: 100%; }
+.user-info-from-cookie { float: left; width: 100%; }
+.user-info-from-cookie .form-item { float: left; width: 100%; margin: 10px 0px 0px 0px; }
+.user-info-from-cookie .form-item .form-item-pass-pass1 { margin: 0px !important; }
+.user-info-from-cookie .form-type-password-confirm .password-strength,
+.user-info-from-cookie .form-type-password-confirm .password-confirm { display: none; }
+.user-info-from-cookie .form-type-password-confirm .form-item-pass-pass2 input { display: block !important; }
+.user-info-from-cookie label,
+.user-info-from-cookie .fieldset-legend { float: left; display: inline-block; font-weight: normal; margin: 6px 10px !important; text-align: center; width: 70px; font-size: 14px; }
+.user-info-from-cookie input { float: left; border-radius: 0px; width: 230px; margin: 0px; }
+.user-info-from-cookie .description { display: none !important; }
+.user-info-from-cookie .password-suggestions { float: left; width: 100%; }
+.user-info-from-cookie .captcha1 { clear: both; width: 100%; }
+.user-info-from-cookie .captcha { clear: both; width: 100%; border: none; margin: 0px; padding: 10px 0px 0px 0px; display: block; }
+.user-info-from-cookie .captcha .reload-captcha-wrapper { display: none; }
+.user-info-from-cookie .captcha .fieldset-description { display: none; }
+.user-info-from-cookie .captcha .fieldset-wrapper { margin: 0px 0px 0px 72px !important; }
+.user-info-from-cookie .captcha .fieldset-wrapper .form-item { float: left; width: 80px; margin: 0px 0px 0px -190px; }
+.user-info-from-cookie .captcha .fieldset-wrapper img { float: left; margin: 0px 0px 0px 100px; }
+.user-info-from-cookie .captcha legend { float: left; }
+.user-info-from-cookie .captcha label { display: none !important; }
+.user-info-from-cookie .captcha .reload-captcha-wrapper { display: none; }
+.user-info-from-cookie .form-item-agree { width: auto; padding: 0px; }
+.user-info-from-cookie .form-item-agree input { float: left; margin: 2px; }
+.user-info-from-cookie .form-item-agree label { float: left; margin: 0px !important; }
+.user-info-from-cookie .form-actions { float: left; }
+*/
+#user-login .sbq_login_thirdpart { display: none; }
+#user-login .item-list { display: none; } 
