@@ -462,9 +462,9 @@ function sbq_commons_menu_alter(&$items) {
         'file' => drupal_get_path('module', 'user_relationships_ui') . '/user_relationships_ui.forms.inc',
     );
   }
-//  if (isset($items['doctor/register'])) {
-//    $items['doctor/register']['page callback'] = 'sbq_commons_doctor_register';
-//  }
+  if (isset($items['doctor/register'])) {
+    $items['doctor/register']['page callback'] = 'sbq_commons_doctor_register';
+  }
 //@url http://192.168.0.150:800/redmine/issues/49
 //@og_ui_menu //user_is_logged_in ==>group_subscribe4sbq
   $items['group/%/%/subscribe']['access callback'] = 'group_subscribe4sbq';
@@ -1061,7 +1061,6 @@ function sbq_commons_doctor_register($profiles) {
     die($html);
   }
   $output = drupal_get_form('user_register_form');
-  dpm($output);
   _profile2_regpath_set_title($profiles, 'register_title');
   return $output;
 }
