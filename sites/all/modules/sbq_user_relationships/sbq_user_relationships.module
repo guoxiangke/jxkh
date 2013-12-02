@@ -7,7 +7,7 @@
  */
 
 function sbq_user_relationships_menu() {
-  
+
   $items['user/%user/relationship'] = array(
       'title' => t('我的圈子'),
       'type' => MENU_NORMAL_ITEM,
@@ -70,18 +70,18 @@ function sbq_user_relationships_menu() {
     );
   }        // user/    2/relationship/378                /cancle
 
-  foreach (array('cancel', 'approve', 'disapprove') as $key => $item) {
-    $items['user/%user/relationship/action/%user_relationships/'.$item] = array(
-      'delivery callback' => 'ajax_deliver',
-      // 'title' => 'Approve Relationship',
-      'type' => MENU_CALLBACK,
-      'access callback' => 'sbq_user_relationships_access_callback',
-      'access arguments' => array( 1 ),
-      //  'access callback' => TRUE,
-      'page callback' => 'sbq_user_relationships_ui_pending_requested_ajax',
-      'page arguments' => array( 1, 4, 5 ),
-      'file' => 'sbq_user_relationships.inc',
-  );
+  foreach (array( 'cancel', 'approve', 'disapprove' ) as $key => $item) {
+    $items['user/%user/relationship/action/%user_relationships/' . $item] = array(
+        'delivery callback' => 'ajax_deliver',
+        // 'title' => 'Approve Relationship',
+        'type' => MENU_CALLBACK,
+        'access callback' => 'sbq_user_relationships_access_callback',
+        'access arguments' => array( 1 ),
+        //  'access callback' => TRUE,
+        'page callback' => 'sbq_user_relationships_ui_pending_requested_ajax',
+        'page arguments' => array( 1, 4, 5 ),
+        'file' => 'sbq_user_relationships.inc',
+    );
   }
 //  $items['user/%user/relationship/action/%user_relationships/cancel'] = array(
 //      'delivery callback' => 'ajax_deliver',
@@ -94,7 +94,6 @@ function sbq_user_relationships_menu() {
 //      'page arguments' => array( 1, 4, 5 ),
 //      'file' => 'sbq_user_relationships.inc',
 //  );
-
 //  $items["user/%user/relationships/requested/%user_relationships/%"] = array(
 //      'title' => 'Approve Relationship',
 //      'type' => MENU_CALLBACK,
@@ -416,12 +415,15 @@ function sbq_user_relationships_my_relstionships($account = NULL) {
     $account = $user;
   }
   $no_approved = 0;
+  $options = array(
+      'include_user_info' => TRUE,
+  );
   $approved = user_relationships_load(array( 'user' => $account->uid, 'approved' => 1,
-      'rtid' => 3 ));
+      'rtid' => 3 ), $options);
   if (in_array(USER_PATIENT_RID, array_keys($account->roles))) {
-    $no_approved = user_relationships_load(array( 'user' => $account->uid, 'rtid' => 2 ));
+    $no_approved = user_relationships_load(array( 'user' => $account->uid, 'rtid' => 2 ), $options);
   } else if (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($account->roles))) {
-    $no_approved = user_relationships_load(array( 'user' => $account->uid, 'rtid' => 1 ));
+    $no_approved = user_relationships_load(array( 'user' => $account->uid, 'rtid' => 1 ), $options);
   }
   return count($approved) + count($no_approved);
 }
@@ -501,10 +503,9 @@ function sbq_user_relationships_user_action($relationship, $account) {
     } else {
       // Received requests, display approve and decline links.
       $links[] = theme('sbq_user_relationships_pending_request_approve_link', array(
-          'uid' => $account->uid, 'rid' => $relationship->rid, 'vid'=>$relationship->{$this_user_str . '_id'} ));
+          'uid' => $account->uid, 'rid' => $relationship->rid, 'vid' => $relationship->{$this_user_str . '_id'} ));
       $links[] = theme('sbq_user_relationships_pending_request_disapprove_link', array(
           'uid' => $account->uid, 'rid' => $relationship->rid, 'vid' => $relationship->{$this_user_str . '_id'} ));
-     
     }
   }
   if (!empty($links)) {
