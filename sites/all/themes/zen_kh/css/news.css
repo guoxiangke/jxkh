@@ -2,7 +2,7 @@
 .section-news #page { }
 .section-news #content { float: left; width: 688px; padding: 15px !important; /*background: #FFF;*/ border: 1px #CCCCCC solid !important; overflow: hidden; }
 .section-news #content .breadcrumb { display: none !important; }
-.section-news #content .page__title { line-height: 26px; padding: 0px 0px 10px 0px; font-size: 20px; border-bottom: 1px solid #E5E5E5; font-weight: normal; text-align: center; }
+.section-news #content .page__title, { line-height: 26px; padding: 0px 0px 10px 0px; font-size: 20px; border-bottom: 1px solid #E5E5E5; font-weight: normal; text-align: center; }
 .section-news #content .view-mode-full { float: left; width: 100%; margin: 20px 0px 0px 0px; }
 /*.section-news */#content .view-mode-full .links { float: left; margin: 10px 0px 0px 0px; color: #666 }
 /*.section-news */#content .view-mode-full .links a { padding: 0px 5px; color: #0066CC; }
@@ -88,6 +88,7 @@
 .node-type-activity .node-activity .field-type-image { padding: 10px 0px; background: none; }
 .node-type-activity .node-activity .field-type-image .field-label { display: none; }
 .node-type-activity .node-activity .field-type-image .field-items { float: left; width: 100%; margin: 0px; text-align: center; }
+.node-type-activity .node-activity .field-type-image img { width: 600px; }
 /*text*/
 .node-type-activity .node-activity .field-type-text-with-summary { float: left; width: 100%; line-height: 26px; font-size: 12px; }
 .node-type-activity .node-activity .field-type-text-with-summary p { margin: 1em 0px !important; }
@@ -97,7 +98,6 @@
 .page-qa #content { padding: 0px !important; border: none !important; }
 .page-qa .ajax-progress { display: none; }
 .page-questions #content .view-question { float: left; width: 100%; }
-.page-questions #content .view-content { float: left; width: 100%; }
 .page-questions #content .question .title,
 .page-questions #content .question .title h2 { float: left; width: 100%; line-height: 30px; margin: 0px; font-size: 16px; font-weight: bold; }
 .page-questions #content .question .title { border-bottom: 2px solid #1DC7DB; }
@@ -267,7 +267,7 @@
 .page-question #content .question .q-content .head_wrap .time { float: left; color: #999; font-size: 12px; }
 .page-question #content .question .q-content .head_wrap .votes { float: right; }
 .page-question #content .question .q-content .head_wrap .votes ul { float: left; margin: 1px 0px 0px 0px; }
-.page-question #content .question .q-content .head_wrap .votes ul li { float: left; line-height: 26px; margin: 0px 0px 0px 10px; font-weight: bold; font-size: 12px; }
+.page-question #content .question .q-content .head_wrap .votes ul li { float: left; line-height: 26px; margin: 0px 0px 0px 10px; padding: 0px; font-weight: bold; font-size: 12px; }
 .page-question #content .question .q-content .head_wrap .votes ul li a { height: 24px; line-height: 24px; padding: 0px 5px; border-radius: 3px; font-size: 12px; }
 .page-question #content .question .q-content .head_wrap .votes ul .first a { border: 1px #009900 solid; color: #009900 !important; background: #F0FBEB; }
 .page-question #content .question .q-content .head_wrap .votes ul .last a { border: 1px #E6393D solid; color: #E6393D !important; background: #ffebec; }
