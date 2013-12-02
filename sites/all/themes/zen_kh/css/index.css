@@ -3,7 +3,7 @@
 a:focus { outline: none; }
 #page,
 .region-bottom { width: 980px; background: #FFF; }
-#main { padding-top: 19px; }
+#main { padding-top: 19px; position: relative; }
 #page { padding: 0px 10px 10px 10px; }
 .sbq-clearfix:before,
 .sbq-clearfix:after { display: table; line-height: 0; content: "" }
@@ -52,7 +52,7 @@ li { list-style: none; }
 .header__site-link:visited { color: #fff }
 .header__site-link:hover { text-decoration: none; }
 .header__site-slogan { margin: 25px 0 0 11px; float: left; color: #fff; font-size: 16px; }
-#block-search-form input.form-submit { width: 24px; height: 24px; background: url(../images/search.png) 241px -4px; text-indent: -1000em; border: medium none; margin-top: 4px; }
+#block-search-form input.form-submit { width: 24px; height: 24px; background: url(../images/search.png) 242px -5px; text-indent: -1000em; border: medium none; margin-top: 4px; }
 #header .sbq-center.sbq-width.sbq-clearfix { position: relative; }
 .two-sidebars .region-sidebar-first { width: 182px; margin-right: -182px; }
 .sidebar-first .region-sidebar-first,
@@ -158,9 +158,9 @@ li { list-style: none; }
 *:before,
 *:after { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box }
 .carousel-indicators li { border: 1px solid #FFFFFF; border-radius: 15px; cursor: pointer; display: inline-block; height: 15px; margin: 1px; text-indent: -999px; width: 15px; }
-#myCarousel .carousel-indicators li { background: none repeat scroll 0 0 #808080; background: url(../images/idx.png) no-repeat right 0\9; }
+#myCarousel .carousel-indicators li { background: none repeat scroll 0 0 #808080; /*background: url(../images/idx.png) no-repeat right 0\9;*/ }
 .carousel-indicators .active { background-color: #16b4c7; height: 15px; width: 15px; }
-#myCarousel .carousel-indicators .active { background: none repeat scroll 0 0 #16b4c7; background: url(../images/idx.png) no-repeat left 0\9; }
+#myCarousel .carousel-indicators .active { background: none repeat scroll 0 0 #16b4c7; /*background: url(../images/idx.png) no-repeat left 0\9;*/ }
 .carousel-inner { position: relative; overflow: hidden; width: 100%; }
 .carousel-inner > .item { display: none; position: relative; -webkit-transition: 0.6s ease-in-out left; transition: 0.6s ease-in-out left; }
 .carousel-inner > .item > img,
@@ -211,19 +211,13 @@ li { list-style: none; }
 #sbq_doctor_quick_register .modal-dialog .modal-content .modal-header { background: url("../images/lodin_01.png") repeat-x scroll 0 0 rgba(0, 0, 0, 0); border-top-left-radius: 5px; border-top-right-radius: 5px; height: 46px; padding: 10px; }
 .close { color: #000000; float: right; font-size: 21px; font-weight: bold; line-height: 1; opacity: 0.2; text-shadow: 0 1px 0 #FFFFFF; }
 button.close { background: none repeat scroll 0 0 rgba(0, 0, 0, 0); border: 0 none; cursor: pointer; padding: 0; }
-#sbq_doctor_quick_register .modal-header .close { color: #FFFFFF; margin-top: 0; opacity: 10; text-shadow: 0 1px 0 #000000; }
-#sbq_doctor_quick_register .modal-header h4.modal-title { color: #FFFFFF; font-size: 18px; margin-left: 20px; text-shadow: 0 1px 1px #000000; }
-#sbq_doctor_quick_register .modal-content .modal-body { background: url("../images/ruk-bg.png") no-repeat scroll 23px 15px rgba(0, 0, 0, 0); float: left; overflow: hidden; }
-#sbq_doctor_quick_register #doctor_register_form { float: right; margin-top: 27px; width: 450px; }
-#sbq_doctor_quick_register #block-user-login { float: left; margin-right: 45px; margin-top: 15px; width: 190px; }
+#user-register-form .form-item label { display: inline-block; font-weight: normal; margin-right: 10px; text-align: center; width: 70px; font-size: 14px; }
 label { display: inline-block; font-weight: bold; margin-bottom: 5px; }
 .input-group { border-collapse: separate; display: table; position: relative; }
-#sbq_doctor_quick_register #user_login_form .form-item-name label { display: none; }
 .input-group-addon,
 .input-group-btn { vertical-align: middle; white-space: nowrap; width: 1%; }
 .input-group-addon { background-color: #EEEEEE; border: 1px solid #CCCCCC; border-radius: 4px; font-size: 14px; font-weight: normal; line-height: 1; padding: 6px 12px; text-align: center; }
 .glyphicon { display: inline-block; font-family: 'Glyphicons Halflings'; font-style: normal; font-weight: normal; line-height: 1; position: relative; top: 1px; }
-#user-register-form .form-item label { display: inline-block; font-weight: normal; margin-right: 10px; text-align: center; width: 70px; font-size: 14px; }
 .views-field-field-tags-disease li { display: inline-block; *display:inline;
 zoom: 1; height: 20px; line-height: 20px; text-align: center; margin: 0 7px 7px 0; position: relative; }
 .views-field-field-tags-disease li a { padding: 0 7px; display: inline-block; *display:inline;
@@ -290,14 +284,14 @@ li { margin: 0; padding: 0 }
 .block__title.block-title,
 .section-square #page-title,
 #block-views-news-block-2 h2,
-.page-groups #page-title { width: 90px; height: 30px; background-color: #1dc7db; color: #fff; font-weight: normal; text-align: center; line-height: 30px; font-size: 12px; text-indent: 0 }
+.page-groups #page-title { width: 90px; height: 30px; background-color: #1dc7db; color: #fff; font-weight: normal; text-align: center; line-height: 30px; font-size: 12px; text-indent: 0; border: none; }
 .section-square #content .block__title.block-title,
 #block-quicktabs-wonderful-qa .block__title.block-title,
 .page-square #page-title,
 .page-groups #page-title,
 #block-quicktabs-user-qa h2,
 #block-quicktabs-user-group h2,
-#block-views-blog-my-blog-block h2 { font-weight: bold; font-size: 16px; }
+#block-views-blog-my-blog-block h2 { font-weight: bold; font-size: 16px; border: none !important; }
 .page-index #page,
 .section-square #page,
 .page-node #page { padding-bottom: 30px; }
@@ -455,8 +449,7 @@ ul.quicktabs-tabs.quicktabs-style-arrows li a:hover { background: url(../images/
 
 
 
-#body-add-more-wrapper .grippie,
-#edit-field-tags { display: none; }
+#body-add-more-wrapper .grippie{ display: none; }
 #block-sbq-commons-sbq-user-menu li.active { background-color: #1dc7db; color: #fff }
 #block-sbq-commons-sbq-quick-ask #question-node-form { position: relative; }
 #block-sbq-commons-recommond-patients { position: relative; }
@@ -574,7 +567,7 @@ zoom: 1; height: 20px; line-height: 20px; text-align: center; margin: 0 6px 11px
 .view-display-id-group_front_page .views-field-created,
 .view-display-id-group_front_page .views-field-comment-count,
 .view-display-id-group_front_page .views-field-value { float: right; }
-.pager { margin: 10px 0 15px auto; text-align: right; }
+.pager { float: left; width: 100%; margin: 10px 0 15px auto; text-align: right; }
 .pager li { border: 1px solid #168a9b; font-size: 12px; color: #fff; display: inline-block; height: 26px; text-align: center; line-height: 26px; padding: 0 10px; }
 .pager li.pager-current { font-weight: normal; background-color: #168a9b; }
 .pager li a,
@@ -708,7 +701,7 @@ nav.breadcrumb { display: none; }
 	border: 1px solid #ccc !important;
 	border-top: 2px solid #1dc7db !important
 }*/
-.page-node #content .field-name-field-image img { max-width: 660px; max-height: 334px; }
+.page-node #content .field-name-field-image img { max-width: 656px; max-height: 334px; }
 .page-node #content p { margin: 0 }
 .page-node #content .title { font-size: 14px; line-height: 32px; font-weight: bold; color: #585858; margin: 0 }
 /*.page-node #content .comments__title,*/
@@ -778,4 +771,3 @@ nav.breadcrumb { display: none; }
 /*------index------*/
 #sbq-hhb-title { clear: both; width: 100%; }
 #sbq-hhb-title h1 { width: auto; height: 50px; line-height: 60px; margin: 0px; background: url("../images/hhb.png") no-repeat scroll 19px center; text-indent: -999em; font-size: 14px; font-weight: normal; color: #535353; text-align: left; overflow: hidden; }
-
