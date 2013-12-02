@@ -63,7 +63,7 @@ jQuery(function($) {
             $.get(href + '?ajax=true', function(data) {
                 self.parent().parent().find("li #status").remove()
                 $('body').append(data);
-                $('section #block-user-login').clone().appendTo('#sbq_doctor_quick_register .modal-body');
+                $('section #block-user-login').clone().prependTo('#sbq_doctor_quick_register .modal-body');
                 $('#sbq_doctor_quick_register #user-login-form div.item-list:first').remove();
                 // $('#sbq_doctor_quick_register').hide();
                 //  $(data).modal();

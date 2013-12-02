@@ -40,19 +40,21 @@ li { list-style: none; }
 #navigation .menu li a:hover { color: #fff }
 #navigation .links li.active a,
 #navigation .menu li.active a { font-weight: bold; }
-#secondary-menu { line-height: 25px; position: fixed; top: 0; left: 0; z-index: 10; height: 25px; width: 100%; float: none; background: url(../images/hbg.png) repeat-x 0 0; font-size: 12px; color: #fff }
+#secondary-menu { line-height: 25px; position: fixed; top: 0; left: 0; z-index: 999; height: 25px; width: 100%; float: none; background: url(../images/hbg.png) repeat-x 0 0; font-size: 12px; color: #fff }
 #secondary-menu a { color: #fff; }
 #secondary-menu h2 { display: none; }
 #secondary-menu ul { float: none; width: 960px; margin: 0 auto; display: block; text-align: right; }
 .header__region.region.region-header { position: absolute; right: 0; bottom: 8px; width: 206px; height: 36px; clear: none; background: url(../images/search.png) no-repeat 0 0; }
-#edit-search-block-form--2 { border: none; margin: 0 0 0 5px; padding: 0 0 0 5px; width: 160px; height: 28px; line-height: 28px; }
-#edit-search-block-form--2:focus { border: none; }
+.header__region.region.region-header .contextual-links-region { margin: 0px; }
+.header__region.region.region-header .form-item-search-block-form { margin: 0px; }
+.header__region.region.region-header #edit-search-block-form--2 { float: left; width: 164px; height: 28px; line-height: 28px; border: none; margin: 4px 0 0 5px; padding: 0 0 0 5px; }
+.header__region.region.region-header .form-actions { float: left; width: auto; }
+#block-search-form input.form-submit { width: 24px; height: 24px; background: url(../images/search.png) 242px -5px; text-indent: -1000em; border: medium none; margin-top: 4px; }
 .header__site-name { font-size: 30px; line-height: 1em; margin-top: 15px }
 .header__site-link,
-.header__site-link:visited { color: #fff }
+.header__site-link:visited { color: #fff !important; }
 .header__site-link:hover { text-decoration: none; }
 .header__site-slogan { margin: 25px 0 0 11px; float: left; color: #fff; font-size: 16px; }
-#block-search-form input.form-submit { width: 24px; height: 24px; background: url(../images/search.png) 242px -5px; text-indent: -1000em; border: medium none; margin-top: 4px; }
 #header .sbq-center.sbq-width.sbq-clearfix { position: relative; }
 .two-sidebars .region-sidebar-first { width: 182px; margin-right: -182px; }
 .sidebar-first .region-sidebar-first,
@@ -177,9 +179,6 @@ li { list-style: none; }
 .carousel-inner > .prev.right { left: 0; }
 .carousel-inner > .active.left { left: -100%; }
 .carousel-inner > .active.right { left: 100%; }
-/*医生快速通道弹框*/
-#sbq_doctor_quick_register { font-size: 14px; }
-#sbq_doctor_quick_register .modal-dialog { width: 800px; }
 .modal { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 1040; display: none; overflow: auto; overflow-y: scroll }
 .modal.fade .modal-dialog { -webkit-transform: translate(0, -25%); -ms-transform: translate(0, -25%); transform: translate(0, -25%); -webkit-transition: -webkit-transform .3s ease-out; -moz-transition: -moz-transform .3s ease-out; -o-transition: -o-transform .3s ease-out; transition: transform .3s ease-out }
 .modal.in .modal-dialog { -webkit-transform: translate(0, 0); -ms-transform: translate(0, 0); transform: translate(0, 0) }
@@ -192,7 +191,7 @@ li { list-style: none; }
 .modal-header .close { margin-top: -2px }
 .modal-title { margin: 0; line-height: 1.428571429 }
 .modal-body { position: relative; padding: 20px }
-.modal-footer { padding: 19px 20px 20px; margin-top: 15px; text-align: right; border-top: 1px solid #e5e5e5 }
+.modal-footer { padding: 19px 20px 20px; text-align: right; }/*border-top: 1px solid #e5e5e5*/
 .modal-footer:before,
 .modal-footer:after,
 #block-views-disease-block .views-row-first:after,
@@ -245,7 +244,7 @@ zoom: 1; color: #168A9B; border: 1px solid #168A9B; border-radius: 3px; position
 .input-group-btn:last-child > .btn,
 .input-group-btn:last-child > .dropdown-toggle,
 .input-group-btn:first-child > .btn:not(:first-child) { border-bottom-left-radius: 0; border-top-left-radius: 0; }
-#user-register-form div input { border-radius: 0; width: 230px; }
+#user-register-form div input { border-radius: 0; width: 196px; }
 #user-register-form .description { display: none; }
 .fieldset-wrapper { margin: -20px 0 0 82px; position: relative; }
 #sbq_doctor_quick_register #edit-profile-doctor-private-profile-field-doctor-license-und-0-upload-button { border: 1px solid #ccc; border-radius: 4px; cursor: pointer; display: inline-block; font-size: 14px; font-weight: normal; line-height: 1.42857; margin-bottom: 0; padding: 6px 12px; text-align: center; vertical-align: middle; white-space: nowrap; background: none; color: #000; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; -o-user-select: none; user-select: none }
@@ -449,7 +448,7 @@ ul.quicktabs-tabs.quicktabs-style-arrows li a:hover { background: url(../images/
 
 
 
-#body-add-more-wrapper .grippie{ display: none; }
+#body-add-more-wrapper .grippie { display: none; }
 #block-sbq-commons-sbq-user-menu li.active { background-color: #1dc7db; color: #fff }
 #block-sbq-commons-sbq-quick-ask #question-node-form { position: relative; }
 #block-sbq-commons-recommond-patients { position: relative; }
