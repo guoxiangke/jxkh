@@ -19,19 +19,24 @@
     ?>
     <div class="warp-nb">
       <span class="name">
-       <?php echo $name ?>
+        <?php echo $name ?>
       </span> 
-       <span class="bedges">
-       <?php echo $bedges; ?>
+      <span class="bedges">
+        <?php echo $bedges; ?>
       </span> 
     </div>
+    <?php ?>
+
     <?php foreach ($profile as $key => $item): ?>
-        <?php if (!empty($item)): ?>
+      <?php if (!empty($item)): ?>
         <span class="<?php echo $key; ?>">
-        <?php echo $item ?>
+          <?php if ($key == 'follow'): ?>
+          +
+          <?php endif; ?>
+          <?php echo $item ?>
         </span> 
-  <?php endif; ?>
-<?php endforeach; ?>
+      <?php endif; ?>
+    <?php endforeach; ?>
   </div>
 </div>
 <?php ?>
