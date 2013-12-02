@@ -115,6 +115,7 @@
 	font-weight:bold;
 }
 .page-user-relationship #content .sbq_user_relationships .sbq-user-relationship-profile .info .bedges{
+	display:inline-block;
 }
 .page-user-relationship #content .sbq_user_relationships .sbq-user-relationship-profile .info .hospital{
 	display:block;
