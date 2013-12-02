@@ -79,7 +79,7 @@
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
       <!-- Modal sbq_user_login_form_modal -->
-      <div class="modal fade" id="sbq_user_login_form_modal" tabindex="-1" role="dialog" aria-labelledby="sbq_user_login_form_modal_label" aria-hidden="true">
+<!--      <div class="modal fade" id="sbq_user_login_form_modal" tabindex="-1" role="dialog" aria-labelledby="sbq_user_login_form_modal_label" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -87,13 +87,13 @@
               <h4 class="modal-title" id="sbq_user_login_form_modal_label">用户登录</h4>
             </div>
             <div class="modal-body">
-              <?php print $user_login_form; ?>
+              <?php //print $user_login_form; ?>
             </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
+          </div> /.modal-content 
+        </div> /.modal-dialog 
+      </div> /.modal -->
       <!-- Modal sbq_doctor_quick_login -->
-      <div class="modal fade" id="sbq_doctor_quick_login_modal" tabindex="-1" role="dialog" aria-labelledby="sbq_user_login_form_modal_label" aria-hidden="true">
+<!--      <div class="modal fade" id="sbq_doctor_quick_login_modal" tabindex="-1" role="dialog" aria-labelledby="sbq_user_login_form_modal_label" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -102,15 +102,15 @@
             </div>
             <div class="modal-body">
               <div class="quick-user-login">
-                <?php print $user_login_block; ?>
+                <?php //print $user_login_block; ?>
               </div>
               <div class="quick-doctor-login">
-                 <?php print $doctor_quick_login_form; ?>
+                 <?php //print $doctor_quick_login_form; ?>
               </div>
             </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
+          </div> /.modal-content 
+        </div> /.modal-dialog 
+      </div> /.modal -->
     <?php } ?>
   </body>
 </html>
