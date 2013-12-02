@@ -138,22 +138,23 @@ Drupal.behaviors.my_custom_behavior = {
     })
 
     /*个人中心提交问题*/
-    $('#block-sbq-commons-sbq-quick-ask #edit-submit--2').click(function() {
-      /* Act on the event */
-      var qs = $.trim($('#edit-body-und-0-value').val());
-      if(qs){
-        var today = new Date();
-        var todayString = today.getFullYear() +'-'+today.getMonth() + '-' + today.getDate();
-        var nqs  = '<div class="views-row views-row-1 views-row-odd views-row-first">';
-            nqs += '<div class="views-field views-field-title"><span class="field-content">'+qs+'</span>  </div>';
-            nqs += '  <div class="views-field views-field-value">        <span class="field-content">0</span>  </div> ';
-            nqs += '  <div class="views-field views-field-field-mark-question-resolved">        <div class="field-content">未解决</div>  </div>  ';
-            nqs += '  <div class="views-field views-field-created">        <span class="field-content">'+todayString+'</span>  </div>  </div>';
+    // $('#block-sbq-commons-sbq-quick-ask #edit-submit--2').click(function() {
+    //   /* Act on the event */
+    //   var qs = $.trim($('#edit-body-und-0-value').val());
+    //   if(qs){
+    //     var today = new Date();
+    //     var todayString = today.getFullYear() +'-'+today.getMonth() + '-' + today.getDate();
+    //     var nqs  = '<div class="views-row views-row-1 views-row-odd views-row-first">';
+    //         nqs += '<div class="views-field views-field-title"><span class="field-content">'+qs+'</span>  </div>';
+    //         nqs += '  <div class="views-field views-field-value">        <span class="field-content">0</span>  </div> ';
+    //         nqs += '  <div class="views-field views-field-field-mark-question-resolved">        <div class="field-content">未解决</div>  </div>  ';
+    //         nqs += '  <div class="views-field views-field-created">        <span class="field-content">'+todayString+'</span>  </div>  </div>';
 
-        $('#quicktabs-tabpage-user_qa-0 .view-content').prepend(nqs)
-      }
-      return false;
-    });
+    //     $('#quicktabs-tabpage-user_qa-0 .view-content').prepend(nqs)
+    //   }
+    //   return false;
+    // });
+
     //评测视频切换
     $('.sbq_field_title_list .field-item a').click(function() {
       var tidx = $(this).parents('.field-item').index();
