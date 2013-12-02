@@ -57,9 +57,9 @@
 #user-register-form .fieldset-wrapper .form-type-managed-file .form-managed-file input[type="submit"] { display: inline-block }
 .user-info-from-cookie .captcha img { margin: 0px 0px -14px 0px; }
 /*sbq_doctor_quick_register*/
-#sbq_doctor_quick_register #doctor_register_form { float: left; width: 360px; }
+#sbq_doctor_quick_register #doctor_register_form { float: left; width: 380px; }
 #sbq_doctor_quick_register #block-user-login { float: left; width: 200px; margin: 0px 70px 0px 0px; }
 #sbq_doctor_quick_register .modal-title { color: #FFF; height: 26px; line-height: 26px; font-size: 16px; font-weight: bold; }
 /*医生快速通道弹框*/
 #sbq_doctor_quick_register { font-size: 14px; }
-#sbq_doctor_quick_register .modal-dialog { width: 710px; }
+#sbq_doctor_quick_register .modal-dialog { width: 740px; }
