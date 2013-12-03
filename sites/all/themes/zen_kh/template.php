@@ -222,3 +222,21 @@ function zen_kh_preprocess_html(&$variables) {
 function zen_kh_preprocess_user_profile (&$variables, $hook) {
   unset($variables['user_profile']);
 }
+
+/**
+ * Implements hook_block_view_alter().
+ */
+function zen_kh_block_view_alter(&$data, $block) {
+  $relationship_page_expect = array(
+    'related_questions2-block',
+    'news-block_2',
+    'news-block_1',
+    'recommond_doctors',
+    'recommond_patients',
+    'exposure_platform-block_user',
+    'blog-block',
+  );
+  if(in_array($block->delta, $relationship_page_expect) && arg(2) == 'relationship') {
+    unset($data['content']); 
+  }
+}
