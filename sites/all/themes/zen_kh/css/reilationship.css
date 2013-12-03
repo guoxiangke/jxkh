@@ -6,8 +6,8 @@
 	display:none;
 }
 .page-user-relationship #content .primary {
-	border-bottom:1px solid #1DC7DB;
-	width:98%;
+	border-bottom:1px solid #16AFC2;
+	width:100%;
 	padding:0;
 }
 .page-user-relationship #content ul.tabs-primary{
@@ -23,14 +23,14 @@
 	margin-left:0;
 }
 .page-user-relationship #content .primary > li a{
-	color:#1DC7DB;
+	color:#16AFC2;
 	border-radius:0;
 	border:0;
 	background: none;
 	text-shadow:0;
 }
 .page-user-relationship #content .primary > li.is-active{
-	background:#1DC7DB;
+	background:#16AFC2;
 }
 .page-user-relationship #content .primary > li.is-active a{
 	color:#fff;
@@ -38,7 +38,7 @@
 	font-weight:bold;
 }
 .page-user-relationship #content .tabs-secondary {
-	border-bottom:2px solid #1DC7DB;
+	border-bottom:2px solid #16AFC2;
 	margin-bottom:0;
 	height:40px;
 	line-height:29px;
@@ -84,10 +84,10 @@
 }
 .page-user-relationship #content .sbq_user_relationships{
 	border-top:0;
-	width:98%;
+	width:100%;
 }
 .page-user-relationship #content .sbq_user_relationships .sbq-user-relationship-profile{
-	width:227px;
+	width:240px;
 	border:1px solid #f2f2f2;
 	display:inline-block;
 	margin:6px 0 6px 6px;
@@ -107,15 +107,28 @@
 .page-user-relationship #content .sbq_user_relationships .sbq-user-relationship-profile .info {
 	margin-left:10px;
 	float:left;
-	width:130px;
+	width:137px;
 }
-.page-user-relationship #content .sbq_user_relationships .sbq-user-relationship-profile .info > span{
+.page-user-relationship #content .sbq_user_relationships .sbq-user-relationship-profile .info .warp-nb{
+	overflow: hidden;
+
+	height:20px;
 }
 .page-user-relationship #content .sbq_user_relationships .sbq-user-relationship-profile .info .name {
 	font-weight:bold;
+	max-width:65px;
+	float:left;
 }
 .page-user-relationship #content .sbq_user_relationships .sbq-user-relationship-profile .info .bedges{
 	display:inline-block;
+	max-width:60px;
+	margin-left:4px;
+}
+.page-user-relationship #content .sbq_user_relationships .sbq-user-relationship-profile .info .bedges .user_badges{
+	float:left;
+	max-width:60px;
+	height:20px;
+	overflow:hidden;
 }
 .page-user-relationship #content .sbq_user_relationships .sbq-user-relationship-profile .info .hospital{
 	display:block;
