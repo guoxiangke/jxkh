@@ -6,8 +6,10 @@
 .section-news #content .view-mode-full { float: left; width: 100%; margin: 20px 0px 0px 0px; }
 /*.section-news */#content .view-mode-full .links { float: left; margin: 10px 0px 0px 0px; color: #666 }
 /*.section-news */#content .view-mode-full .links a { padding: 0px 5px; color: #0066CC; }
-.section-news #content .view-mode-full .field-type-text-with-summary { line-height: 26px; font-size: 14px; }
-.section-news #content .view-mode-full .field-type-text-with-summary p { margin: 1em 0px; text-indent: 2em; }
+.section-news #content .view-mode-full .field-type-text-with-summary,
+.node-type-blog #content .view-mode-full .field-type-text-with-summary { line-height: 26px; font-size: 14px; }
+.section-news #content .view-mode-full .field-type-text-with-summary p,
+.node-type-blog #content .view-mode-full .field-type-text-with-summary p { margin: 1em 0px; text-indent: 2em; }
 .section-news #content .field-name-field-image { text-align: center; }
 /*comment*/
 .comment-wrapper { float: left; width: 100%; margin: 10px 0px 0px 0px; }
@@ -214,7 +216,9 @@
 .page-node-add #content { width: 730px; }
 .page-node-add #content .form-item { float: left; width: 100%; margin: 0px 0px 10px 0px; }
 .page-node-add #content .form-item label { float: left; width: 100%; height: 30px; line-height: 30px; margin: 0px; padding: 0px 0px 8px 0px; background: url(../images/t2.png) no-repeat -22px bottom; font-size: 14px; font-weight: bold; text-indent: 10px; }
-//.page-node-add #content .form-item label span { display: none; }
+//.page-node-add #content .form-item label span {
+display: none;
+}
 .page-node-add #content .form-item input { float: left; width: 100%; border-radius: 0px; }
 .page-node-add #content .form-item input[type="text"] { background: none !important; border: none; border-left: 1px #ccc solid; border-right: 1px #ccc solid; border-bottom: 1px #ccc solid; }
 .page-node-add #content .form-item textarea { float: left; width: 100%; line-height: 20px; padding: 5px; border: none; border-left: 1px #ccc solid; border-right: 1px #ccc solid; border-bottom: 1px #ccc solid; }

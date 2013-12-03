@@ -2,11 +2,12 @@
 nav,
 input { outline: none; }
 /*all*/
-.page-index #page { background: none; box-shadow:none; }
+.page-index #page { background: none; box-shadow: none; }
 .sidebar-second #content { float: left; width: 690px; padding: 15px !important; border: 1px #CCCCCC solid !important; overflow: hidden; }
 .page-groups #content { border: none !important; padding: 0px !important; }
 /*.sidebar-first #content { margin-left: 231px; width: 733px; background: none; padding: 0; border: none!important }*/
 .sidebar-first #content { width: 730px; margin-left: 230px; margin-right: -960px; }
+.front.sidebar-first #content { width: 732px; }
 .two-sidebars #content { width: 500px; margin-left: 191px; margin-right: -960px; }
 #content h1.page__title { font-size: 16px; border-bottom: 1px solid #ccc; padding-bottom: 14px; }
 #content .view-content { float: left; width: 100%; }
