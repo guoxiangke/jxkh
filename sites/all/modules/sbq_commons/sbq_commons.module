@@ -314,6 +314,14 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
     default:
       break;
   }
+  // edit role display node form summary
+  if(isset($form['#node_edit_form']) && $form['#node_edit_form']){
+    global $user;
+    if(!in_array(USER_EDITOR_RID, array_keys($user->roles))){
+      $form['body']['und'][0]['summary']['#access'] = FALSE;
+    }
+  }
+
   // 验证码判断
   _sbq_commons_captcha_display($form, $form_alter, $form_id);
 }
