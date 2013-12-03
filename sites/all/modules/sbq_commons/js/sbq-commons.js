@@ -10,16 +10,16 @@ jQuery(function($) {
     $('#sbq-user-disease-add-submit').live("click", function() {
         var tag_name = $('#sbq-user-disease-add').val();
         if (tag_name != '' && tag_name != '回车添加标签') {
-            var add_url = '/user/ajax/tags/' + tag_name + '/add';
-            $.ajax({
-                url: add_url
-            }).done(function(result) {
-                var insert_li = result[1].data;
-                $(insert_li).appendTo($('.views-field-field-tags-disease ul'));
-            });
-            return false;
-        }
-        ;
+          var add_url = '/user/ajax/tags/'+tag_name+'/add';
+          $.ajax({
+            url: add_url
+          }).done(function(result) {
+            var insert_li = result[1].data;
+            $(insert_li).appendTo($('.views-field-field-tags-disease ul').first());
+            $('#sbq-user-disease-add').val('回车添加标签');
+          });
+          return false;
+        };
     });
 
     // User Center tag delete
@@ -52,7 +52,7 @@ jQuery(function($) {
 //        }
 //        return false;
 //    })
-//    
+//
     $('.user_doctor_register_ajax').click(function() {
         var href = $(this).attr('href');
         if ($('#sbq_doctor_quick_register').length > 0) {
@@ -63,7 +63,7 @@ jQuery(function($) {
             $.get(href + '?ajax=true', function(data) {
                 self.parent().parent().find("li #status").remove()
                 $('body').append(data);
-                $('section #block-user-login').clone().appendTo('#sbq_doctor_quick_register .modal-body');
+                $('section #block-user-login').clone().prependTo('#sbq_doctor_quick_register .modal-body');
                 $('#sbq_doctor_quick_register #user-login-form div.item-list:first').remove();
                 // $('#sbq_doctor_quick_register').hide();
                 //  $(data).modal();
