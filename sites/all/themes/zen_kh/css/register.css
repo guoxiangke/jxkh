@@ -48,6 +48,8 @@
 #user-login .item-list li { display: inline-block }
 .page-user-login #user-login #edit-name { width: 186px; height: 36px; line-height: 36px; font-size: 14px; border: none; background: url(../images/user.png) no-repeat 0 0; padding-left: 28px }
 #user-login input[type="submit"] { background: url(../images/btn1.png) no-repeat 0 -223px; display: block; width: 184px; height: 34px; font-size: 14px; color: #fff; text-align: center; line-height: 34px; border: 0; margin-bottom: 20px; }
+#user-login .sbq_login_thirdpart { display: none; }
+#user-login .item-list { display: none; }
 /*医生注册*/
 #user-register-form .form-item label { }
 #user-register-form .form-type-managed-file div { float: left; }

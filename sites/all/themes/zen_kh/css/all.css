@@ -2,8 +2,12 @@
 nav,
 input { outline: none; }
 /*all*/
-.page-index #page { background: none; }
-.sidebar-second #content { float: left; width: 688px; padding: 15px !important; border: 1px #CCCCCC solid !important; overflow: hidden; }
+.page-index #page { background: none; box-shadow:none; }
+.sidebar-second #content { float: left; width: 690px; padding: 15px !important; border: 1px #CCCCCC solid !important; overflow: hidden; }
+.page-groups #content { border: none !important; padding: 0px !important; }
+/*.sidebar-first #content { margin-left: 231px; width: 733px; background: none; padding: 0; border: none!important }*/
+.sidebar-first #content { width: 730px; margin-left: 230px; margin-right: -960px; }
+.two-sidebars #content { width: 500px; margin-left: 191px; margin-right: -960px; }
 #content h1.page__title { font-size: 16px; border-bottom: 1px solid #ccc; padding-bottom: 14px; }
 #content .view-content { float: left; width: 100%; }
 .messages--status a { color: #0066CC; }
@@ -25,13 +29,13 @@ input { outline: none; }
 .page-user .field-widget-text-textarea-with-summary { float: left; width: 100%; }
 .page-user .field-widget-text-textarea-with-summary .resizable-textarea { float: left; width: 100%; padding: 6px 0px 0px 0px; background: url(../images/pb2.png) no-repeat left top; }
 .page-user #block-sbq-commons-sbq-quick-ask #edit-actions--2 { float: left; width: 56px; height: 56px; position: absolute; right: 0; top: 33px; z-index: 1; overflow: hidden; }
-.page-user #block-sbq-commons-sbq-quick-ask #edit-submit--2 { width: 56px; height: 56px; background: none; background-color: #168a9b; color: #FFF; line-height: 56px; text-align: center; margin: 0; border: none; }
+.page-user #block-sbq-commons-sbq-quick-ask #edit-submit--2 { width: 56px; height: 56px; background: none; background-color: #16AFC2; color: #FFF; line-height: 56px; text-align: center; margin: 0; border: none; }
 .page-user #content .view-content { float: none; }
 .page-user #content .block { float: left; width: 100%; margin: 0px 0px 15px 0px; position: relative; }
 .page-user #content .block .block { margin: 0px; }
 #content .more-link { position: absolute; right: 0; top: -23px; z-index: 1; background: url(../images/more.png) no-repeat; background-position: right; }
 #content .more-link a { padding: 0px 14px 2px 0px; }
-.page-user #block-views-blog-my-blog-block .more-link { top: 9px; right: 10px; }
+.page-user #block-views-blog-my-blog-block .more-link { top: 20px; right: 10px; }
 .page-user #edit-body-und-0-value { float: left; width: 444px; height: 56px; line-height: 23px; padding: 5px; color: #a3a3a3; border: none; resize: none; background: transparent; }
 .page-user .grippie { float: left; }
 .page-user .text-format-wrapper .form-item #block-sbq-commons-sbq-quick-ask #edit-actions--2 { position: relative; right: 0px; top: 26px; z-index: 1; }
@@ -136,9 +140,10 @@ input { outline: none; }
 .user-info-from-cookie .form-actions { float: left; }
 */
 /*admin login*/
-.region-bottom a em { background: #999; font-size: 24px; font-weight: bold; font-style: normal !important; }
-#user-login .sbq_login_thirdpart { display: none; }
-#user-login .item-list { display: none; }
+.region-bottom a em { font-size: 24px; font-weight: bold; font-style: normal !important; }
+.region-bottom li { float: left; width: 100%; height: 40px; line-height: 40px; margin: 2px 0px 0px 0px; }
+.region-bottom li a { float: left; width: 100%; height: 40px; line-height: 40px; background: #CCC; }
+.region-bottom li a:hover { background: #09F; }
 /*lieght box
 
 #sbq_doctor_quick_login_modal .modal-dialog,
@@ -156,4 +161,3 @@ input { outline: none; }
 #sbq_doctor_quick_register #doctor_register_form { float: right; margin-top: 27px; width: 450px; }
 #sbq_doctor_quick_register #block-user-login { float: left; margin-right: 45px; margin-top: 15px; width: 190px; }
 #sbq_doctor_quick_register #user_login_form .form-item-name label { display: none; }*/
-
