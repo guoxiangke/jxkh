@@ -10,16 +10,17 @@ jQuery(function($) {
     $('#sbq-user-disease-add-submit').live("click", function() {
         var tag_name = $('#sbq-user-disease-add').val();
         if (tag_name != '' && tag_name != '回车添加标签') {
-          var add_url = '/user/ajax/tags/'+tag_name+'/add';
-          $.ajax({
-            url: add_url
-          }).done(function(result) {
-            var insert_li = result[1].data;
-            $(insert_li).appendTo($('.views-field-field-tags-disease ul').first());
-            $('#sbq-user-disease-add').val('回车添加标签');
-          });
-          return false;
-        };
+            var add_url = '/user/ajax/tags/' + tag_name + '/add';
+            $.ajax({
+                url: add_url
+            }).done(function(result) {
+                var insert_li = result[1].data;
+                $(insert_li).appendTo($('.views-field-field-tags-disease ul').first());
+                $('#sbq-user-disease-add').val('回车添加标签');
+            });
+            return false;
+        }
+        ;
     });
 
     // User Center tag delete
@@ -57,7 +58,7 @@ jQuery(function($) {
         var href = $(this).attr('href');
         if ($('#sbq_doctor_quick_register').length > 0) {
             $('#sbq_doctor_quick_register').show();
-        } else {
+        } else if ($('#status').length == 0) {
             var self = $(this);
             self.parent().parent().find("li.first").append('<div id="status" style="background: url(/misc/throbber.gif) no-repeat 5px -16px; width:21px; height:16px;display: inline-block;"> </div>');
             $.get(href + '?ajax=true', function(data) {
