@@ -38,34 +38,8 @@ function sbq_commons_menu() {
       'access callback' => TRUE,
       'type' => MENU_CALLBACK,
   );
-  $items['relationship/ajax/%/remove/%/%'] = array(
-      'delivery callback' => 'ajax_deliver',
-      'title' => 'Remove relationship',
-      'access callback' => 'user_relationships_ui_check_access',
-      'access arguments' => array(
-          'delete' ),
-      'page callback' => 'sbq_commons_user_relationships_ui_remove_ajax',
-      'page arguments' => array(
-          2,
-          4,
-          5 ),
-      'type' => MENU_CALLBACK,
-  );
-  // 关注
-  $items['relationship/ajax/%/request/%/%'] = array(
-      'delivery callback' => 'ajax_deliver',
-      'title' => 'Create a relationship',
-      'type' => MENU_CALLBACK,
-      'access callback' => 'user_relationships_ui_check_access',
-      'access arguments' => array(
-          'request' ),
-      'page callback' => 'sbq_commons_user_relationships_ui_request_ajax',
-      'page arguments' => array(
-          2,
-          4,
-          5 ),
-      'file' => 'sbq_commons_og_ui.inc',
-  );
+
+
   $items['relationship/ajax/%/pending/%/%'] = array(
       'title' => 'Received requests',
       'type' => MENU_CALLBACK,
@@ -315,9 +289,9 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
       break;
   }
   // edit role display node form summary
-  if(isset($form['#node_edit_form']) && $form['#node_edit_form']){
+  if (isset($form['#node_edit_form']) && $form['#node_edit_form']) {
     global $user;
-    if(!in_array(USER_EDITOR_RID, array_keys($user->roles))){
+    if (!in_array(USER_EDITOR_RID, array_keys($user->roles))) {
       $form['body']['und'][0]['summary']['#access'] = FALSE;
     }
   }
@@ -776,7 +750,6 @@ function sbq_commons_node_submit(&$node, &$form, &$form_state) {
     $subject = trim(truncate_utf8(decode_entities(strip_tags(check_markup($node->body['und'][0]['value']))), $max_length, TRUE));
     $node->title = $subject;
   }
-
 }
 
 /**
@@ -1358,4 +1331,9 @@ function sbq_commons_user_avart($account = null, $style_name = "sc80") {
     ));
   }
   return '<a href="/user/' . $account->uid . '">' . $picture . '</a>';
+}
+//hook_user_login()
+function sbq_commons_user_login($edit, $account){
+//  $m = drupal_get_messages();
+//  dpm($m);
 }

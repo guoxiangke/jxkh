@@ -398,36 +398,6 @@ function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_time
   _captcha_insert_captcha_element($form, $captcha_placement, $captcha_element);
 }
 
-/**
- * Remove relationship request.
- */
-function sbq_commons_user_relationships_ui_remove_ajax($viewer_id, $rid, $viewd_id) {
-  $user = user_load($viewer_id);
-  $relationship = user_relationships_load($rid);
-  if (!user_relationships_ui_check_access('delete', NULL, $relationship)) {
-    drupal_access_denied();
-    exit();
-  }
-  if (!user_relationships_load($rid)) {
-    sbq_commons_ajax_response('success', '找不到此关系！', NULL, render($html));
-  }
-  user_relationships_delete_relationship($relationship, $user);
-//  drupal_set_message(user_relationships_get_message('removed', $relationship));
-//  $html = sbq_commons_user_relationship_view(user_load($viewd_id), NULL, NULL);
-//  sbq_commons_ajax_response('success', 'success', NULL, render($html));
-  $path = $_GET['q'];
-
-  if ($position = strpos($path, 'destination=')) {
-    if ($token = substr($path, $position, strlen($path))) {
-      $token = str_replace('destination=', '', $token);
-      $commands[] = ajax_command_replace('.' . $token, '已移除');
-      return array(
-          '#type' => 'ajax',
-          '#commands' => $commands );
-    }
-  }
-  ajax_deliver('success');
-}
 
 /**
  * Process relationship request.
@@ -689,7 +659,7 @@ EOF;
       drupal_add_css(drupal_get_path('module', 'sbq_commons') . '/css/app-download.css');
       $block_html = '<div class="second-code">'
           . '<h2>扫描二维码 即可下载应用</h2>'
-          . '<image src="/sites/default/files/images/app.png">'
+          . '<image src="http://app.shangbq.com/res/api.png">'
           . '</div>'
           . '<iframe width="270" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=270&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=3910809638&verifier=480ee660&dpc=1"></iframe>';
 

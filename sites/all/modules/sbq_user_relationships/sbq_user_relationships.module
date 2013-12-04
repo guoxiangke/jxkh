@@ -68,43 +68,42 @@ function sbq_user_relationships_menu() {
         'file' => 'sbq_user_relationships.inc',
         'weight' => 3,
     );
-  }        // user/    2/relationship/378                /cancle
+  }
 
   foreach (array( 'cancel', 'approve', 'disapprove' ) as $key => $item) {
     $items['user/%user/relationship/action/%user_relationships/' . $item] = array(
         'delivery callback' => 'ajax_deliver',
-        // 'title' => 'Approve Relationship',
         'type' => MENU_CALLBACK,
         'access callback' => 'sbq_user_relationships_access_callback',
         'access arguments' => array( 1 ),
-        //  'access callback' => TRUE,
         'page callback' => 'sbq_user_relationships_ui_pending_requested_ajax',
         'page arguments' => array( 1, 4, 5 ),
         'file' => 'sbq_user_relationships.inc',
     );
   }
-//  $items['user/%user/relationship/action/%user_relationships/cancel'] = array(
-//      'delivery callback' => 'ajax_deliver',
-//      // 'title' => 'Approve Relationship',
-//      'type' => MENU_CALLBACK,
-//      'access callback' => 'sbq_user_relationships_access_callback',
-//      'access arguments' => array( 1 ),
-//      //  'access callback' => TRUE,
-//      'page callback' => 'sbq_user_relationships_ui_pending_requested_ajax',
-//      'page arguments' => array( 1, 4, 5 ),
-//      'file' => 'sbq_user_relationships.inc',
-//  );
-//  $items["user/%user/relationships/requested/%user_relationships/%"] = array(
-//      'title' => 'Approve Relationship',
-//      'type' => MENU_CALLBACK,
-//      'access callback' => 'user_relationships_ui_check_access',
-//      'access arguments' => array( 'request', 1 ),
-//      'page callback' => 'user_relationships_ui_pending_requested_ajax',
-//      'page arguments' => array( 5, 1, 4 ),
-//      'file' => 'user_relationships_ui.forms.inc',
-//  );
-//   user/2/relationship/user_relationships/cancel
 
+  // 关注
+  $items['relationship/ajax/%/request/%/%'] = array(
+      'delivery callback' => 'ajax_deliver',
+      'title' => 'Create a relationship',
+      'type' => MENU_CALLBACK,
+      'access callback' => 'user_relationships_ui_check_access',
+      'access arguments' => array( 'request' ),
+      'page callback' => 'sbq_user_relationships_ui_request_ajax',
+      'page arguments' => array( 2, 4, 5 ),
+      'file' => 'sbq_user_relationships.inc',
+  );
+  // 移除
+  $items['relationship/ajax/%/remove/%/%'] = array(
+      'delivery callback' => 'ajax_deliver',
+      'title' => 'Remove relationship',
+      'access callback' => 'user_relationships_ui_check_access',
+      'access arguments' => array( 'delete' ),
+      'page callback' => 'sbq_user_relationships_ui_remove_ajax',
+      'page arguments' => array( 2, 4, 5 ),
+      'type' => MENU_CALLBACK,
+      'file' => 'sbq_user_relationships.inc'
+  );
 
   return $items;
 }
@@ -218,7 +217,6 @@ function sbq_user_relationships_profile($info) {
         $profile['disease'] = $account_disease;
       }
     }
-    $profile['disease'] = '感冒 发烧';
   } elseif (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($account->roles))) {
     if ($user_item = profile2_load_by_user($account, 'doctor_profile') && !empty($user_item) && isset($user_item->field_doctor_hospitals['und'])) {
       foreach ($user_item->field_doctor_hospitals['und'] as $tid) {
@@ -227,7 +225,6 @@ function sbq_user_relationships_profile($info) {
         $profile['hospital'] = $hospital;
       }
     }
-    $profile['hospital'] = '北京儿童精神病专科医院';
   }
 
   $items = $profile;
@@ -251,7 +248,7 @@ function sbq_user_relationships_profile($info) {
  *  recommond doctor patient
  */
 
-function sbq_user_relationships_recommond($account = NULL, $roles, $is_page = TRUE, $count_of_page = 10) {
+function sbq_user_relationships_recommond($account = NULL, $roles, $is_page = TRUE, $count_of_page = 12) {
 
   if (!$account) {
     global $user;
@@ -432,7 +429,7 @@ function sbq_user_relationships_my_relstionships($account = NULL) {
  * @see user_relationships_page
  */
 
-function sbq_user_relstionships_users($account = NULL, $rtid = NULL) {
+function sbq_user_relstionships_users($account = NULL, $rtid = NULL, $page_of_nums = 12) {
   global $user;
   if (!$account || !is_object($account) || !$account->uid) {
     $account = $user;
@@ -458,7 +455,7 @@ function sbq_user_relstionships_users($account = NULL, $rtid = NULL) {
 
   $options = array(
       'include_user_info' => TRUE,
-      'paging' => variable_get('user_relationships_relationships_per_page', 10),
+      'paging' => variable_get('user_relationships_relationships_per_page', $page_of_nums),
   );
 
   $relationships = user_relationships_load($args, $options);
@@ -515,4 +512,26 @@ function sbq_user_relationships_user_action($relationship, $account) {
     array_unshift($row, theme('user_picture', array( 'account' => $this_user )));
   }
   return $row;
+}
+
+function sbq_user_relationships_user_login($edit, $account) {
+  //$f = drupal_set_message();
+  //dpm($f);
+}
+
+//hook_menu_alter()
+function sbq_user_relationships_menu_alter(&$items) {
+  foreach (array( 'received', 'sent' ) as $item) {
+    $items['relationships/' . $item] = array(
+        'page callback' => 'sbq_user_relationships_redirect',
+        'page arguments' => array( 1 ),
+        'access callback' => TRUE,
+    );
+  }
+}
+
+function sbq_user_relationships_redirect($type) {
+  global $user;
+  menu_set_active_item('user/' . $user->uid . '/relationship/' . $type);
+  return menu_execute_active_handler(NULL, FALSE);
 }

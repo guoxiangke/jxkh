@@ -343,33 +343,3 @@ function sbq_commons_user_relationships_ajax($viewed_id, $type = 'add', $account
   }
   return isset($link) ? render($link) : '';
 }
-
-/**
- * Process relationship request.
- */
-function sbq_commons_user_relationships_ui_request_ajax($viewer_id, $rid, $viewed_id) {
-  //#578372 leave all form values in the object for other functions to use
-  $relationship = new stdClass;
-  $relationship->requester = user_load($viewer_id);
-  $relationship->requestee = user_load($viewed_id);
-  $relationship->type = user_relationships_type_load($rid);
-  $relationship = user_relationships_request_relationship($relationship);
-
-  if ($relationship === FALSE || !$relationship) {
-    // sbq_commons_ajax_response('success', '不能建立此关系', NULL, render($html));
-  }
-  //  drupal_set_message(user_relationships_get_message(($relationship->approved ? 'pre_approved' : 'submitted'), $relationship));
-  // $html = sbq_commons_user_relationship_view(user_load($viewed_id), NULL, NULL);
-  //sbq_commons_ajax_response('success', 'success', NULL, render($html));
-  //$g = strstr('destination=', $_GET);
-//  dpm($_GET);
-  $path = $_GET['q'];
-  if ($position = strpos($path, 'destination=')) {
-    if ($token = substr($path, $position, strlen($path))) {
-      $token = str_replace('destination=', '', $token);
-      $commands[] = ajax_command_replace('.' . $token, '已关注');
-      return array( '#type' => 'ajax', '#commands' => $commands );
-    }
-  }
-  ajax_deliver('success');
-}

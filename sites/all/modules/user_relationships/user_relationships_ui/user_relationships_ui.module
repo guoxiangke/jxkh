@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * UI components of user_relationships
@@ -6,12 +7,12 @@
  * @author Alex Karshakevich (maintainer) http://drupal.org/user/183217
  * @author Darren Ferguson (contributor) http://drupal.org/user/70179
  */
-
 define('USER_RELATIONSHIPS_UI_PATH', drupal_get_path('module', 'user_relationships_ui'));
 
 /*
  * Notify the user of pending relationship requests
  */
+
 function _user_relationships_ui_set_notifications(&$account) {
   global $user;
 
@@ -23,10 +24,10 @@ function _user_relationships_ui_set_notifications(&$account) {
   $notifications = drupal_get_messages('status', FALSE);
   $notifications = isset($notifications['status']) ? $notifications['status'] : array();
 
-  $relationships = user_relationships_load(array('requestee_id' => $account->uid, 'approved' => FALSE));
+  $relationships = user_relationships_load(array( 'requestee_id' => $account->uid, 'approved' => FALSE ));
   foreach ($relationships as $relationship) {
     $msg = user_relationships_get_message('pending', $relationship, array(
-      '!pending_relationship_requests'  => l(t('pending relationship requests'), variable_get('user_relationships_requests_link', 'relationships/received'))
+        '!pending_relationship_requests' => l(t('pending relationship requests'), variable_get('user_relationships_requests_link', 'relationships/received'))
     ));
 
     if (!in_array($msg, $notifications)) {
@@ -50,7 +51,7 @@ function _user_relationships_ui_set_notifications(&$account) {
  * @return
  *   An array with actions as strings.
  */
-function user_relationships_ui_actions_between($viewer, $viewed, $action_types = array('add' => 1, 'remove' => 1, 'requested' => 1, 'received' => 1)) {
+function user_relationships_ui_actions_between($viewer, $viewed, $action_types = array( 'add' => 1, 'remove' => 1, 'requested' => 1, 'received' => 1 )) {
   if ($viewer->uid == $viewed->uid) {
     return;
   }
@@ -58,53 +59,52 @@ function user_relationships_ui_actions_between($viewer, $viewed, $action_types =
   $list = array();
 
   if (isset($action_types['requested'])) {
-    $relationships = user_relationships_load(array('requester_id' => $viewer->uid, 'requestee_id' => $viewed->uid, 'approved' => FALSE));
+    $relationships = user_relationships_load(array( 'requester_id' => $viewer->uid, 'requestee_id' => $viewed->uid, 'approved' => FALSE ));
     foreach ($relationships as $relationship) {
       $list[] = t('You have sent a new @rel_name request to this user. (!pending_requests)', array(
-        '!pending_requests'   => l(t('pending requests'), "relationships/sent"),
-      ) + user_relationships_type_translations($relationship));
+          '!pending_requests' => l(t('pending requests'), "relationships/sent"),
+          ) + user_relationships_type_translations($relationship));
     }
   }
 
   if (isset($action_types['received'])) {
-    $relationships = user_relationships_load(array('requester_id' => $viewed->uid, 'requestee_id' => $viewer->uid, 'approved' => FALSE));
+    $relationships = user_relationships_load(array( 'requester_id' => $viewed->uid, 'requestee_id' => $viewer->uid, 'approved' => FALSE ));
     foreach ($relationships as $relationship) {
       if (user_relationships_user_access('maintain @relationship relationships', $relationship)) {
         $list[] = t('This user has requested to be your @rel_name. (!pending_requests)', array(
-          '!pending_requests' => l(t('pending requests'), "user/{$viewer->uid}/relationships/received"),
-        ) + user_relationships_type_translations($relationship));
+            '!pending_requests' => l(t('pending requests'), "user/{$viewer->uid}/relationships/received"),
+            ) + user_relationships_type_translations($relationship));
       }
     }
   }
 
   if (isset($action_types['add'])) {
     $relationships = user_relationships_get_requestable_rtypes($viewer, $viewed, 'full');
-    if ($relationships) {   
+    if ($relationships) {
       // If configured, create direct links.
       if (variable_get('user_relationships_show_direct_links', 1)) {
         // Create a single link, or one for each relationship type.
         foreach ($relationships as $relationship) {
-          $list[] = theme('user_relationships_request_relationship_direct_link', array('relate_to' => $viewed, 'relationship_type' => $relationship));
+          $list[] = theme('user_relationships_request_relationship_direct_link', array( 'relate_to' => $viewed, 'relationship_type' => $relationship ));
         }
       }
       // just one generic link pointing to a page with dropdown.
       else {
-        $list[] = theme('user_relationships_request_relationship_link', array('relate_to' => $viewed));
+        $list[] = theme('user_relationships_request_relationship_link', array( 'relate_to' => $viewed ));
       }
     }
   }
 
   if (isset($action_types['remove'])) {
-    $relationships = user_relationships_load(array('between' => array($viewer->uid, $viewed->uid)));
+    $relationships = user_relationships_load(array( 'between' => array( $viewer->uid, $viewed->uid ) ));
     foreach ($relationships as $relationship) {
       if ($relationship->approved && !isset($list[$relationship->rid]) && user_relationships_ui_check_access('view', NULL, $relationship)) {
         if (user_relationships_ui_check_access('delete', NULL, $relationship)) {
           $list[$relationship->rid] = t('@rel_name (!remove_link)', array(
-            '@rel_name'  => user_relationships_type_get_name($relationship) . ($relationship->is_oneway ? ($relationship->requester_id == $viewer->uid ? t(' (You to Them)') : t(' (Them to You)')) : NULL),
-            '!remove_link'        => theme('user_relationships_remove_link', array('uid' => $viewer->uid, 'rid' => $relationship->rid)),
+              '@rel_name' => user_relationships_type_get_name($relationship) . ($relationship->is_oneway ? ($relationship->requester_id == $viewer->uid ? t(' (You to Them)') : t(' (Them to You)')) : NULL),
+              '!remove_link' => theme('user_relationships_remove_link', array( 'uid' => $viewer->uid, 'rid' => $relationship->rid )),
           ));
-        }
-        else {
+        } else {
           $list[$relationship->rid] = user_relationships_type_get_name($relationship) . ($relationship->is_oneway ? ($relationship->requester_id == $viewer->uid ? t(' (You to Them)') : t(' (Them to You)')) : NULL);
         }
       }
@@ -114,9 +114,9 @@ function user_relationships_ui_actions_between($viewer, $viewed, $action_types =
   return $list;
 }
 
-/**********************************
+/* * ********************************
  *          CALLBACKS
- **********************************/
+ * ******************************** */
 
 /**
  * Check access callback
@@ -180,12 +180,11 @@ function user_relationships_ui_check_access($type, $account = NULL, $relationshi
   return FALSE;
 }
 
-
-/**********************************
+/* * ********************************
  *
  *            HOOKS
  *
- **********************************/
+ * ******************************** */
 
 /**
  * Implements hook_help().
@@ -215,9 +214,9 @@ function user_relationships_ui_init() {
   $settings['user_relationships_ui']['loadingimage'] = url(USER_RELATIONSHIPS_UI_PATH . '/images/loadingAnimation.gif');
   $settings['user_relationships_ui']['savingimage'] = url(USER_RELATIONSHIPS_UI_PATH . '/images/savingimage.gif');
   $settings['user_relationships_ui']['position'] = array(
-    'position' => variable_get('user_relationships_position', 'absolute'),
-    'left' => variable_get('user_relationships_left', '0'),
-    'top' => variable_get('user_relationships_top', '0'),
+      'position' => variable_get('user_relationships_position', 'absolute'),
+      'left' => variable_get('user_relationships_left', '0'),
+      'top' => variable_get('user_relationships_top', '0'),
   );
   drupal_add_js($settings, 'setting');
 }
@@ -229,12 +228,12 @@ function user_relationships_ui_permission() {
   $permissions = array();
   foreach (user_relationships_types_load() as $type) {
     $permissions['view own ' . $type->name . ' relationships'] = array(
-      'title' => t('View own %name relationships', array('%name' => $type->name)),
-      'description' => t('The user is allowed to see his own relationships of this type.'),
+        'title' => t('View own %name relationships', array( '%name' => $type->name )),
+        'description' => t('The user is allowed to see his own relationships of this type.'),
     );
     $permissions['view all ' . $type->name . ' relationships'] = array(
-      'title' => t('View all %name relationships', array('%name' => $type->name)),
-      'description' => t('The user is allowed to see all relationships of this type.'),
+        'title' => t('View all %name relationships', array( '%name' => $type->name )),
+        'description' => t('The user is allowed to see all relationships of this type.'),
     );
   }
   return $permissions;
@@ -245,7 +244,7 @@ function user_relationships_ui_permission() {
  */
 function user_relationships_ui_page_alter(&$page) {
   // This is the div we are utilizing for the form popups for confirmation.
-  $page['page_bottom']['user_relationships'] = array('#markup' => '<div id="user_relationships_popup_form" class="user_relationships_ui_popup_form"></div>');
+  $page['page_bottom']['user_relationships'] = array( '#markup' => '<div id="user_relationships_popup_form" class="user_relationships_ui_popup_form"></div>' );
 }
 
 /**
@@ -253,47 +252,47 @@ function user_relationships_ui_page_alter(&$page) {
  */
 function user_relationships_ui_menu() {
   $items['relationships'] = array(
-    'title' => 'My relationships',
-    'type' => MENU_NORMAL_ITEM,
-    'access callback' => 'user_relationships_ui_check_access',
-    'access arguments' => array('view'),
-    'page callback' => 'user_relationships_page',
-    'file' => 'user_relationships_ui.pages.inc',
-    'menu_name' => 'user-menu',
+      'title' => 'My relationships',
+      'type' => MENU_NORMAL_ITEM,
+      'access callback' => 'user_relationships_ui_check_access',
+      'access arguments' => array( 'view' ),
+      'page callback' => 'user_relationships_page',
+      'file' => 'user_relationships_ui.pages.inc',
+      'menu_name' => 'user-menu',
   );
   $items['relationships/list'] = array(
-    'title' => 'Current',
-    'type' => MENU_DEFAULT_LOCAL_TASK,
-    'weight' => -10,
-    'access callback' => 'user_relationships_ui_check_access',
-    'access arguments' => array('view'),
-    'menu_name' => 'user-menu',
+      'title' => 'Current',
+      'type' => MENU_DEFAULT_LOCAL_TASK,
+      'weight' => -10,
+      'access callback' => 'user_relationships_ui_check_access',
+      'access arguments' => array( 'view' ),
+      'menu_name' => 'user-menu',
   );
   $items['relationships/received'] = array(
-    'title' => 'Received requests',
-    'title callback' => 'user_relationships_ui_title_callback_pending',
-    'title arguments' => array('requestee_id'),
-    'access callback' => 'user_relationships_ui_check_access',
-    'access arguments' => array('approve'),
-    'type' => MENU_LOCAL_TASK,
-    'weight' => -9,
-    'page callback' => 'user_relationships_pending_requests_page',
-    'page arguments' => array('requestee_id'),
-    'file' => 'user_relationships_ui.pages.inc',
-    'menu_name' => 'user-menu',
+      'title' => 'Received requests',
+      'title callback' => 'user_relationships_ui_title_callback_pending',
+      'title arguments' => array( 'requestee_id' ),
+      'access callback' => 'user_relationships_ui_check_access',
+      'access arguments' => array( 'approve' ),
+      'type' => MENU_LOCAL_TASK,
+      'weight' => -9,
+      'page callback' => 'user_relationships_pending_requests_page',
+      'page arguments' => array( 'requestee_id' ),
+      'file' => 'user_relationships_ui.pages.inc',
+      'menu_name' => 'user-menu',
   );
   $items['relationships/sent'] = array(
-    'title' => 'Sent requests',
-    'title callback' => 'user_relationships_ui_title_callback_pending',
-    'title arguments' => array('requester_id'),
-    'access callback' => 'user_relationships_ui_check_access',
-    'access arguments' => array('request'),
-    'type' => MENU_LOCAL_TASK,
-    'weight' => -8,
-    'page callback' => 'user_relationships_pending_requests_page',
-    'page arguments' => array('requester_id'),
-    'file' => 'user_relationships_ui.pages.inc',
-    'menu_name' => 'user-menu',
+      'title' => 'Sent requests',
+      'title callback' => 'user_relationships_ui_title_callback_pending',
+      'title arguments' => array( 'requester_id' ),
+      'access callback' => 'user_relationships_ui_check_access',
+      'access arguments' => array( 'request' ),
+      'type' => MENU_LOCAL_TASK,
+      'weight' => -8,
+      'page callback' => 'user_relationships_pending_requests_page',
+      'page arguments' => array( 'requester_id' ),
+      'file' => 'user_relationships_ui.pages.inc',
+      'menu_name' => 'user-menu',
   );
 
   $show_tabs = db_query('SELECT rtid, show_tab FROM {user_relationships_ui_settings} WHERE show_tab = 1')->fetchAllKeyed();
@@ -301,112 +300,112 @@ function user_relationships_ui_menu() {
   foreach (user_relationships_types_load() as $rtid => $relationship) {
     if (isset($show_tabs[$rtid])) {
       $items["relationships/{$rtid}"] = array(
-        'title' => $relationship->rtid,
-        'title callback' => 'user_relationships_ui_title_callback',
-        'type' => MENU_LOCAL_TASK,
-        'access callback' => 'user_relationships_ui_check_access',
-        'access arguments' => array('view', NULL, 1),
-        'page callback' => 'user_relationships_page',
-        'page arguments' => array(NULL, 1),
-        'file' => 'user_relationships_ui.pages.inc',
-        'menu_name' => 'user-menu',
+          'title' => $relationship->rtid,
+          'title callback' => 'user_relationships_ui_title_callback',
+          'type' => MENU_LOCAL_TASK,
+          'access callback' => 'user_relationships_ui_check_access',
+          'access arguments' => array( 'view', NULL, 1 ),
+          'page callback' => 'user_relationships_page',
+          'page arguments' => array( NULL, 1 ),
+          'file' => 'user_relationships_ui.pages.inc',
+          'menu_name' => 'user-menu',
       );
     }
   }
 
   $items['relationships/%user_relationships/remove'] = array(
-    'title' => 'Remove relationship',
-    'type' => MENU_CALLBACK,
-    'access callback' => 'user_relationships_ui_check_access',
-    'access arguments' => array('delete'),
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('user_relationships_ui_remove', 1),
-    'file' => 'user_relationships_ui.forms.inc',
+      'title' => 'Remove relationship',
+      'type' => MENU_CALLBACK,
+      'access callback' => 'user_relationships_ui_check_access',
+      'access arguments' => array( 'delete' ),
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array( 'user_relationships_ui_remove', 1 ),
+      'file' => 'user_relationships_ui.forms.inc',
   );
 
   $items['relationship/%user/request'] = array(
-    'title' => 'Create a relationship',
-    'type' => MENU_CALLBACK,
-    'access callback' => 'user_relationships_ui_check_access',
-    'access arguments' => array('request'),
-    'page callback' => 'user_relationships_ui_request_ajax',
-    'page arguments' => array(1),
-    'file' => 'user_relationships_ui.forms.inc',
+      'title' => 'Create a relationship',
+      'type' => MENU_CALLBACK,
+      'access callback' => 'user_relationships_ui_check_access',
+      'access arguments' => array( 'request' ),
+      'page callback' => 'user_relationships_ui_request_ajax',
+      'page arguments' => array( 1 ),
+      'file' => 'user_relationships_ui.forms.inc',
   );
 
   $items['user/%user/relationships'] = array(
-    'title' => 'Relationships',
-    'access callback' => 'user_relationships_ui_check_access',
-    'access arguments' => array('view', 1),
-    'page callback' => 'user_relationships_page',
-    'page arguments' => array(1),
-    'file' => 'user_relationships_ui.pages.inc',
-    'type' => MENU_LOCAL_TASK,
+      'title' => 'Relationships',
+      'access callback' => 'user_relationships_ui_check_access',
+      'access arguments' => array( 'view', 1 ),
+      'page callback' => 'user_relationships_page',
+      'page arguments' => array( 1 ),
+      'file' => 'user_relationships_ui.pages.inc',
+      'type' => MENU_LOCAL_TASK,
   );
   $items['user/%user/relationships/list'] = array(
-    'title' => 'Current',
-    'type' => MENU_DEFAULT_LOCAL_TASK,
-    'weight' => -10,
-    'access callback' => 'user_relationships_ui_check_access',
-    'access arguments' => array('view', 1),
+      'title' => 'Current',
+      'type' => MENU_DEFAULT_LOCAL_TASK,
+      'weight' => -10,
+      'access callback' => 'user_relationships_ui_check_access',
+      'access arguments' => array( 'view', 1 ),
   );
 
   $items['user/%user/relationships/received'] = array(
-    'title' => 'Received requests',
-    'title callback' => 'user_relationships_ui_title_callback_pending',
-    'title arguments' => array('requestee_id', 1),
-    'access callback' => 'user_relationships_ui_check_access',
-    'access arguments' => array('approve', 1),
-    'type' => MENU_LOCAL_TASK,
-    'weight' => -9,
-    'page callback' => 'user_relationships_pending_requests_page',
-    'page arguments' => array('requestee_id', 1),
-    'file' => 'user_relationships_ui.pages.inc',
+      'title' => 'Received requests',
+      'title callback' => 'user_relationships_ui_title_callback_pending',
+      'title arguments' => array( 'requestee_id', 1 ),
+      'access callback' => 'user_relationships_ui_check_access',
+      'access arguments' => array( 'approve', 1 ),
+      'type' => MENU_LOCAL_TASK,
+      'weight' => -9,
+      'page callback' => 'user_relationships_pending_requests_page',
+      'page arguments' => array( 'requestee_id', 1 ),
+      'file' => 'user_relationships_ui.pages.inc',
   );
 
   $items['user/%user/relationships/sent'] = array(
-    'title' => 'Sent requests',
-    'title callback' => 'user_relationships_ui_title_callback_pending',
-    'title arguments' => array('requester_id', 1),
-    'access callback' => 'user_relationships_ui_check_access',
-    'access arguments' => array('request', 1),
-    'type' => MENU_LOCAL_TASK,
-    'weight' => -8,
-    'page callback' => 'user_relationships_pending_requests_page',
-    'page arguments' => array('requester_id', 1),
-    'file' => 'user_relationships_ui.pages.inc',
+      'title' => 'Sent requests',
+      'title callback' => 'user_relationships_ui_title_callback_pending',
+      'title arguments' => array( 'requester_id', 1 ),
+      'access callback' => 'user_relationships_ui_check_access',
+      'access arguments' => array( 'request', 1 ),
+      'type' => MENU_LOCAL_TASK,
+      'weight' => -8,
+      'page callback' => 'user_relationships_pending_requests_page',
+      'page arguments' => array( 'requester_id', 1 ),
+      'file' => 'user_relationships_ui.pages.inc',
   );
   foreach (user_relationships_types_load() as $rtid => $relationship) {
     $items["user/%user/relationships/{$rtid}"] = array(
-      'title' => $relationship->rtid,
-      'title callback' => 'user_relationships_ui_title_callback',
-      'type' => MENU_LOCAL_TASK,
-      'access callback' => 'user_relationships_ui_check_access',
-      'access arguments' => array('view', 1, 3),
-      'page callback' => 'user_relationships_page',
-      'page arguments' => array(1, 3),
-      'file' => 'user_relationships_ui.pages.inc',
+        'title' => $relationship->rtid,
+        'title callback' => 'user_relationships_ui_title_callback',
+        'type' => MENU_LOCAL_TASK,
+        'access callback' => 'user_relationships_ui_check_access',
+        'access arguments' => array( 'view', 1, 3 ),
+        'page callback' => 'user_relationships_page',
+        'page arguments' => array( 1, 3 ),
+        'file' => 'user_relationships_ui.pages.inc',
     );
   }
 
   $items["user/%user/relationships/requested/%user_relationships/%"] = array(
-    'title' => 'Approve Relationship',
-    'type' => MENU_CALLBACK,
-    'access callback' => 'user_relationships_ui_check_access',
-    'access arguments' => array('request', 1),
-    'page callback' => 'user_relationships_ui_pending_requested_ajax',
-    'page arguments' => array(5, 1, 4),
-    'file' => 'user_relationships_ui.forms.inc',
+      'title' => 'Approve Relationship',
+      'type' => MENU_CALLBACK,
+      'access callback' => 'user_relationships_ui_check_access',
+      'access arguments' => array( 'request', 1 ),
+      'page callback' => 'user_relationships_ui_pending_requested_ajax',
+      'page arguments' => array( 5, 1, 4 ),
+      'file' => 'user_relationships_ui.forms.inc',
   );
 
   $items['user/%user/relationships/%user_relationships/remove'] = array(
-    'title' => 'Remove relationship',
-    'type' => MENU_CALLBACK,
-    'access callback' => 'user_relationships_ui_check_access',
-    'access arguments' => array('delete', 1),
-    'page callback' => 'user_relationships_ui_remove_ajax',
-    'page arguments' => array(1, 3),
-    'file' => 'user_relationships_ui.forms.inc',
+      'title' => 'Remove relationship',
+      'type' => MENU_CALLBACK,
+      'access callback' => 'user_relationships_ui_check_access',
+      'access arguments' => array( 'delete', 1 ),
+      'page callback' => 'user_relationships_ui_remove_ajax',
+      'page arguments' => array( 1, 3 ),
+      'file' => 'user_relationships_ui.forms.inc',
   );
 
   return $items;
@@ -433,20 +432,20 @@ function user_relationships_ui_title_callback_pending($column, $account = NULL) 
     $account = $user;
   }
 
-  $count = user_relationships_load(array($column => $account->uid, 'approved' => FALSE), array('count' => TRUE));
+  $count = user_relationships_load(array( $column => $account->uid, 'approved' => FALSE ), array( 'count' => TRUE ));
   if ($column == 'requester_id') {
     if ($count > 0) {
       return format_plural($count, 'Sent requests (1)', 'Sent requests (@count)');
     }
     return t('Sent requests');
-  }
-  else {
+  } else {
     if ($count > 0) {
       return format_plural($count, 'Received requests (1)', 'Received requests (@count)');
     }
     return t('Received requests');
   }
 }
+
 /**
  * Implements hook_user_login().
  */
@@ -464,29 +463,29 @@ function user_relationships_ui_user_view($account, $view_mode) {
   }
 
   $output = array();
-  if ($list = user_relationships_ui_actions_between($user, $account, array('remove' => 1))) {
+  if ($list = user_relationships_ui_actions_between($user, $account, array( 'remove' => 1 ))) {
     $output['relations'] = array(
-      '#title'      => t('Your relationships to this user'),
-      '#type'       => 'user_profile_item',
-      '#markup'      => theme('item_list', array('items' => $list)),
-      '#attributes' => array('class' => array('user_relationships_ui')),
+        '#title' => t('Your relationships to this user'),
+        '#type' => 'user_profile_item',
+        '#markup' => theme('item_list', array( 'items' => $list )),
+        '#attributes' => array( 'class' => array( 'user_relationships_ui' ) ),
     );
   }
 
-  if ($actions = user_relationships_ui_actions_between($user, $account, array('add' => 1, 'requested' => 1, 'received' => 1))) {
+  if ($actions = user_relationships_ui_actions_between($user, $account, array( 'add' => 1, 'requested' => 1, 'received' => 1 ))) {
     $output['actions'] = array(
-      '#title'      => t('Relationship actions'),
-      '#type'       => 'user_profile_item',
-      '#markup'      => theme('item_list', array('items' => $actions)),
-      '#attributes' => array('class' => array('user_relationships_ui_actions')),
+        '#title' => t('Relationship actions'),
+        '#type' => 'user_profile_item',
+        '#markup' => theme('item_list', array( 'items' => $actions )),
+        '#attributes' => array( 'class' => array( 'user_relationships_ui_actions' ) ),
     );
   }
 
   if (sizeof($output)) {
     $account->content['user_relationships_ui'] = array(
-      '#type'   => 'user_profile_category',
-      '#title'  => t('Relationships'),
-      '#weight' => 10,
+        '#type' => 'user_profile_category',
+        '#title' => t('Relationships'),
+        '#weight' => 10,
     );
     $account->content['user_relationships_ui'] = array_merge($account->content['user_relationships_ui'], $output);
   }
@@ -508,11 +507,11 @@ function user_relationships_ui_form_alter(&$form, &$form_state, $form_id) {
     // related settings through hook_form_alter(). If it's still empty after the
     // build process, the after build function will remove it.
     $form['user_relationships_ui_settings'] += array(
-      '#type'   => 'fieldset',
-      '#title'  => t('Relationships'),
-      '#weight' => 5,
-      '#collapsible' => TRUE,
-      '#after_build' => array('user_relationships_ui_account_fieldset_remove_if_empty'),
+        '#type' => 'fieldset',
+        '#title' => t('Relationships'),
+        '#weight' => 5,
+        '#collapsible' => TRUE,
+        '#after_build' => array( 'user_relationships_ui_account_fieldset_remove_if_empty' ),
     );
 
     if (variable_get('user_relationships_ui_require_approval', TRUE)) {
@@ -531,11 +530,11 @@ function user_relationships_ui_form_alter(&$form, &$form_state, $form_id) {
         //#453090 Do nothing if there are no options.
         if (count($options)) {
           $form['user_relationships_ui_settings']['user_relationships_ui_auto_approve'] = array(
-            '#type'           => 'checkboxes',
-            '#title'          => t('Automatically approve relationship requests from other users'),
-            '#options'        => $options,
-            '#default_value'  => $form['#user']->data['user_relationships_ui_auto_approve'],
-            '#description'    => t("When another user requests a relationship with you, we usually require your approval. If you'd like certain relationship types to be approved automatically, check the box next to that type.")
+              '#type' => 'checkboxes',
+              '#title' => t('Automatically approve relationship requests from other users'),
+              '#options' => $options,
+              '#default_value' => $form['#user']->data['user_relationships_ui_auto_approve'],
+              '#description' => t("When another user requests a relationship with you, we usually require your approval. If you'd like certain relationship types to be approved automatically, check the box next to that type.")
           );
         }
       }
@@ -550,7 +549,7 @@ function user_relationships_ui_account_fieldset_remove_if_empty($element) {
   // Go through all child elements, if any of them is visible, do not hide.
   // If no elements exist or none are accessible, hide this element.
   foreach (element_children($element) as $key) {
-    if (!isset($element[$key]['#access'])   || $element[$key]['#access']) {
+    if (!isset($element[$key]['#access']) || $element[$key]['#access']) {
       return $element;
     }
   }
@@ -570,54 +569,46 @@ function user_relationships_ui_user_presave(&$edit, $account, $category) {
  */
 function user_relationships_ui_theme() {
   $theme_funcs = array(
-    'user_relationships_request_relationship_link' => array(
-      'variables' => array('relate_to' => NULL)
-    ),
-
-    'user_relationships_request_relationship_direct_link' => array(
-      'variables' => array('relate_to' => NULL, 'relationship_type' => NULL)
-    ),
-
-    'user_relationships_remove_link' => array(
-      'variables' => array('uid' => NULL, 'rid' => NULL)
-    ),
-
-    'user_relationships_pending_request_approve_link' => array(
-      'variables' => array('uid' => NULL, 'rid' => NULL)
-    ),
-
-    'user_relationships_pending_request_disapprove_link' => array(
-      'variables' => array('uid' => NULL, 'rid' => NULL)
-    ),
-
-    'user_relationships_pending_request_cancel_link' => array(
-      'variables' => array('uid' => NULL, 'rid' => NULL)
-    ),
-
-    'user_relationships_approval_status' => array(
-      'variables' => array('approved' => NULL)
-    ),
-
-    'user_relationships_user_link' => array(
-      'variables' => array('uid' => NULL)
-    ),
+      'user_relationships_request_relationship_link' => array(
+          'variables' => array( 'relate_to' => NULL )
+      ),
+      'user_relationships_request_relationship_direct_link' => array(
+          'variables' => array( 'relate_to' => NULL, 'relationship_type' => NULL )
+      ),
+      'user_relationships_remove_link' => array(
+          'variables' => array( 'uid' => NULL, 'rid' => NULL )
+      ),
+      'user_relationships_pending_request_approve_link' => array(
+          'variables' => array( 'uid' => NULL, 'rid' => NULL )
+      ),
+      'user_relationships_pending_request_disapprove_link' => array(
+          'variables' => array( 'uid' => NULL, 'rid' => NULL )
+      ),
+      'user_relationships_pending_request_cancel_link' => array(
+          'variables' => array( 'uid' => NULL, 'rid' => NULL )
+      ),
+      'user_relationships_approval_status' => array(
+          'variables' => array( 'approved' => NULL )
+      ),
+      'user_relationships_user_link' => array(
+          'variables' => array( 'uid' => NULL )
+      ),
   );
   foreach ($theme_funcs as $key => $val) {
     $theme_funcs[$key]['file'] = 'user_relationships_ui.theme.inc';
   }
 
   $theme_templates = array(
-    'user_relationships' => array(
-      'variables' => array('account' => NULL, 'rtid' => NULL),
-      'path'      => drupal_get_path('module', 'user_relationships_ui') . '/templates',
-      'template'  => 'user_relationships',
-    ),
-
-    'user_relationships_pending_requests' => array(
-      'variables' => array('account' => NULL),
-      'path'      => drupal_get_path('module', 'user_relationships_ui') . '/templates',
-      'template'  => 'user_relationships_pending_requests',
-    ),
+      'user_relationships' => array(
+          'variables' => array( 'account' => NULL, 'rtid' => NULL ),
+          'path' => drupal_get_path('module', 'user_relationships_ui') . '/templates',
+          'template' => 'user_relationships',
+      ),
+      'user_relationships_pending_requests' => array(
+          'variables' => array( 'account' => NULL ),
+          'path' => drupal_get_path('module', 'user_relationships_ui') . '/templates',
+          'template' => 'user_relationships_pending_requests',
+      ),
   );
 
   return array_merge($theme_funcs, $theme_templates);
@@ -628,20 +619,20 @@ function user_relationships_ui_theme() {
  */
 function user_relationships_ui_field_extra_fields() {
   $extra['user']['user'] = array(
-    'form' => array(
-      'user_relationships_ui_settings' => array(
-        'label' => t('Relationships'),
-        'description' => t('User Relationships settings form.'),
-        'weight' => 5,
+      'form' => array(
+          'user_relationships_ui_settings' => array(
+              'label' => t('Relationships'),
+              'description' => t('User Relationships settings form.'),
+              'weight' => 5,
+          ),
       ),
-    ),
-    'display' => array(
-      'user_relationships_ui' => array(
-        'label' => t('Relationships'),
-        'description' => t('User Relationships relations and actions.'),
-        'weight' => 10,
+      'display' => array(
+          'user_relationships_ui' => array(
+              'label' => t('Relationships'),
+              'description' => t('User Relationships relations and actions.'),
+              'weight' => 10,
+          )
       )
-    )
   );
   return $extra;
 }
@@ -651,24 +642,24 @@ function user_relationships_ui_field_extra_fields() {
  */
 function user_relationships_ui_form_user_relationships_admin_type_edit_alter(&$form, &$form_state) {
   $form['listings'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Listings'),
-    '#group' => 'tabs',
+      '#type' => 'fieldset',
+      '#title' => t('Listings'),
+      '#group' => 'tabs',
   );
 
   // Load settings.
-  $settings = db_query('SELECT * FROM {user_relationships_ui_settings} WHERE rtid = :rtid', array(':rtid' => (int) $form['rtid']['#value']))->fetchObject();
+  $settings = db_query('SELECT * FROM {user_relationships_ui_settings} WHERE rtid = :rtid', array( ':rtid' => (int) $form['rtid']['#value'] ))->fetchObject();
 
   $form['listings']['ui_settings_hide'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Hide this relationship type from the relationships list'),
-    '#default_value' => $settings ? $settings->hide : FALSE,
+      '#type' => 'checkbox',
+      '#title' => t('Hide this relationship type from the relationships list'),
+      '#default_value' => $settings ? $settings->hide : FALSE,
   );
 
   $form['listings']['ui_settings_show_tab'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Create a separate tab (and path) for this relationship type'),
-    '#default_value' => $settings ? $settings->show_tab : FALSE,
+      '#type' => 'checkbox',
+      '#title' => t('Create a separate tab (and path) for this relationship type'),
+      '#default_value' => $settings ? $settings->show_tab : FALSE,
   );
 }
 
@@ -677,12 +668,12 @@ function user_relationships_ui_form_user_relationships_admin_type_edit_alter(&$f
  */
 function user_relationships_ui_user_relationships_type_insert($relationship_type) {
   db_merge('user_relationships_ui_settings')
-    ->key(array('rtid' => $relationship_type->rtid))
-    ->fields(array(
-      'hide' => isset($relationship_type->ui_settings_hide) ? (int) $relationship_type->ui_settings_hide : 0,
-      'show_tab' => isset($relationship_type->ui_settings_show_tab) ? (int) $relationship_type->ui_settings_show_tab : 0,
-    ))
-    ->execute();
+      ->key(array( 'rtid' => $relationship_type->rtid ))
+      ->fields(array(
+          'hide' => isset($relationship_type->ui_settings_hide) ? (int) $relationship_type->ui_settings_hide : 0,
+          'show_tab' => isset($relationship_type->ui_settings_show_tab) ? (int) $relationship_type->ui_settings_show_tab : 0,
+      ))
+      ->execute();
 }
 
 /**
@@ -690,10 +681,10 @@ function user_relationships_ui_user_relationships_type_insert($relationship_type
  */
 function user_relationships_ui_user_relationships_type_update($relationship_type) {
   db_merge('user_relationships_ui_settings')
-    ->key(array('rtid' => $relationship_type->rtid))
-    ->fields(array(
-      'hide' => isset($relationship_type->ui_settings_hide) ? (int) $relationship_type->ui_settings_hide : 0,
-      'show_tab' => isset($relationship_type->ui_settings_show_tab) ? (int) $relationship_type->ui_settings_show_tab : 0,
-    ))
-    ->execute();
+      ->key(array( 'rtid' => $relationship_type->rtid ))
+      ->fields(array(
+          'hide' => isset($relationship_type->ui_settings_hide) ? (int) $relationship_type->ui_settings_hide : 0,
+          'show_tab' => isset($relationship_type->ui_settings_show_tab) ? (int) $relationship_type->ui_settings_show_tab : 0,
+      ))
+      ->execute();
 }

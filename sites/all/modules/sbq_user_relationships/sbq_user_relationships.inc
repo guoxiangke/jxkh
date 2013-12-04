@@ -77,7 +77,11 @@ function sbq_user_relationships_follow_view($display, $account) {
  * $type in array('sent', 'received')
  */
 
-function sbq_user_relationship_pending_page($type, $account) {
+function sbq_user_relationship_pending_page($type, $account = NULL) {
+  global $user;
+  if($account){
+    $account = $user;
+  }
   if ($type == 'sent') {
     drupal_set_title('发出的请求');
     $options = array(
@@ -178,4 +182,65 @@ function sbq_user_relationships_ui_pending_requested_ajax($account, $relationshi
   if (isset($commands)) {
     return array( '#type' => 'ajax', '#commands' => $commands );
   }
+}
+
+/**
+ * Process relationship request.
+ */
+function sbq_user_relationships_ui_request_ajax($viewer_id, $rid, $viewed_id) {
+  //#578372 leave all form values in the object for other functions to use
+  $relationship = new stdClass;
+  $relationship->requester = user_load($viewer_id);
+  $relationship->requestee = user_load($viewed_id);
+  $relationship->type = user_relationships_type_load($rid);
+  $relationship = user_relationships_request_relationship($relationship);
+
+  if ($relationship === FALSE || !$relationship) {
+    // sbq_commons_ajax_response('success', '不能建立此关系', NULL, render($html));
+  }
+  //  drupal_set_message(user_relationships_get_message(($relationship->approved ? 'pre_approved' : 'submitted'), $relationship));
+  // $html = sbq_commons_user_relationship_view(user_load($viewed_id), NULL, NULL);
+  //sbq_commons_ajax_response('success', 'success', NULL, render($html));
+  //$g = strstr('destination=', $_GET);
+//  dpm($_GET);
+  $path = $_GET['q'];
+  if ($position = strpos($path, 'destination=')) {
+    if ($token = substr($path, $position, strlen($path))) {
+      $token = str_replace('destination=', '', $token);
+      $commands[] = ajax_command_replace('.' . $token, '<span>已关注</span>');
+      return array( '#type' => 'ajax', '#commands' => $commands );
+    }
+  }
+  ajax_deliver('success');
+}
+
+/**
+ * Remove relationship request.
+ */
+function sbq_user_relationships_ui_remove_ajax($viewer_id, $rid, $viewd_id) {
+  $user = user_load($viewer_id);
+  $relationship = user_relationships_load($rid);
+  if (!user_relationships_ui_check_access('delete', NULL, $relationship)) {
+    drupal_access_denied();
+    exit();
+  }
+  if (!user_relationships_load($rid)) {
+    sbq_commons_ajax_response('success', '找不到此关系！', NULL, render($html));
+  }
+  user_relationships_delete_relationship($relationship, $user);
+//  drupal_set_message(user_relationships_get_message('removed', $relationship));
+//  $html = sbq_commons_user_relationship_view(user_load($viewd_id), NULL, NULL);
+//  sbq_commons_ajax_response('success', 'success', NULL, render($html));
+  $path = $_GET['q'];
+
+  if ($position = strpos($path, 'destination=')) {
+    if ($token = substr($path, $position, strlen($path))) {
+      $token = str_replace('destination=', '', $token);
+      $commands[] = ajax_command_replace('.' . $token, '<span>已移除</span>');
+      return array(
+          '#type' => 'ajax',
+          '#commands' => $commands );
+    }
+  }
+  ajax_deliver('success');
 }
