@@ -877,7 +877,7 @@ function ajax_quick_ask_callback($form, &$form_state) {
     $error_msg = '<div id="sbq-message-error" class="messages--error messages error">'
       .'<h2 class="element-invisible">错误信息</h2>'
       .'<ul class="messages__list">'
-      .'<li class="messages__item">'.t('Please type your question.').'</li>'
+      .'<li class="messages__item">请输入您的问题</li>'
       .'</ul></div>';
     $commands[] = ajax_command_after('#main-content', $error_msg);
     $form_state['rebuild'] = TRUE;
