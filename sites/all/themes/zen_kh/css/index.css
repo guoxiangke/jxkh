@@ -14,7 +14,7 @@ a:focus { outline: none; }
 .region-sidebar-first,
 .region-sidebar-second,
 #footer { padding: 0 }
-#header { height: 60px; background: url(../images/hbg.png) repeat-x 0 -26px; margin-top: 25px; position: relative; z-index: 999; }
+#header { height: 60px; background: url(../images/hbg.png) repeat-x 0 -26px; margin-top: 25px; position: relative; z-index: 998; }
 html { background: url(../images/bg.png) repeat 0 0; }
 .sbq-width { width: 960px }
 .sbq-center { margin: 0 auto }
@@ -209,7 +209,6 @@ li { list-style: none; }
 #sbq_doctor_quick_register .modal-dialog .modal-content .modal-header { background: url("../images/lodin_01.png") repeat-x scroll 0 0 rgba(0, 0, 0, 0); border-top-left-radius: 5px; border-top-right-radius: 5px; height: 46px; padding: 10px; }
 .close { color: #000000; float: right; font-size: 21px; font-weight: bold; line-height: 1; opacity: 0.2; text-shadow: 0 1px 0 #FFFFFF; }
 button.close { background: none repeat scroll 0 0 rgba(0, 0, 0, 0); border: 0 none; cursor: pointer; padding: 0; }
-#user-register-form .form-item label { display: inline-block; font-weight: normal; margin-right: 10px; text-align: center; width: 70px; font-size: 14px; }
 label { display: inline-block; font-weight: bold; margin-bottom: 5px; }
 .input-group { border-collapse: separate; display: table; position: relative; }
 .input-group-addon,
@@ -245,7 +244,6 @@ zoom: 1; color: #168A9B; border: 1px solid #168A9B; border-radius: 3px; position
 .input-group-btn:first-child > .btn:not(:first-child) { border-bottom-left-radius: 0; border-top-left-radius: 0; }
 #user-register-form div input { border-radius: 0; width: 196px; }
 #user-register-form .description { display: none; }
-.fieldset-wrapper { margin: -20px 0 0 82px; position: relative; }
 #sbq_doctor_quick_register #edit-profile-doctor-private-profile-field-doctor-license-und-0-upload-button { border: 1px solid #ccc; border-radius: 4px; cursor: pointer; display: inline-block; font-size: 14px; font-weight: normal; line-height: 1.42857; margin-bottom: 0; padding: 6px 12px; text-align: center; vertical-align: middle; white-space: nowrap; background: none; color: #000; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; -o-user-select: none; user-select: none }
 .btn:focus { outline: thin dotted #333; outline: 5px auto -webkit-focus-ring-color; outline-offset: -2px }
 .btn:hover,
@@ -450,6 +448,8 @@ ul.quicktabs-tabs.quicktabs-style-arrows li a:hover { background: url(../images/
 #body-add-more-wrapper .grippie { display: none; }
 #block-sbq-commons-sbq-user-menu li.active { background-color: #16AFC2; color: #fff }
 #block-sbq-commons-sbq-quick-ask #question-node-form { position: relative; }
+#block-sbq-commons-sbq-quick-ask #question-node-form .form-item { margin: 0px; }
+#block-sbq-commons-sbq-quick-ask #question-node-form .form-field-type-taxonomy-term-reference { display: none; }
 #block-sbq-commons-recommond-patients { position: relative; }
 #block-sbq-commons-recommond-patients .view,
 #block-sbq-commons-recommond-doctors .view { padding-top: 10px; }

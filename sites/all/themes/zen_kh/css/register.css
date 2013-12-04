@@ -11,36 +11,51 @@
 	display:none;
 }*/
 #content span.form-required { display: none; }
-#user-register-form fieldset .fieldset-wrapper .form-type-textfield input[type="text"] { width: 90px; }
+#user-register-form fieldset .fieldset-wrapper .form-type-textfield input[type="text"] { width: 90px; position: relative; top: -13px; left: 0px; }
 /*注册*/
 .password-strength-text,
- .password-strength-title,
- .password-indicator { display: none }
+.password-strength-title,
+.password-indicator { display: none }
 #content .form-type-password { width: 100% }
-#content .password-strength { margin-top: 0.2em; }
-#content .password-confirm { margin-top: 0.2em; }
+/*#content .password-strength { margin-top: 0.2em; }
+#content .password-confirm { margin-top: 0.2em; }*/
 #content .confirm-parent { margin: 1.0em 0; }
-#content .user-info-from-cookie fieldset { border: none; }
+#content .user-info-from-cookie > * { float: left; }
+#content .user-info-from-cookie .form-wrapper { padding: 0px; }
+#content .user-info-from-cookie .form-type-managed-file { margin: 0px; }
+/*#content .user-info-from-cookie .form-item { margin: 0px; }*/
+#content .user-info-from-cookie .form-text { margin: 0px; }
+.user-info-from-cookie label,
+.user-info-from-cookie fieldset legend { display: inline-block; font-weight: normal; margin-right: 10px; text-align: center; width: 70px; font-size: 14px; }
+#content .user-info-from-cookie .field-type-image { width: 100%; margin: 1.5em 0px; }
+#content .user-info-from-cookie .captcha { float: left; }
+#content .user-info-from-cookie .captcha legend { margin-top: 8px; }
+#content .user-info-from-cookie .reload-captcha-wrapper { float: right; margin-top: 8px; }
+#content .user-info-from-cookie .form-item-captcha-response { margin: 0px; }
+#content .user-info-from-cookie fieldset { border: none; margin: 0px !important; }
 #content .user-info-from-cookie fieldset legend { float: left; }
 #content .user-info-from-cookie fieldset .fieldset-wrapper .form-type-textfield label { display: none; }
 #content .user-info-from-cookie fieldset .fieldset-wrapper .fieldset-description { display: none; }
-#content .user-info-from-cookie fieldset .fieldset-wrapper { width: 245px; margin: -31px 0 0 72px; }
-#content .user-info-from-cookie fieldset .fieldset-wrapper .reload-captcha-wrapper { float: right; }
+#content .user-info-from-cookie fieldset .fieldset-wrapper,
+#content .user-info-from-cookie fieldset .image-widget-data,
+#content .user-info-from-cookie fieldset .form-file { float: left; width: 245px; display: block; }
 #content .user-info-from-cookie fieldset .fieldset-wrapper .form-item-captcha-response div.description { display: none; }
 .page-doctor-register .user-info-from-cookie fieldset .fieldset-wrapper div,
- #content .user-info-from-cookie fieldset .fieldset-wrapper img,
- #content .user-info-from-cookie fieldset .fieldset-wrapper div { display: inline-block; margin-right: 10px }
-#user-register-form .form-type-checkbox { text-align: left; margin-left: 80px; }
+#content .user-info-from-cookie fieldset .fieldset-wrapper img,
+#content .user-info-from-cookie fieldset .fieldset-wrapper div { display: inline-block; margin-right: 10px }
+#user-register-form .form-type-checkbox { float: left; width: 100%; text-align: left; margin: 10px 0px; padding: 0px 0px 0px 86px; }
 #user-login .form-item-remember-me { margin-left: 90px; }
 #user-login #edit-actions { margin-left: 90px; }
-#user-register-form .field-name-field-doctor-license .image-widget-data { margin: 10px 0 0 0 }
-#user-register-form .field-name-field-doctor-license .image-widget-data input[type="file"] { float: left; width: 235px; margin: 0px 0px 0px 7px; padding: 1px; }
+#user-register-form .field-name-field-doctor-license .image-widget-data { margin: 0px; }
+#user-register-form .field-name-field-doctor-license .image-widget-data input[type="file"] { float: left; width: 235px; margin: 0px 0px 0px 5px; padding: 1px; }
 #user-register-form .field-name-field-doctor-license .image-widget-data input[type="submit"] { display: block; width: 80px; height: 28px; font-size: 14px; text-align: center; line-height: 0px; background: #fff; color: #000; border: 1px solid #ccc; margin: 0; }
-#user-register-form div input[type="submit"] { background: url(../images/btn1.png) no-repeat 0 bottom; display: block; width: 184px; height: 34px; font-size: 14px; color: #fff; text-align: center; line-height: 34px; border: 0; margin-left: 60px; }
+#user-register-form div input[type="submit"] { background: url(../images/btn1.png) no-repeat 0 bottom; display: block; width: 184px; height: 34px; font-size: 14px; color: #fff; text-align: center; line-height: 34px; border: 0; margin-left: 84px; }
+#content .user-info-from-cookie .form-actions { float: left; width: 100%; }
 /*忘记密码*/
 #user-pass div #edit-actions input[type="submit"] { background: url(../images/btn1.png) no-repeat 0 bottom; display: block; width: 184px; height: 34px; font-size: 14px; color: #fff; text-align: center; line-height: 34px; border: 0; }
 /*用户登录*/
-#user-login div .form-item-name input[type="text"] { width: 186px; ; }
+
+#user-login div .form-item-name input[type="text"] { width: 186px; }
 #user-login div .form-item-name .description { display: inline-block; }
 #user-login div .form-item-pass .description { display: inline-block; }
 #user-login div .form-item-pass label { width: 85px; }
@@ -57,7 +72,7 @@
 #user-register-form .fieldset-wrapper .form-type-managed-file .description { display: none }
 #user-register-form .form-type-managed-file label { display: none; }
 #user-register-form .fieldset-wrapper .form-type-managed-file .form-managed-file input[type="submit"] { display: inline-block }
-.user-info-from-cookie .captcha img { margin: 0px 0px -14px 0px; }
+/*.user-info-from-cookie .captcha img { margin:0px; }*/
 /*sbq_doctor_quick_register*/
 #sbq_doctor_quick_register #doctor_register_form { float: left; width: 380px; }
 #sbq_doctor_quick_register #block-user-login { float: left; width: 200px; margin: 0px 70px 0px 0px; }

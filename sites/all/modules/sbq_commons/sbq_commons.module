@@ -156,6 +156,24 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
       $form['title']['#access'] = FALSE;
       if (arg(0) == 'user') { // Quick Ask form for User Center
         $form['body']['und']['0']['#title'] = t('快速提问');
+        $form['field_tags']['und']['#value'] = '快速提问';
+        unset($form['#validate']);
+        unset($form['#submit']);
+        unset($form['body']['und']['0']['format']);
+        unset($form['body']['und']['0']['summary']);
+        $form['actions']['submit'] = array(
+          '#type' => 'submit',
+          '#value' => '提问',
+          //'#attributes' => array('class'=>'use-ajax'),
+          '#ajax' => array(
+              'callback' => 'ajax_quick_ask_callback',
+              'wrapper' => 'question-node-form',
+              'method' => 'replace',
+              'effect' => 'fade',
+              'progress' => array('type' => 'throbber', 'message' => '请稍候'),
+              'file' => 'sbq_commons.inc',
+          ),
+        );
       } else {
         $form['body']['und']['0']['#title'] = t('问题');
       }
@@ -705,6 +723,7 @@ function sbq_commons_relationships_ui_request_validate($requester, &$requestee, 
 function sbq_commons_node_submit(&$node, &$form, &$form_state) {
   foreach ($form_state['field'] as $field_key => $field) {
     if (isset($field[LANGUAGE_NONE]) && $field[LANGUAGE_NONE]['field']['type'] == 'taxonomy_term_reference' && $field[LANGUAGE_NONE]['instance']['widget']['type'] == 'taxonomy_autocomplete') {
+
       $full_tags = $form_state['input'][$field_key][LANGUAGE_NONE];
       foreach (array( '，', '。', ' ', '.', '、', '、', '\\', '／', '/' ) as $it) {
         $full_tags = str_replace($it, ',', $full_tags);
