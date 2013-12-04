@@ -330,4 +330,5 @@ display: none;
 .page-search #content .search-results li span { color: #0066CC; }
 .page-search #content .search-results li .search-snippet-info { float: left; width: 100%; padding: 0px; font-size: 12px; }
 .page-search #content .search-results li .search-snippet { float: left; width: 100%; margin: 5px 0px; }
+.page-search #content .search-results li .search-snippet strong { color: #900; }
 .page-search #content .search-results li .search-info { float: left; width: 100%; margin: 0px; }
