@@ -21,6 +21,7 @@ input { outline: none; }
 .page-user-login .tabs-primary,
 .page-customer .tabs-primary { display: none; }
 /*------page-user------*/ 
+.logged-in.page-user #page-title { display: none; }
 .page-user .tabs-primary,
 .page-user .field-widget-image-image,
 .page-user #edit-field-tags { display: none; }
