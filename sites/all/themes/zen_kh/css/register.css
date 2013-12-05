@@ -35,7 +35,7 @@
 #user-login .captcha .reload-captcha-wrapper { float: left; display: none; }
 .tt { border: 2px #00FF33 dotted; }
 #content .user-info-from-cookie .form-item-captcha-response { float: left; width: 100%; margin: 0px; }
-#content .user-info-from-cookie fieldset .fieldset-wrapper .form-type-textfield input[type="text"] { float: left; width: 80px; margin: 0px 5px 0px 4px; }
+#content .user-info-from-cookie fieldset .fieldset-wrapper .form-type-textfield input[type="text"] { float: left; width: 80px; margin: 0px 5px 0px 0px; }
 #user-login .captcha #edit-captcha-response { float: left; width: 80px; margin: 0px 5px 0px 10px; border: 1px #CCCCCC solid !important; }
 #user-login .captcha .description { display: none; }
 #content .user-info-from-cookie .password-suggestions { display: none !important; }
@@ -58,7 +58,7 @@
 #user-login .form-item-remember-me { margin-left: 90px; }
 #user-login #edit-actions { margin-left: 90px; }
 #user-register-form .field-name-field-doctor-license .image-widget-data { margin: 0px; }
-#user-register-form .field-name-field-doctor-license .image-widget-data input[type="file"] { float: left; width: 235px; margin: 0px 0px 0px 5px; padding: 1px; }
+#user-register-form .field-name-field-doctor-license .image-widget-data input[type="file"] { float: left; width: 235px; padding: 1px; }
 #user-register-form .field-name-field-doctor-license .image-widget-data input[type="submit"] { display: block; width: 80px; height: 28px; font-size: 14px; text-align: center; line-height: 0px; background: #fff; color: #000; border: 1px solid #ccc; margin: 0; }
 #user-register-form div input[type="submit"] { background: url(../images/btn1.png) no-repeat 0 bottom; display: block; width: 184px; height: 34px; font-size: 14px; color: #fff; text-align: center; line-height: 34px; border: 0; margin-left: 84px; }
 #content .user-info-from-cookie .form-actions { float: left; width: 100%; }
