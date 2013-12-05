@@ -147,7 +147,6 @@ function theme_sbq_user_relationships_process_status($variables) {
       '#prefix' => '<div class="sbq-relationships-sent"><ul>',
       '#suffix' => '</ul></div>'
   );
-  dpm('aa');
   $li = '';
   foreach ($variables['relationships'] as $relationship) {
     $row = sbq_user_relationships_user_action($relationship, $variables['account']);
