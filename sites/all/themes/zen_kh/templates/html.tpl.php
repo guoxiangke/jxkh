@@ -49,9 +49,9 @@
     <?php print $page_top; ?>
     <?php print $page; ?>
     <?php print $page_bottom; ?>
-    <?php if (!$user->uid) { ?>
+    <?php //if (!$user->uid) { ?>
       <!-- Modal sbq_customer_register_form_modal -->
-      <div class="modal fade" id="sbq_customer_register_form_modal" tabindex="-1" role="dialog" aria-labelledby="sbq_customer_register_form_modal_label" aria-hidden="true">
+      <!--<div class="modal fade" id="sbq_customer_register_form_modal" tabindex="-1" role="dialog" aria-labelledby="sbq_customer_register_form_modal_label" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -59,13 +59,13 @@
               <h4 class="modal-title" id="sbq_customer_register_form_modal_label">普通注册</h4>
             </div>
             <div class="modal-body">
-              <?php print $customer_register_form; ?>
+              <?php //print $customer_register_form; ?>
             </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
+          </div>--><!-- /.modal-content -->
+        <!--</div>--><!-- /.modal-dialog -->
+      <!--</div>--><!-- /.modal -->
       <!-- Modal sbq_doctor_register_form_modal -->
-      <div class="modal fade" id="sbq_doctor_register_form_modal" tabindex="-1" role="dialog" aria-labelledby="sbq_doctor_register_form_modal_label" aria-hidden="true">
+      <!--<div class="modal fade" id="sbq_doctor_register_form_modal" tabindex="-1" role="dialog" aria-labelledby="sbq_doctor_register_form_modal_label" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -73,11 +73,11 @@
               <h4 class="modal-title" id="sbq_doctor_register_form_modal_label">医生注册</h4>
             </div>
             <div class="modal-body">
-              <?php print $doctor_register_form; ?>
+              <?php //print $doctor_register_form; ?>
             </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
+          </div>--><!-- /.modal-content -->
+        <!--</div>--><!-- /.modal-dialog -->
+      <!--</div>--><!-- /.modal -->
       <!-- Modal sbq_user_login_form_modal -->
 <!--      <div class="modal fade" id="sbq_user_login_form_modal" tabindex="-1" role="dialog" aria-labelledby="sbq_user_login_form_modal_label" aria-hidden="true">
         <div class="modal-dialog">
@@ -89,8 +89,8 @@
             <div class="modal-body">
               <?php //print $user_login_form; ?>
             </div>
-          </div> /.modal-content 
-        </div> /.modal-dialog 
+          </div> /.modal-content
+        </div> /.modal-dialog
       </div> /.modal -->
       <!-- Modal sbq_doctor_quick_login -->
 <!--      <div class="modal fade" id="sbq_doctor_quick_login_modal" tabindex="-1" role="dialog" aria-labelledby="sbq_user_login_form_modal_label" aria-hidden="true">
@@ -108,9 +108,9 @@
                  <?php //print $doctor_quick_login_form; ?>
               </div>
             </div>
-          </div> /.modal-content 
-        </div> /.modal-dialog 
+          </div> /.modal-content
+        </div> /.modal-dialog
       </div> /.modal -->
-    <?php } ?>
+    <?php //} ?>
   </body>
 </html>
