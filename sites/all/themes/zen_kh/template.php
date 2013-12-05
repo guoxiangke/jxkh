@@ -13,6 +13,12 @@ function zen_kh_preprocess_page(&$vars, $hook) {
     // $vars['theme_hook_suggestions'][] = 'page__'. $vars['node']->type;
     array_unshift($vars['theme_hook_suggestions'],'page__node__'. $vars['node']->type);
   }
+  if (arg(0)=='user' && arg(1)=='password') {
+    drupal_set_title('忘记密码');
+  }
+  if (arg(0)=='user' && arg(1)=='login') {
+    drupal_set_title('用户登录');
+  }
 }
 /**
  * Override or insert variables into the maintenance page template.
@@ -146,8 +152,8 @@ function zen_kh_form_alter(&$form, &$form_state, $form_id) {
     $items = array();
     if (variable_get('user_register', USER_REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL)) {
 //        $items[] = l(t('Create new doctor account'), 'doctor/register', array('attributes' => array('title' => t('Create a new user account.'))));
-     
-//      $items[] = '<a href="#" title="" data-toggle="modal" class="user_doctor_register_ajax" data-target="#sbq_doctor_quick_login_modal">医生快速通道</a>';                                                                   
+
+//      $items[] = '<a href="#" title="" data-toggle="modal" class="user_doctor_register_ajax" data-target="#sbq_doctor_quick_login_modal">医生快速通道</a>';
       $items[] = '<a href="/doctor/register"  data-toggle="modal" class="user_doctor_register_ajax">' . t('Create new doctor account') . '</a>';
     }
     $form['doctor_register'] = array('#markup' => theme('item_list', array('items' => $items, 'attributes' => array('class' => 'sbq_doctor_register_button'))), '#weight' => -10);
@@ -206,7 +212,7 @@ function zen_kh_preprocess_html(&$variables) {
     unset($doctor_register_form['profile_customer_profile']);
     unset($doctor_register_form['profile_patient_private_profile']);
     $variables['doctor_register_form'] = drupal_render($doctor_register_form);
-    
+
 //    $user_login_form = drupal_get_form('user_login');
 //    $variables['user_login_form'] = drupal_render($user_login_form);
 //    $quick_register = drupal_get_form('user_register_form');
@@ -237,6 +243,6 @@ function zen_kh_block_view_alter(&$data, $block) {
     'blog-block',
   );
   if(in_array($block->delta, $relationship_page_expect) && arg(2) == 'relationship') {
-    unset($data['content']); 
+    unset($data['content']);
   }
 }
