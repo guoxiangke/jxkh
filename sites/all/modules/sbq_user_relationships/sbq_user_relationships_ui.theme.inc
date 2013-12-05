@@ -160,8 +160,5 @@ function theme_sbq_user_relationships_process_status($variables) {
     $li = "<li>暂无需要处理的请求</li>";
   }
   $output['#markup'] = $li;
-  $output['pager'] = array(
-      '#markup' => theme('pager'),
-  );
-  return $output;
+  return render($output).theme('pager');
 }
