@@ -137,3 +137,32 @@ function theme_sbq_user_relationships_add_user_link($variables) {
       'attributes' => array( 'class' => 'use-ajax ' . $ajax_token ) )
   );
 }
+
+/*
+ * process message status
+ */
+
+function theme_sbq_user_relationships_process_status($variables) {
+  $output = array(
+      '#prefix' => '<div class="sbq-relationships-sent"><ul>',
+      '#suffix' => '</ul></div>'
+  );
+  dpm('aa');
+  $li = '';
+  foreach ($variables['relationships'] as $relationship) {
+    $row = sbq_user_relationships_user_action($relationship, $variables['account']);
+    if ($variables['type'] == 'sent') {
+      $li .= "<li>请求<span name='name'>{$row['user']->name}</span>成为你的好友，<span class='cancel'>{$row[1]}</span></li>";
+    } else {
+      $li .= "<li><span name='name'>{$row['user']->name}</span>请求成为你的好友，<span class='cancel'>{$row[1]}</span></li>";
+    }
+  }
+  if (empty($li)) {
+    $li = "<li>暂无需要处理的请求</li>";
+  }
+  $output['#markup'] = $li;
+  $output['pager'] = array(
+      '#markup' => theme('pager'),
+  );
+  return $output;
+}

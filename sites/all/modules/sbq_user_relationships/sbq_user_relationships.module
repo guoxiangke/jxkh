@@ -57,7 +57,7 @@ function sbq_user_relationships_menu() {
       'weight' => 3,
   );
 
-  foreach (array( 4 => 'received', 5 => 'sent' )  as $key=>$item) {
+  foreach (array( 4 => 'received', 5 => 'sent' ) as $key => $item) {
     $items['user/%user/relationship/default/' . $item] = array(
         'title callback' => 'sbq_user_relationships_title_callback',
         'title arguments' => array( $item ),
@@ -212,6 +212,7 @@ function sbq_user_relationships_theme() {
       'sbq_user_relationships_pending_request_cancel_link',
 //      'sbq_user_relationships_user_link',
       'sbq_user_relationships_add_user_link',
+      'sbq_user_relationships_process_status'
   );
   foreach ($items as $key => $value) {
     $tpls[$value]['file'] = 'sbq_user_relationships_ui.theme.inc';

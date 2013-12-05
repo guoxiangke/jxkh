@@ -83,55 +83,23 @@ function sbq_user_relationship_pending_page($type, $account = NULL) {
     $account = $user;
   }
   if ($type == 'sent') {
-   // drupal_set_title('发出的请求');
+    // drupal_set_title('发出的请求');
     $options = array(
         'include_user_info' => TRUE,
         'paging' => variable_get('user_relationships_relationships_per_page', 10),
     );
     $relationships = user_relationships_load(array( 'requester_id' => $account->uid, 'approved' => FALSE ), $options);
-    $rows = array();
-    foreach ($relationships as $relationship) {
-      $row = sbq_user_relationships_user_action($relationship, $account);
-      $rows[] = array(  t('请求关注'), $row['user']->name .' 为好友', $row[1] );
-    }
-    $output['list'] = array(
-        '#theme' => 'table',
-        '#rows' => $rows,
-        //'#header' => array( '用户', '请求关系类型', '操作' ),
-        '#empty' => t('暂无发出的请求'),
-        'attributes' => array( 'class' => array( 'user-relationships-pending-listing-table' ) ),
-    );
-    $output['pager'] = array(
-        '#markup' => theme('pager'),
-    );
-
-    return $output;
+   
+    return theme('sbq_user_relationships_process_status', array( 'type' => 'sent', 'relationships' => $relationships,'account'=> $account));
   } elseif ($type == 'received') {
-   // drupal_set_title('需要出');
+    // drupal_set_title('需要出');
     $options = array(
         'include_user_info' => TRUE,
         'paging' => variable_get('user_relationships_relationships_per_page', 10),
     );
     $relationships = user_relationships_load(array( 'requestee_id' => $account->uid, 'approved' => FALSE ), $options);
-    $rows = array();
-    foreach ($relationships as $relationship) {
-      $row = sbq_user_relationships_user_action($relationship, $account);
-      $rows[] = array( $row['user']->name, t('请求关注你为好友'), $row[1] );
-      //  dpm($row);
-    }
-
-    $output['list'] = array(
-        '#theme' => 'table',
-        '#rows' => $rows,
-        //'#header' => array( '用户', '请求关系类型', '操作' ),
-        '#empty' => t('暂无需要处理的请求'),
-        'attributes' => array( 'class' => array( 'user-relationships-pending-listing-table' ) ),
-    );
-    $output['pager'] = array(
-        '#markup' => theme('pager'),
-    );
-
-    return $output;
+    
+    return theme('sbq_user_relationships_process_status', array( 'type' => 'received', 'relationships' => $relationships,'account'=> $account));
   }
   return 'success';
 }
@@ -151,7 +119,7 @@ function sbq_user_relationships_ui_pending_requested_ajax($account, $relationshi
       }
       user_relationships_delete_relationship($relationship, $account, $action);
       if ($_GET['destination']) {
-        $commands[] = ajax_command_replace('.' . $_GET['destination'], '取消');
+        $commands[] = ajax_command_replace('.' . $_GET['destination'], '<span>已取消</span>');
       }
       break;
     case 'approve':
@@ -162,7 +130,7 @@ function sbq_user_relationships_ui_pending_requested_ajax($account, $relationshi
       $relationship->approved = TRUE;
       user_relationships_save_relationship($relationship, $action);
       if ($_GET['destination']) {
-        $commands[] = ajax_command_replace('.' . $_GET['destination'], '已同意');
+        $commands[] = ajax_command_replace('.' . $_GET['destination'], '<span>已同意<span>');
       }
       break;
     case 'disapprove':
@@ -173,7 +141,7 @@ function sbq_user_relationships_ui_pending_requested_ajax($account, $relationshi
       user_relationships_delete_relationship($relationship, $account, $action);
 
       if ($_GET['destination']) {
-        $commands[] = ajax_command_replace('.' . $_GET['destination'], '已拒绝');
+        $commands[] = ajax_command_replace('.' . $_GET['destination'], '<span>已拒绝</span>');
       }
       break;
     default:
