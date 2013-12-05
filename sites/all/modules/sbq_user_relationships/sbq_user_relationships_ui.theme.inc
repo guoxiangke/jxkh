@@ -74,7 +74,7 @@ function theme_sbq_user_relationships_pending_request_approve_link($variables) {
   return l(
       t('同意'), "user/{$uid}/relationship/action/{$rid}/approve", array(
       'query' => array( 'destination' => 'pending_request_approve_link' . $vid ),
-      'attributes' => array( 'class' => array( 'use-ajax pending_request_approve_link' . $vid ) ),
+      'attributes' => array( 'class' => array( 'use-ajax pending_request_approve_link arrpove' . $vid ) ),
       )
   );
 }
@@ -89,7 +89,7 @@ function theme_sbq_user_relationships_pending_request_disapprove_link($variables
   return l(
       t('拒绝'), "user/{$uid}/relationship/action/{$rid}/disapprove", array(
       'query' => array( 'destination' => 'pending_request_disapprove_link' . $vid ),
-      'attributes' => array( 'class' => array( 'use-ajax pending_request_disapprove_link' . $vid ) ),
+      'attributes' => array( 'class' => array( 'use-ajax pending_request_disapprove_link disapprove' . $vid ) ),
       )
   );
 }
@@ -104,7 +104,7 @@ function theme_sbq_user_relationships_pending_request_cancel_link($variables) {
   $ajax_token = 'pending_request_cancel' . $vid;
   return l(t('取消'), 'user/' . $uid . '/relationship/action/' . $rid . '/cancel', array(
       'query' => array( 'destination' => $ajax_token ),
-      'attributes' => array( 'class' => 'use-ajax ' . $ajax_token )
+      'attributes' => array( 'class' => 'use-ajax pending-cancel ' . $ajax_token )
       )
   );
 }
