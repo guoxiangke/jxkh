@@ -75,6 +75,7 @@ stylesheets[all][] = css/register.css
 
 scripts[] = js/bootstrap.min.js
 scripts[] = js/script.js
+scripts[] = js/fix.js
 
 
 
