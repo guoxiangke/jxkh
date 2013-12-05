@@ -332,3 +332,9 @@ display: none;
 .page-search #content .search-results li .search-snippet { float: left; width: 100%; margin: 5px 0px; }
 .page-search #content .search-results li .search-snippet strong { color: #900; }
 .page-search #content .search-results li .search-info { float: left; width: 100%; margin: 0px; }
+/*about us*/
+.page-node-2790 #page-title,
+.page-node-20151 #page-title,
+.page-node-2788 #page-title,
+.page-node-2787 #page-title,
+.page-node-2786 #page-title { }
