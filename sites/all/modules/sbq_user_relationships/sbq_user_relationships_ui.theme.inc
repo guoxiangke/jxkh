@@ -54,7 +54,7 @@ function theme_sbq_user_relationships_remove_link($variables) {
   $vid = $variables['vid'];
   $ajax_token = 'user_relationships_remove' . $vid;
 
-  return l(t('移除'), "relationship/ajax/{$uid}/remove/{$rid}/$vid?destination=$ajax_token", array(
+  return l(t('-移除'), "relationship/ajax/{$uid}/remove/{$rid}/$vid?destination=$ajax_token", array(
       'attributes' => array(
           'class' => array(
               'class' => 'use-ajax ' . $ajax_token
@@ -71,7 +71,7 @@ function theme_sbq_user_relationships_pending_request_approve_link($variables) {
   $uid = $variables['uid'];
   $rid = $variables['rid'];
   $vid = $variables['vid'];
-  return l(     
+  return l(
       t('同意'), "user/{$uid}/relationship/action/{$rid}/approve", array(
       'query' => array( 'destination' => 'pending_request_approve_link' . $vid ),
       'attributes' => array( 'class' => array( 'use-ajax pending_request_approve_link' . $vid ) ),
@@ -124,8 +124,16 @@ function theme_sbq_user_relationships_add_user_link($variables) {
   $uid = $variables['uid'];
   $rid = $variables['rid'];
   $vid = $variables['vid'];
+  $relationships = user_relationships_load($vid);
+
+  if ($rid == FRIEND_DOCTOR_PATIENT) {
+    $replace = '+请求';
+  } else {
+    $replace = '+关注';
+  }
+
   $ajax_token = 'user_relationships_' . $vid;
-  return l(t('关注'), "relationship/ajax/{$uid}/request/{$rid}/{$vid}?destination={$ajax_token}", array(
+  return l($replace, "relationship/ajax/{$uid}/request/{$rid}/{$vid}?destination={$ajax_token}", array(
       'attributes' => array( 'class' => 'use-ajax ' . $ajax_token ) )
   );
 }

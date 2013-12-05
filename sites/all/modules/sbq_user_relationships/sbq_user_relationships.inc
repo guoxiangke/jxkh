@@ -79,11 +79,11 @@ function sbq_user_relationships_follow_view($display, $account) {
 
 function sbq_user_relationship_pending_page($type, $account = NULL) {
   global $user;
-  if($account){
+  if ($account) {
     $account = $user;
   }
   if ($type == 'sent') {
-    drupal_set_title('发出的请求');
+   // drupal_set_title('发出的请求');
     $options = array(
         'include_user_info' => TRUE,
         'paging' => variable_get('user_relationships_relationships_per_page', 10),
@@ -92,13 +92,13 @@ function sbq_user_relationship_pending_page($type, $account = NULL) {
     $rows = array();
     foreach ($relationships as $relationship) {
       $row = sbq_user_relationships_user_action($relationship, $account);
-      $rows[] = array( $row['user']->name, $row[0], $row[1] );
+      $rows[] = array(  t('请求关注'), $row['user']->name .' 为好友', $row[1] );
     }
     $output['list'] = array(
         '#theme' => 'table',
         '#rows' => $rows,
-        '#header' => array( '用户', '请求关系类型', '操作' ),
-        '#empty' => '',
+        //'#header' => array( '用户', '请求关系类型', '操作' ),
+        '#empty' => t('暂无发出的请求'),
         'attributes' => array( 'class' => array( 'user-relationships-pending-listing-table' ) ),
     );
     $output['pager'] = array(
@@ -107,7 +107,7 @@ function sbq_user_relationship_pending_page($type, $account = NULL) {
 
     return $output;
   } elseif ($type == 'received') {
-    drupal_set_title('收到的请求');
+   // drupal_set_title('需要出');
     $options = array(
         'include_user_info' => TRUE,
         'paging' => variable_get('user_relationships_relationships_per_page', 10),
@@ -116,15 +116,15 @@ function sbq_user_relationship_pending_page($type, $account = NULL) {
     $rows = array();
     foreach ($relationships as $relationship) {
       $row = sbq_user_relationships_user_action($relationship, $account);
-      $rows[] = array( $row['user']->name, $row[0], $row[1] );
+      $rows[] = array( $row['user']->name, t('请求关注你为好友'), $row[1] );
       //  dpm($row);
     }
 
     $output['list'] = array(
         '#theme' => 'table',
         '#rows' => $rows,
-        '#header' => array( '用户', '请求关系类型', '操作' ),
-        '#empty' => '',
+        //'#header' => array( '用户', '请求关系类型', '操作' ),
+        '#empty' => t('暂无需要处理的请求'),
         'attributes' => array( 'class' => array( 'user-relationships-pending-listing-table' ) ),
     );
     $output['pager'] = array(
@@ -196,18 +196,18 @@ function sbq_user_relationships_ui_request_ajax($viewer_id, $rid, $viewed_id) {
   $relationship = user_relationships_request_relationship($relationship);
 
   if ($relationship === FALSE || !$relationship) {
-    // sbq_commons_ajax_response('success', '不能建立此关系', NULL, render($html));
+    ajax_deliver('error');
   }
-  //  drupal_set_message(user_relationships_get_message(($relationship->approved ? 'pre_approved' : 'submitted'), $relationship));
-  // $html = sbq_commons_user_relationship_view(user_load($viewed_id), NULL, NULL);
-  //sbq_commons_ajax_response('success', 'success', NULL, render($html));
-  //$g = strstr('destination=', $_GET);
-//  dpm($_GET);
+  if ($relationship->type->rtid == FRIEND_DOCTOR_PATIENT) {
+    $replace = '<span>已发送请求</span>';
+  } else {
+    $replace = '<span>已关注</span>';
+  }
   $path = $_GET['q'];
   if ($position = strpos($path, 'destination=')) {
     if ($token = substr($path, $position, strlen($path))) {
       $token = str_replace('destination=', '', $token);
-      $commands[] = ajax_command_replace('.' . $token, '<span>已关注</span>');
+      $commands[] = ajax_command_replace('.' . $token, $replace);
       return array( '#type' => 'ajax', '#commands' => $commands );
     }
   }

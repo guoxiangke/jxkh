@@ -57,16 +57,17 @@ function sbq_user_relationships_menu() {
       'weight' => 3,
   );
 
-  foreach (array( 'received', 'sent' ) as $item) {
-    $items['user/%user/relationship/' . $item] = array(
-        //'title' => t('收到的请求'),
+  foreach (array( 4 => 'received', 5 => 'sent' )  as $key=>$item) {
+    $items['user/%user/relationship/default/' . $item] = array(
+        'title callback' => 'sbq_user_relationships_title_callback',
+        'title arguments' => array( $item ),
         'type' => MENU_LOCAL_TASK,
         'page callback' => 'sbq_user_relationship_pending_page',
         'page arguments' => array( $item, 1 ),
         'access callback' => 'sbq_user_relationships_access_callback',
         'access arguments' => array( 1 ),
         'file' => 'sbq_user_relationships.inc',
-        'weight' => 3,
+        'weight' => $key,
     );
   }
 
@@ -112,12 +113,36 @@ function sbq_user_relationships_menu() {
  * sbq access callback
  */
 
-function sbq_user_relationships_access_callback($account) {
+function sbq_user_relationships_access_callback($account = NULL) {
   global $user;
+  if ($account === NULL) {
+    $account = $user;
+  } elseif (!is_object($account)) {
+    $account = user_load($account);
+  }
   if ($user->uid == 1 || $user->uid == $account->uid) {
     return TRUE;
   }
   return FALSE;
+}
+
+/*
+ * title callback
+ */
+
+function sbq_user_relationships_title_callback($item) {
+  switch ($item) {
+    case 'sent':
+      $item = t('我发送的请求');
+      break;
+    case 'received':
+      $item = t('需要处理的请求');
+      break;
+    default:
+      break;
+  }
+
+  return $item;
 }
 
 /*
@@ -532,6 +557,6 @@ function sbq_user_relationships_menu_alter(&$items) {
 
 function sbq_user_relationships_redirect($type) {
   global $user;
-  menu_set_active_item('user/' . $user->uid . '/relationship/' . $type);
+  menu_set_active_item('user/' . $user->uid . '/relationship/default/' . $type);
   return menu_execute_active_handler(NULL, FALSE);
 }

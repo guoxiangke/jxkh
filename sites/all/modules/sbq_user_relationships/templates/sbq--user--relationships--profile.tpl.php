@@ -30,9 +30,6 @@
     <?php foreach ($profile as $key => $item): ?>
       <?php if (!empty($item)): ?>
         <span class="<?php echo $key; ?>">
-          <?php if ($key == 'follow'): ?>
-          +
-          <?php endif; ?>
           <?php echo $item ?>
         </span> 
       <?php endif; ?>
