@@ -226,9 +226,6 @@ zoom: 1; color: #168A9B; border: 1px solid #168A9B; border-radius: 3px; position
 .block-views .views-field-field-tags-disease li a:hover { background-color: #168a9b; color: #fff }
 .views-field-field-tags-disease span.sba-user-tag-del a { display: block; background-color: #26a0ae; color: #fff; height: 10px; width: 10px; border-radius: 10px; line-height: 7px; text-align: center; padding: 0 }
 .views-field-field-tags-disease span.sba-user-tag-del a:hover { color: #fff }
-#user-register-form .captcha.form-wrapper label,
-#user-register-form .form-item label.option,
-.form-item #edit-agree { width: auto; }
 #doctor_register_form .form-required,
 #sbq_doctor_quick_register #doctor_register_form #edit-profile-doctor-private-profile-field-doctor-license-und-ajax-wrapper label { display: none; }
 #sbq_doctor_quick_register #doctor_register_form .user-info-from-cookie div span.input-group-addon { display: none; }
