@@ -71,9 +71,10 @@ function theme_sbq_user_relationships_pending_request_approve_link($variables) {
   $uid = $variables['uid'];
   $rid = $variables['rid'];
   $vid = $variables['vid'];
+  $ajax_token = 'arrpove' . $vid;
   return l(
       t('同意'), "user/{$uid}/relationship/action/{$rid}/approve", array(
-      'query' => array( 'destination' => 'pending_request_approve_link' . $vid ),
+      'query' => array( 'destination' => $ajax_token ),
       'attributes' => array( 'class' => array( 'use-ajax pending_request_approve_link arrpove' . $vid ) ),
       )
   );
@@ -86,10 +87,11 @@ function theme_sbq_user_relationships_pending_request_disapprove_link($variables
   $uid = $variables['uid'];
   $rid = $variables['rid'];
   $vid = $variables['vid'];
+  $ajax_token = 'disapprove' . $vid;
   return l(
       t('拒绝'), "user/{$uid}/relationship/action/{$rid}/disapprove", array(
-      'query' => array( 'destination' => 'pending_request_disapprove_link' . $vid ),
-      'attributes' => array( 'class' => array( 'use-ajax pending_request_disapprove_link disapprove' . $vid ) ),
+      'query' => array( 'destination' => $ajax_token ),
+      'attributes' => array( 'class' => array( 'use-ajax pending_request_disapprove_link ' . $ajax_token ) ),
       )
   );
 }
@@ -160,5 +162,5 @@ function theme_sbq_user_relationships_process_status($variables) {
     $li = "<li>暂无需要处理的请求</li>";
   }
   $output['#markup'] = $li;
-  return render($output).theme('pager');
+  return render($output) . theme('pager');
 }
