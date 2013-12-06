@@ -187,8 +187,14 @@ function zen_kh_form_alter(&$form, &$form_state, $form_id) {
   }
   //hide csna links in role register(doctor/register customer/register)
   if ($form_id == 'user_login' || $form_id == 'user_login_block' || $form_id == 'user_register_form') {
-    if (arg(1) == 'register')
+    if (arg(1) == 'register'){
       $form['submitted']['user_login_block']['#access'] = FALSE;
+    }
+    $form['captcha']['#weight'] = 98;
+    $form['remember_me']['#weight']  = 98.2;
+    $form['remember_me_a']['#weight'] = 99;
+    $form['links']['#weight'] = 100;
+    $form['actions']['#weight'] = 100;
   }
 
 }

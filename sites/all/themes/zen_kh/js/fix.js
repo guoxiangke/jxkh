@@ -1,9 +1,13 @@
 jQuery(function($) {
-	//fix
-	$("#user-login-form .captcha img").appendTo('#user-login-form .captcha .form-item-captcha-response');
-	$("#user-login-form .captcha img").click(function() {
-		$("#user-login-form .captcha .reload-captcha").click();
+	//index
+	$(".captcha img").appendTo('.captcha .form-item-captcha-response');
+	$(".captcha img").click(function() {
+		$(".captcha .reload-captcha").click();
 	});
 	$("#user-login-form #edit-captcha-response").attr("placeholder", "验证码");
+	//reg
+
+	//$(".user-info-from-cookie .captcha .reload-captcha").click();
+	//END
 });
 

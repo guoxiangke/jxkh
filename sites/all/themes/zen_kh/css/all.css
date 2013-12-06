@@ -57,8 +57,7 @@ input { outline: none; }
 #user-login-form .captcha .fieldset-wrapper .reload-captcha-wrapper { display: none; }
 #user-login-form .captcha .fieldset-wrapper .description { display: none; }
 #user-login-form .captcha .fieldset-wrapper .reload-captcha-wrapper a { color: #000; }
-.tt { border: 1px #FF0000 dotted !important; }
-#user-login-form .captcha .fieldset-wrapper .form-text { float: left; width: 100px; height: 34px; line-height: 20px; background-color: #FFFFFF; border: 1px solid #CCCCCC; border-radius: 4px; box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.071); color: #555555; font-size: 14px; padding: 6px 12px; vertical-align: middle; }
+#user-login-form .captcha .fieldset-wrapper .form-text { float: left; width: 90px; height: 34px; line-height: 20px; margin: 0px 5px 0px 0px; background-color: #FFFFFF; border: 1px solid #CCCCCC; border-radius: 4px; box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.071); color: #555555; font-size: 14px; padding: 6px 12px; vertical-align: middle; }
 #user-login-form .captcha .fieldset-wrapper img { float: left; height: 34px; cursor: pointer; }
 /*user-info-from-cookie*/
 #sbq_doctor_quick_register .user-info-from-cookie .form-wrapper { margin: 1.5em 0px; padding: 0px; border: none; }
