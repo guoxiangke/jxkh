@@ -561,3 +561,10 @@ function sbq_user_relationships_redirect($type) {
   menu_set_active_item('user/' . $user->uid . '/relationship/default/' . $type);
   return menu_execute_active_handler(NULL, FALSE);
 }
+
+function sbq_user_relationships_user_delete($account) {
+  $relstionships = user_relationships_load(array( 'user' => $account->uid ));
+  foreach ($relstionships as $rel) {
+    user_relationships_delete_relationship($rel, $account->uid);
+  }
+}
