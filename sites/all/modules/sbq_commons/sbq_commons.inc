@@ -361,11 +361,11 @@ function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_time
   module_load_include('inc', 'captcha');
   // Get CAPTCHA type and module for given form_id.
   $captcha_point = captcha_get_form_id_setting($form_id);
-   
+
   if (!$captcha_point || !$captcha_point->captcha_type) {
     return;
   }
-  if ($form_id == 'user_login_block' || $form_id == 'user_login') { 
+  if ($form_id == 'user_login_block' || $form_id == 'user_login') {
     $current_ip = ip_address();
     $fail_login = db_select('flood', 'f')
         ->fields('f')
@@ -383,7 +383,7 @@ function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_time
       return;
     }
   }
-  
+
   // Build CAPTCHA form element.
   $captcha_element = array(
       '#type' => 'captcha',
@@ -398,7 +398,7 @@ function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_time
   // Get placement in form and insert in form.
   $captcha_placement = _captcha_get_captcha_placement($form_id, $form);
   _captcha_insert_captcha_element($form, $captcha_placement, $captcha_element);
- 
+
 }
 
 
@@ -588,7 +588,7 @@ EOF;
         $points_link_active = ' is-active active';
       }
       $user_post_count = sbq_commons_get_count($user->uid, 'post');
-      $user_message_count = 0;
+      $user_message_count = sbq_commons_messages_count($user);
       $user_blog_count = sbq_commons_get_count($user->uid, 'blog');
       $user_qa_count = sbq_commons_get_count($user->uid, 'question') + sbq_commons_get_count($user->uid, 'answer');
       ;
@@ -606,7 +606,7 @@ EOF;
           // . '<li class="menu__item is-leaf first leaf sbq-user-menu-post">'
           // . '<a href="/user/' . $user->uid . '#block-quicktabs-user-group" class="menu__link">我的帖子</a>'
           // . '<span class="sbq-count"><a href="#" class="sbq-count-link">' . $user_post_count . '条</a></span></li>'
-          . '<li class="menu__item is-leaf leaf sbq-user-menu-status"><a href="/user/' . $user->uid . '#block-quicktabs-message" class="menu__link">我的动态</a><span class="sbq-count"><a href="#" class="sbq-count-link">5条</a></span></li>'
+          . '<li class="menu__item is-leaf leaf sbq-user-menu-status"><a href="/user/' . $user->uid . '#block-quicktabs-message" class="menu__link">我的动态</a><span class="sbq-count"><a href="#" class="sbq-count-link">'.$user_message_count.'条</a></span></li>'
           . '<li class="menu__item is-leaf leaf sbq-user-menu-blog"><a href="/user/' . $user->uid . '#block-views-blog-my-blog-block" class="menu__link">我的文章</a><span class="sbq-count"><a href="#" class="sbq-count-link">' . $user_blog_count . '篇</a></span></li>'
           //. '<li class="menu__item is-leaf leaf sbq-user-menu-group"><a href="/groups/my" class="menu__link">我的小组</a><span class="sbq-count"><a href="#" class="sbq-count-link">5个</a></span></li>'
           . '<li class="menu__item is-leaf last leaf sbq-user-menu-relationship' . $relationship_li_active . '"><a href="/user/' . $user->uid . '/relationship" class="menu__link' . $relationship_link_active . '">我的圈子</a><span class="sbq-count"><a href="#" class="sbq-count-link">' . $user_relationship_count . '个</a></span></li>'
