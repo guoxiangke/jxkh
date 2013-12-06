@@ -155,11 +155,11 @@ function theme_sbq_user_relationships_process_status($variables) {
   foreach ($variables['relationships'] as $relationship) {
     $row = sbq_user_relationships_user_action($relationship, $variables['account']);
     if ($variables['type'] == 'sent') {
-      $li .= "<li>请求<span name='name'>{$row['user']->name}</span>成为你的好友，<span class='cancel ".$variables['type']."'>{$row[1]}</span></li>";
+      $li .= "<li>请求<span name='name'>{$row['user']->name}</span>成为你的好友<span class='cancel ".$variables['type']."'>{$row[1]}</span></li>";
     } elseif($variables['type'] == 'received') {
       global $user;
       $vid = $user->uid == $relationship->requester_id ?$relationship->requestee_id :$relationship->requester_id ; 
-      $li .= "<li><span name='name'>{$row['user']->name}</span>请求成为你的好友，<span class='cancel ".$variables['type'].$vid."'>{$row[1]}</span></li>";
+      $li .= "<li><span name='name'>{$row['user']->name}</span>请求成为你的好友<span class='cancel ".$variables['type'].$vid."'>{$row[1]}</span></li>";
     }
   }
   if (empty($li)) {
