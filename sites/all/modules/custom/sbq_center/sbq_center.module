@@ -1,0 +1,23 @@
+<?php
+
+//https://jxkh.manageprojects.com/projects/307web/tasks/3
+// 医生群体关注
+define('SBQ_CENTER_NODE_LIMIT', 1);
+
+/**
+ * Implements hook_node_access().
+ */
+
+function sbq_center_node_access($node, $op, $account) {
+	$limit_content_type = 'sbq_center';
+	if ($op == 'create' && $node == $limit_content_type) {
+    $node_count = db_query('SELECT nid FROM {node} WHERE type = :type AND uid = :uid', array( ':type' => $limit_content_type, ':uid' => $account->uid ))->rowCount();
+    if ($node_count >= SBQ_CENTER_NODE_LIMIT) {
+    	// drupal_set_message(t("Your can't create antoher page of !type",array('!type'=>$limit_content_type)), 'status', FALSE);
+    	drupal_set_message(t("The page your are creating was limitd!"), 'status', FALSE);
+      return NODE_ACCESS_DENY;
+    }
+    return NODE_ACCESS_ALLOW;
+  }
+  return NODE_ACCESS_IGNORE;
+}

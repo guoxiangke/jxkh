@@ -1,0 +1,4 @@
+name = Sbq center
+description = sbq hospital center system( including memeber sysytem, webpage manage system)
+;dependencies[] = og_ui
+core = 7.x
