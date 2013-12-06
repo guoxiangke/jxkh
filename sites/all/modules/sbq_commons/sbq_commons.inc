@@ -354,16 +354,18 @@ function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_time
   if (isset($url[0]) && $url[0] == 'api') {
     return;
   }
+
   $pre_times = $fail_times - 1;
   $pre_ind = $fail_times - 2;
   // Visitor does not have permission to skip CAPTCHAs.
   module_load_include('inc', 'captcha');
   // Get CAPTCHA type and module for given form_id.
   $captcha_point = captcha_get_form_id_setting($form_id);
+   
   if (!$captcha_point || !$captcha_point->captcha_type) {
     return;
   }
-  if ($form_id == 'user_login_block' || $form_id == 'user_login') {
+  if ($form_id == 'user_login_block' || $form_id == 'user_login') { 
     $current_ip = ip_address();
     $fail_login = db_select('flood', 'f')
         ->fields('f')
@@ -373,7 +375,6 @@ function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_time
         ->orderBy('timestamp', 'desc')
         ->execute();
     if ($fail_login->rowCount() < $pre_times) {
-      //drupal_rebuild_form($form_id, $form_state);
       return;
     }
     $result = $fail_login->fetchAll();
@@ -382,6 +383,7 @@ function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_time
       return;
     }
   }
+  
   // Build CAPTCHA form element.
   $captcha_element = array(
       '#type' => 'captcha',
@@ -396,6 +398,7 @@ function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_time
   // Get placement in form and insert in form.
   $captcha_placement = _captcha_get_captcha_placement($form_id, $form);
   _captcha_insert_captcha_element($form, $captcha_placement, $captcha_element);
+ 
 }
 
 
