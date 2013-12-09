@@ -29,8 +29,7 @@
 #comment-wrapper .comment header .links li { padding: 0px; }
 #comment-wrapper .comment header .links li a { padding: 0px 5px; color: #0066CC; }
 #comment-wrapper .comment header .links li a:hover { text-decoration: underline; }
-#comment-wrapper .field-type-text-long { float: left; width: 100%; line-height: 22px; padding: 5px 0px; font-size: 12px; word-break: break-all; word-spacing:
-}
+#comment-wrapper .field-type-text-long { float: left; width: 100%; line-height: 22px; padding: 5px 0px; font-size: 12px; word-break: break-all; }
 #comment-wrapper .field-type-text-long p { margin: 0px; }
 #comment-wrapper .indented { float: left; width: 587px; margin: 0px 0px 0px 70px; overflow: hidden; }
 #comment-wrapper .comment-form { float: left; width: 587px; margin: 0px 0px 0px 70px; overflow: hidden; }
@@ -337,4 +336,24 @@ display: none;
 .page-node-20151 #page-title,
 .page-node-2788 #page-title,
 .page-node-2787 #page-title,
-.page-node-2786 #page-title { background:#096; }
+.page-node-2786 #page-title { height: 36px; line-height: 36px !important; font-weight: bold; padding: 0px !important; font-weight: bold; font-size: 18px !important; border-bottom: 2px solid #16AFC2 !important; }
+.page-node-2790 .field-type-text-with-summary,
+.page-node-20151 .field-type-text-with-summary,
+.page-node-2788 .field-type-text-with-summary,
+.page-node-2787 .field-type-text-with-summary,
+.page-node-2786 .field-type-text-with-summary { padding: 5px 0px; line-height: 26px; font-size: 12px; }
+.page-node-2790 .field-type-text-with-summary p,
+.page-node-20151 .field-type-text-with-summary p,
+.page-node-2788 .field-type-text-with-summary p,
+.page-node-2787 .field-type-text-with-summary p,
+.page-node-2786 .field-type-text-with-summary p { margin: 1em 0px !important; font-size: 12px; }
+.page-node-2790 .field-type-text-with-summary a,
+.page-node-20151 .field-type-text-with-summary a,
+.page-node-2788 .field-type-text-with-summary a,
+.page-node-2787 .field-type-text-with-summary a,
+.page-node-2786 .field-type-text-with-summary a { color: #16AFC2; }
+.page-node-2790 .field-type-text-with-summary a:hover,
+.page-node-20151 .field-type-text-with-summary a:hover,
+.page-node-2788 .field-type-text-with-summary a:hover,
+.page-node-2787 .field-type-text-with-summary a:hover,
+.page-node-2786 .field-type-text-with-summary a:hover { color: #16AFC2; text-decoration: underline; }
