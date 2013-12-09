@@ -19,9 +19,9 @@ $comment_form = render($content['comment_form']);
     </div>
   <?php endif; ?>
   <?php print render($title_suffix); ?>
-
-  <?php print $comments; ?>
-
+  <div id="comment-wrapper">
+    <?php print $comments; ?>
+  </div>
   <?php if ($comment_form): ?>
     <h2 class="comments__form-title title comment-form"><?php print t('Add new comment'); ?></h2>
     <?php print $comment_form; ?>
