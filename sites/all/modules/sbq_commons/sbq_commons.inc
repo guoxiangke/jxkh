@@ -609,7 +609,7 @@ EOF;
           . '<li class="menu__item is-leaf leaf sbq-user-menu-status"><a href="/user/' . $user->uid . '#block-quicktabs-message" class="menu__link">好友动态</a><span class="sbq-count"><a href="#" class="sbq-count-link">'.$user_message_count.'条</a></span></li>'
           . '<li class="menu__item is-leaf leaf sbq-user-menu-blog"><a href="/user/' . $user->uid . '#block-views-blog-my-blog-block" class="menu__link">我的文章</a><span class="sbq-count"><a href="#" class="sbq-count-link">' . $user_blog_count . '篇</a></span></li>'
           //. '<li class="menu__item is-leaf leaf sbq-user-menu-group"><a href="/groups/my" class="menu__link">我的小组</a><span class="sbq-count"><a href="#" class="sbq-count-link">5个</a></span></li>'
-          . '<li class="menu__item is-leaf last leaf sbq-user-menu-relationship' . $relationship_li_active . '"><a href="/user/' . $user->uid . '/relationship" class="menu__link' . $relationship_link_active . '">我的圈子</a><span class="sbq-count"><a href="#" class="sbq-count-link">' . $user_relationship_count . '个</a></span></li>'
+          . '<li class="menu__item is-leaf last leaf sbq-user-menu-relationship' . $relationship_li_active . '"><a href="/user/' . $user->uid . '/relationship" class="menu__link' . $relationship_link_active . '">我的圈子</a><span class="sbq-count"><a href="#" class="sbq-count-link">' . $user_relationship_count . '人</a></span></li>'
           // . '<li class="menu__item is-leaf last leaf sbq-user-menu-points' . $points_li_active . '"><a href="/user/' . $user->uid . '/points" class="menu__link' . $points_link_active . '">我的积分</a><span class="sbq-count"><a href="#" class="sbq-count-link">' . $user_point_count . '</a></span></li>'
           . '</ul>'
           . '</div>';

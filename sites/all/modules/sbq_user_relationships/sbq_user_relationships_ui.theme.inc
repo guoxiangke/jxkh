@@ -54,7 +54,7 @@ function theme_sbq_user_relationships_remove_link($variables) {
   $vid = $variables['vid'];
   $ajax_token = 'user_relationships_remove' . $vid;
 
-  return l(t('-移除'), "relationship/ajax/{$uid}/remove/{$rid}/$vid?destination=$ajax_token", array(
+  return l(t('移除'), "relationship/ajax/{$uid}/remove/{$rid}/$vid?destination=$ajax_token", array(
       'attributes' => array(
           'class' => array(
               'class' => 'use-ajax ' . $ajax_token
