@@ -544,7 +544,7 @@ function _sbq_commons_block_html($delta) {
                    <div id="sbq_picture">$picture</div>
                    <div id="sbq_name">$user->name</div>
                    $cpl
-                   <div id="user_badges"><span>勋章</span>$user_badges</div>
+                   <div id="user_badges"><span>勋章</span><a href="/badges">$user_badges</a></div>
 EOF;
       break;
     case 'sbq_quick_ask':
