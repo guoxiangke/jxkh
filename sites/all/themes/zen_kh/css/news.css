@@ -313,6 +313,8 @@ display: none;
 /*questions*/
 .page-qa #content { position: relative; }
 #block-sbq-commons-sbq-add-ask-link { height: 22px; line-height: 22px; margin: 0px; position: absolute; right: 0px; top: 30px; background: url(../images/post2.png) no-repeat left -22px; font-size: 16px; padding-left: 29px; display: inline-block; font-weight: 700; z-index: 9; }
+/*------page-node-delete------*/
+.page-node-delete .confirmation { margin: 10px 0px 0px 0px; }
 /*------page-search------*/
 .page-search #page-title { display: none; }
 .page-search #content .search-form { float: left; width: 100%; margin: 0px; padding: 0px; }
