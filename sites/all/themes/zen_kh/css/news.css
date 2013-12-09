@@ -258,8 +258,8 @@ display: none;
 .page-question #content .question .tags .sbq-qa-flag:hover { background-color: #168a9b; color: #fff; }
 .page-question #content .question .tags .sbq-qa-flag:hover a { color: #fff; }
 .page-question #content .question .tags .sbq-qa-flag a { color: #168a9b; line-height: 20px; }
-.page-question #content .question .links { float: left; width: 100%; display: none; }
-.page-question #content .question .links .delete { float: right; }
+.page-question #content .question .links { float: left; width: 100%; }
+.page-question #content .question .links span { float: right; margin: 0px 0px 0px 5px; }
 .page-question #content .question .links a { border: none; color: #0066CC; }
 .page-question #content .question .q-info { float: left; width: 60px; margin: 0px 10px 0px 0px; }
 .page-question #content .question .q-info .author-item a,
