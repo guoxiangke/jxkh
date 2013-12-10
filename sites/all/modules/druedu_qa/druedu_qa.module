@@ -695,7 +695,6 @@ function druedu_qa_ajax_comments_submit_js($form, &$form_state) {
     // If we have a default form, update it with a new one.
     if (variable_get('comment_form_location_' . $node->type, COMMENT_FORM_BELOW) == COMMENT_FORM_BELOW) {
       $node = $form['#node'];
-      dpm($form);
       $new_form_state = array();
       $new_form_state['build_info']['args'][] = (object) array( 'nid' => $node->nid );
       // Don't pull from cache.
