@@ -694,8 +694,8 @@ nav.breadcrumb { display: none; }
 	padding: 8px 10px 0 10px;
 	border: 1px solid #ccc !important;
 	border-top: 2px solid #16AFC2 !important
-}*/
-.page-node #content .field-name-field-image img { max-width: 656px; max-height: 334px; }
+}
+.page-node #content .field-name-field-image img { max-width: 656px; max-height: 334px; }*/
 .page-node #content p { margin: 0 }
 .page-node #content .title { font-size: 14px; line-height: 32px; font-weight: bold; color: #585858; margin: 0 }
 /*.page-node #content .comments__title,*/

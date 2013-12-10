@@ -31,7 +31,7 @@
 .sbq-relationships-sent ul li:hover { background: #F2FEFF; }
 .sbq-relationships-sent ul li .cancel { float: right; color: #999; }
 .sbq-relationships-sent ul li .cancel a { float: left; width: 40px; height: 24px; line-height: 24px; margin: 2px 0px 0px 5px; border-radius: 3px; text-align: center; }
-.sbq-relationships-sent ul li .cancel .ajax-progress-throbber { }
+.page-user-relationship .ajax-progress-throbber { display: none; }
 .sbq-relationships-sent ul li .cancel .pending_request_approve_link { border: 1px #16AFC2 solid; color: #FFF; background: #16AFC2; }
 .sbq-relationships-sent ul li .cancel .pending_request_disapprove_link,
 .sbq-relationships-sent ul li .cancel .pending-cancel { border: 1px #999 solid; color: #999; background: #FFF; }
