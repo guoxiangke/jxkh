@@ -111,20 +111,7 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
           }
           ?>
 				</div>
-				<div class="links">
-					<?php if(0&&user_access('Authorized to share a node')) : ?>
-					<span class="share"><a class="btn btn-mini use-ajax" href="<?php print $share_a_node; ?>"><?php print t('Share this question') ?></a></span>
-					<?php endif;?>
-					<?php if(isset($accept_link)): ?>
-					<span class="accept"><?php print $accept_link; ?></span>
-					<?php endif;?>
-					<?php if(!empty($edit_node)): ?>
-					<span class="edit"><?php print $edit_node; ?></span>
-					<?php endif;?>
-					<?php if(!empty($delete_node)): ?>
-					<span class="delete"><?php print $delete_node; ?></span>
-					<?php endif;?>
-				</div>
+
 			</div>
 			<div class="q-content span12">
 				<div class="head_wrap"><span class="time"><?php print format_date($node->revision_timestamp, 'sbq_date_medium_revert'); ?></span>
@@ -132,7 +119,20 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
 				</div>
 				<div class="q-body">
 					<p><?php print $body; ?></p>
-				</div>
+				</div>        <div class="links">
+          <?php if(0&&user_access('Authorized to share a node')) : ?>
+          <span class="share"><a class="btn btn-mini use-ajax" href="<?php print $share_a_node; ?>"><?php print t('Share this question') ?></a></span>
+          <?php endif;?>
+          <?php if(isset($accept_link)): ?>
+          <span class="accept"><?php print $accept_link; ?></span>
+          <?php endif;?>
+          <?php if(!empty($edit_node)): ?>
+          <span class="edit"><?php print $edit_node; ?></span>
+          <?php endif;?>
+          <?php if(!empty($delete_node)): ?>
+          <span class="delete"><?php print $delete_node; ?></span>
+          <?php endif;?>
+        </div>
 				<?php if(!empty($field_attachments)):?>
 				<div class="q-files"><?php print $field_attachments; ?></div>
 				<?php endif;?>
