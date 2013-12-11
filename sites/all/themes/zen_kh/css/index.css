@@ -99,11 +99,12 @@ li { list-style: none; }
 #sbq-bd-list #block-views-friend-activities-index h2 { background: url(../images/red.png) no-repeat 19px center; text-indent: -1000em; width: auto; }
 #block-views-exposure-platform-block-index .view-content,
 #block-views-friend-activities-index .view-content { padding-top: 15px;/*background:url(../images/lt.png) no-repeat 0 27px;*/ }
-.sbq-index-block.sbq-index-block-activities li { list-style: decimal outside none; height: 32px; word-wrap: break-word; line-height: 32px; }
+.sbq-index-block.sbq-index-block-activities li { list-style: decimal outside none; height: 32px; word-wrap: break-word; line-height: 32px; font-size: 14px; }
 .sbq-index-block.sbq-index-block-activities li .views-row { height: 32px; }
 #block-views-exposure-platform-slideshow .view-exposure-platform { height: 250px; overflow: hidden; padding: 17px 0 17px 19px; background-color: #fff; border: 1px solid #D2D2D2; }
 #block-views-exposure-platform-slideshow .view-content { height: 208px; overflow: hidden; }
-.sbq-slide-row { width: 220px; height: 208px; float: left; margin-right: 17px }
+.sbq-slide-row { width: 220px; height: 208px; float: left; margin-right: 17px; font-size: 14px; }
+.sbq-slide-row .field-content { float: left; width: 100%; height: 40px; line-height: 20px; overflow: hidden; }
 .views-field-title a { line-height: 22px; }
 #block-views-exposure-platform-slideshow .block-title { font-size: 30px; font-weight: normal; height: 29px; font-size: 14px; margin-bottom: 9px; text-indent: 10em; line-height: 39px; background: url(../images/bgt.png) no-repeat 19px 0; color: #535353; text-align: left; width: auto; }
 .view-id-index_activity_blok_image { width: 731px; height: 340px; margin-bottom: 60px; background: url(../images/slb_02.png) no-repeat center 328px; }
@@ -299,14 +300,13 @@ ul.quicktabs-tabs.quicktabs-style-arrows { margin-bottom: 0; line-height: 29px; 
 .quicktabs_main.quicktabs-style-arrows,
 #block-views-my-qa-hottest-block .view-id-my_qa,
 #block-views-my-group-hottest-block .view-id-my_group,
-#block-views-blog-block-1 .view-display-id-block_1 { float: left; width: 100%; border: 1px solid #cccccc; border-top: none; padding: 0 11px; position: relative; }
+#block-views-blog-block-1 .view-display-id-block_1 { float: left; width: 100%; min-height: 32px; border: 1px solid #cccccc; border-top: none; padding: 0 11px; position: relative; }
 .view .more-link { font-size: 12px; }
 .more-link a { color: #737373 }
 .block-quicktabs .view-content > div,
 #block-views-blog-block-1 .views-row { height: 32px; line-height: 32px; border-bottom: 1px dashed #cacaca; font-size: 12px }
 .block-quicktabs .view-content .views-row-last,
 #block-views-blog-block-1 .views-row-last { border-bottom: none; }
-html { font-size: 14px; font-family: "Microsoft Yahei", "微软雅黑" !important; }
 #quicktabs-container-user_qa,
 #block-quicktabs-user-group,
 #block-quicktabs-message { font-size: 12px; }
