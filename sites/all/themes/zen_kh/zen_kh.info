@@ -54,6 +54,7 @@ stylesheets[all][] = css/styles.css
 stylesheets[all][] = css/index.css
 stylesheets[all][] = css/all.css
 stylesheets[all][] = css/news.css
+stylesheets[all][] = css/center.css
 
 
 stylesheets[all][] = css/reilationship.css
