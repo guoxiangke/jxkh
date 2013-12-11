@@ -25,8 +25,7 @@ li { list-style: none; }
 #footer.region-footer { height: 160px; background: url(../images/fbg.jpg) repeat 0 0; }
 #footer-right,
 #footer-left { display: none; }
-.header__logo { display: block; height: 55px; width: 53px;/* background:url(../../images/logo.png) no-repeat 0 0;
-	*/ }
+.header__logo { display: block; height: 55px; width: 53px;/* background:url(../../images/logo.png) no-repeat 0 0;*/ }
 .header__name-and-slogan { margin-left: 10px; width: 250px; }
 .header__site-name { float: left; }
 #navigation { position: static; float: left; width: auto; height: 14px; margin-top: 26px; margin-left: 100px; }
@@ -254,7 +253,7 @@ zoom: 1; color: #168A9B; border: 1px solid #168A9B; border-radius: 3px; position
 
 .not-logged-in.section-qa #content { padding: 0; border: none!important; }
 .view-display-id-my_blog .view-content .views-row,
-#block-views-blog-my-blog-block .view-content .views-row { height: 32px; line-height: 32px; padding: 0 10px; font-size: 12px; border-bottom: 1px dashed #CACACA; }
+#block-views-blog-my-blog-block .view-content .views-row { height: 32px; line-height: 32px; font-size: 12px; border-bottom: 1px dashed #CACACA; }
 #block-views-blog-my-blog-block .view-content .views-row-last { border-bottom: none }
 #block-views-message-block .views-field-message-render { padding-left: 14px; background: url("../images/dot.png") no-repeat scroll 4px center }
 /*
@@ -300,7 +299,8 @@ ul.quicktabs-tabs.quicktabs-style-arrows { margin-bottom: 0; line-height: 29px; 
 .quicktabs_main.quicktabs-style-arrows,
 #block-views-my-qa-hottest-block .view-id-my_qa,
 #block-views-my-group-hottest-block .view-id-my_group,
-#block-views-blog-block-1 .view-display-id-block_1 { float: left; width: 100%; min-height: 32px; border: 1px solid #cccccc; border-top: none; padding: 0 11px; position: relative; }
+#block-views-blog-block-1 .view-display-id-block_1,
+#block-views-blog-my-blog-block .view-display-id-my_blog_block { float: left; width: 100%; min-height: 32px; line-height: 32px; border: 1px solid #cccccc; border-top: none; padding: 0 11px; position: relative; }
 .view .more-link { font-size: 12px; }
 .more-link a { color: #737373 }
 .block-quicktabs .view-content > div,
@@ -450,9 +450,6 @@ ul.quicktabs-tabs.quicktabs-style-arrows li a:hover { background: url(../images/
 #block-sbq-commons-recommond-patients { position: relative; }
 #block-sbq-commons-recommond-patients .view,
 #block-sbq-commons-recommond-doctors .view { padding-top: 10px; }
-#block-sbq-commons-recommond-doctors .more-link,
-#block-sbq-commons-recommond-patients .more-link,
-#block-views-blog-block .more-link { top: 4px; right: 10px; }
 #block-sbq-commons-recommond-doctors .sbq_recommond_friends,
 #block-sbq-commons-recommond-patients .sbq_recommond_friends,
 #block-sbq-commons-recommond-doctors .sbq-recommond-friends,
