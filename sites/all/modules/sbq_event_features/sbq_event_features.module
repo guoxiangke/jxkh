@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the SBQ Event Features feature.
+ */
+
+include_once 'sbq_event_features.features.inc';
