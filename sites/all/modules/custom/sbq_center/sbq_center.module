@@ -1435,20 +1435,23 @@ function _sbq_center_block_html($delta) {
   global $user;
   switch ($delta) {
     case 'sbq_center_ask':
-      if (!$user->uid) {
-        return;
+      if ($user->uid) {
+        module_load_include('inc', 'node', 'node.pages');
+        $node = (object) array(
+                'uid' => $user->uid,
+                'name' => (isset($user->name) ? $user->name : ''),
+                'type' => 'question',
+                'language' => LANGUAGE_NONE
+        );
+        $question_node_form = drupal_get_form('question_node_form', $node);
+        $block_html = '<div id="sbq-center-ask-form">'
+            . render($question_node_form)
+            . '</div>';
+      } else {
+        $block_html = '<div id="sbq-center-ask-form">'
+            . render($question_node_form)
+            . '</div>';
       }
-      module_load_include('inc', 'node', 'node.pages');
-      $node = (object) array(
-              'uid' => $user->uid,
-              'name' => (isset($user->name) ? $user->name : ''),
-              'type' => 'question',
-              'language' => LANGUAGE_NONE
-      );
-      $question_node_form = drupal_get_form('question_node_form', $node);
-      $block_html = '<div id="sbq-center-ask-form">'
-          . render($question_node_form)
-          . '</div>';
       break;
     default:
       break;
@@ -1513,7 +1516,7 @@ function sbq_center_ask_form_submit($form, &$form_state) {
 }
 
 /*
- * ajax_quick_ask_callback
+ * ajax_center_ask_callback
  */
 function ajax_center_ask_callback($form, &$form_state) {
   $body = $form_state['input']['body']['und'][0]['value'];
@@ -1533,22 +1536,21 @@ function ajax_center_ask_callback($form, &$form_state) {
       watchdog('content', '@type: added %title.', $watchdog_args, WATCHDOG_NOTICE, $node_link);
     }
     if ($node->nid) {
-      // $form_state['values']['nid'] = $node->nid;
-      // $form_state['nid'] = $node->nid;
-      // $title = l($node->title, 'node/' . $node->nid);
-      // $str_date = format_date(time(),'custom','Y-m-d');
-      // $nqs  = '<div class="views-row views-row-1 views-row-odd views-row-first">'
-      //   . '<div class="views-field views-field-title"><span class="field-content">'.$title.'</span></div>'
-      //   . '<div class="views-field views-field-value"><span class="field-content">0</span></div>'
-      //   . '<div class="views-field views-field-field-mark-question-resolved"><div class="field-content">未解决</div></div>'
-      //   . '<div class="views-field views-field-created"><span class="field-content">'.$str_date.'</span></div></div>';
+      $form_state['values']['nid'] = $node->nid;
+      $form_state['nid'] = $node->nid;
+      $title = l($node->title, 'node/' . $node->nid);
+      $str_date = format_date(time(),'custom','Y-m-d');
+      $nqs  = '<div class="views-row views-row-1 views-row-odd views-row-first">'
+        . '<div class="views-field views-field-title"><span class="field-content">'.$title.'</span></div>'
+        . '<div class="views-field views-field-field-mark-question-resolved"><div class="field-content">未解决</div></div>'
+        . '<div class="views-field views-field-created"><span class="field-content">'.$str_date.'</span></div></div>';
       $success_msg = '<div class="messages--status messages status">'
         .'<h2 class="element-invisible">状态消息</h2>'
-        .'<pre>'.$node->title.'已经提交给中心</pre></div>';
+        .'<pre>'.$node->title.' 已经提交给中心</pre></div>';
       $new_textarea = '<textarea class="text-full ckeditor-mod form-textarea" id="edit-body-und-0-value" name="body[und][0][value]" cols="60" rows="20"></textarea>';
       $commands[] = ajax_command_replace('#edit-body-und-0-value', $new_textarea);
       $commands[] = ajax_command_after('#main-content', $success_msg);
-      // $commands[] = ajax_command_prepend('#block-views-my-qa-my-ask .view-content', $nqs);
+      $commands[] = ajax_command_prepend('#block-views-my-qa-center-new .view-content', $nqs);
       // $commands[] = ajax_command_replace('#sbq-message-error', '');
     }
     else {
