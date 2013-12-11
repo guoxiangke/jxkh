@@ -1448,8 +1448,8 @@ function _sbq_center_block_html($delta) {
             . render($question_node_form)
             . '</div>';
       } else {
-        $block_html = '<div id="sbq-center-ask-form">'
-            . render($question_node_form)
+        $block_html = '<div id="sbq-center-need-login">'
+            . '<span>请'.l('登录', 'user/login').'或'.l('注册', 'customer/register').'后，进行提问。'.l('点击注册', 'customer/register').'</span>'
             . '</div>';
       }
       break;
