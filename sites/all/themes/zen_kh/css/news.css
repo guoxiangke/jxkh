@@ -8,34 +8,32 @@
 /*.section-news */#content .view-mode-full .links a { padding: 0px 5px; color: #0066CC; }
 .section-news #content .view-mode-full .field-type-text-with-summary,
 .node-type-blog #content .view-mode-full .field-type-text-with-summary { line-height: 26px; font-size: 14px; }
-.section-news #content .view-mode-full .field-type-text-with-summary p,
-.node-type-blog #content .view-mode-full .field-type-text-with-summary p { margin: 1em 0px; text-indent: 2em; }
+.section-news #content .view-mode-full .field-type-text-with-summary p { margin: 1em 0px; text-indent: 2em; }
 .section-news #content .field-name-field-image { text-align: center; }
 /*comment*/
-.comment-wrapper { float: left; width: 100%; margin: 10px 0px 0px 0px; }
-.comment-wrapper .title_wrap { float: left; width: 100%; height: 30px; border-top: 2px #E5E5E5 solid; border-bottom: 1px #E5E5E5 solid; }
-.comment-wrapper .comments__title { float: left; width: 80px; height: 30px; line-height: 26px; margin: 0px !important; padding: 0px 15px; border-top: 2px #16AFC2 solid; font-size: 14px !important; font-weight: normal; position: relative; top: -2px; text-align: center; background: none !important; color: #585858 !important; }
+#comments { float: left; width: 100%; margin: 15px 0px 0px 0px; }
+#comments .title_wrap { float: left; width: 100%; height: 30px; border-top: 2px #E5E5E5 solid; border-bottom: 1px #E5E5E5 solid; }
+#comments .comments__title { float: left; width: 80px; height: 30px; line-height: 26px; margin: 0px !important; padding: 0px 15px; border-top: 2px #16AFC2 solid; font-size: 14px !important; font-weight: normal; position: relative; top: -2px; text-align: center; background: none !important; color: #585858 !important; }
 #comment-wrapper { float: left; width: 100%; }
 #comment-wrapper .comment { float: left; width: 100%; border-bottom: 1px #E5E5E5 solid; padding: 10px 0px; }
 #comment-wrapper .user-picture,
 #comment-wrapper .user-picture img { float: left; width: 60px; height: 60px; border: none; overflow: hidden; }
-#comment-wrapper .comment header { float: left; width: 585px; margin: 0px 0px 0px 10px; }
-#comment-wrapper .comment header .submitted { float: left; width: 100%; height: 24px; line-height: 24px; margin: 0px; border-bottom: 1px #E5E5E5 dotted; font-size: 12px; }
-#comment-wrapper .comment header .submitted > span { float: left; color: #999; }
-#comment-wrapper .comment header .submitted .username { color: #0066CC; font-weight: bold; }
-#comment-wrapper .comment header .submitted time { color: #666; }
-#comment-wrapper .comment header .links { float: right; margin: 0; color: #666; display: none; }
-#comment-wrapper .comment header .ajax-progress { display: none; }
-#comment-wrapper .comment header .links li { padding: 0px; }
-#comment-wrapper .comment header .links li a { padding: 0px 5px; color: #0066CC; }
-#comment-wrapper .comment header .links li a:hover { text-decoration: underline; }
-#comment-wrapper .field-type-text-long { float: left; width: 100%; line-height: 22px; padding: 5px 0px; font-size: 12px; word-break: break-all; word-spacing:
-}
+#comment-wrapper .comment .sbq-comment-right { float: left; width: 585px; margin: 0px 0px 0px 10px; }
+#comment-wrapper .comment .sbq-comment-right .submitted { float: left; width: 100%; height: 24px; line-height: 24px; margin: 0px; border-bottom: 1px #E5E5E5 dotted; font-size: 12px; }
+#comment-wrapper .comment .sbq-comment-right .submitted > span { float: left; color: #999; }
+#comment-wrapper .comment .sbq-comment-right .submitted .username { color: #0066CC; font-weight: bold; }
+#comment-wrapper .comment .sbq-comment-right .submitted time { color: #666; }
+#comment-wrapper .comment .sbq-comment-right .links { float: right; margin: 0; color: #666; display: none; }
+#comment-wrapper .comment .sbq-comment-right .ajax-progress { display: none; }
+#comment-wrapper .comment .sbq-comment-right .links li { padding: 0px; }
+#comment-wrapper .comment .sbq-comment-right .links li a { padding: 0px 5px; color: #0066CC; }
+#comment-wrapper .comment .sbq-comment-right .links li a:hover { text-decoration: underline; }
+#comment-wrapper .field-type-text-long { float: left; width: 100%; line-height: 22px; padding: 5px 0px; font-size: 12px; word-break: break-all; }
 #comment-wrapper .field-type-text-long p { margin: 0px; }
 #comment-wrapper .indented { float: left; width: 587px; margin: 0px 0px 0px 70px; overflow: hidden; }
 #comment-wrapper .comment-form { float: left; width: 587px; margin: 0px 0px 0px 70px; overflow: hidden; }
-#comment-wrapper .indented .comment header { float: left; width: 100%; margin: 0px; }
-#comment-wrapper .indented .comment header .links { display: none; }
+#comment-wrapper .indented .comment .sbq-comment-right { float: left; width: 100%; margin: 0px; }
+#comment-wrapper .indented .comment .sbq-comment-right .links { display: none; }
 #comment-wrapper .indented .user-picture { display: none; }
 /*add_comment*/
 .comment-wrapper .comments__form-title { }
@@ -57,9 +55,33 @@
 #comment-form .grippie { display: none; }
 .comment-wrapper .throbber { display: none; }
 #comment-wrapper > div { float: left; margin: 0px; border: none; }
-/*#page {
-	box-shadow: 0px 0px 6px 0px #666;
-}*/
+/*------node-type-blog------*/
+.node-type-blog .blog_usernames_blog { display: none; }
+.node-type-blog #page-title { font-size: 16px !important; line-height: 26px !important; }
+.node-type-blog #content header { float: left; width: 100%; height: 26px; line-height: 26px; margin: 10px 0px 0px 0px; }
+.node-type-blog #content header .user-picture { float: left; width: 26px; height: 26px; margin: 0px 5px 0px 0px; overflow: hidden; }
+.node-type-blog #content header span { float: left; height: 26px; line-height: 26px; }
+.node-type-blog #content .field-type-text-with-summary { float: left; width: 100%; }
+.node-type-blog #content .view-mode-full .field-type-text-with-summary p { margin: 1em 0px; }
+.node-type-blog #content .field-name-field-tags { float: left; width: 100%; margin: 10px 0px 0px 0px; }
+.node-type-blog #content .field-name-field-tags .field-label { float: left; width: 35px !important; min-width: 35px !important; height: 22px; line-height: 22px; margin: 0px; padding: 0px; background: none; color: #333; font-size: 12px; font-weight: normal; text-align: left; display: inline; }
+.node-type-blog #content .field-name-field-tags .field-items { float: left; width: 620px; }
+/*.node-type-blog #content .field-name-field-tags .field-item { float: left; margin: 0px 5px 0px 0px; }*/
+.node-type-blog #content .field-name-field-tags .field-item { float: left; height: 20px; line-height: 20px; margin: 0px 5px 5px 0px; padding: 0px 5px; position: relative; border: 1px solid #168a9b; border-radius: 3px; color: #168a9b; font-size: 12px; }
+.node-type-blog #content .field-name-field-tags .field-item:hover { background-color: #168a9b; color: #fff; }
+.node-type-blog #content .field-name-field-tags .field-item:hover a { color: #fff; }
+.node-type-blog #content .field-name-field-tags .field-item a { color: #168a9b; line-height: 20px; }
+/*------page-taxonomy------*/
+.page-taxonomy #page-title { float: left; width: 100%; height: 30px; line-height: 30px; padding: 0px !important; }
+.page-taxonomy .node-blog.node-teaser { float: left; width: 100%; padding: 5px 0px; border-bottom: 1px #CCCCCC dotted; }
+.page-taxonomy .node-blog.node-teaser header { float: left; width: 100%; position: relative; overflow: hidden; }
+.page-taxonomy .node-blog.node-teaser .node-title { float: left; width: 100%; line-height: 26px; font-size: 14px; font-weight: bold; }
+.page-taxonomy .node-blog.node-teaser .node-title a { color: #0066CC; }
+.page-taxonomy .node-blog.node-teaser .submitted { float: left; width: 100%; margin: 0px; font-size: 12px; }
+.page-taxonomy .node-blog.node-teaser .submitted span { float: left; height: 26px; line-height: 26px; }
+.page-taxonomy .node-blog.node-teaser .user-picture { float: left; width: 26px; height: 26px; margin: 0px 5px 0px 0px; overflow: hidden; }
+.page-taxonomy .node-blog.node-teaser .links { float: left; width: 100%; font-size: 12px; display: none; }
+.page-taxonomy .feed-icon { display: none; }
 /*news_list*/
 .page-news #content .pager { margin: 10px 0px 0px auto; }
 .page-news #content .page__title { line-height: 26px; padding: 0px 0px 10px 0px; font-size: 16px; }
@@ -73,29 +95,28 @@
 .page-news .view-display-id-news .view-content .views-field-created { color: #666; font-size: 12px; position: absolute; top: 10px; right: 0; }
 .page-news .view-display-id-news .view-content .views-field-body { float: left; width: 486px; height: 80px; margin: 6px 0px 0px 0px; overflow: hidden; font-size: 12px; }
 .page-news .view-display-id-news .view-content .views-field-body p { margin: 0px; }
-/*------activity------*/
-
-.node-type-activity .breadcrumb { display: none !important; }
-.node-type-activity #content .page__title { border-bottom: 1px solid #E5E5E5; font-size: 20px; font-weight: 400; line-height: 26px; padding: 0px 0px 10px 0px; text-align: center; }
-.node-type-activity .node-activity { margin: 20px 0px 0px 0px; }
-.node-type-activity .node-activity .field-label-above { float: left; width: 100%; padding: 5px 0px; font-size: 14px; background: #FCFCFC; }
-.node-type-activity .node-activity .field-label-above .field-label { float: left; width: 100px; height: 26px; line-height: 26px; margin: 0px; padding: 0px; background: none; color: #666; font-size: 14px; text-align: right !important; font-weight: bold; }
-.node-type-activity .node-activity .field-type-list-boolean { float: right; width: auto; height: 30px; padding: 0px; overflow: hidden; position: relative; bottom: -30px; }
-.node-type-activity .node-activity .field-type-list-boolean .field-label { display: none; }
-.node-type-activity .node-activity .field-label-above .field-items { float: left; width: 550px; line-height: 26px; margin: 0px 0px 0px 5px; color: #333; }
-.node-type-activity .node-activity .field-type-list-boolean .field-items { float: left; width: auto; margin: 0px; }
-.node-type-activity .node-activity .field-type-list-boolean .field-items .field-item { float: left; }
-.node-type-activity .node-activity .field-type-list-boolean .field-items .field-item a { float: left; height: 30px; line-height: 30px; padding: 0px 10px; background: #168A9B; font-size: 14px; color: #FFF; }
-.node-type-activity .node-activity .view-og-extras-nodes { display: none; }
+/*------node-type-event------*/
+.node-type-event .breadcrumb { display: none !important; }
+.node-type-event #content #page-title { border-bottom: 1px solid #E5E5E5; font-size: 20px; font-weight: 400; line-height: 26px; padding: 0px 0px 10px 0px; text-align: center; }
+.node-type-event .view-mode-full { float: left; width: 100%; margin: 20px 0px 0px 0px; position: relative; }
+/*registration-form*/
+.node-type-event .registration-form { float: left; position: absolute; top: 5px; right: 0; }
+.node-type-event .registration-form #edit-email { display: none; }
+.node-type-event .registration-form #edit-return { display: none; }
+.node-type-event .registration-form .form-submit { float: left; height: 26px; padding: 0px 8px; padding: 0px 10px; background: #16AFC2; font-size: 14px; color: #FFF; border: none !important; }
+.node-type-event .view-mode-full .field { float: left; width: 100%; padding: 5px 0px; }
+.node-type-event .view-mode-full .field .field-label { float: left; width: 90px; height: 26px; line-height: 26px; margin: 0px; padding: 0px; background: none; color: #666; font-size: 14px; text-align: right !important; font-weight: bold; overflow: hidden; }
+.node-type-event .view-mode-full .field .field-items { float: left; width: 568px; line-height: 26px; color: #333; font-size: 14px; overflow: hidden; }
+.node-type-event .view-mode-full .field .field-items li { float: left; margin: 0px 5px 0px 0px; }
 /*image*/
-.node-type-activity .node-activity .field-type-image { padding: 10px 0px; background: none; }
-.node-type-activity .node-activity .field-type-image .field-label { display: none; }
-.node-type-activity .node-activity .field-type-image .field-items { float: left; width: 100%; margin: 0px; text-align: center; }
-.node-type-activity .node-activity .field-type-image img { width: 600px; }
+.node-type-event .view-mode-full .field-type-image .field-items { float: left; width: 100%; margin: 0px; text-align: center; }
+.node-type-event .view-mode-full .field-type-image img { width: 600px; }
 /*text*/
-.node-type-activity .node-activity .field-type-text-with-summary { float: left; width: 100%; line-height: 26px; font-size: 12px; }
-.node-type-activity .node-activity .field-type-text-with-summary p { margin: 1em 0px !important; }
-.node-type-activity .node-activity .field-type-text-with-summary a { color: #0066CC; }
+.node-type-event .view-mode-full .field-type-text-with-summary { float: left; width: 100%; line-height: 26px; font-size: 12px; }
+.node-type-event .view-mode-full .field-type-text-with-summary .field-label { display: none; }
+.node-type-event .view-mode-full .field-type-text-with-summary .field-items { width: 100%; }
+.node-type-event .view-mode-full .field-type-text-with-summary p { margin: 1em 0px !important; }
+.node-type-event .view-mode-full .field-type-text-with-summary a { color: #0066CC; }
 /*------page-questions-------*/
 .page-qa #page-title { display: none; }
 .page-qa #content { padding: 0px !important; border: none !important; }
@@ -105,10 +126,8 @@
 .page-questions #content .question .title h2 { float: left; width: 100%; line-height: 30px; margin: 0px; font-size: 16px; font-weight: bold; }
 .page-questions #content .question .title { border-bottom: 2px solid #16AFC2; }
 /*questions list first*/
-
 .page-questions #content .view-display-id-single_question_page > .view-content .q-body .q-body { font-size: 14px; }
 /*--all questions list--*/
-
 .page-questions #content .question { float: left; width: 100%; }
 /*.page-questions #content .view-content .question > .q-body {
 	margin: 10px 0px 0px 0px;
@@ -152,7 +171,6 @@
 .page-questions #content .attachment h3 { float: left; width: 100%; height: 30px; line-height: 30px; margin: 0px; font-size: 14px; font-weight: bold; border-bottom: 2px solid #16AFC2; }
 .page-questions #content .view-question #answers .views-row { float: left; width: 100%; padding: 0px; background: none; border-bottom: 1px #E5E5E5 solid; }
 /*all edit*/
-/*questions edit*/
 .page-questions #content .question .comments-wrapper { float: left; width: 100%; background: #F3F3F3; }
 .page-questions #content .question .comments-wrapper .comment-text { float: left; width: 100%; padding: 2px 5px; line-height: 22px; }
 /*.page-questions #content .question .comments-wrapper .comment-text .field-type-text-long { float: left; width: 100%; }*/
@@ -177,9 +195,7 @@
 .page-questions #content .answer-node-form { float: left; width: 100%; margin: 10px 0px 0px 0px; border: none; }
 .page-questions #content .answer-node-form .form-item { margin: 0px; }
 .page-questions #content .answer-node-form label { float: left; width: 100%; height: 36px; line-height: 36px; margin: 0px; padding: 0px 0px 8px 0px; background: url(../images/t2.png) no-repeat -22px bottom; font-size: 16px; font-weight: bold; text-indent: 10px; }
-/*------node-type-blog------*/
 .page-questions #content .answer-node-form textarea { width: 100%; line-height: 20px; border: none; border-right: none; padding: 5px; }
-.node-type-blog .blog_usernames_blog { display: none; }
 /*------page-questions-tagged------*/
 .page-questions-tagged #page-title { float: left; width: 100%; height: 30px; line-height: 30px; padding: 0px !important; border: none !important; }
 .page-questions-tagged .view-id-questions { float: left; width: 100%; margin: 0px 0px 0px 0px; }
@@ -259,8 +275,8 @@ display: none;
 .page-question #content .question .tags .sbq-qa-flag:hover { background-color: #168a9b; color: #fff; }
 .page-question #content .question .tags .sbq-qa-flag:hover a { color: #fff; }
 .page-question #content .question .tags .sbq-qa-flag a { color: #168a9b; line-height: 20px; }
-.page-question #content .question .links { float: left; width: 100%; display: none; }
-.page-question #content .question .links .delete { float: right; }
+.page-question #content .question .links { float: left; width: 100%; }
+.page-question #content .question .links span { float: right; margin: 0px 0px 0px 5px; }
 .page-question #content .question .links a { border: none; color: #0066CC; }
 .page-question #content .question .q-info { float: left; width: 60px; margin: 0px 10px 0px 0px; }
 .page-question #content .question .q-info .author-item a,
@@ -314,6 +330,8 @@ display: none;
 /*questions*/
 .page-qa #content { position: relative; }
 #block-sbq-commons-sbq-add-ask-link { height: 22px; line-height: 22px; margin: 0px; position: absolute; right: 0px; top: 30px; background: url(../images/post2.png) no-repeat left -22px; font-size: 16px; padding-left: 29px; display: inline-block; font-weight: 700; z-index: 9; }
+/*------page-node-delete------*/
+.page-node-delete .confirmation { margin: 10px 0px 0px 0px; }
 /*------page-search------*/
 .page-search #page-title { display: none; }
 .page-search #content .search-form { float: left; width: 100%; margin: 0px; padding: 0px; }
@@ -337,4 +355,24 @@ display: none;
 .page-node-20151 #page-title,
 .page-node-2788 #page-title,
 .page-node-2787 #page-title,
-.page-node-2786 #page-title { background:#096; }
+.page-node-2786 #page-title { height: 36px; line-height: 36px !important; font-weight: bold; padding: 0px !important; font-weight: bold; font-size: 18px !important; border-bottom: 2px solid #16AFC2 !important; }
+.page-node-2790 .field-type-text-with-summary,
+.page-node-20151 .field-type-text-with-summary,
+.page-node-2788 .field-type-text-with-summary,
+.page-node-2787 .field-type-text-with-summary,
+.page-node-2786 .field-type-text-with-summary { padding: 5px 0px; line-height: 26px; font-size: 12px; }
+.page-node-2790 .field-type-text-with-summary p,
+.page-node-20151 .field-type-text-with-summary p,
+.page-node-2788 .field-type-text-with-summary p,
+.page-node-2787 .field-type-text-with-summary p,
+.page-node-2786 .field-type-text-with-summary p { margin: 1em 0px !important; font-size: 12px; }
+.page-node-2790 .field-type-text-with-summary a,
+.page-node-20151 .field-type-text-with-summary a,
+.page-node-2788 .field-type-text-with-summary a,
+.page-node-2787 .field-type-text-with-summary a,
+.page-node-2786 .field-type-text-with-summary a { color: #16AFC2; }
+.page-node-2790 .field-type-text-with-summary a:hover,
+.page-node-20151 .field-type-text-with-summary a:hover,
+.page-node-2788 .field-type-text-with-summary a:hover,
+.page-node-2787 .field-type-text-with-summary a:hover,
+.page-node-2786 .field-type-text-with-summary a:hover { color: #16AFC2; text-decoration: underline; }

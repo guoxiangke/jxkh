@@ -9,13 +9,13 @@
 ?>
 <article class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
   <?php print $picture; ?>
-  <header>
+  <div class="sbq-comment-right">
     <div class="submitted">
       <?php print $submitted; ?>
-      <?php 
+      <?php
       global $user;
       if($user->uid)    {
-  print render($content['links']); 
+  print render($content['links']);
   }else {
     // echo '<div style="width:100px;height:100px;background:#666;"';
     echo '<ul class="links inline">
@@ -53,7 +53,7 @@
       hide($content['links']);
       print render($content);
     ?>
-  </header>
+  </div>
 
 
 
@@ -63,5 +63,5 @@
     </footer>
   <?php endif; ?>
 
-  
+
 </article>
