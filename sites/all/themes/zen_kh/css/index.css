@@ -1,10 +1,11 @@
 .sbq-clearfix { *zoom:1
 }
 a:focus { outline: none; }
+#page { min-height: 900px; }
 #page,
-.region-bottom { width: 980px; background: #FFF; }
+.region-bottom { width: 960px; background: #FFF; }
 #main { padding-top: 19px; position: relative; }
-#page { padding: 0px 10px 20px 10px; box-shadow: 0px 0px 5px #CCCCCC; }
+/*#page { padding: 0px 10px 20px 10px; box-shadow: 0px 0px 5px #CCCCCC; }*/
 .sbq-clearfix:before,
 .sbq-clearfix:after { display: table; line-height: 0; content: "" }
 .sbq-clearfix:after { clear: both }
@@ -15,7 +16,7 @@ a:focus { outline: none; }
 .region-sidebar-second,
 #footer { padding: 0 }
 #header { height: 60px; background: url(../images/hbg.png) repeat-x 0 -26px; margin-top: 25px; position: relative; z-index: 998; }
-html { background: url(../images/bg.png) repeat 0 0; }
+/*html { background: url(../images/bg.png) repeat 0 0; }*/
 .sbq-width { width: 960px }
 .sbq-center { margin: 0 auto }
 .sbq-border { border: 1px solid #d2d2d2 }
@@ -86,11 +87,11 @@ li { list-style: none; }
 .sbq_doctor_register_button #status { position: absolute; right: 20px; bottom: 22px }
 .user_doctor_register_ajax:hover { color: #fff }
 #content #sbq-bd-list ul { padding-left: 30px; }
-#content #sbq-bd-list .block-views { float: left; width: 50%; margin-bottom: 0; padding-bottom: 40px; }
+#content #sbq-bd-list .block-views { float: left; width: 50%; margin-bottom: 0; padding-bottom: 40px; position: relative; }
 #block-views-friend-activities-index,
 #block-views-exposure-platform-block-index { position: relative; }
 .page-index #block-views-friend-activities-index .more-link,
-.page-index #block-views-exposure-platform-block-index .more-link { right: 10px; top: 18px; }
+.page-index #block-views-exposure-platform-block-index .more-link { position: absolute; right: 10px; top: 18px; background: url(../images/more.png) no-repeat right; }
 #block-views-friend-activities-index,
 .region.region-sidebar-first.column.sidebar { background-color: #fff }
 #block-views-exposure-platform-block-index { background-color: #f6f6f6 }
@@ -285,9 +286,6 @@ li { margin: 0; padding: 0 }
 #block-quicktabs-user-qa h2,
 #block-quicktabs-user-group h2,
 #block-views-blog-my-blog-block h2 { font-weight: bold; font-size: 16px; border: none !important; }
-.page-index #page,
-.section-square #page,
-.page-node #page { padding-bottom: 30px; }
 .region-sidebar-second .block__title.block-title { font-weight: bold; }
 ul.quicktabs-tabs.quicktabs-style-arrows { margin-bottom: 0; line-height: 29px; }
 .block-quicktabs .view-content>div:after,
@@ -694,7 +692,7 @@ nav.breadcrumb { display: none; }
 }
 .page-node #content .field-name-field-image img { max-width: 656px; max-height: 334px; }*/
 .page-node #content p { margin: 0 }
-.page-node #content .title { font-size: 14px; line-height: 32px; font-weight: bold; color: #585858; margin: 0 }
+.page-node #content #page-title { float: left; width: 100%; font-size: 14px; line-height: 32px; padding-bottom: 10px; font-weight: bold; color: #585858; margin: 0 }
 /*.page-node #content .comments__title,*/
 #node_wiki_full_group_tech h3,
 .node .field-label,
@@ -731,7 +729,6 @@ nav.breadcrumb { display: none; }
 .page-node .sbq-field-video-list .field-items { background-color: #222222; }
 .page-node .sbq_field_title_list { background-color: #2b2b2b; position: relative; }
 .page-node .sbq_field_title_list .more-link { bottom: 5px; top: auto; right: 12px; }
-.page-node #content .more-link a { color: #cfcfcf; background: url(../images/wm.png) no-repeat right center; }
 .page-node .sbq-field-video-list { width: 318px; float: left; }
 .page-node .sbq_field_title_list { width: 240px; float: left; margin-top: 39px; padding: 8px 10px; height: 247px; }
 .sbq_field_title_list .sbq-wiki-video-field-label { color: #f0f0f0; font-weight: bold; }

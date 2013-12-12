@@ -7,11 +7,11 @@
 .page-user-relationship #content .primary > li a { color: #16AFC2; border-radius: 0; border: 0; background: none; text-shadow: 0; }
 .page-user-relationship #content .primary > li.is-active { background: #16AFC2; }
 .page-user-relationship #content .primary > li.is-active a { color: #fff; text-shadow: none; font-weight: bold; }
-.page-user-relationship #content .tabs-secondary { border-bottom: 2px solid #16AFC2; margin-bottom: 0; height: 40px; line-height: 29px; width: 100%; }
-.page-user-relationship #content .tabs-secondary > li { background: none; border-radius: 0; border: 0; text-shadow: none; }
+.page-user-relationship #content .tabs-secondary { border-bottom: 2px solid #16AFC2; margin-bottom: 0; height: 31px; line-height: 29px; width: 100%; }
+.page-user-relationship #content .tabs-secondary > li { margin: 0px; background: none; border-radius: 0; border: 0; text-shadow: none; }
 .page-user-relationship #content .tabs-secondary > li a { padding-bottom: 6px; padding-top: 0; height: 29px; text-shadow: none; border: 0; box-shadow: none; background: none; }
 .page-user-relationship #content .tabs-secondary > li a.active { background: url(../images/arrows.png) no-repeat center bottom; padding-bottom: 6px; color: #585858; padding-top: 0; height: 29px; text-shadow: none; border: 0; box-shadow: none; font-weight: bold; }
-.page-user-relationship #content .tabs-secondary > li a:hover { background: url(../images/arrows.png) no-repeat center bottom; padding-bottom: 6px; color: #585858; padding-top: 0; height: 29px; text-shadow: none; border: 0; box-shadow: none; font-weight: bold; }
+.page-user-relationship #content .tabs-secondary > li a:hover { padding-bottom: 6px; color: #585858; padding-top: 0; height: 29px; text-shadow: none; border: 0; box-shadow: none; font-weight: bold; }
 .page-user-relationship #content .sbq_user_relationships { border-top: 0; width: 100%; }
 .page-user-relationship #content .sbq_user_relationships .sbq-user-relationship-profile { width: 233px; border: 1px solid #f2f2f2; display: inline-block; margin: 6px 0 6px 6px; padding: 0; padding: 10px; }
 .page-user-relationship #content .sbq_user_relationships .sbq-user-relationship-profile .image { width: 60px; height: 60px; border: 1px solid #ccc; float: left; }
