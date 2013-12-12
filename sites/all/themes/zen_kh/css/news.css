@@ -2,7 +2,7 @@
 .section-news #page { }
 /*.section-news #content { float: left; width: 690px; padding: 15px !important; border: 1px #E5E5E solid !important; overflow: hidden; }*/
 .section-news #content .breadcrumb { display: none !important; }
-.section-news #content .page__title { line-height: 36px; padding: 0px 0px 10px 0px; font-size: 24px; border-bottom: 1px solid #E5E5E5; font-weight: normal; text-align: center; }
+.section-news #content #page-title { line-height: 36px; padding: 0px 0px 10px 0px; font-size: 24px; border-bottom: 1px solid #E5E5E5; font-weight: normal; text-align: center; }
 .section-news #content .view-mode-full { float: left; width: 100%; margin: 20px 0px 0px 0px; }
 /*.section-news */#content .view-mode-full .links { float: left; margin: 10px 0px 0px 0px; color: #666 }
 /*.section-news */#content .view-mode-full .links a { padding: 0px 5px; color: #0066CC; }
