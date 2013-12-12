@@ -177,8 +177,7 @@ function druedu_qa_init() {
         if (isset($node->field_answer[LANGUAGE_NONE][0]['target_id'])) { // ajax prepare form node_add_form node_object_prepare()
           drupal_goto('questions/' . $node->field_answer[LANGUAGE_NONE][0]['target_id']);
         }
-      }
-      elseif ($node->type == 'question') {
+      } elseif ($node->type == 'question') {
         drupal_goto('question/' . $node->nid);
       }
     }
@@ -250,14 +249,15 @@ function druedu_qa_preprocess_flag(&$variables) {
     $variables['flag_access'] = FALSE;
   }
   $answer_node = node_load($variables['entity_id']);
-  if(!isset($answer_node->field_answer[LANGUAGE_NONE]['0']['target_id'])) return;
+  if (!isset($answer_node->field_answer[LANGUAGE_NONE]['0']['target_id']))
+    return;
   $question_nid = $answer_node->field_answer[LANGUAGE_NONE]['0']['target_id'];
   $question = node_load($question_nid);
   global $user;
-  if($question->uid != $user->uid) {
+  if ($question->uid != $user->uid) {
     $variables['flag_access'] = FALSE;
   }
-  if(!$variables['flag_access'] && $variables['status'] == 'flagged') {
+  if (!$variables['flag_access'] && $variables['status'] == 'flagged') {
     $variables['answer_flagged'] = TRUE;
   }
   // dpm($variables);
@@ -270,7 +270,7 @@ function druedu_qa_views_post_execute(&$view) {
   if ($view->name == 'question') {
     //counts answers and show before attachment.
     $counts = db_select('field_data_field_answer', 'answer')
-        ->fields('answer', array('entity_id'))
+        ->fields('answer', array( 'entity_id' ))
         ->condition('bundle', 'answer')
         ->condition('deleted', 0)
         ->condition('field_answer_target_id', $view->args[0])
@@ -298,7 +298,7 @@ function druedu_qa_views_post_execute(&$view) {
         if (!$node->comment_count) {
           // Append comment form if needed.
           if (user_access('post comments') && $node->comment == COMMENT_NODE_OPEN && (variable_get('comment_form_location_' . $node->type, COMMENT_FORM_BELOW) == COMMENT_FORM_BELOW)) {
-            $build = drupal_get_form("comment_node_{$node->type}_form", (object) array('nid' => $node->nid));
+            $build = drupal_get_form("comment_node_{$node->type}_form", (object) array( 'nid' => $node->nid ));
             $answer_item->comments['#form'] = $build;
           }
         }
@@ -323,7 +323,7 @@ function druedu_qa_preprocess_views_view(&$vars) {
     $vars['answer_node_form'] = druedu_node_add('answer');
   }
   ///questions, /questions/my-questions, /questions/unanswered, /questions/tagged
-  $args = array('my-questions', 'unanswered', 'tagged');
+  $args = array( 'my-questions', 'unanswered', 'tagged' );
   if ($view->name == 'questions' && isset($view->args[0]) && !in_array($view->args[0], $args)) {
     //dpm($view);
     drupal_set_title('This page has no result.');
@@ -354,7 +354,7 @@ function druedu_node_add($type = 'answer', $question_nid = null) {
   // maybe add current users info
   global $user;
   // create a blank node
-  $node = (object) array('uid' => $user->uid, 'name' => (isset($user->name) ? $user->name : ''), 'type' => $type, 'language' => LANGUAGE_NONE);
+  $node = (object) array( 'uid' => $user->uid, 'name' => (isset($user->name) ? $user->name : ''), 'type' => $type, 'language' => LANGUAGE_NONE );
   // Invoke hook_nodapi and hook_node
   // when use ajax ,set default field value.
   //TODO more about ajax for node_add_anwser form....
@@ -406,8 +406,7 @@ function druedu_qa_views_pre_view(&$view, &$display_id, &$args) {
             foreach ($tids as $key => $value) {
               if ($key == 0) {
                 $tid_or = "$value[tid]";
-              }
-              else {
+              } else {
                 $tid_or .= "+$value[tid]";
               }
               //$args[] =  $value['tid'];
@@ -451,7 +450,7 @@ function druedu_qa_node_insert($node) {
       $question = node_load($node->field_answer[LANGUAGE_NONE][0]['target_id']);
     }
     if (isset($question->field_answers)) {
-      $question->field_answers[LANGUAGE_NONE][] = array('target_id' => $node->nid);
+      $question->field_answers[LANGUAGE_NONE][] = array( 'target_id' => $node->nid );
       node_save($question);
     }
   }
@@ -518,7 +517,7 @@ function druedu_qa_exit() {
     if (arg(0) == 'question' && is_numeric(arg(1)) && arg(2) == NULL) {
       // A node has been viewed, so update the node's counters.
       db_merge('node_counter')
-          ->key(array('nid' => arg(1)))
+          ->key(array( 'nid' => arg(1) ))
           ->fields(array(
               'daycount' => 1,
               'totalcount' => 1,
@@ -545,7 +544,7 @@ function druedu_qa_menu() {
   $items['node/%/remove'] = array(
       'title' => 'remove node',
       'page callback' => 'druedu_qa_ajax_unpublish_node',
-      'page arguments' => array(1),
+      'page arguments' => array( 1 ),
       'access callback' => TRUE,
       'type' => MENU_CALLBACK,
   );
@@ -557,8 +556,7 @@ function druedu_qa_ajax_unpublish_node($nid) {
   if (!$node->nid) {
     drupal_access_denied();
     drupal_exit();
-  }
-  elseif (!in_array($node->type, array('question', 'answer'))) {
+  } elseif (!in_array($node->type, array( 'question', 'answer' ))) {
     drupal_access_denied();
     drupal_exit();
   }
@@ -568,15 +566,13 @@ function druedu_qa_ajax_unpublish_node($nid) {
     $node->status = 0;
     node_save($node);
     drupal_set_message(t('The ' . $node->type . ' has been removed.'), 'status');
-  }
-  else {
+  } else {
     drupal_access_denied();
     drupal_exit();
   }
   if ($node->type == 'question') {
     drupal_goto('questions');
-  }
-  elseif ($node->type == 'answer') {
+  } elseif ($node->type == 'answer') {
     drupal_goto('question/' . $node->field_answer[LANGUAGE_NONE][0]['target_id']);
   }
 
@@ -680,7 +676,7 @@ function druedu_qa_ajax_comments_submit_js($form, &$form_state) {
     //XXX: notice the div id #s  -guo
     // fit for all sites comments form use ajax.
     $nodes = node_load($node->nid);
-    $comments = druedu_qa_comment_counts_load(array($nodes));
+    $comments = druedu_qa_comment_counts_load(array( $nodes ));
     if ($comments[$node->nid] == 1) {//$nodes->comment_count
       $comment_output = '<div class="has-comment"><b class="triangle_top"></b></div>' . $comment_output;
     }
@@ -690,10 +686,9 @@ function druedu_qa_ajax_comments_submit_js($form, &$form_state) {
     if ($node->type == 'question' || $node->type == 'answer') {
       //$commands[] = ajax_command_append("#comments-wrapper-".$node->nid, $comment_output); //not use ajax_command_append necause issue jump top of the page
       $commands[] = ajax_command_invoke(NULL, 'insertComment', array(
-          array('selector' => "#comments-wrapper-" . $node->nid, 'data' => $comment_output))
+          array( 'selector' => "#comments-wrapper-" . $node->nid, 'data' => $comment_output ) )
       );
-    }
-    else {
+    } else {
       $commands[] = ajax_command_after('#comment-wrapper', $comment_output);
     }
 
@@ -701,7 +696,7 @@ function druedu_qa_ajax_comments_submit_js($form, &$form_state) {
     if (variable_get('comment_form_location_' . $node->type, COMMENT_FORM_BELOW) == COMMENT_FORM_BELOW) {
       $node = $form['#node'];
       $new_form_state = array();
-      $new_form_state['build_info']['args'][] = (object) array('nid' => $node->nid);
+      $new_form_state['build_info']['args'][] = (object) array( 'nid' => $node->nid );
       // Don't pull from cache.
       $new_form_state['input'] = array();
       $new_form_build = drupal_build_form($form['#form_id'], $new_form_state);
@@ -719,7 +714,7 @@ function druedu_qa_ajax_comments_submit_js($form, &$form_state) {
 //  $commands[] = ajax_command_invoke(NULL, "comments_sent");
 
 
-  return array('#type' => 'ajax', '#commands' => $commands);
+  return array( '#type' => 'ajax', '#commands' => $commands );
 }
 
 /**
@@ -731,13 +726,13 @@ function druedu_qa_comment_view($comment, $view_mode, $langcode) {
   if ($comment->node_type == 'comment_node_answer' || $comment->node_type == 'comment_node_question') {
     // Reply.
     if (isset($comment->content['links']['comment']['#links']['comment-reply'])) {
-      $comment->content['links']['comment']['#links']['comment-reply']['attributes']['class'] = array('btn', 'btn-small', 'use-ajax');
+      $comment->content['links']['comment']['#links']['comment-reply']['attributes']['class'] = array( 'btn', 'btn-small', 'use-ajax' );
       $comment->content['links']['comment']['#links']['comment-reply']['href'] = 'ajax_comments/reply/' . $comment->nid . '/' . $comment->cid;
     }
 
     // Edit.
     if (isset($comment->content['links']['comment']['#links']['comment-edit'])) {
-      $comment->content['links']['comment']['#links']['comment-edit']['attributes']['class'] = array('btn', 'btn-mini', 'btn-link', 'use-ajax');
+      $comment->content['links']['comment']['#links']['comment-edit']['attributes']['class'] = array( 'btn', 'btn-mini', 'btn-link', 'use-ajax' );
       $comment->content['links']['comment']['#links']['comment-edit']['href'] = 'ajax_comments/edit/' . $comment->cid;
     }
 
@@ -795,7 +790,7 @@ function druedu_qa_form_answer_node_form_alter(&$form, &$form_state) {
   $form['options']['promote']['#default_value'] = 0;
   //}
 
-  $files = array('node');
+  $files = array( 'node' );
   _ajax_register_needed_files($form_state, $files);
   // !$form['title']['#default_value'] mean not the edit form.
   if (!$form['title']['#default_value'] && !isset($form['actions']['submit']['#ajax'])) {
@@ -830,8 +825,7 @@ function _ajax_register_needed_files(&$form_state, array $files) {
   foreach ($files as $file) {
     if ((is_array($file) && isset($file['module']) || (is_string($file) && file_exists($file)))) {
       $form_state['build_info']['files'][] = $file;
-    }
-    elseif (is_string($file) && module_exists($file)) {
+    } elseif (is_string($file) && module_exists($file)) {
       // Loading all includes of the module
       $path = drupal_get_path('module', $file);
       $destination = DRUPAL_ROOT . '/' . $path;
@@ -901,7 +895,7 @@ function _ajax_answer_submit_js($form, &$form_state) {
   $view->set_items_per_page(1);
   $view->set_item('answers_attachment', 'sort', 'flagged', NULL);
   $view->set_item('answers_attachment', 'sort', 'value', NULL);
-  $view->set_arguments(array($nid));
+  $view->set_arguments(array( $nid ));
   $view->is_attachment = true;
   $view->execute();
   $view->preview();
@@ -916,9 +910,51 @@ function _ajax_answer_submit_js($form, &$form_state) {
   }
   $commands[] = ajax_command_remove('#answers h3');
   $commands[] = ajax_command_prepend('#answers', $view->attachment_before);
-  $commands[] = ajax_command_prepend('#answers .view-content', $result);
+  $commands[] = ajax_command_prepend('#answers #new_answer', $result);
+  
+  $html = '<textarea class="text-full ckeditor-mod form-textarea required" id="edit-body-und-0-value" name="body[und][0][value]" cols="60" rows="6" autocomplete="off"></textarea>';
+  $commands[] = ajax_command_replace('#answer-node-form textarea', $html);
 
-  return array('#type' => 'ajax', '#commands' => $commands);
+
+//  $node = $form_state['node'];
+//  
+//  if (!empty($node->nid)) {
+//
+//    // Node is created successfully.
+//    // Return the same from but with empty fields.
+//    $new_node = (object) array(
+//            'uid' => $node->uid,
+//            'name' => $node->name,
+//            'type' => $node->type,
+//            'language' => $node->language,
+//    );
+//
+//    $new_form_state = array();
+//    $new_form_state['build_info']['args'] = array( $new_node );
+//    $new_form_state['values'] = array();
+//    $new_form_state['method'] = $form_state['method'];
+//
+//    form_load_include($new_form_state, 'inc', 'node', 'node.pages');
+//
+//    $new_form = drupal_rebuild_form($node->type . '_node_form', $new_form_state);
+//
+//    $commands[] = ajax_command_replace('#'.$form['#id'], drupal_render($new_form));
+//  }
+
+  //$nid = $new_form_state['nid'];
+//  $new_form_state = array();
+//  //$new_form_state['build_info']['args'][] = (object) array( 'nid' => $nid );
+//  // Don't pull from cache.
+//  $new_form_state['input'] = array();
+//  $new_form_build = drupal_build_form($form['#form_id'], $new_form_state);
+//  $new_form_output = drupal_render($new_form_build);
+//  //drupal_add_js('comments_sent()', 'inline');
+//  $commands[] = ajax_command_replace('#' . $form['#id'], $new_form_output);
+//  dpm($new_form_output);
+//  dpm($form);
+//  dpm($form_state);
+
+  return array( '#type' => 'ajax', '#commands' => $commands );
 }
 
 /**
@@ -958,7 +994,7 @@ function druedu_qa_count_questions() {
   // questions/unanswered
   $counts = 0;
   $query = db_select('node', 'n')
-      ->fields('n', array('nid'))
+      ->fields('n', array( 'nid' ))
       ->condition('n.type ', 'question')
       ->condition('n.status ', 1);
   if ($uid = $user->uid) {
@@ -967,25 +1003,22 @@ function druedu_qa_count_questions() {
           ->condition('n.uid', $uid)
           ->execute()
           ->rowCount();
-    }
-    elseif (arg(0) == 'questions' && arg(1) == 'unanswered') {
+    } elseif (arg(0) == 'questions' && arg(1) == 'unanswered') {
 
       $query = db_select('node', 'n')
-          ->fields('n', array('nid')); //nid;
+          ->fields('n', array( 'nid' )); //nid;
       $query->join('field_data_field_mark_question_resolved', 'f', 'f.entity_id = n.nid');
       $counts = $query
-          ->fields('f', array('entity_id'))//nid
+          ->fields('f', array( 'entity_id' ))//nid
           ->condition('f.field_mark_question_resolved_value ', 0)
           ->execute()
           ->rowCount();
-    }
-    elseif (arg(0) == 'questions' && is_null(arg(1))) {
+    } elseif (arg(0) == 'questions' && is_null(arg(1))) {
       $counts = $query
           ->execute()
           ->rowCount();
     }
-  }
-  elseif (arg(0) == 'questions' && is_null(arg(1))) {
+  } elseif (arg(0) == 'questions' && is_null(arg(1))) {
     $counts = $query
         ->execute()
         ->rowCount();
@@ -1010,7 +1043,7 @@ function druedu_qa_comment_counts_load($nodes) {
 
   // For nodes with comments enabled, fetch information from the database.
   if (!empty($comments_enabled)) {
-    $result = db_query('SELECT nid, cid, last_comment_timestamp, last_comment_name, last_comment_uid, comment_count FROM {node_comment_statistics} WHERE nid IN (:comments_enabled)', array(':comments_enabled' => $comments_enabled));
+    $result = db_query('SELECT nid, cid, last_comment_timestamp, last_comment_name, last_comment_uid, comment_count FROM {node_comment_statistics} WHERE nid IN (:comments_enabled)', array( ':comments_enabled' => $comments_enabled ));
     foreach ($result as $record) {
       // $nodes[$record->nid]->cid = $record->cid;
       // $nodes[$record->nid]->last_comment_timestamp = $record->last_comment_timestamp;

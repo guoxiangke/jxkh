@@ -177,6 +177,13 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
       } else {
         $form['body']['und']['0']['#title'] = t('问题');
       }
+      global $user;
+      if (in_array(USER_EDITOR_RID, array_keys($user->roles)) || $user->uid == 1) {
+        $form['author']['#access'] = TRUE;
+        $form['options']['#access'] = TRUE;
+        $form['comment_settings']['#access'] = TRUE;
+        $form['additional_settings']['#access'] = TRUE;
+      }
       break;
     case 'post_node_form'://禁止评论 for post
       global $user;
@@ -306,6 +313,7 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
     default:
       break;
   }
+
   // edit role display node form summary
   if (isset($form['#node_edit_form']) && $form['#node_edit_form']) {
     global $user;
