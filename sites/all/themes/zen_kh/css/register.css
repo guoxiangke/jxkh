@@ -68,6 +68,7 @@
 #user-login div .form-item-name input[type="text"] { width: 186px; }
 #user-login div .form-item-name .description { display: inline-block; }
 #user-login div .form-item-pass .description { display: inline-block; }
+#user-login div .form-item-name label { width: 85px; }
 #user-login div .form-item-pass label { width: 85px; }
 #user-login .item-list ul.sbq_custom_login { margin: 1.5em 1.0em }
 #user-login .item-list li { display: inline-block }

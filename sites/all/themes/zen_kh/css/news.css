@@ -1,8 +1,8 @@
 /*news*/
 .section-news #page { }
-.section-news #content { float: left; width: 690px; padding: 15px !important; /*background: #FFF;*/ border: 1px #CCCCCC solid !important; overflow: hidden; }
+/*.section-news #content { float: left; width: 690px; padding: 15px !important; border: 1px #E5E5E solid !important; overflow: hidden; }*/
 .section-news #content .breadcrumb { display: none !important; }
-.section-news #content .page__title { line-height: 26px; padding: 0px 0px 10px 0px; font-size: 20px; border-bottom: 1px solid #E5E5E5; font-weight: normal; text-align: center; }
+.section-news #content .page__title { line-height: 36px; padding: 0px 0px 10px 0px; font-size: 24px; border-bottom: 1px solid #E5E5E5; font-weight: normal; text-align: center; }
 .section-news #content .view-mode-full { float: left; width: 100%; margin: 20px 0px 0px 0px; }
 /*.section-news */#content .view-mode-full .links { float: left; margin: 10px 0px 0px 0px; color: #666 }
 /*.section-news */#content .view-mode-full .links a { padding: 0px 5px; color: #0066CC; }
@@ -13,7 +13,7 @@
 /*comment*/
 #comments { float: left; width: 100%; margin: 15px 0px 0px 0px; }
 #comments .title_wrap { float: left; width: 100%; height: 30px; border-top: 2px #E5E5E5 solid; border-bottom: 1px #E5E5E5 solid; }
-#comments .comments__title { float: left; width: 80px; height: 30px; line-height: 30px !important; margin: 0px !important; padding: 0px 15px; border-top: 2px #16AFC2 solid; font-size: 14px !important; font-weight: normal; position: relative; top: -2px; text-align: center; background: none !important; color: #585858 !important; }
+#comments .comments__title { float: left !important; width: 80px; height: 30px; line-height: 30px !important; margin: 0px !important; padding: 0px 15px; border-top: 2px #16AFC2 solid; font-size: 14px !important; font-weight: normal; position: relative; top: -2px; text-align: center; background: none !important; color: #585858 !important; }
 #comment-wrapper { float: left; width: 100%; }
 #comment-wrapper .comment { float: left; width: 100%; border-bottom: 1px #E5E5E5 solid; padding: 10px 0px; }
 #comment-wrapper .user-picture,
