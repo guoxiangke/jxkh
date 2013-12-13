@@ -677,8 +677,9 @@ function _sbq_commons_user_recommonds_friends_ids($roles, $num = 2, $account = n
       "select uid from {users} u where " .
       "u.uid not in ( select requestee_id from user_relationships " .
       "where requester_id = {$account->uid}) " .
-      "and u.uid not in( select requester_id from user_relationships where requestee_id = {$account->uid}) " .
-      "and u.uid in ( select uid from users_roles where rid = {$roles}) limit 0,{$num} ");
+      "and u.uid not in( select requester_id from user_relationships where requestee_id = {$account->uid}) ".
+      "and u.uid <> {$account->uid} " .
+      "and u.uid in ( select uid from users_roles where rid = {$roles}) order by uid ASC limit 0,{$num} ");
   $result = $query_user->fetchAllAssoc('uid');
   return $result ? array_keys($result) : array();
 }
