@@ -1,0 +1,66 @@
+* { margin: 0px; padding: 0px; list-style: none; }
+a { text-decoration: none; }
+img { border: none; }
+/*------font------*/
+html { font-family: "Arial", "Verdana", "宋体"; color: #585858; font-size: 12px; }
+#header,
+#footer,
+.block-title,
+.more-link,
+label { font-family: "Microsoft Yahei", "微软雅黑" !important; }
+.element-invisible { display: none; }
+/*------head------*/
+#secondary-menu { line-height: 25px; position: fixed; top: 0; left: 0; z-index: 999; height: 25px; width: 100%; float: none; background: url(../images/hbg.png) repeat-x 0 0; font-size: 12px; color: #fff }
+#secondary-menu a { color: #fff; }
+#secondary-menu h2 { display: none; }
+#secondary-menu ul { float: none; width: 960px; margin: 0 auto; display: block; text-align: right; }
+#secondary-menu ul li { height: 25px; line-height: 25px; margin: 0px 1em 0px 0px; display: inline; }
+#header { float: left; width: 100%; height: 60px; background: url(../images/hbg.png) repeat-x 0 -26px; margin-top: 25px; position: relative; z-index: 998; }
+/*------body------*/
+#page { width: 960px; margin: 0 auto; }
+#main { float: left; width: 100%; padding: 20px 0px; }
+.tabs-primary { display: none; }
+/*head*/
+.sbq-center.sbq-width.sbq-clearfix { width: 960px; height: 60px; margin: 0 auto; position: relative; }
+.header__logo { float: left; display: block; height: 55px; width: 53px; }
+.header__name-and-slogan { float: left; margin-left: 10px; width: 250px; }
+.header__site-name { float: left; line-height: 30px; margin: 15px 0px 0px 0px; font-size: 30px; }
+.header__site-name a { color: #FFFFFF; }
+.header__site-slogan { margin: 23px 0 0 11px; float: left; color: #fff; font-size: 16px; }
+#navigation { position: static; float: left; width: 365px; height: 20px; line-height: 20px; margin: 23px 0px 0px 100px; }
+#navigation #main-menu ul li { float: left; height: 20px; line-height: 20px; padding: 0 45px 0 0; }
+#navigation #main-menu ul li a { lheight: 20px; line-height: 20px; font-size: 14px; color: #deeff2; text-decoration: none; }
+#navigation #main-menu ul li a:hover { color: #FFF; }
+#navigation #main-menu ul li .active-trail a { color: #FFF; font-weight: bold; }
+/*region*/
+.header__region.region.region-header { position: absolute; right: 0; bottom: 13px; width: 206px; height: 36px; clear: none; background: url(../images/search.png) no-repeat 0 0; }
+.header__region.region.region-header #edit-search-block-form--2 { float: left; width: 164px; height: 28px; line-height: 28px; border: none; margin: 4px 0 0 5px; padding: 0 0 0 5px; }
+.header__region.region.region-header .form-actions { float: left; width: 30px; height: 34px; overflow: hidden; }
+.header__region.region.region-header .form-actions .form-submit { float: left; width: 30px; height: 34px; background: none; border: none; overflow: hidden; text-indent: -999px; cursor: pointer; }
+/*------foot------*/
+#footer { float: left; width: 100%; height: 160px; background: url(../images/fbg.jpg) repeat 0 0; }
+#footer-right,
+#footer-left { display: none; }
+#about-links { margin: 45px 0px 0px 0px; }
+#footer-copy { margin: 28px 0px 0px 0px; }
+#about-links,
+#footer-copy { text-align: center; color: #e3e3e3; font-size: 14px; }
+#about-links ul { margin: 0 }
+#about-links li { display: inline; padding: 0 10px }
+#about-links a,
+#footer-copy a { color: #e3e3e3; font-size: 14px; }
+.block-views .views-row a { color: #585858 }
+.block-views .views-row a:hover { color: #16B4C7 }
+/*------content------*/
+#content { float: left; width: 690px; }
+/*------left------*/
+.sidebar-second .region-sidebar-second { float: left; width: 260px; margin: 0px 0px 0px 10px; }
+/*------right------*/
+
+
+.messages--status { position: fixed; top: 0; left: 0; z-index: 99999; color: #FFF; }
+/*admin*/
+.region.region-bottom { float: left; width: 100%; }
+.region.region-bottom a { float: left; width: 110px; height: 110px; line-height: 30px; margin: 5px; padding: 5px; background: #CCC; color: #FFF; font-size: 24px; overflow: hidden; font-style: normal; word-break: break-all; word-wrap: break-word; }
+.region.region-bottom a em { font-style: normal; }
+.region.region-bottom a:hover { background: #16AFC2; font-family: "Microsoft Yahei", "微软雅黑" !important; }
