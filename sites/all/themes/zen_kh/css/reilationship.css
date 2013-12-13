@@ -53,8 +53,9 @@
 #block-sbq-commons-recommond-patients .sbq-user-relationship-profile .info .follow { display: block; }
 #block-sbq-commons-recommond-patients .sbq-user-relationship-profile .info .follow a { font-size: 12px; color: #000; font-weight: bold; }
 /*勋章*/
-.sbq-bedges { margin: 20px 0 20px 20px; }
-.sbq-bedges .bedges { width: 48%; margin: 0 1% 10px 1%; float: left; padding: 15px; border-bottom: 1px solid #ccc; }
+.page-node-20137 #page-title { background: #16AFC2; padding: 0px !important; font-size: 14px !important; color: #FFF !important; border: none !important; text-indent: 10px; }
+.sbq-bedges { float: left; width: 100%; padding: 10px; border-left: 1px solid #E5E5E5; border-right: 1px solid #E5E5E5; border-bottom: 1px solid #E5E5E5; }
+.sbq-bedges .bedges { width: 48%; margin: 0 1% 10px 1%; float: left; padding: 15px; border-bottom: 1px solid #E5E5E5; }
 .sbq-bedges .bedges .picture { text-align: center; border-right: 1px dashed #ccc; width: 158px; float: left; }
 .sbq-bedges .bedges .info { padding-top: 1em; float: left; padding-left: 10px; width: 260px; }
 /*个人中心--修改资料*/
