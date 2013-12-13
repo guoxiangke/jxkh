@@ -204,7 +204,7 @@ function sbq_user_relationships_ui_remove_ajax($viewer_id, $rid, $viewd_id) {
   if ($position = strpos($path, 'destination=')) {
     if ($token = substr($path, $position, strlen($path))) {
       $token = str_replace('destination=', '', $token);
-      $commands[] = ajax_command_replace('.' . $token, '<span>已移除</span>');
+      $commands[] = ajax_command_replace('.' . $token, '<span>已取消</span>');
       return array(
           '#type' => 'ajax',
           '#commands' => $commands );
