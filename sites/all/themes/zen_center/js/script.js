@@ -41,6 +41,8 @@ Drupal.behaviors.my_custom_behavior = {
     //   $(this).attr('data-toggle', 'modal');
     //   $(this).attr('data-target', '#sbq_customer_register_form_modal');
     // });
+    var bannerBackground = $('#sbq-banner img').attr('src');
+    $('#sbq-banner').css('background', 'url("' + bannerBackground + '")');
 
     $('#myCarousel').carousel({
 		  interval: 4000
