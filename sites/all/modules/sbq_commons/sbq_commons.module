@@ -442,6 +442,18 @@ function sbq_commons_user_view($account, $view_mode, $langcode) {
 }
 
 /**
+ * Implements hook_user_view_alter().
+ */
+function sbq_commons_user_view_alter(&$build) {
+  global $user;
+  if ($build['#account']->uid == $user->uid ) {
+    $build = array();
+  } else {
+    // change sth to control display for other user
+  }
+}
+
+/**
  * Implements hook_menu_alter().
  */
 function sbq_commons_menu_alter(&$items) {
@@ -1372,7 +1384,7 @@ function sbq_commons_user_login($edit, $account) {
 }
 
 /**
- * 
+ *
  * @global type $user
  * @param type $account one of uid,null,account
  * @return int
