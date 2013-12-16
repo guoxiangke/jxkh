@@ -1,0 +1,48 @@
+<?php
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+/**
+ * 预约门诊类型
+ */
+define('SBQ_CENTER_RESERVATION_TYPE_OUTPATIMENT', 0);
+/**
+ * 预约电话类型
+ */
+define('SBQ_CENTER_RESERVATION_TYPE_PHONE', 1);
+/**
+ * 预约表单id
+ */
+define('SBQ_CENTER_RESERVATION_NODE_ID', 21784);
+
+
+
+/*
+ * hook_form_alter
+ */
+
+function sbq_center_reservation_form_alter(&$form, $form_state, $form_id) {
+  if (strpos($form_id, 'webform_client_form_') !== FALSE) {
+    $nid = str_replace('webform_client_form_', '', $form_id);
+    if ($nid == SBQ_CENTER_RESERVATION_NODE_ID) {
+      if ($sbq_center = sbq_center_get_center()) {
+        $form['submitted']['sbq_center_id']['#value'] = $sbq_center->nid;
+        $form['submitted']['sbq_center_formcategory']['#value'] = SBQ_CENTER_RESERVATION_TYPE_OUTPATIMENT;
+      }
+    }
+  }
+}
+
+/**
+ * get sbq center reservation form only in sbq center page true running
+ * @return type
+ */
+function sbq_center_reservation_form() {
+  if (sbq_center_get_center()) {
+    return drupal_get_form('webform_client_form_' . SBQ_CENTER_RESERVATION_NODE_ID, node_load(SBQ_CENTER_RESERVATION_NODE_ID), array());
+  }
+  return array();
+}
