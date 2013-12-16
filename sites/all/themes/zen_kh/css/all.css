@@ -1,6 +1,7 @@
 /*------fixbug------*/
 nav,
 input { outline: none; }
+#page { min-height: 900px; }
 /*------font------*/
 html,
 .more-link { font-family: "Arial", "Verdana", "宋体"; color: #585858; font-size: 12px; }
@@ -60,6 +61,7 @@ html,
 .page-user .sbq-user-add-post a { color: #585858; }
 .page-user #content .messages--status { float: left; width: 100%; margin: 0px 0px 20px 0px;/* position: absolute; top: 0; left: 0; z-index: 999; opacity:0.6; */ }
 .page-user .region-sidebar-second .ajax-progress { display: none; }
+.page-user #edit-og-group-ref { display: none; }
 /*user-login-form*/
 #user-login-form .captcha { width: 186px; margin: 0 auto; padding: 10px 0px 15px 0px; border: none; }
 #user-login-form .captcha .fieldset-description { display: none; }

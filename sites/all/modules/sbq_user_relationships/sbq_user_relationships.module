@@ -297,6 +297,7 @@ function sbq_user_relationships_recommond($account = NULL, $roles, $is_page = TR
         . "and roles.uid <> {$account->uid}";
   }
   if ($is_page) {
+    $query .= " ORDER BY uid ASC ";
     $pages = pager_default_initialize(db_query($query)->rowCount(), $count_of_page);
     $result = db_query_range($query, $pages * $count_of_page, $count_of_page)->fetchAllAssoc('uid');
   } else {
