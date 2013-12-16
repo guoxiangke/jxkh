@@ -3,18 +3,18 @@
 //https://jxkh.manageprojects.com/projects/307web/tasks/3
 // 医生群体关注
 define('SBQ_CENTER_NODE_LIMIT', 1);
+define('SBQ_CENTER_NODE_TYPE', 'sbq_center');
 
 /**
  * Implements hook_node_access().
  */
-
 function sbq_center_node_access($node, $op, $account) {
-	$limit_content_type = 'sbq_center';
-	if ($op == 'create' && $node == $limit_content_type) {
-    $node_count = db_query('SELECT nid FROM {node} WHERE type = :type AND uid = :uid', array( ':type' => $limit_content_type, ':uid' => $account->uid ))->rowCount();
+  //$limit_content_type = 'sbq_center';
+  if ($op == 'create' && $node == SBQ_CENTER_NODE_TYPE) {
+    $node_count = db_query('SELECT nid FROM {node} WHERE type = :type AND uid = :uid', array( ':type' => SBQ_CENTER_NODE_TYPE, ':uid' => $account->uid ))->rowCount();
     if ($node_count >= SBQ_CENTER_NODE_LIMIT) {
-    	// drupal_set_message(t("Your can't create antoher page of !type",array('!type'=>$limit_content_type)), 'status', FALSE);
-    	drupal_set_message(t("The page your are creating was limitd!"), 'status', FALSE);
+      // drupal_set_message(t("Your can't create antoher page of !type",array('!type'=>$limit_content_type)), 'status', FALSE);
+      drupal_set_message(t("The page your are creating was limitd!"), 'status', FALSE);
       return NODE_ACCESS_DENY;
     }
     return NODE_ACCESS_ALLOW;
@@ -152,7 +152,7 @@ function sbq_center_node_access($node, $op, $account) {
 //           15 => 'doctor_group',
 //           16 => 'general_group',
 //           17 => 'post',
-//           18 => 'tech_test',
+//           18 => 'tech_test'87654321``````````1
 //           19 => 'wiki_child',
 //           20 => 'tech',
 //           21 => 'wiki',
@@ -1450,7 +1450,7 @@ function _sbq_center_block_html($delta) {
             . '</div>';
       } else {
         $block_html = '<div id="sbq-center-need-login">'
-            . '<span>请'.l('登录', 'user/login').'或'.l('注册', 'customer/register').'后，进行提问。'.l('点击注册', 'customer/register').'</span>'
+            . '<span>请' . l('登录', 'user/login') . '或' . l('注册', 'customer/register') . '后，进行提问。' . l('点击注册', 'customer/register') . '</span>'
             . '</div>';
       }
       break;
@@ -1492,16 +1492,16 @@ function sbq_center_form_alter(&$form, &$form_state, $form_id) {
           unset($form['body']['und']['0']['format']);
           unset($form['body']['und']['0']['summary']);
           $form['actions']['submit'] = array(
-            '#type' => 'submit',
-            '#value' => '提问',
-            //'#attributes' => array('class'=>'use-ajax'),
-            '#ajax' => array(
-                'callback' => 'ajax_center_ask_callback',
-                'wrapper' => 'question-node-form',
-                'method' => 'replace',
-                'effect' => 'fade',
-                'progress' => array( 'type' => 'throbber', 'message' => '请稍候' ),
-            ),
+              '#type' => 'submit',
+              '#value' => '提问',
+              //'#attributes' => array('class'=>'use-ajax'),
+              '#ajax' => array(
+                  'callback' => 'ajax_center_ask_callback',
+                  'wrapper' => 'question-node-form',
+                  'method' => 'replace',
+                  'effect' => 'fade',
+                  'progress' => array( 'type' => 'throbber', 'message' => '请稍候' ),
+              ),
           );
         }
       }
@@ -1519,9 +1519,10 @@ function sbq_center_ask_form_submit($form, &$form_state) {
 /*
  * ajax_center_ask_callback
  */
+
 function ajax_center_ask_callback($form, &$form_state) {
   $body = $form_state['input']['body']['und'][0]['value'];
-  if (isset($body) && strlen(trim($body))>0) {
+  if (isset($body) && strlen(trim($body)) > 0) {
     $commands = array();
     module_load_include('inc', 'node', 'node.pages');
     $node = node_form_submit_build_node($form, $form_state);
@@ -1529,8 +1530,8 @@ function ajax_center_ask_callback($form, &$form_state) {
     node_save($node);
     $node_link = l(t('view'), 'node/' . $node->nid);
     $watchdog_args = array(
-      '@type' => $node->type,
-      '%title' => $node->title,
+        '@type' => $node->type,
+        '%title' => $node->title,
     );
 
     if ($insert) {
@@ -1553,8 +1554,7 @@ function ajax_center_ask_callback($form, &$form_state) {
       $commands[] = ajax_command_prepend('#sbq-center-ask-form', $success_msg);
       $commands[] = ajax_command_prepend('#block-views-my-qa-center-new .view-content', $nqs);
       // $commands[] = ajax_command_replace('#sbq-message-error', '');
-    }
-    else {
+    } else {
       // In the unlikely case something went wrong on save, the node will be
       // rebuilt and node form redisplayed the same way as in preview.
       drupal_set_message(t('The post could not be saved.'), 'error');
@@ -1574,4 +1574,44 @@ function ajax_center_ask_callback($form, &$form_state) {
       '#type' => 'ajax',
       '#commands' => $commands );
   ajax_deliver($page);
+}
+
+/**
+ * get sbq center node by user 
+ * @global type $user
+ * @param type $account one of array(account,uid,null)
+ * @return type node object
+ */
+function sbq_center_get_center_by_user($account = null) {
+  if (!$account) {
+    global $user;
+    $account = $user;
+  } else if (!is_object($account)) {
+    $obj = new stdClass();
+    $obj->uid = $account;
+    $account = $obj;
+  }
+  $nodes = node_load_multiple(array(), array( 'type' => SBQ_CENTER_NODE_TYPE, 'uid' => $account->uid, 'status' => 1 ));
+  return reset($nodes);
+}
+
+/**
+ *  get sbq center node
+ * @param type $nid one of array(null,nid)
+ * @return type node object
+ * @throws Exception
+ */
+function sbq_center_get_center($nid = null) {
+  if (!$nid) {
+    $nid = arg(1);
+  }
+  if ($node = node_load($nid)) {
+    if ($node->type != SBQ_CENTER_NODE_TYPE) {
+      return null;
+    }
+  } else {
+    return null;
+  }
+
+  return $node;
 }
