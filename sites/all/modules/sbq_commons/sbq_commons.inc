@@ -529,8 +529,7 @@ function _sbq_commons_block_html($delta) {
       $cpl = render($list);
       //操作
       $opt_link = l('操作', 'user/' . $user->uid . '/edit');
-      // $message_link = l('消息', 'user/');
-      $message_link = '';
+      $message_link = l('消息', 'messages');
       //勋章
       $user_badges = '';
       if (module_exists('user_badges')) {
