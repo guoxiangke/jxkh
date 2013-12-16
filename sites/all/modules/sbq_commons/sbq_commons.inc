@@ -537,7 +537,7 @@ function _sbq_commons_block_html($delta) {
       }
       $block_html = <<<EOF
                    <i class="option">$opt_link</i>
-                 <!--  <i class="message">$message_link</i> -->
+                   <i class="message">$message_link</i> 
                    <div id="sbq_picture">$picture</div>
                    <div id="sbq_name">$user->name</div>
                    $cpl
@@ -675,7 +675,7 @@ function _sbq_commons_user_recommonds_friends_ids($roles, $num = 2, $account = n
       "u.uid not in ( select requestee_id from user_relationships " .
       "where requester_id = {$account->uid}) " .
       "and u.uid not in( select requester_id from user_relationships where requestee_id = {$account->uid}) " .
-      "and u.uid <> {$account->uid} ".
+      "and u.uid <> {$account->uid} " .
       "and u.uid in ( select uid from users_roles where rid = {$roles}) order by uid asc limit 0,{$num}");
   $result = $query_user->fetchAllAssoc('uid');
 
