@@ -96,6 +96,7 @@ scripts[] = js/fix.js
 ;   <?php print $header_top; ?>
 
 regions[header]         = Header
+regions[banner]         = Banner
 regions[navigation]     = Navigation bar
 regions[highlighted]    = Highlighted
 regions[help]           = Help
