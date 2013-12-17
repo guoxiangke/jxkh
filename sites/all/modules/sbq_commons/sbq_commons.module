@@ -65,9 +65,7 @@ function sbq_commons_menu() {
       'delivery callback' => 'ajax_deliver',
       'type' => MENU_CALLBACK,
       'page callback' => 'sbq_og_ui_subscribe_ajax',
-      'page arguments' => array(
-          1,
-          2 ),
+      'page arguments' => array( 1, 2 ),
       // Function will take care of permissions, as we want to show "you are
       // already a member of the group" to group members, however it is not
       // possible to give authenticated group members the "subscribe" permissions.
@@ -439,6 +437,18 @@ function sbq_commons_preprocess_page(&$variables) {
  */
 function sbq_commons_user_view($account, $view_mode, $langcode) {
   sbq_commons_user_relationship_view($account, $view_mode, $langcode);
+}
+
+/**
+ * Implements hook_user_view_alter().
+ */
+function sbq_commons_user_view_alter(&$build) {
+  global $user;
+  if ($build['#account']->uid == $user->uid ) {
+    $build = array();
+  } else {
+    // change sth to control display for other user
+  }
 }
 
 /**
@@ -1372,7 +1382,7 @@ function sbq_commons_user_login($edit, $account) {
 }
 
 /**
- * 
+ *
  * @global type $user
  * @param type $account one of uid,null,account
  * @return int

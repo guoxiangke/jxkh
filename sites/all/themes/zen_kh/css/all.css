@@ -1,9 +1,23 @@
 /*------fixbug------*/
 nav,
 input { outline: none; }
+/*------font------*/
+html { font-family: "Arial", "Verdana", "宋体"; color: #585858; font-size: 12px; }
+#header,
+#footer,
+#page-title,
+.q-title,
+.node-title,
+.title,
+.block-title,
+.menu__item,
+#page label,
+.form-submit,
+.form-actions .message,
+.more-link { font-family: "Microsoft Yahei", "微软雅黑" !important; }
+#page { padding-bottom: 30px; }
 /*all*/
-.page-index #page { background: none; box-shadow: none; }
-.sidebar-second #content { float: left; width: 690px; padding: 15px !important; border: 1px #CCCCCC solid !important; overflow: hidden; }
+.sidebar-second #content { float: left; width: 690px; padding: 10px !important; border: 1px #E5E5E5 solid !important; overflow: hidden; }
 .page-groups #content { border: none !important; padding: 0px !important; }
 /*.sidebar-first #content { margin-left: 231px; width: 733px; background: none; padding: 0; border: none!important }*/
 .sidebar-first #content { width: 730px; margin-left: 230px; margin-right: -960px; }
@@ -34,20 +48,22 @@ input { outline: none; }
 .page-user #block-sbq-commons-sbq-quick-ask .form-actions .ajax-progress { float: left; width: 56px; height: 56px; position: absolute; right: 0; top: 0px; z-index: 2; overflow: hidden; }
 .page-user #block-sbq-commons-sbq-quick-ask .form-actions .ajax-progress .message { width: 56px; height: 56px; line-height: 56px; margin: 0px; padding: 0px; background: #E5E5E5; color: #666; text-align: center; }
 .page-user #block-sbq-commons-sbq-quick-ask .form-actions .ajax-progress .throbber { display: none; }
-.page-user #content .view-content { float: none; }
+/*.page-user #content .view-content { float: none; }*/
 .page-user #content .block { float: left; width: 100%; margin: 0px 0px 15px 0px; position: relative; }
 .page-user #content .block .block { margin: 0px; }
-#content .more-link { position: absolute; right: 0; top: -23px; z-index: 1; background: url(../images/more.png) no-repeat; background-position: right; }
+.page-user #content .more-link { position: absolute; right: 0; top: -32px; z-index: 1; background: url(../images/more.png) no-repeat; background-position: right; }
+.page-user #content #block-views-blog-my-blog-block .more-link { right: 11px; top: -32px; }
 #content .more-link a { padding: 0px 14px 2px 0px; }
-.page-user #block-views-blog-my-blog-block .more-link { top: 20px; right: 10px; }
-.page-user #edit-body-und-0-value { float: left; width: 444px; height: 56px; line-height: 23px; padding: 5px; color: #a3a3a3; border: none; resize: none; background: transparent; }
+.page-user #edit-body-und-0-value { float: left; width: 444px; height: 56px; line-height: 22px; padding: 5px; color: #666; border: none; resize: none; background: transparent; }
 .page-user .grippie { float: left; }
 .page-user .text-format-wrapper .form-item #block-sbq-commons-sbq-quick-ask #edit-actions--2 { position: relative; right: 0px; top: 26px; z-index: 1; }
-.page-user .sbq-user-add-post { height: 22px; line-height: 22px; position: absolute; right: 260px; top: 0px; background: url(../images/post2.png) no-repeat left -22px; font-size: 16px; padding-left: 29px; display: inline-block; font-weight: 700; z-index: 9; }
+.page-user .sbq-user-add-post { height: 22px; line-height: 22px; position: absolute; right: 260px; top: 0px; background: url(../images/post2.png) no-repeat left -22px; font-size: 16px; padding-left: 29px; display: inline-block; font-weight: 700; z-index: 9; font-family: "Microsoft Yahei", "微软雅黑" !important; }
 #body-add-more-wrapper label { height: 22px; line-height: 22px; background: url(../images/post.png) no-repeat left center; padding-left: 29px; font-size: 16px; color: #585858; margin-bottom: 5px; }
 .page-user #block-sbq-commons-sbq-quick-ask { position: relative; }
 .page-user .sbq-user-add-post a { color: #585858; }
 .page-user #content .messages--status { float: left; width: 100%; margin: 0px 0px 20px 0px;/* position: absolute; top: 0; left: 0; z-index: 999; opacity:0.6; */ }
+.page-user .region-sidebar-second .ajax-progress { display: none; }
+.page-user #edit-og-group-ref { display: none; }
 /*user-login-form*/
 #user-login-form .captcha { width: 186px; margin: 0 auto; padding: 10px 0px 15px 0px; border: none; }
 #user-login-form .captcha .fieldset-description { display: none; }
@@ -78,7 +94,7 @@ input { outline: none; }
 /*right*/ 
 .region-sidebar-second { width: 260px !important; margin-left: 700px !important; }
 .region-sidebar-second .contextual-links-region .more-link,
-.region-sidebar-second .block-views .more-link { background: #F00; position: absolute; top: 4px; right: 5px; background: url(../images/wm.png) no-repeat right center; }
+.region-sidebar-second .block-views .more-link { background: #F00; position: absolute; top: 5px; right: 5px; background: url(../images/wm.png) no-repeat right center; }
 .region-sidebar-second .contextual-links-region .more-link a,
 .region-sidebar-second .block-views .more-link a { padding-right: 15px; }
 /*------20063------*/
@@ -88,7 +104,7 @@ input { outline: none; }
 #block-sbq-commons-sbq-user-profile em { font-size: 12px; }
 #block-sbq-commons-sbq-user-profile #sbq_name { margin: 10px 0px 0px 0px; }
 #block-sbq-commons-sbq-user-profile .item-list { float: left; width: 80px; overflow: hidden; }
-#block-sbq-commons-sbq-user-profile .item-list li { float: left; width: 100%; height: 20px; line-height: 20px; overflow: hidden; word-break: break-all; word-wrap: break-word; }
+#block-sbq-commons-sbq-user-profile .item-list li { float: left; width: 100%; height: 20px; line-height: 20px; font-size: 12px; overflow: hidden; word-break: break-all; word-wrap: break-word; }
 #block-sbq-commons-sbq-user-profile #user_badges { float: left; width: 100%; height: 16px; margin: 5px 0px 0px 0px; overflow: hidden; }
 #block-sbq-commons-sbq-user-profile #user_badges span { float: left; height: 16px; line-height: 16px; margin: 0px 5px 0px 0px; }
 #block-sbq-commons-sbq-user-profile #user_badges .user_badges { float: left; height: 16px; height: 16px; margin: 0px 2px 0px 0px !important; }

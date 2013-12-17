@@ -1,8 +1,8 @@
 /*news*/
 .section-news #page { }
-.section-news #content { float: left; width: 688px; padding: 15px !important; /*background: #FFF;*/ border: 1px #CCCCCC solid !important; overflow: hidden; }
+/*.section-news #content { float: left; width: 690px; padding: 15px !important; border: 1px #E5E5E solid !important; overflow: hidden; }*/
 .section-news #content .breadcrumb { display: none !important; }
-.section-news #content .page__title { line-height: 26px; padding: 0px 0px 10px 0px; font-size: 20px; border-bottom: 1px solid #E5E5E5; font-weight: normal; text-align: center; }
+.section-news #content #page-title { line-height: 36px; padding: 0px 0px 10px 0px; font-size: 24px; border-bottom: 1px solid #E5E5E5; font-weight: normal; text-align: center; }
 .section-news #content .view-mode-full { float: left; width: 100%; margin: 20px 0px 0px 0px; }
 /*.section-news */#content .view-mode-full .links { float: left; margin: 10px 0px 0px 0px; color: #666 }
 /*.section-news */#content .view-mode-full .links a { padding: 0px 5px; color: #0066CC; }
@@ -13,7 +13,7 @@
 /*comment*/
 #comments { float: left; width: 100%; margin: 15px 0px 0px 0px; }
 #comments .title_wrap { float: left; width: 100%; height: 30px; border-top: 2px #E5E5E5 solid; border-bottom: 1px #E5E5E5 solid; }
-#comments .comments__title { float: left; width: 80px; height: 30px; line-height: 26px; margin: 0px !important; padding: 0px 15px; border-top: 2px #16AFC2 solid; font-size: 14px !important; font-weight: normal; position: relative; top: -2px; text-align: center; background: none !important; color: #585858 !important; }
+#comments .comments__title { float: left !important; width: 80px; height: 30px; line-height: 30px !important; margin: 0px !important; padding: 0px 15px; border-top: 2px #16AFC2 solid; font-size: 14px !important; font-weight: normal; position: relative; top: -2px; text-align: center; background: none !important; color: #585858 !important; }
 #comment-wrapper { float: left; width: 100%; }
 #comment-wrapper .comment { float: left; width: 100%; border-bottom: 1px #E5E5E5 solid; padding: 10px 0px; }
 #comment-wrapper .user-picture,
@@ -76,7 +76,6 @@
 .page-taxonomy .node-blog.node-teaser { float: left; width: 100%; padding: 5px 0px; border-bottom: 1px #CCCCCC dotted; }
 .page-taxonomy .node-blog.node-teaser header { float: left; width: 100%; position: relative; overflow: hidden; }
 .page-taxonomy .node-blog.node-teaser .node-title { float: left; width: 100%; line-height: 26px; font-size: 14px; font-weight: bold; }
-.page-taxonomy .node-blog.node-teaser .node-title a { color: #0066CC; }
 .page-taxonomy .node-blog.node-teaser .submitted { float: left; width: 100%; margin: 0px; font-size: 12px; }
 .page-taxonomy .node-blog.node-teaser .submitted span { float: left; height: 26px; line-height: 26px; }
 .page-taxonomy .node-blog.node-teaser .user-picture { float: left; width: 26px; height: 26px; margin: 0px 5px 0px 0px; overflow: hidden; }
@@ -90,8 +89,7 @@
 .page-news .view-display-id-news .view-content .views-row { float: left; width: 100%; line-height: 20px; padding: 10px 0px; border-bottom: 1px #CCC dotted; position: relative; }
 .page-news .view-display-id-news .view-content .views-row-last { border: none; }
 .page-news .view-display-id-news .view-content .views-row .views-field-field-image { float: left; width: 160px; height: 106px; margin: 0px 10px 0px 0px; overflow: hidden; }
-.page-news .view-display-id-news .view-content .views-field-title { float: left; width: 370px; height: 20px; overflow: hidden; }
-.page-news .view-display-id-news .view-content .views-field-title a { color: #0066CC; }
+.page-news .view-display-id-news .view-content .views-field-title { float: left; width: 370px; height: 20px; line-height: 20px; font-weight: bold; overflow: hidden; }
 .page-news .view-display-id-news .view-content .views-field-created { color: #666; font-size: 12px; position: absolute; top: 10px; right: 0; }
 .page-news .view-display-id-news .view-content .views-field-body { float: left; width: 486px; height: 80px; margin: 6px 0px 0px 0px; overflow: hidden; font-size: 12px; }
 .page-news .view-display-id-news .view-content .views-field-body p { margin: 0px; }
@@ -265,9 +263,9 @@ display: none;
 .page-question #content .question .q-body > .pull-left { float: left; width: 20px; margin: 0px 0px 0px 5px; }
 /*all questions right*/
 .page-question #content .question .q-body .q-margin { float: left; width: 100%; position: relative; }
-.page-question #content .question .q-body { float: left; width: 100%; line-height: 22px; padding: 10px 0px; word-break: break-all; font-size: 12px; }
+.page-question #content .question .q-body { float: left; width: 100%; line-height: 24px; padding: 5px 0px; word-break: break-all; font-size: 12px; }
 .page-question #content .question .q-body p { margin: 0px; }
-.page-question #content .question .tags { float: left; width: 100%; margin: 0px 0px 5px 0px; }
+.page-question #content .question .tags { float: left; width: 100%; margin: 5px 0px; }
 .page-question #content .question .tags .tags-label { float: left; width: 35px; }
 .page-question #content .question .tags a { color: #0066CC; }
 .page-question #content .question .tags .sbq-qa-flag_wrap { float: left; width: 550px; }
@@ -281,7 +279,7 @@ display: none;
 .page-question #content .question .q-info { float: left; width: 60px; margin: 0px 10px 0px 0px; }
 .page-question #content .question .q-info .author-item a,
 .page-question #content .question .q-info .author-item img { float: left; width: 60px; height: 60px; border: none; }
-.page-question #content .question .q-info .author-item span { float: left; width: 100%; margin: 0px; padding: 0px; }
+.page-question #content .question .q-info .author-item span { float: left; width: 100%; line-height: 20px; margin: 0px; padding: 0px; text-align: center; }
 .page-question #content .question .q-info .author-item .create a { float: left; width: 100%; height: 20px; line-height: 20px; margin: 0px; padding: 0px; border-radius: 0; color: #0066CC; font-size: 12px; text-align: center; font-weight: normal; word-break: break-all; word-wrap: break-word; overflow: hidden; }
 .page-question #content .question .q-content { float: left; width: 586px; overflow: hidden; }
 .page-question #content .question .head_wrap { float: left; width: 100%; height: 30px; line-height: 30px; border-bottom: 1px #CCCCCC dotted; overflow: hidden; }
@@ -312,9 +310,9 @@ display: none;
 .page-question #content .form-textarea-wrapper { float: left; width: 100%; border-left: 1px #ccc solid; border-right: 1px #ccc solid; border-bottom: 1px #ccc solid; }
 .page-question #content .question .comment_textarea textarea { width: 100%; height: 90px; line-height: 20px; border: none; border-right: none; resize: none; padding: 5px; }
 .page-question #content .form-actions { float: left; width: 100%; height: 30px; line-height: 30px; margin: 5px 0px 0px 0px; }
-.page-question #content .form-submit { float: right; width: 60px; height: 30px; margin: 0px; padding: 0px; text-align: center; border: none !important; background: #168A9B; color: #FFF; font-size: 16px; }
-.page-question #content .ajax-progress { float: right; margin: 0px -60px 0px 0px; }
-.page-question #content .message { float: right; width: 60px; height: 30px; margin: 0px; padding: 0px; text-align: center; background: #E5E5E5; color: #666; font-size: 14px; }
+.page-question #content .form-submit { float: right; width: 70px; height: 30px; margin: 0px; padding: 0px; text-align: center; border: none !important; background: #168A9B; color: #FFF; font-size: 14px; font-weight: bold; }
+.page-question #content .ajax-progress { float: right; margin: 0px -70px 0px 0px; }
+.page-question #content .message { float: right; width: 70px; height: 30px; margin: 0px; padding: 0px; text-align: center; background: #E5E5E5; color: #666; font-size: 14px; font-weight: bold; }
 .page-question #content .throbber { display: none; }
 .page-question #content .messages--error { margin: 0px; }
 /*comments_btn*/
