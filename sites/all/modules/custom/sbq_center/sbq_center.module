@@ -1541,14 +1541,14 @@ function ajax_center_ask_callback($form, &$form_state) {
       $form_state['values']['nid'] = $node->nid;
       $form_state['nid'] = $node->nid;
       $title = l($node->title, 'node/' . $node->nid);
-      $str_date = format_date(time(),'custom','Y-m-d');
-      $nqs  = '<div class="views-row views-row-1 views-row-odd views-row-first">'
-        . '<div class="views-field views-field-title"><span class="field-content">'.$title.'</span></div>'
-        . '<div class="views-field views-field-field-mark-question-resolved"><div class="field-content">未解决</div></div>'
-        . '<div class="views-field views-field-created"><span class="field-content">'.$str_date.'</span></div></div>';
+      $str_date = format_date(time(), 'custom', 'Y-m-d');
+      $nqs = '<div class="views-row views-row-1 views-row-odd views-row-first">'
+          . '<div class="views-field views-field-title"><span class="field-content">' . $title . '</span></div>'
+          . '<div class="views-field views-field-field-mark-question-resolved"><div class="field-content">未解决</div></div>'
+          . '<div class="views-field views-field-created"><span class="field-content">' . $str_date . '</span></div></div>';
       $success_msg = '<div id="sbq-message-status" class="messages--status messages status sbq-message">'
-        .'<h2 class="element-invisible">状态消息</h2>'
-        .'<pre>'.$node->title.' 已经提交给中心</pre></div>';
+          . '<h2 class="element-invisible">状态消息</h2>'
+          . '<pre>' . $node->title . ' 已经提交给中心</pre></div>';
       $new_textarea = '<textarea class="text-full ckeditor-mod form-textarea" id="edit-body-und-0-value" name="body[und][0][value]" cols="60" rows="20"></textarea>';
       $commands[] = ajax_command_replace('#edit-body-und-0-value', $new_textarea);
       $commands[] = ajax_command_prepend('#sbq-center-ask-form', $success_msg);
@@ -1562,10 +1562,10 @@ function ajax_center_ask_callback($form, &$form_state) {
     }
   } else {
     $error_msg = '<div id="sbq-message-error" class="messages--error messages error sbq-message">'
-      .'<h2 class="element-invisible">错误信息</h2>'
-      .'<ul class="messages__list">'
-      .'<li class="messages__item">请输入您的问题</li>'
-      .'</ul></div>';
+        . '<h2 class="element-invisible">错误信息</h2>'
+        . '<ul class="messages__list">'
+        . '<li class="messages__item">请输入您的问题</li>'
+        . '</ul></div>';
     $commands[] = ajax_command_prepend('#sbq-center-ask-form', $error_msg);
     $form_state['rebuild'] = TRUE;
   }
@@ -1604,7 +1604,7 @@ function sbq_center_get_center_by_user($account = null) {
 function sbq_center_get_center($nid = null) {
   if (!$nid) {
     $nid = arg(1);
-  }
+  } 
   if ($node = node_load($nid)) {
     if ($node->type != SBQ_CENTER_NODE_TYPE) {
       return null;
@@ -1612,6 +1612,5 @@ function sbq_center_get_center($nid = null) {
   } else {
     return null;
   }
-
   return $node;
 }
