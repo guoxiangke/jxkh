@@ -4,14 +4,17 @@ img { border: none; }
 /*hide*/
 .breadcrumb { display: none; }
 /*------font------*/
-html { font-family: "Arial", "Verdana", "宋体"; color: #585858; font-size: 12px; }
+html { font-family: "SimSun", "宋体", "Arial"; color: #585858; font-size: 12px; }
 #header,
 #footer,
 .block-title,
 .more-link,
 label,
+#page-title,
 .node-type-sbq-center #sbq-banner .views-field-title,
-.node-type-sbq-center #sbq-banner .views-field-body { font-family: "Microsoft Yahei", "微软雅黑" !important; }
+.node-type-sbq-center #sbq-banner .views-field-body { font-family: "Microsoft Yahei", "微软雅黑", "Arial" !important; }
+a { color: #585858; }
+a:hover { color: #16B4C7; }
 .element-invisible { display: none; }
 /*------head------*/
 #secondary-menu { line-height: 25px; position: fixed; top: 0; left: 0; z-index: 999; height: 25px; width: 100%; float: none; background: url(../images/hbg.png) repeat-x 0 0; font-size: 12px; color: #fff }
@@ -58,8 +61,9 @@ label,
 /*------content------*/
 #content { float: left; width: 690px; }
 /*------left------*/
-.sidebar-second .region-sidebar-second { float: left; width: 260px; margin: 0px 0px 0px 10px; }
 /*------right------*/
+.sidebar-second .region-sidebar-second { float: left; width: 260px; margin: 0px 0px 0px 10px; }
+/*------message------*/
 .sbq-message,
 .messages--status { line-height: 20px; }
 .messages,

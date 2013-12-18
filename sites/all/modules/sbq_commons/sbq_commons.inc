@@ -545,21 +545,20 @@ function _sbq_commons_block_html($delta) {
 EOF;
       break;
     case 'sbq_quick_ask':
-      if (!$user->uid) {
-        return;
+      if ($user->uid && arg(1)==$user->uid) {
+        module_load_include('inc', 'node', 'node.pages');
+        $node = (object) array(
+                'uid' => $user->uid,
+                'name' => (isset($user->name) ? $user->name : ''),
+                'type' => 'question',
+                'language' => LANGUAGE_NONE
+        );
+        $question_node_form = drupal_get_form('question_node_form', $node);
+        $block_html = '<div class="sbq-question-node-add-form">'
+            . '<div class="sbq-user-add-post">' . l('发布文章', 'node/add/blog') . '</div>'
+            . render($question_node_form)
+            . '</div>';
       }
-      module_load_include('inc', 'node', 'node.pages');
-      $node = (object) array(
-              'uid' => $user->uid,
-              'name' => (isset($user->name) ? $user->name : ''),
-              'type' => 'question',
-              'language' => LANGUAGE_NONE
-      );
-      $question_node_form = drupal_get_form('question_node_form', $node);
-      $block_html = '<div class="sbq-question-node-add-form">'
-          . '<div class="sbq-user-add-post">' . l('发布文章', 'node/add/blog') . '</div>'
-          . render($question_node_form)
-          . '</div>';
       break;
     case 'sbq_add_ask_link':
       if (!$user->uid) {
