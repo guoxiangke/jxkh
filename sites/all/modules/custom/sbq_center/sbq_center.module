@@ -1604,7 +1604,7 @@ function sbq_center_get_center_by_user($account = null) {
 function sbq_center_get_center($nid = null) {
   if (!$nid) {
     $nid = arg(1);
-  }
+  } 
   if ($node = node_load($nid)) {
     if ($node->type != SBQ_CENTER_NODE_TYPE) {
       return null;
@@ -1612,6 +1612,5 @@ function sbq_center_get_center($nid = null) {
   } else {
     return null;
   }
-  dpm($nid);
   return $node;
 }

@@ -26,14 +26,14 @@ function sbq_center_reservation_menu() {
       'page callback' => 'sbq_center_reservation',
       'page arguments' => array( 1, 3 ),
       'access callback' => 'sbq_center_reservation_access',
-      'access arguments' => array( 'form', NULL),
+      'access arguments' => array( 'form', NULL ),
       'file' => 'sbq_center_reservation.inc',
       'type' => MENU_CALLBACK,
   );
 
   return $items;
 }
-         
+
 function sbq_center_reservation_access($type, $account = NULL) {
   return TRUE;
 }
@@ -49,21 +49,25 @@ function sbq_center_reservation_access($type, $account = NULL) {
 //      if ($sbq_center = sbq_center_get_center()) {
 ////        $form['submitted']['sbq_center_id']['#value'] = $sbq_center->nid;
 ////        $form['submitted']['sbq_center_formcategory']['#value'] = SBQ_CENTER_RESERVATION_TYPE_OUTPATIMENT;
+//        dpm($form);
+//        $webform['submitted']['sbq_center_name']['#value'] = '斯蒂芬';
 //      }
 //    }
 //  }
+//  dpm($form_id);
 //}
 
 /**
  * get sbq center reservation form only in sbq center page true running
  * @return type
  */
-//function sbq_center_reservation_form(&$form, $form_state, $sbq_center_reservation_type) {
-//  if ($sbq_center = sbq_center_get_center()) {
-//    $form = &drupal_get_form('webform_client_form_' . SBQ_CENTER_RESERVATION_NODE_ID, node_load(SBQ_CENTER_RESERVATION_NODE_ID), array());
-//    $form['submitted']['sbq_center_id']['#value'] = $sbq_center->nid;
-//    $form['submitted']['sbq_center_formcategory']['#value'] = $sbq_center_reservation_type;
-//  }
-//  dpm($sbq_center);
-//  return $form;
-//}
+function sbq_center_reservation_sheet($sbq_center_reservation_type) {
+  if ($sbq_center = sbq_center_get_center()) {
+    $node = node_load(SBQ_CENTER_RESERVATION_NODE_ID);
+    webform_node_view($node, 'full');
+    $webform = $node->content['webform']['#form'];
+    $webform['submitted']['sbq_center_id']['#value'] = $sbq_center->nid;
+    $webform['submitted']['sbq_center_formcategory']['#value'] = $sbq_center_reservation_type;
+  }
+  return isset($webform) ? $webform : '';
+}
