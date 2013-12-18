@@ -1,27 +1,21 @@
 ; Drupal's .info files allow themers to easily specify some of the static
 ; properties of your theme. Properties such as its name, stylesheets,
 ; javascripts, and block regions.
-;
+
 ; Drupal 7 stores a cache of the data in this .info files. If you modify any
 ; lines in this file, you MUST refresh Drupal 7's cache by simply visiting the
 ; Appearance page at admin/appearance.
 
-
-
 ; The name, description and screenshot used for this theme on the Appearance
 ; page at admin/appearance.
 
-screenshot  = screenshot.png
-name        = Tiger Theme 7.x
+screenshot = screenshot.png
+name = Tiger Theme 7.x
 description = Tiger Theme for SBQ
-
-
 
 ; This theme is compatible with Drupal 7 core.
 
-core        = 7.x
-
-
+core = 7.x
 
 ; This section controls the CSS files for your theme. There are 3 different
 ; things you can do with a "stylesheets" line:
@@ -32,14 +26,14 @@ core        = 7.x
 ; - Remove a module's stylesheet. If you specify the name of a Drupal core or
 ;   contrib module's stylesheets, Drupal will remove that stylesheet if you do
 ;   NOT include a file with that name with your theme.
-;
+
 ; stylesheets[MEDIA][] = FILE
-;
+
 ; The "FILE" is the name of the stylesheet to add/override/remove.
 ; The "MEDIA" in the first set of brackets is a media type or a media query.
 ; Typical CSS media types include "all", "screen", "print", and "handheld". A
 ; typical media query is "screen and (max-width: 320px)".
-;
+
 ; CSS2.1 media types: http://www.w3.org/TR/CSS21/media.html#media-types
 ; CSS3 media queries: http://www.w3.org/TR/css3-mediaqueries/
 
@@ -51,7 +45,6 @@ stylesheets[all][] = system.base.css
 
 ; Then we add our own stylesheet.
 stylesheets[all][] = css/styles.css
-
 
 ; Optionally add some JavaScripts to your theme.
 scripts[] = js/script.js
@@ -66,24 +59,22 @@ scripts[] = js/script.js
 ; And you'll use this variable in maintenance-page.tpl.php:
 ;   <?php print $header_top; ?>
 
-regions[header]         = Header
-regions[navigation]     = Navigation bar
-regions[highlighted]    = Highlighted
-regions[help]           = Help
-regions[content]        = Content
-regions[sidebar_first]  = First sidebar
+regions[header] = Header
+regions[navigation] = Navigation bar
+regions[highlighted] = Highlighted
+regions[help] = Help
+regions[content] = Content
+regions[sidebar_first] = First sidebar
 regions[sidebar_second] = Second sidebar
-regions[footer]         = Footer
-regions[bottom]         = Page bottom
+regions[footer] = Footer
+regions[bottom] = Page bottom
 
 ; The page_top and page_bottom regions are hidden, which means they will not
 ; show up on the blocks administration page. But they are required in order for
 ; the html.tpl.php to work properly, so do not delete them.
 
-regions[page_top]       = Page top
-regions[page_bottom]    = Page bottom
-
-
+regions[page_top] = Page top
+regions[page_bottom] = Page bottom
 
 ; Various page elements output by the theme can be toggled on and off. The
 ; "features" control which of these check boxes display on the
