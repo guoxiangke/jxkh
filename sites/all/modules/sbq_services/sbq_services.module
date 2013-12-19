@@ -5,10 +5,12 @@
  */
 function sbq_services_services_resources() {
   module_load_include('inc', 'sbq_services', 'resources/grow_records_resource');
+  module_load_include('inc', 'sbq_services', 'resources/center_resource');
   $resources = array(
       '#api_version' => 3002,
   );
   $resources += grow_records_resource_definition();
+  $resources += center_resource_definition();
   return $resources;
 }
 
