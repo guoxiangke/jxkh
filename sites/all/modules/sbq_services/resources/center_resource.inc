@@ -329,6 +329,5 @@ function _center_question_format($cneterid, $data, $target = 'node', $is_list = 
     $result[] = $node;
   }
 
- // return $result;
   return $result;
 }
