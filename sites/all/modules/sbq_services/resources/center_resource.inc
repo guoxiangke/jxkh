@@ -290,8 +290,10 @@ function center_question_edu_query($centerid, $fun = NULL, $page, $fields, $para
   $view_art->preview();
   $article = array();
   foreach ($view_art->result as $key => $value) {
+    $node = node_load($value->nid);
     $art['title'] = $value->node_title;
     $art['nid'] = $value->nid;
+    $art['body'] = $node->body['und'][0]['value'];
     $article[] = $art;
   }
   return array( 'video' => $video, 'article' => $art );
