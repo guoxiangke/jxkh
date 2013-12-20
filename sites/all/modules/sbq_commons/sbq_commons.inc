@@ -519,27 +519,34 @@ function _sbq_commons_block_html($delta) {
   global $user;
   switch ($delta) {
     case 'sbq_user_profile':
-      if (!$user->uid) {
+      $arg1=0;
+      $arg1=arg(1);
+      if (arg(0)=='user' && ($arg1>0 && $arg1!=$user->uid)) {
+        $account = user_load($arg1);
+      } else {
+        $account = $user;
+      }
+      if (!$account->uid) {
         return;
       }
-      $picture = sbq_commons_user_avart();
+      $picture = sbq_commons_user_avart($account);
       //积分
-      $list = userpoints_get_points_list();
+      $list = userpoints_get_points_list($account);
       unset($list['actions']);
       $cpl = render($list);
       //操作
-      $opt_link = l('操作', 'user/' . $user->uid . '/edit');
+      $opt_link = l('操作', 'user/' . $account->uid . '/edit');
       $message_link = l('消息', 'messages');
       //勋章
       $user_badges = '';
       if (module_exists('user_badges')) {
-        $user_badges = user_badges_for_uid($user->uid);
+        $user_badges = user_badges_for_uid($account->uid);
       }
       $block_html = <<<EOF
                    <i class="option">$opt_link</i>
-                   <i class="message">$message_link</i> 
+                   <i class="message">$message_link</i>
                    <div id="sbq_picture">$picture</div>
-                   <div id="sbq_name">$user->name</div>
+                   <div id="sbq_name">$account->name</div>
                    $cpl
                    <div id="user_badges"><span>勋章</span><a href="/badges">$user_badges</a></div>
 EOF;

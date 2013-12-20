@@ -34,12 +34,12 @@ html { font-family: "Arial", "Verdana", "宋体"; color: #585858; font-size: 12p
 .page-doctor-register .tabs-primary,
 .page-user-login .tabs-primary,
 .page-customer .tabs-primary { display: none; }
-/*------page-user------*/ 
+/*------page-user------*/
 .logged-in.page-user #page-title { display: none; }
 .page-user .tabs-primary,
 .page-user .field-widget-image-image,
 .page-user #edit-field-tags { display: none; }
-.page-user .profile { display: none; }
+/*.page-user .profile { display: none; }*/
 .page-user .text-format-wrapper .form-item { float: left; width: 100%; margin: 0px; }
 .page-user .field-widget-text-textarea-with-summary { float: left; width: 100%; }
 .page-user .field-widget-text-textarea-with-summary .resizable-textarea { float: left; width: 100%; padding: 6px 0px 0px 0px; background: url(../images/pb2.png) no-repeat left top; }
@@ -91,7 +91,7 @@ html { font-family: "Arial", "Verdana", "宋体"; color: #585858; font-size: 12p
 #sbq_doctor_quick_register .modal-header { background: url(../images/quick_register_head.png) repeat-x !important; }
 #edit-profile-doctor-private-profile-field-doctor-license-und-0-upload-button { display: none !important; }
 .front .sbq_doctor_register_button #status { display: none !important; }
-/*right*/ 
+/*right*/
 .region-sidebar-second { width: 260px !important; margin-left: 700px !important; }
 .region-sidebar-second .contextual-links-region .more-link,
 .region-sidebar-second .block-views .more-link { background: #F00; position: absolute; top: 5px; right: 5px; background: url(../images/wm.png) no-repeat right center; }

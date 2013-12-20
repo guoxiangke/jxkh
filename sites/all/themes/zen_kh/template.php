@@ -232,7 +232,7 @@ function zen_kh_preprocess_html(&$variables) {
  * Remove user profile default content
  */
 function zen_kh_preprocess_user_profile (&$variables, $hook) {
-  unset($variables['user_profile']);
+  //unset($variables['user_profile']);
 }
 
 /**

@@ -448,6 +448,8 @@ function sbq_commons_user_view_alter(&$build) {
     $build = array();
   } else {
     // change sth to control display for other user
+    $account = $build['#account'];
+
   }
 }
 

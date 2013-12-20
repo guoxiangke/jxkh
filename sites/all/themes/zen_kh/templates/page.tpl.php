@@ -73,7 +73,9 @@
     <?php print render($page['header']); ?>
   </div>
 </header>
-
+<div id="sbq-banner">
+  <?php print render($page['banner']); ?>
+</div>
 <div id="page">
 
   <div id="main">
