@@ -11,6 +11,8 @@ function center_resource_definition() {
   $definition['center']['operations'] = array(
   );
 
+ 
+
   $definition['center']['targeted_actions']['question'] = array(
       'help' => 'create center question',
       'file' => array( 'type' => 'inc', 'module' => 'sbq_services', 'name' => 'resources/center_resource' ),
@@ -263,7 +265,7 @@ function center_question_comment($centerid, $data) {
 }
 
 function center_question_comment_query($centerid, $fun = NULL, $questionid, $page, $fields, $parameters, $pagesize) {
-  
+
   if ($fun) {
     if (is_numeric($fun)) {
       //$parameters['nid'] = $fun;
@@ -289,7 +291,7 @@ function center_question_comment_query($centerid, $fun = NULL, $questionid, $pag
     $nids = array_keys($result['node']);
   }
 
-  $nodes = node_load_multiple($nids);  
+  $nodes = node_load_multiple($nids);
   $nodes = _center_question_comment_formate($nodes, 'data', TRUE);
 
   $data = array(
@@ -428,7 +430,7 @@ function center_question_edu_query($centerid, $fun = NULL, $page, $fields, $para
     $art['body'] = $node->body['und'][0]['value'];
     $article[] = $art;
   }
-  return array( 'video' => $video, 'article' => $art );
+  return array( 'video' => $video, 'article' => $article );
 }
 
 /**
@@ -474,7 +476,7 @@ function _center_question_comment_formate($data, $target = 'node', $is_list = FA
   }
   $result = array();
   foreach ($data as $key => $value) {
-    $value = (array)$value;
+    $value = (array) $value;
     if ($target == 'node') {
       $node['title'] = $value['title'];
       $node['type'] = 'answer';
