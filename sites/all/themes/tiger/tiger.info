@@ -44,9 +44,11 @@ stylesheets[all][] = system.theme.css
 stylesheets[all][] = system.base.css
 
 ; Then we add our own stylesheet.
-stylesheets[all][] = css/styles.css
+stylesheets[all][] = css/general.css
 
 ; Optionally add some JavaScripts to your theme.
+scripts[] = js/jquery-1.8.3.min.js
+scripts[] = js/interface.js
 scripts[] = js/script.js
 
 ; In the page.tpl, the contents of the region are output with a
@@ -75,6 +77,10 @@ regions[bottom] = Page bottom
 
 regions[page_top] = Page top
 regions[page_bottom] = Page bottom
+
+regions[front_left] = Front Page left
+regions[front_middle] = Front Page middle
+regions[front_right] = Front Page right
 
 ; Various page elements output by the theme can be toggled on and off. The
 ; "features" control which of these check boxes display on the

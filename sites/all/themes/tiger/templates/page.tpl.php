@@ -154,3 +154,168 @@
     </div></div> <!-- /.section, /#footer -->
 
   </div></div> <!-- /#page, /#page-wrapper -->
+<!---------------------------------------------------------------------------->
+<div class="header">
+  <div class="header_inner">
+    <div class="sbq_logo">
+      <div class="sbq_img"><a href="#"><img src="image/logo.png" width="290" height="60"  alt=""/></a></div>
+    </div>
+    <div class="sbq_header_login">
+      <div class="sbq_user_links"><a href="#">登录</a>|<a href="#">注册</a></div>
+      <div class="sbq_user_pic"><a href="#"><img src="image/default_avatar.png" width="50" height="50"  alt=""/></a></div>
+    </div>
+  </div>
+</div>
+<div class="sbq_qr_code">
+  <div class="sbq_qr_code_inner">
+    <a href="#"><img src="images/qr_code.png" width="100" height="140"  alt=""/></a>
+  </div>
+</div>
+<div class="body">
+  <div class="main">
+    <div class="sbq_home_menu">
+      <ul class="sbq_patient">
+        <li class="color_01"><a href="#">
+          <div class="sbq_img"><img src="images/sbq_home_icon_03.png" width="40" height="40"  alt=""/></div>
+          <div class="sbq_title">小组</div>
+          <div class="sbq_text">小组相关介绍文字关介绍文字</div>
+          </a></li>
+        <li class="color_02"><a href="#">
+          <div class="sbq_img"><img src="images/sbq_home_icon_12.png" width="40" height="40"  alt=""/></div>
+          <div class="sbq_title">问答</div>
+          <div class="sbq_text">小组相关介绍文字关介绍文字</div>
+          </a></li>
+        <li class="color_03"><a href="#">
+          <div class="sbq_img"><img src="images/sbq_home_icon_06.png" width="40" height="40"  alt=""/></div>
+          <div class="sbq_title">评测</div>
+          <div class="sbq_text">小组相关介绍文字关介绍文字</div>
+          </a></li>
+        <li class="color_05"><a href="#">
+          <div class="sbq_img"><img src="images/sbq_home_icon_07.png" width="40" height="40"  alt=""/></div>
+          <div class="sbq_title">活动</div>
+          <div class="sbq_text">小组相关介绍文字关介绍文字</div>
+          </a></li>
+        <li class="color_06"><a href="#">
+          <div class="sbq_img"><img src="images/sbq_home_icon_05.png" width="40" height="40"  alt=""/></div>
+          <div class="sbq_title">红黑榜</div>
+          <div class="sbq_text">小组相关介绍文字关介绍文字</div>
+          </a></li>
+        <li class="color_07 half"><a href="#">
+          <div class="sbq_img"><img src="images/sbq_home_icon_11.png" width="40" height="40"  alt=""/></div>
+          <div class="sbq_title">新闻</div>
+          </a></li>
+        <li class="color_07 half"><a href="#">
+          <div class="sbq_img"><img src="images/sbq_home_icon_10.png" width="40" height="40"  alt=""/></div>
+          <div class="sbq_title">曝光台</div>
+          </a></li>
+        <li class="color_07 half"><a href="#">
+          <div class="sbq_img"><img src="images/sbq_home_icon_08.png" width="40" height="40"  alt=""/></div>
+          <div class="sbq_title">爱心活动</div>
+          </a></li>
+        <li class="color_07 half"><a href="#">
+          <div class="sbq_img"><img src="images/sbq_home_icon_09.png" width="40" height="40"  alt=""/></div>
+          <div class="sbq_title">医界传奇 </div>
+          </a></li>
+        <li class="color_09"><a href="#">
+          <div class="sbq_img"><img src="images/sbq_home_icon_13.png" width="40" height="40"  alt=""/></div>
+          <div class="sbq_title">测试</div>
+          <div class="sbq_text">小组相关介绍文字关介绍文字</div>
+          </a></li>
+        <li class="color_10"><a href="#">
+          <div class="sbq_img"><img src="images/sbq_home_icon_13.png" width="40" height="40"  alt=""/></div>
+          <div class="sbq_title">测试</div>
+          <div class="sbq_text">小组相关介绍文字关介绍文字</div>
+          </a></li>
+        <li class="color_11"><a href="#">
+          <div class="sbq_img"><img src="images/sbq_home_icon_13.png" width="40" height="40"  alt=""/></div>
+          <div class="sbq_title">测试</div>
+          <div class="sbq_text">小组相关介绍文字关介绍文字</div>
+          </a></li>
+        <li class="color_12"><a href="#">
+          <div class="sbq_img"><img src="images/sbq_home_icon_13.png" width="40" height="40"  alt=""/></div>
+          <div class="sbq_title">测试</div>
+          <div class="sbq_text">小组相关介绍文字关介绍文字</div>
+          </a></li>
+        <li class="color_13"><a href="#">
+          <div class="sbq_img"><img src="images/sbq_home_icon_13.png" width="40" height="40"  alt=""/></div>
+          <div class="sbq_title">测试</div>
+          <div class="sbq_text">小组相关介绍文字关介绍文字</div>
+          </a></li>
+      </ul>
+      <ul class="sbq_doctor">
+        <li class="color_04"><a href="#">
+          <div class="sbq_img"><img src="images/sbq_home_icon_02.png" width="40" height="40"  alt=""/></div>
+          <div class="sbq_title">圈子</div>
+          <div class="sbq_text">小组相关介绍文字关介绍文字</div>
+          </a></li>
+        <li class="color_08"><a href="#">
+          <div class="sbq_img"><img src="images/sbq_home_icon_04.png" width="40" height="40"  alt=""/></div>
+          <div class="sbq_title">医生馆</div>
+          <div class="sbq_text">小组相关介绍文字关介绍文字</div>
+          </a></li>
+        <li class="color_14"><a href="#">
+          <div class="sbq_img"><img src="images/sbq_home_icon_13.png" width="40" height="40"  alt=""/></div>
+          <div class="sbq_title">测试</div>
+          <div class="sbq_text">小组相关介绍文字关介绍文字</div>
+          </a></li>
+        <li class="color_15"><a href="#">
+          <div class="sbq_img"><img src="images/sbq_home_icon_13.png" width="40" height="40"  alt=""/></div>
+          <div class="sbq_title">测试</div>
+          <div class="sbq_text">小组相关介绍文字关介绍文字</div>
+          </a></li>
+        <li class="color_16"><a href="#">
+          <div class="sbq_img"><img src="images/sbq_home_icon_13.png" width="40" height="40"  alt=""/></div>
+          <div class="sbq_title">测试</div>
+          <div class="sbq_text">小组相关介绍文字关介绍文字</div>
+          </a></li>
+        <li class="color_17"><a href="#">
+          <div class="sbq_img"><img src="images/sbq_home_icon_13.png" width="40" height="40"  alt=""/></div>
+          <div class="sbq_title">测试</div>
+          <div class="sbq_text">小组相关介绍文字关介绍文字</div>
+          </a></li>
+      </ul>
+      <ul class="sbq_focus">
+        <li class="color_03 pic"><a href="#">
+          <div class="sbq_img"><img src="images/307.png" width="250" height="120"  alt=""/></div>
+          <div class="sbq_title">307医院免疫学实验室</div>
+          </a></li>
+        <li class="color_03 pic"><a href="#">
+          <div class="sbq_img"><img src="images/307.png" width="250" height="120"  alt=""/></div>
+          <div class="sbq_title">12345678901234567890123456789012345678901234567890</div>
+          </a></li>
+        <li class="color_03 pic"><a href="#">
+          <div class="sbq_img"><img src="images/307.png" width="250" height="120"  alt=""/></div>
+          <div class="sbq_title">307医院免疫学实验室</div>
+          </a></li>
+        <li class="color_03 pic"><a href="#">
+          <div class="sbq_img"><img src="images/307.png" width="250" height="120"  alt=""/></div>
+          <div class="sbq_title">307医院免疫学实验室</div>
+          </a></li>
+        <li class="color_04"><a href="#">
+          <div class="sbq_img"><img src="images/sbq_home_icon_02.png" width="40" height="40"  alt=""/></div>
+          <div class="sbq_title">XX诊所</div>
+          <div class="sbq_text">小组相关介绍文字关介绍文字</div>
+          </a></li>
+        <li class="color_18"><a href="#">
+          <div class="sbq_img"><img src="images/sbq_home_icon_02.png" width="40" height="40"  alt=""/></div>
+          <div class="sbq_title">XX诊所</div>
+          <div class="sbq_text">小组相关介绍文字关介绍文字</div>
+          </a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="footer">
+  <div class="footer_inner">
+    <div class="sbq_about_link">
+      <ul>
+        <li><a href="/node/2790">联系我们</a></li>
+        <li><a href="/node/20151">注册服务条款</a></li>
+        <li><a href="/node/2788">免责声明</a></li>
+        <li><a href="/node/2787">加入我们</a></li>
+        <li><a href="/node/2786">关于我们</a></li>
+      </ul>
+    </div>
+    <div class="sbq_copy">Copyright&copy;<a href="http://www.miitbeian.gov.cn/state/outPortal/loginPortal.action" target="_bank">伤不起</a> ( 京ICP备13032461号-1 ) <a class="footer-logo" href="www.shangbq.com">中国最真实的医疗评价平台</a></div>
+  </div>
+</div>

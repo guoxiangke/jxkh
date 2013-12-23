@@ -1,0 +1,179 @@
+<?php
+
+/**
+ * @file
+ * Boxes Admin UI
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function boxes_admin_ui_menu() {
+  $items = array();
+
+  $items['admin/structure/block-types'] = array(
+    'title' => 'Block Types',
+    'description' => 'Manage Block Types',
+    'page callback' => 'boxes_admin_ui_admin_page',
+    'access arguments' => array('administer box types'),
+    'file' => 'boxes_admin_ui.admin.inc',
+  );
+
+  $items['admin/structure/block-types/list'] = array(
+    'title' => 'List',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -10,
+  );
+
+  $items['admin/structure/block-types/add'] = array(
+    'title' => 'Add block type',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('boxes_admin_ui_type_form'),
+    'access arguments' => array('administer box types'),
+    'type' => MENU_LOCAL_ACTION,
+    'file' => 'boxes_admin_ui.admin.inc',
+  );
+
+  $items['admin/structure/block-types/manage/%boxes_type'] = array(
+    'title' => 'Edit block type',
+    'title arguments' => array(4),
+    'title callback' => 'boxes_admin_ui_page_title',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('boxes_admin_ui_type_form', 4),
+    'access arguments' => array('administer box types'),
+    'file' => 'boxes_admin_ui.admin.inc',
+  );
+  $items['admin/structure/block-types/manage/%boxes_type/edit'] = array(
+    'title' => 'Edit',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+  );
+  $items['admin/structure/block-types/manage/%boxes_type/delete'] = array(
+    'title' => 'Delete',
+    'page arguments' => array('boxes_admin_ui_type_delete_confirm', 4),
+    'access arguments' => array('administer box types'),
+    'file' => 'boxes_admin_ui.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Page title for block types
+ */
+function boxes_admin_ui_page_title($block_type) {
+  $boxtype = boxes_fetch_plugin_info($block_type->type);
+  return check_plain($boxtype['label']);
+}
+
+/**
+ * Implements hook_boxes_types_api_info().
+ */
+function boxes_admin_ui_boxes_types_api_info() {
+  return array(
+    'api' => boxes_current_version(),
+  );
+}
+
+/**
+ * Implements hook_boxes_types().
+ */
+function boxes_admin_ui_boxes_types() {
+  $plugins = array();
+
+
+  // Add in the types defined in the UI.
+  $box_types = boxes_admin_ui_get_types();
+
+  foreach ($box_types as $box_type) {
+    $plugins[$box_type->name] = array(
+      'label' => $box_type->label,
+      'description' => empty($box_type->description) ? '' : $box_type->description,
+      'type' => $box_type->name,
+      'export_status' => $box_type->type,
+    );
+
+    $plugins[$box_type->name] += _boxes_admin_default_plugin();
+  }
+
+  return $plugins;
+}
+
+/**
+ * Get The Bean Types
+ */
+function boxes_admin_ui_get_types() {
+  $box_types = &drupal_static(__FUNCTION__);
+
+  if (empty($box_types)) {
+    $cache = cache_get('bean_types');
+    if (empty($cache->data)) {
+      // In install profiles, this function can get called before Drupal's created
+      // our database tables (see http://drupal.org/node/1179420), so don't crash
+      // Drupal installation by trying to get box types; if we did, we'd query a
+      // nonexistent table.
+      if (defined('MAINTENANCE_MODE') && MAINTENANCE_MODE == 'install' &&
+        drupal_get_installed_schema_version('boxes_admin_ui', TRUE) == SCHEMA_UNINSTALLED) {
+        $box_types = array();
+      }
+      else {
+        ctools_include('export');
+        $box_types = ctools_export_load_object('box_type');
+        cache_set('box_types', $box_types);
+      }
+    }
+    else {
+      $box_types = $cache->data;
+    }
+  }
+
+  return $box_types;
+}
+
+/**
+ * The Default plugin settings
+ */
+function _boxes_admin_default_plugin() {
+  return array(
+    'label' => '',
+    'description' => '',
+    'type' => '',
+    'editable' => TRUE,
+    'handler' => array(
+      'info_file' => TRUE,
+      'class' => 'BoxCustom',
+      'parent' => 'box',
+      'file' => 'custom.inc',
+      'path' => drupal_get_path('module', 'boxes_admin_ui') . '/plugins',
+    ),
+  );
+}
+
+/**
+ * Implements hook_features_api().
+ */
+function boxes_admin_ui_features_api() {
+  static $api = FALSE;
+  if (!$api) {
+    module_load_include('inc', 'features', 'includes/features.ctools');
+    $api = ctools_component_features_api('boxes_admin_ui');
+    $api['box_type']['name'] = 'Box types';
+    $api['box_type']['file'] = drupal_get_path('module', 'boxes_admin_ui') . '/includes/features.inc';
+  }
+  return $api;
+}
+
+/**
+ * Implements hook_modules_enabled().
+ */
+function boxes_admin_ui_modules_enabled($modules) {
+  $boxes_found = FALSE;
+  foreach ($modules as $module) {
+    if (function_exists($module .'_boxes_types')) {
+      $boxes_found = TRUE;
+    }
+  }
+  // Flush bean caches and statics if any of the enabled modules provide bean types.
+  if ($boxes_found) {
+    boxes_reset();
+  }
+}

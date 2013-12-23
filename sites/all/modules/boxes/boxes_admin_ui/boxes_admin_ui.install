@@ -1,0 +1,70 @@
+<?php
+
+/**
+ * @file
+ * Install files
+ */
+
+/**
+ * Implements of hook_schema().
+ */
+function boxes_admin_ui_schema() {
+  $schema['box_type'] = array(
+    'description' => 'Stores information about all defined box types.',
+    'export' => array(
+      'key' => 'name',
+      'identifier' => 'box_type',
+      'default hook' => 'box_admin_ui_types',
+      'admin_title' => 'label',
+      'api' => array(
+        'owner' => 'boxes_admin_ui',
+        'api' => 'boxes',
+        'minimum_version' => boxes_min_version(),
+        'current_version' => boxes_current_version(),
+      ),
+    ),
+    'fields' => array(
+      'type_id' => array(
+        'description' => 'The Type ID of this block. Only used internally by CTools',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'no export' => TRUE,
+      ),
+      'name' => array(
+        'description' => 'The machine-readable name of this box type.',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+      ),
+      'label' => array(
+        'description' => 'The human-readable name of this box type.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'options' => array(
+        'description' => 'Block content configuration.',
+        'type' => 'text',
+        'size' => 'big',
+      ),
+      'description' => array(
+        'description' => 'The description of this box type.',
+        'type' => 'text',
+        'size' => 'big',
+      ),
+    ),
+    'primary key' => array('type_id'),
+    'unique keys' => array(
+      'name' => array('name'),
+    ),
+  );
+  return $schema;
+}
+
+/**
+ * Upgrade from Boxes/Beans
+ */
+//function bean_admin_ui_update_7200() {
+//}

@@ -1,0 +1,117 @@
+<?php
+
+/**
+ * @file
+ * Boxes installation routines
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function boxes_schema() {
+  $schema['box'] = array(
+    'description' => 'Stores box items.',
+    'fields' => array(
+      'bid' => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique box item ID.',
+      ),
+      'delta' => array(
+        'description' => "The box {block}.delta.",
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+      ),
+      'label' => array(
+        'description' => 'The Displays in the Admin page.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'title' => array(
+        'description' => 'The human-readable name of this box.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'type' => array(
+        'description' => 'The {box_type}.type of this box.',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'view_mode' => array(
+        'description' => 'The View mode to use as the box.',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => 'default',
+      ),
+      'data' => array(
+        'type' => 'text',
+        'not null' => FALSE,
+        'size' => 'big',
+        'serialize' => TRUE,
+        'description' => 'A serialized array of additional data related to this box.',
+      ),
+    ),
+    'foreign keys' => array(
+      'type' => array(
+        'table' => 'box_type',
+        'columns' => array('type' => 'type'),
+      ),
+    ),
+    'primary key' => array('bid'),
+    'unique keys' => array(
+      'delta' => array('delta'),
+    ),
+  );
+
+  return $schema;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function boxes_uninstall() {
+  // Make sure boxes.module is include.
+  require dirname(__FILE__) . DIRECTORY_SEPARATOR . 'boxes.module';
+  // Bypass entity_load() as we cannot use it here.
+  foreach (boxes_get_types() as $box_type) {
+    field_attach_delete_bundle('boxes', $box_type->type);
+  }
+}
+
+/**
+ * Implements hook_disable().
+ */
+function boxes_disable() {
+  // Remove all of the currently placed blocks
+
+  // Delete any blocks
+  // @see block_custom_block_delete_submit()
+  db_delete('block')
+    ->condition('module', 'boxes')
+    ->execute();
+  db_delete('block_role')
+    ->condition('module', 'boxes')
+    ->execute();
+
+  // @see node_form_block_custom_block_delete_submit()
+  db_delete('block_node_type')
+    ->condition('module', 'boxes')
+    ->execute();
+}
+
+
+/**
+ * Update to the 2.x version of Boxes
+ */
+//function boxes_update_7200() {
+//  return t('Upgrade complete');
+//}
+

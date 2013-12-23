@@ -1,0 +1,19 @@
+name = Boxes
+description = The next generation of Blocks as Entities
+core = 7.x
+files[] = includes/boxes.core.inc
+files[] = includes/boxes.info.inc
+files[] = plugins/base.inc
+files[] = includes/translation.handler.boxes.inc
+files[] = boxes.test
+
+dependencies[] = block
+dependencies[] = entity
+dependencies[] = ctools
+
+; Information added by drupal.org packaging script on 2013-09-30
+version = "7.x-2.x-dev"
+core = "7.x"
+project = "boxes"
+datestamp = "1380556876"
+

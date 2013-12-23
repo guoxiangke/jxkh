@@ -1,0 +1,26 @@
+* { margin: 0px; padding: 0px; list-style: none; }
+a { text-decoration: none; }
+img { border: none; }
+input { outline: none; }
+html { font-family: "SimSun", "宋体", "Arial"; color: #585858; font-size: 12px; }
+.sbq_home_menu,
+.footer,
+.top_nav,
+.top_nav2,
+.header,
+.header2,
+input { font-family: "Microsoft Yahei", "微软雅黑", "Arial" !important; }
+/*header*/
+.header { float: left; width: 100%; height: 61px; background: url(../image/sbq_header_bg.png) repeat-x; overflow: hidden; }
+.header .header_inner { width: 1070px; padding: 0px 100px; margin: 0 auto; }
+.header .sbq_logo { float: left; }
+.header .sbq_header_login { float: right; height: 50px; padding: 4px; font-size: 14px; color: #FFF; }
+.header .sbq_header_login a { color: #FFF; }
+.header .sbq_header_login a:hover { color: #eeeeee; }
+.header .sbq_user_links { float: left; height: 50px; line-height: 50px; margin: 0px 5px 0px 0px; overflow: hidden; white-space:nowrap; }
+.header .sbq_user_links a { padding: 0px 5px; }
+.header .sbq_header_login .sbq_user_pic { float: left; border: 1px #FFFFFF solid; }
+
+.sbq_qr_code { float: left; width: 100%; position: absolute; top: 131px; left: 0; }
+.sbq_qr_code .sbq_qr_code_inner { width: 1270px; margin: 0 auto; }
+.sbq_qr_code img { float: left; width: 100px; overflow: hidden; }
