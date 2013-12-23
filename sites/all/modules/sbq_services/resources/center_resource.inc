@@ -100,6 +100,71 @@ function center_resource_definition() {
       'access arguments' => array( 'view' ),
       'access arguments append' => TRUE,
   );
+  $definition['center']['relationships']['comment'] = array(
+      'file' => array( 'type' => 'inc', 'module' => 'sbq_services', 'name' => 'resources/center_resource' ),
+      'help' => 'This method returns center question comment.',
+      'callback' => 'center_question_comment_query',
+      'args' => array(
+          array(
+              'name' => 'centerid',
+              'type' => 'int',
+              'description' => t('The center id .'),
+              'source' => array( 'path' => 0 ),
+              'optional' => FALSE,
+          ),
+          array(
+              'name' => 'fun',
+              'type' => 'int',
+              'description' => t('The function .'),
+              'source' => array( 'path' => 2 ),
+              'default value' => '',
+              'optional' => TRUE,
+          ),
+          array(
+              'name' => 'questionid',
+              'type' => 'int',
+              'description' => t('The questionid .'),
+              'source' => array( 'param' => 'questionid' ),
+              'default value' => '',
+              'optional' => FALSE,
+          ),
+          array(
+              'name' => 'page',
+              'optional' => TRUE,
+              'type' => 'int',
+              'description' => 'The zero-based index of the page to get, defaults to 0.',
+              'default value' => 0,
+              'source' => array( 'param' => 'page' ),
+          ),
+          array(
+              'name' => 'fields',
+              'optional' => TRUE,
+              'type' => 'string',
+              'description' => 'The fields to get.',
+              'default value' => '*',
+              'source' => array( 'param' => 'fields' ),
+          ),
+          array(
+              'name' => 'parameters',
+              'optional' => TRUE,
+              'type' => 'array',
+              'description' => 'Parameters array',
+              'default value' => array(),
+              'source' => array( 'param' => 'parameters' ),
+          ),
+          array(
+              'name' => 'pagesize',
+              'optional' => TRUE,
+              'type' => 'int',
+              'description' => 'The zero-based index of the page to get, defaults to 0.',
+              'default value' => variable_get('services_node_index_page_size', 10),
+              'source' => array( 'param' => 'pagesize' ),
+          ),
+      ),
+      'access callback' => '_node_resource_access',
+      'access arguments' => array( 'view' ),
+      'access arguments append' => TRUE,
+  );
 
   $definition['center']['relationships']['edu'] = array(
       'file' => array( 'type' => 'inc', 'module' => 'sbq_services', 'name' => 'resources/center_resource' ),
@@ -169,11 +234,13 @@ function center_resource_definition() {
  * @return type
  */
 function center_question_alter($centerid, $fun, $data) {
+
   if ($fun) {
     if (is_numeric($fun)) {
       $data['nid'] = $fun;
     } else {
-      return call_user_func('center_question' . $fun, $centerid, $data);
+      // return $fun;
+      return call_user_func('center_question_' . $fun, $centerid, $data);
     }
   }
 
@@ -181,6 +248,56 @@ function center_question_alter($centerid, $fun, $data) {
   $node = reset($node);
   $node = _node_resource_create($node);
   return $node;
+}
+
+/**
+ * create center question comment
+ * @param type $centerid
+ * @param type $data
+ * @return type
+ */
+function center_question_comment($centerid, $data) {
+  $result = _center_question_comment_formate($data);
+  $node = reset($result);
+  return _node_resource_create($node);
+}
+
+function center_question_comment_query($centerid, $fun = NULL, $questionid, $page, $fields, $parameters, $pagesize) {
+  
+  if ($fun) {
+    if (is_numeric($fun)) {
+      //$parameters['nid'] = $fun;
+    } else {
+      //return call_user_func('center_question_' . $fun, $page, $fields, $pagesize, $parameters, $centerid);
+      return 'this interface is die';
+    }
+  }
+
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+      ->propertyCondition('type', 'answer')
+      ->fieldCondition('field_answer', 'target_id', $questionid, '=');
+  $node_query = clone $query;
+  $count = $query->count()->execute();
+
+  $result = $node_query->propertyOrderBy('created', 'DESC')
+      ->range($page * $pagesize, $pagesize)
+      ->execute();
+  //return array_keys($result['node']);
+  $nids = array();
+  if (isset($result['node'])) {
+    $nids = array_keys($result['node']);
+  }
+
+  $nodes = node_load_multiple($nids);  
+  $nodes = _center_question_comment_formate($nodes, 'data', TRUE);
+
+  $data = array(
+      'data' => $nodes,
+      'page' => $page,
+      'pagecount' => ceil($count / $pagesize),
+  );
+  return $data;
 }
 
 /**
@@ -198,14 +315,16 @@ function center_question_query($centerid, $fun = NULL, $page, $fields, $paramete
     if (is_numeric($fun)) {
       $parameters['nid'] = $fun;
     } else {
-      return call_user_func('center_question' . $fun, $page, $fields, $pagesize, $parameters, $centerid);
+      return call_user_func('center_question_' . $fun, $page, $fields, $pagesize, $parameters, $centerid);
     }
   }
   $data = _center_question_query($fields, $parameters, $page, $pagesize, $centerid);
   if (isset($parameters['nid'])) {
+    return $data;
     $nodes = _center_question_format($cneterid, $data['data'], 'data', TRUE);
     return reset($nodes);
   }
+
   $data['data'] = _center_question_format($cneterid, $data['data'], 'data', TRUE);
   return $data;
 }
@@ -240,6 +359,19 @@ function _center_question_query($fields = "*", $parameters = array(), $page = 0,
     $nids = array_keys($result['node']);
   }
   $nodes = node_load_multiple($nids);
+  // include question comment
+//  if ($nodes && isset($parameters['include_comment'])) {
+//    if (!isset($parameters['include_comment']['page'])) {
+//      $parameters['include_comment']['page'] = 0;
+//    }
+//    foreach ($nodes as $key => &$value) {
+//      $commnet_count = count($value->field_answers['und']);
+//      $commnet = array_values($value->field_answers['und']);
+//      $result = array_slice($commnet, $parameters['include_comment']['page'] * 10, 10);
+//      $value->comment_value = node_load($result);
+//    }
+//  }
+
   $data = array(
       'data' => $nodes,
       'page' => $page,
@@ -263,7 +395,7 @@ function center_question_edu_query($centerid, $fun = NULL, $page, $fields, $para
     if (is_numeric($fun)) {
       $parameters['nid'] = $fun;
     } else {
-      return call_user_func('center_question' . $fun, $page, $fields, $pagesize, $parameters, $centerid);
+      return call_user_func('center_question_' . $fun, $page, $fields, $pagesize, $parameters, $centerid);
     }
   }
 
@@ -327,9 +459,35 @@ function _center_question_format($cneterid, $data, $target = 'node', $is_list = 
       $node['type'] = $value['type'];
       $node['created'] = $value['created'];
       $node['nid'] = $value['nid'];
+      $node['comment'] = $value['comment'];
     }
     $result[] = $node;
   }
 
+  return $result;
+}
+
+function _center_question_comment_formate($data, $target = 'node', $is_list = FALSE) {
+
+  if (!$is_list) {
+    $data = array( $data );
+  }
+  $result = array();
+  foreach ($data as $key => $value) {
+    $value = (array)$value;
+    if ($target == 'node') {
+      $node['title'] = $value['title'];
+      $node['type'] = 'answer';
+      $node['body']['und'][0]['value'] = $value['body'];
+      $node['field_answer']['und'][0]['target_id'] = "1cc({$value['questionid']})";
+    } else {
+      $node['title'] = $value['title'];
+      $node['type'] = $value['type'];
+      $node['body'] = $value['body']['und'][0]['value'];
+      $node['commentid'] = $value['nid'];
+      $node['questionid'] = $value['field_answer']['und'][0]['target_id'];
+    }
+    $result[] = $node;
+  }
   return $result;
 }
