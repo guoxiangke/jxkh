@@ -9,6 +9,23 @@
 function center_resource_definition() {
   module_load_include('inc', 'services', 'resources/node_resource');
   $definition['center']['operations'] = array(
+      'retrieve' => array(
+          'help' => 'Retrieve a center',
+          'file' => array( 'type' => 'inc', 'module' => 'sbq_services', 'name' => 'resources/center_resource' ),
+          'callback' => 'center',
+          'args' => array(
+              array(
+                  'name' => 'centerid',
+                  'optional' => FALSE,
+                  'source' => array( 'path' => 0 ),
+                  'type' => 'int',
+                  'description' => 'The nid of the node to retrieve',
+              ),
+          ),
+          'access callback' => '_node_resource_access',
+          'access arguments' => array( 'view' ),
+          'access arguments append' => TRUE,
+      ),
   );
 
   $definition['center']['targeted_actions']['question'] = array(
@@ -286,7 +303,7 @@ function center_resource_definition() {
               'name' => 'uid',
               'type' => 'int',
               'description' => t('The function .'),
-              'source' => array( 'param' => userid ),
+              'source' => array( 'param' => 'userid' ),
               'default value' => 0,
               'optional' => TRUE,
           ),
@@ -330,7 +347,11 @@ function center_resource_definition() {
 
   return $definition;
 }
-
+function center($centerid) {
+  $node = node_load($centerid);
+  $nodes = _center_formate($node, 'data');
+  return reset($nodes);
+}
 /**
  *  alter question function
  * @param type $centerid
@@ -530,7 +551,7 @@ function center_question_edu_query($centerid, $fun = NULL, $page, $fields, $para
   foreach ($view_art->result as $key => $value) {
     $node = node_load($value->nid);
     $art['title'] = $value->node_title;
-    $art['nid'] = (string)$value->nid;
+    $art['nid'] = (int) $value->nid;
     $art['body'] = $node->body['und'][0]['value'];
     $article[] = $art;
   }
@@ -564,7 +585,7 @@ function _center_question_format($cneterid, $data, $target = 'node', $is_list = 
       $node['title'] = $value['title'];
       $node['type'] = $value['type'];
       $node['created'] = $value['created'];
-      $node['nid'] = $value['nid'];
+      $node['nid'] = (int) $value['nid'];
       $node['comment'] = $value['comment'];
     }
     $result[] = $node;
@@ -573,6 +594,13 @@ function _center_question_format($cneterid, $data, $target = 'node', $is_list = 
   return $result;
 }
 
+/**
+ * convert data 
+ * @param type $data
+ * @param type $target
+ * @param type $is_list
+ * @return type
+ */
 function _center_question_comment_formate($data, $target = 'node', $is_list = FALSE) {
 
   if (!$is_list) {
@@ -590,10 +618,48 @@ function _center_question_comment_formate($data, $target = 'node', $is_list = FA
       $node['title'] = $value['title'];
       $node['type'] = $value['type'];
       $node['body'] = $value['body']['und'][0]['value'];
-      $node['commentid'] = $value['nid'];
-      $node['questionid'] = $value['field_answer']['und'][0]['target_id'];
+      $node['commentid'] = (int) $value['nid'];
+      $node['questionid'] = (int) $value['field_answer']['und'][0]['target_id'];
     }
     $result[] = $node;
   }
   return $result;
+}
+
+/**
+ * convert center data
+ * @param type $data
+ * @param type $target
+ * @param type $is_list
+ * @return type
+ */
+function _center_formate($data, $target = 'node', $is_list = FALSE) {
+  if (!$is_list) {
+    $data = array( $data );
+  }
+  $nodes = array();
+  foreach ($data as $key => $value) {
+    $value = (array) $value;
+    if ($target != 'node') {   
+      if (isset($value['field_sbq_center_img']['und'])) {
+         //return $value['field_sbq_center_img']['und'];
+        foreach ($value['field_sbq_center_img']['und'] as $key => $value) {
+          $value = (array) $value;
+          $node['open_img'][$key] = array(
+              'url' => file_create_url($value['uri']),
+              'name' => $value['filename'],
+              'filesize' => $value['filesize'],
+              'width' => $value['width'],
+              'height' => $value['height'],
+              'fid' => $value['fid'],
+          );
+        }
+      }
+    }
+    if (isset($node)) {
+      $nodes[] = $node;
+    }
+  }
+
+  return $nodes;
 }
