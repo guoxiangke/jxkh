@@ -11,8 +11,6 @@ function center_resource_definition() {
   $definition['center']['operations'] = array(
   );
 
- 
-
   $definition['center']['targeted_actions']['question'] = array(
       'help' => 'create center question',
       'file' => array( 'type' => 'inc', 'module' => 'sbq_services', 'name' => 'resources/center_resource' ),
@@ -225,6 +223,111 @@ function center_resource_definition() {
       'access arguments' => array( 'view' ),
       'access arguments append' => TRUE,
   );
+
+
+  module_load_include('inc', 'webform_service', 'webform_service');
+  $definition['center']['targeted_actions']['reservation'] = array(
+      'help' => 'create center reservation',
+      'file' => array( 'type' => 'inc', 'module' => 'sbq_services', 'name' => 'resources/center_reservation_resource' ),
+      'callback' => 'center_reservation_alter',
+      'args' => array(
+          array(
+              'name' => 'centerid',
+              'optional' => FALSE,
+              'source' => array( 'path' => 0 ),
+              'type' => 'int',
+              'description' => 'The nid of the submission node',
+          ),
+          array(
+              'name' => 'fun',
+              'optional' => TRUE,
+              'source' => array( 'path' => 2 ),
+              'default value' => '',
+              'type' => 'int',
+              'description' => 'alter center question function',
+          ),
+          array(
+              'name' => 'data',
+              'optional' => FALSE,
+              'source' => 'data',
+              'description' => 'The submission data to create',
+              'type' => 'array',
+          ),
+      ),
+//      'access callback' => '_submission_resource_access',
+//      'access arguments' => array( 'create' ),
+//      'access arguments append' => TRUE,
+      'access callback' => '_node_resource_access',
+      'access arguments' => array( 'view' ),
+      'access arguments append' => TRUE,
+  );
+
+  $definition['center']['relationships']['reservation'] = array(
+      'file' => array( 'type' => 'inc', 'module' => 'sbq_services', 'name' => 'resources/center_reservation_resource' ),
+      'help' => 'This method returns center question.',
+      'callback' => 'center_reservation_query',
+      'args' => array(
+          array(
+              'name' => 'centerid',
+              'type' => 'int',
+              'description' => t('The center id .'),
+              'source' => array( 'path' => 0 ),
+              'optional' => FALSE,
+          ),
+          array(
+              'name' => 'fun',
+              'type' => 'int',
+              'description' => t('The function .'),
+              'source' => array( 'path' => 2 ),
+              'default value' => '',
+              'optional' => TRUE,
+          ),
+          array(
+              'name' => 'uid',
+              'type' => 'int',
+              'description' => t('The function .'),
+              'source' => array( 'param' => userid ),
+              'default value' => 0,
+              'optional' => TRUE,
+          ),
+          array(
+              'name' => 'page',
+              'optional' => TRUE,
+              'type' => 'int',
+              'description' => 'The zero-based index of the page to get, defaults to 0.',
+              'default value' => 0,
+              'source' => array( 'param' => 'page' ),
+          ),
+          array(
+              'name' => 'fields',
+              'optional' => TRUE,
+              'type' => 'string',
+              'description' => 'The fields to get.',
+              'default value' => '*',
+              'source' => array( 'param' => 'fields' ),
+          ),
+          array(
+              'name' => 'parameters',
+              'optional' => TRUE,
+              'type' => 'array',
+              'description' => 'Parameters array',
+              'default value' => array(),
+              'source' => array( 'param' => 'parameters' ),
+          ),
+          array(
+              'name' => 'pagesize',
+              'optional' => TRUE,
+              'type' => 'int',
+              'description' => 'The zero-based index of the page to get, defaults to 0.',
+              'default value' => variable_get('services_node_index_page_size', 10),
+              'source' => array( 'param' => 'pagesize' ),
+          ),
+      ),
+      'access callback' => '_node_resource_access',
+      'access arguments' => array( 'view' ),
+      'access arguments append' => TRUE,
+  );
+
   return $definition;
 }
 
@@ -412,6 +515,7 @@ function center_question_edu_query($centerid, $fun = NULL, $page, $fields, $para
   foreach ($view->result as $key => $value) {
     $v['title'] = $value->node_title;
     $v['video'] = render($value->field_field_sbq_center_video[0]['rendered']);
+    $v['thumb'] = '';
     $v['video_url'] = file_create_url($value->field_field_sbq_center_video[0]['rendered']['#file']->uri);
     $video[] = $v;
   }
@@ -426,7 +530,7 @@ function center_question_edu_query($centerid, $fun = NULL, $page, $fields, $para
   foreach ($view_art->result as $key => $value) {
     $node = node_load($value->nid);
     $art['title'] = $value->node_title;
-    $art['nid'] = $value->nid;
+    $art['nid'] = (string)$value->nid;
     $art['body'] = $node->body['und'][0]['value'];
     $article[] = $art;
   }
