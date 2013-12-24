@@ -81,21 +81,8 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
 					<?php
           }else{
             //show who edit ,who create.
-            //$editor = user_load($node->revision_uid);
-            $editor = user_load($node->uid);
              ?>
-					<div class="author-item q-author q-edit pull-left">
-						<?php
-              $variables = array(
-                'style_name' => 'profile_small',
-                'path' =>$editor->picture->uri,
 
-              );
-              print theme_image_style($variables); ?>
-						<div class="commit pull-left">
-							<div class="timestamp"><span class="create">Edited by <?php print l(format_username($editor),'user/'.$editor->uid); ?></span><!--<span><?php //print format_date($node->revision_timestamp, 'sbq_date_medium_revert'); ?></span>--></div>
-						</div>
-					</div>
 					<div class="author-item q-author pull-left"> <?php print $picture; ?>
 						<div class="commit pull-left">
 							<!--                 <div class="timestamp"><span class="create">Create</span><?php print $created; ?></div>
