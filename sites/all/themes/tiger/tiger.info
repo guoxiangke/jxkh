@@ -81,6 +81,7 @@ regions[page_bottom] = Page bottom
 regions[front_left] = Front Page left
 regions[front_middle] = Front Page middle
 regions[front_right] = Front Page right
+regions[qr_code] = QR Code
 
 ; Various page elements output by the theme can be toggled on and off. The
 ; "features" control which of these check boxes display on the

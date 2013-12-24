@@ -91,7 +91,7 @@
 </div>
 <div class="sbq_qr_code">
   <div class="sbq_qr_code_inner">
-    <a href="#"><img src="images/qr_code.png" width="100" height="140"  alt=""/></a>
+    <?php print render($page['qr_code']); ?>
   </div>
 </div>
 <div class="body">
@@ -101,18 +101,9 @@
         <?php print render($page['front_left']); ?>
       </ul>
       <ul class="sbq_doctor">
-        <li class="color_04"><a href="#">
-          <div class="sbq_img"><img src="images/sbq_home_icon_02.png" width="40" height="40"  alt=""/></div>
-          <div class="sbq_title">圈子</div>
-          <div class="sbq_text">小组相关介绍文字关介绍文字</div>
-          </a></li>
         <?php print render($page['front_middle']); ?>
       </ul>
       <ul class="sbq_focus">
-        <li class="color_03 pic"><a href="#">
-          <div class="sbq_img"><img src="images/307.png" width="250" height="120"  alt=""/></div>
-          <div class="sbq_title">307医院免疫学实验室</div>
-          </a></li>
         <?php print render($page['front_right']); ?>
       </ul>
     </div>

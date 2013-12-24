@@ -28,6 +28,7 @@
  */
 ?>
 <?php
+//var_dump($content["field_css_color"]);die;
   $display_title = '';
   $css_classes = '';
   $img = '';
@@ -37,7 +38,7 @@
     $display_title .= $content["field_display_title"][0]["#markup"];
   }
   if (isset($content["field_css_color"])) {
-    $css_classes .= $content["field_css_color"][0]["#markup"];
+    $css_classes .= $content["field_css_color"]['#items'][0]["value"];
   }
   if (isset($content["field_css_class"])) {
     $css_classes .= ' '.$content["field_css_class"][0]["#markup"];
