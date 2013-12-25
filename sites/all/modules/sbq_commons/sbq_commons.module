@@ -1030,6 +1030,19 @@ function sbq_commons_block_view_alter(&$data, $block) {
     case 'sbq_friends-recommend_friend':
       $data['subject'] = '推荐好友';
       break;
+    case 'sbq_quick_ask':
+    case 'user_qa':
+    case 'message':
+    case 'blog-my_blog_block':
+      $uid = $user->uid;
+      $show = FALSE;
+      if((count(arg()) <= 2) && (arg(0) == 'user' || (arg(0) == 'users' && arg(1) == $uid)) ) {
+        $show = TRUE;
+      }
+      if (!$show) {
+        $data['content'] = '';
+      }
+      break;
     default:
       break;
   }
@@ -1380,7 +1393,7 @@ function sbq_commons_user_login($edit, $account) {
 }
 
 /**
- * 
+ *
  * @global type $user
  * @param type $account one of uid,null,account
  * @return int
