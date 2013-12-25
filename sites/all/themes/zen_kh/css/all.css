@@ -32,7 +32,7 @@ html,
 .page-doctor-register .tabs-primary,
 .page-user-login .tabs-primary,
 .page-customer .tabs-primary { display: none; }
-/*------page-user------*/ 
+/*------page-user------*/
 .logged-in.page-user #page-title { display: none; }
 .page-user .tabs-primary,
 .page-user .field-widget-image-image,
@@ -89,7 +89,7 @@ html,
 #sbq_doctor_quick_register .modal-header { background: url(../images/quick_register_head.png) repeat-x !important; }
 #edit-profile-doctor-private-profile-field-doctor-license-und-0-upload-button { display: none !important; }
 .front .sbq_doctor_register_button #status { display: none !important; }
-/*right*/ 
+/*right*/
 .region-sidebar-second { width: 260px !important; margin-left: 700px !important; }
 .region-sidebar-second .contextual-links-region .more-link,
 .region-sidebar-second .block-views .more-link { background: #F00; position: absolute; top: 5px; right: 5px; background: url(../images/wm.png) no-repeat right center; }
@@ -178,3 +178,13 @@ html,
 #sbq_doctor_quick_register #doctor_register_form { float: right; margin-top: 27px; width: 450px; }
 #sbq_doctor_quick_register #block-user-login { float: left; margin-right: 45px; margin-top: 15px; width: 190px; }
 #sbq_doctor_quick_register #user_login_form .form-item-name label { display: none; }*/
+
+.node-hospital-blacklist .field-name-field-image ,
+.node-doctor-legend .field-name-field-image ,
+.node-curing-guide .field-name-field-image ,
+.node-news .field-name-field-image ,
+.node-hospital-blacklist .field-name-field-image ,
+.node-friend-activities .field-name-field-image ,
+.node-illness-diagnosis .field-name-field-image ,
+.node-red-list .field-name-field-image ,
+.nodeblack-list .field-name-field-image{display:none;}

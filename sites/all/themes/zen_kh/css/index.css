@@ -60,6 +60,7 @@ li { list-style: none; }
 .sidebar-first .region-sidebar-first,
 .not-logged-in.two-sidebars .region-sidebar-first { width: 220px; background-color: #fff }
 .sbq-btn1 { width: 184px; height: 34px; border: none; padding: 0; font-size: 14px; color: #fff }
+#block-user-login #edit-actions #edit-submit,
 #block-user-login #edit-actions--2 #edit-submit--2,
 #edit-submit--3 { background: url(../images/btn1.png) no-repeat 0 -223px; width: 184px; height: 34px; border: none; padding: 0; font-size: 14px; color: #fff; margin-bottom: 23px; line-height: 23px }
 #about-links { margin-top: 45px; }
