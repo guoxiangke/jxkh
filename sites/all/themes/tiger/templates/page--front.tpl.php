@@ -83,7 +83,7 @@
     </div>
     <?php endif; ?>
     <div class="sbq_header_login">
-      <div class="sbq_user_links"><a href="#">登录</a>|<a href="#">注册</a></div>
+      <div class="sbq_user_links"><a href="user/login" class="log">登录</a>|<a href="register.html">注册</a></div>
       <div class="sbq_user_pic"><a href="#"><img src="image/default_avatar.png" width="50" height="50"  alt=""/></a></div>
     </div>
   </div>
