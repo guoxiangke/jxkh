@@ -354,7 +354,10 @@ function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_time
   if (isset($url[0]) && $url[0] == 'api') {
     return;
   }
-
+  if (!module_exists('captcha')) {
+    return;
+  }
+  // if(!module)
   $pre_times = $fail_times - 1;
   $pre_ind = $fail_times - 2;
   // Visitor does not have permission to skip CAPTCHAs.
@@ -398,9 +401,7 @@ function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_time
   // Get placement in form and insert in form.
   $captcha_placement = _captcha_get_captcha_placement($form_id, $form);
   _captcha_insert_captcha_element($form, $captcha_placement, $captcha_element);
-
 }
-
 
 /**
  * Process relationship request.
@@ -606,7 +607,7 @@ EOF;
           // . '<li class="menu__item is-leaf first leaf sbq-user-menu-post">'
           // . '<a href="/user/' . $user->uid . '#block-quicktabs-user-group" class="menu__link">我的帖子</a>'
           // . '<span class="sbq-count"><a href="#" class="sbq-count-link">' . $user_post_count . '条</a></span></li>'
-          . '<li class="menu__item is-leaf leaf sbq-user-menu-status"><a href="/user/' . $user->uid . '#block-quicktabs-message" class="menu__link">好友动态</a><span class="sbq-count"><a href="#" class="sbq-count-link">'.$user_message_count.'条</a></span></li>'
+          . '<li class="menu__item is-leaf leaf sbq-user-menu-status"><a href="/user/' . $user->uid . '#block-quicktabs-message" class="menu__link">好友动态</a><span class="sbq-count"><a href="#" class="sbq-count-link">' . $user_message_count . '条</a></span></li>'
           . '<li class="menu__item is-leaf leaf sbq-user-menu-blog"><a href="/user/' . $user->uid . '#block-views-blog-my-blog-block" class="menu__link">我的文章</a><span class="sbq-count"><a href="#" class="sbq-count-link">' . $user_blog_count . '篇</a></span></li>'
           //. '<li class="menu__item is-leaf leaf sbq-user-menu-group"><a href="/groups/my" class="menu__link">我的小组</a><span class="sbq-count"><a href="#" class="sbq-count-link">5个</a></span></li>'
           . '<li class="menu__item is-leaf last leaf sbq-user-menu-relationship' . $relationship_li_active . '"><a href="/user/' . $user->uid . '/relationship" class="menu__link' . $relationship_link_active . '">我的圈子</a><span class="sbq-count"><a href="#" class="sbq-count-link">' . $user_relationship_count . '人</a></span></li>'
@@ -677,7 +678,7 @@ function _sbq_commons_user_recommonds_friends_ids($roles, $num = 2, $account = n
       "select uid from {users} u where " .
       "u.uid not in ( select requestee_id from user_relationships " .
       "where requester_id = {$account->uid}) " .
-      "and u.uid not in( select requester_id from user_relationships where requestee_id = {$account->uid}) ".
+      "and u.uid not in( select requester_id from user_relationships where requestee_id = {$account->uid}) " .
       "and u.uid <> {$account->uid} " .
       "and u.uid in ( select uid from users_roles where rid = {$roles}) order by uid ASC limit 0,{$num} ");
   $result = $query_user->fetchAllAssoc('uid');
@@ -715,7 +716,7 @@ function sbq_commons_user_disease_tag_add_ajax($tag_name = '') {
     $profile = profile2_load_by_user($user->uid, 'main');
     if (!$profile) {
       // if profile is empty, create for this user
-      $profile = profile2_create(array('type' => 'main', 'uid' => $user->uid));
+      $profile = profile2_create(array( 'type' => 'main', 'uid' => $user->uid ));
     }
     $index = count($profile->field_tags_disease['und']);
     $checked = FALSE;
@@ -808,9 +809,10 @@ function sbq_commons_get_count($uid = 0, $type = '') {
 /*
  * ajax_quick_ask_callback
  */
+
 function ajax_quick_ask_callback($form, &$form_state) {
   $body = $form_state['input']['body']['und'][0]['value'];
-  if (isset($body) && strlen(trim($body))>0) {
+  if (isset($body) && strlen(trim($body)) > 0) {
     # code...
     $commands = array();
     module_load_include('inc', 'node', 'node.pages');
@@ -819,8 +821,8 @@ function ajax_quick_ask_callback($form, &$form_state) {
     node_save($node);
     $node_link = l(t('view'), 'node/' . $node->nid);
     $watchdog_args = array(
-      '@type' => $node->type,
-      '%title' => $node->title,
+        '@type' => $node->type,
+        '%title' => $node->title,
     );
 
     if ($insert) {
@@ -830,18 +832,17 @@ function ajax_quick_ask_callback($form, &$form_state) {
       $form_state['values']['nid'] = $node->nid;
       $form_state['nid'] = $node->nid;
       $title = l($node->title, 'node/' . $node->nid);
-      $str_date = format_date(time(),'custom','Y-m-d');
-      $nqs  = '<div class="views-row views-row-1 views-row-odd views-row-first">'
-        . '<div class="views-field views-field-title"><span class="field-content">'.$title.'</span></div>'
-        . '<div class="views-field views-field-value"><span class="field-content">0</span></div>'
-        . '<div class="views-field views-field-field-mark-question-resolved"><div class="field-content">未解决</div></div>'
-        . '<div class="views-field views-field-created"><span class="field-content">'.$str_date.'</span></div></div>';
+      $str_date = format_date(time(), 'custom', 'Y-m-d');
+      $nqs = '<div class="views-row views-row-1 views-row-odd views-row-first">'
+          . '<div class="views-field views-field-title"><span class="field-content">' . $title . '</span></div>'
+          . '<div class="views-field views-field-value"><span class="field-content">0</span></div>'
+          . '<div class="views-field views-field-field-mark-question-resolved"><div class="field-content">未解决</div></div>'
+          . '<div class="views-field views-field-created"><span class="field-content">' . $str_date . '</span></div></div>';
       $new_textarea = '<textarea class="text-full ckeditor-mod form-textarea" id="edit-body-und-0-value" name="body[und][0][value]" cols="60" rows="20"></textarea>';
       $commands[] = ajax_command_replace('#edit-body-und-0-value', $new_textarea);
       $commands[] = ajax_command_prepend('#block-views-my-qa-my-ask .view-content', $nqs);
       $commands[] = ajax_command_replace('#sbq-message-error', '');
-    }
-    else {
+    } else {
       // In the unlikely case something went wrong on save, the node will be
       // rebuilt and node form redisplayed the same way as in preview.
       drupal_set_message(t('The post could not be saved.'), 'error');
@@ -849,10 +850,10 @@ function ajax_quick_ask_callback($form, &$form_state) {
     }
   } else {
     $error_msg = '<div id="sbq-message-error" class="messages--error messages error">'
-      .'<h2 class="element-invisible">错误信息</h2>'
-      .'<ul class="messages__list">'
-      .'<li class="messages__item">请输入您的问题</li>'
-      .'</ul></div>';
+        . '<h2 class="element-invisible">错误信息</h2>'
+        . '<ul class="messages__list">'
+        . '<li class="messages__item">请输入您的问题</li>'
+        . '</ul></div>';
     $commands[] = ajax_command_after('#main-content', $error_msg);
     $form_state['rebuild'] = TRUE;
   }
