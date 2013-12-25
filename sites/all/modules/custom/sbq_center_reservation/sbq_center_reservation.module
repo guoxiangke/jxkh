@@ -16,7 +16,7 @@ define('SBQ_CENTER_RESERVATION_TYPE_PHONE', 1);
 /**
  * 预约表单id
  */
-define('SBQ_CENTER_RESERVATION_NODE_ID', 21784);
+define('SBQ_CENTER_RESERVATION_NODE_ID', 21749);
 
 /**
  * hook menu
@@ -70,4 +70,30 @@ function sbq_center_reservation_sheet($sbq_center_reservation_type) {
     $webform['submitted']['sbq_center_formcategory']['#value'] = $sbq_center_reservation_type;
   }
   return isset($webform) ? $webform : '';
+}
+
+/**
+ *  hook_webform_submission_insert
+ * @param type $node
+ * @param type $submission
+ */
+function sbq_center_reservation_webform_submission_insert($node, $submission) {
+  global $user;
+  $title = $user->name;
+  if ($user->uid != $submission->uid) {
+    $account = user_load($submission->uid);
+    $title = $account->name;
+  }
+  db_insert('webform_submissions_center_reservation')
+      ->fields(array(
+          'sid' => $submission->sid,
+          'nid' => $node->nid,
+          'cid' => $submission->data[9]['value'][0],
+          'uid' => $submission->uid,
+          'type'=> $submission->data[10]['value'][0],
+          'is_draft' => $submission->is_draft,
+          'submitted' => $submission->submitted,
+          'remote_addr' => $submission->remote_addr,
+          'short_title' => $title,
+      ))->execute();
 }

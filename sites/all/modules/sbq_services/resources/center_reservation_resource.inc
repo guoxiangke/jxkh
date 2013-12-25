@@ -25,7 +25,6 @@ function center_reservation_alter($centerid, $fun, $data) {
   
   module_load_include('inc', 'webform_service', 'webform_service');
   $submission = _center_reservation_format($data);
-  //return $submission;
   $result = reset($submission);
   return _submission_resource_create(SBQ_CENTER_RESERVATION_NODE_ID, $result);
 }
