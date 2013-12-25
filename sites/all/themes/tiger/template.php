@@ -11,7 +11,7 @@
 function tiger_preprocess_page($variables) {
   // /* can be used to load css per page, based on path, node-type, or others. */
   if ($variables['is_front']) {
-    drupal_add_css(drupal_get_path('theme', 'tiger') . "/css/home_style.css");
+    drupal_add_css(path_to_theme() . "/css/home_style.css", array('group' => CSS_THEME));
   }
 }
 

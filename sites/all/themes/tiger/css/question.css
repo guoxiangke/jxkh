@@ -1,0 +1,28 @@
+.sbq_question_final { float: left; width: 100%; }
+.sbq_question_final .sbq_question { float: left; width: 100%; }
+/*---general---*/
+.sbq_question_final .sbq_content { float: left; width: 630px; margin: 0px 0px 0px 50px; }
+.sbq_question_final .sbq_content .sbq_user_name { float: left; height: 24px; line-height: 24px; font-size: 12px; font-weight: bold; }
+.sbq_question_final .sbq_content .sbq_user_name a { color: #16afc2; }
+.sbq_question_final .sbq_content .sbq_user_name a:hover { text-decoration: underline; }
+.sbq_question_final .sbq_content .sbq_user_pic { float: right; width: 24px; height: 24px; overflow: hidden; }
+.sbq_question_final .sbq_content .sbq_user_pic img { float: left; width: 24px; height: 24px; border: none; border-radius: 2px; overflow: hidden; }
+.sbq_question_final .sbq_title { float: left; width: 100%; line-height: 30px; font-size: 14px; word-break: break-all; word-wrap: break-word; }
+.sbq_question_final .sbq_text { float: left; width: 100%; line-height: 22px; padding: 5px 0px; font-size: 13px; }
+.sbq_question_final .votes { float: left; width: 40px; position: absolute; top: 10px; left: 0px; word-break: break-all; word-wrap: break-word; }
+.sbq_question_final .votes a { float: left; width: 40px; margin: 0px 0px 5px 0px; padding: 10px 0px; border-radius: 2px; background: #e2fafd; color: #00a1b5; font-size: 13px; text-align: center; }
+.sbq_question_final .votes a:hover,
+.sbq_question_final .votes .active { background: #00a1b5; }
+.sbq_question_final .votes a .arrow { float: left; width: 100%; height: 6px; margin: 0 auto; background: url(../image/sbq_question_final_votes_bg.png) no-repeat; }
+.sbq_question_final .votes .up .arrow { background-position: center 0px; }
+.sbq_question_final .votes .down .arrow { background-position: center -6px; }
+.sbq_question_final .votes .up:hover .arrow,
+.sbq_question_final .votes .up.active .arrow { background-position: center -12px; }
+.sbq_question_final .votes .down:hover .arrow,
+.sbq_question_final .votes .down.active .arrow { background-position: center -18px; }
+.sbq_question_final .votes a .count { float: left; width: 100%; height: 24px; line-height: 24px; overflow: hidden; }
+.sbq_question_final .votes a:hover .count,
+.sbq_question_final .votes .active .count { color: #FFF; }
+/*sbq_answer*/
+.sbq_answer_list { float: left; width: 100%; }
+.sbq_question_final .sbq_answer { float: left; width: 100%; padding: 10px 0px; position: relative; }

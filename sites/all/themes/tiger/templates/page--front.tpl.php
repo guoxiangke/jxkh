@@ -78,7 +78,6 @@
     <div class="sbq_logo">
       <div class="sbq_img">
         <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo">
-          <img src="<?php print $logo; ?>" width="290" height="60" alt="<?php print t('Home'); ?>" />
         </a>
       </div>
     </div>

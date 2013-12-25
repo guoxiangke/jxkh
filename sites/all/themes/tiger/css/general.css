@@ -1,26 +1,89 @@
 * { margin: 0px; padding: 0px; list-style: none; }
-a { text-decoration: none; }
+/*------font------*/
+a { text-decoration: none; color: #333333; }
+a:hover { color: #16AFC2; }
 img { border: none; }
 input { outline: none; }
-html { font-family: "SimSun", "宋体", "Arial"; color: #585858; font-size: 12px; }
+.votes { font-family: "Arial", "Helvetica", sans-serif; }
+html,
+.sbq_tips_error { font-family: "SimSun", "宋体", "Arial"; color: #333333; font-size: 12px; }
 .sbq_home_menu,
 .footer,
 .top_nav,
 .top_nav2,
 .header,
 .header2,
-input { font-family: "Microsoft Yahei", "微软雅黑", "Arial" !important; }
-/*header*/
-.header { float: left; width: 100%; height: 61px; background: url(../image/sbq_header_bg.png) repeat-x; overflow: hidden; }
-.header .header_inner { width: 1070px; padding: 0px 100px; margin: 0 auto; }
+input,
+.sbq_form_01,
+.sbq_user_name { font-family: "Microsoft Yahei", "微软雅黑", "Arial" !important; }
+/*------header------*/
+.header { float: left; width: 100%; }
+.header .header_inner { width: 960px; margin: 0 auto; }
 .header .sbq_logo { float: left; }
-.header .sbq_header_login { float: right; height: 50px; padding: 4px; font-size: 14px; color: #FFF; }
-.header .sbq_header_login a { color: #FFF; }
-.header .sbq_header_login a:hover { color: #eeeeee; }
-.header .sbq_user_links { float: left; height: 50px; line-height: 50px; margin: 0px 5px 0px 0px; overflow: hidden; white-space:nowrap; }
+.header .sbq_header_login { float: right; height: 50px; padding: 4px; font-size: 14px; color: #333333; }
+.header .sbq_header_login a { color: #333333; }
+.header .sbq_header_login a:hover { color: #424242; }
+.header .sbq_user_links { float: left; height: 50px; line-height: 50px; margin: 0px 5px 0px 0px; overflow: hidden; white-space: nowrap; }
 .header .sbq_user_links a { padding: 0px 5px; }
-.header .sbq_header_login .sbq_user_pic { float: left; border: 1px #FFFFFF solid; }
-
-.sbq_qr_code { float: left; width: 100%; position: absolute; top: 131px; left: 0; }
-.sbq_qr_code .sbq_qr_code_inner { width: 1270px; margin: 0 auto; }
-.sbq_qr_code img { float: left; width: 100px; overflow: hidden; }
+.header .sbq_header_login .sbq_user_pic { float: left; border: 1px #E5E5E5 solid; }
+/*------body------*/
+.body { float: left; width: 100%; padding: 30px 0px; }
+.body .main { width: 960px; margin: 0 auto; }
+.body .content { float: left; width: 680px; }
+.body .sidebar_second { float: left; width: 260px; margin: 0px 0px 0px 20px; }
+/*------body------*/
+/*------Colorbox------*/
+#colorbox,
+#cboxOverlay,
+#cboxWrapper { position: absolute; top: 0; left: 0; z-index: 9999; overflow: hidden; }
+#cboxWrapper { max-width: none; }
+#cboxOverlay { position: fixed; width: 100%; height: 100%; }
+#cboxMiddleLeft,
+#cboxBottomLeft { clear: left; }
+#cboxContent { position: relative; }
+#cboxLoadedContent { overflow: auto; -webkit-overflow-scrolling: touch; }
+#cboxTitle { margin: 0; }
+#cboxLoadingOverlay,
+#cboxLoadingGraphic { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+#cboxPrevious,
+#cboxNext,
+#cboxClose,
+#cboxSlideshow { cursor: pointer; }
+.cboxPhoto { float: left; margin: auto; border: 0; display: block; max-width: none; -ms-interpolation-mode: bicubic; }
+.cboxIframe { width: 100%; height: 100%; display: block; border: 0; }
+#colorbox,
+#cboxContent,
+#cboxLoadedContent { box-sizing: content-box; -moz-box-sizing: content-box; -webkit-box-sizing: content-box; }
+/*User Style*/
+#cboxOverlay { background: #000; }
+#colorbox { outline: 0; }
+/*#cboxTopLeft { width: 25px; height: 25px; background: url(../image/border1.png) no-repeat 0 0; }
+#cboxTopCenter { height: 25px; background: url(../image/border1.png) repeat-x 0 -50px; }
+#cboxTopRight { width: 25px; height: 25px; background: url(../image/border1.png) no-repeat -25px 0; }
+#cboxBottomLeft { width: 25px; height: 25px; background: url(../image/border1.png) no-repeat 0 -25px; }
+#cboxBottomCenter { height: 25px; background: url(../image/border1.png) repeat-x 0 -75px; }
+#cboxBottomRight { width: 25px; height: 25px; background: url(../image/border1.png) no-repeat -25px -25px; }
+#cboxMiddleLeft { width: 25px; background: url(../image/border2.png) repeat-y 0 0; }
+#cboxMiddleRight { width: 25px; background: url(../image/border2.png) repeat-y -25px 0; }
+*/
+#cboxContent {/* background: #fff;*/ overflow: hidden; }
+.cboxIframe {/* background: #fff;*/ }
+#cboxError { padding: 50px; border: 1px solid #ccc; }
+#cboxLoadedContent { }
+#cboxTitle { position: absolute; bottom: 0px; left: 0; text-align: center; width: 100%; color: #999; }
+#cboxCurrent { position: absolute; bottom: 0px; left: 100px; color: #999; }
+#cboxLoadingOverlay { background: #fff url(../image/loading.gif) no-repeat 50% 50%; }
+/* these elements are buttons, and may need to have additional styles reset to avoid unwanted base styles */
+#cboxPrevious,
+#cboxNext,
+#cboxSlideshow,
+#cboxClose { border: 0; padding: 0; margin: 0; overflow: visible; width: auto; background: none; }
+/* avoid outlines on :active (mouseclick), but preserve outlines on :focus (tabbed navigating) */
+#cboxPrevious:active,
+#cboxNext:active,
+#cboxSlideshow:active,
+#cboxClose:active { outline: 0; }
+#cboxSlideshow { position: absolute; bottom: 0px; right: 42px; color: #444; }
+#cboxPrevious { position: absolute; bottom: 0px; left: 0; color: #444; }
+#cboxNext { position: absolute; bottom: 0px; left: 63px; color: #444; }
+#cboxClose { float: left; width: 40px; height: 40px; position: absolute; top: 5px; right: 5px; display: block; text-indent: -999px; overflow: hidden; background: url(../image/close.png) no-repeat; }
