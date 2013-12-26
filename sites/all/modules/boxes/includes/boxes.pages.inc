@@ -241,7 +241,7 @@ function boxes_form($form, &$form_state, Box $box, $type = NULL) {
     '#weight' => 200,
     '#submit' => array('boxes_form_submit'),
   );
-  if (!empty($box->bid) && user_access('delete any ' . $box->type . ' box')) {
+  if (!empty($box->bid) && user_access('delete any ' . $box->type . ' boxes')) {
     $form['actions']['delete'] = array(
       '#type' => 'submit',
       '#value' => t('Delete'),

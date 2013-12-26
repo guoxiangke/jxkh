@@ -574,7 +574,7 @@ function boxes_access($op, $box = NULL, $account = NULL) {
   }
 
   if (isset($box) && isset($box->type)) {
-    if (user_access("$op any {$box->type} box", $account)) {
+    if (user_access("$op any {$box->type} boxes", $account)) {
       $rights[$account->uid][$cid][$op] = TRUE;
       return TRUE;
     }
@@ -582,7 +582,7 @@ function boxes_access($op, $box = NULL, $account = NULL) {
   else {
     // Here we are looking for access to any of the types.
     foreach (boxes_get_types() as $box_type) {
-      $perm = $op . ' any ' . $box_type->type . ' box';
+      $perm = $op . ' any ' . $box_type->type . ' boxes';
       if (user_access($perm, $account)) {
         $rights[$account->uid][$cid][$op] = TRUE;
         return TRUE;
