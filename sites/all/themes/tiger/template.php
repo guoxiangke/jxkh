@@ -18,6 +18,10 @@ function tiger_preprocess_page($variables) {
   if (!$variables['logged_in']) {
     drupal_add_css(path_to_theme() . "/css/reg.css", array('group' => CSS_THEME));
   }
+  // question detail page
+  if (arg(0) == 'question') {
+    drupal_add_css(path_to_theme() . "/css/question.css", array('group' => CSS_THEME));
+  }
 }
 
 /**

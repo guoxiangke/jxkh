@@ -108,6 +108,6 @@
     </div>
   </div>
 </div>
-<div id="footer" class="footer">
+<div class="footer">
   <?php print render($page['footer']); ?>
 </div> <!-- /#footer -->

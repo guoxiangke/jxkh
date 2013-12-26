@@ -1,7 +1,9 @@
 * { margin: 0px; padding: 0px; list-style: none; }
 /*------font------*/
+textarea,
+input { outline: none; }
 a { text-decoration: none; color: #333333; }
-a:hover { color: #16AFC2; }
+a:hover { color: #225599; }
 img { border: none; }
 input { outline: none; }
 .votes { font-family: "Arial", "Helvetica", sans-serif; }
@@ -15,23 +17,70 @@ html,
 .header2,
 input,
 .sbq_form_01,
-.sbq_user_name { font-family: "Microsoft Yahei", "微软雅黑", "Arial" !important; }
+.sbq_user_name,
+.sbq_date,
+.sbq_follow_num a { font-family: "Microsoft Yahei", "微软雅黑", "Arial" !important; }
 /*------header------*/
 .header { float: left; width: 100%; }
-.header .header_inner { width: 960px; margin: 0 auto; }
+.header .header_inner { width: 960px; height: 60px; margin: 0 auto; padding: 0px 0px 10px 0px; overflow: hidden; border-bottom: 1px #E5E5E5 solid; }
 .header .sbq_logo { float: left; }
-.header .sbq_header_login { float: right; height: 50px; padding: 4px; font-size: 14px; color: #333333; }
+.header .sbq_header_login { float: right; height: 24px; margin: 28px 0px 0px 0px; padding: 5px; font-size: 14px; color: #333333; }
 .header .sbq_header_login a { color: #333333; }
 .header .sbq_header_login a:hover { color: #424242; }
-.header .sbq_user_links { float: left; height: 50px; line-height: 50px; margin: 0px 5px 0px 0px; overflow: hidden; white-space: nowrap; }
+.header .sbq_user_links { float: left; height: 24px; line-height: 24px; margin: 0px 5px 0px 0px; overflow: hidden; white-space: nowrap; }
 .header .sbq_user_links a { padding: 0px 5px; }
-.header .sbq_header_login .sbq_user_pic { float: left; border: 1px #E5E5E5 solid; }
+.header .sbq_header_login .sbq_user_pic { float: left; width: 24px; height: 24px; }
+.header .sbq_header_login .sbq_user_pic img { float: left; width: 24px; height: 24px; }
+/*sbq_main_nav*/
+.sbq_main_nav { float: left; height: 26px; margin: 32px 0px 0px 50px; }
+.sbq_main_nav ul { float: left; }
+.sbq_main_nav ul li { float: left; font-size: 14px; margin: 0px 30px 0px 0px; }
+.sbq_main_nav ul li a { float: left; height: 26px; line-height: 26px; padding: 0px 8px; }
+.sbq_main_nav ul li a:hover { background: #1575D5; color: #FFF; }
+/*------footer------*/
+.footer { float: left; width: 100%; }
+.footer .footer_inner { width: 960px; margin: 0 auto; border-top: 1px #E5E5E5 solid; }
+.footer .sbq_about_link { clear: both; padding: 20px 0px 5px 0px; text-align: center; }
+.footer .sbq_about_link li { height: 24px; line-height: 24px; padding: 0px 5px; display: inline-block; font-size: 14px; }
+.footer a { color: #999; }
+.footer a:hover { color: #999; text-decoration: underline; }
+.footer .sbq_copy { clear: both; height: 20px; line-height: 20px; padding: 5px 0px 20px 0px; text-align: center; color: #999; }
 /*------body------*/
 .body { float: left; width: 100%; padding: 30px 0px; }
 .body .main { width: 960px; margin: 0 auto; }
 .body .content { float: left; width: 680px; }
-.body .sidebar_second { float: left; width: 260px; margin: 0px 0px 0px 20px; }
-/*------body------*/
+/*------sidebar_second------*/
+.sidebar_second { float: left; width: 260px; margin: 0px 0px 0px 20px; }
+/*sbq_follow*/
+.sbq_follow { float: left; width: 100%; }
+.sbq_follow .sbq_follow_btn { float: left; width: 100%; margin: 0px 0px 15px 0px; }
+.sbq_follow .sbq_follow_btn a { float: left; width: 78px; height: 32px; line-height: 32px; margin: 0px 10px 0px 0px; border: 1px #6D8F29 solid; border-radius: 3px; background: url(../image/sbq_follow_btn_bg.png) repeat-x; color: #3E5E00; font-size: 14px; text-align: center; box-shadow: 0px 1px 0px #d6eca7 inset, 0px 1px 0px #cdcdcd; }
+.sbq_follow .sbq_follow_btn a.on { color: #666666; border: 1px #bbbbbb solid; background: url(../image/sbq_follow_btn_bg_ON.png) repeat-x; box-shadow: none; }
+.sbq_follow .sbq_follow_num { float: left; width: 100%; height: 22px; line-height: 22px; margin: 0px 0px 10px 0px; color: #999; }
+.sbq_follow .sbq_follow_num a { color: #225599; font-weight: bold; margin: 0px 5px 0px 0px; }
+.sbq_follow .sbq_follow_num a:hover { text-decoration: underline; }
+.sbq_follow .sbq_follow_list { float: left; width: 100%; margin: 0px 0px 20px 0px; }
+.sbq_follow .sbq_follow_list ul { float: left; width: 100%; }
+.sbq_follow .sbq_follow_list ul li { float: left; margin: 3px 3px 0px 0px; }
+.sbq_follow .sbq_follow_list ul li a,
+.sbq_follow .sbq_follow_list ul li a img { float: left; width: 24px; height: 24px; overflow: hidden; border-radius: 2px; }
+/*sidebar_list_01*/
+.sidebar_second .sidebar_list_01 { float: left; width: 100%; padding: 15px 0px 10px 0px; border-top: 1px solid #EEEEEE; }
+.sidebar_second .sidebar_list_01 .sbq_sidebar_list_head { float: left; width: 100%; height: 24px; line-height: 24px; margin: 0px 0px 10px 0px; overflow: hidden; font-size: 14px; font-weight: bold; }
+.sidebar_second .sidebar_list_01 ul { float: left; width: 100%; }
+.sidebar_second .sidebar_list_01 ul li { float: left; width: 100%; line-height: 22px; margin: 0px 0px 8px 0px; }
+.sidebar_second .sidebar_list_01 ul li a { color: #225599; }
+.sidebar_second .sidebar_list_01 ul li a:hover { text-decoration: underline; }
+.sidebar_second .sidebar_list_01 ul li .sidebar_list_num { color: #999; margin: 0px 0px 0px 5px; display: inline-block; }
+/*sbq_sidebar_list_02*/
+.sidebar_second .sbq_sidebar_list_02 { float: left; width: 100%; margin: 0px 0px 15px 0px; border-top: 2px #1575D5 solid; }
+.sidebar_second .sbq_sidebar_list_02 .sbq_sidebar_list_head { float: left; width: 240px; height: 32px; line-height: 32px; padding: 0px 9px; border-left: 1px #E5E5E5 solid; border-right: 1px #E5E5E5 solid; border-bottom: 1px #E5E5E5 solid; }
+.sidebar_second .sbq_sidebar_list_02 .sbq_sidebar_list_title { font-size: 14px; font-weight: bold; }
+.sidebar_second .sbq_sidebar_list_02 ul { float: left; width: 240px; padding: 5px 9px; border-left: 1px #E5E5E5 solid; border-right: 1px #E5E5E5 solid; border-bottom: 1px #E5E5E5 solid; }
+.sidebar_second .sbq_sidebar_list_02 ul li { float: left; width: 100%; line-height: 22px; padding: 2px 0px; }
+.sidebar_second .sbq_sidebar_list_02 ul li a { color: #225599; }
+.sidebar_second .sbq_sidebar_list_02 ul li a:hover { text-decoration: underline; }
+.sidebar_second .sbq_sidebar_list_02 ul li .sidebar_list_num { color: #999; margin: 0px 0px 0px 5px; display: inline-block; }
 /*------Colorbox------*/
 #colorbox,
 #cboxOverlay,

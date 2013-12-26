@@ -47,20 +47,22 @@ body { background: url(../image/bg.jpg) center top no-repeat fixed; }
 .header { float: left; width: 100%; height: 60px; overflow: hidden; }
 .header .header_inner { width: 1070px; padding: 0px 100px; margin: 0 auto; }
 .header .sbq_logo { float: left; }
-.header .sbq_header_login { float: right; height: 50px; padding: 4px; font-size: 14px; color: #FFF; }
+.header .sbq_logo a { float: left; width: 300px; height: 60px; background: url(../image/logo.png) no-repeat; }
+.header .sbq_header_login { float: right; height: 24px; margin: 28px 5px 0px 0px; padding: 5px; font-size: 14px; color: #FFF; }
 .header .sbq_header_login a { color: #FFF; }
 .header .sbq_header_login a:hover { color: #eeeeee; }
-.header .sbq_user_links { float: left; height: 50px; line-height: 50px; margin: 0px 5px 0px 0px; overflow: hidden; white-space: nowrap; }
+.header .sbq_user_links { float: left; height: 24px; line-height: 24px; margin: 0px 5px 0px 0px; overflow: hidden; white-space: nowrap; }
 .header .sbq_user_links a { padding: 0px 5px; }
-.header .sbq_header_login .sbq_user_pic { float: left; border: 1px #FFFFFF solid; }
+.header .sbq_header_login .sbq_user_pic { float: left; width: 24px; height: 24px; }
+.header .sbq_header_login .sbq_user_pic img { float: left; width: 24px; height: 24px; }
 .sbq_qr_code { float: left; width: 100%; position: absolute; top: 131px; left: 0; }
 .sbq_qr_code .sbq_qr_code_inner { width: 1270px; margin: 0 auto; }
 .sbq_qr_code img { float: left; width: 100px; overflow: hidden; }
 /*footer*/
-.footer { float: left; width: 100%; padding: 30px 0px; overflow: hidden; text-shadow: 1px 1px 1px #666666; }
+.footer { float: left; width: 100%; overflow: hidden; text-shadow: 1px 1px 1px #666666; }
 .footer a { color: #FFFFFF; }
 .footer a:hover { color: #eeeeee; }
-.footer .footer_inner { width: 1050px; padding: 0px 100px; margin: 0 auto; }
+.footer .footer_inner { width: 1050px; padding: 0px 100px; margin: 0 auto; border: none; }
 .footer .sbq_about_link { float: left; width: 100%; }
 .footer .sbq_about_link ul { float: right; }
 .footer .sbq_about_link ul li { float: left; height: 30px; line-height: 30px; padding: 0px 0px 0px 10px; font-size: 16px; }
