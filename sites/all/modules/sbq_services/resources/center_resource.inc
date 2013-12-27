@@ -303,7 +303,7 @@ function center_resource_definition() {
               'name' => 'uid',
               'type' => 'int',
               'description' => t('The function .'),
-              'source' => array( 'param' => 'userid' ),
+              'source' => array( 'param' => 'uid' ),
               'default value' => 0,
               'optional' => TRUE,
           ),
@@ -347,11 +347,13 @@ function center_resource_definition() {
 
   return $definition;
 }
+
 function center($centerid) {
   $node = node_load($centerid);
   $nodes = _center_formate($node, 'data');
   return reset($nodes);
 }
+
 /**
  *  alter question function
  * @param type $centerid
@@ -640,9 +642,9 @@ function _center_formate($data, $target = 'node', $is_list = FALSE) {
   $nodes = array();
   foreach ($data as $key => $value) {
     $value = (array) $value;
-    if ($target != 'node') {   
+    if ($target != 'node') {
       if (isset($value['field_sbq_center_img']['und'])) {
-         //return $value['field_sbq_center_img']['und'];
+        //return $value['field_sbq_center_img']['und'];
         foreach ($value['field_sbq_center_img']['und'] as $key => $value) {
           $value = (array) $value;
           $node['open_img'][$key] = array(

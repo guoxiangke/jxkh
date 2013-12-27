@@ -157,8 +157,8 @@ function sbq_center_reservation_webform_submission_access($node, $submission, $o
       // they have permission to access their own permissions.
       return og_user_access('node', $group['target_id'], 'access own center reservation submissions', $account);
     case 'list':
-      
-      $f= og_user_access('node', $group['target_id'], 'access all center reservation results', $account) || (og_user_access('node', $group['target_id'], 'access own center reservation submissions', $account) && ($account->uid || isset($_SESSION['webform_submission'])));
+
+      $f = og_user_access('node', $group['target_id'], 'access all center reservation results', $account) || (og_user_access('node', $group['target_id'], 'access own center reservation submissions', $account) && ($account->uid || isset($_SESSION['webform_submission'])));
       return true;
     case 'edit':
       if ($general_access) {
@@ -179,7 +179,6 @@ function sbq_center_reservation_webform_submission_access($node, $submission, $o
       }
       break;
   }
-
 }
 
 /**
@@ -227,7 +226,7 @@ function sbq_center_reservation_node_insert($node) {
   $webform_node->type = 'webform';
   $webform_node->title = $node->title . '(预约)';
   node_object_prepare($webform_node);
-  $webform_node->language = language_default();
+  $webform_node->language = $node->language;
   $webform_node->body = $node->title;
   $webform_node->og_group_ref['und'][0]['target_id'] = $node->nid;
   node_save($webform_node);
@@ -261,4 +260,37 @@ function sbq_center_reservation_node_by_center($centerid = NULL) {
   }
   $reservationid = reset(array_keys($result['node']));
   return node_load($reservationid);
+}
+
+/**
+ *  fetch user reservation
+ * @param type $filter array('uid'=>?, 'nid' => ?), $uid is not must
+ * @param type $page
+ * @param type $pagesize
+ */
+function sbq_center_reservation_get_submissions($filter, $page = 0, $pagesize = 10) {
+  $query = db_select('webform_submissions', 'wfs')
+      ->fields('wfs', array( 'sid' ))
+      ->orderBy('submitted', 'DESC')
+      ->condition('nid', $filter['nid']);
+
+  if (isset($filter['uid']) && $filter['uid']) {
+    $query->condition('uid', $filter['uid']);
+    $count = webform_get_submission_count($filter['nid'], $filter['uid']);
+  }  else {
+    $count = webform_get_submission_count($filter['nid']);
+  }
+  $result = $query->condition('is_draft', 0)
+      ->range($page * $pagesize, $pagesize)
+      ->execute()
+      ->fetchAllAssoc('sid');
+  $reservation = array();
+  foreach ($result as $key => $value) {
+    $reservation[] = webform_get_submission($filter['nid'], $key);
+  }
+  return array(
+      'reservation' => $reservation,
+      'page' => $page,
+      'pagecount' => ceil($count / $pagesize)
+  );
 }
