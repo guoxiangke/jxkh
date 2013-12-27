@@ -29,10 +29,7 @@ function center_reservation_alter($centerid, $fun, $data) {
 }
 
 function center_reservation_query($centerid, $fun = NULL, $uid, $page, $fields, $parameters, $pagesize) {
-//  webform_get_submissions($filters);
-//  webform_get_submissions($filters);
   $reservation_node = sbq_center_reservation_node_by_center($centerid);
-  return $parameters;
   module_load_include('inc', 'webform', 'includes/webform.submissions');
   if ($fun) {
     if (is_numeric($fun)) {
