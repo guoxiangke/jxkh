@@ -19,6 +19,8 @@ function zen_kh_preprocess_page(&$vars, $hook) {
   if (arg(0)=='user' && arg(1)=='login') {
     drupal_set_title('用户登录');
   }
+    dpm(arg(2));
+    dpm($vars['theme_hook_suggestions']);
 }
 /**
  * Override or insert variables into the maintenance page template.
