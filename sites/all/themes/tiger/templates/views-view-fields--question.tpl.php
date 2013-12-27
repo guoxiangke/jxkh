@@ -39,6 +39,7 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
   if(isset($ops))
   $accept_link = $ops;
   $node = node_load($nid);//answer node /q-node
+  kpr($node);
   global $base_url, $user;
   $share_a_node = $base_url.'/node/'.$row->nid.'/share/'.$user->uid.'/nojs';
 
