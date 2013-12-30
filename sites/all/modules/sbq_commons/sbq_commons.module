@@ -1417,3 +1417,63 @@ function sbq_commons_messages_count($account = NULL) {
   }
   return 0;
 }
+
+/**
+ * Implements hook_node_view().
+ */
+function sbq_commons_node_view($node, $view_mode, $langcode) {
+//   分类
+// 医界传奇 (Machine name: doctor_legend)
+// 就医指南 (Machine name: curing_guide)
+// 新闻 (Machine name: news)
+// 曝光台 (Machine name: hospital_blacklist)
+// 爱心活动 (Machine name: friend_activities)
+// 病例诊断 (Machine name: illness_diagnosis)
+// ----------------------------------------------------------
+// 红榜单 (Machine name: red_list)
+// 黑榜单 (Machine name: black_list)
+    if(in_array($node->type, array('doctor_legend','curing_guide','news','hospital_blacklist','friend_activities','illness_diagnosis','red_list','black_list','blog','post')))
+    // Only append comments when we are building a node on its own node detail
+    // page. We compare $node and $page_node to ensure that comments are not
+    // appended to other nodes shown on the page, for example a node_reference
+    // displayed in 'full' view mode within another node.
+    if ($view_mode == 'full' && node_is_page($node) && empty($node->in_preview)) {
+      
+      $n_nid = prev_next_nid($node->nid, 'prev');
+      $link_text = '上一篇';
+      if($n_nid == 0) {
+        $link_text = t('上一篇: 没有了');
+        $n_nid = $node->nid;
+      }else{
+        $n_node = node_load($n_nid);
+        $link_text = $link_text.': '.$n_node->title;
+      }
+      $links['previous'] = array(
+            'title' => $link_text,
+            'href' => "node/$n_nid",
+            'attributes' => array('title' => t('Previous page.')),            
+          );
+      $n_nid = prev_next_nid($node->nid, 'next');
+
+      $link_text = '下一篇';
+      if($n_nid == 0) {
+        $link_text = t('下一篇: 没有了');
+        $n_nid = $node->nid;
+      }else{
+        $n_node = node_load($n_nid);
+        $link_text = $link_text.': '.$n_node->title;
+      }
+      
+      $links['next'] = array(
+            'title' => $link_text,
+            'href' => "node/$n_nid",
+            'attributes' => array('title' => t('Next page.')),
+          );
+
+      $node->content['links']['pn'] = array(
+        '#theme' => 'links__node__node',
+        '#links' => $links,
+        '#attributes' => array('class' => array('links', 'inline')),
+      );
+    }
+}
