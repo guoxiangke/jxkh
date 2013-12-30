@@ -349,9 +349,56 @@ function center_resource_definition() {
 }
 
 function center($centerid) {
+  global $user;
+
   $node = node_load($centerid);
   $nodes = _center_formate($node, 'data');
-  return reset($nodes);
+  //return reset($nodes);
+  //咨询
+  $question_query = new EntityFieldQuery();
+  $result = $question_query->entityCondition('entity_type', 'node')
+      ->propertyCondition('type', 'question')
+      ->propertyCondition('uid', $user->uid)
+      ->fieldCondition('og_group_ref', 'target_id', $centerid, '=')
+      ->execute();
+
+  $question = array();
+
+  if (isset($result['node']) && $qids = array_keys($result['node'])) {
+    foreach ($qids as $key => $value) {
+      $node_q = node_load($value);
+      $question[$value] = count($node_q->field_answers['und']);
+    }
+  }
+  //指导建议
+  // 视频
+  $view = views_get_view('sbq_center_edu');
+  $view->set_display('center_edu_video');
+  $view->set_arguments(array( $centerid ));
+  $view->is_attachment = true;
+  $view->execute();
+  $view->preview();
+
+  // 文章
+  $view_art = views_get_view('sbq_center_edu');
+  $view_art->set_display('article_block');
+  $view_art->set_arguments(array( $centerid ));
+  $view_art->is_attachment = true;
+  $view_art->execute();
+  $view_art->preview();
+  $edu_count = count($view->result) + count($view_art->result);
+  //预约门诊
+  $reservation = array(
+      '10' => '已经接受'
+  );
+
+  $return = reset($nodes);
+  $return += array(
+      'question' => $question,
+      'edu' => $edu_count,
+      'reservation' => $reservation
+  );
+  return $return;
 }
 
 /**

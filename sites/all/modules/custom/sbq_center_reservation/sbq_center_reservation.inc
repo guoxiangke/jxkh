@@ -12,3 +12,19 @@ function sbq_center_reservation($sbq_center, $reservation) {
   }
   return isset($form) ? $form : '';
 }
+
+function sbq_center_reservation_manager($centerid) {
+//  global $user;
+//
+//  if(is_object($centerid)){
+//    $center = node_load($centerid);
+//  }
+//  $center = node_load($centerid);
+  module_load_include('inc', 'webform', 'includes/webform.submissions');
+  module_load_include('inc', 'webform', 'includes/webform.report');
+  
+  $reservation = sbq_center_reservation_node_by_center($centerid);
+  $result = webform_get_submissions(array( 'nid' => $reservation->nid), NULL, 10);
+  $result = webform_results_submissions($reservation, NULL, 10);
+  echo  ($result);
+}

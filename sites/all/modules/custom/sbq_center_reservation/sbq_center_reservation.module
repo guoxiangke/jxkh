@@ -35,6 +35,32 @@ function sbq_center_reservation_access($type, $account = NULL) {
 }
 
 /**
+ * hook_reservation_form_alter
+ * 
+ * @param type $form
+ * @param type $form_state
+ * @param type $form_id
+ */
+function sbq_center_reservation_form_alter(&$form, $form_state, $form_id) {
+  global $user;
+  if (strpos($form_id, 'webform_client_form_') !== FALSE) {
+    if (isset($form['submitted']['sbq_center_category']) && $user->uid != 1) {
+      $form['submitted']['sbq_center_category']['#access'] = FALSE;
+      $form['submitted']['center_status']['#access'] = FALSE;
+    }
+  }
+//  if (strpos($form_id, 'webform_client_form_') !== FALSE) {
+//    $nid = str_replace('webform_client_form_', '', $form_id);
+//    if ($nid == SBQ_CENTER_RESERVATION_NODE_ID) {
+//      if ($sbq_center = sbq_center_get_center()) {
+//        $form['submitted']['sbq_center_id']['#value'] = $sbq_center->nid;
+//        $form['submitted']['sbq_center_formcategory']['#value'] = SBQ_CENTER_RESERVATION_TYPE_OUTPATIMENT;
+//      }
+//    }
+//  }
+}
+
+/**
  * fetch center reservation form by center node id or arg(1)
  * @param type $sbq_center_reservation_type in SBQ_CENTER_RESERVATION_TYPE_OUTPATIMENT, SBQ_CENTER_RESERVATION_TYPE_PHONE
  * @param type $centerid center node id or arg(1) or center node
@@ -277,7 +303,7 @@ function sbq_center_reservation_get_submissions($filter, $page = 0, $pagesize = 
   if (isset($filter['uid']) && $filter['uid']) {
     $query->condition('uid', $filter['uid']);
     $count = webform_get_submission_count($filter['nid'], $filter['uid']);
-  }  else {
+  } else {
     $count = webform_get_submission_count($filter['nid']);
   }
   $result = $query->condition('is_draft', 0)
@@ -285,6 +311,7 @@ function sbq_center_reservation_get_submissions($filter, $page = 0, $pagesize = 
       ->execute()
       ->fetchAllAssoc('sid');
   $reservation = array();
+  module_load_include('inc', 'webform', 'includes/webform.submissions');
   foreach ($result as $key => $value) {
     $reservation[] = webform_get_submission($filter['nid'], $key);
   }
@@ -293,4 +320,17 @@ function sbq_center_reservation_get_submissions($filter, $page = 0, $pagesize = 
       'page' => $page,
       'pagecount' => ceil($count / $pagesize)
   );
+}
+/**
+ * hook_theme
+ * @return array
+ */
+function sbq_center_reservation_theme() {
+  $tpls = array(
+      'sbq_user_relationships_list' => array(
+          'template' => 'sbq_center_reservation',
+          'variables' => array()
+      ),
+  );
+  return $tpls;
 }
