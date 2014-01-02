@@ -2,4 +2,5 @@ name = Sbq Services
 description = sbq services resources definition
 dependencies[] = services
 dependencies[] = webform_service
+dependencies[] = 
 core = 7.x

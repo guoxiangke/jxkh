@@ -1625,3 +1625,4 @@ function sbq_center_group_post($centerid = NULL) {
     return array();
   }
 }
+

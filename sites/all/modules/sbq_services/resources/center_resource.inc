@@ -345,6 +345,38 @@ function center_resource_definition() {
       'access arguments append' => TRUE,
   );
 
+  $definition['center']['targeted_actions']['message'] = array(
+      'help' => 'send message to center user',
+      'file' => array( 'type' => 'inc', 'module' => 'sbq_services', 'name' => 'resources/center_message_resource' ),
+      'callback' => 'center_message_alter',
+      'access callback' => '_node_resource_access',
+      'access arguments' => array( 'view' ),
+      'access arguments append' => TRUE,
+      'args' => array(
+          array(
+              'name' => 'centerid',
+              'optional' => FALSE,
+              'source' => array( 'path' => 0 ),
+              'type' => 'int',
+              'description' => 'The center id',
+          ),
+          array(
+              'name' => 'fun',
+              'optional' => TRUE,
+              'source' => array( 'path' => 2 ),
+              'default value' => '',
+              'type' => 'int',
+              'description' => 'alter center message function',
+          ),
+          array(
+              'name' => 'data',
+              'optional' => FALSE,
+              'source' => 'data',
+              'description' => 'The center message',
+              'type' => 'array',
+          ),
+      ),
+  );
   return $definition;
 }
 
