@@ -1,6 +1,0 @@
-name = Privatemsg Service
-description = Provides a privatemsg service.
-package = Services - services
-dependencies[] = services
-dependencies[] = privatemsg
-core = 6.x
