@@ -378,28 +378,12 @@ function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_time
       ->orderBy('timestamp', 'desc')
       ->execute();
   $result = $fail_login->fetchAll();
-  dpm();
   if (!$result) {
     unset($form['captcha']);
   } elseif (count($result) == $fail_times && ((time() - $result[2]->timestamp)/60) < $mintue) {
-    
     return;
   }
   unset($form['captcha']);
-  // Build CAPTCHA form element.
-//  $captcha_element = array(
-//      '#type' => 'captcha',
-//      '#captcha_type' => $captcha_point->module . '/' . $captcha_point->captcha_type,
-//      '#weight' => 99,
-//  );
-//  // Add a CAPTCHA description if required.
-//  if (variable_get('captcha_add_captcha_description', TRUE)) {
-//    $captcha_element['#description'] = _captcha_get_description();
-//  }
-//
-//  // Get placement in form and insert in form.
-//  $captcha_placement = _captcha_get_captcha_placement($form_id, $form);
-//  _captcha_insert_captcha_element($form, $captcha_placement, $captcha_element);
 }
 
 /**
