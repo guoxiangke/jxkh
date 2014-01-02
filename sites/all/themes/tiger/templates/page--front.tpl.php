@@ -83,8 +83,27 @@
     </div>
     <?php endif; ?>
     <div class="sbq_header_login">
-      <div class="sbq_user_links"><a href="user/login" class="log">登录</a>|<a href="register.html">注册</a></div>
-      <div class="sbq_user_pic"><a href="#"><img src="image/default_avatar.png" width="50" height="50"  alt=""/></a></div>
+      <?php if (!$logged_in): ?>
+      <div class="sbq_user_links">
+        <a href="user/login" class="log">登录</a>|<a href="register.html">注册</a>
+      </div>
+      <div class="sbq_user_pic">
+        <a href="#"><img src="../image/default_avatar.png" width="50" height="50"  alt=""/></a>
+      </div>
+      <?php endif; ?>
+      <?php if ($logged_in): ?>
+      <?php
+        global $user;
+        $name = theme('username', array('account' => $user));
+        $picture = theme('user_picture', array('account' =>$user));
+      ?>
+      <div class="sbq_user_links">
+        欢迎您，<?php print $name; ?>|<a href="/user/logout">退出</a>
+      </div>
+      <div class="sbq_user_pic">
+        <?php print $picture; ?>
+      </div>
+      <?php endif; ?>
     </div>
   </div>
 </div>

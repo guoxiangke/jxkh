@@ -1,0 +1,40 @@
+<?php
+
+function sbq_load_comments_menu(){
+  $items['ajax/comments/%'] = array(
+      'title' => 'Load all comments',
+      'page callback' => 'sbq_load_comments_load_all',
+      'page arguments' => array(2),
+      'access callback' => TRUE,
+      'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+function sbq_load_comments_load_all($nid = 0) {
+  if ($nid > 0) {
+    $output = '';
+    $node = node_load($nid);
+    $comments = comment_get_thread($node, COMMENT_MODE_FLAT, $node->comment_count);
+    $arr = array();
+    foreach ($comments as $key => $value) {
+      $comment = array();
+      $a_comment = comment_load($value);
+      $account = user_load($a_comment->uid);
+      $ac_name = theme('username', array('account' => $account));
+      $ac_picture = theme('user_picture', array('account' =>$account));
+      $comment_date = format_date($a_comment->changed, 'short');
+      $comment_body = $a_comment->comment_body['und'][0]['safe_value'];
+
+      $comment['sbq_user_pic'] = $ac_picture;
+      $comment['sbq_user_name'] = $ac_name;
+      $comment['sbq_text'] = $comment_body;
+      $comment['sbq_date'] = $comment_date;
+
+      $arr[] = $comment;
+    } // end of foreach
+  } else {
+
+  }
+  drupal_json_output($arr);
+}

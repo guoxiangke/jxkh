@@ -39,9 +39,9 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
   if(isset($ops))
   $accept_link = $ops;
   $node = node_load($nid);//answer node /q-node
-  kpr($node);
   global $base_url, $user;
   $share_a_node = $base_url.'/node/'.$row->nid.'/share/'.$user->uid.'/nojs';
+  $comments_per_page = 4;
 
   //field_ask_anonymous
   if($fields['field_ask_anonymous']->content == 1) {
@@ -68,7 +68,7 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
     </div>
     <div class="sbq_reply_actions">
       <ul>
-        <li class="sbq_date"><?php print $created; ?></li>
+        <li><?php print $created; ?></li>
         <li><a href="#" class="sbq_add_reply_btn">
           <?php if ($node->comment_count == 0) {?>
             添加评论
@@ -85,41 +85,48 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
       </ul>
     </div>
     <div class="sbq_reply_wrap">
-      <div class="sbq_reply_list">
+      <div id="comments-<?php print $nid ?>" class="sbq_reply_list">
         <ul>
+          <?php
+            $q_comments = comment_get_thread($node, COMMENT_MODE_FLAT, $comments_per_page);
+            foreach ($q_comments as $key => $value) {
+              $q_comment = comment_load($value);
+              $account = user_load($q_comment->uid);
+              $qc_name = theme('username', array('account' => $account));
+              $qc_picture = theme('user_picture', array('account' =>$account));
+              // $qc_picture = variable_get('user_picture_default', '');
+              // $qc_picture = theme('image_style', array('style_name' => 'profile_small', 'path' => $qc_picture));
+              $comment_date = format_date($q_comment->changed, 'short');
+              $comment_body = $q_comment->comment_body['und'][0]['safe_value'];
+          ?>
           <li>
-            <div class="sbq_user_pic"><a href="#" title="用户名"><img src="images/user_face2.jpg" width="24" height="24"  alt=""/></a></div>
+            <div class="sbq_user_pic"><?php print $qc_picture; ?></div>
             <div class="sbq_reply_list_content">
-              <div class="sbq_user_name"><a href="#">伊丽莎白酱</a></div>
-              <div class="sbq_text">快要好了的时候又发烧了38.5去医院灌肠第二天早上37.5晚上的时候又38.5去医院查血白细胞较少又做了一次灌肠.请问这种情况严重吗</div>
-              <div class="sbq_date">2013/12/09</div>
+              <div class="sbq_user_name"><?php print $qc_name; ?></div>
+              <div class="sbq_text"><?php print $comment_body; ?></div>
+              <div class="sbq_date"><?php print $comment_date; ?></div>
             </div>
           </li>
+          <?php
+            } // end of foreach
+          ?>
         </ul>
       </div>
-      <div class="comment_textarea" style="overflow-x: hidden; overflow-y: hidden; display: block;"> <a href="#" class="close"> <i class="icon-remove-sign"></i> </a>
-        <form class="comment-form" action="/comment/reply/21619" method="post" id="comment-form--6" accept-charset="UTF-8">
-          <div>
-            <div class="field-type-text-long field-name-comment-body field-widget-text-textarea form-wrapper" id="edit-comment-body--6">
-              <div id="comment-body-add-more-wrapper--6">
-                <div class="form-item form-type-textarea form-item-comment-body-und-0-value">
-                  <label for="edit-comment-body-und-0-value--6"> 评论 <span class="form-required" title="此项必填。">*</span> </label>
-                  <div class="form-textarea-wrapper resizable textarea-processed resizable-textarea">
-                    <textarea class="text-full form-textarea required" id="edit-comment-body-und-0-value--6" name="comment_body[und][0][value]" cols="60" rows="1"></textarea>
-                    <div class="grippie"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <input type="hidden" name="form_build_id" value="form-4Z16ZfA4C_5qhh-NcxgEzPqoAtDr_DiBaqz4SNODsnc">
-            <input type="hidden" name="form_token" value="oK2bU1oaVC9CrLVlyo9wAMFDLxbNJBbThaYqM5TaT7k">
-            <input type="hidden" name="form_id" value="comment_node_question_form">
-            <div class="form-actions form-wrapper" id="edit-actions--6">
-              <input type="submit" id="edit-submit--6" name="op" value="评论" class="form-submit ajax-processed">
-            </div>
+      <?php if ($node->comment_count > $comments_per_page) {?>
+        <div class="sbq_all_reply_btn"><a href="#" nid="<?php print $nid; ?>">显示全部评论</a></div>
+      <?php } // end of if ?>
+      <?php
+      if(user_is_logged_in())
+      foreach ( $view->result as $q_a_item) {//both for question & answers.
+       if(isset($q_a_item->comments) && $row->nid==$q_a_item->comments['#form']['nid']['#value']){
+         ?>
+          <div class="comment_textarea">
+            <?php print (render($q_a_item->comments['#form'])); ?>
           </div>
-        </form>
-      </div>
+         <?php
+         }
+      }
+      ?>
     </div>
   </div>
 </div>

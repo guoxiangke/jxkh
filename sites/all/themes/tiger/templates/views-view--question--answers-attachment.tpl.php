@@ -30,7 +30,7 @@
  * @see crystal_qa_preprocess_views_view()
  */
 ?>
-<div class="sbq_question_final">
+<div class="sbq_answer_list">
   <?php if ($rows): ?>
     <?php print $rows; ?>
   <?php elseif ($empty): ?>
@@ -39,45 +39,37 @@
     </div>
   <?php endif; ?>
 
+  <?php if ($pager): ?>
+    <?php print $pager; ?>
+  <?php endif; ?>
+
   <?php if ($attachment_after): ?>
     <div id = "answers" class="attachment attachment-after">
       <div id="new_answer">
       </div>
     </div>
     <?php print $attachment_after; ?>
-    <?php
-      $answers_count = 0;
-      if (arg(0) == 'question' && is_numeric(arg(1)) && ! arg(2)) {
-        $node = node_load(arg(1));
-        $answers_count = $node->field_computed_answers['und'][0]['value'];
-      }
-      // TODO : Load More answers by ajax
-      // Answers are views attachment
-    ?>
-    <?php if ($answers_count > 50): ?>
-      <a class="sbq_more_link">更多</a>
-    <?php endif; ?>
   <?php endif; ?>
+
+  <?php if ($more): ?>
+    <?php print $more; ?>
+  <?php endif; ?>
+
+  <?php if ($footer): ?>
+    <div class="view-footer">
+      <?php print $footer; ?>
+    </div>
+  <?php endif; ?>
+
+  <?php if ($feed_icon): ?>
+    <div class="feed-icon">
+      <?php print $feed_icon; ?>
+    </div>
+  <?php endif; ?>
+
   <?php if (isset($answer_node_form)): ?>
-    <?php
-      global $user;
-      if ($user->uid > 0) {
-        $a_name = theme('username', array('account' => $user));
-        $a_picture = theme('user_picture', array('account' =>$user));
-        ?>
-        <div class="sbq_answer_info">
-          <div class="sbq_user_name"><?php print $a_name; ?></div>
-          <div class="sbq_user_pic"><?php print $a_picture; ?></div>
-        </div>
-        <div class="sbq_answer_form">
-          <div class="answer-node-form">
-            <?php print render($answer_node_form); // render answer_node_form for question  ?>
-          </div>
-        </div>
-        <?php
-      } else {
-        # code...
-      }
-    ?>
+    <div class="answer-node-form">
+      <?php print render($answer_node_form); // render answer_node_form for question  ?>
+    </div>
   <?php endif; ?>
 </div><?php /* class view */ ?>
