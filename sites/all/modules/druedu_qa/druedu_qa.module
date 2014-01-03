@@ -902,56 +902,20 @@ function _ajax_answer_submit_js($form, &$form_state) {
   $rows_plugin = $view->style_plugin->row_plugin;
   foreach ($view->result as $k => $r) {
     $view->row_index = $k;
+    $origin_c = $comment_form = $r->comments['#form']['#children'];
+    $commenet_body = str_replace('<div></div>', $r->comments['#form']['comment_body']['#children'], $comment_form);
     $result .= '<div class="views-row clearfix">';
-    $result .= str_replace("/system/ajax", "/questions/" . $nid, $rows_plugin->render($r));
+    $old = str_replace("/system/ajax", "/questions/" . $nid, $rows_plugin->render($r));
+    $result .= str_replace($r->comments['#form']['#children'], $commenet_body, $old);
     $result .= '</div>';
   }
+
   $commands[] = ajax_command_remove('#answers h3');
   $commands[] = ajax_command_prepend('#answers', $view->attachment_before);
   $commands[] = ajax_command_prepend('#answers #new_answer', $result);
-  
+
   $html = '<textarea class="text-full ckeditor-mod form-textarea required" id="edit-body-und-0-value" name="body[und][0][value]" cols="60" rows="6" autocomplete="off"></textarea>';
   $commands[] = ajax_command_replace('#answer-node-form textarea', $html);
-
-
-//  $node = $form_state['node'];
-//  
-//  if (!empty($node->nid)) {
-//
-//    // Node is created successfully.
-//    // Return the same from but with empty fields.
-//    $new_node = (object) array(
-//            'uid' => $node->uid,
-//            'name' => $node->name,
-//            'type' => $node->type,
-//            'language' => $node->language,
-//    );
-//
-//    $new_form_state = array();
-//    $new_form_state['build_info']['args'] = array( $new_node );
-//    $new_form_state['values'] = array();
-//    $new_form_state['method'] = $form_state['method'];
-//
-//    form_load_include($new_form_state, 'inc', 'node', 'node.pages');
-//
-//    $new_form = drupal_rebuild_form($node->type . '_node_form', $new_form_state);
-//
-//    $commands[] = ajax_command_replace('#'.$form['#id'], drupal_render($new_form));
-//  }
-
-  //$nid = $new_form_state['nid'];
-//  $new_form_state = array();
-//  //$new_form_state['build_info']['args'][] = (object) array( 'nid' => $nid );
-//  // Don't pull from cache.
-//  $new_form_state['input'] = array();
-//  $new_form_build = drupal_build_form($form['#form_id'], $new_form_state);
-//  $new_form_output = drupal_render($new_form_build);
-//  //drupal_add_js('comments_sent()', 'inline');
-//  $commands[] = ajax_command_replace('#' . $form['#id'], $new_form_output);
-//  dpm($new_form_output);
-//  dpm($form);
-//  dpm($form_state);
-
   return array( '#type' => 'ajax', '#commands' => $commands );
 }
 
