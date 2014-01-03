@@ -480,8 +480,7 @@ function druedu_qa_node_delete($node) {
       $question->field_mark_question_resolved[LANGUAGE_NONE][0]['value'] = 0;
       node_save($question);
     };
-    if (isset($question->nid))
-      $_GET['destination'] = 'node/' . $question->nid;
+    $_GET['destination'] = 'node/' . $question->nid;
   }
   //comment blow if you want leave the answers while del a question...
   if ($node->type == 'question') {
@@ -491,8 +490,8 @@ function druedu_qa_node_delete($node) {
         //watchdog('Q&A', 'answer:'.$value['target_id'].' was deleted while del question:'.$node->nid);
         node_delete($value['target_id']);
       }
+      $_GET['destination'] = 'questions';
     }
-    //$_GET['destination'] = 'questions';
   }
 }
 
@@ -859,7 +858,6 @@ function _ajax_answer_submit_js($form, &$form_state) {
   $status = 'status';
   unset($_SESSION['messages']['status']);
   $notify_text = '<div id="messages"><div class="clearfix"><div class="messages ajax-comments ' . $status . '"><h2 class="element-invisible">Status message</h2>' . $text . '</div></div></div>';
-  watchdog('1notify_text', $notify_text, array(), WATCHDOG_NOTICE, 'link');
   //TODO: where is $notify_text ?
   // Don't display as a preview as this is being submitted.
   ////unset($comment_build['comment_body']['#object']->in_preview);

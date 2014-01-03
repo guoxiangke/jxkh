@@ -26,7 +26,7 @@
  Ø  提问的患者能够设置最佳答案，且只有一次设置机会
  */
 $question_node = node_load(arg(1));
-if($question_node->field_mark_question_resolved[LANGUAGE_NONE][0]['value'] != 1) {
+if(isset($question_node->field_mark_question_resolved[LANGUAGE_NONE][0]['value']) && $question_node->field_mark_question_resolved[LANGUAGE_NONE][0]['value'] != 1) {
 	 print $output;
 	}else {
 		$flags = flag_get_counts($entity_type = 'node',$row->nid);
