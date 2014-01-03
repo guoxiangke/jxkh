@@ -377,6 +377,65 @@ function center_resource_definition() {
           ),
       ),
   );
+
+
+  $definition['center']['relationships']['message'] = array(
+      'file' => array( 'type' => 'inc', 'module' => 'sbq_services', 'name' => 'resources/center_message_resource' ),
+      'help' => 'This method returns center message.',
+      'callback' => 'center_message_query',
+      'args' => array(
+          array(
+              'name' => 'centerid',
+              'type' => 'int',
+              'description' => t('The center id .'),
+              'source' => array( 'path' => 0 ),
+              'optional' => FALSE,
+          ),
+          array(
+              'name' => 'fun',
+              'type' => 'int',
+              'description' => t('The function .'),
+              'source' => array( 'path' => 2 ),
+              'default value' => '',
+              'optional' => TRUE,
+          ),
+          array(
+              'name' => 'page',
+              'optional' => TRUE,
+              'type' => 'int',
+              'description' => 'The zero-based index of the page to get, defaults to 0.',
+              'default value' => 0,
+              'source' => array( 'param' => 'page' ),
+          ),
+          array(
+              'name' => 'fields',
+              'optional' => TRUE,
+              'type' => 'string',
+              'description' => 'The fields to get.',
+              'default value' => '*',
+              'source' => array( 'param' => 'fields' ),
+          ),
+          array(
+              'name' => 'parameters',
+              'optional' => TRUE,
+              'type' => 'array',
+              'description' => 'Parameters array',
+              'default value' => array(),
+              'source' => array( 'param' => 'parameters' ),
+          ),
+          array(
+              'name' => 'pagesize',
+              'optional' => TRUE,
+              'type' => 'int',
+              'description' => 'The zero-based index of the page to get, defaults to 0.',
+              'default value' => variable_get('services_node_index_page_size', 10),
+              'source' => array( 'param' => 'pagesize' ),
+          ),
+      ),
+      'access callback' => '_node_resource_access',
+      'access arguments' => array( 'view' ),
+      'access arguments append' => TRUE,
+  );
   return $definition;
 }
 
