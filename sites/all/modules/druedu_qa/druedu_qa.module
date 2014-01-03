@@ -902,14 +902,13 @@ function _ajax_answer_submit_js($form, &$form_state) {
   $rows_plugin = $view->style_plugin->row_plugin;
   foreach ($view->result as $k => $r) {
     $view->row_index = $k;
-    $origin_c = $comment_form = $r->comments['#form']['#children'];
+    $comment_form = $r->comments['#form']['#children'];
     $commenet_body = str_replace('<div></div>', $r->comments['#form']['comment_body']['#children'], $comment_form);
     $result .= '<div class="views-row clearfix">';
     $old = str_replace("/system/ajax", "/questions/" . $nid, $rows_plugin->render($r));
     $result .= str_replace($r->comments['#form']['#children'], $commenet_body, $old);
     $result .= '</div>';
   }
-
   $commands[] = ajax_command_remove('#answers h3');
   $commands[] = ajax_command_prepend('#answers', $view->attachment_before);
   $commands[] = ajax_command_prepend('#answers #new_answer', $result);
