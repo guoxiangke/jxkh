@@ -72,7 +72,7 @@ function center_message_query($centerid, $fun = NULL, $page, $fields, $parameter
     );
   }
   foreach ($result['messages'] as $key => $value) {
-    $message[$key] = array(
+    $message[] = array(
         'mid' => $value->mid,
         'body' => $value->body,
         'timestamp' => $value->timestamp,
