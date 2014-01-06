@@ -130,13 +130,16 @@ function sbq_center_reservation_sheet($sbq_center_reservation_type, $centerid = 
  * @param type $node
  * @param type $submission
  */
-function sbq_center_reservation_webform_submission_insert($node, $submission) {
+function sbq_center_reservation_webform_submission_insert($node, $submission) { dpm('sbq_center_reservation');
   if (!module_exists('message')) {
     return;
   }
   dpm('sbq_center_reservation');
   if (!message_type_load('sbq_center_reservation')) {
-    message_type_create('sbq_center_reservation');
+     dpm('sbq_center_reservation');
+    $type = message_type_create('sbq_center_reservation');
+    $type->save();
+    dpm(message_type_load());
   }
   
 
