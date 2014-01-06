@@ -36,6 +36,11 @@ function sbq_center_reservation_action($centerid, $sid, $action) {
             ->condition('sid', $sid)
             ->condition('cid', sbq_center_reservation_field_keys('sbq_center_status'))
             ->execute();
+        foreach (module_implements('webform_submission_update') as $key => $value) {
+          $submission->is_accept = TRUE;
+          module_invoke($value, 'webform_submission_update', $reservation_node, $submission);
+        }
+
         return 'success';
       }
       break;

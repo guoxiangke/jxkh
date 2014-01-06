@@ -49,9 +49,9 @@ function sbq_center_reservation_menu() {
   );
 
   foreach (array( 'accept', 'ignore' ) as $key => $value) {
-    $items['node/%/reservation/%/action/'.$value] = array(
+    $items['node/%/reservation/%/action/' . $value] = array(
         'page callback' => 'sbq_center_reservation_action',
-        'page arguments' => array( 1, 3, $value),
+        'page arguments' => array( 1, 3, $value ),
         'access callback' => 'sbq_center_reservation_access',
         'access arguments' => array( $value, NULL ),
         'file' => 'sbq_center_reservation.inc',
@@ -131,6 +131,16 @@ function sbq_center_reservation_sheet($sbq_center_reservation_type, $centerid = 
  * @param type $submission
  */
 function sbq_center_reservation_webform_submission_insert($node, $submission) {
+  if (!module_exists('message')) {
+    return;
+  }
+  dpm('sbq_center_reservation');
+  if (!message_type_load('sbq_center_reservation')) {
+    message_type_create('sbq_center_reservation');
+  }
+  
+
+  message_create('sbq_center_reservation', array( '' ));
 //  global $user;
 //  $title = $user->name;
 //  if ($user->uid != $submission->uid) {
@@ -296,15 +306,16 @@ function sbq_center_reservation_node_insert($node) {
   if (!isset($node->type) || $node->type != SBQ_CENTER_NODE_TYPE) {
     return;
   }
-  $webform_node = new stdClass();
-  $webform_node->uid = $node->uid;
-  $webform_node->type = 'webform';
-  $webform_node->title = $node->title . '(预约)';
-  node_object_prepare($webform_node);
-  $webform_node->language = $node->language;
-  $webform_node->body = $node->title;
-  $webform_node->og_group_ref['und'][0]['target_id'] = $node->nid;
-  node_save($webform_node);
+
+//  $webform_node = new stdClass();
+//  $webform_node->uid = $node->uid;
+//  $webform_node->type = 'webform';
+//  $webform_node->title = $node->title . '(预约)';
+//  node_object_prepare($webform_node);
+//  $webform_node->language = $node->language;
+//  $webform_node->body = $node->title;
+//  $webform_node->og_group_ref['und'][0]['target_id'] = $node->nid;
+//  node_save($webform_node);
 }
 
 /**
@@ -315,14 +326,15 @@ function sbq_center_reservation_node_insert($node) {
 function sbq_center_reservation_node_by_center($centerid = NULL) {
   if (!$centerid) {
     $center_arg1 = arg(1);
-    $centerid = $center_arg1 ? $centerid : 0;
+    $centerid = $center_arg1 ? $center_arg1 : 0;
   }
   if (is_object($centerid)) {
     $node = $centerid;
   } else {
     $node = node_load($centerid);
   }
-  if ($node->type != SBQ_CENTER_NODE_TYPE) {
+
+  if (isset($node->type) && $node->type != SBQ_CENTER_NODE_TYPE) {
     return NULL;
   }
   $query = new EntityFieldQuery();
@@ -437,7 +449,6 @@ function sbq_center_reservation_render($node, $submission, $email, $format, $mul
   }
   $result = array();
   foreach ($submission as $k => $v) {
-    dpm($v);
     if (isset($component_tree['children'])) {
       foreach ($component_tree['children'] as $cid => $component) {
         if (_webform_client_form_rule_check($node, $component, $component['page_num'], NULL, $submission)) {
@@ -478,6 +489,7 @@ function sbq_center_reservation_render($node, $submission, $email, $format, $mul
           $data[$key]['#value'] = $value['#options'][$value['#value'][0]];
           break;
         case 'center_status':
+          dpm($value);
           $data[$key]['#value'] = $value['#options'][$value['#value'][0]];
           break;
         default:
@@ -525,4 +537,10 @@ function sbq_center_reservation_field_keys($key = NULL) {
     return $fields[$key];
   }
   return $fields;
+}
+
+function sbq_center_reservation_webform_submission_update($node, $submission) {
+  if (isset($submission->is_accept) && $submission->is_accept) {
+    variable_set('sbq_center_reservation_' . $submission->sid, 'acceptd');
+  }
 }
