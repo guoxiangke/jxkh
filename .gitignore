@@ -13,5 +13,9 @@ sites/*/files/styles
 sites/*/files/temp
 sites/*/private
 sites/all/modules/test/
+<<<<<<< HEAD
 /nbproject/private/
 nbproject/*
+=======
+nbproject/*
+>>>>>>> d3a9ecf36728c61ae78d06766a757f98c779ff6e

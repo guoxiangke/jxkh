@@ -18,12 +18,25 @@ function tiger_preprocess_page($variables) {
   if (!$variables['logged_in'] && arg(0) == 'user') {
     drupal_add_css(path_to_theme() . "/css/reg.css", array('group' => CSS_THEME));
   }
-  // question detail page
+  // question page
   if (arg(0) == 'question' || arg(0) == 'questions') {
     drupal_add_css(path_to_theme() . "/css/question.css", array('group' => CSS_THEME));
     if (is_numeric(arg(1)) && ! arg(2)) {
       $node = node_load(arg(1));
       drupal_set_title($node->title);
+    }
+  }
+}
+
+function tiger_preprocess_views_view(&$vars) {
+  if ($vars['view']->name == 'questions' && $vars['view']->current_display == 'page_questions_tagged') {
+    $title = $vars['view']->exposed_input['field_tags_tid'];
+    if (strlen(trim($title))>0) {
+      $vars['title'] = $title;
+      $vars['view']->build_info['title'] = $title;
+    } else {
+      $vars['title'] = '问答';
+      $vars['view']->build_info['title'] = '问答';
     }
   }
 }
@@ -147,5 +160,57 @@ function tiger_pager($variables) {
       'attributes' => array('class' => array('pager')),
     ));
     return '<div class="sbq_page_num">'.$output.'</div>';
+  }
+}
+
+function tiger_theme() {
+  $items = array();
+  $items['user_login'] = array(
+    'render element' => 'form',
+    'path' => drupal_get_path('theme', 'tiger') . '/templates',
+    'template' => 'user-login',
+    'preprocess functions' => array(
+       'tiger_preprocess_user_login'
+    ),
+  );
+  // $items['user_register_form'] = array(
+  //   'render element' => 'form',
+  //   'path' => drupal_get_path('theme', 'tiger') . '/templates',
+  //   'template' => 'user-register-form',
+  //   'preprocess functions' => array(
+  //     'tiger_preprocess_user_register_form'
+  //   ),
+  // );
+  return $items;
+}
+
+function tiger_preprocess_user_login(&$vars) {
+  //$vars['form']['name']['#attributes']['class'][] = 'sbq_login_btn';
+  $vars['form']['actions']['submit']['#attributes']['class'][] = 'sbq_login_btn';
+  $vars['form']['actions']['submit']['#field_prefix'] = '<div class="sbq_botton_01">';
+  $vars['form']['actions']['submit']['#field_suffix'] = '</div>';
+}
+
+function tiger_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'user_login') {
+    # code...
+    unset($form['name']['#title']);
+    unset($form['name']['#description']);
+    $form['name']['#field_prefix'] = '<div class="sbq_form_01"><label>用户名：</label>';
+    $form['name']['#field_suffix'] = '<div class="sbq_link"><a href="/user/register" class="reg cboxElement" target="_parent">注册账户</a></div></div>';
+
+    unset($form['pass']['#title']);
+    unset($form['pass']['#description']);
+    $form['pass']['#field_prefix'] = '<div class="sbq_form_01"><label>密码：</label>';
+    $form['pass']['#field_suffix'] = '<div class="sbq_link"><a href="#">忘记密码？</a></div></div>';
+
+    unset($form['remember_me']['#title']);
+    $form['remember_me']['#field_prefix'] = '<div class="sbq_checkbox_01">';
+    $form['remember_me']['#field_suffix'] = '<label for="checkbox1">下次自动登录</label></div>';
+
+    // $form['actions']['#field_prefix'] = '<div class="sbq_botton_01">';
+    // $form['actions']['#field_suffix'] = '</div>';
+
+    kpr($form);
   }
 }

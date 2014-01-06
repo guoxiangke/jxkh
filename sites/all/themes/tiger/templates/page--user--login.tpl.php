@@ -79,28 +79,3 @@
     </div></div> <!-- /.section, /#content -->
   </div></div> <!-- /#main, /#main-wrapper -->
 </div></div> <!-- /#page, /#page-wrapper -->
-<!---------------------------------------------------------------------------->
-<div class="sbq_login">
-  <div class="sbq_login_head"></div>
-  <div class="sbq_login_content">
-    <div class="sbq_form_01">
-      <label>用户名：</label>
-      <input type="text" class="sbq_input_01">
-      <div class="sbq_link"><a href="register.html" class="reg" target="_parent">注册账户</a></div>
-    </div>
-    <div class="sbq_form_01">
-      <label>密码：</label>
-      <input type="password" class="sbq_input_01">
-      <div class="sbq_link"><a href="#">忘记密码？</a></div>
-      <div class="sbq_tips_error">用户名和密码不匹配,请重新输入</div>
-    </div>
-    <div class="sbq_checkbox_01">
-      <input type="checkbox" id="checkbox1">
-      <label for="checkbox1">下次自动登录</label>
-    </div>
-    <div class="sbq_botton_01">
-      <label></label>
-      <input type="button" class="sbq_login_btn" value="登录">
-    </div>
-  </div>
-</div>

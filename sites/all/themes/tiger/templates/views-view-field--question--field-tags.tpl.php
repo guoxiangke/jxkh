@@ -26,11 +26,15 @@
 <?php
   foreach ($row->field_field_tags as $key => $tag) {
     $tag_title = trim($tag['rendered']['#title']);
-    if (strlen($tag_title)>0) {
+    $tid = trim($tag['raw']['tid']);
+    if (strlen($tag_title)>0 && $tid>0) {
+      $tag_count = 1;
+      $nids = taxonomy_select_nodes($tid, FALSE);
+      $tag_count = count($nids);
       $output = '<li>'
         . '<a href="'.url('questions/tagged/').'?field_tags_tid='.$tag_title.'">'
         . '<span class="sbq_tit">'.$tag_title.'</span>'
-        . '<span class="sbq_num">23</span>'
+        . '<span class="sbq_num">'.$tag_count.'</span>'
         . '</a>';
       print $output;
     }

@@ -753,10 +753,10 @@ function druedu_qa_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'answer_node_form' || $form_id == 'question_node_form') {
 
     $form['author']['#access'] = FALSE;
-    $form['options']['#access'] = FALSE;
+    //$form['options']['#access'] = FALSE;
     $form['comment_settings']['#access'] = FALSE;
     //$form['book']['#access'] = FALSE;
-    $form['additional_settings']['#access'] = FALSE;
+    //$form['additional_settings']['#access'] = FALSE;
     if ($form_id == 'answer_node_form') {
       $form['field_answer']['#access'] = FALSE;
       // $form['revision_information']['#access'] = FALSE;
