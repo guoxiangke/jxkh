@@ -442,14 +442,24 @@ function sbq_user_relationships_my_relstionships($account = NULL) {
   $options = array(
       'include_user_info' => TRUE,
   );
-  $approved = user_relationships_load(array( 'user' => $account->uid, 'approved' => 1,
-      'rtid' => 3 ), $options);
+  $approved = user_relationships_load(array( 'user' => $account->uid, 'approved' => 1, 'rtid' => 3 ), $options);
+
   if (in_array(USER_PATIENT_RID, array_keys($account->roles))) {
     $no_approved = user_relationships_load(array( 'user' => $account->uid, 'rtid' => 2 ), $options);
+    $return = array(
+        'patient_count' => count($no_approved),
+        'doctor_count' => count($approved),
+        'all' => count($no_approved) + count($approved),
+    );
   } else if (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($account->roles))) {
     $no_approved = user_relationships_load(array( 'user' => $account->uid, 'rtid' => 1 ), $options);
+    $return = array(
+        'doctor_count' => count($no_approved),
+        'patient_count' => count($approved),
+        'all' => count($no_approved) + count($approved),
+    );
   }
-  return count($approved) + count($no_approved);
+  return $return;
 }
 
 /*
