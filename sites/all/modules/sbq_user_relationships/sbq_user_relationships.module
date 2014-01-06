@@ -413,11 +413,13 @@ function sbq_user_relationships_action_between_user($viewer, $viewed, $action_ty
 //              //   '!remove_link' => drupal_get_form('sbq_user_relationships_ui_remove_ajax', $viewer, $relationship)
 //          ));
 
-          $list[] = array(
-              'relationship_type' => $relationship->name,
-              'relationship_action' => theme_sbq_user_relationships_remove_link(array(
-                  'uid' => $viewer->uid, 'rid' => $relationship->rtid, 'vid' => $viewed->uid ))
-          );
+//          $list[] = array(
+//              'relationship_type' => $relationship->name,
+//              'relationship_action' => theme_sbq_user_relationships_remove_link(array(
+//                  'uid' => $viewer->uid, 'rid' => $relationship->rid, 'vid' => $viewed->uid ))
+//          );
+          $list[] = sbq_user_relationships_user_action($relationship, $viewed);
+        
         } else {
           $list[$relationship->rid] = user_relationships_type_get_name($relationship) . ($relationship->is_oneway ? ($relationship->requester_id == $viewer->uid ? t(' (You to Them)') : t(' (Them to You)')) : NULL);
         }
@@ -443,7 +445,7 @@ function sbq_user_relationships_my_relstionships($account = NULL) {
       'include_user_info' => TRUE,
   );
   $approved = user_relationships_load(array( 'user' => $account->uid, 'approved' => 1, 'rtid' => 3 ), $options);
-
+  $return = array();
   if (in_array(USER_PATIENT_RID, array_keys($account->roles))) {
     $no_approved = user_relationships_load(array( 'user' => $account->uid, 'rtid' => 2 ), $options);
     $return = array(
