@@ -673,11 +673,14 @@ function center_question_edu_query($centerid, $fun = NULL, $page, $fields, $para
   $view->execute();
   $view->preview();
   $video = array();
+  module_load_include('inc', 'media_youku', 'includes/MediaYouKuStreamWrapper');
   foreach ($view->result as $key => $value) {
+    $media = new MediaYouKuStreamWrapper();
+    $media->setUri($value->field_field_sbq_center_video[0]['rendered']['#file']->uri);
     $v['title'] = $value->node_title;
     $v['video'] = render($value->field_field_sbq_center_video[0]['rendered']);
-    $v['thumb'] = '';
-    $v['video_url'] = file_create_url($value->field_field_sbq_center_video[0]['rendered']['#file']->uri);
+    $v['thumb'] = file_create_url($media->getLocalThumbnailPath());
+    $v['video_url'] = _center_formate_fetch_youku_video($media);
     $video[] = $v;
   }
   // 文章
@@ -802,4 +805,28 @@ function _center_formate($data, $target = 'node', $is_list = FALSE) {
   }
 
   return $nodes;
+}
+
+function _center_formate_fetch_youku_video(MediaYouKuStreamWrapper $media) {
+ // variable_del($media->getUri());
+  if ($url = variable_get($media->getUri())) {
+    return $url;
+  }
+  module_load_include('inc', 'sbq_services', 'resources/includes/youku_analysis');
+  $parts = $media->get_parameters();
+  $link = 'http://v.youku.com/player/getPlayList/VideoIDS/' . urlencode($parts['v']) . '/timezone/+08/version/5/source/out?password=&ran=2513&n=3';
+  $content = file_get_contents($link);
+  $data = @json_decode($content, true);
+  foreach ($data['data'][0]['streamfileids'] AS $k => $v) {
+    $sid = getSid();
+    $fileid = getfileid($v, $data['data'][0]['seed']);
+    if ($k == 'mp4') {
+      $url = "http://f.youku.com/player/getFlvPath/sid/{$sid}_00/st/{$k}/fileid/{$fileid}?K={$data['data'][0]['segs'][$k][0]['k']}";
+      variable_set($media->getUri(), $url);
+      return $url;
+    }
+    continue;
+  }
+
+  return file_create_url($media->getUri());
 }
