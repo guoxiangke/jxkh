@@ -117,6 +117,7 @@
 
   $a_name = theme('username', array('account' => $account));
   $a_picture = theme('user_picture', array('account' =>$account));
+  $a_uid = $account->uid;
 
   $user_post_count = sbq_commons_get_count($account->uid, 'post');
   $user_message_count = sbq_commons_messages_count($account);
@@ -128,6 +129,8 @@
 
   $follow_link = sbq_user_relationships_action_between_user($user, $account);
 
+  $menu_sbq_user_center = menu_navigation_links('menu-sbq-user-center');
+
   if (in_array('doctor', $account->roles)) {
     $a_doctor_profile = profile2_load_by_user($account, 'doctor_profile');
     $field_doctor_title = drupal_render(field_view_field('profile2', $a_doctor_profile, 'field_doctor_title', 'value'));
@@ -138,7 +141,6 @@
 ?>
 <div class="body">
   <div class="main">
-    <?php kpr($account);?>
     <?php kpr($follow_link);?>
     <div class="sbq_user_headr"><img src="/sites/all/themes/tiger/image/sbq_user_headr_bg.jpg" width="960" height="200"  alt=""/></div>
     <div class="sbq_user_info">
@@ -175,10 +177,21 @@
         </ul>
       </div>
     </div>
+    <?php if ($menu_sbq_user_center): ?>
+      <div class="sbq_user_menu">
+        <?php print theme('links__menu_sbq_user_center', array(
+          'links' => $menu_sbq_user_center,
+          'attributes' => array(
+            'id' => 'sbq_user_menu',
+            'class' => array('links', 'inline', 'clearfix'),
+          ),
+        )); ?>
+      </div> <!-- /#sbq_user_menu -->
+    <?php endif; ?>
     <div class="sbq_user_menu">
       <ul>
         <li class="active"><a href="user_center.html">我的动态</a></li>
-        <li><a href="user_blog_list.html">我的文章</a></li>
+        <li><?php print l('我的文章', 'user/'.$a_uid.'/blog'); ?></li>
         <li><a href="user_qa_list.html">我的问答</a></li>
         <li><a href="user_friends.html">我的圈子</a></li>
         <li><a href="user_message.html">我的消息</a></li>

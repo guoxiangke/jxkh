@@ -229,3 +229,10 @@ function tiger_user_login_ajax_callback() {
     location.reload(true);
   </script>';
 }
+
+/**
+ * Implements theme_menu_tree().
+ */
+function tiger_menu_tree($variables) {
+  return '<ul>' . $variables['tree'] . '</ul>';
+}
