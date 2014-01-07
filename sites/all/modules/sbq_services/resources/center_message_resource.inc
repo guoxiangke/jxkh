@@ -62,16 +62,20 @@ function center_message_query($centerid, $fun = NULL, $page, $fields, $parameter
   }
 
   $message = array();
-  $item = reset($result['messages']);
 
-  foreach (array( $item->author ) as $key => $value) {
-    $user_img[$value->uid] = array(
-        'uid' => $value->uid,
-        'user_avart' => isset($value->uri) ? file_create_url($value->uri) : NULL,
-        'name' => $value->name,
-    );
+
+  foreach (array( $item->author, $item->user ) as $key => $value) {
+    
   }
+  $user_img = array();
   foreach ($result['messages'] as $key => $value) {
+    if (!isset($user_img[$value->author->uid])) {
+      $user_img[$value->author->uid] = array(
+          'uid' => $value->author->uid,
+          'user_avart' => isset($value->author) ? file_create_url($value->author) : NULL,
+          'name' => $value->author->name,
+      );
+    }
     $message[] = array(
         'mid' => $value->mid,
         'body' => $value->body,
