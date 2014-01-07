@@ -314,6 +314,7 @@ function sbq_user_relationships_recommond($account = NULL, $roles, $is_page = TR
 function sbq_user_relationships_action_between_user($viewer, $viewed, $action_types = NULL) {
   drupal_add_library('system', 'drupal.ajax');
   module_load_include('inc', 'sbq_user_relationships', 'sbq_user_relationships_ui.theme');
+  module_load_include('inc', 'sbq_user_relationships', 'sbq_user_relationships');
   if ($viewer->uid == $viewed->uid) {
     return;
   }
@@ -327,68 +328,81 @@ function sbq_user_relationships_action_between_user($viewer, $viewed, $action_ty
   }
   $list = array();
   module_load_include('inc', 'user_relationships_ui', 'user_relationships_ui.forms');
-  if (isset($action_types['requested'])) {
-    $relationships = user_relationships_load(array( 'requester_id' => $viewer->uid,
-        'requestee_id' => $viewed->uid, 'approved' => FALSE ));
-    foreach ($relationships as $relationship) {
-      $list[] = t('You have sent a new @rel_name request to this user. (!pending_requests)', array(
-          '!pending_requests' => l(t('pending requests'), "relationships/sent"),
-          ) + user_relationships_type_translations($relationship));
-    }
-  }
-
-  if (isset($action_types['received'])) {
-    $relationships = user_relationships_load(array(
-        'requester_id' => $viewed->uid,
-        'requestee_id' => $viewer->uid,
-        'approved' => FALSE ));
-    foreach ($relationships as $relationship) {
-      if (user_relationships_user_access('maintain @relationship relationships', $relationship)) {
-        $list[] = t('This user has requested to be your @rel_name. (!pending_requests)', array(
-            '!pending_requests' => l(t('pending requests'), "user/{$viewer->uid}/relationships/received"),
-            ) + user_relationships_type_translations($relationship));
-        $list[] = t('This user has requested to be your @rel_name. (!approve_requests, !dis_approve_requests)', array(
-            '!approve_requests' => l('同意', 'relationship/ajax/' . $viewer->uid . '/pending/' . $relationship->rid . '/' . $viewed->uid . '/approve', array(
-                'html' => TRUE,
-                'attributes' => array(
-                    'class' => array(
-                        'relationship_ajax_action' ) ),
-                )
-            ),
-            '!dis_approve_requests' => l('拒绝', 'relationship/ajax/' . $viewer->uid . '/pending/' . $relationship->rid . '/' . $viewed->uid . '/disapprove', array(
-                'html' => TRUE,
-                'attributes' => array(
-                    'class' => array(
-                        'relationship_ajax_action' ) ),
-                )
-            )
-            )
-        );
-      }
-    }
-  }
+//  if (isset($action_types['requested'])) {
+//    $relationships = user_relationships_load(array( 'requester_id' => $viewer->uid,
+//        'requestee_id' => $viewed->uid, 'approved' => FALSE ));
+//    foreach ($relationships as $relationship) {
+//      $list[] = t('You have sent a new @rel_name request to this user. (!pending_requests)', array(
+//          '!pending_requests' => l(t('pending requests'), "relationships/sent"),
+//          ) + user_relationships_type_translations($relationship));
+//    }
+//  }
+//
+//  if (isset($action_types['received'])) {
+//    $relationships = user_relationships_load(array(
+//        'requester_id' => $viewed->uid,
+//        'requestee_id' => $viewer->uid,
+//        'approved' => FALSE ));
+//    foreach ($relationships as $relationship) {
+//      if (user_relationships_user_access('maintain @relationship relationships', $relationship)) {
+//        $list[] = t('This user has requested to be your @rel_name. (!pending_requests)', array(
+//            '!pending_requests' => l(t('pending requests'), "user/{$viewer->uid}/relationships/received"),
+//            ) + user_relationships_type_translations($relationship));
+//        $list[] = t('This user has requested to be your @rel_name. (!approve_requests, !dis_approve_requests)', array(
+//            '!approve_requests' => l('同意', 'relationship/ajax/' . $viewer->uid . '/pending/' . $relationship->rid . '/' . $viewed->uid . '/approve', array(
+//                'html' => TRUE,
+//                'attributes' => array(
+//                    'class' => array(
+//                        'relationship_ajax_action' ) ),
+//                )
+//            ),
+//            '!dis_approve_requests' => l('拒绝', 'relationship/ajax/' . $viewer->uid . '/pending/' . $relationship->rid . '/' . $viewed->uid . '/disapprove', array(
+//                'html' => TRUE,
+//                'attributes' => array(
+//                    'class' => array(
+//                        'relationship_ajax_action' ) ),
+//                )
+//            )
+//            )
+//        );
+//      }
+//    }
+//  }
 
 
   if (isset($action_types['add'])) {
     $relationships = user_relationships_get_requestable_rtypes($viewer, $viewed, 'full');
+    if ($viewed->uid == 103) {
+//      kpr($relationships);
+//      kpr($viewed);
+//      kpr($relationships);
+    }
     if ($relationships) {
       // If configured, create direct links.
       if (variable_get('user_relationships_show_direct_links', 1)) {
         // Create a single link, or one for each relationship type.
         foreach ($relationships as $relationship) {
-          if (sbq_commons_relationships_ui_check_access_by_roles($viewer, $viewed, $relationship->rtid)) {
-            if (sbq_commons_relationships_ui_request_validate($viewer, $viewed, $relationship->rtid)) {
+
+          if (sbq_user_relationships_ui_check_access_by_roles($viewer, $viewed, $relationship->rtid)) {
+            if (sbq_user_relationships_ui_request_validate($viewer, $viewed, $relationship->rtid)) {
+
+              $theme = theme('sbq_user_relationships_add_user_link', array(
+                  'uid' => $viewer->uid,
+                  'rid' => $relationship->rtid,
+                  'vid' => $viewed->uid )
+              );
+              if ($viewed->uid == 103) {
+                kpr($relationship);
+                kpr($theme);
+              }
               $list[] = array(
                   'relationship_type' => $relationship->name,
-                  'relationship_action' => theme('sbq_user_relationships_add_user_link', array(
-                      'uid' => $viewer->uid, 'rid' => $relationship->rtid, 'vid' => $viewed->uid ))
+                  'relationship_action' => $theme
               );
             }
           }
         }
-      }
-      // just one generic link pointing to a page with dropdown.
-      else {
+      } else {
         $list[] = theme('user_relationships_request_relationship_link', array(
             'relate_to' => $viewed ));
       }
@@ -396,30 +410,17 @@ function sbq_user_relationships_action_between_user($viewer, $viewed, $action_ty
   }
 
   if (isset($action_types['remove'])) {
-    $relationships = user_relationships_load(array(
-        'between' => array(
-            $viewer->uid,
-            $viewed->uid ) ));
+    $relationships = user_relationships_load(array( 'between' => array( $viewer->uid, $viewed->uid ) ));
     foreach ($relationships as $relationship) {
       if ($relationship->approved && !isset($list[$relationship->rid]) && user_relationships_ui_check_access('view', NULL, $relationship)) {
-        if (user_relationships_ui_check_access('delete', NULL, $relationship)) {
+        if (sbq_user_relationships_ui_check_access('delete', NULL, $relationship)) {
           // @see user_relationships_remove_link
-//          $list[$relationship->rid] = t('@rel_name (!remove_link)', array(
-//              '@rel_name' => user_relationships_type_get_name($relationship) . ($relationship->is_oneway ? ($relationship->requester_id == $viewer->uid ? t(' (You to Them)') : t(' (Them to You)')) : NULL),
-//              '!remove_link' => l(t('移除'), 'relationship/ajax/' . $viewer->uid . '/remove/' . $relationship->rid . '/' . $viewed->uid, array(
-//                  'attributes' => array(
-//                      'class' => array(
-//                          'class' => 'relationship_ajax_action' ) ) )),
-//              //   '!remove_link' => drupal_get_form('sbq_user_relationships_ui_remove_ajax', $viewer, $relationship)
-//          ));
-
-//          $list[] = array(
-//              'relationship_type' => $relationship->name,
-//              'relationship_action' => theme_sbq_user_relationships_remove_link(array(
-//                  'uid' => $viewer->uid, 'rid' => $relationship->rid, 'vid' => $viewed->uid ))
-//          );
-          $list[] = sbq_user_relationships_user_action($relationship, $viewed);
-        
+          $action = sbq_user_relationships_user_action($relationship, $viewer);
+          $list[] = array(
+              'relationship_type' => $relationship->name,
+              'relationship_action' => $action[1]
+          );
+          // $list[] = array('relationship_action'=>$action[1]);
         } else {
           $list[$relationship->rid] = user_relationships_type_get_name($relationship) . ($relationship->is_oneway ? ($relationship->requester_id == $viewer->uid ? t(' (You to Them)') : t(' (Them to You)')) : NULL);
         }
@@ -515,7 +516,6 @@ function sbq_user_relstionships_users($account = NULL, $rtid = NULL, $page_of_nu
  */
 function sbq_user_relationships_user_action($relationship, $account) {
   global $user;
-
   $this_user_str = $account->uid == $relationship->requestee_id ? 'requester' : 'requestee';
   $this_user = $relationship->{$this_user_str};
   $row = array(
@@ -526,8 +526,10 @@ function sbq_user_relationships_user_action($relationship, $account) {
   $links = array();
   if ($relationship->approved) {
     if (user_relationships_ui_check_access('delete', $account, $relationship)) {
-      $links[] = theme('sbq_user_relationships_remove_link', array( 'uid' => $account->uid,
-          'rid' => $relationship->rid, 'vid' => $relationship->{$this_user_str . '_id'} ));
+      $links[] = theme('sbq_user_relationships_remove_link', array(
+          'uid' => $account->uid,
+          'rid' => $relationship->rid,
+          'vid' => $relationship->{$this_user_str . '_id'} ));
     }
   } elseif (user_relationships_ui_check_access($permission, $account, $relationship)) {
     if ($this_user_str == 'requestee') {
@@ -539,9 +541,14 @@ function sbq_user_relationships_user_action($relationship, $account) {
     } else {
       // Received requests, display approve and decline links.
       $links[] = theme('sbq_user_relationships_pending_request_approve_link', array(
-          'uid' => $account->uid, 'rid' => $relationship->rid, 'vid' => $relationship->{$this_user_str . '_id'} ));
+          'uid' => $account->uid,
+          'rid' => $relationship->rid,
+          'vid' => $relationship->{$this_user_str . '_id'} ));
       $links[] = theme('sbq_user_relationships_pending_request_disapprove_link', array(
-          'uid' => $account->uid, 'rid' => $relationship->rid, 'vid' => $relationship->{$this_user_str . '_id'} ));
+          'uid' => $account->uid,
+          'rid' => $relationship->rid,
+          'vid' => $relationship->{$this_user_str . '_id'} )
+      );
     }
   }
   if (!empty($links)) {
