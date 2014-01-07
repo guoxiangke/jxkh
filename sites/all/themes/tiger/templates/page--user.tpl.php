@@ -124,12 +124,18 @@
   $user_blog_count = sbq_commons_get_count($account->uid, 'blog');
   $user_question_count = sbq_commons_get_count($account->uid, 'question');
   $user_answer_count = sbq_commons_get_count($account->uid, 'answer');
-  $user_relationship_count = sbq_user_relationships_my_relstionships($user);
+  $user_relationship_count = sbq_user_relationships_my_relstionships($account);
   $user_point_count = userpoints_get_current_points($user->uid, 'all');
 
   $follow_link = sbq_user_relationships_action_between_user($user, $account);
 
   $menu_sbq_user_center = menu_navigation_links('menu-sbq-user-center');
+
+  $menu_blog_active = '';
+  if (in_array('blog', arg())) {
+    $menu_blog_active = 'class="active"';
+  }
+
 
   if (in_array('doctor', $account->roles)) {
     $a_doctor_profile = profile2_load_by_user($account, 'doctor_profile');
@@ -141,7 +147,6 @@
 ?>
 <div class="body">
   <div class="main">
-    <?php kpr($follow_link);?>
     <div class="sbq_user_headr"><img src="/sites/all/themes/tiger/image/sbq_user_headr_bg.jpg" width="960" height="200"  alt=""/></div>
     <div class="sbq_user_info">
       <div class="sbq_user_pic"><?php print $a_picture; ?></div>
@@ -171,27 +176,17 @@
           <?php if (isset($user_relationship_count['patient_count'])): ?>
           <li><strong><?php print $user_relationship_count['patient_count']; ?></strong><span>病友圈</span></li>
           <?php endif; ?>
-          <?php if ($user_question_count && $user_answer_count): ?>
+          <?php if ($user_question_count>=0 && $user_answer_count>=0): ?>
           <li><strong><?php print $user_question_count; ?>/<?php print $user_answer_count; ?></strong><span>提问/回答</span></li>
           <?php endif; ?>
         </ul>
       </div>
     </div>
-    <?php if ($menu_sbq_user_center): ?>
-      <div class="sbq_user_menu">
-        <?php print theme('links__menu_sbq_user_center', array(
-          'links' => $menu_sbq_user_center,
-          'attributes' => array(
-            'id' => 'sbq_user_menu',
-            'class' => array('links', 'inline', 'clearfix'),
-          ),
-        )); ?>
-      </div> <!-- /#sbq_user_menu -->
-    <?php endif; ?>
+
     <div class="sbq_user_menu">
       <ul>
-        <li class="active"><a href="user_center.html">我的动态</a></li>
-        <li><?php print l('我的文章', 'user/'.$a_uid.'/blog'); ?></li>
+        <li><a href="user_center.html">我的动态</a></li>
+        <li <?php print $menu_blog_active; ?>><?php print l('我的文章', 'user/'.$a_uid.'/blog'); ?></li>
         <li><a href="user_qa_list.html">我的问答</a></li>
         <li><a href="user_friends.html">我的圈子</a></li>
         <li><a href="user_message.html">我的消息</a></li>
