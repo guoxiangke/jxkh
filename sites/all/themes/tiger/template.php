@@ -26,6 +26,10 @@ function tiger_preprocess_page($variables) {
       drupal_set_title($node->title);
     }
   }
+  // user center page
+  if (arg(0) == 'user') {
+    drupal_add_css(path_to_theme() . "/css/user.css", array('group' => CSS_THEME));
+  }
 }
 
 function tiger_preprocess_views_view(&$vars) {
@@ -185,32 +189,43 @@ function tiger_theme() {
 }
 
 function tiger_preprocess_user_login(&$vars) {
-  //$vars['form']['name']['#attributes']['class'][] = 'sbq_login_btn';
-  $vars['form']['actions']['submit']['#attributes']['class'][] = 'sbq_login_btn';
-  $vars['form']['actions']['submit']['#field_prefix'] = '<div class="sbq_botton_01">';
-  $vars['form']['actions']['submit']['#field_suffix'] = '</div>';
+  // $vars['form']['actions']['submit']['#attributes']['class'][] = 'sbq_login_btn';
+  // $vars['form']['actions']['#field_prefix'] = '<div class="sbq_botton_01">';
+  // $vars['form']['actions']['#field_suffix'] = '</div>';
 }
 
 function tiger_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'user_login') {
     # code...
-    unset($form['name']['#title']);
+    //unset($form['name']['#title']);
     unset($form['name']['#description']);
-    $form['name']['#field_prefix'] = '<div class="sbq_form_01"><label>用户名：</label>';
-    $form['name']['#field_suffix'] = '<div class="sbq_link"><a href="/user/register" class="reg cboxElement" target="_parent">注册账户</a></div></div>';
+    $form['name']['#prefix'] = '<div class="sbq_form_01">';
+    $form['name']['#suffix'] = '<div class="sbq_link"><a href="/user/register" class="reg cboxElement" target="_parent">注册账户</a></div></div>';
 
-    unset($form['pass']['#title']);
+    //unset($form['pass']['#title']);
     unset($form['pass']['#description']);
-    $form['pass']['#field_prefix'] = '<div class="sbq_form_01"><label>密码：</label>';
-    $form['pass']['#field_suffix'] = '<div class="sbq_link"><a href="#">忘记密码？</a></div></div>';
+    $form['pass']['#prefix'] = '<div class="sbq_form_01">';
+    $form['pass']['#suffix'] = '<div class="sbq_link"><a href="#">忘记密码？</a></div></div>';
 
-    unset($form['remember_me']['#title']);
-    $form['remember_me']['#field_prefix'] = '<div class="sbq_checkbox_01">';
-    $form['remember_me']['#field_suffix'] = '<label for="checkbox1">下次自动登录</label></div>';
+    //unset($form['remember_me']['#title']);
+    $form['remember_me']['#prefix'] = '<div class="sbq_checkbox_01">';
+    $form['remember_me']['#suffix'] = '</div>';
 
-    // $form['actions']['#field_prefix'] = '<div class="sbq_botton_01">';
-    // $form['actions']['#field_suffix'] = '</div>';
-
-    kpr($form);
+    $form['actions']['submit']['#value'] = '登录';
+    $form['actions']['submit']['#attributes']['class'][] = 'sbq_login_btn';
+    $form['actions']['submit']['#ajax'] = array(
+      'callback' => 'tiger_user_login_ajax_callback',
+      'wrapper' => '',
+      'method' => 'replace',
+    );
+    $form['actions']['#prefix'] = '<div class="sbq_botton_01"><label></label>';
+    $form['actions']['#suffix'] = '</div>';
   }
+}
+
+function tiger_user_login_ajax_callback() {
+  return '<script type="text/javascript">
+    parent.$.fn.colorbox.close();
+    location.reload(true);
+  </script>';
 }

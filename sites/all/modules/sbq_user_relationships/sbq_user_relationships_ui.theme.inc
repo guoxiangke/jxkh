@@ -136,7 +136,7 @@ function theme_sbq_user_relationships_add_user_link($variables) {
 
   $ajax_token = 'user_relationships_' . $vid;
   return l($replace, "relationship/ajax/{$uid}/request/{$rid}/{$vid}?destination={$ajax_token}", array(
-      'attributes' => array( 'class' => 'use-ajax ' . $ajax_token ) )
+      'attributes' => array( 'class' => 'use-ajax sbq_add_follow_btn ' . $ajax_token ) )
   );
 }
 
@@ -158,7 +158,7 @@ function theme_sbq_user_relationships_process_status($variables) {
       $li .= "<li>请求<span name='name'>{$row['user']->name}</span>成为你的好友<span class='cancel ".$variables['type']."'>{$row[1]}</span></li>";
     } elseif($variables['type'] == 'received') {
       global $user;
-      $vid = $user->uid == $relationship->requester_id ?$relationship->requestee_id :$relationship->requester_id ; 
+      $vid = $user->uid == $relationship->requester_id ?$relationship->requestee_id :$relationship->requester_id ;
       $li .= "<li><span name='name'>{$row['user']->name}</span>请求成为你的好友<span class='cancel ".$variables['type'].$vid."'>{$row[1]}</span></li>";
     }
   }

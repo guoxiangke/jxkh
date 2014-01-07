@@ -31,7 +31,7 @@ body { background: url(../image/bg.jpg) center top no-repeat fixed; }
 .sbq_home_menu ul li .sbq_img { float: left; width: 40px; height: 40px; overflow: hidden; }
 .sbq_home_menu ul li .sbq_img img { width: 40px; height: 40px; }
 .sbq_home_menu ul li .sbq_title { float: left; width: 185px; height: 40px; line-height: 40px; margin: 0px 0px 0px 5px; color: #FFF; font-size: 24px; overflow: hidden; }
-.sbq_home_menu ul li .sbq_text { float: left; width: 185px; height: 40px; line-height: 20px; margin: 0px 0px 0px 45px; font-size: 12px; overflow: hidden; }
+.sbq_home_menu ul li .sbq_text { float: left; width: 185px; height: 40px; line-height: 20px; margin: 0px 0px 0px 45px; font-size: 14px; overflow: hidden; }
 .sbq_home_menu ul .half { width: 120px; height: 120px; }
 .sbq_home_menu ul .half a { width: 100px; height: 100px; padding: 10px; }
 .sbq_home_menu ul .half .sbq_img { float: left; width: 100%; height: 40px; padding: 10px 0px; overflow: hidden; text-align: center; }

@@ -9,6 +9,7 @@ input { outline: none; }
 .votes { font-family: "Arial", "Helvetica", sans-serif; }
 html,
 .sbq_tips_error,
+.sbq_tips,
 .sbq_user_follow { font-family: "SimSun", "宋体", "Arial"; color: #333333; font-size: 12px; }
 .sbq_home_menu,
 .footer,
@@ -142,7 +143,7 @@ input,
 #cboxLoadedContent { box-sizing: content-box; -moz-box-sizing: content-box; -webkit-box-sizing: content-box; }
 /*User Style*/
 #cboxOverlay { background: #000; }
-#colorbox { outline: 0; }
+#colorbox { outline: 0; background: #fff url(../image/loading.gif) no-repeat 50% 50%; }
 /*#cboxTopLeft { width: 25px; height: 25px; background: url(../image/border1.png) no-repeat 0 0; }
 #cboxTopCenter { height: 25px; background: url(../image/border1.png) repeat-x 0 -50px; }
 #cboxTopRight { width: 25px; height: 25px; background: url(../image/border1.png) no-repeat -25px 0; }
@@ -158,7 +159,7 @@ input,
 #cboxLoadedContent { }
 #cboxTitle { position: absolute; bottom: 0px; left: 0; text-align: center; width: 100%; color: #999; }
 #cboxCurrent { position: absolute; bottom: 0px; left: 100px; color: #999; }
-#cboxLoadingOverlay { background: #fff url(../image/loading.gif) no-repeat 50% 50%; }
+/*#cboxLoadingOverlay { background: #fff url(../image/loading.gif) no-repeat 50% 50%; }*/
 /* these elements are buttons, and may need to have additional styles reset to avoid unwanted base styles */
 #cboxPrevious,
 #cboxNext,
