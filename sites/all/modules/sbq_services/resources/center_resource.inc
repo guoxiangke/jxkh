@@ -830,7 +830,7 @@ function _center_formate_fetch_youku_video(MediaYouKuStreamWrapper $media) {
   $link = 'http://v.youku.com/player/getPlayList/VideoIDS/' . urlencode($parts['v']) . '/timezone/+08/version/5/source/out?password=&ran=2513&n=3';
   $content = file_get_contents($link);
   $data = @json_decode($content, true);
-  return $data['data'][0]['streamfileids'];
+  
   foreach ($data['data'][0]['streamfileids'] AS $k => $v) {
     if ($k == 'mp4') {
       $sid = getSid();
