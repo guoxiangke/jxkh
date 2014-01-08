@@ -199,12 +199,15 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     # code...
     //unset($form['name']['#title']);
     unset($form['name']['#description']);
+    $form['name']['#title'] = '用户名';
     $form['name']['#prefix'] = '<div class="sbq_form_01">';
+    $form['name']['#attributes']['class'][] = 'sbq_input_01';
     $form['name']['#suffix'] = '<div class="sbq_link"><a href="/user/register" class="reg cboxElement" target="_parent">注册账户</a></div></div>';
 
     //unset($form['pass']['#title']);
     unset($form['pass']['#description']);
     $form['pass']['#prefix'] = '<div class="sbq_form_01">';
+    $form['pass']['#attributes']['class'][] = 'sbq_input_01';
     $form['pass']['#suffix'] = '<div class="sbq_link"><a href="#">忘记密码？</a></div></div>';
 
     //unset($form['remember_me']['#title']);

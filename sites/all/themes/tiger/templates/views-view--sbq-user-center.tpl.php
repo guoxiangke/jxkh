@@ -35,16 +35,65 @@
     } else {
       $account = $user;
     }
+
+    $blog_active = FALSE;
+    if (in_array('blog', arg())) {
+      $blog_active = TRUE;
+      $menu_promoted_active = '';
+      $menu_blog_active = '';
+      if (in_array('promoted', arg())) {
+        $menu_promoted_active = 'class="active"';
+      } else {
+        $menu_blog_active = 'class="active"';
+      }
+    }
+
+    $qa_active = FALSE;
+    if (in_array('qa', arg())) {
+      $qa_active = TRUE;
+      $menu_promoted_active = '';
+      $menu_followed_active = '';
+      $menu_ask_active = '';
+      $menu_answer_active = '';
+      if (in_array('promoted', arg())) {
+        $menu_promoted_active = 'class="active"';
+      } elseif (in_array('followed', arg())) {
+        $menu_followed_active = 'class="active"';
+      } elseif (in_array('ask', arg())) {
+        $menu_ask_active = 'class="active"';
+      } elseif (in_array('answer', arg())) {
+        $menu_answer_active = 'class="active"';
+      }
+    }
+
   ?>
+
   <div class="sbq_nav">
     <ul>
-      <?php if (is_numeric(arg(1)) && arg(1)==$user->uid): ?>
-      <li><?php print l('推荐文章', 'user/blog/promoted'); ?></li>
+      <?php if ($blog_active): ?>
+        <?php if ($account->uid==$user->uid): ?>
+          <li <?php print $menu_promoted_active; ?>><?php print l('推荐文章', 'user/blog/promoted'); ?></li>
+        <?php endif; ?>
+          <li <?php print $menu_blog_active; ?>><?php print l('我的文章', 'user/'.$account->uid.'/blog'); ?></li>
       <?php endif; ?>
-      <li class="active"><?php print l('我的文章', 'user/'.$account->uid.'/blog'); ?></li>
+      <?php if ($qa_active): ?>
+        <?php if ($account->uid==$user->uid): ?>
+          <li <?php print $menu_promoted_active; ?>><?php print l('推荐问答', 'user/qa/promoted'); ?></li>
+          <li <?php print $menu_followed_active; ?>><?php print l('我关注的问答', 'user/qa/followed'); ?></li>
+        <?php endif; ?>
+          <li <?php print $menu_ask_active; ?>><?php print l('我的提问', 'user/'.$account->uid.'/qa/ask'); ?></li>
+          <li <?php print $menu_answer_active; ?>><?php print l('我的回答', 'user/'.$account->uid.'/qa/answer'); ?></li>
+      <?php endif; ?>
     </ul>
-    <?php if (is_numeric(arg(1)) && arg(1)==$account->uid): ?>
-    <a href="#" class="sbq_add_btn">发布文章</a>
+    <?php if ($blog_active): ?>
+      <?php if ($account->uid==$user->uid): ?>
+        <?php print l('发布文章', 'node/add/blog', array('attributes' => array('class' => 'sbq_add_btn'))); ?>
+      <?php endif; ?>
+    <?php endif; ?>
+    <?php if ($qa_active): ?>
+      <?php if ($account->uid==$user->uid): ?>
+        <?php print l('发布问题', 'node/add/question', array('attributes' => array('class' => 'sbq_add_btn'))); ?>
+      <?php endif; ?>
     <?php endif; ?>
   </div>
 

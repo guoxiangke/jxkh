@@ -47,7 +47,7 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
     <div class="sbq_reply_actions">
       <ul>
         <li><?php print $comment_count; ?></li>
-      <li><?php print $created; ?></li>
+        <li><?php print $created; ?></li>
       </ul>
     </div>
   </div>

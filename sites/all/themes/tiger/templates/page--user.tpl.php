@@ -135,6 +135,10 @@
   if (in_array('blog', arg())) {
     $menu_blog_active = 'class="active"';
   }
+  $menu_qa_active = '';
+  if (in_array('qa', arg())) {
+    $menu_qa_active = 'class="active"';
+  }
 
 
   if (in_array('doctor', $account->roles)) {
@@ -187,7 +191,7 @@
       <ul>
         <li><a href="user_center.html">我的动态</a></li>
         <li <?php print $menu_blog_active; ?>><?php print l('我的文章', 'user/'.$a_uid.'/blog'); ?></li>
-        <li><a href="user_qa_list.html">我的问答</a></li>
+        <li <?php print $menu_qa_active; ?>><?php print l('我的问答', 'user/'.$a_uid.'/qa/ask'); ?></li>
         <li><a href="user_friends.html">我的圈子</a></li>
         <li><a href="user_message.html">我的消息</a></li>
         <li><a href="#">我的积分</a></li>
