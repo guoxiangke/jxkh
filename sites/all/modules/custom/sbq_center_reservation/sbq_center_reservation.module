@@ -130,38 +130,22 @@ function sbq_center_reservation_sheet($sbq_center_reservation_type, $centerid = 
  * @param type $node
  * @param type $submission
  */
-function sbq_center_reservation_webform_submission_insert($node, $submission) { dpm('sbq_center_reservation');
+function sbq_center_reservation_webform_submission_insert($node, $submission) {
   if (!module_exists('message')) {
     return;
   }
-  dpm('sbq_center_reservation');
-  if (!message_type_load('sbq_center_reservation')) {
-     dpm('sbq_center_reservation');
-    $type = message_type_create('sbq_center_reservation');
-    $type->save();
-    dpm(message_type_load());
+  if (!message_type_load('sbq_center_reservation1')) {
+//    global $language;
+//    $values['message_text'][$language->lanauage][0]['value'] = 'valuess';
+//    $values['language'] = $language->lanauage;
+//    $type = message_type_create('sbq_center_reservation2', $values);
+//    $type->save();
   }
-  
-
-  message_create('sbq_center_reservation', array( '' ));
-//  global $user;
-//  $title = $user->name;
-//  if ($user->uid != $submission->uid) {
-//    $account = user_load($submission->uid);
-//    $title = $account->name;
-//  }
-//  db_insert('webform_submissions_center_reservation')
-//      ->fields(array(
-//          'sid' => $submission->sid,
-//          'nid' => $node->nid,
-//          'cid' => $submission->data[9]['value'][0],
-//          'uid' => $submission->uid,
-//          'type' => $submission->data[10]['value'][0],
-//          'is_draft' => $submission->is_draft,
-//          'submitted' => $submission->submitted,
-//          'remote_addr' => $submission->remote_addr,
-//          'short_title' => $title,
-//      ))->execute();
+  global $user;
+  $message = message_create('sbq_center_reservation_accept', array(), $user);
+  $warpper = entity_metadata_wrapper('message', $message);
+  $warpper->field_node_ref->set($node);
+  $warpper->save();
 }
 
 /**
@@ -542,8 +526,28 @@ function sbq_center_reservation_field_keys($key = NULL) {
   return $fields;
 }
 
+function sbq_center_reservation_text() {
+  return 'sbq';
+}
+
+/**
+ * hook_webform_submission_update accept submission for generate message
+ * @param type $node
+ * @param type $submission
+ */
 function sbq_center_reservation_webform_submission_update($node, $submission) {
-  if (isset($submission->is_accept) && $submission->is_accept) {
-    variable_set('sbq_center_reservation_' . $submission->sid, 'acceptd');
+  if (!isset($node->og_group_ref) || !isset($node->og_group_ref['und'][0]['target_id'])) {
+    return;
+  }
+  if ($submission->data[sbq_center_reservation_field_keys('sbq_center_status')]['value'][0] == 1) {
+    global $user;
+    $time = $submission->data[sbq_center_reservation_field_keys('sbq_center_time')]['value'][0];
+    $message = message_create('sbq_center_reservation_accept', array(
+        'arguments' => array( '!time' => $time, )
+        ), $user);
+
+    $warpper = entity_metadata_wrapper('message', $message);
+    $warpper->field_node_ref->set($node);
+    $warpper->save();
   }
 }

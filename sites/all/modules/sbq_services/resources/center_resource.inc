@@ -487,17 +487,16 @@ function center($centerid) {
   $view_art->preview();
   $edu_count = count($view->result) + count($view_art->result);
   //预约门诊
-  $reservation = array(
-      '10' => '已经接受'
-  );
+
+  module_load_include('inc', 'sbq_services', 'resources/center_reservation_resource');
+  $messages = center_reservation_message($centerid, $user->uid);
 
   $return = reset($nodes);
   $return += array(
-      'message' => $message_new_count/2,
+      'message' => $message_new_count / 2,
       'edu' => $edu_count,
-      'reservation' => $reservation
+      'reservation' => $messages,
   );
-
   return $return;
 }
 
@@ -830,7 +829,7 @@ function _center_formate_fetch_youku_video(MediaYouKuStreamWrapper $media) {
   $link = 'http://v.youku.com/player/getPlayList/VideoIDS/' . urlencode($parts['v']) . '/timezone/+08/version/5/source/out?password=&ran=2513&n=3';
   $content = file_get_contents($link);
   $data = @json_decode($content, true);
-  
+
   foreach ($data['data'][0]['streamfileids'] AS $k => $v) {
     if ($k == 'mp4') {
       $sid = getSid();

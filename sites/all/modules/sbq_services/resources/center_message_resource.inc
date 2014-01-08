@@ -51,7 +51,6 @@ function center_message_alter($centerid, $fun, $data) {
  * @param type $pagesize
  */
 function center_message_query($centerid, $fun = NULL, $page, $fields, $parameters, $pagesize) {
-
   if (!$centermid = center_message_get_privatemsgid($centerid)) {
     return array();
   }
@@ -60,13 +59,7 @@ function center_message_query($centerid, $fun = NULL, $page, $fields, $parameter
   } else {
     $result = privatemsg_thread_load($centermid);
   }
-
   $message = array();
-
-
-  foreach (array( $item->author, $item->user ) as $key => $value) {
-    
-  }
   $user_img = array();
   foreach ($result['messages'] as $key => $value) {
     if (!isset($user_img[$value->author->uid])) {
