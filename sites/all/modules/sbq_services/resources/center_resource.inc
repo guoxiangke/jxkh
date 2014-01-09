@@ -493,7 +493,7 @@ function center($centerid) {
 
   $return = reset($nodes);
 
-  $return['message'] = $message_new_count / 2;
+  $return['message'] = $message_new_count;
   $return['edu'] = $edu_count;
   $return['reservation'] = $messages;
   return $return;
