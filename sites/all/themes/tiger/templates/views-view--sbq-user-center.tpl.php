@@ -28,46 +28,6 @@
  */
 ?>
 <div class="sbq_user_article_list">
-  <?php
-    global $user;
-    if (is_numeric(arg(1)) && arg(1)!=$user->uid) {
-      $account = user_load(arg(1));
-    } else {
-      $account = $user;
-    }
-
-    $blog_active = FALSE;
-    if (in_array('blog', arg())) {
-      $blog_active = TRUE;
-      $menu_promoted_active = '';
-      $menu_blog_active = '';
-      if (in_array('promoted', arg())) {
-        $menu_promoted_active = 'class="active"';
-      } else {
-        $menu_blog_active = 'class="active"';
-      }
-    }
-
-    $qa_active = FALSE;
-    if (in_array('qa', arg())) {
-      $qa_active = TRUE;
-      $menu_promoted_active = '';
-      $menu_followed_active = '';
-      $menu_ask_active = '';
-      $menu_answer_active = '';
-      if (in_array('promoted', arg())) {
-        $menu_promoted_active = 'class="active"';
-      } elseif (in_array('followed', arg())) {
-        $menu_followed_active = 'class="active"';
-      } elseif (in_array('ask', arg())) {
-        $menu_ask_active = 'class="active"';
-      } elseif (in_array('answer', arg())) {
-        $menu_answer_active = 'class="active"';
-      }
-    }
-
-  ?>
-
   <div class="sbq_nav">
     <ul>
       <?php if ($blog_active): ?>

@@ -83,6 +83,11 @@
       </div>
     </div>
     <?php endif; ?>
+    <div class="sbq_main_nav">
+      <?php if ($main_menu || $secondary_menu): ?>
+        <?php print theme('links__system_main_menu', array('links' => $main_menu, 'attributes' => array('id' => 'main-menu', 'class' => array('links', 'inline', 'clearfix')))); ?>
+      <?php endif; ?>
+    </div>
     <div class="sbq_header_login">
       <?php if (!$logged_in): ?>
       <div class="sbq_user_links">
