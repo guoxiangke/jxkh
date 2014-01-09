@@ -117,7 +117,7 @@ function center_reservation_message($centerid, $userid) {
   }
   $result = $query->execute();
   
-  if (!$result['message']) {
+  if (!isset($result['message'])) {
     //  $mids = array_keys($result['message']);
     return '';
   }
