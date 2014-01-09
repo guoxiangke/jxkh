@@ -492,19 +492,10 @@ function center($centerid) {
   $messages = center_reservation_message($centerid, $user->uid);
 
   $return = reset($nodes);
-  if (!is_null($return)) {
-    $return += array(
-        'message' => $message_new_count / 2,
-        'edu' => $edu_count,
-        'reservation' => $messages,
-    );
-  } else {
-    $return = array(
-        'message' => $message_new_count / 2,
-        'edu' => $edu_count,
-        'reservation' => $messages,
-    );
-  }
+
+  $return['message'] = $message_new_count / 2;
+  $return['edu'] = $edu_count;
+  $return['reservation'] = $messages;
   return $return;
 }
 
