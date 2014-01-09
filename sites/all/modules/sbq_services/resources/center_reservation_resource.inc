@@ -98,6 +98,7 @@ function _center_reservation_format($data, $type = 'webform', $is_list = FALSE) 
       $node['category'] = $value[10]['value'][0];
       $node['uid'] = $origin->uid;
       $node['sid'] = $origin->sid;
+      $node['status'] = $value[11]['value'][0];
     }
     $nodes[] = $node;
   }
@@ -109,9 +110,10 @@ function center_reservation_message($centerid, $userid) {
   $query = new EntityFieldQuery();
   $query->entityCondition('entity_type', 'message')
       ->propertyCondition('type', 'sbq_center_reservation_accept')
+      ->propertyOrderBy('timestamp', 'DESC')
       ->fieldCondition('field_node_ref ', 'target_id', $reservation_node->nid);
   if ($time = variable_get('reservation_last_watch_' . $userid . '_' . $centerid)) {
-    // $query->propertyCondition('timestamp', $time, '>');
+     $query->propertyCondition('timestamp', $time, '>');
   }
   $result = $query->execute();
   
@@ -120,13 +122,11 @@ function center_reservation_message($centerid, $userid) {
     return '';
   }
   $mesage = array();
-  
   foreach (message_load_multiple(array_keys($result['message'])) as $key => $value) {
     $m = $value->buildContent();
-    //return $m;
      $message[] = strip_tags($m['message__message_text__0']['#markup']);
-   // $mesage[] = strip_tags($m['zh-hans'][0]->);
   }
   // variable_set('reservation_last_watch_' . $userid . '_' . $centerid, time());
   return $message;
 }
+
