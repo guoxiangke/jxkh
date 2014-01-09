@@ -1625,9 +1625,3 @@ function sbq_center_group_post($centerid = NULL) {
     return array();
   }
 }
-
-function sbq_center_node_view($node, $view_mode, $langcode){
-  dpm($node);
-}
-
-
