@@ -71,6 +71,7 @@
  *
  * @ingroup themeable
  */
+  $theme_path = drupal_get_path('theme', 'tiger');
 ?>
 <div class="header">
   <div class="header_inner">
@@ -94,7 +95,7 @@
         <a href="/user/login" class="log">登录</a>|<a href="/user/register">注册</a>
       </div>
       <div class="sbq_user_pic">
-        <a href="#"><img src="/sites/all/themes/tiger/image/default_avatar.png" width="50" height="50"  alt=""/></a>
+        <a href="#"><img src="<?php print $theme_path; ?>/image/default_avatar.png" width="50" height="50"  alt=""/></a>
       </div>
       <?php endif; ?>
       <?php if ($logged_in): ?>
