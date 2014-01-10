@@ -78,6 +78,7 @@ function tiger_preprocess_page(&$variables) {
     );
     $variables['follow_link'] = sbq_user_relationships_action_between_user($user, $account);
   }
+
 }
 
 function tiger_preprocess_views_view(&$vars) {
@@ -144,11 +145,17 @@ function tiger_preprocess_views_view(&$vars) {
  * hook_preprocess_node
  *
  */
-function tiger_preprocess_node($variables) {
+function tiger_preprocess_node(&$variables) {
   // /* can be used to load css per page, based on path, node-type, or others. */
   // if (drupal_get_path_alias("node/{$variables['#node']->nid}") == 'foo') {
   //   drupal_add_css(drupal_get_path('theme', 'tiger') . "/css/foo.css");
   // }
+  $news_array = array('news', 'hospital_blacklist', 'friend_activities', 'red_list', 'black_list', 'doctor_legend');
+  if (in_array($variables['type'], $news_array)) {
+    //$node = $variables['node'];
+    drupal_add_css(path_to_theme() . "/css/news.css", array('group' => CSS_THEME));
+    $variables['theme_hook_suggestions'][] = 'node__news';
+  }
 }
 
 function tiger_pager($variables) {
