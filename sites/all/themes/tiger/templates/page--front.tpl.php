@@ -171,14 +171,14 @@
   <div class="footer_inner">
   <div class="sbq_about_link">
     <ul>
-      <li><a href="/node/2790">联系我们</a></li>
-      <li><a href="/node/20151">注册服务条款</a></li>
-      <li><a href="/node/2788">免责声明</a></li>
-      <li><a href="/node/2787">加入我们</a></li>
-      <li><a href="/node/2786">关于我们</a></li>
+      <li><a href="/contact.html">联系我们</a></li>
+      <li><a href="/services.html">注册服务条款</a></li>
+      <li><a href="/copyright.html">免责声明</a></li>
+      <li><a href="/join.html">加入我们</a></li>
+      <li><a href="/about.html">关于我们</a></li>
     </ul>
   </div>
-  <div class="sbq_copy">Copyright©<a href="http://www.miitbeian.gov.cn/state/outPortal/loginPortal.action" target="_bank">伤不起</a> ( 京ICP备13032461号-1 ) <a class="footer-logo" href="www.shangbq.com">中国最真实的医疗评价平台</a></div>
+  <div class="sbq_copy">© 2014 伤不起 中国最真实的医疗评价平台(<a href="http://www.miitbeian.gov.cn" target="_bank"> 京ICP备13032461号-1</a>) </div>
   </div>
   <?php print render($page['footer']); ?>
 </div> <!-- /#footer -->
