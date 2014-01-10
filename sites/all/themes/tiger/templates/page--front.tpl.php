@@ -89,7 +89,7 @@
         <a href="/user/login" class="log">登录</a>|<a href="/user/register">注册</a>
       </div>
       <div class="sbq_user_pic">
-        <a href="#"><img src="<?php print $theme_path; ?>/image/default_avatar.png" width="50" height="50"  alt=""/></a>
+        <a href="#"><img src="/<?php print $theme_path; ?>/image/default_avatar.png" width="50" height="50"  alt=""/></a>
       </div>
       <?php endif; ?>
       <?php if ($logged_in): ?>
@@ -166,7 +166,7 @@
       </ul>
       <ul class="sbq_focus">
         <li class="color_03 pic"><a href="#">
-          <div class="sbq_img"><img src="<?php print $theme_path; ?>/images/307.png" width="250" height="120"  alt=""/></div>
+          <div class="sbq_img"><img src="/<?php print $theme_path; ?>/images/307.png" width="250" height="120"  alt=""/></div>
           <div class="sbq_title">307医院免疫学实验室</div>
           </a></li>
       </ul>
