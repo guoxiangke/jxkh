@@ -94,7 +94,7 @@
         <a href="/user/login" class="log">登录</a>|<a href="/user/register">注册</a>
       </div>
       <div class="sbq_user_pic">
-        <a href="#"><img src="../image/default_avatar.png" width="50" height="50"  alt=""/></a>
+        <a href="#"><img src="/sites/all/themes/tiger/image/default_avatar.png" width="50" height="50"  alt=""/></a>
       </div>
       <?php endif; ?>
       <?php if ($logged_in): ?>
@@ -133,5 +133,17 @@
   </div>
 </div>
 <div class="footer">
+  <div class="footer_inner">
+  <div class="sbq_about_link">
+    <ul>
+      <li><a href="/node/2790">联系我们</a></li>
+      <li><a href="/node/20151">注册服务条款</a></li>
+      <li><a href="/node/2788">免责声明</a></li>
+      <li><a href="/node/2787">加入我们</a></li>
+      <li><a href="/node/2786">关于我们</a></li>
+    </ul>
+  </div>
+  <div class="sbq_copy">Copyright©<a href="http://www.miitbeian.gov.cn/state/outPortal/loginPortal.action" target="_bank">伤不起</a> ( 京ICP备13032461号-1 ) <a class="footer-logo" href="www.shangbq.com">中国最真实的医疗评价平台</a></div>
+  </div>
   <?php print render($page['footer']); ?>
 </div> <!-- /#footer -->
