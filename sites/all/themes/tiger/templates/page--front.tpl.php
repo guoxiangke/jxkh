@@ -97,6 +97,10 @@
         global $user;
         $name = theme('username', array('account' => $user));
         $picture = theme('user_picture', array('account' =>$user));
+        $user_link = 'javascript:void(请登录后使用!)';
+        if($user->uid) {
+          $user_link = '/user/'.$user->uid;
+        }
       ?>
       <div class="sbq_user_links">
         欢迎您，<?php print $name; ?>|<a href="/user/logout">退出</a>
@@ -115,45 +119,45 @@
   <div class="main">
     <div class="sbq_home_menu">
       <ul class="sbq_patient">
-        <li class="front-redblack color_06"><a href="#">
+        <li class="front-redblack color_06"><a href="/news/friend_activities">
           <div class="sbq_img"></div>
           <div class="sbq_title">红黑榜</div>
           <div class="sbq_text">揭示医疗行业真相</div>
           </a></li>
-        <li class="front-qa color_02"><a href="#">
+        <li class="front-qa color_02"><a href="/questions/all">
           <div class="sbq_img"></div>
           <div class="sbq_title">问答</div>
           <div class="sbq_text">除了专业还要对症 </div>
           </a></li>
-        <li class="front-event color_05"><a href="#">
+        <li class="front-event color_05"><a href="/activity/20063">
           <div class="sbq_img"></div>
           <div class="sbq_title">活动</div>
           <div class="sbq_text">有你参与大不同</div>
           </a></li>
-        <li class="front-legend color_07 half"><a href="#">
+        <li class="front-legend color_07 half"><a href="/news/doctor_legend">
           <div class="sbq_img"></div>
           <div class="sbq_title">医界传奇 </div>
           </a></li>
-        <li class="front-blacklist color_07 half"><a href="#">
+        <li class="front-blacklist color_07 half"><a href="/news/hospital_blacklist">
           <div class="sbq_img"></div>
           <div class="sbq_title">曝光台</div>
           </a></li>
-        <li class="front-activities color_07 half"><a href="#">
+        <li class="front-activities color_07 half"><a href="/news/friend_activities">
           <div class="sbq_img"></div>
           <div class="sbq_title">爱心</div>
           </a></li>
-        <li class="front-news color_07 half"><a href="#">
+        <li class="front-news color_07 half"><a href="/news/news">
           <div class="sbq_img"></div>
           <div class="sbq_title">资讯</div>
           </a></li>
       </ul>
       <ul class="sbq_doctor">
-        <li class="front-relationship color_04"><a href="#">
+        <li class="front-relationship color_04"><a href="<?php print $user_link; ?>" title="">
           <div class="sbq_img"></div>
           <div class="sbq_title">圈子</div>
           <div class="sbq_text">人以群分确实必要</div>
           </a></li>
-        <li class="front-doctor color_08"><a href="#">
+        <li class="front-doctor color_08"><a href="<?php print $user_link; ?>" title="">
           <div class="sbq_img"></div>
           <div class="sbq_title">医生馆</div>
           <div class="sbq_text">专业医生的网上医院</div>
