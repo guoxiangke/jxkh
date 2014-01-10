@@ -97,7 +97,7 @@
         global $user;
         $name = theme('username', array('account' => $user));
         $picture = theme('user_picture', array('account' =>$user));
-        $user_link = 'javascript:void(请登录后使用!)';
+        $user_link = '###';
         if($user->uid) {
           $user_link = '/user/'.$user->uid;
         }
@@ -152,12 +152,13 @@
           </a></li>
       </ul>
       <ul class="sbq_doctor">
-        <li class="front-relationship color_04"><a href="<?php print $user_link; ?>" title="">
+
+        <li class="front-relationship color_04"><a href="<?php print $user_link; ?>" title="圈子"<?php if(!$user->uid) print "onclick= alert('请登录后使用!');" ?>>
           <div class="sbq_img"></div>
           <div class="sbq_title">圈子</div>
           <div class="sbq_text">人以群分确实必要</div>
           </a></li>
-        <li class="front-doctor color_08"><a href="<?php print $user_link; ?>" title="">
+        <li class="front-doctor color_08"><a href="<?php print $user_link; ?>" title="医生馆" <?php if(!$user->uid) print "onclick= alert('请登录后使用!');" ?>>
           <div class="sbq_img"></div>
           <div class="sbq_title">医生馆</div>
           <div class="sbq_text">专业医生的网上医院</div>
