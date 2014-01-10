@@ -78,6 +78,24 @@ function tiger_preprocess_page(&$variables) {
     );
     $variables['follow_link'] = sbq_user_relationships_action_between_user($user, $account);
   }
+  // blog add page
+  if (in_array('blog', arg()) && in_array('add', arg())) {
+    global $user;
+    drupal_add_css(path_to_theme() . "/css/user.css", array('group' => CSS_THEME));
+    $variables['theme_hook_suggestions'][] = 'page__user';
+    $account = $user;
+    $variables['account'] = $account;
+    $variables['counts'] = array(
+      'user_post_count' => sbq_commons_get_count($account->uid, 'post'),
+      'user_message_count' => sbq_commons_messages_count($account),
+      'user_blog_count' => sbq_commons_get_count($account->uid, 'blog'),
+      'user_question_count' => sbq_commons_get_count($account->uid, 'question'),
+      'user_answer_count' => sbq_commons_get_count($account->uid, 'answer'),
+      'user_relationship_count' => sbq_user_relationships_my_relstionships($account),
+      'user_point_count' => userpoints_get_current_points($user->uid, 'all'),
+    );
+    $variables['follow_link'] = sbq_user_relationships_action_between_user($user, $account);
+  }
 
 }
 
@@ -325,6 +343,21 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     );
     $form['actions']['#prefix'] = '<div class="sbq_botton_01"><label></label>';
     $form['actions']['#suffix'] = '</div>';
+  } elseif ($form_id == 'blog_node_form') {
+    # code...
+    $form['#prefix'] = '<div class="sbq_add_content"><div class="sbq_head"><div class="sbq_title">发布文章</div></div>';
+    $form['#suffix'] = '</div>';
+
+    $form['title']['#prefix'] = '<div class="sbq_form_02">';
+    $form['title']['#suffix'] = '</div>';
+
+    $form['body']['#prefix'] = '<div class="sbq_form_02">';
+    $form['body']['#suffix'] = '</div>';
+
+    $form['field_tags']['#prefix'] = '<div class="sbq_form_02">';
+    $form['field_tags']['#suffix'] = '</div>';
+
+    kpr($form);
   }
 }
 
