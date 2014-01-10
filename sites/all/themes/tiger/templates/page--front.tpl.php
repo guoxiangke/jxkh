@@ -161,7 +161,7 @@
       </ul>
       <ul class="sbq_focus">
         <li class="color_03 pic"><a href="#">
-          <div class="sbq_img"><img src="images/307.png" width="250" height="120"  alt=""/></div>
+          <div class="sbq_img"><img src="<?php print $theme_path; ?>/images/307.png" width="250" height="120"  alt=""/></div>
           <div class="sbq_title">307医院免疫学实验室</div>
           </a></li>
       </ul>
