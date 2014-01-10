@@ -239,3 +239,10 @@ function tiger_user_login_ajax_callback() {
 function tiger_menu_tree($variables) {
   return '<ul>' . $variables['tree'] . '</ul>';
 }
+
+/**
+ * Implements hook_html_head_alter().
+ */
+function tiger_html_head_alter(&$head_elements) {
+  unset($head_elements['system_meta_generator']);
+}
