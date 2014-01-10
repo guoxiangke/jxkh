@@ -15,6 +15,7 @@
 .sbq_user_info .sbq_user_follow a { float: left; height: 24px; line-height: 24px; margin: 0px 0px 0px 5px; color: #999999; font-size: 12px; }
 .sbq_user_info .sbq_user_follow a:hover { color: #225599; }
 .sbq_user_info .sbq_user_follow .sbq_add_follow_btn { width: 40px; height: 22px; line-height: 22px; border: 1px #6D8F29 solid; border-radius: 3px; background: url(../image/sbq_follow_btn_bg.png) repeat-x; color: #3E5E00; text-align: center; box-shadow: 0px 1px 0px #d6eca7 inset, 0px 1px 0px #cdcdcd; overflow: hidden; }
+.sbq_user_info .sbq_user_follow .sbq_add_follow_btn:hover { color: #3E5E00; }
 /*sbq_user_follower*/
 .sbq_user_info .sbq_user_follower { float: left; width: 276px; }
 .sbq_user_info .sbq_user_follower ul { float: right; margin: 5px 0px 0px 0px; padding: 5px 0px; }
@@ -172,7 +173,7 @@
 .sbq_add_content .form-actions { float: left; }
 .sbq_add_content .form-actions input { float: left; width: 50px; height: 34px; border: none; background: #1575d5; font-size: 14px; color: #FFF; overflow: hidden; border: 1px #0D6EB8 solid; border-radius: 3px; }
 /*user_blog_final*/
-.sbq_blog_final { float: left; width: 100%; }
+.sbq_user_blog_final { float: left; width: 100%; }
 .sbq_article_title { float: left; width: 100%; line-height: 36px; padding: 0px 0px 15px 0px; font-size: 22px; font-weight: normal; text-align: center; }
 /*sbq_article_info*/
 .sbq_article_info { float: left; width: 100%; height: 22px; line-height: 22px; padding: 0px 0px 2px 0px; border-bottom: 1px #e5e5e5 dotted; color: #999; font-family: "Arial"; }
