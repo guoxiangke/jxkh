@@ -72,6 +72,7 @@
  * @ingroup themeable
  */
 ?>
+<?php if ($logged_in): ?>
 <div class="header">
   <div class="header_inner">
     <?php if ($logo): ?>
@@ -168,12 +169,12 @@
 
     <div class="sbq_user_menu">
       <ul>
-        <li><a href="user_center.html">我的动态</a></li>
-        <li <?php print $menu_blog_active; ?>><?php print l('我的文章', 'user/'.$a_uid.'/blog'); ?></li>
-        <li <?php print $menu_qa_active; ?>><?php print l('我的问答', 'user/'.$a_uid.'/qa/ask'); ?></li>
-        <li><a href="user_friends.html">我的圈子</a></li>
-        <li><a href="user_message.html">我的消息</a></li>
-        <li><a href="#">我的积分</a></li>
+        <li><a href="user_center.html">动态</a></li>
+        <li <?php print $menu_blog_active; ?>><?php print l('文章', 'user/'.$a_uid.'/blog'); ?></li>
+        <li <?php print $menu_qa_active; ?>><?php print l('问答', 'user/'.$a_uid.'/qa/ask'); ?></li>
+        <li><a href="user_friends.html">圈子</a></li>
+        <li><a href="user_message.html">消息</a></li>
+        <li><a href="#">积分</a></li>
       </ul>
     </div>
     <?php if ($page['sidebar_first']): ?>
@@ -196,3 +197,4 @@
 <div class="footer">
   <?php print render($page['footer']); ?>
 </div> <!-- /#footer -->
+<?php endif; ?>

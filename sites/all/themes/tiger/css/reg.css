@@ -53,5 +53,5 @@
 .sbq_login_thirdpart { float: left; width: 100%; height: 20px; overflow: hidden; }
 .sbq_login_thirdpart .sbq_text { float: right; height: 20px; line-height: 20px; margin: 0px 5px 0px 0px; color: #999; }
 .sbq_login_thirdpart .item-list { float: right; height: 20px; line-height: 20px; margin: 0px 10px 0px 0px; }
-.sbq_login_thirdpart .item-list li { float: left; width: 20px; height: 20px; overflow: hidden; margin: 0px 2px 0px 0px; }
+.sbq_login_thirdpart .item-list li { float: left; width: 20px; height: 20px; overflow: hidden; margin: 0px 3px 0px 0px; }
 .sbq_login_thirdpart .item-list li img { float: left; width: 20px; height: 20px; overflow: hidden; }

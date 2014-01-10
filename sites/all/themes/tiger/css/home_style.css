@@ -40,6 +40,7 @@ body { background: url(../image/bg.jpg) center top no-repeat fixed; }
 .sbq_home_menu ul .front-activities .sbq_img { background-position: center -240px; }
 .sbq_home_menu ul .front-news .sbq_img { background-position: center -280px; }
 .sbq_home_menu ul .front-doctor .sbq_img { background-position: center -320px; }
+.sbq_home_menu ul .sbq_focus .sbq_img { background: none; }
 .sbq_home_menu ul li .sbq_title { float: left; width: 185px; height: 40px; line-height: 40px; margin: 0px 0px 0px 5px; color: #FFF; font-size: 24px; overflow: hidden; }
 .sbq_home_menu ul li .sbq_text { float: left; width: 185px; height: 40px; line-height: 20px; margin: 0px 0px 0px 45px; font-size: 14px; overflow: hidden; }
 .sbq_home_menu ul .half { width: 120px; height: 120px; }

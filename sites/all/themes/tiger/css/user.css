@@ -24,14 +24,19 @@
 .sbq_user_info .sbq_user_follower li strong { float: left; width: 80px; height: 26px; line-height: 26px; color: #225599; font-size: 16px; overflow: hidden; font-family: Arial; }
 .sbq_user_info .sbq_user_follower li span { float: left; width: 80px; height: 20px; line-height: 20px; font-size: 12px; overflow: hidden; font-family: Arial; }
 /*sbq_user_menu*/
-.sbq_user_menu { float: left; width: 100%; margin: 0px 0px 20px 0px; background: #F3F3F3; }
+.sbq_user_menu { float: left; width: 100%; margin: 0px 0px 20px 0px; background: #F3F3F3; position: relative; z-index: 999; }
 .sbq_user_menu ul { float: left; width: 100%; height: 49px; border-bottom: 1px #E5E5E5 solid; }
-.sbq_user_menu ul li { float: left; border-top: 1px #E5E5E5 solid; border-right: 1px #E5E5E5 solid; }
+.sbq_user_menu ul li { float: left; width: 130px; height: 48px; border-top: 1px #E5E5E5 solid; border-right: 1px #E5E5E5 solid; }
 .sbq_user_menu ul li:first-child { border-left: 1px #E5E5E5 solid; margin: 0px 0px 0px 20px; }
 .sbq_user_menu ul li a { float: left; width: 128px; height: 46px; line-height: 46px; border: 1px #FFFFFF solid; background: #f3f3f3; overflow: hidden; font-size: 16px; color: #999; text-align: center; }
 .sbq_user_menu ul li a:hover { color: #666; }
 .sbq_user_menu ul .active { border-bottom: 1px #FFF solid; }
 .sbq_user_menu ul .active a { background: #FFF; color: #666; }
+.sbq_user_menu ul .sbq_more_list { height: auto; border-right: none; background: url(../image/tt.png) repeat-y right; }
+.sbq_user_menu ul .sbq_more_list a:hover { background: #FFF; }
+.sbq_user_menu ul .sbq_more_list span { float: left; width: 100%; margin: 2px 0px 0px -1px; padding: 5px 0px; border: 1px solid #E5E5E5; background: #FFF; display: none; }
+.sbq_user_menu ul .sbq_more_list span a { float: left; width: 100%; height: 32px; line-height: 32px; border: none; background: #FFF; }
+.sbq_user_menu ul .sbq_more_list span a:hover { background: #F3F3F3; }
 /*sbq_user_article_list*/
 .sbq_user_article_list { float: left; width: 100%; }
 .sbq_user_article_list .sbq_add_btn { float: right; height: 22px; line-height: 22px; padding: 0px 5px; background: #1575d5; font-size: 12px; color: #FFF; overflow: hidden; border: 1px #0D6EB8 solid; border-radius: 3px; }

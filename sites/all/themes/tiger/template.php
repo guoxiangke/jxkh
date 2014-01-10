@@ -18,6 +18,14 @@ function tiger_preprocess_page(&$variables) {
   if (!$variables['logged_in'] && arg(0) == 'user') {
     drupal_add_css(path_to_theme() . "/css/reg.css", array('group' => CSS_THEME));
   }
+  // login page and register page
+  if (!$variables['logged_in'] && arg(1) == 'register') {
+    drupal_add_css(path_to_theme() . "/css/reg.css", array('group' => CSS_THEME));
+  }
+  // news list page
+  if (in_array('news', arg())) {
+    drupal_add_css(path_to_theme() . "/css/news.css", array('group' => CSS_THEME));
+  }
   // question page
   if (arg(0) == 'question' || arg(0) == 'questions') {
     drupal_add_css(path_to_theme() . "/css/question.css", array('group' => CSS_THEME));
@@ -78,8 +86,8 @@ function tiger_preprocess_page(&$variables) {
     );
     $variables['follow_link'] = sbq_user_relationships_action_between_user($user, $account);
   }
-  // blog add page
-  if (in_array('blog', arg()) && in_array('add', arg())) {
+  // blog/question add page
+  if ((in_array('blog', arg()) || in_array('question', arg())) && in_array('add', arg())) {
     global $user;
     drupal_add_css(path_to_theme() . "/css/user.css", array('group' => CSS_THEME));
     $variables['theme_hook_suggestions'][] = 'page__user';
@@ -96,7 +104,6 @@ function tiger_preprocess_page(&$variables) {
     );
     $variables['follow_link'] = sbq_user_relationships_action_between_user($user, $account);
   }
-
 }
 
 function tiger_preprocess_views_view(&$vars) {
@@ -168,7 +175,14 @@ function tiger_preprocess_node(&$variables) {
   // if (drupal_get_path_alias("node/{$variables['#node']->nid}") == 'foo') {
   //   drupal_add_css(drupal_get_path('theme', 'tiger') . "/css/foo.css");
   // }
-  $news_array = array('news', 'hospital_blacklist', 'friend_activities', 'red_list', 'black_list', 'doctor_legend');
+  $news_array = array(
+    'news',
+    'hospital_blacklist',
+    'friend_activities',
+    'red_list',
+    'black_list',
+    'doctor_legend'
+  );
   if (in_array($variables['type'], $news_array)) {
     //$node = $variables['node'];
     drupal_add_css(path_to_theme() . "/css/news.css", array('group' => CSS_THEME));
@@ -315,6 +329,7 @@ function tiger_preprocess_user_login(&$vars) {
 }
 
 function tiger_form_alter(&$form, &$form_state, $form_id) {
+  // kpr($form_id);
   if ($form_id == 'user_login') {
     # code...
     //unset($form['name']['#title']);
@@ -343,8 +358,61 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     );
     $form['actions']['#prefix'] = '<div class="sbq_botton_01"><label></label>';
     $form['actions']['#suffix'] = '</div>';
+  } elseif ($form_id == 'user_register_form') {
+    $user_reg_active = '';
+    $doctor_reg_active = '';
+    $reg = arg(0);
+    $is_doctor_reg = FALSE;
+    if ($reg) {
+      if ($reg == 'customer') {
+        $user_reg_active = 'class="active"';
+      } elseif ($reg == 'doctor') {
+        $doctor_reg_active = 'class="active"';
+        $is_doctor_reg = TRUE;
+      }
+    }
+    $form['#prefix'] = '<div class="sbq_reg"><div class="sbq_reg_nav">'
+        .'<ul>'
+          .'<li '.$user_reg_active.'><a href="/customer/register" class="sbq_reg_u"></a></li>'
+          .'<li '.$doctor_reg_active.'><a href="/doctor/register" class="sbq_reg_d"></a></li>'
+        .'</ul>'
+      .'</div>'
+      .'<div class="sbq_reg_content">';
+    $form['#suffix'] = '</div></div>';
+
+    unset($form['account']['name']['#description']);
+    $form['account']['name']['#prefix'] = '<div class="sbq_form_01">';
+    $form['account']['name']['#attributes']['class'][] = 'sbq_input_01';
+    $form['account']['name']['#suffix'] = '</div>';
+
+    unset($form['account']['mail']['#description']);
+    $form['account']['mail']['#prefix'] = '<div class="sbq_form_01">';
+    $form['account']['mail']['#attributes']['class'][] = 'sbq_input_01';
+    $form['account']['mail']['#suffix'] = '</div>';
+
+    unset($form['account']['pass']['#description']);
+    $form['account']['pass']['#prefix'] = '<div class="sbq_form_01">';
+    $form['account']['pass']['#attributes']['class'][] = 'sbq_input_01';
+    $form['account']['pass']['#suffix'] = '</div>';
+
+    $form['agree']['#prefix'] = '<div class="sbq_checkbox_01">';
+    $form['agree']['#suffix'] = '</div>';
+
+    $form['actions']['submit']['#value'] = '注册';
+    $form['actions']['submit']['#attributes']['class'][] = 'sbq_login_btn';
+    $form['actions']['#prefix'] = '<div class="sbq_botton_01"><label></label>';
+    $form['actions']['#suffix'] = '</div>';
+
+    if ($is_doctor_reg) {
+      # code...
+      // $form['profile_doctor_private_profile']['field_doctor_phone']['#prefix'] = '<div class="sbq_form_01">';
+      // $form['profile_doctor_private_profile']['field_doctor_phone']['#attributes']['class'][] = 'sbq_input_01';
+      // $form['profile_doctor_private_profile']['field_doctor_phone']['#suffix'] = '</div>';
+
+    }
+
+    kpr($form);
   } elseif ($form_id == 'blog_node_form') {
-    # code...
     $form['#prefix'] = '<div class="sbq_add_content"><div class="sbq_head"><div class="sbq_title">发布文章</div></div>';
     $form['#suffix'] = '</div>';
 
@@ -356,8 +424,24 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
 
     $form['field_tags']['#prefix'] = '<div class="sbq_form_02">';
     $form['field_tags']['#suffix'] = '</div>';
+  } elseif ($form_id == 'question_node_form') {
+    $form['#prefix'] = '<div class="sbq_add_content"><div class="sbq_head"><div class="sbq_title">发布问题</div></div>';
+    $form['#suffix'] = '</div>';
 
-    kpr($form);
+    $form['title']['#prefix'] = '<div class="sbq_form_02">';
+    $form['title']['#suffix'] = '</div>';
+
+    $form['body']['#prefix'] = '<div class="sbq_form_02">';
+    $form['body']['#suffix'] = '</div>';
+
+    $form['field_tags']['#prefix'] = '<div class="sbq_form_02">';
+    $form['field_tags']['#suffix'] = '</div>';
+
+    $form['field_departments']['#prefix'] = '<div class="sbq_hide">';
+    $form['field_departments']['#suffix'] = '</div>';
+
+    $form['og_group_ref']['#prefix'] = '<div class="sbq_hide">';
+    $form['og_group_ref']['#suffix'] = '</div>';
   }
 }
 
