@@ -83,10 +83,15 @@
       </div>
     </div>
     <?php endif; ?>
+    <div class="sbq_main_nav">
+      <?php if ($main_menu || $secondary_menu): ?>
+        <?php print theme('links__system_main_menu', array('links' => $main_menu, 'attributes' => array('id' => 'main-menu', 'class' => array('links', 'inline', 'clearfix')))); ?>
+      <?php endif; ?>
+    </div>
     <div class="sbq_header_login">
       <?php if (!$logged_in): ?>
       <div class="sbq_user_links">
-        <a href="/user/login" class="log">登录</a>|<a href="/user/register">注册</a>
+        <a href="/user/login" class="log">登录</a>|<a href="/customer/register">注册</a>
       </div>
       <div class="sbq_user_pic">
         <a href="#"><img src="../image/default_avatar.png" width="50" height="50"  alt=""/></a>
@@ -94,7 +99,6 @@
       <?php endif; ?>
       <?php if ($logged_in): ?>
       <?php
-        global $user;
         $name = theme('username', array('account' => $user));
         $picture = theme('user_picture', array('account' =>$user));
       ?>
@@ -108,56 +112,34 @@
     </div>
   </div>
 </div>
+<?php if ($logged_in): ?>
 <?php
-  if (is_numeric(arg(1)) && arg(1)!=$user->uid) {
-    $account = user_load(arg(1));
-  } else {
-    $account = $user;
-  }
-
   $a_name = theme('username', array('account' => $account));
   $a_picture = theme('user_picture', array('account' =>$account));
   $a_uid = $account->uid;
 
-  $user_post_count = sbq_commons_get_count($account->uid, 'post');
-  $user_message_count = sbq_commons_messages_count($account);
-  $user_blog_count = sbq_commons_get_count($account->uid, 'blog');
-  $user_question_count = sbq_commons_get_count($account->uid, 'question');
-  $user_answer_count = sbq_commons_get_count($account->uid, 'answer');
-  $user_relationship_count = sbq_user_relationships_my_relstionships($account);
-  $user_point_count = userpoints_get_current_points($user->uid, 'all');
-
-  $follow_link = sbq_user_relationships_action_between_user($user, $account);
-
-  $menu_sbq_user_center = menu_navigation_links('menu-sbq-user-center');
-
   $menu_blog_active = '';
   if (in_array('blog', arg())) {
+    $menu_blog_active = 'class="active"';
+  } elseif (isset($node) && $node->type == 'blog') {
     $menu_blog_active = 'class="active"';
   }
   $menu_qa_active = '';
   if (in_array('qa', arg())) {
     $menu_qa_active = 'class="active"';
   }
-
-
-  if (in_array('doctor', $account->roles)) {
-    $a_doctor_profile = profile2_load_by_user($account, 'doctor_profile');
-    $field_doctor_title = drupal_render(field_view_field('profile2', $a_doctor_profile, 'field_doctor_title', 'value'));
-    $field_doctor_hospitals = drupal_render(field_view_field('profile2', $a_doctor_profile, 'field_doctor_hospitals', 'value'));
-    $field_doctor_departments = drupal_render(field_view_field('profile2', $a_doctor_profile, 'field_doctor_departments', 'value'));
-    $hospitals_departments = $field_doctor_hospitals .' '. $field_doctor_departments;
-  }
 ?>
+<?php endif; ?>
 <div class="body">
   <div class="main">
+    <?php if ($logged_in): ?>
     <div class="sbq_user_headr"><img src="/sites/all/themes/tiger/image/sbq_user_headr_bg.jpg" width="960" height="200"  alt=""/></div>
     <div class="sbq_user_info">
       <div class="sbq_user_pic"><?php print $a_picture; ?></div>
       <div class="sbq_user_summary">
         <div class="sbq_user_name">
           <strong><?php print $a_name; ?></strong>
-          <?php if ($field_doctor_title): ?>
+          <?php if (isset($field_doctor_title)): ?>
           <span><?php print $field_doctor_title; ?></span>
           <?php endif; ?>
           <?php if (isset($follow_link[0]) && isset($follow_link[0]['relationship_action'])): ?>
@@ -166,22 +148,22 @@
           </div>
           <?php endif; ?>
         </div>
-        <?php if ($hospitals_departments): ?>
+        <?php if (isset($hospitals_departments)): ?>
         <div class="sbq_user_hospital"><?php print $hospitals_departments; ?></div>
-        <?php elseif($a_doctor_profile): ?>
+        <?php elseif(isset($is_doctor) && $is_doctor): ?>
         <div class="sbq_user_hospital"><a href="/user/edit">填写所在医院及科室</a></div>
         <?php endif; ?>
       </div>
       <div class="sbq_user_follower">
         <ul>
-          <?php if (isset($user_relationship_count['doctor_count'])): ?>
-          <li><strong><?php print $user_relationship_count['doctor_count']; ?></strong><span>医生圈</span></li>
+          <?php if (isset($counts['user_relationship_count']['doctor_count'])): ?>
+          <li><strong><?php print $counts['user_relationship_count']['doctor_count']; ?></strong><span>医生圈</span></li>
           <?php endif; ?>
-          <?php if (isset($user_relationship_count['patient_count'])): ?>
-          <li><strong><?php print $user_relationship_count['patient_count']; ?></strong><span>病友圈</span></li>
+          <?php if (isset($counts['user_relationship_count']['patient_count'])): ?>
+          <li><strong><?php print $counts['user_relationship_count']['patient_count']; ?></strong><span>病友圈</span></li>
           <?php endif; ?>
-          <?php if ($user_question_count>=0 && $user_answer_count>=0): ?>
-          <li><strong><?php print $user_question_count; ?>/<?php print $user_answer_count; ?></strong><span>提问/回答</span></li>
+          <?php if ($counts['user_question_count']>=0 && $counts['user_answer_count']>=0): ?>
+          <li><strong><?php print $counts['user_question_count']; ?>/<?php print $counts['user_answer_count']; ?></strong><span>提问/回答</span></li>
           <?php endif; ?>
         </ul>
       </div>
@@ -189,14 +171,15 @@
 
     <div class="sbq_user_menu">
       <ul>
-        <li><a href="user_center.html">我的动态</a></li>
-        <li <?php print $menu_blog_active; ?>><?php print l('我的文章', 'user/'.$a_uid.'/blog'); ?></li>
-        <li <?php print $menu_qa_active; ?>><?php print l('我的问答', 'user/'.$a_uid.'/qa/ask'); ?></li>
-        <li><a href="user_friends.html">我的圈子</a></li>
-        <li><a href="user_message.html">我的消息</a></li>
-        <li><a href="#">我的积分</a></li>
+        <li><a href="user_center.html">动态</a></li>
+        <li <?php print $menu_blog_active; ?>><?php print l('文章', 'user/'.$a_uid.'/blog'); ?></li>
+        <li <?php print $menu_qa_active; ?>><?php print l('问答', 'user/'.$a_uid.'/qa/ask'); ?></li>
+        <li><a href="user_friends.html">圈子</a></li>
+        <li><a href="user_message.html">消息</a></li>
+        <li><a href="#">积分</a></li>
       </ul>
     </div>
+    <?php endif; ?>
     <?php if ($page['sidebar_first']): ?>
       <div class="sidebar_first sidebar">
         <?php print render($page['sidebar_first']); ?>
@@ -217,3 +200,4 @@
 <div class="footer">
   <?php print render($page['footer']); ?>
 </div> <!-- /#footer -->
+

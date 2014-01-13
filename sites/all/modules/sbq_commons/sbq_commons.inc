@@ -778,15 +778,6 @@ function sbq_commons_user_disease_tag_delete_ajax($tid = 0) {
   ajax_deliver($page);
 }
 
-/**
- * QA index page
- * return empty page for zen_kh theme
- * Use tabs blocks to theme this page
- */
-function druedu_qa_empty_page() {
-  return '';
-}
-
 /*
  *
  */

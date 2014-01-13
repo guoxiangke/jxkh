@@ -26,47 +26,22 @@
  *
  * @ingroup views_templates
  */
- // $main_title = drupal_get_title();
- // if($main_title=='QA') {//???
- //   $main_title = 'All Questions';
- // }
- // echo "<h1>$main_title</h1>";
 ?>
-<div class="sbq_question_list">
-  <div class="sbq_tags">
-    <ul>
-    <?php //tags
-    // TODO: performance
-      $vocabulary = taxonomy_vocabulary_machine_name_load('tags');
-      $terms = taxonomy_get_tree($vocabulary->vid);
-      foreach ($terms as $key => $tag) {
-        $tag_title = trim($tag->name);
-        $tid = trim($tag->tid);
-        if (strlen($tag_title)>0 && $tid>0) {
-          $tag_count = 0;
-          $nids = taxonomy_select_nodes($tid, FALSE);
-          $tag_count = count($nids);
-          if ($tag_count > 5) {
-            $output = '<li>'
-              . '<a href="'.url('questions/tagged/').'?field_tags_tid='.$tag_title.'">'
-              . '<span class="sbq_tit">'.$tag_title.'</span>'
-              . '<span class="sbq_num">'.$tag_count.'</span>'
-              . '</a>';
-            print $output;
-          }
-        }
-      }
-    ?>
-    </ul>
-  </div>
+<div class="sbq_news_list">
   <?php print render($title_prefix); ?>
   <?php if ($title): ?>
-    <h2 class="sbq_list_title"><?php print $title; ?></h2>
+    <?php print $title; ?>
   <?php endif; ?>
   <?php print render($title_suffix); ?>
   <?php if ($header): ?>
     <div class="view-header">
       <?php print $header; ?>
+    </div>
+  <?php endif; ?>
+
+  <?php if ($exposed): ?>
+    <div class="view-filters">
+      <?php print $exposed; ?>
     </div>
   <?php endif; ?>
 
@@ -77,7 +52,7 @@
   <?php endif; ?>
 
   <?php if ($rows): ?>
-    <div class="sbq_question_list_inner view-content">
+    <div class="sbq_news_list_inner">
       <?php print $rows; ?>
     </div>
   <?php elseif ($empty): ?>

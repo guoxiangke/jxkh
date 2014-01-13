@@ -71,6 +71,7 @@
  *
  * @ingroup themeable
  */
+  $theme_path = drupal_get_path('theme', 'tiger');
 ?>
 <div class="header">
   <div class="header_inner">
@@ -85,10 +86,10 @@
     <div class="sbq_header_login">
       <?php if (!$logged_in): ?>
       <div class="sbq_user_links">
-        <a href="/user/login" class="log">登录</a>|<a href="/user/register">注册</a>
+        <a href="/user/login" class="log">登录</a>|<a href="/customer/register">注册</a>
       </div>
       <div class="sbq_user_pic">
-        <a href="#"><img src="/sites/all/themes/tiger/image/default_avatar.png" width="50" height="50"  alt=""/></a>
+        <a href="#"><img src="/<?php print $theme_path; ?>/image/default_avatar.png" width="50" height="50"  alt=""/></a>
       </div>
       <?php endif; ?>
       <?php if ($logged_in): ?>
@@ -96,6 +97,10 @@
         global $user;
         $name = theme('username', array('account' => $user));
         $picture = theme('user_picture', array('account' =>$user));
+        $user_link = '###';
+        if($user->uid) {
+          $user_link = '/user/'.$user->uid;
+        }
       ?>
       <div class="sbq_user_links">
         欢迎您，<?php print $name; ?>|<a href="/user/logout">退出</a>
@@ -108,59 +113,60 @@
   </div>
 </div>
 <div class="sbq_qr_code">
-  <div class="sbq_qr_code_inner"><a href="http://app.shangbq.com/update/CaseHistoryChart.v.1.87.apk"><img src="/sites/all/themes/tiger/images/qr_code.png" width="100" height="140"  alt=""/></a></div>
+  <div class="sbq_qr_code_inner"><a href="http://app.shangbq.com/update/CaseHistoryChart.v.1.87.apk"><img src="<?php print $theme_path; ?>/images/qr_code.png" width="100" height="140"  alt=""/></a></div>
 </div>
 <div class="body">
   <div class="main">
     <div class="sbq_home_menu">
       <ul class="sbq_patient">
-        <li class="color_06"><a href="/news/friend_activities">
-          <div class="sbq_img"><img src="/sites/all/themes/tiger/images/sbq_home_icon_05.png" width="40" height="40"  alt=""/></div>
+        <li class="front-redblack color_06"><a href="/news/friend_activities">
+          <div class="sbq_img"></div>
           <div class="sbq_title">红黑榜</div>
           <div class="sbq_text">揭示医疗行业真相</div>
           </a></li>
-        <li class="color_02"><a href="/questions/all">
-          <div class="sbq_img"><img src="/sites/all/themes/tiger/images/sbq_home_icon_12.png" width="40" height="40"  alt=""/></div>
+        <li class="front-qa color_02"><a href="/questions/all">
+          <div class="sbq_img"></div>
           <div class="sbq_title">问答</div>
           <div class="sbq_text">除了专业还要对症 </div>
           </a></li>
-        <li class="color_05"><a href="/activity/20063">
-          <div class="sbq_img"><img src="/sites/all/themes/tiger/images/sbq_home_icon_07.png" width="40" height="40"  alt=""/></div>
+        <li class="front-event color_05"><a href="/activity/20063">
+          <div class="sbq_img"></div>
           <div class="sbq_title">活动</div>
           <div class="sbq_text">有你参与大不同</div>
           </a></li>
-        <li class="color_07 half"><a href="/news/doctor_legend">
-          <div class="sbq_img"><img src="/sites/all/themes/tiger/images/sbq_home_icon_09.png" width="40" height="40"  alt=""/></div>
+        <li class="front-legend color_07 half"><a href="/news/doctor_legend">
+          <div class="sbq_img"></div>
           <div class="sbq_title">医界传奇 </div>
           </a></li>
-        <li class="color_07 half"><a href="/news/hospital_blacklist">
-          <div class="sbq_img"><img src="/sites/all/themes/tiger/images/sbq_home_icon_10.png" width="40" height="40"  alt=""/></div>
+        <li class="front-blacklist color_07 half"><a href="/news/hospital_blacklist">
+          <div class="sbq_img"></div>
           <div class="sbq_title">曝光台</div>
           </a></li>
-        <li class="color_07 half"><a href="/news/friend_activities">
-          <div class="sbq_img"><img src="/sites/all/themes/tiger/images/sbq_home_icon_08.png" width="40" height="40"  alt=""/></div>
+        <li class="front-activities color_07 half"><a href="/news/friend_activities">
+          <div class="sbq_img"></div>
           <div class="sbq_title">爱心</div>
           </a></li>
-        <li class="color_07 half"><a href="/news/news">
-          <div class="sbq_img"><img src="/sites/all/themes/tiger/images/sbq_home_icon_11.png" width="40" height="40"  alt=""/></div>
+        <li class="front-news color_07 half"><a href="/news/news">
+          <div class="sbq_img"></div>
           <div class="sbq_title">资讯</div>
           </a></li>
       </ul>
       <ul class="sbq_doctor">
-        <li class="color_04"><a href="user" title="请登录后使用!">
-          <div class="sbq_img"><img src="/sites/all/themes/tiger/images/sbq_home_icon_02.png" width="40" height="40"  alt=""/></div>
+
+        <li class="front-relationship color_04"><a href="<?php print $user_link; ?>" title="圈子"<?php if(!$user->uid) print "onclick= alert('请登录后使用!');" ?>>
+          <div class="sbq_img"></div>
           <div class="sbq_title">圈子</div>
           <div class="sbq_text">人以群分确实必要</div>
           </a></li>
-        <li class="color_08"><a href="user" title="请登录后使用!">
-          <div class="sbq_img"><img src="/sites/all/themes/tiger/images/sbq_home_icon_04.png" width="40" height="40"  alt=""/></div>
+        <li class="front-doctor color_08"><a href="<?php print $user_link; ?>" title="医生馆" <?php if(!$user->uid) print "onclick= alert('请登录后使用!');" ?>>
+          <div class="sbq_img"></div>
           <div class="sbq_title">医生馆</div>
           <div class="sbq_text">专业医生的网上医院</div>
           </a></li>
       </ul>
       <ul class="sbq_focus">
         <li class="color_03 pic"><a href="#">
-          <div class="sbq_img"><img src="/sites/all/themes/tiger/images/307.png" width="250" height="120"  alt=""/></div>
+          <div class="sbq_img"><img src="/<?php print $theme_path; ?>/images/307.png" width="250" height="120"  alt=""/></div>
           <div class="sbq_title">307医院免疫学实验室</div>
           </a></li>
       </ul>
@@ -171,14 +177,14 @@
   <div class="footer_inner">
   <div class="sbq_about_link">
     <ul>
-      <li><a href="/node/2790">联系我们</a></li>
-      <li><a href="/node/20151">注册服务条款</a></li>
-      <li><a href="/node/2788">免责声明</a></li>
-      <li><a href="/node/2787">加入我们</a></li>
-      <li><a href="/node/2786">关于我们</a></li>
+      <li><a href="/contact.html">联系我们</a></li>
+      <li><a href="/services.html">注册服务条款</a></li>
+      <li><a href="/copyright.html">免责声明</a></li>
+      <li><a href="/join.html">加入我们</a></li>
+      <li><a href="/about.html">关于我们</a></li>
     </ul>
   </div>
-  <div class="sbq_copy">Copyright©<a href="http://www.miitbeian.gov.cn/state/outPortal/loginPortal.action" target="_bank">伤不起</a> ( 京ICP备13032461号-1 ) <a class="footer-logo" href="www.shangbq.com">中国最真实的医疗评价平台</a></div>
+  <div class="sbq_copy">© 2014 伤不起 中国最真实的医疗评价平台(<a href="http://www.miitbeian.gov.cn" target="_bank"> 京ICP备13032461号-1</a>) </div>
   </div>
   <?php print render($page['footer']); ?>
 </div> <!-- /#footer -->
