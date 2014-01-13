@@ -1,0 +1,176 @@
+* { margin: 0px; padding: 0px; list-style: none; }
+/*------font------*/
+textarea,
+input { outline: none; }
+a { text-decoration: none; color: #333333; }
+a:hover { color: #225599; }
+img { border: none; }
+input { outline: none; }
+.votes { font-family: "Arial", "Helvetica", sans-serif; }
+html,
+.sbq_tips_error,
+.sbq_tips,
+.sbq_user_follow { font-family: "SimSun", "宋体", "Arial"; color: #333333; font-size: 12px; }
+.sbq_home_menu,
+.footer,
+.top_nav,
+.top_nav2,
+.header,
+.header2,
+input,
+.sbq_form_01,
+.sbq_user_name,
+.sbq_date,
+.sbq_follow_num a,
+.sbq_list_title,
+.sbq_page_num,
+.sbq_user_menu,
+.sbq_quick_question { font-family: "Microsoft Yahei", "微软雅黑", "Arial" !important; }
+/*------header------*/
+.header { float: left; width: 100%; }
+.header .header_inner { width: 960px; height: 60px; margin: 0 auto; padding: 0px 0px 10px 0px; overflow: hidden; border-bottom: 1px #E5E5E5 solid; }
+.header .sbq_logo { float: left; }
+.header .sbq_header_login { float: right; height: 24px; margin: 28px 0px 0px 0px; padding: 5px; font-size: 14px; color: #333333; }
+.header .sbq_header_login a { color: #333333; }
+.header .sbq_header_login a:hover { color: #424242; }
+.header .sbq_user_links { float: left; height: 24px; line-height: 24px; margin: 0px 5px 0px 0px; overflow: hidden; white-space: nowrap; }
+.header .sbq_user_links a { padding: 0px 5px; }
+.header .sbq_header_login .sbq_user_pic,
+.header .sbq_header_login .sbq_user_pic img { float: left; width: 24px; height: 24px; border-radius: 2px; }
+/*sbq_main_nav*/
+.sbq_main_nav { float: left; height: 26px; margin: 32px 0px 0px 50px; }
+.sbq_main_nav ul { float: left; }
+.sbq_main_nav ul li { float: left; font-size: 14px; margin: 0px 30px 0px 0px; }
+.sbq_main_nav ul li a { float: left; height: 26px; line-height: 26px; padding: 0px 8px; border-radius: 2px; }
+.sbq_main_nav ul li a:hover { background: #1575D5; color: #FFF; }
+/*------footer------*/
+.footer { float: left; width: 100%; }
+.footer .footer_inner { width: 960px; margin: 0 auto; border-top: 1px #E5E5E5 solid; }
+.footer .sbq_about_link { clear: both; padding: 20px 0px 5px 0px; text-align: center; }
+.footer .sbq_about_link li { height: 24px; line-height: 24px; padding: 0px 5px; display: inline-block; font-size: 14px; }
+.footer a { color: #999; }
+.footer a:hover { color: #999; text-decoration: underline; }
+.footer .sbq_copy { clear: both; height: 20px; line-height: 20px; padding: 5px 0px 20px 0px; text-align: center; color: #999; }
+/*------body------*/
+.body { float: left; width: 100%; padding: 30px 0px; }
+.body .main { width: 960px; margin: 0 auto; }
+.body .content { float: left; width: 680px; }
+/*------sbq_page_num------*/
+.sbq_page_num { float: left; position: relative; left: 50%; }
+.sbq_page_num ul { float: left; position: relative; right: 50%; }
+.sbq_page_num ul li { float: left; height: 22px; line-height: 22px; margin: 0px 5px; font-size: 14px; }
+.sbq_page_num ul li a { float: left; color: #999999; }
+.sbq_page_num ul li a:hover,
+.sbq_page_num .active { text-decoration: underline; color: #225599; }
+/*------sidebar_second------*/
+.sidebar_second { float: left; width: 260px; margin: 0px 0px 0px 20px; }
+/*sbq_follow*/
+.sidebar_second .sbq_follow { float: left; width: 100%; }
+.sidebar_second .sbq_follow .sbq_follow_btn { float: left; width: 100%; margin: 0px 0px 15px 0px; }
+.sidebar_second .sbq_follow .sbq_follow_btn a { float: left; width: 78px; height: 32px; line-height: 32px; margin: 0px 10px 0px 0px; border: 1px #6D8F29 solid; border-radius: 3px; background: url(../image/sbq_follow_btn_bg.png) repeat-x; color: #3E5E00; font-size: 14px; text-align: center; box-shadow: 0px 1px 0px #d6eca7 inset, 0px 1px 0px #cdcdcd; overflow: hidden; }
+.sidebar_second .sbq_follow .sbq_follow_btn a.unflag-action { color: #666666; border: 1px #bbbbbb solid; background: url(../image/sbq_follow_btn_bg_ON.png) repeat-x; box-shadow: none; }
+.sidebar_second .sbq_follow .sbq_follow_num { float: left; width: 100%; height: 22px; line-height: 22px; margin: 0px 0px 10px 0px; color: #999; }
+.sidebar_second .sbq_follow .sbq_follow_num a { color: #225599; font-weight: bold; margin: 0px 5px 0px 0px; }
+.sidebar_second .sbq_follow .sbq_follow_num a:hover { text-decoration: underline; }
+.sidebar_second .sbq_follow .sbq_follow_list { float: left; width: 100%; margin: 0px 0px 20px 0px; }
+.sidebar_second .sbq_follow .sbq_follow_list ul { float: left; width: 100%; }
+.sidebar_second .sbq_follow .sbq_follow_list ul li { float: left; margin: 3px 3px 0px 0px; }
+.sidebar_second .sbq_follow .sbq_follow_list ul li a,
+.sidebar_second .sbq_follow .sbq_follow_list ul li a img { float: left; width: 24px; height: 24px; overflow: hidden; border-radius: 2px; }
+/*sbq_sidebar_list_01*/
+.sidebar_second .sbq_sidebar_list_01 { float: left; width: 100%; padding: 15px 0px 10px 0px; border-top: 1px solid #EEEEEE; }
+.sidebar_second .sbq_sidebar_list_01 .sbq_head { float: left; width: 100%; height: 24px; line-height: 24px; margin: 0px 0px 10px 0px; overflow: hidden; font-size: 14px; font-weight: bold; }
+.sidebar_second .sbq_sidebar_list_01 ul { float: left; width: 100%; }
+.sidebar_second .sbq_sidebar_list_01 ul li { float: left; width: 100%; line-height: 22px; margin: 0px 0px 8px 0px; }
+.sidebar_second .sbq_sidebar_list_01 ul li a { color: #225599; }
+.sidebar_second .sbq_sidebar_list_01 ul li a:hover { text-decoration: underline; }
+.sidebar_second .sbq_sidebar_list_01 ul li .sidebar_num { color: #999; margin: 0px 0px 0px 5px; display: inline-block; }
+/*sbq_sidebar_list_02*/
+.sidebar_second .sbq_sidebar_list_02 { float: left; width: 100%; margin: 0px 0px 15px 0px; border-top: 2px #1575D5 solid; }
+.sidebar_second .sbq_sidebar_list_02 .sbq_head { float: left; width: 240px; height: 32px; line-height: 32px; padding: 0px 9px; border-left: 1px #E5E5E5 solid; border-right: 1px #E5E5E5 solid; border-bottom: 1px #E5E5E5 solid; }
+.sidebar_second .sbq_sidebar_list_02 .sbq_title { font-size: 14px; font-weight: bold; }
+.sidebar_second .sbq_sidebar_list_02 ul { float: left; width: 240px; padding: 5px 9px; border-left: 1px #E5E5E5 solid; border-right: 1px #E5E5E5 solid; border-bottom: 1px #E5E5E5 solid; }
+.sidebar_second .sbq_sidebar_list_02 ul li { float: left; width: 100%; line-height: 22px; padding: 2px 0px; }
+.sidebar_second .sbq_sidebar_list_02 ul li a { color: #225599; }
+.sidebar_second .sbq_sidebar_list_02 ul li a:hover { text-decoration: underline; }
+.sidebar_second .sbq_sidebar_list_02 ul li .sidebar_num { color: #999; margin: 0px 0px 0px 5px; display: inline-block; }
+/*sidebar_list_03*/
+.sidebar_second .sbq_sidebar_list_03 { float: left; width: 100%; padding: 15px 0px 10px 0px; border-top: 1px solid #EEEEEE; }
+.sidebar_second .sbq_sidebar_list_03 .sbq_head { float: left; width: 100%; height: 24px; line-height: 24px; margin: 0px 0px 10px 0px; overflow: hidden; font-size: 14px; font-weight: bold; }
+.sidebar_second .sbq_sidebar_list_03 ul { float: left; width: 100%; }
+.sidebar_second .sbq_sidebar_list_03 ul li { float: left; width: 100%; line-height: 22px; margin: 0px 0px 8px 0px; }
+.sidebar_second .sbq_sidebar_list_03 .sbq_user_pic,
+.sidebar_second .sbq_sidebar_list_03 .sbq_user_pic img { float: left; width: 40px; height: 40px; border-radius: 2px; overflow: hidden; }
+.sidebar_second .sbq_sidebar_list_03 .sbq_content { float: left; width: 210px; line-height: 20px; margin: 0px 0px 0px 10px; }
+.sidebar_second .sbq_sidebar_list_03 .sbq_content span { float: left; }
+.sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_user_name { float: left; max-width: 90px; height: 20px; margin: 0px 5px 0px 0px; font-size: 12px; font-weight: bold; overflow: hidden; }
+.sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_user_name a { float: left; color: #225599; word-break: break-all; word-wrap: break-word; }
+.sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_user_name a:hover { text-decoration: underline; }
+.sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_user_badge { float: left; max-width: 66px; height: 20px; overflow: hidden; }
+.sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_user_badge a { float: left; margin: 0px 2px 0px 0px; }
+.sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_text { float: left; width: 100%; line-height: 20px; color: #999999; font-family: "Arial"; }
+.sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_follow { float: left; width: auto; }
+.sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_follow a { float: left; height: 20px; line-height: 20px; padding: 0px 0px 0px 17px; color: #999999; background: url(../image/sbq_reply_actions_icon.png) no-repeat; background-position: left -44px; }
+.sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_follow a:hover { color: #698EBF; text-decoration: underline; background-position: left -66px; }
+/*sbq_user_badge*/
+.sidebar_second .sbq_badge { float: left; width: 100%; padding: 0px 0px 15px 0px; }
+.sidebar_second .sbq_badge .sbq_head { float: left; width: 100%; height: 24px; line-height: 24px; margin: 0px 0px 5px 0px; overflow: hidden; font-size: 14px; font-weight: bold; }
+.sidebar_second .sbq_badge ul { float: left; width: 100%; }
+.sidebar_second .sbq_badge ul li { float: left; width: 20px; height: 20px; margin: 0px 3px 3px 0px; }
+.sidebar_second .sbq_badge ul li img { float: left; width: 20px; height: 20px; }
+.sidebar_first { float: left; width: 260px; margin: 0px 20px 0px 0px; }
+/*------Colorbox------*/
+#colorbox,
+#cboxOverlay,
+#cboxWrapper { position: absolute; top: 0; left: 0; z-index: 9999; overflow: hidden; }
+#cboxWrapper { max-width: none; }
+#cboxOverlay { position: fixed; width: 100%; height: 100%; }
+#cboxMiddleLeft,
+#cboxBottomLeft { clear: left; }
+#cboxContent { position: relative; }
+#cboxLoadedContent { overflow: auto; -webkit-overflow-scrolling: touch; }
+#cboxTitle { margin: 0; }
+#cboxLoadingOverlay,
+#cboxLoadingGraphic { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+#cboxPrevious,
+#cboxNext,
+#cboxClose,
+#cboxSlideshow { cursor: pointer; }
+.cboxPhoto { float: left; margin: auto; border: 0; display: block; max-width: none; -ms-interpolation-mode: bicubic; }
+.cboxIframe { width: 100%; height: 100%; display: block; border: 0; }
+#colorbox,
+#cboxContent,
+#cboxLoadedContent { box-sizing: content-box; -moz-box-sizing: content-box; -webkit-box-sizing: content-box; }
+/*User Style*/
+#cboxOverlay { background: #000; }
+#colorbox { outline: 0; background: #fff url(../image/loading.gif) no-repeat 50% 50%; }
+/*#cboxTopLeft { width: 25px; height: 25px; background: url(../image/border1.png) no-repeat 0 0; }
+#cboxTopCenter { height: 25px; background: url(../image/border1.png) repeat-x 0 -50px; }
+#cboxTopRight { width: 25px; height: 25px; background: url(../image/border1.png) no-repeat -25px 0; }
+#cboxBottomLeft { width: 25px; height: 25px; background: url(../image/border1.png) no-repeat 0 -25px; }
+#cboxBottomCenter { height: 25px; background: url(../image/border1.png) repeat-x 0 -75px; }
+#cboxBottomRight { width: 25px; height: 25px; background: url(../image/border1.png) no-repeat -25px -25px; }
+#cboxMiddleLeft { width: 25px; background: url(../image/border2.png) repeat-y 0 0; }
+#cboxMiddleRight { width: 25px; background: url(../image/border2.png) repeat-y -25px 0; }
+*/
+#cboxContent {/* background: #fff;*/ overflow: hidden; }
+.cboxIframe {/* background: #fff;*/ }
+#cboxError { padding: 50px; border: 1px solid #ccc; }
+#cboxLoadedContent { }
+#cboxTitle { position: absolute; bottom: 0px; left: 0; text-align: center; width: 100%; color: #999; }
+#cboxCurrent { position: absolute; bottom: 0px; left: 100px; color: #999; }
+/*#cboxLoadingOverlay { background: #fff url(../image/loading.gif) no-repeat 50% 50%; }*/
+/* these elements are buttons, and may need to have additional styles reset to avoid unwanted base styles */
+#cboxPrevious,
+#cboxNext,
+#cboxSlideshow,
+#cboxClose { border: 0; padding: 0; margin: 0; overflow: visible; width: auto; background: none; }
+/* avoid outlines on :active (mouseclick), but preserve outlines on :focus (tabbed navigating) */
+#cboxPrevious:active,
+#cboxNext:active,
+#cboxSlideshow:active,
+#cboxClose:active { outline: 0; }
+#cboxSlideshow { position: absolute; bottom: 0px; right: 42px; color: #444; }
+#cboxPrevious { position: absolute; bottom: 0px; left: 0; color: #444; }
+#cboxNext { position: absolute; bottom: 0px; left: 63px; color: #444; }
+#cboxClose { float: left; width: 40px; height: 40px; position: absolute; top: 5px; right: 5px; display: block; text-indent: -999px; overflow: hidden; background: url(../image/close.png) no-repeat; }

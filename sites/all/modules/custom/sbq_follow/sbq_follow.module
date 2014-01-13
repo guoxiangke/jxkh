@@ -1,0 +1,93 @@
+<?php
+
+function sbq_follow_menu(){
+  $items['ajax/follower/%'] = array(
+      'title' => 'Load all follower',
+      'page callback' => 'sbq_follow_load_follower',
+      'page arguments' => array(2),
+      'access callback' => TRUE,
+      'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+function sbq_follow_load_follower($nid = 0) {
+  if ($nid > 0) {
+    $output = '';
+    $node = node_load($nid);
+    $flag = flag_get_flag('follow') or die('no "follow" flag defined');
+    $flag_count = $flag->get_count($nid);
+    if ($flag_count > 0) {
+      $flag_users = flag_get_entity_flags('node', $nid, 'follow');
+      $followers = array();
+      foreach ($flag_users as $uid => $value) {
+        $follower = array();
+        $account = user_load($value->uid);
+        $f_picture = theme('user_picture', array('account' =>$account));
+        $follower['sbq_user_pic'] = $f_picture;
+        $followers[] = $follower;
+      }
+    }
+  }
+  drupal_json_output($followers);
+}
+
+/**
+ * Implements hook_block_info().
+ * This hook declares what blocks are provided by the module.
+ */
+function sbq_follow_block_info() {
+  $blocks['sbq_follow_node_qa'] = array(
+    'info' => t('Sbq Follow QA'),
+    'cache' => DRUPAL_CACHE_PER_ROLE, // default
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ * This hook declares what blocks are provided by the module.
+ */
+function sbq_follow_block_view($delta = '') {
+  switch ($delta) {
+    case 'sbq_follow_node_qa':
+      $block['subject'] = '';
+      $block['content'] = _sbq_follow_block_html($delta);
+      break;
+  }
+  return isset($block) ? $block : '';
+}
+
+function _sbq_follow_block_html($delta) {
+  global $user;
+  switch ($delta) {
+    case 'sbq_follow_node_qa':
+      if (!$user->uid) {
+        return;
+      }
+      if (arg(0) == 'question' && is_numeric(arg(1)) && ! arg(2)) {
+        $node = node_load(arg(1));
+        $nid = $node->nid;
+        $flag = flag_get_flag('follow') or die('no "follow" flag defined');
+        $flag_link = flag_create_link('follow', $nid);
+        $flag_count = $flag->get_count($nid);
+      }
+      $block_html = '';
+      $block_html .= '<div class="sbq_follow">';
+      $block_html .= $flag_link;
+      $block_html .= '<div class="sbq_follow_num">';
+      $block_html .= '<a href="#" nid="'.$nid.'">';
+      $block_html .= $flag_count;
+      $block_html .= '</a>人关注该问题';
+      $block_html .= '</div>';
+      $block_html .= '<div class="sbq_follow_list">';
+      $block_html .= '<ul class="sbq_follow_list_ul">';
+      $block_html .= '</ul>';
+      $block_html .= '</div>';
+      $block_html .= '</div>';
+      break;
+    default:
+      break;
+  }
+  return isset($block_html) ? $block_html : '';
+}

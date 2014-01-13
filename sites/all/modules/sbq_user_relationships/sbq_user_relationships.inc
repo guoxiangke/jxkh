@@ -89,8 +89,8 @@ function sbq_user_relationship_pending_page($type, $account = NULL) {
         'paging' => variable_get('user_relationships_relationships_per_page', 20),
     );
     $relationships = user_relationships_load(array( 'requester_id' => $account->uid, 'approved' => FALSE ), $options);
-   
-    return theme('sbq_user_relationships_process_status', array( 'type' => 'sent', 'relationships' => $relationships,'account'=> $account));
+
+    return theme('sbq_user_relationships_process_status', array( 'type' => 'sent', 'relationships' => $relationships, 'account' => $account ));
   } elseif ($type == 'received') {
     // drupal_set_title('需要出');
     $options = array(
@@ -98,8 +98,8 @@ function sbq_user_relationship_pending_page($type, $account = NULL) {
         'paging' => variable_get('user_relationships_relationships_per_page', 20),
     );
     $relationships = user_relationships_load(array( 'requestee_id' => $account->uid, 'approved' => FALSE ), $options);
-    
-    return theme('sbq_user_relationships_process_status', array( 'type' => 'received', 'relationships' => $relationships,'account'=> $account));
+
+    return theme('sbq_user_relationships_process_status', array( 'type' => 'received', 'relationships' => $relationships, 'account' => $account ));
   }
   return 'success';
 }
@@ -211,4 +211,166 @@ function sbq_user_relationships_ui_remove_ajax($viewer_id, $rid, $viewd_id) {
     }
   }
   ajax_deliver('success');
+}
+
+/**
+ * use user-roles check_access
+ */
+function sbq_user_relationships_ui_check_access_by_roles($user, $account, $relationship) {
+  // 当前用户为医生
+  if (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($user->roles))) {
+    // 被被请求者为医生
+    if (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($account->roles)) && $relationship == FOLLOWER_DOCTOR) {
+      return TRUE;
+    } // 被被请求者为病人
+    elseif (in_array(USER_PATIENT_RID, array_keys($account->roles)) && $relationship == FRIEND_DOCTOR_PATIENT) {
+# code...
+      return TRUE;
+    }
+  }// 当前用户为病人
+  elseif (in_array(USER_PATIENT_RID, array_keys($user->roles))) {
+    //被被请求者为病人
+    if (in_array(USER_PATIENT_RID, array_keys($user->roles)) && $relationship == FOLLOWER_PATIENT) {
+      return TRUE;
+    }//被被请求者为医生
+    elseif (in_array(USER_CERTIFIED_DOCTOR_RID, array_keys($account->roles)) && $relationship == FRIEND_DOCTOR_PATIENT) {
+# code...
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+/**
+ * @see user_relationships_ui_request_validate
+ */
+function sbq_user_relationships_ui_request_validate($requester, &$requestee, $rtid) {
+  $rtype = user_relationships_type_load($rtid);
+
+  //check that a type has been chosen
+  $current_relationships = user_relationships_load(array(
+      'between' => array(
+          $requester->uid,
+          $requestee->uid ) ), array(
+      'sort' => 'rtid' ));
+  //check for multiple relationships
+  if (!variable_get('user_relationships_allow_multiple', TRUE) && count($current_relationships)) {
+    form_set_error('rtid', user_relationships_get_message('too_many_relationships'));
+    if (isset($_GET['ajax'])) {
+      drupal_goto();
+    } else {
+      return;
+    }
+  }
+  //check user is allowed to request this type
+  if (!user_relationships_can_request($requester, $rtype)) {
+    // relationship_type_not_allowed
+    return FALSE;
+  }
+
+  //check user is allowed to receive this type
+  if (!user_relationships_can_receive($requestee, $rtype)) {
+    return FALSE;
+  }
+
+  //check if this request contradicts existing relationships or requests of this type
+  //gather rtids of relationships that have already been requested from requester to requestee
+  $test_relationships = array();
+  foreach ($current_relationships as $key => $value) {
+    foreach ($value as $val_rel) {
+      //existing two way relationships count no matter the direction
+      if (!$val_rel->is_oneway) {
+        $test_relationships[$key] = $key;
+        continue;
+      }
+      //if it's one way, but not reciprocal, then it counts no matter the direction
+      if (!$val_rel->is_reciprocal) {
+        $test_relationships[$key] = $key;
+        continue;
+      }
+      //remaining case is a reciprocal relationship - it counts unless the request is in the opposite direction
+      if ($requester->uid == $val_rel->requester_id) {
+        $test_relationships[$key] = $key;
+      }
+    }
+  }
+  //check if there aren't any available (not yet used) types that can be established
+  $select = db_select('user_relationship_types');
+  $select->addExpression('COUNT(*)', 'count');
+  if ($test_relationships) {
+    $select->condition('rtid', $test_relationships, 'NOT IN');
+  }
+  if (!$select->execute()->fetchField()) {
+    // too_many_relationships
+    return FALSE;
+  }
+  //check if desired relationship type is among the unused ones
+  elseif (isset($test_relationships[$rtid])) {
+    // 'existing_relationship' : 'existing_request';
+    return FALSE;
+  }
+
+  return TRUE;
+}
+
+/**
+ * Check access callback
+ */
+function sbq_user_relationships_ui_check_access($type, $account = NULL, $relationship_type = NULL) {
+  global $user;
+
+  if (!is_object($account)) {
+    $account = $user;
+  }
+
+  if (!is_object($relationship_type)) {
+    $relationship_type = user_relationships_type_load($relationship_type);
+  }
+
+  if (user_access('administer user relationships')) {
+    return TRUE;
+  }
+
+  // If the user does not any have permission, deny access.
+  if (!user_relationships_can_receive($account)) {
+    return FALSE;
+  }
+
+  switch ($type) {
+    case 'view':
+      // First check if it is the current user and if he has view own
+      // permission.
+      if ($account->uid == $user->uid && user_relationships_user_access('view own @relationship relationships', $relationship_type)) {
+        return TRUE;
+      }
+
+      // If this is a different user or he doesn't have that permission,
+      // check the view all permission.
+      if (user_relationships_user_access('view all @relationship relationships', $relationship_type)) {
+        return TRUE;
+      }
+      break;
+    case 'approve':
+      // Only the administer permission allows to approve, request, delete
+      // relationships for other users, which was already checked.
+      if ($account->uid == $user->uid && user_relationships_user_access('maintain @relationship relationships', $relationship_type)) {
+        return TRUE;
+      }
+      break;
+    case 'request':
+      if ($account->uid == $user->uid && user_relationships_can_request($account, $relationship_type)) {
+        return TRUE;
+      }
+      break;
+    case 'delete':
+      // Do not allow access if this is a oneway relationship requested by another user.
+      // if (is_object($relationship_type) && $relationship_type->is_oneway && $relationship_type->requester_id != $user->uid) {
+      //   return FALSE;
+      // }
+      if ($account->uid == $user->uid && user_relationships_user_access('delete @relationship relationships', $relationship_type)) {
+        return TRUE;
+      }
+      break;
+  }
+  return FALSE;
 }

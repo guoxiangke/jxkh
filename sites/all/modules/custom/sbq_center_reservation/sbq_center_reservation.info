@@ -1,0 +1,6 @@
+name = Sbq Center Reservation
+description = sbq center reservation 
+dependencies[] = webform
+dependencies[] = sbq_center
+
+core = 7.x

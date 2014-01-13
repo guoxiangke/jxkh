@@ -1,0 +1,4 @@
+name = Sbq Follow
+description = Follow a node
+dependencies[] = flag
+core = 7.x

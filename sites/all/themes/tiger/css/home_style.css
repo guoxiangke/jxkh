@@ -1,0 +1,69 @@
+body { background: url(../image/bg.jpg) center top no-repeat fixed; }
+.body { float: left; width: 100%; margin-top: 60px; padding: 0px; }
+.body .main { width: 1070px; padding: 0px 100px; margin: 0 auto; }
+/*sbq_home_menu*/
+.sbq_home_menu { float: left; width: 100%; }
+.sbq_home_menu a { color: #FFF; }
+.sbq_home_menu ul { float: left; padding: 5px; }
+.sbq_home_menu .sbq_patient { float: left; width: 520px; }
+.sbq_home_menu .sbq_doctor,
+.sbq_home_menu .sbq_focus { float: left; width: 260px; }
+.sbq_home_menu ul li { float: left; width: 250px; height: 120px; margin: 5px; display: block; overflow: hidden; position: relative; }
+.sbq_home_menu ul li a { float: left; width: 230px; height: 100px; padding: 10px; }
+.sbq_home_menu ul .color_01 { background: #178fff; }
+.sbq_home_menu ul .color_02 { background: #00aca2; }
+.sbq_home_menu ul .color_03 { background: #5b36b6 }
+.sbq_home_menu ul .color_04 { background: #3a5cab }
+.sbq_home_menu ul .color_05 { background: #ff8a00 }
+.sbq_home_menu ul .color_06 { background: #c70000 }
+.sbq_home_menu ul .color_07 { background: #ff017e }
+.sbq_home_menu ul .color_08 { background: #2ECC71 }
+.sbq_home_menu ul .color_09 { background: #00d2ff }
+.sbq_home_menu ul .color_10 { background: #0a59c2 }
+.sbq_home_menu ul .color_11 { background: #00a201 }
+.sbq_home_menu ul .color_12 { background: #E74C3C }
+.sbq_home_menu ul .color_13 { background: #7F8C8D }
+.sbq_home_menu ul .color_14 { background: #F1C40F }
+.sbq_home_menu ul .color_15 { background: #34495e }
+.sbq_home_menu ul .color_16 { background: #afd500 }
+.sbq_home_menu ul .color_17 { background: #ff2400 }
+.sbq_home_menu ul .color_18 { background: #8f1acc }
+.sbq_home_menu ul li .sbq_img { float: left; width: 40px; height: 40px; overflow: hidden; }
+.sbq_home_menu ul li .sbq_img img { width: 40px; height: 40px; }
+.sbq_home_menu ul li .sbq_title { float: left; width: 185px; height: 40px; line-height: 40px; margin: 0px 0px 0px 5px; color: #FFF; font-size: 24px; overflow: hidden; }
+.sbq_home_menu ul li .sbq_text { float: left; width: 185px; height: 40px; line-height: 20px; margin: 0px 0px 0px 45px; font-size: 14px; overflow: hidden; }
+.sbq_home_menu ul .half { width: 120px; height: 120px; }
+.sbq_home_menu ul .half a { width: 100px; height: 100px; padding: 10px; }
+.sbq_home_menu ul .half .sbq_img { float: left; width: 100%; height: 40px; padding: 10px 0px; overflow: hidden; text-align: center; }
+.sbq_home_menu ul .half .sbq_img img { width: 40px; height: 40px; }
+.sbq_home_menu ul .half .sbq_title { float: left; width: 100%; margin: 0px; text-align: center; }
+.sbq_home_menu ul .half .sbq_text { display: none; }
+.sbq_home_menu ul .pic a { width: 250px; height: 120px; padding: 0px; }
+.sbq_home_menu ul .pic .sbq_img { width: 250px; height: 120px; }
+.sbq_home_menu ul .pic .sbq_img img { width: 250px; height: 120px; }
+.sbq_home_menu ul .pic .sbq_title { float: left; width: 240px; height: 30px; line-height: 30px; margin: 0px; padding: 0px 5px; position: absolute; bottom: 0px; left: 0px; font-weight: bold; background: url(../image/bg_01.png); font-size: 16px; word-break: break-all; word-wrap: break-word; }
+.sbq_home_menu ul .pic .sbq_text { display: none; }
+/*header*/
+.header { float: left; width: 100%; height: 60px; overflow: hidden; }
+.header .header_inner { width: 1070px; padding: 0px 100px; margin: 0 auto; }
+.header .sbq_logo { float: left; }
+.header .sbq_logo a { float: left; width: 300px; height: 60px; background: url(../image/logo.png) no-repeat; }
+.header .sbq_header_login { float: right; height: 24px; margin: 28px 5px 0px 0px; padding: 5px; font-size: 14px; color: #FFF; }
+.header .sbq_header_login a { color: #FFF; }
+.header .sbq_header_login a:hover { color: #eeeeee; }
+.header .sbq_user_links { float: left; height: 24px; line-height: 24px; margin: 0px 5px 0px 0px; overflow: hidden; white-space: nowrap; }
+.header .sbq_user_links a { padding: 0px 5px; }
+.header .sbq_header_login .sbq_user_pic { float: left; width: 24px; height: 24px; }
+.header .sbq_header_login .sbq_user_pic img { float: left; width: 24px; height: 24px; }
+.sbq_qr_code { float: left; width: 100%; position: absolute; top: 131px; left: 0; }
+.sbq_qr_code .sbq_qr_code_inner { width: 1270px; margin: 0 auto; }
+.sbq_qr_code img { float: left; width: 100px; overflow: hidden; }
+/*footer*/
+.footer { float: left; width: 100%; overflow: hidden; text-shadow: 1px 1px 1px #666666; }
+.footer a { color: #FFFFFF; }
+.footer a:hover { color: #eeeeee; }
+.footer .footer_inner { width: 1050px; padding: 0px 100px; margin: 0 auto; border: none; }
+.footer .sbq_about_link { float: left; width: 100%; }
+.footer .sbq_about_link ul { float: right; }
+.footer .sbq_about_link ul li { float: left; height: 30px; line-height: 30px; padding: 0px 0px 0px 10px; font-size: 16px; }
+.footer .sbq_copy { float: left; width: 100%; height: 20px; line-height: 20px; text-align: right; font-size: 12px; color: #FFF; }

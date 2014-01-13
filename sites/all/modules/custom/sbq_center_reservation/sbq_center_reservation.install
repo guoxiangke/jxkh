@@ -1,0 +1,87 @@
+<?php
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function sbq_center_reservation_schema() {
+  $schema = array();
+  $schema['webform_submissions_center_reservation'] = array(
+      'description' => 'webform submissions extend for center.',
+      'fields' => array(
+          'sid' => array(
+              'description' => 'The unique identifier for this submission.',
+              'type' => 'int',
+              'unsigned' => TRUE,
+              'not null' => TRUE,
+          ),
+          'nid' => array(
+              'description' => 'The node identifier of a webform.',
+              'type' => 'int',
+              'unsigned' => TRUE,
+              'not null' => TRUE,
+              'default' => 0,
+          ),
+          'cid' => array(
+              'description' => 'The centerid of a sbq center.',
+              'type' => 'int',
+              'unsigned' => TRUE,
+              'not null' => TRUE,
+              'default' => 0,
+          ),
+          'uid' => array(
+              'description' => 'The id of the user that completed this submission.',
+              'type' => 'int',
+              'unsigned' => TRUE,
+              'not null' => TRUE,
+              'default' => 0,
+          ),
+          'type' => array(
+              'description' => 'The center reservation type',
+              'type' => 'int',
+              'unsigned' => TRUE,
+              'not null' => TRUE,
+              'default' => 0,
+          ),
+          'is_draft' => array(
+              'description' => 'Is this a draft of the submission?',
+              'type' => 'int',
+              'size' => 'tiny',
+              'not null' => TRUE,
+              'default' => 0,
+          ),
+          'submitted' => array(
+              'description' => 'Timestamp of when the form was submitted.',
+              'type' => 'int',
+              'not null' => TRUE,
+              'default' => 0,
+          ),
+          'remote_addr' => array(
+              'description' => 'The IP address of the user that submitted the form.',
+              'type' => 'varchar',
+              'length' => 128,
+          ),
+          'short_title' => array(
+              'description' => 'The shor content for reservation.',
+              'type' => 'varchar',
+              'length' => 128,
+          ),
+      ),
+      'indexes' => array(
+          'nid_uid_sid' => array( 'nid', 'uid', 'sid', 'cid' ),
+          'nid_sid' => array( 'nid', 'sid' ),
+          'uid_cid' => array( 'uid', 'cid' ),
+          'nid_sid_cid' => array( 'nid', 'sid', 'cid' )
+      ),
+  );
+  return $schema;
+}
+
+function sbq_center_reservation_install() {
+  drupal_install_schema('sbq_center_reservation');
+}
