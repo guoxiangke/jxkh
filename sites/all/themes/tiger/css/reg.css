@@ -36,15 +36,15 @@
 .password-suggestions { display: none !important; }
 .password-confirm.form-text { margin: 0px; }
 /*field-type-image*/
-.field-type-image { float: left; width: 100%; }
-.field-type-image fieldset { border: none; }
-.field-type-image .ajax-progress { display: none; }
-.field-type-image .description { float: left; width: 570px; line-height: 20px; margin: 10px 0px 0px 120px; font-size: 12px; color: #666; }
-.field-type-image input[type="file"] { float: left; width: 220px; height: 36px; line-height: 32px; border: 1px #DDDDDD solid; }
-.field-type-image input[type="submit"] { float: left; width: 60px; height: 36px; line-height: 36px; margin: 0px 0px 0px 10px; padding: 0px; border: none; border-radius: 3px; background: #1575D5; color: #FFF; font-size: 14px; }
-.field-type-image .file { display: none; }
-.field-type-image .image-preview { float: left; padding: 0px; }
-.field-type-image .file-size { float: left; margin: 0px 0px 0px 10px; }
+.sbq_reg .field-type-image { float: left; width: 100%; }
+.sbq_reg .field-type-image fieldset { border: none; }
+.sbq_reg .field-type-image .ajax-progress { display: none; }
+.sbq_reg .field-type-image .description { float: left; width: 570px; line-height: 20px; margin: 10px 0px 0px 120px; font-size: 12px; color: #666; }
+.sbq_reg .field-type-image input[type="file"] { float: left; width: 220px; height: 36px; line-height: 32px; border: 1px #DDDDDD solid; }
+.sbq_reg .field-type-image input[type="submit"] { float: left; width: 60px; height: 36px; line-height: 36px; margin: 0px 0px 0px 10px; padding: 0px; border: none; border-radius: 3px; background: #1575D5; color: #FFF; font-size: 14px; }
+.sbq_reg .field-type-image .file { display: none; }
+.sbq_reg .field-type-image .image-preview { float: left; padding: 0px; }
+.sbq_reg .field-type-image .file-size { float: left; margin: 0px 0px 0px 10px; }
 /*------sbq_login------*/
 .sbq_login { float: left; width: 500px; }
 .sbq_login .sbq_login_head { float: left; width: 100%; height: 50px; background: url(../image/sbq_login_head_bg.png) left; }

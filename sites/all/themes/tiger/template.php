@@ -447,6 +447,14 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
 
     $form['og_group_ref']['#prefix'] = '<div class="sbq_hide">';
     $form['og_group_ref']['#suffix'] = '</div>';
+  } elseif ($form_id == 'user_profile_form') {
+    kpr($form);
+    $is_doctor = FALSE;
+    $roles_array = $form['#user']->roles;
+    if  (in_array('doctor', $roles_array)) {
+      $is_doctor = TRUE;
+    }
+
   }
 }
 
