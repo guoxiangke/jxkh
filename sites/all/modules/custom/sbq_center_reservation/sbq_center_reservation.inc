@@ -12,11 +12,9 @@
  * @param type $formstatus
  * @return string
  */
-function sbq_center_opendys_form($form, $formstatus) {
-
-  $header = $part = array(
-  );
-
+function sbq_center_opendays_form($form, $form_status, $center) {
+  dpm($center);
+  $header = $part = array();
   foreach (array( 'monday' => '星期一', 'tuesday' => '星期二', 'wednesday' => '星期三', 'thursday' => '星期四', 'friday' => '星期五', 'saturday' => '星期六', 'sunday' => '星期日', ) as $key => $item) {
     $header[$key] = $item;
 
@@ -28,20 +26,34 @@ function sbq_center_opendys_form($form, $formstatus) {
         )
     );
   }
-
+  $form['centerid'] = array(
+      '#type' => 'hidden',
+      '#value' => $center->nid
+      );
   $form['content'] = array(
       '#type' => 'tableselect',
       '#header' => $header,
-      '#options' => array( $part ),
   );
+  $form['opendays'] = $part;
+
   $form['submit'] = array(
       '#type' => 'submit',
-      '#value' => t('Submit your information'),
+      '#value' => t('提交'),
   );
 
   return $form;
 }
-
-function sbq_center_opendays_form_submmitted($form, $formstatus) {
-  return 'success';
+/**
+ * form sbq center ipenda
+ * @param type $form
+ * @param type $form_status
+ */
+function sbq_center_opendays_form_submit($form, $form_status) {
+  $data = array();
+  foreach ($form['opendays'] as $key => $value) {
+    if(strpos($key, '#') !== 0){
+     $data[$key] =  $form_status['values'][$key];
+    }
+  }
+  variable_set('center_reservation_'.$form_status['values']['centerid'].'_settings', serialize($data));
 }

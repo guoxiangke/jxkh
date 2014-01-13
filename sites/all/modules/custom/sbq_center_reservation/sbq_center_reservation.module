@@ -5,28 +5,87 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 /**
  * hook  menu
  * @return array
  */
 function sbq_center_reservation_menu() {
-  $items['center/reservation/settings'] = array(
+  $items['center/reservation/%sbq_center/settings'] = array(
       'title' => '设置接诊日期',
-      'page callback' =>'drupal_get_form',
-      'page arguments' => array('sbq_center_opendys_form'),
-      'access callback' => TRUE,
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array( 'sbq_center_opendays_form', 2 ),
+      'access callback' => 'sbq_center_reservation_access',
+      'access arguments' => array( 2 ),
       'type' => MENU_NORMAL_ITEM,
       'file' => 'sbq_center_reservation.inc'
   );
   return $items;
 }
 
+function sbq_center_reservation_access($center) {
+  if (!$center)
+    return FALSE;
+  return TRUE;
+}
+
 /**
- * reservation settings
+ * get reservation settings
  * @param type $type
  */
 function sbq_center_reservation_setopenday($centerid, $opendays) {
-  if (!$center_node = sbq_center_get_center($centerid)) {
+  if (!$center_node = sbq_center_load($centerid)) {
     throw new Exception("The parameter {$center_node} is not Center Node");
   }
+}
+
+function sbq_center_reservation_settings($center) {
+  if (!is_object($center)) {
+    $center = sbq_center_load($center);
+  }
+  if (!$center) {
+    return array();
+  }
+  if ($vari = variable_get('center_reservation_' . $center->nid . '_settings')) {
+    return array();
+  }
+  return unserialize($vari);
+}
+
+function sbq_center_reservation_theme_registry_alter(&$theme_registry) {
+  dpm(arg(1));
+  if (arg(1) == 'reservation') {
+    $theme_registry['calendar_month_col']['path'] = drupal_get_path('module', 'sbq_center_reservation');
+    $theme_registry['calendar_month_col']['template'] = '/templates/' . $theme_registry['calendar_month_col']['template'];
+
+    $theme_registry['calendar_item']['path'] = drupal_get_path('module', 'sbq_center_reservation');
+    $theme_registry['calendar_item']['template'] = '/templates/' . $theme_registry['calendar_item']['template'];
+    $theme_registry['calendar_item']['preprocess functions'][] = 'template_preprocess_sbq_center_reservation_item';
+    dpm($theme_registry['calendar_item']);
+  }
+}
+
+/**
+ * @see template_preprocess_calendar_item()
+ * @param type $vars
+ */
+function template_preprocess_sbq_center_reservation_item(&$vars) {
+  if (isset($vars['rendered_fields'])) {
+    $vars['rendered_fields'] = array();
+  }
+//  $item = $vars['item'];
+//  $multiday_hidden = !empty($vars['view']->style_options['multiday_hidden']) ? $vars['view']->style_options['multiday_hidden'] : array();
+//  if (!empty($item->rendered) && empty($item->is_multi_day)) {
+//  //  $vars['rendered_fields'] = array( $item->rendered );
+//  } else {
+//    foreach ($vars['view']->field as $id => $field) {
+//      if ($field->options['exclude'] || (!empty($item->is_multi_day) && in_array($id, $multiday_hidden))) {
+//        unset($vars['rendered_fields'][$field->field]);
+//      }
+//    }
+//  }
+}
+
+function sbq_center_reservation_can_reservation($date){
+  
 }

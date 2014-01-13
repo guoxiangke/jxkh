@@ -18,7 +18,7 @@ function center_message_alter($centerid, $fun, $data) {
       return call_user_func('center_question_' . $fun, $centerid, $data);
     }
   }
-  if (!$center = sbq_center_get_center($centerid)) {
+  if (!$center = sbq_center_load($centerid)) {
     return services_error('not found the center form ' . $centerid, '404');
   }
   //return center_message_get_privatemsgid($centerid);
