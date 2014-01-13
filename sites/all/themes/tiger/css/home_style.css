@@ -30,11 +30,22 @@ body { background: url(../image/bg.jpg) center top no-repeat fixed; }
 .sbq_home_menu ul .color_18 { background: #8f1acc }
 .sbq_home_menu ul li .sbq_img { float: left; width: 40px; height: 40px; overflow: hidden; }
 .sbq_home_menu ul li .sbq_img img { width: 40px; height: 40px; }
+.sbq_home_menu ul li .sbq_img { background: url(../image/index_icon.png) no-repeat; }
+.sbq_home_menu ul .front-redblack .sbq_img { background-position: center 0px; }
+.sbq_home_menu ul .front-qa .sbq_img { background-position: center -40px; }
+.sbq_home_menu ul .front-relationship .sbq_img { background-position: center -80px; }
+.sbq_home_menu ul .front-event .sbq_img { background-position: center -120px; }
+.sbq_home_menu ul .front-legend .sbq_img { background-position: center -160px; }
+.sbq_home_menu ul .front-blacklist .sbq_img { background-position: center -200px; }
+.sbq_home_menu ul .front-activities .sbq_img { background-position: center -240px; }
+.sbq_home_menu ul .front-news .sbq_img { background-position: center -280px; }
+.sbq_home_menu ul .front-doctor .sbq_img { background-position: center -320px; }
+.sbq_home_menu ul .sbq_focus .sbq_img { background: none; }
 .sbq_home_menu ul li .sbq_title { float: left; width: 185px; height: 40px; line-height: 40px; margin: 0px 0px 0px 5px; color: #FFF; font-size: 24px; overflow: hidden; }
 .sbq_home_menu ul li .sbq_text { float: left; width: 185px; height: 40px; line-height: 20px; margin: 0px 0px 0px 45px; font-size: 14px; overflow: hidden; }
 .sbq_home_menu ul .half { width: 120px; height: 120px; }
 .sbq_home_menu ul .half a { width: 100px; height: 100px; padding: 10px; }
-.sbq_home_menu ul .half .sbq_img { float: left; width: 100%; height: 40px; padding: 10px 0px; overflow: hidden; text-align: center; }
+.sbq_home_menu ul .half .sbq_img { float: left; width: 100%; height: 40px; margin: 10px 0px; overflow: hidden; text-align: center; }
 .sbq_home_menu ul .half .sbq_img img { width: 40px; height: 40px; }
 .sbq_home_menu ul .half .sbq_title { float: left; width: 100%; margin: 0px; text-align: center; }
 .sbq_home_menu ul .half .sbq_text { display: none; }
@@ -55,7 +66,7 @@ body { background: url(../image/bg.jpg) center top no-repeat fixed; }
 .header .sbq_user_links a { padding: 0px 5px; }
 .header .sbq_header_login .sbq_user_pic { float: left; width: 24px; height: 24px; }
 .header .sbq_header_login .sbq_user_pic img { float: left; width: 24px; height: 24px; }
-.sbq_qr_code { float: left; width: 100%; position: absolute; top: 131px; left: 0; }
+.sbq_qr_code { float: left; width: 100%; position: absolute; top: 130px; left: 0; }
 .sbq_qr_code .sbq_qr_code_inner { width: 1270px; margin: 0 auto; }
 .sbq_qr_code img { float: left; width: 100px; overflow: hidden; }
 /*footer*/

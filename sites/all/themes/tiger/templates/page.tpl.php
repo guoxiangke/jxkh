@@ -71,6 +71,7 @@
  *
  * @ingroup themeable
  */
+  $theme_path = drupal_get_path('theme', 'tiger');
 ?>
 <div class="header">
   <div class="header_inner">
@@ -83,13 +84,18 @@
       </div>
     </div>
     <?php endif; ?>
+    <div class="sbq_main_nav">
+      <?php if ($main_menu || $secondary_menu): ?>
+        <?php print theme('links__system_main_menu', array('links' => $main_menu, 'attributes' => array('id' => 'main-menu', 'class' => array('links', 'inline', 'clearfix')))); ?>
+      <?php endif; ?>
+    </div>
     <div class="sbq_header_login">
       <?php if (!$logged_in): ?>
       <div class="sbq_user_links">
         <a href="/user/login" class="log">登录</a>|<a href="/user/register">注册</a>
       </div>
       <div class="sbq_user_pic">
-        <a href="#"><img src="../image/default_avatar.png" width="50" height="50"  alt=""/></a>
+        <a href="#"><img src="/<?php print $theme_path; ?>/image/default_avatar.png" width="50" height="50"  alt=""/></a>
       </div>
       <?php endif; ?>
       <?php if ($logged_in): ?>
@@ -128,5 +134,17 @@
   </div>
 </div>
 <div class="footer">
+  <div class="footer_inner">
+  <div class="sbq_about_link">
+    <ul>
+      <li><a href="/contact.html">联系我们</a></li>
+      <li><a href="/services.html">注册服务条款</a></li>
+      <li><a href="/copyright.html">免责声明</a></li>
+      <li><a href="/join.html">加入我们</a></li>
+      <li><a href="/about.html">关于我们</a></li>
+    </ul>
+  </div>
+  <div class="sbq_copy">© 2014 伤不起 中国最真实的医疗评价平台(<a href="http://www.miitbeian.gov.cn" target="_bank"> 京ICP备13032461号-1</a>) </div>
+  </div>
   <?php print render($page['footer']); ?>
 </div> <!-- /#footer -->
