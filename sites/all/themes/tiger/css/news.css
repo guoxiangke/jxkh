@@ -23,6 +23,7 @@
 .sbq_article_content u { text-decoration: underline; }
 .sbq_article_content em { font-style: italic; }
 .sbq_article_content blockquote { margin: 0.8em 0px; padding: 0px 0px 0px 10px; border-left: 3px solid #D0E5F2; vertical-align: baseline; display: block; font-size: 12px; }
+.sbq_article_content .field-name-field-image { display: none; }
 /*news_final*/
 .sbq_news_list { float: left; width: 100%; }
 .sbq_news_list .sbq_news_list_head { float: left; width: 100%; line-height: 30px; border-bottom: 1px #EEE solid; font-size: 18px; font-weight: bold; overflow: hidden; }
