@@ -5,35 +5,70 @@
  * and open the template in the editor.
  */
 ?>
-<div class="sbq-user-relationship-profile">
-  <div class="image">
-    <?php echo $image ?>
-  </div>
-  <div class="info">
-    <?php
-    $name = $profile['name'];
-    unset($profile['name']);
-
-    $bedges = $profile['bedges'];
-    unset($profile['bedges']);
-    ?>
-    <div class="warp-nb">
-      <span class="name">
-        <?php echo $name ?>
-      </span> 
-      <span class="bedges">
-        <?php echo $bedges; ?>
-      </span> 
+<?php if ($view == 'list'): ?>
+  <div class="sbq-user-relationship-profile">
+    <div class="image">
+      <?php echo $image ?>
     </div>
-    <?php ?>
+    <div class="info">
+      <?php
+      $name = $profile['name'];
+      unset($profile['name']);
 
-    <?php foreach ($profile as $key => $item): ?>
-      <?php if (!empty($item)): ?>
-        <span class="<?php echo $key; ?>">
-          <?php echo $item ?>
+      $bedges = $profile['bedges'];
+      unset($profile['bedges']);
+      ?>
+      <div class="warp-nb">
+        <span class="name">
+          <?php echo $name ?>
         </span> 
-      <?php endif; ?>
-    <?php endforeach; ?>
+        <span class="bedges">
+          <?php echo $bedges; ?>
+        </span> 
+      </div>
+      <?php ?>
+
+      <?php foreach ($profile as $key => $item): ?>
+        <?php if (!empty($item)): ?>
+          <span class="<?php echo $key; ?>">
+            <?php echo $item ?>
+          </span> 
+        <?php endif; ?>
+      <?php endforeach; ?>
+    </div>
   </div>
-</div>
-<?php ?>
+<?php elseif ($view == 'block') : ?>
+
+  in block
+  <div class="sbq-user-relationship-profile">
+    <div class="image">
+      <?php echo $image ?>
+    </div>
+    <div class="info">
+      <?php
+      $name = $profile['name'];
+      unset($profile['name']);
+
+      $bedges = $profile['bedges'];
+      unset($profile['bedges']);
+      ?>
+      <div class="warp-nb">
+        <span class="name">
+          <?php echo $name ?>
+        </span> 
+        <span class="bedges">
+          <?php echo $bedges; ?>
+        </span> 
+      </div>
+      <?php ?>
+
+      <?php foreach ($profile as $key => $item): ?>
+        <?php if (!empty($item)): ?>
+          <span class="<?php echo $key; ?>">
+            <?php echo $item ?>
+          </span> 
+        <?php endif; ?>
+      <?php endforeach; ?>
+    </div>
+  </div>
+<?php endif; ?>
