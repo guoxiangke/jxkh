@@ -1,15 +1,22 @@
 /*------sbq_form------*/
-.sbq_form_01 { float: left; width: 100%; padding: 10px 0px; font-size: 14px; position: relative; }
+.sbq_form_01,
+.form-item-pass .form-item { float: left; width: 100%; padding: 10px 0px; font-size: 14px; position: relative; }
 .sbq_form_01 label,
-.sbq_botton_01 label { float: left; width: 110px; height: 36px; line-height: 36px; margin: 0px 10px 0px 0px; text-align: right; }
+.sbq_botton_01 label,
+.form-item-pass label { float: left; width: 110px; height: 36px; line-height: 36px; margin: 0px 10px 0px 0px; text-align: right; overflow: hidden; }
+.form-required { display: none; }
 /*sbq_input_01*/
-.sbq_form_01 .sbq_input_01 { float: left; width: 200px; height: 34px; line-height: 34px; padding: 0px 9px; border: 1px #dddddd solid; background: url(../image/input_bg_01.png) repeat-x; }
+.sbq_form_01 .sbq_input_01,
+.form-item-pass .form-text { float: left; width: 200px; height: 34px; line-height: 34px; padding: 0px 9px; border: 1px #dddddd solid; background: url(../image/input_bg_01.png) repeat-x; }
 .sbq_form_01 .sbq_input_01:focus { border: 1px #3385d6 solid; box-shadow: 0px 0px 2px #3385d6; }
 /*sbq_file_01*/
 .sbq_form_01 .sbq_file_01 { float: left; width: 220px; height: 36px; line-height: 32px; }
 /*sbq_botton_01*/
 .sbq_botton_01 { float: left; width: 100%; padding: 10px 0px; }
 .sbq_login_btn { float: left; width: 80px; height: 36px; line-height: 36px; padding: 0px; border: none; border-radius: 3px; background: #1575D5; color: #FFF; font-size: 14px; }
+.sbq_botton_01 .ajax-progress { float: left; width: 80px; height: 36px; position: relative; left: -80px; overflow: hidden; }
+.sbq_botton_01 .ajax-progress .message { float: left; width: 80px; height: 36px; line-height: 36px; border-radius: 3px; background: #999; color: #FFF; font-size: 14px; text-align: center; }
+.sbq_botton_01 .ajax-progress .throbber { display: none; }
 .sbq_link { float: left; height: 36px; line-height: 36px; margin: 0px 0px 0px 5px; }
 .sbq_link a { color: #225599; }
 .sbq_checkbox_01 { float: left; line-height: 26px; padding: 5px 0px 5px 120px; }
@@ -17,6 +24,27 @@
 .sbq_checkbox_01 label { float: left; height: 26px; line-height: 26px; margin: 0px 5px; }
 .sbq_checkbox_01 label a { font-weight: bold; padding: 0px 2px; }
 /*.sbq_tips_error { float: left; width: 210px; line-height: 20px; padding: 8px 5px 0px 5px; position: absolute; top: 38px; left: 120px; background: url(../image/error_bg.png) center top no-repeat; color: #E6393D; font-size: 12px; display: none; }*/
+/*password-strength*/
+.password-strength,
+.password-confirm { float: right; width: 260px; height: 36px; line-height: 36px; margin: 0px 80px 0px 0px; color: #666; }
+.password-parent .password-strength { height: 30px; line-height: 30px; }
+.password-strength .password-strength-title { float: left; }
+.password-strength .password-strength-text,
+.password-confirm span { float: right; }
+.password-strength .password-indicator { float: left; width: 100%; }
+.password-strength .password-indicator .indicator { float: left; height: 2px; background: #1575D5; }
+.password-suggestions { display: none !important; }
+.password-confirm.form-text { margin: 0px; }
+/*field-type-image*/
+.field-type-image { float: left; width: 100%; }
+.field-type-image fieldset { border: none; }
+.field-type-image .ajax-progress { display: none; }
+.field-type-image .description { float: left; width: 570px; line-height: 20px; margin: 10px 0px 0px 120px; font-size: 12px; color: #666; }
+.field-type-image input[type="file"] { float: left; width: 220px; height: 36px; line-height: 32px; border: 1px #DDDDDD solid; }
+.field-type-image input[type="submit"] { float: left; width: 60px; height: 36px; line-height: 36px; margin: 0px 0px 0px 10px; padding: 0px; border: none; border-radius: 3px; background: #1575D5; color: #FFF; font-size: 14px; }
+.field-type-image .file { display: none; }
+.field-type-image .image-preview { float: left; padding: 0px; }
+.field-type-image .file-size { float: left; margin: 0px 0px 0px 10px; }
 /*------sbq_login------*/
 .sbq_login { float: left; width: 500px; }
 .sbq_login .sbq_login_head { float: left; width: 100%; height: 50px; background: url(../image/sbq_login_head_bg.png) left; }
@@ -27,12 +55,12 @@
 .sbq_reg .sbq_reg_nav { float: left; width: 100%; height: 50px; background: url(../image/sbq_reg_head_bg1.png) repeat-x; }
 .sbq_reg .sbq_reg_nav li { float: left; height: 50px; margin: 0px 10px 0px 0px; border-radius: 5px 5px 0px 0px; background: url(../image/sbq_reg_head_bg2.png) repeat-x; }
 .sbq_reg .sbq_reg_nav .active { background: url(../image/sbq_reg_head_bg.png) repeat-x; }
-.sbq_reg .sbq_reg_nav a { float: left; width: 130px; height: 50px; margin: 0px 0px 0px 10px; padding: 0px 10px; background: url(../image/sbq_reg_ud.png) no-repeat; }
-.sbq_reg .sbq_reg_nav .sbq_reg_u { background-position: 0px 0px; }
-.sbq_reg .sbq_reg_nav .sbq_reg_d { background-position: 0px -50px; }
+.sbq_reg .sbq_reg_nav a { float: left; width: 130px; height: 50px; padding: 0px 20px 0px 10px; background: url(../image/sbq_reg_ud.png) no-repeat; }
+.sbq_reg .sbq_reg_nav .sbq_reg_u { background-position: center 0px; }
+.sbq_reg .sbq_reg_nav .sbq_reg_d { background-position: center -50px; }
 .sbq_reg .sbq_reg_content { float: left; width: 100%; padding: 30px 0px; background: #fcfcfc; }
 .body { float: left; width: 100%; margin-top: 60px; }
-.main { width: 800px; padding: 0px 100px; margin: 0 auto; }
+.body .main { width: 800px; margin: 0 auto; }
 /*sbq_tips*/
 .sbq_form_01 .sbq_tips { clear: both; width: 340px; line-height: 24px; margin: 0px 0px 0px 10px; font-size: 12px; display: inline-block; }
 .sbq_form_01 .sbq_tips_error { float: left; max-height: 330px; height: 24px; padding: 5px; border: 1px #E6393D solid; background: #FEF5F1; color: #E6393D; overflow: hidden; }
@@ -49,6 +77,7 @@
 .captcha input { float: left; width: 80px; height: 34px; line-height: 34px; padding: 0px 9px; border: 1px #dddddd solid; background: url(../image/input_bg_01.png) repeat-x; }
 .captcha input:focus { border: 1px #3385d6 solid; box-shadow: 0px 0px 2px #3385d6; }
 .captcha img { float: left; width: 88px; height: 34px; border: 1px #eee solid; margin: 0px 0px 0px 10px; }
+.captcha a { float: left; height: 36px; line-height: 36px; margin: 0px 0px 0px 5px; }
 /*sbq_login_thirdpart*/
 .sbq_login_thirdpart { float: left; width: 100%; height: 20px; overflow: hidden; }
 .sbq_login_thirdpart .sbq_text { float: right; height: 20px; line-height: 20px; margin: 0px 5px 0px 0px; color: #999; }
