@@ -31,7 +31,8 @@ input,
 .sbq_article_title,
 .captcha label,
 .sbq_news_list .sbq_title,
-.sbq_news_list_head { font-family: "Microsoft Yahei", "微软雅黑", "Arial" !important; }
+.sbq_news_list_head,
+.form-item-pass { font-family: "Microsoft Yahei", "微软雅黑", "Arial" !important; }
 /*------header------*/
 .header { float: left; width: 100%; }
 .header .header_inner { width: 960px; height: 60px; margin: 0 auto; padding: 0px 0px 10px 0px; overflow: hidden; border-bottom: 1px #E5E5E5 solid; }
