@@ -35,7 +35,7 @@ function tiger_preprocess_page(&$variables) {
     }
   }
   // user center page
-  if (arg(0) == 'user') {
+  if ($variables['logged_in'] && arg(0) == 'user') {
     drupal_add_css(path_to_theme() . "/css/user.css", array('group' => CSS_THEME));
 
     global $user;
@@ -355,6 +355,7 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
       'callback' => 'tiger_user_login_ajax_callback',
       'wrapper' => '',
       'method' => 'replace',
+      'progress' => array( 'type' => 'throbber', 'message' => '请稍候' ),
     );
     $form['actions']['#prefix'] = '<div class="sbq_botton_01"><label></label>';
     $form['actions']['#suffix'] = '</div>';
@@ -391,9 +392,7 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     $form['account']['mail']['#suffix'] = '</div>';
 
     unset($form['account']['pass']['#description']);
-    $form['account']['pass']['#prefix'] = '<div class="sbq_form_01">';
     $form['account']['pass']['#attributes']['class'][] = 'sbq_input_01';
-    $form['account']['pass']['#suffix'] = '</div>';
 
     $form['agree']['#prefix'] = '<div class="sbq_checkbox_01">';
     $form['agree']['#suffix'] = '</div>';
@@ -404,14 +403,20 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     $form['actions']['#suffix'] = '</div>';
 
     if ($is_doctor_reg) {
-      # code...
-      // $form['profile_doctor_private_profile']['field_doctor_phone']['#prefix'] = '<div class="sbq_form_01">';
-      // $form['profile_doctor_private_profile']['field_doctor_phone']['#attributes']['class'][] = 'sbq_input_01';
-      // $form['profile_doctor_private_profile']['field_doctor_phone']['#suffix'] = '</div>';
+      $form['profile_doctor_private_profile']['field_doctor_phone']['#prefix'] = '<div class="sbq_form_01">';
+      $form['profile_doctor_private_profile']['field_doctor_phone']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
+      $form['profile_doctor_private_profile']['field_doctor_phone']['#suffix'] = '</div>';
+
+      $form['profile_doctor_private_profile']['field_doctor_hospital_phone']['#prefix'] = '<div class="sbq_form_01">';
+      $form['profile_doctor_private_profile']['field_doctor_hospital_phone']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
+      $form['profile_doctor_private_profile']['field_doctor_hospital_phone']['#suffix'] = '</div>';
+
+      $form['profile_doctor_private_profile']['field_doctor_license']['#prefix'] = '<div class="sbq_form_01">';
+      $form['profile_doctor_private_profile']['field_doctor_license']['#suffix'] = '</div>';
 
     }
 
-    kpr($form);
+    //kpr($form);
   } elseif ($form_id == 'blog_node_form') {
     $form['#prefix'] = '<div class="sbq_add_content"><div class="sbq_head"><div class="sbq_title">发布文章</div></div>';
     $form['#suffix'] = '</div>';
@@ -444,6 +449,7 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     $form['og_group_ref']['#suffix'] = '</div>';
   }
 }
+
 
 function tiger_user_login_ajax_callback() {
   return '<script type="text/javascript">

@@ -72,7 +72,6 @@
  * @ingroup themeable
  */
 ?>
-<?php if ($logged_in): ?>
 <div class="header">
   <div class="header_inner">
     <?php if ($logo): ?>
@@ -92,7 +91,7 @@
     <div class="sbq_header_login">
       <?php if (!$logged_in): ?>
       <div class="sbq_user_links">
-        <a href="/user/login" class="log">登录</a>|<a href="/user/register">注册</a>
+        <a href="/user/login" class="log">登录</a>|<a href="/customer/register">注册</a>
       </div>
       <div class="sbq_user_pic">
         <a href="#"><img src="../image/default_avatar.png" width="50" height="50"  alt=""/></a>
@@ -113,6 +112,7 @@
     </div>
   </div>
 </div>
+<?php if ($logged_in): ?>
 <?php
   $a_name = theme('username', array('account' => $account));
   $a_picture = theme('user_picture', array('account' =>$account));
@@ -129,8 +129,10 @@
     $menu_qa_active = 'class="active"';
   }
 ?>
+<?php endif; ?>
 <div class="body">
   <div class="main">
+    <?php if ($logged_in): ?>
     <div class="sbq_user_headr"><img src="/sites/all/themes/tiger/image/sbq_user_headr_bg.jpg" width="960" height="200"  alt=""/></div>
     <div class="sbq_user_info">
       <div class="sbq_user_pic"><?php print $a_picture; ?></div>
@@ -177,6 +179,7 @@
         <li><a href="#">积分</a></li>
       </ul>
     </div>
+    <?php endif; ?>
     <?php if ($page['sidebar_first']): ?>
       <div class="sidebar_first sidebar">
         <?php print render($page['sidebar_first']); ?>
@@ -197,4 +200,4 @@
 <div class="footer">
   <?php print render($page['footer']); ?>
 </div> <!-- /#footer -->
-<?php endif; ?>
+

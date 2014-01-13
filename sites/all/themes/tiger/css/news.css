@@ -11,6 +11,7 @@
 .sbq_article_info ul .sbq_comment_num a:hover { background-position: 0px -22px; color: #698EBF; }
 /*sbq_article_content*/
 .sbq_article_content { float: left; width: 100%; padding: 30px 0px; border-bottom: 1px #E5E5E5 dotted; font-size: 14px; line-height: 24px; }
+.sbq_article_content img { max-width: 680px; margin: 10px 0px; }
 .sbq_article_content ol,
 .sbq_article_content ul { list-style-position: outside; margin: 0.8em 0px 0.8em 1.5em; font-family: "Arial", sans-serif; }
 .sbq_article_content ol li { margin: 0px 0px 5px 0px; list-style-position: outside; list-style-type: decimal; }
@@ -22,6 +23,7 @@
 .sbq_article_content u { text-decoration: underline; }
 .sbq_article_content em { font-style: italic; }
 .sbq_article_content blockquote { margin: 0.8em 0px; padding: 0px 0px 0px 10px; border-left: 3px solid #D0E5F2; vertical-align: baseline; display: block; font-size: 12px; }
+.sbq_article_content .field-name-field-image { display: none; }
 /*news_final*/
 .sbq_news_list { float: left; width: 100%; }
 .sbq_news_list .sbq_news_list_head { float: left; width: 100%; line-height: 30px; border-bottom: 1px #EEE solid; font-size: 18px; font-weight: bold; overflow: hidden; }

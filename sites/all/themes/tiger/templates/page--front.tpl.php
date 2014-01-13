@@ -86,7 +86,7 @@
     <div class="sbq_header_login">
       <?php if (!$logged_in): ?>
       <div class="sbq_user_links">
-        <a href="/user/login" class="log">登录</a>|<a href="/user/register">注册</a>
+        <a href="/user/login" class="log">登录</a>|<a href="/customer/register">注册</a>
       </div>
       <div class="sbq_user_pic">
         <a href="#"><img src="/<?php print $theme_path; ?>/image/default_avatar.png" width="50" height="50"  alt=""/></a>

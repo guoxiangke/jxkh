@@ -36,6 +36,7 @@
   <div class="sbq_tags">
     <ul>
     <?php //tags
+    // TODO: performance
       $vocabulary = taxonomy_vocabulary_machine_name_load('tags');
       $terms = taxonomy_get_tree($vocabulary->vid);
       foreach ($terms as $key => $tag) {
