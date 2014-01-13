@@ -119,7 +119,7 @@
   <div class="main">
     <div class="sbq_home_menu">
       <ul class="sbq_patient">
-        <li class="front-redblack color_06"><a href="/news/friend_activities">
+        <li class="front-redblack color_06"><a href="###" onclick="alert('新功能敬请期待！');">
           <div class="sbq_img"></div>
           <div class="sbq_title">红黑榜</div>
           <div class="sbq_text">揭示医疗行业真相</div>
@@ -153,19 +153,21 @@
       </ul>
       <ul class="sbq_doctor">
 
-        <li class="front-relationship color_04"><a href="<?php print $user_link; ?>" title="圈子"<?php if(!$user->uid) print "onclick= alert('请登录后使用!');" ?>>
+        <li class="front-relationship color_04"><a href="###" onclick="alert('新功能敬请期待！');">
+          <!-- <a href="<?php print $user_link; ?>" title="圈子"<?php if(!$user->uid) print "onclick= alert('请登录后使用!');" ?>> -->
           <div class="sbq_img"></div>
           <div class="sbq_title">圈子</div>
           <div class="sbq_text">人以群分确实必要</div>
           </a></li>
-        <li class="front-doctor color_08"><a href="<?php print $user_link; ?>" title="医生馆" <?php if(!$user->uid) print "onclick= alert('请登录后使用!');" ?>>
+        <li class="front-doctor color_08"><a href="###" onclick="alert('新功能敬请期待！');">
+          <!-- <a href="<?php print $user_link; ?>" title="医生馆" <?php if(!$user->uid) print "onclick= alert('请登录后使用!');" ?>> -->
           <div class="sbq_img"></div>
           <div class="sbq_title">医生馆</div>
           <div class="sbq_text">专业医生的网上医院</div>
           </a></li>
       </ul>
       <ul class="sbq_focus">
-        <li class="color_03 pic"><a href="#">
+        <li class="color_03 pic"><a href="###" onclick="alert('307新功能敬请期待！');">
           <div class="sbq_img"><img src="/<?php print $theme_path; ?>/images/307.png" width="250" height="120"  alt=""/></div>
           <div class="sbq_title">307医院免疫学实验室</div>
           </a></li>
