@@ -53,6 +53,12 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
       <ul>
         <li><?php print $comment_count; ?></li>
         <li><?php print $created; ?></li>
+        <?php if(!empty($edit_node)): ?>
+        <li class="edit"><?php print $edit_node; ?></li>
+        <?php endif;?>
+        <?php if(!empty($delete_node)): ?>
+        <li class="delete"><?php print $delete_node; ?></li>
+        <?php endif;?>
       </ul>
     </div>
   <?php if($has_image): ?>
