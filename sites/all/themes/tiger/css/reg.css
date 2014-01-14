@@ -25,7 +25,7 @@
 .sbq_checkbox_01 label a { font-weight: bold; padding: 0px 2px; }
 /*.sbq_tips_error { float: left; width: 210px; line-height: 20px; padding: 8px 5px 0px 5px; position: absolute; top: 38px; left: 120px; background: url(../image/error_bg.png) center top no-repeat; color: #E6393D; font-size: 12px; display: none; }*/
 /*password-strength*/
-.form-item-pass { float: left;  }
+.form-item-pass { float: left; }
 .password-strength,
 .password-confirm { float: right; width: 260px; height: 36px; line-height: 36px; margin: 0px 80px 0px 0px; }
 .password-parent .password-strength { height: 30px; line-height: 30px; }
@@ -40,7 +40,7 @@
 .sbq_reg .field-type-image { float: left; width: 100%; }
 .sbq_reg .field-type-image fieldset { border: none; }
 .sbq_reg .field-type-image .ajax-progress { display: none; }
-.sbq_reg .field-type-image .description { float: left; width: 570px; line-height: 20px; margin: 10px 0px 0px 120px; font-size: 12px; }
+.sbq_reg .field-type-image .description { float: left; width: 570px; line-height: 20px; margin: 5px 0px 0px 120px; font-size: 12px; color: #666; }
 .sbq_reg .field-type-image input[type="file"] { float: left; width: 220px; height: 36px; line-height: 32px; border: 1px #DDDDDD solid; }
 .sbq_reg .field-type-image input[type="submit"] { float: left; width: 60px; height: 36px; line-height: 36px; margin: 0px 0px 0px 10px; padding: 0px; border: none; border-radius: 3px; background: #1575D5; color: #FFF; font-size: 14px; }
 .sbq_reg .field-type-image .file { display: none; }
@@ -85,5 +85,5 @@
 .sbq_login_thirdpart .item-list { float: right; height: 20px; line-height: 20px; margin: 0px 10px 0px 0px; }
 .sbq_login_thirdpart .item-list li { float: left; width: 20px; height: 20px; overflow: hidden; margin: 0px 3px 0px 0px; }
 .sbq_login_thirdpart .item-list li img { float: left; width: 20px; height: 20px; overflow: hidden; }
- hidden; }
+
 : hidden; }

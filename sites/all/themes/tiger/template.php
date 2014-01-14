@@ -146,7 +146,6 @@ function tiger_preprocess_views_view(&$vars) {
           'language' => LANGUAGE_NONE
         );
         $question_node_form = drupal_get_form('question_node_form', $node);
-        kpr($question_node_form);
         $sbq_quick_ask_form = render($question_node_form);
       }
     }
@@ -459,17 +458,32 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     $form['field_tags']['#prefix'] = '<div class="sbq_form_02">';
     $form['field_tags']['#suffix'] = '</div>';
   } elseif ($form_id == 'question_node_form') {
-    $form['#prefix'] = '<div class="sbq_add_content"><div class="sbq_head"><div class="sbq_title">发布问题</div></div>';
-    $form['#suffix'] = '</div>';
+    $is_followers_page = FALSE;
+    if (in_array('followers', arg())) {
+      $is_followers_page = TRUE;
+    }
+
+    if ($is_followers_page) {
+      $form['#prefix'] = '<div class="sbq_add_content">';
+      $form['#suffix'] = '</div>';
+
+      $form['body']['und'][0]['#format'] = 'plain_text';
+
+      $form['field_tags']['#prefix'] = '<div class="sbq_hide">';
+      $form['field_tags']['#suffix'] = '</div>';
+    } else {
+      $form['#prefix'] = '<div class="sbq_add_content"><div class="sbq_head"><div class="sbq_title">发布问题</div></div>';
+      $form['#suffix'] = '</div>';
+
+      $form['field_tags']['#prefix'] = '<div class="sbq_form_02">';
+      $form['field_tags']['#suffix'] = '</div>';
+    }
 
     $form['title']['#prefix'] = '<div class="sbq_form_02">';
     $form['title']['#suffix'] = '</div>';
 
     $form['body']['#prefix'] = '<div class="sbq_form_02">';
     $form['body']['#suffix'] = '</div>';
-
-    $form['field_tags']['#prefix'] = '<div class="sbq_form_02">';
-    $form['field_tags']['#suffix'] = '</div>';
 
     $form['field_departments']['#prefix'] = '<div class="sbq_hide">';
     $form['field_departments']['#suffix'] = '</div>';
@@ -498,6 +512,7 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     unset($form['account']['pass']['#description']);
     $form['account']['pass']['#attributes']['class'][] = 'sbq_input_01';
 
+    unset($form['picture']['picture_delete']);
     $form['picture']['#prefix'] = '<div class="sbq_form_01">';
     $form['picture']['#suffix'] = '</div>';
 
@@ -543,7 +558,6 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
       $form['actions']['#prefix'] = '<div class="sbq_botton_01"><label></label>';
       $form['actions']['#suffix'] = '</div>';
     }
-    kpr($form);
   }
 }
 
