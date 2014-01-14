@@ -170,9 +170,9 @@
           </a></li>
       </ul>
       <ul class="sbq_focus">
-        <li class="color_03 pic"><a href="###" onclick="alert('307新功能敬请期待！');">
+        <li class="color_03 pic"><a href="###" onclick="alert('307免疫性流产治疗中心,敬请期待！');">
           <div class="sbq_img"><img src="/<?php print $theme_path; ?>/images/307.png" width="250" height="120"  alt=""/></div>
-          <div class="sbq_title">307医院免疫学实验室</div>
+          <div class="sbq_title">307免疫性流产治疗中心</div>
           </a></li>
       </ul>
     </div>
