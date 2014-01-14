@@ -53,6 +53,10 @@
 <body class="<?php print $classes; ?>" <?php print $attributes;?>>
   <?php print $page_top; ?>
   <?php print $page; ?>
-  <?php print $page_bottom; ?>
+  <?php print $page_bottom; ?><script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0f1e49aefcdb074bba985a42bee5e183' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
 </body>
 </html>
