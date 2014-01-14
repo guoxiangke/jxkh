@@ -126,6 +126,35 @@ function tiger_preprocess_views_view(&$vars) {
     }
     $vars['account'] = $account;
 
+    $follower_active = FALSE;
+    $sbq_quick_ask_form = '';
+    if (in_array('followers', arg())) {
+      $follower_active = TRUE;
+      $menu_qa_active = '';
+      $menu_blog_active = '';
+      if (in_array('qa', arg())) {
+        $menu_qa_active = 'class="active"';
+      } else {
+        $menu_blog_active = 'class="active"';
+      }
+      if ($user->uid) {
+        module_load_include('inc', 'node', 'node.pages');
+        $node = (object) array(
+          'uid' => $user->uid,
+          'name' => (isset($user->name) ? $user->name : ''),
+          'type' => 'question',
+          'language' => LANGUAGE_NONE
+        );
+        $question_node_form = drupal_get_form('question_node_form', $node);
+        kpr($question_node_form);
+        $sbq_quick_ask_form = render($question_node_form);
+      }
+    }
+    $vars['follower_active'] = $follower_active;
+    $vars['quick_ask_form'] = $sbq_quick_ask_form;
+    $vars['menu_qa_active'] = $menu_qa_active;
+    $vars['menu_blog_active'] = $menu_blog_active;
+
     $blog_active = FALSE;
     if (in_array('blog', arg())) {
       $blog_active = TRUE;
@@ -469,6 +498,9 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     unset($form['account']['pass']['#description']);
     $form['account']['pass']['#attributes']['class'][] = 'sbq_input_01';
 
+    $form['picture']['#prefix'] = '<div class="sbq_form_01">';
+    $form['picture']['#suffix'] = '</div>';
+
     if ($is_doctor) {
       $form['profile_doctor_profile']['field_doctor_hospitals']['#prefix'] = '<div class="sbq_form_01">';
       $form['profile_doctor_profile']['field_doctor_hospitals']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
@@ -511,6 +543,7 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
       $form['actions']['#prefix'] = '<div class="sbq_botton_01"><label></label>';
       $form['actions']['#suffix'] = '</div>';
     }
+    kpr($form);
   }
 }
 

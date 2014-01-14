@@ -118,14 +118,20 @@
   $a_picture = theme('user_picture', array('account' =>$account));
   $a_uid = $account->uid;
 
+  $show_followers = FALSE;
+  if ($user->uid == $a_uid) {
+    $show_followers = TRUE;
+  }
+
   $menu_blog_active = '';
-  if (in_array('blog', arg())) {
+  $menu_qa_active = '';
+  if (in_array('followers', arg())) {
+    $menu_follower_active = 'class="active"';
+  } elseif (in_array('blog', arg())) {
     $menu_blog_active = 'class="active"';
   } elseif (isset($node) && $node->type == 'blog') {
     $menu_blog_active = 'class="active"';
-  }
-  $menu_qa_active = '';
-  if (in_array('qa', arg())) {
+  } elseif (in_array('qa', arg())) {
     $menu_qa_active = 'class="active"';
   }
 ?>
@@ -171,7 +177,9 @@
 
     <div class="sbq_user_menu">
       <ul>
-        <li><a href="user_center.html">动态</a></li>
+        <?php if ($show_followers): ?>
+        <li <?php print $menu_follower_active; ?>><?php print l('动态', 'user/followers/blog'); ?></li>
+        <?php endif; ?>
         <li <?php print $menu_blog_active; ?>><?php print l('文章', 'user/'.$a_uid.'/blog'); ?></li>
         <li <?php print $menu_qa_active; ?>><?php print l('问答', 'user/'.$a_uid.'/qa/ask'); ?></li>
         <li><a href="user_friends.html">圈子</a></li>

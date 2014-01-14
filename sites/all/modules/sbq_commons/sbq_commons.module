@@ -1185,6 +1185,21 @@ function sbq_commons_views_query_alter(&$view, &$query) {
         'operator' => 'in',
     );
   }
+
+  if ($view->name == 'sbq_user_center' && ($view->current_display == 'blog_followers' || $view->current_display == 'qa_followers' )) {
+    $friend_ids = array();
+    foreach (user_relationships_load(array( 'user' => $user->uid, 'approved' => TRUE ), array( 'include_user_info' => TRUE )) as $key => $value) {
+      $friend_ids[] = $user->uid == $value->requester_id ? $value->requestee_id : $value->requester_id;
+    }
+
+    $friend_ids[] = -1;
+    $query->where[1]['conditions'][] = array(
+        'field' => 'node.uid',
+        'value' => $friend_ids,
+        'operator' => 'in',
+    );
+    //kpr($query);
+  }
 }
 
 function sbq_commons_module_implements_alter(&$implementations, $hook) {
