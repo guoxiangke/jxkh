@@ -5,18 +5,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+define('SBQ_CENTER_RESERVATION_NODE_TYPE', 'sbq_center_reservation');
 
 /**
  * hook  menu
  * @return array
  */
 function sbq_center_reservation_menu() {
-  $items['center/reservation/%sbq_center/settings'] = array(
+  $items['center/%sbq_center/reservation/settings'] = array(
       'title' => '设置接诊日期',
       'page callback' => 'drupal_get_form',
-      'page arguments' => array( 'sbq_center_opendays_form', 2 ),
+      'page arguments' => array( 'sbq_center_opendays_form', 1 ),
       'access callback' => 'sbq_center_reservation_access',
-      'access arguments' => array( 2 ),
+      'access arguments' => array( 1 ),
       'type' => MENU_NORMAL_ITEM,
       'file' => 'sbq_center_reservation.inc'
   );
@@ -49,22 +50,36 @@ function sbq_center_reservation_setopenday($centerid, $opendays) {
 }
 
 function sbq_center_reservation_get_settings($center) {
-  if (!is_object($center)) {
-    $center = sbq_center_load($center);
-  }
-  if (!$center) {
-    return array();
-  }
+  static $center_reservation_opendays = array();
+
+//  if (!is_object($center)) {
+//    if (isset($center_reservation_opendays[$center])) {
+//      return $center_reservation_opendays[$center];
+//    } else {
+//      $center = sbq_center_load($center);
+//    }
+//  }
+//
+//  if (!isset($center) || $center->type != SBQ_CENTER_NODE_TYPE) {
+//    throw new Exception('the node is not sbq center reservation');
+//  }
+//  if (isset($center_reservation_opendays[$center->nid])) {
+//    return $center_reservation_opendays[$center->nid];
+//  }
+//  if (!$center) {
+//    return array();
+//  }
+  $center = sbq_center_load($center);
+
   if (!$vari = variable_get('center_reservation_' . $center->nid . '_settings')) {
     return array();
   }
-
-  return unserialize($vari);
+  $center_reservation_opendays[$center->nid] = unserialize($vari);
+  return $center_reservation_opendays[$center->nid];
 }
 
 function sbq_center_reservation_theme_registry_alter(&$theme_registry) {
   if (arg(2) == 'reservation') {
-    //  $theme_registry['calendar_month']['preprocess functions'][] = 'template_preprocess_sbq_center_reservation_month';
     $theme_registry['calendar_month_col']['path'] = drupal_get_path('module', 'sbq_center_reservation');
     $theme_registry['calendar_month_col']['template'] = '/templates/' . $theme_registry['calendar_month_col']['template'];
     $theme_registry['calendar_month_col']['preprocess functions'][] = 'template_preprocess_sbq_center_reservation_month_col';
@@ -73,7 +88,6 @@ function sbq_center_reservation_theme_registry_alter(&$theme_registry) {
     $theme_registry['calendar_item']['template'] = '/templates/' . $theme_registry['calendar_item']['template'];
     $theme_registry['calendar_item']['preprocess functions'][] = 'template_preprocess_sbq_center_reservation_item';
   }
-  //dpm($theme_registry);
 }
 
 /**
@@ -101,14 +115,15 @@ function template_preprocess_sbq_center_reservation_month_col(&$vars) {
   // dpm($vars);
 }
 
+/**
+ * 
+ * @param type $date
+ * @param type $center
+ * @return boolean
+ */
 function sbq_center_reservation_can_reservation($date, $center = '') {
   if (!$center) {
-    $center = node_load(arg(1));
-  } else {
-    $center = node_load($center);
-  }
-  if (!$center || $center->type != SBQ_CENTER_NODE_TYPE) {
-    throw new Exception("the node is not sbq center");
+    $center = arg(1);
   }
   $settings = sbq_center_reservation_get_settings($center);
   $week_index = date_day_of_week($date);
@@ -124,7 +139,62 @@ function sbq_center_reservation_can_reservation($date, $center = '') {
   if (strtotime($date) < time()) {
     return FALSE;
   }
-  $reservation = $settings[$week[$week_index]];
-
+  $reservation = $settings['opendays'][$week[$week_index]];
   return $reservation['a'] || $reservation['b'];
+}
+
+/*
+ * hook_form_alter
+ */
+
+function sbq_center_reservation_form_alter(&$form, $form_states) {
+  if (isset($form['#bundle']) && $form['#bundle'] == 'sbq_center_reservation') {
+    $param = drupal_http_build_query(drupal_get_query_parameters());
+    if ($param) {
+      $array = explode('=', $param);
+      $node = node_load($array[1]);
+      $form['field_node_ref'][LANGUAGE_NONE][0]['target_id']['#default_value'] = "$node->title ($node->nid)";
+      $form['field_node_ref'][LANGUAGE_NONE]['#default_value'] = $node->nid;
+      $form['field_node_ref'][LANGUAGE_NONE]['#attributes']['disabled'] = TRUE;
+    }
+    $form['#validate'][] = 'sbq_center_reservation_form_validate';
+  }
+}
+
+/*
+ * sbq center reservation validate
+ */
+
+function sbq_center_reservation_form_validate($form, &$form_states) {
+  if (!sbq_center_reservation_can_reservation($form_states['values']['field_reservation_time']['und'][0]['value'], $form_states['values']['field_node_ref']['und'][0]['target_id'])) {
+    form_set_error('field_reservation_time ', '您输入的预约时间不能预约');
+  }
+}
+
+/**
+ * get reservation node of one center
+ * @param type $centerids
+ */
+function sbq_center_reservation_fetch_by_center($centerid) {
+  if (!$center = sbq_center_load($centerid)) {
+    throw new Exception("the center $centerid is not center");
+  }
+
+  $query = new EntityFieldQuery();
+  $result = $query->entityCondition('entity_type', 'node')
+      ->propertyCondition('type', SBQ_CENTER_RESERVATION_NODE_TYPE)
+      ->fieldCondition('node_ref', 'target_id', $center->nid)
+      ->execute();
+  if (!isset($result['node'])) {
+    return FALSE;
+  }
+  $reservationid = reset(array_keys($result['node']));
+  return node_load($reservationid);
+}
+
+
+function sbq_center_reservation_node_submit($node, $form, $form_state){
+  dpm($node);
+  dpm($form);
+  dpm($form_state);
 }

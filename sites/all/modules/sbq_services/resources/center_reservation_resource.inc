@@ -21,30 +21,26 @@ function center_reservation_alter($centerid, $fun, $data) {
       
     }
   }
-  $center_node = sbq_center_reservation_node_by_center($centerid);
-  module_load_include('inc', 'webform_service', 'webform_service');
-  $submission = _center_reservation_format($data);
-  $result = reset($submission);
-  return _submission_resource_create($center_node->nid, $result);
+  $nodes = _center_reservation_format($data);
+  $node = reset($nodes);
+  return _node_resource_create($node);
 }
 
 function center_reservation_query($centerid, $fun = NULL, $uid, $page, $fields, $parameters, $pagesize) {
-  $reservation_node = sbq_center_reservation_node_by_center($centerid);
-  module_load_include('inc', 'webform', 'includes/webform.submissions');
   if ($fun) {
     if (is_numeric($fun)) {
-      $webform = webform_get_submission($reservation_node->nid, $fun);
-      $nodes = _center_reservation_format($webform, 'data');
-      return reset($nodes);
-    } else {
       
+    } else {
+      $function = 'center_reservation_' . $fun;
+      if (!function_exists($function)) {
+        services_error("no found $fun resources", 404);
+      }
+      return $function($centerid, $uid, $page, $fields, $parameters, $pagesize);
     }
   }
   $uid = isset($parameters['uid']) ? $parameters['uid'] : NULL;
   $nodes = sbq_center_reservation_get_submissions(array( 'uid' => $uid, 'nid' => $reservation_node->nid ), $page, $pagesize);
-
   $nodes['reservation'] = _center_reservation_format($nodes['reservation'], 'data', TRUE);
-
   return $nodes;
 }
 
@@ -55,51 +51,35 @@ function center_reservation_query($centerid, $fun = NULL, $uid, $page, $fields, 
  * @param type $is_list
  * @return string
  */
-function _center_reservation_format($data, $type = 'webform', $is_list = FALSE) {
+function _center_reservation_format($data, $type = 'node', $is_list = FALSE) {
   if (!$is_list) {
     $data = array( $data );
   }
   $nodes = array();
   foreach ($data as $key => $value) {
-    if ($type == 'webform') {
-      $node[1][0] = $value['is_outpatient'];
-      $node[2] = $value['name'];
-      $node[3] = $value['sex'];
-      $node[4] = date('Y-m-d H:i:s', $value['bron']);
-      $node[5] = date('Y-m-d H:i:s', $value['reservation_time']);
-      $node[6] = $value['body'];
-      $node[7] = $value['file'];
-      $node[8] = $value['recommended'];
-      // $node[9] = $value['centerid'];
-      $node[10] = $value['category'];
-//      $node['values']['submitted_tree']['sbq_center_outpatient'][0] = '';
-//      $node['values']['submitted_tree']['sbq_center_name'] = '';
-//      $node['values']['submitted_tree']['sbq_center_sex'] = '';
-//      $node['values']['submitted_tree']['sbq_center_bron'] = '';
-//      $node['values']['submitted_tree']['sbq_center_time'] = '';
-//      $node['values']['submitted_tree']['sbq_center_body'] = '';
-//      $node['values']['submitted_tree']['sbq_center_file'] = '';
-//      $node['values']['submitted_tree']['sbq_center_recommended'] = '';
-//      $node['values']['submitted_tree']['sbq_center_id'] = '';
-//      $node['values']['submitted_tree']['sbq_center_formcategory'] = '';
+    if ($type == 'node') {
+      $node['type'] = SBQ_CENTER_RESERVATION_NODE_TYPE;
+      $node['body']['und'][0]['value'] = $value['body'];
+      $node['field_real_name']['und'][0]['value'] = $value['name'];
+      $node['field_sex']['und'][0]['value'] = 1;//$value['sex'];
+      $node['field_age']['und'][0]['value'] = $value['age'];
+      $node['field_identity']['und'][0]['value'] = $value['identity'];
+      $node['field_case_num']['und'][0]['value'] = $value['case_num'];
+      $node['field_phone']['und'][0]['value'] = $value['phone'];
+      $node['field_node_ref']['und'][0]['target_id'] = $value['centerid'];
+      $node['field_reservation_time']['und'][0]['value'] = date('Y-m-d', $value['reservation_time']);
     } else {
-      $origin = $value;
-      $value = $value->data;
-      $node['is_outpatient'] = $value[1]['value'][0];
-      $node['name'] = $value[2]['value'][0];
-      $node['sex'] = $value[3]['value'][0];
-      $bron = new DateTime($value[4]['value'][0]);
-      $node['bron'] = $bron->getTimestamp();
-      $reservation = new DateTime($value[5]['value'][0]);
-      $node['reservation_time'] = $reservation->getTimestamp();
-      $node['body'] = $value[6]['value'][0];
-      $node['file'] = $value[7]['value'][0];
-      $node['recommended'] = $value[8]['value'][0];
-      $node['category'] = $value[10]['value'][0];
-      $node['uid'] = $origin->uid;
-      $node['sid'] = $origin->sid;
-      $node['status'] = $value[11]['value'][0];
+      $node['body'] = $value['body']['und'][0]['value'];
+      $node['name'] = $value['field_real_name']['und'][0]['value'];
+      $node['sex'] = $value['field_sex']['und'][0]['value'];
+      $node['age'] = $value['field_age']['und'][0]['value'];
+      $node['identity'] = $value['field_identity']['und'][0]['value'];
+      $node['case_num'] = $value['field_case_num']['und'][0]['value'];
+      $node['phone'] = $value['field_phone']['und'][0]['value'];
+      $node['centerid'] = $value['field_node_ref']['und'][0]['target_id'];
+      $node['reservation_time'] = $value['field_reservation_time']['und'][0]['value'];
     }
+
     $nodes[] = $node;
   }
   return $nodes;
@@ -113,10 +93,10 @@ function center_reservation_message($centerid, $userid) {
       ->propertyOrderBy('timestamp', 'DESC')
       ->fieldCondition('field_node_ref ', 'target_id', $reservation_node->nid);
   if ($time = variable_get('reservation_last_watch_' . $userid . '_' . $centerid)) {
-     $query->propertyCondition('timestamp', $time, '>');
+    $query->propertyCondition('timestamp', $time, '>');
   }
   $result = $query->execute();
-  
+
   if (!$result['message']) {
     //  $mids = array_keys($result['message']);
     return '';
@@ -124,9 +104,31 @@ function center_reservation_message($centerid, $userid) {
   $mesage = array();
   foreach (message_load_multiple(array_keys($result['message'])) as $key => $value) {
     $m = $value->buildContent();
-     $message[] = strip_tags($m['message__message_text__0']['#markup']);
+    $message[] = strip_tags($m['message__message_text__0']['#markup']);
   }
   // variable_set('reservation_last_watch_' . $userid . '_' . $centerid, time());
   return $message;
 }
 
+function center_reservation_fetch($centerid, $uid, $page, $fields, $parameters, $pagesize) {
+  $month = $parameters['month'];
+  if (is_null($month)) {
+    $month = date('m');
+  }
+  $year = date('Y');
+  $now_day = date('d');
+  $days = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+
+  for ($i = $now_day; $i <= $days; $i++) {
+    $date = "$year-$month-$i";
+
+    if (sbq_center_reservation_can_reservation($date, $centerid)) {
+      $data[] = array(
+          $date => array(
+              'a', 'p'
+          )
+      );
+    }
+  }
+  return isset($data) ? $data : array();
+}

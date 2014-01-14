@@ -55,5 +55,8 @@ function sbq_center_opendays_form_submit($form, $form_status) {
      $data[$key] =  $form_status['values'][$key];
     }
   }
-  variable_set('center_reservation_'.$form_status['values']['centerid'].'_settings', serialize($data));
+
+  $seri = array('opendays'=>$data,'numofday'=>10);
+ 
+  variable_set('center_reservation_'.$form_status['values']['centerid'].'_settings', serialize($seri));
 }

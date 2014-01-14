@@ -293,7 +293,7 @@ function center_resource_definition() {
           ),
           array(
               'name' => 'fun',
-              'type' => 'int',
+              'type' => 'string',
               'description' => t('The function .'),
               'source' => array( 'path' => 2 ),
               'default value' => '',
