@@ -135,14 +135,19 @@
 .sbq_form_head { float: left; width: 100%; border-top: 1px #EEE solid; margin: 11px 0px 0px 0px; }
 .sbq_form_head .sbq_title { float: left; height: 22px; line-height: 22px; margin: -11px 0px 0px 0px; padding: 0px 5px 0px 0px; background: #FFF; font-size: 14px; font-weight: bold; }
 .sbq_form_wrap { float: left; width: 100%; }
-.sbq_form_01 { float: left; width: 100%; padding: 10px 0px; font-size: 14px; }
+.sbq_form_01,
+.form-item-pass .form-item { float: left; width: 100%; padding: 10px 0px; font-size: 14px; position: relative; }
 .sbq_form_01 .sbq_text { float: left; width: 570px; line-height: 22px; padding: 5px 0px; word-break: break-all; word-wrap: break-word; }
 .sbq_form_01 label,
 .sbq_botton_01 label,
-.field-type-datetime legend { float: left; width: 100px; height: 32px; line-height: 32px; margin: 0px 10px 0px 0px; color: #666666; text-align: right; }
-.sbq_form_01 .sbq_input_01 { float: left; width: 200px; height: 30px; line-height: 30px; padding: 0px 9px; border: 1px #dddddd solid; background: url(../image/input_bg_01.png) repeat-x; }
+.field-type-datetime legend,
+.form-item-pass label { float: left; width: 100px; height: 32px; line-height: 32px; margin: 0px 10px 0px 0px; color: #666666; text-align: right; }
+.sbq_form_01 .sbq_input_01,
+.form-item-pass input,
+.field-name-field-doctor-hospitals input { float: left; width: 200px; height: 30px; line-height: 30px; padding: 0px 9px; border: 1px #dddddd solid; background: url(../image/input_bg_01.png) repeat-x; }
 .sbq_form_01 .sbq_input_01:focus,
-.sbq_form_01 textarea:focus { border: 1px #3385d6 solid; box-shadow: 0px 0px 2px #3385d6; }
+.sbq_form_01 textarea:focus,
+.form-item-pass input:focus { border: 1px #3385d6 solid; box-shadow: 0px 0px 2px #3385d6; }
 /*sbq_file_01*/
 .sbq_form_01 .sbq_file_01 { float: left; width: 220px; height: 32px; line-height: 32px; }
 /*textarea*/
@@ -166,6 +171,24 @@
 .sbq_form_01 .sbq_tips_error { float: left; padding: 5px; border: 1px #E6393D solid; background: #FEF5F1; color: #E6393D; }
 .sbq_form_01 .sbq_tips_pass { float: left; padding: 5px; border: 1px #009900 solid; background: #F8FFF0; color: #009900; }
 .sbq_form_01 .sbq_tips_text { float: left; padding: 6px; color: #666; }
+/*------fix_form------*/
+/*password-strength*/
+.form-item-pass { float: left; width: 100%; }
+.password-strength,
+.password-confirm { float: right; width: 260px; height: 36px; line-height: 36px; margin: 0px 80px 0px 0px; color: #666; }
+.password-parent .password-strength { height: 30px; line-height: 30px; }
+.password-strength .password-strength-title { float: left; }
+.password-strength .password-strength-text,
+.password-confirm span { float: right; }
+.password-strength .password-indicator { float: left; width: 100%; }
+.password-strength .password-indicator .indicator { float: left; height: 2px; background: #1575D5; }
+.password-suggestions { display: none !important; }
+.password-confirm.form-text { margin: 0px; }
+.field-name-field-doctor-hospitals #autocomplete,
+.field-name-field-doctor-departments #autocomplete { float: left; width: 220px !important; margin: 1px 0px 0px 0px; position: absolute; z-index: 10; display: block !important; }
+.field-name-field-doctor-hospitals #autocomplete li { float: left; width: 200px; padding: 0px 10px; height: 26px; line-height: 26px; background: #EFF6FA; color: #698EBF; }
+.field-name-field-doctor-hospitals #autocomplete li:hover { background: #698EBF; color: #FFF; }
+.field-name-field-doctor-hospitals .element-invisible { display: none!important; }
 /*sbq_add_content*/
 .sbq_add_content { float: left; width: 100%; }
 .sbq_add_content .sbq_title { float: left; width: 100%; height: 30px; line-height: 30px; margin: 0px 0px 5px 0px; font-size: 16px; font-weight: bold; border-bottom: 1px #EEEEEE solid; }
@@ -209,5 +232,5 @@
 .sbq_user_badge .sbq_con .sbq_item { float: left; width: 335px; padding: 10px 0px; margin: 0px 10px 0px 0px; border-bottom: 1px #DDD dotted; }
 .sbq_user_badge .sbq_con .sbq_item .sbq_icon { float: left; width: 80px; height: 80px; }
 .sbq_user_badge .sbq_con .sbq_content { float: left; width: 245px; margin: 0px 0px 0px 10px; }
-.sbq_user_badge .sbq_con .sbq_title { float: left; width: 100%; height: 26px; line-height: 26px; font-size: 14px; font-weight: bold; }
-.sbq_user_badge .sbq_con .sbq_text { float: left; width: 100%; line-height: 20px; }
+.sbq_user_badge .sbq_con .sbq_title { float: left; width: 100%; height: 20px; line-height: 20px; font-size: 14px; font-weight: bold; }
+.sbq_user_badge .sbq_con .sbq_text { float: left; width: 100%; height: 40px; line-height: 20px; margin: 0px 0px 0px 0px; overflow: hidden; }

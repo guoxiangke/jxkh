@@ -392,10 +392,6 @@ function sbq_user_relationships_action_between_user($viewer, $viewed, $action_ty
                   'rid' => $relationship->rtid,
                   'vid' => $viewed->uid )
               );
-              if ($viewed->uid == 103) {
-                kpr($relationship);
-                kpr($theme);
-              }
               $list[] = array(
                   'relationship_type' => $relationship->name,
                   'relationship_action' => $theme
@@ -509,7 +505,7 @@ function sbq_user_relstionships_users($account = NULL, $rtid = NULL, $page_of_nu
 }
 
 /**
- * 
+ *
  * @global type $user
  * @param type $relationship
  * @param type $account

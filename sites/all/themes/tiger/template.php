@@ -448,13 +448,69 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     $form['og_group_ref']['#prefix'] = '<div class="sbq_hide">';
     $form['og_group_ref']['#suffix'] = '</div>';
   } elseif ($form_id == 'user_profile_form') {
-    kpr($form);
     $is_doctor = FALSE;
     $roles_array = $form['#user']->roles;
     if  (in_array('doctor', $roles_array)) {
       $is_doctor = TRUE;
     }
+    $form['#prefix'] = '<div class="sbq_user_date"><div class="sbq_form_wrap">';
+    $form['#suffix'] = '</div></div>';
 
+    unset($form['account']['current_pass']['#description']);
+    $form['account']['current_pass']['#prefix'] = '<div class="sbq_form_01">';
+    $form['account']['current_pass']['#attributes']['class'][] = 'sbq_input_01';
+    $form['account']['current_pass']['#suffix'] = '</div>';
+
+    unset($form['account']['mail']['#description']);
+    $form['account']['mail']['#prefix'] = '<div class="sbq_form_01">';
+    $form['account']['mail']['#attributes']['class'][] = 'sbq_input_01';
+    $form['account']['mail']['#suffix'] = '</div>';
+
+    unset($form['account']['pass']['#description']);
+    $form['account']['pass']['#attributes']['class'][] = 'sbq_input_01';
+
+    if ($is_doctor) {
+      $form['profile_doctor_profile']['field_doctor_hospitals']['#prefix'] = '<div class="sbq_form_01">';
+      $form['profile_doctor_profile']['field_doctor_hospitals']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
+      $form['profile_doctor_profile']['field_doctor_hospitals']['#suffix'] = '</div>';
+
+      $form['profile_doctor_profile']['field_doctor_departments']['#prefix'] = '<div class="sbq_form_01">';
+      $form['profile_doctor_profile']['field_doctor_departments']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
+      $form['profile_doctor_profile']['field_doctor_departments']['#suffix'] = '</div>';
+
+      $form['profile_doctor_profile']['field_sex']['#prefix'] = '<div class="sbq_form_01">';
+      $form['profile_doctor_profile']['field_sex']['und']['#attributes']['class'][] = 'sbq_radio_wrap';
+      $form['profile_doctor_profile']['field_sex']['#suffix'] = '</div>';
+
+      $form['profile_doctor_profile']['field_nickname']['#prefix'] = '<div class="sbq_form_01">';
+      $form['profile_doctor_profile']['field_nickname']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
+      $form['profile_doctor_profile']['field_nickname']['#suffix'] = '</div>';
+
+      $form['profile_doctor_profile']['field_doctor_introduction']['#prefix'] = '<div class="sbq_form_01">';
+      $form['profile_doctor_profile']['field_doctor_introduction']['#suffix'] = '</div>';
+
+      $form['profile_doctor_profile']['field_doctor_title']['#prefix'] = '<div class="sbq_form_01">';
+      $form['profile_doctor_profile']['field_doctor_title']['#suffix'] = '</div>';
+
+      $form['profile_doctor_profile']['field_doctor_school_title']['#prefix'] = '<div class="sbq_form_01">';
+      $form['profile_doctor_profile']['field_doctor_school_title']['#suffix'] = '</div>';
+
+      $form['profile_doctor_profile']['field_doctor_expert_disease']['#prefix'] = '<div class="sbq_form_01">';
+      $form['profile_doctor_profile']['field_doctor_expert_disease']['#suffix'] = '</div>';
+
+      $form['profile_doctor_profile']['field_doctor_picture']['#prefix'] = '<div class="sbq_form_01">';
+      $form['profile_doctor_profile']['field_doctor_picture']['#suffix'] = '</div>';
+
+      unset($form['profile_doctor_profile']['field_birthday']['und']['#prefix']);
+      unset($form['profile_doctor_profile']['field_birthday']['und']['#suffix']);
+      $form['profile_doctor_profile']['field_birthday']['#prefix'] = '<div class="sbq_form_01">';
+      //$form['profile_doctor_profile']['field_birthday']['und'][0]['#attributes']['class'][] = 'sbq_input_01';
+      $form['profile_doctor_profile']['field_birthday']['#suffix'] = '</div>';
+
+      $form['actions']['submit']['#attributes']['class'][] = 'sbq_btn';
+      $form['actions']['#prefix'] = '<div class="sbq_botton_01"><label></label>';
+      $form['actions']['#suffix'] = '</div>';
+    }
   }
 }
 
