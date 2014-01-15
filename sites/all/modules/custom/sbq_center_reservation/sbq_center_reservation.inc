@@ -29,7 +29,7 @@ function sbq_center_opendays_form($form, $form_status, $center) {
   $form['centerid'] = array(
       '#type' => 'hidden',
       '#value' => $center->nid
-      );
+  );
   $form['content'] = array(
       '#type' => 'tableselect',
       '#header' => $header,
@@ -43,6 +43,7 @@ function sbq_center_opendays_form($form, $form_status, $center) {
 
   return $form;
 }
+
 /**
  * form sbq center ipenda
  * @param type $form
@@ -51,12 +52,27 @@ function sbq_center_opendays_form($form, $form_status, $center) {
 function sbq_center_opendays_form_submit($form, $form_status) {
   $data = array();
   foreach ($form['opendays'] as $key => $value) {
-    if(strpos($key, '#') !== 0){
-     $data[$key] =  $form_status['values'][$key];
+    if (strpos($key, '#') !== 0) {
+      $data[$key] = $form_status['values'][$key];
     }
   }
 
-  $seri = array('opendays'=>$data,'numofday'=>10);
- 
-  variable_set('center_reservation_'.$form_status['values']['centerid'].'_settings', serialize($seri));
+  $seri = array( 'opendays' => $data, 'numofday' => 10 );
+
+  variable_set('center_reservation_' . $form_status['values']['centerid'] . '_settings', serialize($seri));
+}
+
+function sbq_center_reservation_manage($center, $action) {
+  switch ($action) {
+    case 'accept':
+
+
+      break;
+
+    case 'ignore':
+
+
+      break;
+  }
+  return 'success';
 }
