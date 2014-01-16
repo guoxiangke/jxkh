@@ -158,7 +158,7 @@
 
         <li class="front-relationship color_04">
           <?php if($user->uid) { ?>
-            <a href="user/<?php echo $user->uid;?>/relationship" title="圈子" alt="人以群分确实必要" onclick="alert('新功能敬请期待！');">  
+            <a href="user/<?php echo $user->uid;?>/relationship" title="圈子" alt="人以群分确实必要">  
           <?php
           }else { ?>
             <a href="###" title="圈子" alt="人以群分确实必要" onclick="alert('请登录后使用!');">  
@@ -170,7 +170,7 @@
         <li class="front-doctor color_08"><a href="###" onclick="alert('新功能敬请期待！');">
           
           <?php if($user->uid) { ?>
-            <a href="user/<?php echo $user->uid;?>/relationship/default/doctor" title="圈子" alt="人以群分确实必要" onclick="alert('新功能敬请期待！');">  
+            <a href="user/<?php echo $user->uid;?>/relationship/default/doctor" title="圈子" alt="人以群分确实必要">  
           <?php
           }else { ?>
             <a href="###" title="医生馆" alt="专业医生的网上医院" onclick="alert('请登录后使用!');">  
