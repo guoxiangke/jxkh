@@ -1,5 +1,5 @@
 * { margin: 0px; padding: 0px; list-style: none; }
-.sbq_hide { display: none; }
+.sbq_hide{ display: none; }
 /*------font------*/
 textarea,
 input { outline: none; }
@@ -257,3 +257,4 @@ input,
 #cboxPrevious { position: absolute; bottom: 0px; left: 0; color: #444; }
 #cboxNext { position: absolute; bottom: 0px; left: 63px; color: #444; }
 #cboxClose { float: left; width: 40px; height: 40px; position: absolute; top: 5px; right: 5px; display: block; text-indent: -999px; overflow: hidden; background: url(../image/close.png) no-repeat; }
+

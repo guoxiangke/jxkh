@@ -27,53 +27,14 @@
  * @ingroup views_templates
  */
 ?>
-<div class="sbq_user_article_list">
-  <?php if ($follower_active): ?>
-  <div class="sbq_quick_question">
-    <div class="sbq_head">
-      <ul>
-        <li class="sbq_add_question"><a href="#">快速提问</a></li>
-        <li class="sbq_add_blog"><?php print l('发布文章', 'node/add/blog'); ?></li>
-      </ul>
-    </div>
-    <?php print $quick_ask_form; ?>
-  </div>
-  <?php endif; ?>
+<div class="sbq_user_message">
   <div class="sbq_nav">
     <ul>
-      <?php if ($follower_active): ?>
-        <?php if ($account->uid==$user->uid): ?>
-          <li <?php print $menu_blog_active; ?>><?php print l('文章动态', 'user/followers/blog'); ?></li>
-        <?php endif; ?>
-          <li <?php print $menu_qa_active; ?>><?php print l('问答动态', 'user/followers/qa'); ?></li>
-      <?php elseif ($blog_active): ?>
-        <?php if ($account->uid==$user->uid): ?>
-          <li <?php print $menu_promoted_active; ?>><?php print l('推荐文章', 'user/blog/promoted'); ?></li>
-        <?php endif; ?>
-          <li <?php print $menu_blog_active; ?>><?php print l('我的文章', 'user/'.$account->uid.'/blog'); ?></li>
-      <?php elseif ($qa_active): ?>
-        <?php if ($account->uid==$user->uid): ?>
-          <li <?php print $menu_promoted_active; ?>><?php print l('推荐问答', 'user/qa/promoted'); ?></li>
-          <li <?php print $menu_followed_active; ?>><?php print l('我关注的问答', 'user/qa/followed'); ?></li>
-        <?php endif; ?>
-          <li <?php print $menu_ask_active; ?>><?php print l('我的提问', 'user/'.$account->uid.'/qa/ask'); ?></li>
-          <li <?php print $menu_answer_active; ?>><?php print l('我的回答', 'user/'.$account->uid.'/qa/answer'); ?></li>
-      <?php endif; ?>
+      <li  class="active"><?php print l('系统消息', 'user/message'); ?></li>
+      <li><?php print l('我发送的请求', 'user/'.$user->uid.'/relationship/default/sent'); ?></li>
+      <li><?php print l('我收到的请求', 'user/'.$user->uid.'/relationship/default/received'); ?></li>
     </ul>
-    <?php if (!$follower_active): ?>
-      <?php if ($blog_active): ?>
-        <?php if ($account->uid==$user->uid): ?>
-          <?php print l('发布文章', 'node/add/blog', array('attributes' => array('class' => 'sbq_add_btn'))); ?>
-        <?php endif; ?>
-      <?php endif; ?>
-      <?php if ($qa_active): ?>
-        <?php if ($account->uid==$user->uid): ?>
-          <?php print l('发布问题', 'node/add/question', array('attributes' => array('class' => 'sbq_add_btn'))); ?>
-        <?php endif; ?>
-      <?php endif; ?>
-    <?php endif; ?>
   </div>
-
   <?php print render($title_prefix); ?>
   <?php if ($title): ?>
     <?php print $title; ?>
