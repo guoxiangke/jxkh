@@ -167,8 +167,7 @@
           <div class="sbq_title">圈子</div>
           <div class="sbq_text">人以群分确实必要</div>
           </a></li>
-        <li class="front-doctor color_08"><a href="###" onclick="alert('新功能敬请期待！');">
-          
+        <li class="front-doctor color_08">          
           <?php if($user->uid) { ?>
             <a href="user/<?php echo $user->uid;?>/relationship/default/doctor" title="圈子" alt="人以群分确实必要">  
           <?php
