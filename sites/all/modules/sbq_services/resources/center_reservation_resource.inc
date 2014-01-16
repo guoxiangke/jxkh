@@ -25,7 +25,6 @@ function center_reservation_alter($centerid, $fun, $data) {
     services_error("the center id $centerid not found", 401);
   }
   $data['centerid'] = "center ({$centerid})";
-  ;
   $nodes = _center_reservation_format($data);
   $node = reset($nodes);
   return _node_resource_create($node);
