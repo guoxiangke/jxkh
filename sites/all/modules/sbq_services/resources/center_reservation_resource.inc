@@ -121,7 +121,7 @@ function center_reservation_message($centerid, $userid) {
       ->propertyOrderBy('timestamp', 'DESC')
       ->fieldCondition('field_node_ref ', 'target_id', $reservation_node->nid);
   if ($time = variable_get('reservation_last_watch_' . $userid . '_' . $centerid)) {
-    $query->propertyCondition('timestamp', $time, '>');
+   // $query->propertyCondition('timestamp', $time, '>');
   }
   $result = $query->execute();
 
