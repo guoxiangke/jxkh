@@ -198,7 +198,8 @@ function sbq_user_relationships_theme() {
           'template' => 'templates/sbq--user--relationships--profile',
           'variables' => array(
               'image' => '',
-              'profile' => array()
+              'profile' => array(),
+              'view' => ''
           )
       ),
   );
@@ -226,7 +227,7 @@ function sbq_user_relationships_theme() {
  * @todo remove test data
  */
 
-function sbq_user_relationships_profile($info) {
+function sbq_user_relationships_profile($info, $view = 'list') {
   module_load_include('inc', 'sbq_commons', 'sbq_commons_og_ui');
   $account = $info['user'];
   $image = sbq_commons_user_avart($account);
@@ -265,7 +266,7 @@ function sbq_user_relationships_profile($info) {
   }
   $profile['follow'] = $items['follow'];
   $build = theme('sbq_user_relationships_profile', array( 'image' => $image,
-      'profile' => $profile ));
+      'profile' => $profile, 'view' => $view ));
 
   return $build;
 }
@@ -391,10 +392,6 @@ function sbq_user_relationships_action_between_user($viewer, $viewed, $action_ty
                   'rid' => $relationship->rtid,
                   'vid' => $viewed->uid )
               );
-              if ($viewed->uid == 103) {
-                kpr($relationship);
-                kpr($theme);
-              }
               $list[] = array(
                   'relationship_type' => $relationship->name,
                   'relationship_action' => $theme
@@ -508,7 +505,7 @@ function sbq_user_relstionships_users($account = NULL, $rtid = NULL, $page_of_nu
 }
 
 /**
- * 
+ *
  * @global type $user
  * @param type $relationship
  * @param type $account

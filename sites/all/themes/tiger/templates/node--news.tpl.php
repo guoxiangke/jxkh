@@ -84,8 +84,6 @@
   <h2 class="sbq_article_title"><?php print $title; ?></h2>
   <div class="sbq_article_info">
     <ul>
-      <li><a href="#">来源网站</a></li>
-      <li>作者</li>
       <li><?php print $date; ?></li>
       <li class="sbq_comment_num"><a href="#comments">评论(<?php print $comment_count; ?>)</a></li>
     </ul>

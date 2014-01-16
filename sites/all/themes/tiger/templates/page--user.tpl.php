@@ -118,15 +118,36 @@
   $a_picture = theme('user_picture', array('account' =>$account));
   $a_uid = $account->uid;
 
+  $current_user = FALSE;
+  if ($user->uid == $a_uid) {
+    $current_user = TRUE;
+  }
+
+  $menu_follower_active = '';
   $menu_blog_active = '';
-  if (in_array('blog', arg())) {
+  $menu_qa_active = '';
+  $menu_edit_active = '';
+  $menu_relationship_active = '';
+  $menu_message_active = '';
+  $menu_account_active = '';
+  if (in_array('followers', arg())) {
+    $menu_follower_active = 'class="active"';
+  } elseif (in_array('blog', arg())) {
     $menu_blog_active = 'class="active"';
   } elseif (isset($node) && $node->type == 'blog') {
     $menu_blog_active = 'class="active"';
-  }
-  $menu_qa_active = '';
-  if (in_array('qa', arg())) {
+  } elseif (in_array('qa', arg())) {
     $menu_qa_active = 'class="active"';
+  } elseif (in_array('relationship', arg()) && ( in_array('received', arg()) || in_array('sent', arg()) )) {
+    $menu_message_active = 'class="active"';
+  } elseif (in_array('relationship', arg())) {
+    $menu_relationship_active = 'class="active"';
+  } elseif (in_array('message', arg())) {
+    $menu_message_active = 'class="active"';
+  } elseif (in_array('edit', arg())) {
+    $menu_edit_active = 'class="active"';
+  } else {
+    $menu_account_active = 'class="active"';
   }
 ?>
 <?php endif; ?>
@@ -171,12 +192,17 @@
 
     <div class="sbq_user_menu">
       <ul>
-        <li><a href="user_center.html">动态</a></li>
+        <?php if ($current_user): ?>
+        <li <?php print $menu_follower_active; ?>><?php print l('动态', 'user/followers/blog'); ?></li>
+        <?php endif; ?>
+        <li <?php print $menu_account_active; ?>><?php print l('资料', 'user/'.$a_uid); ?></li>
         <li <?php print $menu_blog_active; ?>><?php print l('文章', 'user/'.$a_uid.'/blog'); ?></li>
         <li <?php print $menu_qa_active; ?>><?php print l('问答', 'user/'.$a_uid.'/qa/ask'); ?></li>
-        <li><a href="user_friends.html">圈子</a></li>
-        <li><a href="user_message.html">消息</a></li>
-        <li><a href="#">积分</a></li>
+        <?php if ($current_user): ?>
+        <li <?php print $menu_relationship_active; ?>><?php print l('圈子', 'user/'.$a_uid.'/relationship'); ?></li>
+        <li <?php print $menu_message_active; ?>><?php print l('消息', 'user/message'); ?></li>
+        <li <?php print $menu_edit_active; ?>><?php print l('编辑', 'user/'.$a_uid.'/edit'); ?></li>
+        <?php endif; ?>
       </ul>
     </div>
     <?php endif; ?>

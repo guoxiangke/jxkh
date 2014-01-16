@@ -7,9 +7,8 @@
  * @ingroup views_templates
  */
 ?>
-<?php if (!empty($title)): ?>
-  <div class="sbq_news_list_head"><?php print $title; ?></div>
-<?php endif; ?>
+<ul>
 <?php foreach ($rows as $id => $row): ?>
   <?php print $row; ?>
 <?php endforeach; ?>
+</ul>

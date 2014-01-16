@@ -36,32 +36,8 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
       $$id = $field->separator.$$id;
     }
   }
-  $has_image = FALSE;
-  if (isset($field_image)) {
-    $has_image = TRUE;
-  }
 ?>
 
-<div class="sbq_item">
-  <?php if($has_image): ?>
-  <div class="sbq_img"><?php print $field_image; ?></div>
-  <div class="sbq_content">
-  <?php endif;?>
-    <h2 class="sbq_title"><?php print $title; ?></h2>
-    <div class="sbq_text"><?php print $body; ?></div>
-    <div class="sbq_reply_actions">
-      <ul>
-        <li><?php print $comment_count; ?></li>
-        <li><?php print $created; ?></li>
-        <?php if(!empty($edit_node)): ?>
-        <li class="edit"><?php print $edit_node; ?></li>
-        <?php endif;?>
-        <?php if(!empty($delete_node)): ?>
-        <li class="delete"><?php print $delete_node; ?></li>
-        <?php endif;?>
-      </ul>
-    </div>
-  <?php if($has_image): ?>
-  </div>
-  <?php endif;?>
-</div>
+<li>
+  <div class="sbq_text"><?php print $message_render; ?></div>
+</li>
