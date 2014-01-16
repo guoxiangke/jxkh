@@ -274,7 +274,7 @@ function sbq_center_reservation_get_manage_item($row) {
 }
 
 function sbq_center_reservation_reservation_status_alter($reservation) {
-  if ($reservation->field_reservation_status[0]['raw']['value'] == SBQ_CENTER_RESERVATION_STATUS_ACCEPT) {
+  if ($reservation->field_reservation_status['und'][0]['value'] == SBQ_CENTER_RESERVATION_STATUS_ACCEPT) {
     global $user;
     $message = message_create('sbq_center_reservation_accept', array(
         'arguments' => array( '!time' => $reservation->field_reservation_time['und'][0]['value'], )
