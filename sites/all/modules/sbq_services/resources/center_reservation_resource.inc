@@ -90,7 +90,7 @@ function _center_reservation_format($data, $type = 'node', $is_list = FALSE) {
       $node['og_group_ref']['und'][0]['target_id'] = $value['centerid'];
       $node['field_reservation_time']['und'][0]['value']['date'] = date('Y-m-d', $value['reservation_time']);
     } else {
-      $node['nid'] = (int)$value['nid'];
+      $node['nid'] = (int) $value['nid'];
       $node['body'] = $value['body']['und'][0]['value'];
       $node['name'] = $value['field_real_name']['und'][0]['value'];
       $node['sex'] = $value['field_sex']['und'][0]['value'];
@@ -114,19 +114,19 @@ function _center_reservation_format($data, $type = 'node', $is_list = FALSE) {
  * @return string
  */
 function center_reservation_message($centerid, $userid) {
-  $reservation_node = sbq_center_reservation_fetch_by_center($centerid);
+  //$reservation_node = sbq_center_reservation_fetch_by_center($centerid);
   $query = new EntityFieldQuery();
   $query->entityCondition('entity_type', 'message')
       ->propertyCondition('type', 'sbq_center_reservation_accept')
       ->propertyOrderBy('timestamp', 'DESC')
-      ->fieldCondition('field_node_ref ', 'target_id', $reservation_node->nid);
+      ->propertyCondition('uid', $userid)
+      ->fieldCondition('field_node_ref', 'target_id', $centerid);
   if ($time = variable_get('reservation_last_watch_' . $userid . '_' . $centerid)) {
-   // $query->propertyCondition('timestamp', $time, '>');
+    //$query->propertyCondition('timestamp', $time, '>');
   }
   $result = $query->execute();
 
   if (!$result['message']) {
-    //  $mids = array_keys($result['message']);
     return '';
   }
   $mesage = array();
@@ -134,7 +134,7 @@ function center_reservation_message($centerid, $userid) {
     $m = $value->buildContent();
     $message[] = strip_tags($m['message__message_text__0']['#markup']);
   }
-  // variable_set('reservation_last_watch_' . $userid . '_' . $centerid, time());
+  variable_set('reservation_last_watch_' . $userid . '_' . $centerid, time());
   return $message;
 }
 

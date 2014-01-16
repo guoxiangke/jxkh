@@ -65,10 +65,12 @@ function sbq_center_opendays_form_submit($form, $form_status) {
 function sbq_center_reservation_manage($center, $reservation, $action) {
   switch ($action) {
     case 'accept':
-      $reservation->field_reservation_status['und'][0]['value'] = SBQ_CENTER_RESERVATION_STATUS_ACCEPT;
-      //node_save($reservation);
-      foreach (module_implements('reservation_status_alter') as $key => $value) {
+      if ($reservation->field_reservation_status['und'][0]['value'] == SBQ_CENTER_RESERVATION_STATUS_SUBMMIT) {
+        $reservation->field_reservation_status['und'][0]['value'] = SBQ_CENTER_RESERVATION_STATUS_ACCEPT;
+        node_save($reservation);
+        foreach (module_implements('reservation_status_alter') as $key => $value) {
           module_invoke($value, 'reservation_status_alter', $reservation);
+        }
       }
       break;
 

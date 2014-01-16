@@ -248,11 +248,13 @@ function sbq_center_reservation_reservation_status_alter($reservation) {
 
   if ($reservation->field_reservation_status['und'][0]['value'] == SBQ_CENTER_RESERVATION_STATUS_ACCEPT) {
     global $user;
+    $date = new DateTime($reservation->field_reservation_time['und'][0]['value']);
     $message = message_create('sbq_center_reservation_accept', array(
-        'arguments' => array( '!time' => date('Y-m-d', $reservation->field_reservation_time['und'][0]['value']), )
+        'arguments' => array( '!time' => date('Y-m-d', $date->getTimestamp()) )
         ), user_load($reservation->uid));
-  
+
     $warpper = entity_metadata_wrapper('message', $message);
+    
     $warpper->field_node_ref->set(node_load($reservation->og_group_ref['und'][0]['target_id']));
     $warpper->field_center_reservation_send->set($user->uid);
     $warpper->save();
