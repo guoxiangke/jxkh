@@ -257,6 +257,7 @@ function sbq_center_reservation_get_reservation($uid = '', $nid = '', array $par
 
 function sbq_center_reservation_get_manage_item($row) {
   $centerid = arg(1);
+  dpm(node_load($row->nid));
   $accept = $ignore = '';
   switch ($row->field_field_reservation_status[0]['raw']['value']) {
     case SBQ_CENTER_RESERVATION_STATUS_SUBMMIT:
@@ -264,7 +265,7 @@ function sbq_center_reservation_get_manage_item($row) {
       $ignore = l('删除', "center/{$centerid}/reservation/{$row->nid}/ignore");
       break;
     case SBQ_CENTER_RESERVATION_STATUS_ACCEPT:
-     // $accept = l('接受', "center/{$centerid}/reservation/{$row->nid}/accept");
+      // $accept = l('接受', "center/{$centerid}/reservation/{$row->nid}/accept");
       $accept = '';
       $ignore = l('删除', "center/{$centerid}/reservation/{$row->nid}/ignore");
       break;
@@ -272,8 +273,15 @@ function sbq_center_reservation_get_manage_item($row) {
   return $accept . $ignore;
 }
 
-function sbq_center_reservation_status_alter($reservation){
-  if($reservation->field_reservation_status[0]['raw']['value'] == SBQ_CENTER_RESERVATION_STATUS_ACCEPT){
-    $message = message_create($type, $values, $account);
+function sbq_center_reservation_reservation_status_alter($reservation) {
+  if ($reservation->field_reservation_status[0]['raw']['value'] == SBQ_CENTER_RESERVATION_STATUS_ACCEPT) {
+    global $user;
+    $message = message_create('sbq_center_reservation_accept', array(
+        'arguments' => array( '!time' => $reservation->field_reservation_time['und'][0]['value'], )
+        ), $user);
+    $warpper = entity_metadata_wrapper('message', $message);
+    $warpper->field_node_ref->set(node_load($reservation->og_group_ref['und'][0]['target_id']));
+    $warpper->save();
+  
   }
 }
