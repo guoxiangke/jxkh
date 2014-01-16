@@ -474,13 +474,13 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
 
       $form['field_tags']['#prefix'] = '<div class="sbq_form_02">';
       $form['field_tags']['#suffix'] = '</div>';
+
+      $form['body']['#prefix'] = '<div class="sbq_form_02">';
+      $form['body']['#suffix'] = '</div>';
     }
 
     $form['title']['#prefix'] = '<div class="sbq_form_02">';
     $form['title']['#suffix'] = '</div>';
-
-    $form['body']['#prefix'] = '<div class="sbq_form_02">';
-    $form['body']['#suffix'] = '</div>';
 
     $form['field_departments']['#prefix'] = '<div class="sbq_hide">';
     $form['field_departments']['#suffix'] = '</div>';
