@@ -44,15 +44,11 @@
  * @ingroup themeable
  */
 ?>
-<div id="<?php print $block_html_id; ?>" class="sbq_sidebar_list_01 <?php print $classes; ?>"<?php print $attributes; ?>>
-  <?php print render($title_prefix); ?>
+<div id="<?php print $block_html_id; ?>" class="<?php print $classes; ?> sbq_sidebar_list_03"<?php print $attributes; ?>>
   <?php if ($block->subject): ?>
-  <div class="sbq_head" <?php print $title_attributes; ?>>
-    <span class="sbq_title">
-      <?php print $block->subject ?>
-    </span>
-  </div>
+    <div class="sbq_head">
+      <span class="sbq_title"><?php print $block->subject ?></span>
+    </div>
   <?php endif;?>
-  <?php print render($title_suffix); ?>
   <?php print $content ?>
 </div>
