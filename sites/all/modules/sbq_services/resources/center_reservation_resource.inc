@@ -114,7 +114,7 @@ function _center_reservation_format($data, $type = 'node', $is_list = FALSE) {
  * @return string
  */
 function center_reservation_message($centerid, $userid) {
-  $reservation_node = sbq_center_reservation_node_by_center($centerid);
+  $reservation_node = sbq_center_reservation_fetch_by_center($centerid);
   $query = new EntityFieldQuery();
   $query->entityCondition('entity_type', 'message')
       ->propertyCondition('type', 'sbq_center_reservation_accept')
