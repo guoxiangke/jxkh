@@ -310,7 +310,7 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
       $form['body']['und'][0]['summary']['#access'] = FALSE;
     }
   }
-
+  module_load_include('inc', 'sbq_commons', 'sbq_commons');
   // 验证码判断
   _sbq_commons_captcha_display($form, $form_alter, $form_id);
 }
