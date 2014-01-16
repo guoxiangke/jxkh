@@ -29,7 +29,7 @@ function sbq_center_reservation_menu() {
       'page callback' => 'sbq_center_reservation_add',
       'page arguments' => array( 1, 'add' ),
       'access callback' => 'sbq_center_reservation_access',
-      'access arguments' => array( 2 ),
+      'access arguments' => array( 2, NULL, 'add' ),
       'type' => MENU_NORMAL_ITEM,
       'file' => 'sbq_center_reservation.inc'
   );
@@ -40,7 +40,7 @@ function sbq_center_reservation_menu() {
         'page callback' => 'sbq_center_reservation_manage',
         'page arguments' => array( 1, 3, 4 ),
         'access callback' => 'sbq_center_reservation_access',
-        'access arguments' => array( 1, 4 ),
+        'access arguments' => array( 1, 3, 'manage center reservation' ),
         'type' => MENU_NORMAL_ITEM,
         'file' => 'sbq_center_reservation.inc'
     );
@@ -48,7 +48,33 @@ function sbq_center_reservation_menu() {
   return $items;
 }
 
-function sbq_center_reservation_access($center, $type = 'NULL') {
+/**
+ * Implements hook_og_permission().
+ */
+function sbq_center_reservation_og_permission() {
+  $items['add center reservation'] = array(
+      'title' => t('提交表单预约'),
+      'description' => t('拥有此权限，可以提交预约表单.'),
+      'roles' => array( OG_ANONYMOUS_ROLE, OG_AUTHENTICATED_ROLE, OG_ADMINISTRATOR_ROLE ),
+  );
+  $items['manage center reservation'] = array(
+      'title' => t('管理中心预约表单'),
+      'description' => t('管理中心预约表单，更新状态，删除表单.'),
+      'roles' => array( OG_ANONYMOUS_ROLE, OG_AUTHENTICATED_ROLE, OG_ADMINISTRATOR_ROLE ),
+  );
+  $items['cancel own center reservation'] = array(
+      'title' => t('取消自己的预约表单'),
+      'description' => t('取消自己的预约表单.'),
+      'roles' => array( OG_ANONYMOUS_ROLE, OG_AUTHENTICATED_ROLE, OG_ADMINISTRATOR_ROLE ),
+  );
+  return $items;
+}
+
+function sbq_center_reservation_access($center, $reservation = NULL, $type = NULL, $account = NULL) {
+  global $user;
+  if (!$account) {
+    $account = $user;
+  }
   if (!$center)
     return FALSE;
   return TRUE;
@@ -244,8 +270,11 @@ function sbq_center_reservation_get_manage_item($row) {
   return $accept . $ignore;
 }
 
-function sbq_center_reservation_reservation_status_alter($reservation) {
+/*
+ * 
+ */
 
+function sbq_center_reservation_reservation_status_alter($reservation) {
   if ($reservation->field_reservation_status['und'][0]['value'] == SBQ_CENTER_RESERVATION_STATUS_ACCEPT) {
     global $user;
     $date = new DateTime($reservation->field_reservation_time['und'][0]['value']);
@@ -254,7 +283,7 @@ function sbq_center_reservation_reservation_status_alter($reservation) {
         ), user_load($reservation->uid));
 
     $warpper = entity_metadata_wrapper('message', $message);
-    
+
     $warpper->field_node_ref->set(node_load($reservation->og_group_ref['und'][0]['target_id']));
     $warpper->field_center_reservation_send->set($user->uid);
     $warpper->save();
