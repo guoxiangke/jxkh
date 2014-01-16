@@ -98,6 +98,7 @@ function _center_reservation_format($data, $type = 'node', $is_list = FALSE) {
       $node['identity'] = $value['field_identity']['und'][0]['value'];
       $node['case_num'] = $value['field_case_num']['und'][0]['value'];
       $node['phone'] = $value['field_phone']['und'][0]['value'];
+      $node['status'] =  $value['field_reservation_status']['und'][0]['value'];
       $date = new DateTime($value['field_reservation_time']['und'][0]['value']);
       $node['reservation_time'] = $date->getTimestamp();
     }
@@ -159,8 +160,9 @@ function center_reservation_fetch($centerid, $uid, $page, $fields, $parameters, 
   for ($i = $now_day; $i <= $days; $i++) {
     $date = "$year-$month-$i";
     if (sbq_center_reservation_can_reservation($date, $centerid)) {
+      $date = new DateTime($date);
       $data[] = array(
-          $date => array(
+          $date->getTimestamp() => array(
               'a', 'p'
           )
       );
