@@ -383,7 +383,11 @@ function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_time
   } elseif (count($result) == $fail_times && ((time() - $result[2]->timestamp)/60) < $mintue) {
     return;
   }
-  unset($form['captcha']);
+
+  // Get placement in form and insert in form.
+  $captcha_placement = _captcha_get_captcha_placement($form_id, $form);
+  _captcha_insert_captcha_element($form, $captcha_placement, $captcha_element);
+
 }
 
 /**
@@ -505,48 +509,53 @@ function _sbq_commons_block_html($delta) {
   global $user;
   switch ($delta) {
     case 'sbq_user_profile':
-      if (!$user->uid) {
+      $arg1=0;
+      $arg1=arg(1);
+      if (arg(0)=='user' && ($arg1>0 && $arg1!=$user->uid)) {
+        $account = user_load($arg1);
+      } else {
+        $account = $user;
+      }
+      if (!$account->uid) {
         return;
       }
-      $picture = sbq_commons_user_avart();
+      $picture = sbq_commons_user_avart($account);
       //积分
-      $list = userpoints_get_points_list();
+      $list = userpoints_get_points_list($account);
       unset($list['actions']);
       $cpl = render($list);
       //操作
-      $opt_link = l('操作', 'user/' . $user->uid . '/edit');
-      // $message_link = l('消息', 'user/');
-      $message_link = '';
+      $opt_link = l('操作', 'user/' . $account->uid . '/edit');
+      $message_link = l('消息', 'messages');
       //勋章
       $user_badges = '';
       if (module_exists('user_badges')) {
-        $user_badges = user_badges_for_uid($user->uid);
+        $user_badges = user_badges_for_uid($account->uid);
       }
       $block_html = <<<EOF
                    <i class="option">$opt_link</i>
-                 <!--  <i class="message">$message_link</i> -->
+                   <i class="message">$message_link</i>
                    <div id="sbq_picture">$picture</div>
-                   <div id="sbq_name">$user->name</div>
+                   <div id="sbq_name">$account->name</div>
                    $cpl
                    <div id="user_badges"><span>勋章</span><a href="/badges">$user_badges</a></div>
 EOF;
       break;
     case 'sbq_quick_ask':
-      if (!$user->uid) {
-        return;
+      if ($user->uid && arg(1)==$user->uid) {
+        module_load_include('inc', 'node', 'node.pages');
+        $node = (object) array(
+                'uid' => $user->uid,
+                'name' => (isset($user->name) ? $user->name : ''),
+                'type' => 'question',
+                'language' => LANGUAGE_NONE
+        );
+        $question_node_form = drupal_get_form('question_node_form', $node);
+        $block_html = '<div class="sbq-question-node-add-form">'
+            . '<div class="sbq-user-add-post">' . l('发布文章', 'node/add/blog') . '</div>'
+            . render($question_node_form)
+            . '</div>';
       }
-      module_load_include('inc', 'node', 'node.pages');
-      $node = (object) array(
-              'uid' => $user->uid,
-              'name' => (isset($user->name) ? $user->name : ''),
-              'type' => 'question',
-              'language' => LANGUAGE_NONE
-      );
-      $question_node_form = drupal_get_form('question_node_form', $node);
-      $block_html = '<div class="sbq-question-node-add-form">'
-          . '<div class="sbq-user-add-post">' . l('发布文章', 'node/add/blog') . '</div>'
-          . render($question_node_form)
-          . '</div>';
       break;
     case 'sbq_add_ask_link':
       if (!$user->uid) {
@@ -664,7 +673,9 @@ function _sbq_commons_user_recommonds_friends_ids($roles, $num = 2, $account = n
       "and u.uid not in( select requester_id from user_relationships where requestee_id = {$account->uid}) " .
       "and u.uid <> {$account->uid} " .
       "and u.uid in ( select uid from users_roles where rid = {$roles}) order by uid ASC limit 0,{$num} ");
+
   $result = $query_user->fetchAllAssoc('uid');
+
   return $result ? array_keys($result) : array();
 }
 
@@ -755,15 +766,6 @@ function sbq_commons_user_disease_tag_delete_ajax($tid = 0) {
       '#type' => 'ajax',
       '#commands' => $commands );
   ajax_deliver($page);
-}
-
-/**
- * QA index page
- * return empty page for zen_kh theme
- * Use tabs blocks to theme this page
- */
-function druedu_qa_empty_page() {
-  return '';
 }
 
 /*

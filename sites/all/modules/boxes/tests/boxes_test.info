@@ -1,0 +1,15 @@
+name = Boxes Test
+description = Creates test plugins for boxes
+core = 7.x
+
+dependencies[] = boxes
+files[] = boxes_test.module
+
+hidden = TRUE
+
+; Information added by drupal.org packaging script on 2013-09-30
+version = "7.x-2.x-dev"
+core = "7.x"
+project = "boxes"
+datestamp = "1380556876"
+

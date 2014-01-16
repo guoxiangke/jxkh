@@ -1,0 +1,299 @@
+<?php
+
+/**
+ * @file
+ * Tests for block.module.
+ */
+
+
+abstract class BoxSetup extends DrupalWebTestCase {
+  protected $admin_user;
+  protected $plugin_name;
+
+
+  function setUp() {
+    parent::setUp('boxes', 'ctools', 'entity', 'boxes_test', 'block');
+    $this->addAdminUser();
+  }
+
+  function addAdminUser() {
+    $permissions = array_keys(boxes_permission());
+    $permissions += array(
+      'administer blocks',
+      'access administration pages',
+      'access content',
+    );
+    $this->admin_user = $this->drupalCreateUser($permissions);
+    $this->drupalLogin($this->admin_user);
+
+    // Test plugin name
+    $this->plugin_name = 'test_box';
+  }
+}
+
+/**
+ * Test the API
+ */
+class BoxesTestPlugins extends BoxSetup {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'Boxes Plugin',
+      'description' => 'Test the boxes plugin API.',
+      'group' => 'Boxes',
+    );
+  }
+
+  /**
+   * Test loading of the plugin
+   */
+  function testBoxesLoadPlugin() {
+    // Load the class
+    $plugin_class = boxes_load_plugin_class('test_box');
+    $plugin_class_name = get_class($plugin_class);
+
+    // Plugin should be implement the boxesTypePluginInterface interface
+    if (boxes_check_plugin_class($plugin_class_name)) {
+      $this->pass(t('boxes type should use the BoxTypePluginInterface interface'));
+    }
+    else {
+      $this->fail(t('boxes type should use the BoxTypePluginInterface interface'));
+    }
+
+    // Verify that a boxes plugin with an invalid class does not load
+    $this->assertFalse(boxes_load_plugin_class('test_no_boxes'), t('box type should not load with an invalid class'));
+    $this->assertFalse(boxes_load_plugin_class('test_wrong_class'), t('box type should not load with an invalid class'));
+  }
+
+  /**
+   * Verity that the correct links appear
+   */
+  function testBoxesTypeLinks() {
+    $this->drupalGet('block/add');
+    // Verify the block add pages exists
+    $this->assertResponse(200, t('Block Add Page is accessible'));
+
+    // There should 2 plugins links
+    $this->assertLinkByHref('block/add/test-box', 0, t('A link to the box add for each type should exist'));
+    $this->assertLinkByHref('block/add/test-box-2', 0, t('A link to the box add for each type should exist'));
+    $this->assertNoLinkByHref('block/add/test-no-boxes', t('A link to an invalid box type should not exist'));
+    $this->assertNoLinkByHref('block/add/test-wrong-class', t('A link to an invalid box type should not exist'));
+  }
+
+
+  /**
+   * Test the boxes form
+   */
+  function testBoxesTypeForm() {
+
+    foreach (boxes_get_types() as $type) {
+      $this->drupalGet("block/add/{$type->buildUrl()}");
+
+      // Verify the core fields are there
+      $this->assertFieldById('edit-label', '', t('Label exists on box add form.'));
+      $this->assertFieldById('edit-title', '', t('Title exists on box add form.'));
+      $this->assertFieldById('edit-view-mode', '', t('View Mode exists on box add form.'));
+    }
+  }
+}
+
+class BoxTests extends BoxSetup {
+  public static function getInfo() {
+    return array(
+      'name' => 'Boxes functionality',
+      'description' => 'Test the boxes API.',
+      'group' => 'Boxes',
+    );
+  }
+
+  /**
+   * Test the URL of the boxes types
+   */
+  function testBoxTypeURL() {
+    $test_plugin = array(
+      'label' => t('Test'),
+      'name' => 'test_name',
+      'description' => t('This is a test plugin'),
+      'handler' => array(
+        'class' => 'BoxTestPlugin',
+        'parent' => 'box',
+      ),
+    );
+
+    $box_type = new BoxDefault($test_plugin);
+    $box_type->type = "test_name";
+    $this->assertEqual($box_type->buildURL(), "test-name", t('URL is formatted correctly.'));
+  }
+
+  /**
+   * Test the boxes API
+   */
+  public function testBoxesAPI() {
+    $values = array(
+      'delta' => 'test_boxes',
+      'label' => t('Test boxes'),
+      'title' => t('Test boxes'),
+      'type' => $this->plugin_name,
+      'view_mode' => 'default',
+      'data' => array(
+        'test_boolean' => FALSE,
+        'test_string' => t('New String'),
+        'test_array' => array(
+          'test_array_1' => 'new_value',
+        ),
+      ),
+    );
+
+    $box = boxes_create($values);
+    $this->assertTrue(boxes_save($box), t('Box was saved'));
+
+    $values['label'] = $values['title'] = t('Test boxes 2');
+    $values['delta'] = 'test_boxes2';
+    $box = boxes_create($values);
+    $this->assertTrue(boxes_save($box), t('Box was saved'));
+
+    $boxes = array_values(boxes_load_multiple(FALSE, array('type' => $this->plugin_name)));
+    $this->assertEqual($boxes[0]->label, t('Test boxes'), 'Created and loaded boxes.');
+    $this->assertEqual($boxes[1]->label, t('Test boxes 2'), 'Created and loaded boxes.');
+
+    // Delete the first boxes
+    $delete_id = $boxes[0]->bid;
+    boxes_delete($boxes[0]);
+
+    $box = $boxes[1];
+
+    // Try to load deleted boxes
+    $delete_box = boxes_load($delete_id, TRUE);
+    $this->assertFalse($delete_box, t('Box Deleted'));
+
+    // Load by delta
+    $delta_box = boxes_load_delta('test_boxes2', TRUE);
+    $this->assertEqual($delta_box->identifier(), $box->identifier(), t('Box loaded by delta'));
+
+    // Test devel pages
+    if (module_exists('devel')) {
+      $this->drupalGet("block/{$box->identifier()}/devel");
+      $this->assertResponse(200, t('Devel load page is viewable'));
+      $this->assertText($box->label(), t('Devel load page is viewable'));
+
+      $this->drupalGet("block/{$box->identifier()}/devel/render");
+      $this->assertResponse(200, t('Devel render page is viewable'));
+      $this->assertText($box->label(), t('Devel render page is viewable'));
+    }
+
+    // Test a boxes with an invalid plugin
+    $values['type'] = 'fake_plugin';
+    $values['delta'] = 'fake_boxes_plugin';
+    $box = boxes_create($values);
+    $this->assertTrue(boxes_save($box), t('Box with invalid type was saved'));
+    $this->assertTrue(boxes_load_delta('fake_boxes_plugin'), t('Box with an invalid plugin is loaded'));
+
+    // Test a boxes with a plugin with an invalid class
+    $values['delta'] = 'missing_class';
+    $values['type'] = 'test_no_boxes';
+    $box = boxes_create($values);
+    $this->assertTrue(boxes_save($box), t('Box with a plugin that has an invalid class is saved'));
+    $this->assertTrue(boxes_load_delta('missing_class'), t('Box with a plugin that has an invalid class is loaded'));
+  }
+
+  /**
+   * Tests viewing boxes.
+   */
+  function testRendering() {
+    $values = array(
+      'delta' => 'test_boxes',
+      'label' => t('Test boxes'),
+      'title' => t('Test boxes'),
+      'type' => $this->plugin_name,
+      'view_mode' => 'default',
+      'data' => array(
+        'test_boolean' => FALSE,
+        'test_string' => t('New String'),
+        'test_array' => array(
+          'test_array_1' => 'new_value',
+        ),
+      ),
+    );
+
+    $box = boxes_create($values);
+    boxes_save($box);
+
+    $this->drupalGet("block/{$box->identifier()}");
+    $this->assertResponse(200, t('Box Page is viewable'));
+    $this->assertText($box->label(), t('Box Page is viewable'));
+
+  }
+}
+
+/**
+ * This should test the access to boxess
+ */
+class BoxAccess extends DrupalWebTestCase {
+  public static function getInfo() {
+    return array(
+      'name' => 'Boxes Access',
+      'description' => 'Test the access to boxes.',
+      'group' => 'Boxes',
+    );
+  }
+
+  protected function setUp() {
+    parent::setUp();
+  }
+
+  /**
+   * Test
+   */
+  public function testTest() {
+    $this->assertTrue(TRUE, t('Not implemented'));
+  }
+}
+
+/**
+ * Integration Tests
+ */
+class BoxIntegrationTests extends DrupalWebTestCase {
+  public static function getInfo() {
+    return array(
+      'name' => 'Boxes Integration Tests',
+      'description' => 'Make sure everything works from the front end.',
+      'group' => 'Boxes',
+    );
+  }
+
+  protected function setUp() {
+    parent::setUp();
+  }
+
+  /**
+   * Test that reactions when there are no boxes types
+   */
+
+  /**
+   * Test adding a box
+   */
+  public function testBoxAdd() {
+    $this->assertTrue(TRUE, t('Not implemented'));
+  }
+
+  /**
+   * Test Editing a box
+   */
+  public function testBoxEdit() {
+    $this->assertTrue(TRUE, t('Not implemented'));
+  }
+
+  /**
+   * Test Deleting a box
+   */
+  public function testBoxDelete() {
+    $this->assertTrue(TRUE, t('Not implemented'));
+  }
+
+  /**
+   * Place a box block on the page
+   */
+  public function testBoxPlacement() {
+    $this->assertTrue(TRUE, t('Not implemented'));
+  }
+}

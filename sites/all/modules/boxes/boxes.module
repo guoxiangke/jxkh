@@ -1,0 +1,844 @@
+<?php
+/**
+ * @file
+ */
+
+/**
+ * Implements hook_entity_info().
+ */
+function boxes_entity_info() {
+  $return = array(
+    'box' => array(
+      'label' => t('Block'),
+      'entity class' => 'Box',
+      'controller class' => 'BoxEntityAPIController',
+      'base table' => 'box',
+      'fieldable' => TRUE,
+      'entity keys' => array(
+        'id' => 'bid',
+        'bundle' => 'type',
+        'label' => 'title',
+        'name' => 'delta',
+      ),
+      'bundles' => array(),
+      'bundle keys' => array(
+        'bundle' => 'type',
+      ),
+      'label callback' => 'entity_class_label',
+      'uri callback' => 'entity_class_uri',
+      'access callback' => 'boxes_access',
+      'module' => 'boxes',
+      'metadata controller class' => 'BoxMetadataController',
+      'view modes' => array(
+        'default' => array(
+          'label' => t('Default'),
+          'custom settings' => FALSE,
+        ),
+      ),
+      'field replacement' => array(
+        'title' => array(
+          'field' => array(
+            'type' => 'text',
+            'cardinality' => 1,
+            'translatable' => TRUE,
+          ),
+          'instance' => array(
+            'label' => t('Title'),
+            'description' => t('The Title of the block.'),
+            'required' => FALSE,
+            'settings' => array(
+              'text_processing' => 0,
+            ),
+            'widget' => array(
+              'weight' => -5,
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+
+  foreach (boxes_get_types() as $type) {
+    if (!empty($type)) {
+      $return['box']['bundles'][$type->type] = array(
+        'label' => $type->getLabel(),
+        'description' => $type->getDescription(),
+        'admin' => array(
+          'path' => 'admin/structure/block-types/manage/%boxes_type',
+          'real path' => 'admin/structure/block-types/manage/' . $type->buildURL(),
+          'bundle argument' => 4,
+          'access arguments' => array('administer box types'),
+        ),
+      );
+    }
+  }
+
+  return $return;
+}
+
+/**
+ * Implements hook_translation_info().
+ */
+function boxes_translation_info($types = NULL) {
+  $info = array(
+    'box' => array(
+      'translation' => array(
+        'entity_translation' => array(
+          'class' => 'EntityTranslationBoxHandler',
+          'base path' => 'block/%boxes_delta',
+          'path wildcard' => '%boxes_delta',
+        ),
+      ),
+    ),
+  );
+
+  return isset($types) ? array_intersect_key($info, $types) : $info;
+}
+
+/**
+ * Implements hook_menu().
+ */
+function boxes_menu() {
+  $items = array();
+
+  $items['block/add'] = array(
+    'title' => 'Add Block',
+    'page callback' => 'boxes_add_page',
+    'access arguments' => array('add'),
+    'access callback' => 'boxes_add_page_access',
+    'file' => 'includes/boxes.pages.inc',
+  );
+
+  foreach (boxes_get_types() as $type) {
+    if (!empty($type)) {
+      $items['block/add/' . $type->buildURL()] = array(
+        'title' => $type->getLabel(),
+        'title callback' => 'check_plain',
+        'page callback' => 'boxes_add',
+        'page arguments' => array($type->type),
+        'access arguments' => array('create any ' . $type->type . ' boxes'),
+        'file' => 'includes/boxes.pages.inc',
+      );
+    }
+  }
+
+  $items['block/%boxes_delta'] = array(
+    'title' => 'Block',
+    'page callback' => 'boxes_view',
+    'page arguments' => array(1),
+    'access arguments' => array('edit', 1),
+    'access callback' => 'boxes_access',
+    'file' => 'includes/boxes.pages.inc',
+  );
+
+  $items['block/%boxes_delta/view'] = array(
+    'title' => 'View',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'context' => MENU_CONTEXT_NONE,
+    'weight' => -20,
+  );
+
+
+  $items['block/%boxes_delta/edit'] = array(
+    'title' => 'Edit',
+    'type' => MENU_LOCAL_TASK,
+    'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
+    'page callback' => 'boxes_edit',
+    'page arguments' => array(1),
+    'access arguments' => array('edit', 1),
+    'access callback' => 'boxes_access',
+    'file' => 'includes/boxes.pages.inc',
+  );
+
+  $items['block/%boxes_delta/delete'] = array(
+    'title' => 'Delete',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('boxes_delete_confirm', 1),
+    'access callback' => 'boxes_access',
+    'access arguments' => array('delete', 1),
+    'weight' => 1,
+    'type' => MENU_LOCAL_TASK,
+    'context' => MENU_CONTEXT_NONE,
+    'file' => 'includes/boxes.pages.inc',
+  );
+
+
+  $items['admin/content/blocks'] = array(
+    'title' => 'Blocks',
+    'description' => 'Manage blocks used on your site.',
+    'page callback' => 'boxes_list',
+    'access arguments' => array('administer boxes'),
+    'file' => 'includes/boxes.pages.inc',
+    'type' => MENU_LOCAL_TASK | MENU_NORMAL_ITEM,
+  );
+
+  if (module_exists('devel')) {
+    $devel_path = drupal_get_path('module', 'devel');
+    $items['block/%boxes_delta/devel'] = array(
+      'title' => 'Devel',
+      'page callback' => 'devel_load_object',
+      'page arguments' => array('boxes', 1),
+      'access arguments' => array('administer boxes'),
+      'type' => MENU_LOCAL_TASK,
+      'file' => 'devel.pages.inc',
+      'file path' => $devel_path,
+      'weight' => 100,
+    );
+    $items['block/%boxes_delta/devel/load'] = array(
+      'title' => 'Load',
+      'type' => MENU_DEFAULT_LOCAL_TASK,
+    );
+    $items['block/%boxes_delta/devel/render'] = array(
+      'title' => 'Render',
+      'page callback' => 'devel_render_object',
+      'page arguments' => array('boxes', 1),
+      'access arguments' => array('administer boxes'),
+      'file' => 'devel.pages.inc',
+      'file path' => $devel_path,
+      'type' => MENU_LOCAL_TASK,
+      'weight' => 100,
+    );
+  }
+
+  return $items;
+}
+
+/**
+ * Implements hook_admin_paths().
+ */
+function boxes_admin_paths() {
+  $paths = array(
+    'block/*/edit' => TRUE,
+    'block/*/delete' => TRUE,
+    'block/*/revisions' => TRUE,
+    'block/*/revisions/*/revert' => TRUE,
+    'block/*/revisions/*/delete' => TRUE,
+    'block/add' => TRUE,
+    'block/add/*' => TRUE,
+  );
+  return $paths;
+}
+
+/**
+ * Title of the boxes
+ */
+function boxes_page_title($box) {
+  return $box->label;
+}
+
+/**
+ * Menu Argument Loader
+ */
+function boxes_type_load($type) {
+  return boxes_load_plugin_class(strtr($type, array('-' => '_')));
+}
+
+/**
+ * Gets an array of all boxes types, keyed by the type name.
+ *
+ * @param $type_name
+ *   If set, the type with the given name is returned.
+ * @return box_types[]
+ *   Depending whether $type isset, an array of boxes types or a single one.
+ */
+function boxes_get_types() {
+  $box_types = &drupal_static(__FUNCTION__);
+
+  if (empty($box_types)) {
+    $box_types = boxes_load_plugin_class_all();
+  }
+
+  return $box_types;
+}
+
+/**
+ * Fetch the widget plugin info
+ */
+function boxes_fetch_plugin_info($plugin = NULL) {
+  $plugins = &drupal_static(__FUNCTION__);
+  ctools_include('plugins');
+
+  if (empty($plugins)) {
+    if (($cache = cache_get('boxes_plugins')) && !empty($cache->data)) {
+      $plugins = $cache->data;
+    }
+    else {
+      $plugins = ctools_get_plugins('boxes', 'types');
+
+      // Only use modules with the same version.
+      $allowed_modules = array_keys(ctools_plugin_api_info('boxes', 'types', boxes_min_version(), boxes_current_version()));
+      foreach ($plugins as $key => $plugin_value) {
+        if (!in_array($plugin_value['module'], $allowed_modules) || ($plugin_value['abstract'])) {
+          unset($plugins[$key]);
+        }
+      }
+      cache_set('boxes_plugins', $plugins);
+    }
+  }
+
+  if (empty($plugin)) {
+    return $plugins;
+  }
+  else {
+    // Make sure the plugin is in the cache.
+    if (!isset($plugins[$plugin])) {
+      $plugin_info = ctools_get_plugins('boxes', 'types', $plugin);
+      if (empty($allowed_modules)) {
+        $allowed_modules = array_keys(ctools_plugin_api_info('boxes', 'types', boxes_current_version(), boxes_min_version()));
+      }
+      if (in_array($plugin_info['module'], $allowed_modules)) {
+        $plugins[$plugin] = $plugin_info;
+
+        cache_set('boxes_plugins', $plugins);
+      }
+    }
+
+    // If we still don't have the plugin then return NULL.
+    if (empty($plugins[$plugin])) {
+      return NULL;
+    }
+    return $plugins[$plugin];
+  }
+}
+
+/**
+ * Reset the static variables and caches
+ */
+function boxes_reset() {
+  ctools_include('plugins');
+  // Clear ctools cache.
+  ctools_get_plugins_reset();
+  drupal_static_reset('ctools_plugins');
+  drupal_static_reset('ctools_plugin_type_info_loaded');
+  drupal_static_reset('ctools_plugin_type_info');
+
+  // Clear the boxes cache.
+  drupal_static_reset('boxes_fetch_plugin_info');
+  drupal_static_reset('boxes_load_plugin_class');
+
+  // Flush plugin caches and rebuild the menu
+  cache_clear_all('boxes_plugins', 'cache');
+  cache_clear_all('ctools_plugin_type_info', 'cache');
+  cache_clear_all('ctools_plugin_files', 'cache', TRUE);
+  cache_clear_all('plugins', 'cache', TRUE);
+  cache_clear_all('box_types', 'cache');
+  cache_clear_all('entity_info', 'cache', TRUE);
+
+  menu_rebuild();
+}
+
+/**
+ * Load a widget class
+ *
+ * @param $plugin_key string
+ *  the key fo the plugin
+ * @return BoxTypePluginInterface | Boolean
+ *  An instance of the boxes class or FALSE if not loaded
+ */
+function boxes_load_plugin_class($plugin_key = NULL) {
+  $cache = &drupal_static(__FUNCTION__);
+
+  if (!isset($cache[$plugin_key])) {
+    ctools_include('plugins');
+    $class = ctools_plugin_load_class('boxes', 'types', $plugin_key, 'handler');
+    if ($class && boxes_check_plugin_class($class)) {
+      $cache[$plugin_key] = new $class(boxes_fetch_plugin_info($plugin_key));
+    }
+  }
+  return isset($cache[$plugin_key]) ? $cache[$plugin_key] : FALSE;
+}
+
+/**
+ * Check the plugin type class
+ *
+ * @param $class string
+ *  The name of the boxes type class
+ * @return Boolean
+ */
+function boxes_check_plugin_class($class) {
+  $ref_class = new ReflectionClass($class);
+  if (in_array('BoxTypePluginInterface', $ref_class->getInterfaceNames())) {
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+/**
+ * Load all widget classes
+ */
+function boxes_load_plugin_class_all() {
+  $return = array();
+  foreach (boxes_fetch_plugin_info() as $plugin) {
+    if (!empty($plugin['name']) && $plugin['name'] !== 'box' && $plugin_class = boxes_load_plugin_class($plugin['name'])) {
+      $return[$plugin['name']] = $plugin_class;
+    }
+  }
+  return $return;
+}
+
+/**
+ * Load all boxes
+ */
+function boxes_get_all_boxes() {
+  $boxes = &drupal_static(__FUNCTION__);
+
+  if (!isset($boxes)) {
+    $query = new EntityFieldQuery();
+    $result = $query
+      ->entityCondition('entity_type', 'box')
+      ->execute();
+    if (isset($result['box'])) {
+      $boxes = boxes_load_multiple(array_keys($result['box']));
+    }
+    else {
+      $boxes = array();
+    }
+  }
+
+  return $boxes;
+}
+
+/**
+ * Fetch a boxes object.
+ *
+ * @param $bid
+ *   Integer specifying the boxes id.
+ * @param $reset
+ *   A boolean indicating that the internal cache should be reset.
+ * @return
+ *   A fully-loaded $boxes object or FALSE if it cannot be loaded.
+ *
+ * @see boxes_load_multiple()
+ */
+function boxes_load($bid, $reset = FALSE) {
+  $boxes = boxes_load_multiple(array($bid), array(), $reset);
+  return reset($boxes);
+}
+
+/**
+ * Fetch a boxes object by its delta.
+ *
+ * @param $delta
+ *   String specifying the boxes delta.
+ * @param $reset
+ *   A boolean indicating that the internal cache should be reset.
+ * @return
+ *   A fully-loaded $boxes object or FALSE if it cannot be loaded.
+ */
+function boxes_load_delta($delta, $reset = FALSE) {
+  $result = db_select('box', 'b')
+    ->fields('b', array('bid'))
+    ->condition('delta', $delta)
+    ->execute();
+  if ($bid = $result->fetchField()) {
+    $boxes = boxes_load_multiple(array($bid), array(), $reset);
+    return reset($boxes);
+  }
+  return FALSE;
+}
+
+/**
+ * Menu callback to load a boxes by the delta
+ */
+function boxes_delta_load($delta) {
+  return boxes_load_delta($delta);
+}
+
+/**
+ * Load multiple boxess based on certain conditions.
+ *
+ * @param $bids
+ *   An array of boxes IDs.
+ * @param $conditions
+ *   An array of conditions to match against the {boxes} table.
+ * @param $reset
+ *   A boolean indicating that the internal cache should be reset.
+ * @return
+ *   An array of boxes objects, indexed by pid.
+ *
+ * @see entity_load()
+ * @see boxes_load()
+ */
+function boxes_load_multiple($bids = array(), $conditions = array(), $reset = FALSE) {
+  return entity_load('box', $bids, $conditions, $reset);
+}
+
+/**
+ * Implements hook_permissions().
+ */
+function boxes_permission() {
+  $perms = array(
+    'administer box types' => array(
+      'title' => t('Administer block types'),
+      'description' => t('Create and delete fields on boxes, and set their permissions.'),
+    ),
+    'administer boxes' => array(
+      'title' => t('Administer boxes'),
+      'description' => t('Edit and view all boxes.'),
+    ),
+    'edit box view mode' => array(
+      'title' => t('Change the View Mode of the box'),
+      'description' => t('Ability to change the view mode on the box form'),
+    ),
+  );
+
+  // Add a Permission for each entity type.
+  foreach (boxes_get_types() as $box_type) {
+    $box_type_name = check_plain($box_type->type);
+    $perms += array(
+      "create any $box_type_name boxes" => array(
+        'title' => t('%type_name: add box', array('%type_name' => $box_type->getLabel())),
+      ),
+      "edit any $box_type_name boxes" => array(
+        'title' => t('%type_name: Edit box', array('%type_name' => $box_type->getLabel())),
+      ),
+      "view any $box_type_name boxes" => array(
+        'title' => t('%type_name: View box', array('%type_name' => $box_type->getLabel())),
+      ),
+      "delete any $box_type_name boxes" => array(
+        'title' => t('%type_name: delete box', array('%type_name' => $box_type->getLabel())),
+      ),
+    );
+  }
+
+  return $perms;
+}
+
+/**
+ * Access callback for the entity API.
+ */
+function boxes_type_access($op, $type = NULL, $account = NULL) {
+  return user_access('administer box types', $account);
+}
+
+/**
+ * Determines whether the given user has access to a boxes.
+ *
+ * @param $op
+ *   The operation being performed. One of 'view', 'update', 'create', 'delete'
+ *   or just 'edit' (being the same as 'create' or 'update').
+ * @param $box
+ *   Optionally a box or a box type to check access for. If nothing is
+ *   given, access for all boxess is determined.
+ * @param $account
+ *   The user to check for. Leave it to NULL to check for the current user.
+ * @return boolean
+ *   Whether access is allowed or not.
+ */
+function boxes_access($op, $box = NULL, $account = NULL) {
+  $rights = &drupal_static(__FUNCTION__, array());
+
+  // Only real permissions are view, delete, create and edit
+  switch ($op) {
+    case 'view':
+    case 'delete':
+    case 'create':
+      $op = $op;
+      break;
+    case 'add':
+      $op = 'create';
+      break;
+    default:
+      $op = 'edit';
+  }
+
+  // If no user object is supplied, the access check is for the current user.
+  if (empty($account)) {
+    $account = $GLOBALS['user'];
+  }
+
+  $cid = is_object($box) ? $box->bid : $box;
+
+  // If we've already checked access for this node, user and op, return from cache.
+  if (isset($rights[$account->uid][$cid][$op])) {
+    return $rights[$account->uid][$cid][$op];
+  }
+
+  if (user_access('administer boxes', $account)) {
+    return TRUE;
+  }
+
+  // We grant access to the boxes if both of the following conditions are met:
+  // - No modules say to deny access.
+  // - At least one module says to grant access.
+  // If no module specified either allow or deny, we fall back to the default.
+  $access = module_invoke_all('boxes_access', $box, $op, $account);
+  if (in_array(FALSE, $access, TRUE)) {
+    $rights[$account->uid][$cid][$op] = FALSE;
+    return FALSE;
+  }
+  elseif (in_array(TRUE, $access, TRUE)) {
+    $rights[$account->uid][$cid][$op] = TRUE;
+    return TRUE;
+  }
+
+  if (isset($box) && isset($box->type)) {
+    if (user_access("$op any {$box->type} boxes", $account)) {
+      $rights[$account->uid][$cid][$op] = TRUE;
+      return TRUE;
+    }
+  }
+  else {
+    // Here we are looking for access to any of the types.
+    foreach (boxes_get_types() as $box_type) {
+      $perm = $op . ' any ' . $box_type->type . ' boxes';
+      if (user_access($perm, $account)) {
+        $rights[$account->uid][$cid][$op] = TRUE;
+        return TRUE;
+      }
+    }
+  }
+
+  return FALSE;
+}
+
+/**
+ * Access callback for the general boxes add page (block/add).
+ */
+function boxes_add_page_access() {
+  if (user_access('administer box types') || user_access('administer boxes')) {
+    return TRUE;
+  }
+  foreach (boxes_get_types() as $box_type) {
+    if (boxes_access('create', $box_type->type)) {
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+/**
+ * Inserts or updates a boxes object into the database.
+ *
+ * @param $boxes
+ *   The boxes object to be inserted.
+ *
+ * @return
+ *   Failure to write a record will return FALSE. Otherwise SAVED_NEW or
+ *   SAVED_UPDATED is returned depending on the operation performed.
+ */
+function boxes_save(Box $box) {
+  return $box->save();
+}
+
+/**
+ * Deletes an existing boxes.
+ *
+ * @param $boxes
+ *   The message object to be boxes.
+ */
+function boxes_delete(Box $box) {
+  return $box->delete();
+}
+
+/**
+ * Helper to easily create a boxes.
+ *
+ * @param $values array
+ *   Array with the following keys:
+ *   - "arguments" - Array with arguments that should be replaced on run time in
+ *     the message type.
+ *
+ * @return boxes
+ */
+function boxes_create($values) {
+  return entity_create('box', $values);
+}
+
+/**
+ * View the boxes
+ */
+function boxes_view(Box $box, $view_mode = 'default', $langcode = NULL) {
+  if (!isset($langcode)) {
+    $langcode = $GLOBALS['language_content']->language;
+  }
+
+  drupal_set_title($box->label());
+  return $box->view($view_mode, $langcode);
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function boxes_block_info() {
+  $blocks = array();
+  $boxes = boxes_get_all_boxes();
+  foreach ($boxes as $box) {
+    $blocks[$box->delta] = array(
+      'info' => $box->label,
+      'cache' => $box->getInfo('cache_level'),
+    );
+  }
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function boxes_block_view($delta = '') {
+  $return = array();
+  $box = boxes_load_delta($delta);
+
+  if (boxes_access('view', $box) && $box) {
+    $return = array(
+      'content' => $box->view($box->view_mode),
+      'subject' => $box->title,
+    );
+
+    if (!empty($return['content']) && module_exists('contextual')) {
+      $return['content']['#contextual_links']['boxes'] = array('block', array($box->identifier()));
+    }
+  }
+
+  return $return;
+}
+
+/**
+ * Define the name of the api hook
+ */
+function boxes_types_hook_name() {
+  return 'boxes_types_api_info';
+}
+
+/**
+ * The current version of the API
+ */
+function boxes_current_version() {
+  return 6;
+}
+
+/**
+ * The minimal version
+ */
+function boxes_min_version() {
+  return 6;
+}
+
+/**
+ * Implements hook_box_types_api_info().
+ */
+function boxes_boxes_types_api_info() {
+  return array(
+    'api' => boxes_current_version(),
+  );
+}
+
+/**
+ * Implements hook_ctools_plugin_type().
+ */
+function boxes_ctools_plugin_type() {
+  return array(
+    'types' => array(
+      'cache' => TRUE,
+      'use hooks' => TRUE,
+      'classes' => array('handler'),
+      'info file' => TRUE,
+      'alterable' => TRUE,
+      'defaults' => array(
+        'abstract' => FALSE,
+        'label' => t('Block'),
+        'description' => '',
+        'cache_level' => DRUPAL_CACHE_PER_ROLE,
+        // Editable in the block type UI
+        // THESE should have 'boxes_custom' as the class
+        'editable' => FALSE,
+        'view_mode' => 'default',
+        'handler' => array(
+          'class' => 'BoxDefault',
+          'parent' => 'box',
+          'file' => 'base.inc',
+          'path' => drupal_get_path('module', 'boxes') . '/plugins',
+        ),
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_box_types().
+ */
+function boxes_boxes_types() {
+  $plugins = array();
+  $plugins['box'] = array(
+    'handler' => array(
+      'class' => 'BoxPlugin',
+      'file' => 'base.inc',
+      'path' => drupal_get_path('module', 'boxes') . '/plugins',
+    ),
+  );
+  $plugins['box_default'] = array(
+    'abstract' => TRUE,
+    'handler' => array(
+      'class' => 'BoxDefault',
+      'parent' => 'box',
+      'file' => 'base.inc',
+      'path' => drupal_get_path('module', 'boxes') . '/plugins',
+    ),
+  );
+  return $plugins;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function boxes_theme() {
+  return array(
+    'box' => array(
+      'render element' => 'entity',
+      'template' => 'box',
+    ),
+    'boxes_add_list' => array(
+      'variables' => array('content' => NULL),
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu_local_tasks_alter().
+ */
+function boxes_menu_local_tasks_alter(&$data, $router_item, $root_path) {
+  // Add action link to 'block/add' on 'admin/content/blocks' page.
+  if ($root_path == 'admin/content/blocks' && boxes_get_types()) {
+    $item = menu_get_item('block/add');
+    if ($item['access']) {
+      $data['actions']['output'][] = array(
+        '#theme' => 'menu_local_action',
+        '#link' => $item,
+      );
+    }
+  }
+}
+
+/**
+ * Implements hook_workbench_create_alter().
+ */
+function boxes_workbench_create_alter(&$output) {
+  $items = array();
+  $i = 0;
+  foreach (boxes_get_types() as $box_type) {
+    $items[str_replace(' ', '', $box_type->getLabel()) . '_' . $i] = array(
+      'title' => $box_type->getLabel(),
+      'href' => 'block/add/' . $box_type->buildURL(),
+      'description' => $box_type->getDescription(),
+      'localized_options' => array(),
+    );
+    $i++;
+  }
+
+  ksort($blocks);
+
+  $output['box_types'] = array(
+    '#title' => t('Create Blocks'),
+    '#markup' => theme('node_add_list', array('content' => $items)),
+    '#theme' => 'workbench_element',
+  );
+}
+
+/**
+ * Implements hook_modules_enabled()
+ */
+function boxes_modules_enabled($modules) {
+  boxes_reset();
+}

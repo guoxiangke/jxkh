@@ -1,0 +1,96 @@
+<?php
+
+/**
+ * @page
+ * boxes_test.module
+ */
+
+/**
+ * Implements hook_box_types_api_info().
+ */
+function boxes_test_boxes_types_api_info() {
+  return array(
+    'api' => 6,
+  );
+}
+
+/**
+ * Implements hook_box_types().
+ */
+function boxes_test_boxes_types() {
+  $plugins = array();
+
+  $plugins['test_box'] = array(
+    'label' => t('Test'),
+    'description' => t('This is a test plugin'),
+    'handler' => array(
+      'class' => 'BoxTestPlugin',
+      'parent' => 'box',
+    ),
+  );
+
+  $plugins['test_box_2'] = array(
+    'label' => t('Test 2'),
+    'description' => t('This is a test plugin'),
+    'handler' => array(
+      'class' => 'BoxTestPlugin',
+      'parent' => 'box',
+    ),
+  );
+
+
+  $plugins['test_no_box'] = array(
+    'label' => t('Test No Class'),
+    'description' => t('This class does not exist'),
+    'handler' => array(
+      'class' => 'ClassDoesNotExist',
+    ),
+  );
+
+  $plugins['test_wrong_class'] = array(
+    'label' => t('Test Invalid Class'),
+    'description' => t('This class does not exist'),
+    'handler' => array(
+      'class' => 'BoxPluginWrong',
+    ),
+  );
+
+  return $plugins;
+}
+
+class BoxTestPlugin extends BoxPlugin {
+  public function values() {
+    return array(
+      'test_boolean' => TRUE,
+      'test_string' => t('String'),
+      'test_array' => array(
+        'test_array_1' => 'test_array_1',
+      ),
+    );
+  }
+
+  public function form($box, $form, &$form_state) {
+    $form = array();
+    $form['test_boolean'] = array(
+      '#type' => 'textfield',
+      '#title' => t('String'),
+      '#default_value' => $box->test_string,
+    );
+
+    $form['test_boolean'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Boolean'),
+      '#default_value' => $box->test_boolean,
+    );
+
+    $form['test_array'] = array(
+      '#type' => 'string',
+      '#title' => t('Array'),
+      '#default_value' => $box->test_array['test_array_1'],
+    );
+
+    return $form;
+  }
+}
+
+class BoxPluginWrong {}

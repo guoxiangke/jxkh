@@ -1,0 +1,12 @@
+name = Boxes Admin UI
+description = Add the ability to create Block Types in the UI
+core = 7.x
+dependencies[] = boxes
+files[] = plugins/custom.inc
+configure = admin/structure/block-types
+; Information added by drupal.org packaging script on 2013-09-30
+version = "7.x-2.x-dev"
+core = "7.x"
+project = "boxes"
+datestamp = "1380556876"
+

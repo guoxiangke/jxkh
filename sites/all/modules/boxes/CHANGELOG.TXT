@@ -1,0 +1,6 @@
+Current API VERSION: 6
+
+boxes 7.x-2.x-dev
+==================
+Integration of Bean and Boxes
+
