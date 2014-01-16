@@ -6,6 +6,9 @@
  * and open the template in the editor.
  */
 define('SBQ_CENTER_RESERVATION_NODE_TYPE', 'sbq_center_reservation');
+define('SBQ_CENTER_RESERVATION_STATUS_SUBMMIT', 0);
+define('SBQ_CENTER_RESERVATION_STATUS_ACCEPT', 1);
+define('SBQ_CENTER_RESERVATION_STATUS_IGNORE', 2);
 
 /**
  * hook  menu
@@ -52,7 +55,7 @@ function sbq_center_reservation_access($center, $type = 'NULL') {
 }
 
 function sbq_center_reservation_load($rid) {
-  if(!$reservation = node_load($rid)){
+  if (!$reservation = node_load($rid)) {
     return NULL;
   }
   return $reservation->type == SBQ_CENTER_RESERVATION_NODE_TYPE ? $reservation : NULL;
@@ -254,7 +257,23 @@ function sbq_center_reservation_get_reservation($uid = '', $nid = '', array $par
 
 function sbq_center_reservation_get_manage_item($row) {
   $centerid = arg(1);
-  $accept = l('接受', "center/{$centerid}/reservation/{$row->nid}/accept");
-  $ignore = l('忽略', "center/{$centerid}/reservation/{$row->nid}/ignore");
+  $accept = $ignore = '';
+  switch ($row->field_field_reservation_status[0]['raw']['value']) {
+    case SBQ_CENTER_RESERVATION_STATUS_SUBMMIT:
+      $accept = l('接受', "center/{$centerid}/reservation/{$row->nid}/accept");
+      $ignore = l('删除', "center/{$centerid}/reservation/{$row->nid}/ignore");
+      break;
+    case SBQ_CENTER_RESERVATION_STATUS_ACCEPT:
+     // $accept = l('接受', "center/{$centerid}/reservation/{$row->nid}/accept");
+      $accept = '';
+      $ignore = l('删除', "center/{$centerid}/reservation/{$row->nid}/ignore");
+      break;
+  }
   return $accept . $ignore;
+}
+
+function sbq_center_reservation_status_alter($reservation){
+  if($reservation->field_reservation_status[0]['raw']['value'] == SBQ_CENTER_RESERVATION_STATUS_ACCEPT){
+    $message = message_create($type, $values, $account);
+  }
 }
