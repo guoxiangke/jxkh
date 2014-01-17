@@ -81,3 +81,22 @@ function sbq_center_reservation_manage($center, $reservation, $action) {
   }
   return 'success';
 }
+
+function sbq_center_reservation_created($center, $account = NULL) {
+  if (FALSE !== is_null($account)) {
+    global $user;
+    $account = $user;
+  }
+  module_load_include('inc', 'node', 'node.pages');
+  $types = node_type_get_types();
+  $node = array(
+      'uid' => $account->uid,
+      'name' => (isset($account->name) ? $account->name : ''),
+      'type' => SBQ_CENTER_RESERVATION_NODE_TYPE,
+      'og_group_ref' => array('und'=>array(array('target_id'=>$center->nid))),
+      'language' => LANGUAGE_NONE
+  );
+  drupal_set_title(t('Create @name', array( '@name' => $types[SBQ_CENTER_RESERVATION_NODE_TYPE]->name )), PASS_THROUGH);
+  return drupal_get_form('sbq_center_reservation_node_form', (object)$node);
+
+}

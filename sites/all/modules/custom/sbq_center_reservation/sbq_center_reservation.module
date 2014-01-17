@@ -20,7 +20,7 @@ function sbq_center_reservation_menu() {
       'page callback' => 'drupal_get_form',
       'page arguments' => array( 'sbq_center_opendays_form', 1 ),
       'access callback' => 'sbq_center_reservation_access',
-      'access arguments' => array( 1 ),
+      'access arguments' => array( 1, NULL, 'setting center reservation' ),
       'type' => MENU_NORMAL_ITEM,
       'file' => 'sbq_center_reservation.inc'
   );
@@ -45,6 +45,16 @@ function sbq_center_reservation_menu() {
         'file' => 'sbq_center_reservation.inc'
     );
   }
+
+  $items['center/%sbq_center/reservation/created'] = array(
+      'title' => '创建预约',
+      'page callback' => 'sbq_center_reservation_created',
+      'page arguments' => array( 1 ),
+      'access callback' => 'sbq_center_reservation_access',
+      'access arguments' => array( 1, NULL, 'create sbq_center_reservation conten' ),
+      'type' => MENU_NORMAL_ITEM,
+      'file' => 'sbq_center_reservation.inc'
+  );
   return $items;
 }
 
@@ -67,16 +77,32 @@ function sbq_center_reservation_og_permission() {
       'description' => t('取消自己的预约表单.'),
       'roles' => array( OG_ANONYMOUS_ROLE, OG_AUTHENTICATED_ROLE, OG_ADMINISTRATOR_ROLE ),
   );
+  $items['setting center reservation'] = array(
+      'title' => t('设置中心预约'),
+      'description' => t('可以设置预约时间.'),
+      'roles' => array( OG_ANONYMOUS_ROLE, OG_AUTHENTICATED_ROLE, OG_ADMINISTRATOR_ROLE ),
+  );
   return $items;
 }
 
 function sbq_center_reservation_access($center, $reservation = NULL, $type = NULL, $account = NULL) {
+   
   global $user;
   if (!$account) {
     $account = $user;
-  }
-  if (!$center)
+  }dpm(og_get_permissions());
+  if (!og_user_access('node', $center->nid, $type, $account)) {
     return FALSE;
+  } 
+  switch ($type) {
+    case 'cancel own center reservation':
+      return $reservation->uid == $account->uid;
+      break;
+    default:
+      break;
+  }
+
+
   return TRUE;
 }
 
@@ -168,15 +194,7 @@ function sbq_center_reservation_can_reservation($date, $center = '') {
  */
 
 function sbq_center_reservation_form_alter(&$form, $form_states) {
-
   if (isset($form['#bundle']) && $form['#bundle'] == SBQ_CENTER_RESERVATION_NODE_TYPE && isset($form['#node']) && !isset($form['#node']->nid)) {
-    $param = drupal_get_query_parameters();
-    if ($param['target_id']) {
-      $node = node_load($param['target_id']);
-      $form['og_group_ref'][LANGUAGE_NONE][0]['target_id']['#default_value'] = "$node->title ($node->nid)";
-      $form['og_group_ref'][LANGUAGE_NONE]['#default_value'] = $node->nid;
-      $form['og_group_ref'][LANGUAGE_NONE]['#attributes']['disabled'] = TRUE;
-    }
     $form['#validate'][] = 'sbq_center_reservation_form_validate';
   }
 }
@@ -187,8 +205,6 @@ function sbq_center_reservation_form_alter(&$form, $form_states) {
 
 function sbq_center_reservation_form_validate($form, &$form_states) {
   // file_put_contents('/home/chechao/1.log', $form_states['values']['field_node_ref']['und'][0]['target_id']);
-  dpm($form_states);
-
   if (!sbq_center_reservation_can_reservation($form_states['values']['field_reservation_time']['und'][0]['value'], $form_states['values']['og_group_ref']['und'][0]['target_id'])) {
     form_set_error('field_reservation_time ', '您输入的预约时间不能预约');
   }
@@ -254,7 +270,6 @@ function sbq_center_reservation_get_reservation($uid = '', $nid = '', array $par
 
 function sbq_center_reservation_get_manage_item($row) {
   $centerid = arg(1);
-  dpm(node_load($row->nid));
   $accept = $ignore = '';
   switch ($row->field_field_reservation_status[0]['raw']['value']) {
     case SBQ_CENTER_RESERVATION_STATUS_SUBMMIT:
