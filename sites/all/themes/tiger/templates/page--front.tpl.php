@@ -122,7 +122,7 @@
   <div class="main">
     <div class="sbq_home_menu">
       <ul class="sbq_patient">
-        <li class="front-redblack color_06"><a href="###" onclick="alert('新功能敬请期待！');">
+        <li class="front-redblack color_06"><a href="###" onclick="alert('榜单沉淀中～敬请期待！');">
           <div class="sbq_img"></div>
           <div class="sbq_title">红黑榜</div>
           <div class="sbq_text">揭示医疗行业真相</div>
@@ -132,7 +132,7 @@
           <div class="sbq_title">问答</div>
           <div class="sbq_text">除了专业还要对症 </div>
           </a></li>
-        <li class="front-event color_05"><a href="/activity/20063">
+        <li class="front-event color_05"><a href="###" onclick="alert('精彩活动，即将开启,敬请期待！');">
           <div class="sbq_img"></div>
           <div class="sbq_title">活动</div>
           <div class="sbq_text">有你参与大不同</div>
