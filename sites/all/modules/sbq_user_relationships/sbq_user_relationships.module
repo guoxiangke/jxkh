@@ -253,6 +253,7 @@ function sbq_user_relationships_profile($info, $view = 'list') {
       }
     }
   }
+  $profile['answers_count'] = sbq_commons_get_count($account->uid, 'answer');
 
   $items = $profile;
   unset($profile);
@@ -265,6 +266,7 @@ function sbq_user_relationships_profile($info, $view = 'list') {
     $profile['disease'] = $items['disease'];
   }
   $profile['follow'] = $items['follow'];
+  $profile['answers_count'] = $items['answers_count'];
   $build = theme('sbq_user_relationships_profile', array( 'image' => $image,
       'profile' => $profile, 'view' => $view ));
 

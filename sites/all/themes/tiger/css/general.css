@@ -1,9 +1,9 @@
 * { margin: 0px; padding: 0px; list-style: none; }
-.sbq_hide{ display: none; }
+.sbq_hide { display: none; }
 /*------font------*/
 textarea,
 input { outline: none; }
-a { text-decoration: none; color: #333333; }
+a { text-decoration: none; color: #333333; outline: none; }
 a:hover { color: #225599; }
 img { border: none; }
 input { outline: none; }
@@ -32,7 +32,8 @@ input,
 .captcha label,
 .sbq_news_list .sbq_title,
 .sbq_news_list_head,
-.form-item-pass { font-family: "Microsoft Yahei", "微软雅黑", "Arial" !important; }
+.form-item-pass,
+.confirmation { font-family: "Microsoft Yahei", "微软雅黑", "Arial" !important; }
 /*------header------*/
 .header { float: left; width: 100%; }
 .header .header_inner { width: 960px; height: 60px; margin: 0 auto; padding: 0px 0px 10px 0px; overflow: hidden; border-bottom: 1px #E5E5E5 solid; }
@@ -71,6 +72,7 @@ input,
 .sbq_page_num .active { text-decoration: underline; color: #225599; }
 /*------sidebar_second------*/
 .sidebar_second { float: left; width: 260px; margin: 0px 0px 0px 20px; }
+.sidebar_second .more-link { float: left; width: 100%; line-height: 22px; text-align: right; font-size: 12px; color: #225599; }
 /*sbq_follow*/
 .sidebar_second .sbq_follow { float: left; width: 100%; }
 .sidebar_second .sbq_follow .sbq_follow_btn { float: left; width: 100%; margin: 0px 0px 15px 0px; }
@@ -105,7 +107,7 @@ input,
 .sidebar_second .sbq_sidebar_list_03 { float: left; width: 100%; padding: 15px 0px 10px 0px; border-top: 1px solid #EEEEEE; }
 .sidebar_second .sbq_sidebar_list_03 .sbq_head { float: left; width: 100%; height: 24px; line-height: 24px; margin: 0px 0px 10px 0px; overflow: hidden; font-size: 14px; font-weight: bold; }
 .sidebar_second .sbq_sidebar_list_03 ul { float: left; width: 100%; }
-.sidebar_second .sbq_sidebar_list_03 ul li { float: left; width: 100%; line-height: 22px; margin: 0px 0px 8px 0px; }
+.sidebar_second .sbq_sidebar_list_03 ul li { float: left; width: 100%; line-height: 22px; margin: 0px 0px 10px 0px; }
 .sidebar_second .sbq_sidebar_list_03 .sbq_user_pic,
 .sidebar_second .sbq_sidebar_list_03 .sbq_user_pic img { float: left; width: 40px; height: 40px; border-radius: 2px; overflow: hidden; }
 .sidebar_second .sbq_sidebar_list_03 .sbq_content { float: left; width: 210px; line-height: 20px; margin: 0px 0px 0px 10px; }
@@ -113,7 +115,7 @@ input,
 .sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_user_name { float: left; max-width: 90px; height: 20px; margin: 0px 5px 0px 0px; font-size: 12px; font-weight: bold; overflow: hidden; }
 .sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_user_name a { float: left; color: #225599; word-break: break-all; word-wrap: break-word; }
 .sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_user_name a:hover { text-decoration: underline; }
-.sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_user_badge { float: left; max-width: 66px; height: 20px; overflow: hidden; }
+.sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_user_badge { float: left; width: auto; max-width: 66px; height: 20px; overflow: hidden; }
 .sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_user_badge a { float: left; margin: 0px 2px 0px 0px; }
 .sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_text { float: left; width: 100%; line-height: 20px; color: #999999; font-family: "Arial"; }
 .sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_follow { float: left; width: auto; }
@@ -257,4 +259,25 @@ input,
 #cboxPrevious { position: absolute; bottom: 0px; left: 0; color: #444; }
 #cboxNext { position: absolute; bottom: 0px; left: 63px; color: #444; }
 #cboxClose { float: left; width: 40px; height: 40px; position: absolute; top: 5px; right: 5px; display: block; text-indent: -999px; overflow: hidden; background: url(../image/close.png) no-repeat; }
-
+/*------cke_editable------*/
+.cke_editable { float: left; width: 100%; height: 100%; line-height: 24px; font-size: 14px; word-break: break-all; word-wrap: break-word; }
+.cke_editable span { display: none; }
+.cke_editable ol,
+.cke_editable ul { list-style-position: outside; margin: 0.8em 0px 0.8em 1.5em; font-family: "Arial", sans-serif; }
+.cke_editable ol li { margin: 0px 0px 5px 0px; list-style-position: outside; list-style-type: decimal; }
+.cke_editable ul li { margin: 0px 0px 5px 0px; list-style-position: outside; list-style-type: disc; }
+.cke_editable a { color: #225599; }
+.cke_editable a:hover { text-decoration: underline; }
+.cke_editable b { font-weight: bold; }
+.cke_editable p { margin: 0px 0px 5px 0px; }
+.cke_editable u { text-decoration: underline; }
+.cke_editable em { font-style: italic; }
+.cke_editable blockquote { margin: 0.8em 0px; padding: 0px 0px 0px 10px; border-left: 3px solid #D0E5F2; vertical-align: baseline; display: block; font-size: 12px; }
+.cke_contents { padding: 5px !important; }
+/*------page-node-delete------*/
+.page-node-delete .content { width: 100%; }
+.page-node-delete .confirmation { line-height: 24px; font-size: 16px; font-weight: bold; }
+.page-node-delete .form-actions { width: 100%; height: 30px; margin: 10px 0px 0px 0px; position: relative; }
+.page-node-delete .form-actions input { float: left; width: 60px; height: 30px; border-radius: 3px; border: 1px #0D6EB8 solid; background: #1575d5; font-size: 14px; color: #FFF; overflow: hidden; }
+.page-node-delete .form-actions #edit-cancel { float: left; width: 60px; height: 30px; line-height: 30px; font-size: 14px; font-weight: normal; text-align: center; }
+-align: center; }

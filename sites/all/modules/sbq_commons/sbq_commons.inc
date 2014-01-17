@@ -610,7 +610,7 @@ EOF;
     case 'recommond_doctors':
       $ids = _sbq_commons_user_recommonds_friends_ids(USER_CERTIFIED_DOCTOR_RID);
       $friends = user_load_multiple($ids);
-      $block_html = '<div class="view"> <div class="view-content">';
+      $block_html = '<ul>';
       foreach ($friends as $value) {
         $relatioships = sbq_user_relationships_action_between_user($user, $value);
         $relatioships = reset($relatioships);
@@ -622,7 +622,7 @@ EOF;
         $block_html .= sbq_user_relationships_profile($accounts_view, 'block');
       }
       if ($block_html) {
-        $block_html .= '</div><div class="more-link"><a href="/user/' . $user->uid . '/relationship/recommand/doctor">更多</a></div></div>';
+        $block_html .= '</ul><div class="more-link"><a href="/user/' . $user->uid . '/relationship/recommand/doctor">更多</a></div>';
       }
       break;
     case 'recommond_patients':
@@ -631,7 +631,7 @@ EOF;
       }
       $ids = _sbq_commons_user_recommonds_friends_ids(USER_PATIENT_RID);
       $friends = user_load_multiple($ids);
-      $block_html = '<div class="view"> <div class="view-content">';
+      $block_html = '<ul>';
       foreach ($friends as $value) {
         $relatioships = sbq_user_relationships_action_between_user($user, $value);
         $relatioships = reset($relatioships);
@@ -643,7 +643,7 @@ EOF;
         $block_html .= sbq_user_relationships_profile($accounts_view, 'block');
       }
       if ($block_html) {
-        $block_html .= '</div><div class="more-link"><a href="/user/' . $user->uid . '/relationship/recommand/patient">更多</a></div></div>';
+        $block_html .= '</ul><div class="more-link"><a href="/user/' . $user->uid . '/relationship/recommand/patient">更多</a></div>';
       }
       break;
     case 'app_page':

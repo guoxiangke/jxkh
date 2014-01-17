@@ -43,15 +43,6 @@
 .sbq_question_final .votes a .count { float: left; width: 100%; height: 24px; line-height: 24px; overflow: hidden; }
 .sbq_question_final .votes a:hover .count,
 .sbq_question_final .votes .active .count { color: #FFF; }
-/*sbq_reply_actions*/
-.sbq_question_final .sbq_reply_actions { float: left; width: 100%; height: 32px; line-height: 22px; position: relative; z-index: 1; }
-.sbq_question_final .sbq_reply_actions ul { float: left; width: 100%; }
-.sbq_question_final .sbq_reply_actions ul li { float: left; margin: 0px 10px 0px 0px; padding: 0px 0px 10px 0px; color: #999999; font-family: Arial; }
-.sbq_question_final .sbq_reply_actions ul li a { float: left; height: 22px; line-height: 22px; color: #999999; font-family: Arial; }
-.sbq_question_final .sbq_reply_actions ul li a:hover { color: #698EBF; }
-.sbq_question_final .sbq_reply_actions ul li .sbq_add_reply_btn { background: url(../image/sbq_reply_actions_icon.png) no-repeat; padding: 0px 0px 0px 18px; }
-.sbq_question_final .sbq_reply_actions ul li .sbq_add_reply_btn:hover { background-position: 0px -22px; }
-.sbq_question_final .sbq_reply_actions ul .active { background: url(../image/sbq_reply_arrow.png) bottom center no-repeat; }
 /*sbq_reply_wrap*/
 .sbq_question_final .sbq_reply_wrap { float: left; width: 578px; margin: -1px 0px 10px 0px; border: 1px #ddd solid; border-radius: 4px; display: none; }
 /*sbq_reply_list*/
@@ -75,8 +66,11 @@
 .sbq_question_final .sbq_reply_wrap .comment_textarea .form-textarea-wrapper { float: left; width: 530px; padding: 5px 8px; border: 1px #CCC solid; background: #FFF; box-shadow: 0px 1px 3px #CCC inset; border-radius: 3px; }
 .sbq_question_final .sbq_reply_wrap .comment_textarea .form-textarea-wrapper textarea { float: left; width: 100%; min-height: 24px; line-height: 24px; margin: 0px; padding: 0px; border: none; resize: none; overflow: hidden; font-size: 12px; }
 .sbq_question_final .sbq_reply_wrap .comment_textarea .grippie { display: none; }
-.sbq_question_final .sbq_reply_wrap .comment_textarea .form-actions { float: right; width: 50px; height: 34px; margin: 10px 0px 0px 0px; }
-.sbq_question_final .sbq_reply_wrap .comment_textarea .form-actions input { float: left; width: 50px; height: 34px; border: none; background: #1575d5; font-size: 14px; color: #FFF; overflow: hidden; border: 1px #0D6EB8 solid; border-radius: 3px; }
+.sbq_question_final .sbq_reply_wrap .comment_textarea .form-actions { float: right; width: 70px; height: 34px; margin: 10px 0px 0px 0px; position: relative; }
+.sbq_question_final .sbq_reply_wrap .comment_textarea .form-actions input { float: left; width: 70px; height: 34px; border: none; background: #1575d5; font-size: 14px; color: #FFF; overflow: hidden; border: 1px #0D6EB8 solid; border-radius: 3px; }
+.sbq_question_final .sbq_reply_wrap .comment_textarea .form-actions .ajax-progress { float: left; width: 72px; height: 36px; overflow: hidden; position: absolute; top: -1px; left: -1px; }
+.sbq_question_final .sbq_reply_wrap .comment_textarea .form-actions .ajax-progress .throbber { display: none; }
+.sbq_question_final .sbq_reply_wrap .comment_textarea .form-actions .ajax-progress .message { float: left; width: 70px; height: 34px; line-height: 34px; border-radius: 3px; border: 1px #818181 solid; background: #999; color: #FFF; font-size: 14px; text-align: center; overflow: hidden; }
 .sbq_question_final .sbq_more_link { float: left; width: 628px; height: 32px; line-height: 32px; margin: 0px 0px 20px 50px; border-radius: 3px; text-align: center; border: 1px #BBB solid; background: url(../image/more_link_bg.png) repeat-x; font-size: 12px; cursor: pointer; color: #333; }
 .sbq_question_final .sbq_more_link:hover { text-decoration: none; }
 /*sbq_answer*/
@@ -88,9 +82,12 @@
 .sbq_question_final .sbq_answer_form label,
 .sbq_question_final .sbq_answer_form .cke_bottom,
 .sbq_question_final .sbq_answer_form .ckeditor_links,
-.sbq_question_final .sbq_answer_form .element-invisible { display: none; }
-.sbq_question_final .sbq_answer_form .form-actions { float: right; width: 50px; height: 34px; margin: 10px 0px 0px 0px; }
-.sbq_question_final .sbq_answer_form .form-actions input { float: left; width: 50px; height: 34px; border: none; background: #1575d5; font-size: 14px; color: #FFF; overflow: hidden; border: 1px #0D6EB8 solid; border-radius: 3px; }
+.sbq_question_final .sbq_answer_form .element-invisible { display: none !important; }
+.sbq_question_final .sbq_answer_form .form-actions { float: right; width: 70px; height: 34px; margin: 10px 0px 0px 0px; position: relative; }
+.sbq_question_final .sbq_answer_form .form-actions input { float: left; width: 70px; height: 34px; line-height: 34px; margin: 0px; padding: 0px; border-radius: 3px; border: 1px #0D6EB8 solid; background: #1575d5; font-size: 14px; color: #FFF; overflow: hidden; }
+.sbq_question_final .sbq_answer_form .form-actions .ajax-progress { float: left; width: 72px; height: 36px; overflow: hidden; position: absolute; top: -1px; left: -1px; }
+.sbq_question_final .sbq_answer_form .form-actions .ajax-progress .throbber { display: none; }
+.sbq_question_final .sbq_answer_form .form-actions .ajax-progress .message { float: left; width: 70px; height: 34px; line-height: 34px; border-radius: 3px; border: 1px #818181 solid; background: #999; color: #FFF; font-size: 14px; text-align: center; overflow: hidden; }
 /*sbq_tags*/
 .sbq_question_final .sbq_tags { float: left; width: 630px; margin: 0px 0px 0px 50px; }
 .sbq_question_list .sbq_tags { float: left; margin: 0px 0px 10px 0px; }
@@ -123,12 +120,29 @@
 .sbq_question_list .votes a .count { float: left; width: 100%; height: 24px; line-height: 24px; overflow: hidden; }
 .sbq_question_list .votes a:hover .count,
 .sbq_question_list .votes .active .count { color: #FFF; }
-/*sbq_reply_actions*/
 .sbq_question_list a:hover { text-decoration: underline; }
+/*sbq_reply_actions
 .sbq_question_list .sbq_reply_actions { float: left; width: 100%; height: 22px; line-height: 22px; margin: 2px 0px 0px 0px; }
 .sbq_question_list .sbq_reply_actions ul { float: left; width: 100%; }
 .sbq_question_list .sbq_reply_actions ul li { float: left; margin: 0px 10px 0px 0px; color: #999999; font-family: Arial; }
 .sbq_question_list .sbq_reply_actions ul li a { float: left; height: 22px; line-height: 22px; color: #999999; }
-.sbq_question_list .sbq_reply_actions ul li a:hover { color: #698EBF; }
-.sbq_question_list .sbq_reply_actions ul li .sbq_add_follow_btn { background: url(../image/sbq_reply_actions_icon.png) no-repeat; background-position: 0px -44px; padding: 0px 0px 0px 18px; }
-.sbq_question_list .sbq_reply_actions ul li .sbq_add_follow_btn:hover { background-position: 0px -66px; }
+.sbq_question_list .sbq_reply_actions ul li a:hover { color: #698EBF; }*/
+
+/*sbq_reply_actions*/
+.sbq_reply_actions { float: left; width: 100%; height: 32px; line-height: 22px; position: relative; z-index: 1; }
+.sbq_reply_actions ul { float: left; width: 100%; }
+.sbq_reply_actions ul li { float: left; margin: 0px 10px 0px 0px; padding: 0px 0px 10px 0px; color: #999999; font-family: Arial; }
+.sbq_reply_actions ul li a { float: left; height: 22px; line-height: 22px; color: #999999; font-family: Arial; }
+.sbq_reply_actions ul li a:hover { color: #698EBF; }
+.sbq_reply_actions ul .active { background: url(../image/sbq_reply_arrow.png) bottom center no-repeat; }
+.sbq_reply_actions ul .sbq_reply_btn a { background: url(../image/sbq_reply_actions_icon.png) no-repeat; padding: 0px 0px 0px 18px; }
+.sbq_reply_actions ul .sbq_reply_btn a:hover { background-position: 0px -22px; }
+.sbq_reply_actions ul .sbq_follow_btn a { background: url(../image/sbq_reply_actions_icon.png) no-repeat; background-position: 0px -44px; padding: 0px 0px 0px 18px; }
+.sbq_reply_actions ul .sbq_follow_btn a:hover { background-position: 0px -66px; }
+.sbq_reply_actions ul .sbq_follow_btn .unflag-action { background: none; padding: 0px; }
+.sbq_reply_actions ul .sbq_delete a { background: url(../image/sbq_reply_actions_icon.png) no-repeat; background-position: 0px -132px; padding: 0px 0px 0px 18px; }
+.sbq_reply_actions ul .sbq_delete a:hover { background-position: 0px -154px; }
+/*------messages------*/
+.messages.warning { display: none; }
+.messages.error { float: left; width: 100%; line-height: 22px; margin: 0px 0px 5px 0px; color: #900; }
+.messages .element-invisible { display: none; }
