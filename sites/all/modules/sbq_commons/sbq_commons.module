@@ -439,20 +439,6 @@ function sbq_commons_user_view($account, $view_mode, $langcode) {
 }
 
 /**
- * Implements hook_user_view_alter().
- */
-function sbq_commons_user_view_alter(&$build) {
-  global $user;
-  if ($build['#account']->uid == $user->uid ) {
-    $build = array();
-  } else {
-    // change sth to control display for other user
-    $account = $build['#account'];
-
-  }
-}
-
-/**
  * Implements hook_menu_alter().
  */
 function sbq_commons_menu_alter(&$items) {
@@ -1187,7 +1173,7 @@ function sbq_commons_views_query_alter(&$view, &$query) {
     }
   }
 
-  if ($view->name == 'message' && ($view->current_display == 'block' || $view->current_display == 'page_1' )) {
+  if ($view->name == 'message' && ($view->current_display == 'block' || $view->current_display == 'page_1' || $view->current_display == 'user_message' )) {
     $friend_ids = array();
     foreach (user_relationships_load(array( 'user' => $user->uid, 'approved' => TRUE ), array( 'include_user_info' => TRUE )) as $key => $value) {
       $friend_ids[] = $user->uid == $value->requester_id ? $value->requestee_id : $value->requester_id;
@@ -1195,6 +1181,20 @@ function sbq_commons_views_query_alter(&$view, &$query) {
     $friend_ids[] = -1;
     $query->where[1]['conditions'][] = array(
         'field' => 'message.uid',
+        'value' => $friend_ids,
+        'operator' => 'in',
+    );
+  }
+
+  if ($view->name == 'sbq_user_center' && ($view->current_display == 'blog_followers' || $view->current_display == 'qa_followers' )) {
+    $friend_ids = array();
+    foreach (user_relationships_load(array( 'user' => $user->uid, 'approved' => TRUE ), array( 'include_user_info' => TRUE )) as $key => $value) {
+      $friend_ids[] = $user->uid == $value->requester_id ? $value->requestee_id : $value->requester_id;
+    }
+
+    $friend_ids[] = -1;
+    $query->where[1]['conditions'][] = array(
+        'field' => 'node.uid',
         'value' => $friend_ids,
         'operator' => 'in',
     );

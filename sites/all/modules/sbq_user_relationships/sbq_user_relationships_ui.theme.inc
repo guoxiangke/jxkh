@@ -91,7 +91,7 @@ function theme_sbq_user_relationships_pending_request_disapprove_link($variables
   return l(
       t('拒绝'), "user/{$uid}/relationship/action/{$rid}/disapprove", array(
       'query' => array( 'destination' => $ajax_token ),
-      'attributes' => array( 'class' => array( 'use-ajax pending_request_disapprove_link ' ) ),
+      'attributes' => array( 'class' => array( 'use-ajax pending_request_disapprove_link refuse ' ) ),
       )
   );
 }
@@ -147,19 +147,32 @@ function theme_sbq_user_relationships_add_user_link($variables) {
  */
 
 function theme_sbq_user_relationships_process_status($variables) {
+  global $user;
+  $menu_sent_active = '';
+  $menu_received_active = '';
+  if ($variables['type'] == 'sent') {
+    $menu_sent_active = 'class="active"';
+  } elseif ($variables['type'] == 'received') {
+    $menu_received_active = 'class="active"';
+  }
+  $nav = '<div class="sbq_nav">'
+          .'<ul>'
+            .'<li>'.l('系统消息', 'user/message').'</li>'
+            .'<li '.$menu_sent_active.'>'.l('我发送的请求', 'user/'.$user->uid.'/relationship/default/sent').'</li>'
+            .'<li '.$menu_received_active.'>'.l('我收到的请求', 'user/'.$user->uid.'/relationship/default/received').'</li>'
+          .'</ul>'
+        .'</div>';
   $output = array(
-      '#prefix' => '<div class="sbq-relationships-sent"><ul>',
-      '#suffix' => '</ul></div>'
+      '#prefix' => '<div class="sbq_user_message">'.$nav.'<div class="sbq_con"><ul>',
+      '#suffix' => '</ul></div></div>'
   );
   $li = '';
   foreach ($variables['relationships'] as $relationship) {
     $row = sbq_user_relationships_user_action($relationship, $variables['account']);
     if ($variables['type'] == 'sent') {
-      $li .= "<li>请求<span name='name'>{$row['user']->name}</span>成为你的好友<span class='cancel " . $variables['type'] . "'>{$row[1]}</span></li>";
+      $li .= '<li><div class="sbq_text">请求'.$row['user']->name.'成为你的好友</div><div class="sbq_actions">'.$row[1].'</div></li>';
     } elseif ($variables['type'] == 'received') {
-      global $user;
-      $vid = $user->uid == $relationship->requester_id ? $relationship->requestee_id : $relationship->requester_id;
-      $li .= "<li><span name='name'>{$row['user']->name}</span>请求成为你的好友<span class='cancel " . $variables['type'] . $vid . "'>{$row[1]}</span></li>";
+      $li .= '<li><div class="sbq_text">'.$row['user']->name.'</div>请求成为你的好友<div class="sbq_actions">'.$row[1].'</div></li>';
     }
   }
   if (empty($li)) {
