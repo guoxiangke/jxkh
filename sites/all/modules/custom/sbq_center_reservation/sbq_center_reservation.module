@@ -51,7 +51,7 @@ function sbq_center_reservation_menu() {
       'page callback' => 'sbq_center_reservation_created',
       'page arguments' => array( 1 ),
       'access callback' => 'sbq_center_reservation_access',
-      'access arguments' => array( 1, NULL, 'create sbq_center_reservation conten' ),
+      'access arguments' => array( 1, NULL, 'create sbq_center_reservation content' ),
       'type' => MENU_NORMAL_ITEM,
       'file' => 'sbq_center_reservation.inc'
   );
@@ -90,7 +90,7 @@ function sbq_center_reservation_access($center, $reservation = NULL, $type = NUL
   global $user;
   if (!$account) {
     $account = $user;
-  }dpm(og_get_permissions());
+  }
   if (!og_user_access('node', $center->nid, $type, $account)) {
     return FALSE;
   } 
@@ -232,9 +232,9 @@ function sbq_center_reservation_fetch_by_center($centerid) {
 }
 
 function sbq_center_reservation_node_submit($node, $form, $form_state) {
-  dpm($node);
-  dpm($form);
-  dpm($form_state);
+//  dpm($node);
+//  dpm($form);
+//  dpm($form_state);
 }
 
 /**
