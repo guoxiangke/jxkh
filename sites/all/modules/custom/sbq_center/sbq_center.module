@@ -1601,10 +1601,7 @@ function sbq_center_get_center_by_user($account = null) {
  * @return type node object
  * @throws Exception
  */
-function sbq_center_get_center($nid = NULL) {
-  if (!$nid) {
-    $nid = arg(1);
-  }
+function sbq_center_load($nid) {
   if ($node = node_load($nid)) {
     if ($node->type != SBQ_CENTER_NODE_TYPE) {
       return null;
@@ -1619,9 +1616,14 @@ function sbq_center_group_post($centerid = NULL) {
   if (is_object($centerid)) {
     $center = $centerid;
   } else {
-    $center = sbq_center_get_center($centerid);
+    $center = sbq_center_load($centerid);
   }
   if (!$center) {
     return array();
   }
+}
+
+
+function sbq_center_node_view($node, $view_mode, $langcode) {
+ // dpm($node);
 }
