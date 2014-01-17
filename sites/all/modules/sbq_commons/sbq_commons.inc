@@ -384,10 +384,6 @@ function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_time
     return;
   }
 
-  // Get placement in form and insert in form.
-  $captcha_placement = _captcha_get_captcha_placement($form_id, $form);
-  _captcha_insert_captcha_element($form, $captcha_placement, $captcha_element);
-
 }
 
 /**
