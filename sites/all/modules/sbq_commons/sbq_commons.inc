@@ -350,54 +350,40 @@ function sbq_commons_modal_html($data, $id = 'sbq_modal', $title = '') {
  * @see captcha_form_alter
  */
 function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_times = 3, $mintue = 10) {
-  $url = explode('/', $_GET['q']);
-  if (isset($url[0]) && $url[0] == 'api') {
+ if (!module_exists('captcha')) {
     return;
   }
-
-  $pre_times = $fail_times - 1;
-  $pre_ind = $fail_times - 2;
-  // Visitor does not have permission to skip CAPTCHAs.
+  $url = explode('/', $_GET['q']);
+  if (isset($url[0]) && $url[0] == 'api') {
+    if (isset($form['captcha'])) {
+      unset($form['captcha']);
+    }
+    return;
+  }
+  if (!in_array($form_id, array( 'user_login_block', 'user_login' ))) {
+    return;
+  }
   module_load_include('inc', 'captcha');
-  // Get CAPTCHA type and module for given form_id.
   $captcha_point = captcha_get_form_id_setting($form_id);
-
   if (!$captcha_point || !$captcha_point->captcha_type) {
     return;
   }
-  if ($form_id == 'user_login_block' || $form_id == 'user_login') {
-    $current_ip = ip_address();
-    $fail_login = db_select('flood', 'f')
-        ->fields('f')
-        ->condition('event', 'failed_login_attempt_ip')
-        ->condition('identifier', $current_ip)
-        ->range(0, $fail_times)
-        ->orderBy('timestamp', 'desc')
-        ->execute();
-    if ($fail_login->rowCount() < $pre_times) {
-      return;
-    }
-    $result = $fail_login->fetchAll();
-    $time_length = (time() - $result[$pre_ind]->timestamp) / 60;
-    if ($time_length > $mintue) {
-      return;
-    }
+
+  $current_ip = ip_address();
+  $fail_login = db_select('flood', 'f')
+      ->fields('f')
+      ->condition('event', 'failed_login_attempt_ip')
+      ->condition('identifier', $current_ip)
+      ->range(0, $fail_times)
+      ->orderBy('timestamp', 'desc')
+      ->execute();
+  $result = $fail_login->fetchAll();
+  if (!$result) {
+    unset($form['captcha']);
+  } elseif (count($result) == $fail_times && ((time() - $result[2]->timestamp)/60) < $mintue) {
+    return;
   }
 
-  // Build CAPTCHA form element.
-  $captcha_element = array(
-      '#type' => 'captcha',
-      '#captcha_type' => $captcha_point->module . '/' . $captcha_point->captcha_type,
-      '#weight' => 99,
-  );
-  // Add a CAPTCHA description if required.
-  if (variable_get('captcha_add_captcha_description', TRUE)) {
-    $captcha_element['#description'] = _captcha_get_description();
-  }
-
-  // Get placement in form and insert in form.
-  $captcha_placement = _captcha_get_captcha_placement($form_id, $form);
-  _captcha_insert_captcha_element($form, $captcha_placement, $captcha_element);
 }
 
 /**
