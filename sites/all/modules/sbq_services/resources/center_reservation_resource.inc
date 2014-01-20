@@ -58,7 +58,7 @@ function center_reservation_query($centerid, $fun = NULL, $uid, $page, $fields, 
   //$uid = isset($parameters['uid']) ? $parameters['uid'] : $uid->uid;
 
   $data = sbq_center_reservation_get_reservation($user->uid, null, array( 'targetid' => $centerid, 'page' => array( 'page' => $page, 'pagesize' => $pagesize ) ));
-  return $data;
+
   $nodes['reservation'] = _center_reservation_format($data, 'data', TRUE);
   return $nodes;
 }
