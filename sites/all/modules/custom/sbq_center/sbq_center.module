@@ -1513,7 +1513,6 @@ function sbq_center_form_alter(&$form, &$form_state, $form_id) {
 
 function sbq_center_ask_form_submit($form, &$form_state) {
   $form_state['redirect'] = FALSE;
-  dpm($form_state);
 }
 
 /*

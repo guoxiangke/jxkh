@@ -98,5 +98,4 @@ function sbq_center_reservation_created($center, $account = NULL) {
   );
   drupal_set_title(t('Create @name', array( '@name' => $types[SBQ_CENTER_RESERVATION_NODE_TYPE]->name )), PASS_THROUGH);
   return drupal_get_form('sbq_center_reservation_node_form', (object)$node);
-
 }
