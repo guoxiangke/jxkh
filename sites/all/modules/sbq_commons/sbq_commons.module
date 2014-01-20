@@ -235,13 +235,13 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
       // $form['account']['mail']['#title'] = t('电子邮箱');
       // $form['actions']['submit']['#value'] = t('立即注册');
 
-      // $form['agree'] = array(
-      //     '#type' => 'checkbox',
-      //     '#title' => t('同意' . l('伤不起服务条款', "node/20151", array(
-      //             'attributes' => array( 'target' => '_blank', 'class' => 'argee_regester' ) ))),
-      //     '#default_value' => TRUE,
-      //     '#weight' => 99.9
-      // );
+      $form['agree'] = array(
+          '#type' => 'checkbox',
+          '#title' => t('同意' . l('伤不起服务条款', "node/20151", array(
+                  'attributes' => array( 'target' => '_blank', 'class' => 'argee_regester' ) ))),
+          '#default_value' => TRUE,
+          '#weight' => 99.9
+      );
       break;
     case 'user_login_block':
       //@see template.php in zen_sbq

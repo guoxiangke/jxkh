@@ -33,9 +33,9 @@
 .sbq_reg .sbq_reg_nav .sbq_reg_d { background-position: center -50px; }
 .sbq_reg .sbq_reg_content { float: left; width: 100%; padding: 30px 0px; background: #fcfcfc; }
 .body { float: left; width: 100%; margin-top: 60px; }
-.body .main { width: 700px; margin: 0 auto; }
+.body .main { width: 680px; margin: 0 auto; }
 /*sbq_tips*/
-.sbq_form_01 .sbq_tips { clear: both; width: 340px; line-height: 24px; margin: 0px 0px 0px 10px; font-size: 12px; display: inline-block; }
+.sbq_form_01 .sbq_tips { clear: both; width: 330px; line-height: 24px; margin: 0px 0px 0px 10px; font-size: 12px; display: inline-block; }
 .sbq_form_01 .sbq_tips_error { float: left; max-height: 330px; height: 24px; padding: 5px; border: 1px #E6393D solid; background: #FEF5F1; color: #E6393D; overflow: hidden; }
 .sbq_form_01 .sbq_tips_pass { float: left; max-height: 330px; height: 24px; padding: 5px; border: 1px #009900 solid; background: #F8FFF0; color: #009900; overflow: hidden; }
 .sbq_form_01 .sbq_tips_text { float: left; max-height: 330px; height: 24px; padding: 6px; color: #666; overflow: hidden; }

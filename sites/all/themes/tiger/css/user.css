@@ -141,6 +141,11 @@
 .form-item-pass .form-item { float: left; width: 100%; padding: 10px 0px; font-size: 14px; position: relative; }
 .sbq_form_wrap .sbq_form_01 label { float: left; width: 110px; height: 36px; line-height: 36px; margin: 0px 10px 0px 0px; text-align: right; overflow: hidden; }
 .sbq_form_wrap .sbq_form_01 .sbq_text { float: left; width: 550px; line-height: 22px; padding: 7px 0px; word-break: break-all; word-wrap: break-word; }
+/*sbq_tips*/
+.sbq_form_01 .sbq_tips { clear: both; width: 340px; line-height: 20px; margin: 0px 0px 0px 10px; font-size: 12px; display: inline-block; }
+.sbq_form_01 .sbq_tips_error { float: left; padding: 5px; border: 1px #E6393D solid; background: #FEF5F1; color: #E6393D; }
+.sbq_form_01 .sbq_tips_pass { float: left; padding: 5px; border: 1px #009900 solid; background: #F8FFF0; color: #009900; }
+.sbq_form_01 .sbq_tips_text { float: left; padding: 6px; color: #666; }
 /*.sbq_form_01 label,
 .sbq_botton_01 label,
 .field-type-datetime legend,
@@ -168,11 +173,7 @@
 .field-type-datetime { float: left; width: 100%; }
 .field-type-datetime .fieldset-wrapper label { width: auto; margin: 0px 5px; }
 .field-type-datetime .description { }*/
-/*sbq_tips*/
-.sbq_form_01 .sbq_tips { clear: both; width: 340px; line-height: 20px; margin: 0px 0px 0px 10px; font-size: 12px; display: inline-block; }
-.sbq_form_01 .sbq_tips_error { float: left; padding: 5px; border: 1px #E6393D solid; background: #FEF5F1; color: #E6393D; }
-.sbq_form_01 .sbq_tips_pass { float: left; padding: 5px; border: 1px #009900 solid; background: #F8FFF0; color: #009900; }
-.sbq_form_01 .sbq_tips_text { float: left; padding: 6px; color: #666; }
+
 /*------fix_form------*/
 /*password-strength
 .form-item-pass { float: left; width: 100%; }
@@ -199,11 +200,11 @@
 
 /*sbq_add_content*/
 .sbq_add_content { float: left; width: 100%; }
-.sbq_add_content .sbq_title { float: left; width: 100%; height: 30px; line-height: 30px; margin: 0px 0px 5px 0px; font-size: 16px; font-weight: bold; border-bottom: 1px #EEEEEE solid; }
+.sbq_add_content .sbq_title { float: left; width: 100%; height: 30px; line-height: 30px; margin: 0px 0px 10px 0px; font-size: 16px; font-weight: bold; border-bottom: 1px #EEEEEE solid; }
 .sbq_add_content .field-type-text-with-summary label,
 .sbq_add_content .cke_bottom,
 .sbq_add_content .ckeditor_links,
-.sbq_add_content .element-invisible { display: none; }
+.sbq_add_content .element-invisible { display: none !important; }
 .sbq_add_content .sbq_form_02 { float: left; width: 100%; margin: 0px 0px 10px 0px; }
 .sbq_add_content label { float: left; width: 100%; height: 26px; line-height: 26px; margin: 0px 0px 5px 0px; color: #666; font-size: 14px; }
 .sbq_form_02 .form-text { float: left; width: 660px; height: 30px; line-height: 30px; padding: 0px 9px; border: 1px #B6B6B6 solid; }
@@ -241,7 +242,7 @@
 .sbq_user_badge .sbq_con .sbq_content { float: left; width: 245px; margin: 0px 0px 0px 10px; }
 .sbq_user_badge .sbq_con .sbq_title { float: left; width: 100%; height: 20px; line-height: 20px; font-size: 14px; font-weight: bold; }
 .sbq_user_badge .sbq_con .sbq_text { float: left; width: 100%; height: 40px; line-height: 20px; margin: 0px 0px 0px 0px; overflow: hidden; }
-%; height: 20px; line-height: 20px; font-size: 14px; font-weight: bold; }
+x; line-height: 20px; font-size: 14px; font-weight: bold; }
 .sbq_user_badge .sbq_con .sbq_text { float: left; width: 100%; height: 40px; line-height: 20px; margin: 0px 0px 0px 0px; overflow: hidden; }
  left; width: 100%; height: 20px; line-height: 20px; font-size: 14px; font-weight: bold; }
 .sbq_user_badge .sbq_con .sbq_text { float: left; width: 100%; height: 40px; line-height: 20px; margin: 0px 0px 0px 0px; overflow: hidden; }

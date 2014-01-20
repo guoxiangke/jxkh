@@ -63,8 +63,10 @@
       <?php print $rows; ?>
     </div>
   <?php elseif ($empty): ?>
-    <div class="view-empty">
-      <?php print $empty; ?>
+    <div class="sbq_con">
+      <ul>
+        <li><?php print $empty; ?></li>
+      </ul>
     </div>
   <?php endif; ?>
 

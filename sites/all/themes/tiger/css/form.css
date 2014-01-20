@@ -15,7 +15,7 @@
 .sbq_form_wrap input[type="password"]:focus { border: 1px #3385d6 solid; box-shadow: 0px 0px 2px #3385d6; }
 /*textarea*/
 .sbq_form_wrap .sbq_form_01 .grippie { display: none; }
-.sbq_form_wrap .sbq_form_01 textarea { float: left; width: 478px; padding: 10px; height: 66px; line-height: 22px; border: 1px #dddddd solid; resize: none; overflow: hidden; }
+.sbq_form_wrap .sbq_form_01 textarea { float: left; width: 398px; padding: 10px; height: 66px; line-height: 22px; border: 1px #dddddd solid; resize: none; overflow: hidden; }
 .sbq_form_wrap .sbq_form_01 textarea:focus { border: 1px #3385d6 solid; box-shadow: 0px 0px 2px #3385d6; }
 /*select*/
 .sbq_form_wrap select { float: left; height: 22px; line-height: 22px; margin: 7px 5px 0px 0px; vertical-align: middle; }
@@ -26,6 +26,10 @@
 .sbq_form_wrap .sbq_form_01 .sbq_radio_wrap { float: left; width: 220px; }
 .sbq_form_wrap .sbq_form_01 .sbq_radio_wrap label { width: auto; margin: 0px 5px; }
 .sbq_form_wrap .sbq_form_01 .sbq_radio_wrap input { float: left; border: none; width: 14px; height: 14px; margin: 10px 0px 0px 0px; padding: 0px; background: none; }
+/*sbq_checkbox_01*/
+.sbq_checkbox_01 { float: left; line-height: 26px; padding: 5px 0px 5px 120px; }
+.sbq_checkbox_01 input { float: left; height: 26px; line-height: 26px; }
+.sbq_checkbox_01 label { float: left; height: 26px; line-height: 26px; margin: 0px 5px; }
 /*botton*/
 .sbq_form_wrap .sbq_botton_01 { float: left; width: 100%; padding: 10px 0px; }
 .sbq_form_wrap .sbq_botton_01 .sbq_btn { float: left; width: 80px; height: 36px; line-height: 36px; padding: 0px; border: none; border-radius: 3px; background: #1575D5; color: #FFF; font-size: 14px; }
@@ -34,6 +38,7 @@
 /*edit-picture*/
 .sbq_form_wrap #edit-picture { float: left; width: 100%; }
 .sbq_form_wrap #edit-picture .form-item { float: left; width: 100%; margin: 10px 0px 0px 0px; }
+.sbq_form_wrap #edit-picture img { max-width: 400px; }
 /*field-type-image*/
 .sbq_form_wrap .field-type-image { float: left; width: 100%; }
 .sbq_form_wrap .field-type-image fieldset { border: none; }
