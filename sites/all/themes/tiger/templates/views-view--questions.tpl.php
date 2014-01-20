@@ -32,36 +32,44 @@
  // }
  // echo "<h1>$main_title</h1>";
 ?>
+<?php
+  // get tags
+  if ($cache = cache_get('sbq_questions_list_tags')) {
+    $tags_output = $cache->data;
+  }
+  else {
+    // Create data.
+    $vocabulary = taxonomy_vocabulary_machine_name_load('tags');
+    $terms = taxonomy_get_tree($vocabulary->vid);
+    $tags_output = '';
+    foreach ($terms as $key => $tag) {
+      $tag_title = trim($tag->name);
+      $tid = trim($tag->tid);
+      if (strlen($tag_title)>0 && $tid>0) {
+        $tag_count = 0;
+        $nids = taxonomy_select_nodes($tid, FALSE);
+        foreach($nids as $nid) {
+          $node = node_load($nid);
+          if ($node->type == 'question' && $node->status) {
+            $tag_count++;
+          }
+        }
+        if ($tag_count > 5) {
+          $tags_output .= '<li>'
+            . '<a href="'.url('questions/tagged/').'?field_tags_tid='.$tag_title.'">'
+            . '<span class="sbq_tit">'.$tag_title.'</span>'
+            . '<span class="sbq_num">'.$tag_count.'</span>'
+            . '</a>';
+        }
+      }
+    }
+    cache_set('sbq_questions_list_tags', $tags_output);
+  }
+?>
 <div class="sbq_question_list">
   <div class="sbq_tags">
     <ul>
-    <?php //tags
-    // TODO: performance
-      $vocabulary = taxonomy_vocabulary_machine_name_load('tags');
-      $terms = taxonomy_get_tree($vocabulary->vid);
-      foreach ($terms as $key => $tag) {
-        $tag_title = trim($tag->name);
-        $tid = trim($tag->tid);
-        if (strlen($tag_title)>0 && $tid>0) {
-          $tag_count = 0;
-          $nids = taxonomy_select_nodes($tid, FALSE);
-          foreach($nids as $nid) {
-            $node = node_load($nid);
-            if ($node->type == 'question' && $node->status) {
-              $tag_count++;
-            }
-          }
-          if ($tag_count > 5) {
-            $output = '<li>'
-              . '<a href="'.url('questions/tagged/').'?field_tags_tid='.$tag_title.'">'
-              . '<span class="sbq_tit">'.$tag_title.'</span>'
-              . '<span class="sbq_num">'.$tag_count.'</span>'
-              . '</a>';
-            print $output;
-          }
-        }
-      }
-    ?>
+      <?php print $tags_output; ?>
     </ul>
   </div>
   <?php print render($title_prefix); ?>
