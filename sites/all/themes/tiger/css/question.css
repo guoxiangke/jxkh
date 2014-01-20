@@ -144,5 +144,6 @@
 .sbq_reply_actions ul .sbq_delete a:hover { background-position: 0px -154px; }
 /*------messages------*/
 .messages.warning { display: none; }
-.messages.error { float: left; width: 100%; line-height: 22px; margin: 0px 0px 5px 0px; color: #900; }
+.messages.error { width: 100%; line-height: 22px; margin: 0px 0px 5px 0px; color: #900; }
 .messages .element-invisible { display: none; }
+ay: none; }

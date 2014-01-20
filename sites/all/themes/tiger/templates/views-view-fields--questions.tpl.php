@@ -53,7 +53,7 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
   <h2 class="sbq_title"><?php print $title; ?></h2>
   <div class="votes"><a href="/question/<?php print $nid; ?>"><span class="count"><?php print $fields['field_computed_answers']->content; ?></span></a></div>
   <div class="sbq_content">
-    <div class="sbq_user_name"><?php print $q_author; ?></div>
+    <div class="sbq_user_name"><?php print $name; ?></div>
     <div class="sbq_text"><?php print $body; ?></div>
     <div class="sbq_reply_actions">
       <ul>
