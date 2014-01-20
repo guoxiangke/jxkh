@@ -53,20 +53,20 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
   <h2 class="sbq_title"><?php print $title; ?></h2>
   <div class="votes"><a href="/question/<?php print $nid; ?>"><span class="count"><?php print $fields['field_computed_answers']->content; ?></span></a></div>
   <div class="sbq_content">
-    <div class="sbq_user_name"><?php print $q_author; ?></div>
+    <div class="sbq_user_name"><?php print $name; ?></div>
     <div class="sbq_text"><?php print $body; ?></div>
     <div class="sbq_reply_actions">
       <ul>
-        <li><?php print flag_create_link('follow', $nid); ?></li>
+        <li class="sbq_follow_btn"><?php print flag_create_link('follow', $nid); ?></li>
         <?php if ($node->comment_count > 0) {?>
-          <li>回复(<?php print $node->comment_count; ?>)</li>
+          <li class="sbq_reply_btn">回复(<?php print $node->comment_count; ?>)</li>
         <?php }?>
         <li><?php print $published_at; ?></li>
         <?php if(!empty($edit_node)): ?>
-        <li class="edit"><?php print $edit_node; ?></li>
+        <li class="sbq_edit"><?php print $edit_node; ?></li>
         <?php endif;?>
         <?php if(!empty($delete_node)): ?>
-        <li class="delete"><?php print $delete_node; ?></li>
+        <li class="sbq_delete"><?php print $delete_node; ?></li>
         <?php endif;?>
       </ul>
     </div>

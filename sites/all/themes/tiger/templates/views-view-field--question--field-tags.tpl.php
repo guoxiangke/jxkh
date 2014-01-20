@@ -28,9 +28,14 @@
     $tag_title = trim($tag['rendered']['#title']);
     $tid = trim($tag['raw']['tid']);
     if (strlen($tag_title)>0 && $tid>0) {
-      $tag_count = 1;
+      $tag_count = 0;
       $nids = taxonomy_select_nodes($tid, FALSE);
-      $tag_count = count($nids);
+      foreach($nids as $nid) {
+        $node = node_load($nid);
+        if ($node->type == 'question' && $node->status) {
+          $tag_count++;
+        }
+      }
       $output = '<li>'
         . '<a href="'.url('questions/tagged/').'?field_tags_tid='.$tag_title.'">'
         . '<span class="sbq_tit">'.$tag_title.'</span>'

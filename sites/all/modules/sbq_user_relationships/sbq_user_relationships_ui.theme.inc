@@ -129,14 +129,14 @@ function theme_sbq_user_relationships_add_user_link($variables) {
   $relationships = user_relationships_load($vid);
 
   if ($rid == FRIEND_DOCTOR_PATIENT) {
-    $replace = '+请求';
+    $replace = '请求';
   } else {
-    $replace = '+关注';
+    $replace = '关注';
   }
   $rand = uniqid();
   $ajax_token = 'user_relationships_' . $vid.$rand;
   return l($replace, "relationship/ajax/{$uid}/request/{$rid}/{$vid}?destination={$ajax_token}", array(
-      'attributes' => array( 'class' => 'use-ajax sbq_add_follow_btn ' . $ajax_token ) )
+      'attributes' => array( 'class' => 'use-ajax sbq_add_follow_btn add ' . $ajax_token ) )
   );
 }
 

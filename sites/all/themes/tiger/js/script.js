@@ -2,7 +2,7 @@ jQuery(function($) {
   // jQuery here
   $('.sbq_add_reply_btn').live("click", function(){
     $(this).parent('li').toggleClass('active');
-    $(this).parents('.sbq_reply_actions').next('.sbq_reply_wrap').slideToggle();
+    $(this).parents('.sbq_reply_actions').next('.sbq_reply_wrap').slideToggle(50);
     return false;
   });
 

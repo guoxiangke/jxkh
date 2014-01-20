@@ -227,19 +227,18 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
 
       break;
     case 'user_register_form':
-      $form['profile_doctor_profile']['#access'] = FALSE;
-      $form['profile_customer_profile']['#access'] = FALSE;
-      //隐藏csna登录
-      $form['csna_login']['#access'] = FALSE;
-      $form['account']['name']['#title'] = t('登录帐户');
-      $form['account']['mail']['#title'] = t('电子邮箱');
-      $form['actions']['submit']['#value'] = t('立即注册');
+      // $form['profile_doctor_profile']['#access'] = FALSE;
+      // $form['profile_customer_profile']['#access'] = FALSE;
+      // //隐藏csna登录
+      // $form['csna_login']['#access'] = FALSE;
+      // $form['account']['name']['#title'] = t('登录帐户');
+      // $form['account']['mail']['#title'] = t('电子邮箱');
+      // $form['actions']['submit']['#value'] = t('立即注册');
 
       $form['agree'] = array(
           '#type' => 'checkbox',
           '#title' => t('同意' . l('伤不起服务条款', "node/20151", array(
-                  'attributes' => array( 'target' => '_blank', 'class' => array('agree_register') ) ))
-              ),
+                  'attributes' => array( 'target' => '_blank', 'class' => 'argee_regester' ) ))),
           '#default_value' => TRUE,
           '#weight' => 99.9
       );

@@ -120,6 +120,7 @@
 </div>
 <div class="body">
   <div class="main">
+    <?php print $messages; ?>
     <div class="sbq_home_menu">
       <ul class="sbq_patient">
         <li class="front-redblack color_06"><a href="###" onclick="alert('榜单沉淀中～敬请期待！');">

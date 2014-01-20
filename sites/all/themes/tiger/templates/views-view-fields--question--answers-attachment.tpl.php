@@ -64,7 +64,7 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
     <div class="sbq_reply_actions">
       <ul>
         <li class="sbq_date"><?php print $created; ?></li>
-        <li><a href="#" class="sbq_add_reply_btn">
+        <li class="sbq_reply_btn"><a href="#" class="sbq_add_reply_btn">
           <?php if ($node->comment_count == 0) {?>
             添加评论
           <?php } else {?>
@@ -72,10 +72,10 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
           <?php }?>
         </a></li>
         <?php if(!empty($edit_node)): ?>
-        <li class="edit"><?php print $edit_node; ?></li>
+        <li class="sbq_edit"><?php print $edit_node; ?></li>
         <?php endif;?>
         <?php if(!empty($delete_node)): ?>
-        <li class="delete"><?php print $delete_node; ?></li>
+        <li class="sbq_delete"><?php print $delete_node; ?></li>
         <?php endif;?>
       </ul>
     </div>

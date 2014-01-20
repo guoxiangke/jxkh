@@ -94,7 +94,7 @@
         <a href="/user/login" class="log">登录</a>|<a href="/customer/register">注册</a>
       </div>
       <div class="sbq_user_pic">
-        <a href="#"><img src="../image/default_avatar.png" width="50" height="50"  alt=""/></a>
+        <a href="#"><img src="/<?php print drupal_get_path('theme', 'tiger'); ?>/image/default_avatar.png" width="50" height="50"  alt=""/></a>
       </div>
       <?php endif; ?>
       <?php if ($logged_in): ?>
@@ -153,6 +153,7 @@
 <?php endif; ?>
 <div class="body">
   <div class="main">
+    <?php print $messages; ?>
     <?php if ($logged_in): ?>
     <div class="sbq_user_headr"><img src="/sites/all/themes/tiger/image/sbq_user_headr_bg.jpg" width="960" height="200"  alt=""/></div>
     <div class="sbq_user_info">
