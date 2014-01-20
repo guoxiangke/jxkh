@@ -14,7 +14,7 @@ $is_reservation = sbq_center_reservation_can_reservation($item['date']);
 <td <?php print $id ?>class="<?php print $item['class'] ?>" colspan="<?php print $item['colspan'] ?>" rowspan="<?php print $item['rowspan'] ?>"<?php print $date . $headers . $day; ?>>
 
   <?php if ($is_reservation): ?>
-    <a href="/node/add/sbq-center-reservation">
+  <a href="/center/<?php echo arg(1);?>/reservation/created">
       <div class="inner reservation-item"  style="background: red;">
         <?php print $item['entry'] ?>
       </div>

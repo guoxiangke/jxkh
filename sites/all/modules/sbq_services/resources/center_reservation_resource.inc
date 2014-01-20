@@ -49,15 +49,16 @@ function center_reservation_query($centerid, $fun = NULL, $uid, $page, $fields, 
       if (!function_exists($function)) {
         services_error("no found $fun resources", 404);
       }
-      return $function($centerid, $uid, $page, $fields, $parameters, $pagesize);
+      return $function($centerid, $user->uid, $page, $fields, $parameters, $pagesize);
     } else {
       $data = sbq_center_reservation_get_reservation($uid->uid, $fun);
       return reset(_center_reservation_format($data, 'data'));
     }
   }
-  $uid = isset($parameters['uid']) ? $parameters['uid'] : $uid->uid;
+  //$uid = isset($parameters['uid']) ? $parameters['uid'] : $uid->uid;
 
-  $data = sbq_center_reservation_get_reservation($uid, null, array( 'targetid' => $centerid, 'page' => array( 'page' => $page, 'pagesize' => $pagesize ) ));
+  $data = sbq_center_reservation_get_reservation($user->uid, null, array( 'targetid' => $centerid, 'page' => array( 'page' => $page, 'pagesize' => $pagesize ) ));
+  return $data;
   $nodes['reservation'] = _center_reservation_format($data, 'data', TRUE);
   return $nodes;
 }
@@ -87,7 +88,10 @@ function _center_reservation_format($data, $type = 'node', $is_list = FALSE) {
       $node['field_case_num']['und'][0]['value'] = $value['case_num'];
       $node['field_phone']['und'][0]['value'] = $value['phone'];
       $node['og_group_ref']['und'][0]['target_id'] = $value['centerid'];
+      //pop-up
       $node['field_reservation_time']['und'][0]['value']['date'] = date('Y-m-d', $value['reservation_time']);
+      $node['field_reservation_time']['und'][0]['value']['time'] = date('H:i', $value['reservation_time']);
+      // $node['field_reservation_time']['und'][0]['value']['date'] = date('Y-m-d', $value['reservation_time']);
     } else {
       $node['nid'] = (int) $value['nid'];
       $node['body'] = $value['body']['und'][0]['value'];
@@ -97,7 +101,7 @@ function _center_reservation_format($data, $type = 'node', $is_list = FALSE) {
       $node['identity'] = $value['field_identity']['und'][0]['value'];
       $node['case_num'] = $value['field_case_num']['und'][0]['value'];
       $node['phone'] = $value['field_phone']['und'][0]['value'];
-      $node['status'] =  $value['field_reservation_status']['und'][0]['value'];
+      $node['status'] = $value['field_reservation_status']['und'][0]['value'];
       $date = new DateTime($value['field_reservation_time']['und'][0]['value']);
       $node['reservation_time'] = $date->getTimestamp();
     }

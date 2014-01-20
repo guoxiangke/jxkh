@@ -22,7 +22,7 @@ function sbq_center_opendays_form($form, $form_status, $center) {
         '#type' => 'checkboxes',
         '#options' => array(
             'a' => '上午',
-            'b' => '下午'
+            'p' => '下午'
         )
     );
   }

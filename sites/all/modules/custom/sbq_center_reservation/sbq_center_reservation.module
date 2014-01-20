@@ -86,14 +86,14 @@ function sbq_center_reservation_og_permission() {
 }
 
 function sbq_center_reservation_access($center, $reservation = NULL, $type = NULL, $account = NULL) {
-   
+
   global $user;
   if (!$account) {
     $account = $user;
   }
   if (!og_user_access('node', $center->nid, $type, $account)) {
     return FALSE;
-  } 
+  }
   switch ($type) {
     case 'cancel own center reservation':
       return $reservation->uid == $account->uid;
@@ -170,6 +170,16 @@ function sbq_center_reservation_can_reservation($date, $center = '') {
   if (!$center) {
     $center = arg(1);
   }
+
+  if (is_array($date)) {
+    $date = $date['date'];
+    $time = $date['time'];
+  } else {
+    $datetime = new DateTime($date);
+    $date = date('Y-m-d', $datetime->getTimestamp());
+    $time = date('H', $datetime->getTimestamp());
+  }
+
   $settings = sbq_center_reservation_get_settings($center);
   $week_index = date_day_of_week($date);
   $week = array(
@@ -184,9 +194,21 @@ function sbq_center_reservation_can_reservation($date, $center = '') {
   if (strtotime($date) < time()) {
     return FALSE;
   }
-  $reservation = $settings['opendays'][$week[$week_index]];
 
-  return $reservation['a'] || $reservation['b'];
+  $reservation = $settings['opendays'][$week[$week_index]];
+  //dpm($reservation);
+
+  if ($reservation['a']) {
+    if ($time > 9 && $time < 12) {
+      return true;
+    }
+  }
+  if ($reservation['b']) {
+    if ($time > 13 && $time < 18) {
+      return true;
+    }
+  }
+  return FALSE;
 }
 
 /*
@@ -194,7 +216,7 @@ function sbq_center_reservation_can_reservation($date, $center = '') {
  */
 
 function sbq_center_reservation_form_alter(&$form, $form_states) {
-  if (isset($form['#bundle']) && $form['#bundle'] == SBQ_CENTER_RESERVATION_NODE_TYPE && isset($form['#node']) && !isset($form['#node']->nid)) {
+  if (isset($form['#bundle']) && $form['#bundle'] == SBQ_CENTER_RESERVATION_NODE_TYPE) {
     $form['#validate'][] = 'sbq_center_reservation_form_validate';
   }
 }
@@ -205,7 +227,9 @@ function sbq_center_reservation_form_alter(&$form, $form_states) {
 
 function sbq_center_reservation_form_validate($form, &$form_states) {
   // file_put_contents('/home/chechao/1.log', $form_states['values']['field_node_ref']['und'][0]['target_id']);
-  if (!sbq_center_reservation_can_reservation($form_states['values']['field_reservation_time']['und'][0]['value'], $form_states['values']['og_group_ref']['und'][0]['target_id'])) {
+  $c = sbq_center_reservation_can_reservation($form_states['values']['field_reservation_time']['und'][0]['value'], $form_states['values']['og_group_ref']['und'][0]['target_id']);
+
+  if (!$c) {
     form_set_error('field_reservation_time ', '您输入的预约时间不能预约');
   }
 }
@@ -232,9 +256,7 @@ function sbq_center_reservation_fetch_by_center($centerid) {
 }
 
 function sbq_center_reservation_node_submit($node, $form, $form_state) {
-//  dpm($node);
-//  dpm($form);
-//  dpm($form_state);
+
 }
 
 /**
@@ -248,10 +270,10 @@ function sbq_center_reservation_get_reservation($uid = '', $nid = '', array $par
   $query->entityCondition('entity_type', 'node')
       ->propertyCondition('type', SBQ_CENTER_RESERVATION_NODE_TYPE);
   if ($uid) {
-    $query->entityCondition('uid', $uid);
+    $query->propertyCondition('uid', $uid);
   }
   if ($nid) {
-    $query->entityCondition('nid', $nid);
+    $query->propertyCondition('nid', $nid);
   }
   if (in_array('target_id', array_keys($parameters))) {
     $query->fieldCondition('node_ref', 'target_id', $parameters['target_id']);
@@ -282,7 +304,7 @@ function sbq_center_reservation_get_manage_item($row) {
       $ignore = l('删除', "center/{$centerid}/reservation/{$row->nid}/ignore");
       break;
   }
-  return $accept .' '. $ignore;
+  return $accept . ' ' . $ignore;
 }
 
 /*
@@ -304,5 +326,3 @@ function sbq_center_reservation_reservation_status_alter($reservation) {
     $warpper->save();
   }
 }
-
-
