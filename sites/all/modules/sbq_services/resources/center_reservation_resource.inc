@@ -165,7 +165,7 @@ function center_reservation_fetch($centerid, $uid, $page, $fields, $parameters, 
       $date = new DateTime($date);
       $data[] = array(
           $date->getTimestamp() => array(
-              'a', 'p'
+              'a'=>TRUE, 'p'=>TRUE
           )
       );
     }

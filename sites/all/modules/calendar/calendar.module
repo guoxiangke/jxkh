@@ -426,7 +426,6 @@ function calendar_list_views() {
       }
     }
   }
-  dpm($calendar_views);
   return $calendar_views;
 }
 
