@@ -465,6 +465,7 @@ function center($centerid) {
   $message_new_count = db_select('pm_index', 'pmi')
       ->fields('pmi', array( 'mid' ))
       ->condition('is_new', 1)
+      ->condition('recipient', $user->uid)
       ->condition('thread_id', center_message_get_privatemsgid($centerid))
       ->condition('deleted', 0)
       ->execute()
