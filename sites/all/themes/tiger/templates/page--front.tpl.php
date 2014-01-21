@@ -72,6 +72,7 @@
  * @ingroup themeable
  */
   $theme_path = drupal_get_path('theme', 'tiger');
+  $user_link = '#';
 ?>
 <div class="header">
   <div class="header_inner">
@@ -97,7 +98,6 @@
         global $user;
         $name = theme('username', array('account' => $user));
         $picture = theme('user_picture', array('account' =>$user));
-        $user_link = '###';
         if($user->uid) {
           $user_link = '/user/'.$user->uid;
         }

@@ -2,7 +2,8 @@
 .sbq_hide { display: none; }
 /*------font------*/
 textarea,
-input { outline: none; }
+input,
+select { outline: none; }
 a { text-decoration: none; color: #333333; outline: none; }
 a:hover { color: #225599; }
 img { border: none; }
@@ -33,7 +34,9 @@ input,
 .sbq_news_list .sbq_title,
 .sbq_news_list_head,
 .form-item-pass,
-.confirmation { font-family: "Microsoft Yahei", "微软雅黑", "Arial" !important; }
+.confirmation,
+.sbq_step,
+.sbq_findpwd .sbq_text { font-family: "Microsoft Yahei", "微软雅黑", "Arial" !important; }
 /*------header------*/
 .header { float: left; width: 100%; }
 .header .header_inner { width: 960px; height: 60px; margin: 0 auto; padding: 0px 0px 10px 0px; overflow: hidden; border-bottom: 1px #E5E5E5 solid; }
@@ -280,4 +283,3 @@ input,
 .page-node-delete .form-actions { width: 100%; height: 30px; margin: 10px 0px 0px 0px; position: relative; }
 .page-node-delete .form-actions input { float: left; width: 60px; height: 30px; border-radius: 3px; border: 1px #0D6EB8 solid; background: #1575d5; font-size: 14px; color: #FFF; overflow: hidden; }
 .page-node-delete .form-actions #edit-cancel { float: left; width: 60px; height: 30px; line-height: 30px; font-size: 14px; font-weight: normal; text-align: center; }
--align: center; }

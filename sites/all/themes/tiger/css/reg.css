@@ -1,3 +1,5 @@
+.body { float: left; width: 100%; margin-top: 60px; }
+.body .main { width: 680px; margin: 0 auto; }
 /*------sbq_login------*/
 .sbq_login .sbq_form_01 { float: left; width: 100%; padding: 10px 0px; font-size: 14px; position: relative; }
 .sbq_login .sbq_form_01 label,
@@ -32,13 +34,33 @@
 .sbq_reg .sbq_reg_nav .sbq_reg_u { background-position: center 0px; }
 .sbq_reg .sbq_reg_nav .sbq_reg_d { background-position: center -50px; }
 .sbq_reg .sbq_reg_content { float: left; width: 100%; padding: 30px 0px; background: #fcfcfc; }
-.body { float: left; width: 100%; margin-top: 60px; }
-.body .main { width: 680px; margin: 0 auto; }
+/*------sbq_reg------*/
+.sbq_findpwd { width: 680px; margin: 0 auto; }
+.sbq_findpwd .sbq_findpwd_nav { float: left; width: 100%; height: 50px; background: url(../image/sbq_findpwd_bg.png) left no-repeat; }
+.sbq_findpwd .sbq_reg_content { float: left; width: 100%; padding: 30px 0px; background: #fcfcfc; }
+.sbq_findpwd .sbq_form_wrap .sbq_botton_01 .sbq_btn { float: left; width: auto; height: 36px; line-height: 36px; padding: 0px 10px; border: none; border-radius: 3px; background: #1575D5; color: #FFF; font-size: 14px; }
+/*sbq_step*/
+.sbq_step { float: left; margin: 15px 0px 0px 0px; position: relative; left: 50%; }
+.sbq_step ul { float: left; height: 90px; list-style: none; position: relative; right: 50%; }
+.sbq_step ul li { float: left; width: 220px; padding: 0px 0px 0px 0px; list-style: none; background: url(../image/sbq_step_bg.png); background-position: center 0px; }
+.sbq_step ul .done { background-position: center -30px; }
+.sbq_step ul .last { width: 15px; background: none; }
+.sbq_step ul li span { float: left; width: 30px; height: 30px; line-height: 30px; list-style: none; text-align: center; position: relative; left: -15px; background: url(../image/sbq_step_bg.png) no-repeat; background-position: 0px -60px; color: #FFF; }
+.sbq_step ul .done span { background-position: 0px 0px; background-position: -30px -60px; }
+.sbq_step ul .cur span { background-position: -22px 0px; background-position: -60px -60px; }
+.sbq_step em { float: left; width: 100px; height: 20px; line-height: 20px; position: absolute; top: 35px; left: -35px; color: #666666; text-align: center; font-style: normal; }
+.sbq_step b { float: left; width: 100px; height: 32px; line-height: 16px; position: absolute; top: 55px; left: -35px; color: #CCC; text-align: center; font-weight: normal; }
+.sbq_findpwd .sbq_text { float: left; width: 100%; line-height: 22px; padding: 30px 0px; text-align: center; font-size: 14px; }
+.sbq_findpwd .sbq_text a:hover { color: #225599; text-decoration: underline; }
+/*.sbq_findpwd .sbq_form_wrap label { width: 160px; }
+.sbq_findpwd .sbq_form_01 .sbq_tips { width: 260px; }
+.sbq_findpwd .sbq_form_wrap .password-strength,
+.sbq_findpwd .sbq_form_wrap .password-confirm { margin: 0px 15px 0px 0px; }*/
 /*sbq_tips*/
-.sbq_form_01 .sbq_tips { clear: both; width: 330px; line-height: 24px; margin: 0px 0px 0px 10px; font-size: 12px; display: inline-block; }
-.sbq_form_01 .sbq_tips_error { float: left; max-height: 330px; height: 24px; padding: 5px; border: 1px #E6393D solid; background: #FEF5F1; color: #E6393D; overflow: hidden; }
-.sbq_form_01 .sbq_tips_pass { float: left; max-height: 330px; height: 24px; padding: 5px; border: 1px #009900 solid; background: #F8FFF0; color: #009900; overflow: hidden; }
-.sbq_form_01 .sbq_tips_text { float: left; max-height: 330px; height: 24px; padding: 6px; color: #666; overflow: hidden; }
+.sbq_form_01 .sbq_tips { clear: both; width: 310px; line-height: 24px; margin: 0px 0px 0px 10px; font-size: 12px; display: inline-block; }
+.sbq_form_01 .sbq_tips_error { float: left; max-height: 310px; height: 24px; padding: 5px; border: 1px #E6393D solid; background: #FEF5F1; color: #E6393D; overflow: hidden; }
+.sbq_form_01 .sbq_tips_pass { float: left; max-height: 310px; height: 24px; padding: 5px; border: 1px #009900 solid; background: #F8FFF0; color: #009900; overflow: hidden; }
+.sbq_form_01 .sbq_tips_text { float: left; max-height: 310px; height: 24px; padding: 6px; color: #666; overflow: hidden; }
 /*captcha*/
 .captcha { float: left; width: 100%; padding: 10px 0px; font-size: 14px; position: relative; border: none; }
 .captcha legend,
@@ -56,29 +78,3 @@
 .sbq_login_thirdpart .item-list { float: right; height: 20px; line-height: 20px; margin: 0px 10px 0px 0px; }
 .sbq_login_thirdpart .item-list li { float: left; width: 20px; height: 20px; overflow: hidden; margin: 0px 3px 0px 0px; }
 .sbq_login_thirdpart .item-list li img { float: left; width: 20px; height: 20px; overflow: hidden; }
-hirdpart .item-list li img { float: left; width: 20px; height: 20px; overflow: hidden; }
-34px; border: 1px #eee solid; margin: 0px 0px 0px 10px; }
-.captcha a { float: left; height: 36px; line-height: 36px; margin: 0px 0px 0px 5px; color: #225599; }
-/*sbq_login_thirdpart*/
-.sbq_login_thirdpart { float: left; width: 100%; height: 20px; overflow: hidden; }
-.sbq_login_thirdpart .sbq_text { float: right; height: 20px; line-height: 20px; margin: 0px 5px 0px 0px; color: #999; }
-.sbq_login_thirdpart .item-list { float: right; height: 20px; line-height: 20px; margin: 0px 10px 0px 0px; }
-.sbq_login_thirdpart .item-list li { float: left; width: 20px; height: 20px; overflow: hidden; margin: 0px 3px 0px 0px; }
-.sbq_login_thirdpart .item-list li img { float: left; width: 20px; height: 20px; overflow: hidden; }
-overflow: hidden; }
-em-list li img { float: left; width: 20px; height: 20px; overflow: hidden; }
-px 9px; border: 1px #dddddd solid; background: url(../image/input_bg_01.png) repeat-x; }
-.captcha input:focus { border: 1px #3385d6 solid; box-shadow: 0px 0px 2px #3385d6; }
-.captcha img { float: left; width: 88px; height: 34px; border: 1px #eee solid; margin: 0px 0px 0px 10px; }
-.captcha a { float: left; height: 36px; line-height: 36px; margin: 0px 0px 0px 5px; color: #225599; }
-/*sbq_login_thirdpart*/
-.sbq_login_thirdpart { float: left; width: 100%; height: 20px; overflow: hidden; }
-.sbq_login_thirdpart .sbq_text { float: right; height: 20px; line-height: 20px; margin: 0px 5px 0px 0px; color: #999; }
-.sbq_login_thirdpart .item-list { float: right; height: 20px; line-height: 20px; margin: 0px 10px 0px 0px; }
-.sbq_login_thirdpart .item-list li { float: left; width: 20px; height: 20px; overflow: hidden; margin: 0px 3px 0px 0px; }
-.sbq_login_thirdpart .item-list li img { float: left; width: 20px; height: 20px; overflow: hidden; }
-ine-height: 20px; margin: 0px 10px 0px 0px; }
-.sbq_login_thirdpart .item-list li { float: left; width: 20px; height: 20px; overflow: hidden; margin: 0px 3px 0px 0px; }
-.sbq_login_thirdpart .item-list li img { float: left; width: 20px; height: 20px; overflow: hidden; }
-
-: hidden; }

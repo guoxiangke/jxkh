@@ -34,7 +34,7 @@
 .sbq_form_wrap .sbq_botton_01 { float: left; width: 100%; padding: 10px 0px; }
 .sbq_form_wrap .sbq_botton_01 .sbq_btn { float: left; width: 80px; height: 36px; line-height: 36px; padding: 0px; border: none; border-radius: 3px; background: #1575D5; color: #FFF; font-size: 14px; }
 /*description*/
-.sbq_form_wrap .description { float: left; width: 540px; line-height: 20px; margin: 5px 0px 0px 110px; font-size: 12px; color: #999; }
+.sbq_form_wrap .description { float: left; width: 540px; line-height: 20px; margin: 5px 0px 0px 120px; font-size: 12px; color: #999; }
 /*edit-picture*/
 .sbq_form_wrap #edit-picture { float: left; width: 100%; }
 .sbq_form_wrap #edit-picture .form-item { float: left; width: 100%; margin: 10px 0px 0px 0px; }
@@ -59,7 +59,7 @@
 .sbq_form_wrap .password-confirm span { float: right; }
 .sbq_form_wrap .password-strength .password-indicator { float: left; width: 100%; }
 .sbq_form_wrap .password-strength .password-indicator .indicator { float: left; height: 2px; background: #1575D5; }
-.sbq_form_wrap .password-suggestions { display: none !important; }
+.sbq_form_wrap .password-suggestions { }
 .sbq_form_wrap .password-confirm.form-text { margin: 0px; }
 /*form-type-radios*/
 .sbq_form_wrap .form-type-radios input { float: left; height: 36px; }
@@ -80,3 +80,4 @@
 .sbq_form_wrap .field-name-field-birthday .form-type-date-popup { margin: 0px; }
 
 /*---fix garbage HTML---*/
+---fix garbage HTML---*/
