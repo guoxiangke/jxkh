@@ -31,7 +31,6 @@ function template_preprocess_calendar_month(&$vars) {
     $day_names = $rows;
     $rows = array();
   }
-  dpm($rows);
   $month_rows = $rows;
   foreach ($rows as $weekno => $row) {
     foreach ($row as $day => $data) {

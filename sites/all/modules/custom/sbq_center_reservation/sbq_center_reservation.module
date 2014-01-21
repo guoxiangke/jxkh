@@ -166,7 +166,7 @@ function template_preprocess_sbq_center_reservation_month_col(&$vars) {
  * @param type $center
  * @return boolean
  */
-function sbq_center_reservation_can_reservation($date, $center = '') {
+function sbq_center_reservation_can_reservation($date, $center = '', $display=FALSE) {
   if (!$center) {
     $center = arg(1);
   }
@@ -179,7 +179,6 @@ function sbq_center_reservation_can_reservation($date, $center = '') {
     $date = date('Y-m-d', $datetime->getTimestamp());
     $time = date('H', $datetime->getTimestamp());
   }
-
   $settings = sbq_center_reservation_get_settings($center);
   $week_index = date_day_of_week($date);
   $week = array(
@@ -198,15 +197,18 @@ function sbq_center_reservation_can_reservation($date, $center = '') {
   $reservation = $settings['opendays'][$week[$week_index]];
   //dpm($reservation);
 
-  if ($reservation['a']) {
+  if ( isset($reservation['a']) && $reservation['a']) {
     if ($time > 9 && $time < 12) {
       return true;
     }
   }
-  if ($reservation['b']) {
+  if ( isset($reservation['p']) && $reservation['p']) {
     if ($time > 13 && $time < 18) {
       return true;
     }
+  }
+  if($display){
+    return isset($reservation['a']) && $reservation['a'] || isset($reservation['p']) && $reservation['p'];
   }
   return FALSE;
 }

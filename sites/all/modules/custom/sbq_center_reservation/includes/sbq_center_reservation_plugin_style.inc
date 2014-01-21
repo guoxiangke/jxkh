@@ -357,7 +357,7 @@ var $date_info;
   /**
    * Build one month.
    */
-  function calendar_build_month() {dpm(__CLASS__.__FUNCTION__);
+  function calendar_build_month() {
     $translated_days = date_week_days_ordered(date_week_days(TRUE));
     $month = date_format($this->curday, 'n');
     $curday_date = date_format($this->curday, DATE_FORMAT_DATE);

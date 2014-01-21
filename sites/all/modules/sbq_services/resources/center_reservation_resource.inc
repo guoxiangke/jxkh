@@ -161,7 +161,7 @@ function center_reservation_fetch($centerid, $uid, $page, $fields, $parameters, 
   $days = cal_days_in_month(CAL_GREGORIAN, $month, $year);
   for ($i = $now_day; $i <= $days; $i++) {
     $date = "$year-$month-$i";
-    if (sbq_center_reservation_can_reservation($date, $centerid)) {
+    if (sbq_center_reservation_can_reservation($date, $centerid, TRUE)) {
       $date = new DateTime($date);
       $data[] = array(
           $date->getTimestamp() => array(
