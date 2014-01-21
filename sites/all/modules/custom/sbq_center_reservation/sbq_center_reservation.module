@@ -218,7 +218,7 @@ function sbq_center_reservation_can_reservation($date, $center = '', $display=FA
  */
 
 function sbq_center_reservation_form_alter(&$form, $form_states) {
-  if (isset($form['#bundle']) && $form['#bundle'] == SBQ_CENTER_RESERVATION_NODE_TYPE) {
+  if (isset($form['#bundle']) && $form['#bundle'] == SBQ_CENTER_RESERVATION_NODE_TYPE && arg(0)!='admin') {
     $form['#validate'][] = 'sbq_center_reservation_form_validate';
   }
 }
