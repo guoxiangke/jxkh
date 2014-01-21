@@ -528,7 +528,6 @@ function template_preprocess_calendar_item(&$vars) {
   // At the last possible minute we fix the values in rendered_fields so it
   // contains the correct rendered content for the type of item and item display.
   $item = $vars['item'];
-  dpm($item);
   $multiday_hidden = !empty($vars['view']->style_options['multiday_hidden']) ? $vars['view']->style_options['multiday_hidden'] : array();
 
   if (!empty($item->rendered) && empty($item->is_multi_day)) {
