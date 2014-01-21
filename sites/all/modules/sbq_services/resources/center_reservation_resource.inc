@@ -90,7 +90,8 @@ function _center_reservation_format($data, $type = 'node', $is_list = FALSE) {
       $node['og_group_ref']['und'][0]['target_id'] = $value['centerid'];
       //pop-up
       $node['field_reservation_time']['und'][0]['value']['date'] = date('Y-m-d', $value['reservation_time']);
-      $node['field_reservation_time']['und'][0]['value']['time'] = date('H:i', $value['reservation_time']);
+     // $node['field_reservation_time']['und'][0]['value']['time'] = date('H:i', $value['reservation_time']);
+       $node['field_reservation_time']['und'][0]['value']['time'] = '11:00';
       // $node['field_reservation_time']['und'][0]['value']['date'] = date('Y-m-d', $value['reservation_time']);
     } else {
       $node['nid'] = (int) $value['nid'];
@@ -167,7 +168,7 @@ function center_reservation_fetch($centerid, $uid, $page, $fields, $parameters, 
           $date->getTimestamp() => array(
               'a'=>TRUE, 'p'=>TRUE
           )
-      );
+      ); 
     }
   }
   return isset($data) ? $data : array();
