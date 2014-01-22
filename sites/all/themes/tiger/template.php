@@ -27,7 +27,8 @@ function tiger_preprocess_page(&$variables) {
   if (!$variables['logged_in'] && arg(1) == 'register') {
     drupal_add_css(path_to_theme() . "/css/reg.css", array('group' => CSS_THEME));
     drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
-    unset($variables['page']['sidebar_second']); // No right sidebar
+    $variables['page']['sidebar_second'] = FALSE;
+    // unset($variables['page']['sidebar_second']); // No right sidebar
   }
   // news list page
   if (in_array('news', arg())) {
