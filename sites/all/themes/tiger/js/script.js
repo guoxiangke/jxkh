@@ -61,13 +61,15 @@ jQuery(function($) {
   $(".captcha .reload-captcha-wrapper a").appendTo('.captcha .form-item-captcha-response');
   $("#user-login-form #edit-captcha-response").attr("placeholder", "验证码");
   $(".captcha").insertBefore('.sbq_checkbox_01');
+
+      $('#user-profile-form .user-picture').click(function(){
+        $('#edit-picture-upload').click();
+        return false;
+      });
   // End of jQuery
   Drupal.behaviors.tiger = {
     attach: function (context, settings) {
       // behaviors here
-      $('#user-profile-form .user-picture').click(function(){
-        $('#edit-picture-upload').click();
-      });
       // End of behaviors
     }
   };
