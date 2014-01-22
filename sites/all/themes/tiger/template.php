@@ -260,12 +260,12 @@ function tiger_preprocess_views_view(&$vars) {
     $vars['menu_blog_active'] = $menu_blog_active;
 
     $qa_active = FALSE;
+    $menu_promoted_active = '';
+    $menu_followed_active = '';
+    $menu_ask_active = '';
+    $menu_answer_active = '';
     if (in_array('qa', arg())) {
       $qa_active = TRUE;
-      $menu_promoted_active = '';
-      $menu_followed_active = '';
-      $menu_ask_active = '';
-      $menu_answer_active = '';
       if (in_array('promoted', arg())) {
         $menu_promoted_active = 'class="active"';
       } elseif (in_array('followed', arg())) {
