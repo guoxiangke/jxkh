@@ -195,7 +195,6 @@ function sbq_center_reservation_can_reservation($date, $center = '', $display=FA
   }
 
   $reservation = $settings['opendays'][$week[$week_index]];
-  //dpm($reservation);
 
   if ( isset($reservation['a']) && $reservation['a']) {
     if ($time > 9 && $time < 12) {
