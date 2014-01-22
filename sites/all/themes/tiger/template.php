@@ -456,12 +456,12 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     $form['name']['#title'] = '用户名';
     $form['name']['#prefix'] = '<div class="sbq_form_01">';
     $form['name']['#attributes']['class'][] = 'sbq_input_01';
-    $form['name']['#suffix'] = '<div class="sbq_link"><a href="/customer/register" class="reg cboxElement" target="_parent">注册账户</a></div></div>';
+    $form['name']['#suffix'] = '<div class="sbq_link"><a href="/customer/register"  target="_blank" class="reg cboxElement" target="_parent">注册账户</a></div></div>';
 
     unset($form['pass']['#description']);
     $form['pass']['#prefix'] = '<div class="sbq_form_01">';
     $form['pass']['#attributes']['class'][] = 'sbq_input_01';
-    $form['pass']['#suffix'] = '<div class="sbq_link"><a href="/user/password">忘记密码？</a></div></div>';
+    $form['pass']['#suffix'] = '<div class="sbq_link"><a href="/user/password" target="_blank">忘记密码？</a></div></div>';
 
     $form['remember_me']['#prefix'] = '<div class="sbq_checkbox_01">';
     $form['remember_me']['#suffix'] = '</div>';
