@@ -30,6 +30,9 @@ function tiger_preprocess_page(&$variables) {
     $variables['page']['sidebar_second'] = FALSE;
     // unset($variables['page']['sidebar_second']); // No right sidebar
   }
+  if (arg(1) == 'user' && arg(1) == 'password') {
+    $variables['page']['sidebar_second'] = FALSE;
+  }
   // news list page
   if (in_array('news', arg())) {
     drupal_add_css(path_to_theme() . "/css/news.css", array('group' => CSS_THEME));
