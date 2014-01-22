@@ -30,7 +30,7 @@ function tiger_preprocess_page(&$variables) {
     $variables['page']['sidebar_second'] = FALSE;
     // unset($variables['page']['sidebar_second']); // No right sidebar
   }
-  if (arg(1) == 'user' && arg(1) == 'password') {
+  if (arg(0) == 'user' && arg(1) == 'password') {
     $variables['page']['sidebar_second'] = FALSE;
   }
   // news list page
