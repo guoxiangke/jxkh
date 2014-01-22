@@ -79,11 +79,18 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
         <?php endif;?>
       </ul>
     </div>
-    <div class="sbq_reply_wrap">
+    <?php
+      $a_comments = comment_get_thread($node, COMMENT_MODE_FLAT, $comments_per_page);
+      $comments_count = $node->comment_count;
+      $warp_add_class = '';
+      if ($comments_count == 0) {
+        $warp_add_class = 'no_reply';
+      }
+    ?>
+    <div class="sbq_reply_wrap <?php print $warp_add_class ?>">
       <div id="comments-<?php print $nid ?>" class="sbq_reply_list">
         <ul>
           <?php
-            $a_comments = comment_get_thread($node, COMMENT_MODE_FLAT, $comments_per_page);
             foreach ($a_comments as $key => $value) {
               $a_comment = comment_load($value);
               $account = user_load($a_comment->uid);

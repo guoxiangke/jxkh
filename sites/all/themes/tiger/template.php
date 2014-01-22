@@ -27,7 +27,11 @@ function tiger_preprocess_page(&$variables) {
   if (!$variables['logged_in'] && arg(1) == 'register') {
     drupal_add_css(path_to_theme() . "/css/reg.css", array('group' => CSS_THEME));
     drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
-    unset($variables['page']['sidebar_second']); // No right sidebar
+    $variables['page']['sidebar_second'] = FALSE;
+    // unset($variables['page']['sidebar_second']); // No right sidebar
+  }
+  if (arg(0) == 'user' && arg(1) == 'password') {
+    $variables['page']['sidebar_second'] = FALSE;
   }
   // news list page
   if (in_array('news', arg())) {
@@ -53,19 +57,44 @@ function tiger_preprocess_page(&$variables) {
       $account = $user;
     }
     $variables['account'] = $account;
+    if (module_exists('sbq_commons')) {
+      $user_post_count = sbq_commons_get_count($account->uid, 'post');
+      $user_message_count = sbq_commons_messages_count($account);
+      $user_blog_count = sbq_commons_get_count($account->uid, 'blog');
+      $user_question_count = sbq_commons_get_count($account->uid, 'question');
+      $user_answer_count = sbq_commons_get_count($account->uid, 'answer');
+    } else {
+      $user_post_count = 0;
+      $user_message_count = 0;
+      $user_blog_count = 0;
+      $user_question_count = 0;
+      $user_answer_count = 0;
+    }
+    if (module_exists('sbq_user_relationships')) {
+      $user_relationship_count = sbq_user_relationships_my_relstionships($account);
+      $follow_link = sbq_user_relationships_action_between_user($user, $account);
+    } else {
+      $user_relationship_count = 0;
+      $follow_link = '';
+    }
+    if (module_exists('userpoints')) {
+      $user_point_count = userpoints_get_current_points($user->uid, 'all');
+    } else {
+      $user_point_count = 0;
+    }
     $variables['counts'] = array(
-      'user_post_count' => sbq_commons_get_count($account->uid, 'post'),
-      'user_message_count' => sbq_commons_messages_count($account),
-      'user_blog_count' => sbq_commons_get_count($account->uid, 'blog'),
-      'user_question_count' => sbq_commons_get_count($account->uid, 'question'),
-      'user_answer_count' => sbq_commons_get_count($account->uid, 'answer'),
-      'user_relationship_count' => sbq_user_relationships_my_relstionships($account),
-      'user_point_count' => userpoints_get_current_points($user->uid, 'all'),
+      'user_post_count' => $user_post_count,
+      'user_message_count' => $user_message_count,
+      'user_blog_count' => $user_blog_count,
+      'user_question_count' => $user_question_count,
+      'user_answer_count' => $user_answer_count,
+      'user_relationship_count' => $user_relationship_count,
+      'user_point_count' => $user_point_count,
     );
-    $variables['follow_link'] = sbq_user_relationships_action_between_user($user, $account);
+    $variables['follow_link'] = $follow_link;
     $variables['menu_sbq_user_center'] = menu_navigation_links('menu-sbq-user-center');
     $variables['is_doctor'] = FALSE;
-    if (in_array('doctor', $account->roles)) {
+    if (in_array('doctor', $account->roles) && module_exists('profile2')) {
       $a_doctor_profile = profile2_load_by_user($account, 'doctor_profile');
       $variables['is_doctor'] = TRUE;
       $variables['a_doctor_profile'] = $a_doctor_profile;
@@ -83,21 +112,48 @@ function tiger_preprocess_page(&$variables) {
   }
   // blog detial page
   if (isset($variables['node']) && $variables['node']->type == 'blog') {
+    global $user;
     $node = $variables['node'];
     drupal_add_css(path_to_theme() . "/css/user.css", array('group' => CSS_THEME));
     $variables['theme_hook_suggestions'][] = 'page__user';
     $account = user_load($node->uid);
     $variables['account'] = $account;
+    if (module_exists('sbq_commons')) {
+      $user_post_count = sbq_commons_get_count($account->uid, 'post');
+      $user_message_count = sbq_commons_messages_count($account);
+      $user_blog_count = sbq_commons_get_count($account->uid, 'blog');
+      $user_question_count = sbq_commons_get_count($account->uid, 'question');
+      $user_answer_count = sbq_commons_get_count($account->uid, 'answer');
+    } else {
+      $user_post_count = 0;
+      $user_message_count = 0;
+      $user_blog_count = 0;
+      $user_question_count = 0;
+      $user_answer_count = 0;
+    }
+    if (module_exists('sbq_user_relationships')) {
+      $user_relationship_count = sbq_user_relationships_my_relstionships($account);
+      $follow_link = sbq_user_relationships_action_between_user($user, $account);
+    } else {
+      $user_relationship_count = 0;
+      $follow_link = '';
+    }
+    if (module_exists('userpoints')) {
+      $user_point_count = userpoints_get_current_points($user->uid, 'all');
+    } else {
+      $user_point_count = 0;
+    }
+
     $variables['counts'] = array(
-      'user_post_count' => sbq_commons_get_count($account->uid, 'post'),
-      'user_message_count' => sbq_commons_messages_count($account),
-      'user_blog_count' => sbq_commons_get_count($account->uid, 'blog'),
-      'user_question_count' => sbq_commons_get_count($account->uid, 'question'),
-      'user_answer_count' => sbq_commons_get_count($account->uid, 'answer'),
-      'user_relationship_count' => sbq_user_relationships_my_relstionships($account),
-      'user_point_count' => userpoints_get_current_points($user->uid, 'all'),
+      'user_post_count' => $user_post_count,
+      'user_message_count' => $user_message_count,
+      'user_blog_count' => $user_blog_count,
+      'user_question_count' => $user_question_count,
+      'user_answer_count' => $user_answer_count,
+      'user_relationship_count' => $user_relationship_count,
+      'user_point_count' => $user_point_count,
     );
-    $variables['follow_link'] = sbq_user_relationships_action_between_user($user, $account);
+    $variables['follow_link'] = $follow_link;
   }
   // blog/question add page
   if ((in_array('blog', arg()) || in_array('question', arg())) && in_array('add', arg())) {
@@ -106,16 +162,42 @@ function tiger_preprocess_page(&$variables) {
     $variables['theme_hook_suggestions'][] = 'page__user';
     $account = $user;
     $variables['account'] = $account;
+    if (module_exists('sbq_commons')) {
+      $user_post_count = sbq_commons_get_count($account->uid, 'post');
+      $user_message_count = sbq_commons_messages_count($account);
+      $user_blog_count = sbq_commons_get_count($account->uid, 'blog');
+      $user_question_count = sbq_commons_get_count($account->uid, 'question');
+      $user_answer_count = sbq_commons_get_count($account->uid, 'answer');
+    } else {
+      $user_post_count = 0;
+      $user_message_count = 0;
+      $user_blog_count = 0;
+      $user_question_count = 0;
+      $user_answer_count = 0;
+    }
+    if (module_exists('sbq_user_relationships')) {
+      $user_relationship_count = sbq_user_relationships_my_relstionships($account);
+      $follow_link = sbq_user_relationships_action_between_user($user, $account);
+    } else {
+      $user_relationship_count = 0;
+      $follow_link = '';
+    }
+    if (module_exists('userpoints')) {
+      $user_point_count = userpoints_get_current_points($user->uid, 'all');
+    } else {
+      $user_point_count = 0;
+    }
+
     $variables['counts'] = array(
-      'user_post_count' => sbq_commons_get_count($account->uid, 'post'),
-      'user_message_count' => sbq_commons_messages_count($account),
-      'user_blog_count' => sbq_commons_get_count($account->uid, 'blog'),
-      'user_question_count' => sbq_commons_get_count($account->uid, 'question'),
-      'user_answer_count' => sbq_commons_get_count($account->uid, 'answer'),
-      'user_relationship_count' => sbq_user_relationships_my_relstionships($account),
-      'user_point_count' => userpoints_get_current_points($user->uid, 'all'),
+      'user_post_count' => $user_post_count,
+      'user_message_count' => $user_message_count,
+      'user_blog_count' => $user_blog_count,
+      'user_question_count' => $user_question_count,
+      'user_answer_count' => $user_answer_count,
+      'user_relationship_count' => $user_relationship_count,
+      'user_point_count' => $user_point_count,
     );
-    $variables['follow_link'] = sbq_user_relationships_action_between_user($user, $account);
+    $variables['follow_link'] = $follow_link;
   }
 }
 
@@ -141,10 +223,11 @@ function tiger_preprocess_views_view(&$vars) {
 
     $follower_active = FALSE;
     $sbq_quick_ask_form = '';
-    if (in_array('followers', arg())) {
-      $follower_active = TRUE;
+
       $menu_qa_active = '';
       $menu_blog_active = '';
+    if (in_array('followers', arg())) {
+      $follower_active = TRUE;
       if (in_array('qa', arg())) {
         $menu_qa_active = 'class="active"';
       } else {
@@ -168,10 +251,11 @@ function tiger_preprocess_views_view(&$vars) {
     $vars['menu_blog_active'] = $menu_blog_active;
 
     $blog_active = FALSE;
+
+    $menu_promoted_active = '';
+    $menu_blog_active = '';
     if (in_array('blog', arg())) {
       $blog_active = TRUE;
-      $menu_promoted_active = '';
-      $menu_blog_active = '';
       if (in_array('promoted', arg())) {
         $menu_promoted_active = 'class="active"';
       } else {
@@ -183,12 +267,12 @@ function tiger_preprocess_views_view(&$vars) {
     $vars['menu_blog_active'] = $menu_blog_active;
 
     $qa_active = FALSE;
-    if (in_array('qa', arg())) {
-      $qa_active = TRUE;
       $menu_promoted_active = '';
       $menu_followed_active = '';
       $menu_ask_active = '';
       $menu_answer_active = '';
+    if (in_array('qa', arg())) {
+      $qa_active = TRUE;
       if (in_array('promoted', arg())) {
         $menu_promoted_active = 'class="active"';
       } elseif (in_array('followed', arg())) {
@@ -370,23 +454,18 @@ function tiger_preprocess_user_login(&$vars) {
 }
 
 function tiger_form_alter(&$form, &$form_state, $form_id) {
-  // kpr($form_id);
   if ($form_id == 'user_login') {
-    # code...
-    //unset($form['name']['#title']);
     unset($form['name']['#description']);
     $form['name']['#title'] = '用户名';
     $form['name']['#prefix'] = '<div class="sbq_form_01">';
     $form['name']['#attributes']['class'][] = 'sbq_input_01';
-    $form['name']['#suffix'] = '<div class="sbq_link"><a href="/user/register" class="reg cboxElement" target="_parent">注册账户</a></div></div>';
+    $form['name']['#suffix'] = '<div class="sbq_link"><a href="/customer/register"  target="_blank">注册账户</a></div></div>';
 
-    //unset($form['pass']['#title']);
     unset($form['pass']['#description']);
     $form['pass']['#prefix'] = '<div class="sbq_form_01">';
     $form['pass']['#attributes']['class'][] = 'sbq_input_01';
-    $form['pass']['#suffix'] = '<div class="sbq_link"><a href="/user/password">忘记密码？</a></div></div>';
+    $form['pass']['#suffix'] = '<div class="sbq_link"><a href="/user/password" target="_blank">忘记密码？</a></div></div>';
 
-    //unset($form['remember_me']['#title']);
     $form['remember_me']['#prefix'] = '<div class="sbq_checkbox_01">';
     $form['remember_me']['#suffix'] = '</div>';
 
@@ -394,7 +473,7 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     $form['actions']['submit']['#attributes']['class'][] = 'sbq_login_btn';
     $form['actions']['submit']['#ajax'] = array(
       'callback' => 'tiger_user_login_ajax_callback',
-      'wrapper' => '',
+      'wrapper' => $form['#id'],
       'method' => 'replace',
       'progress' => array( 'type' => 'throbber', 'message' => '请稍候' ),
     );
@@ -422,17 +501,17 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
       .'<div class="sbq_reg_content"><div class="sbq_form_wrap">';
     $form['#suffix'] = '</div></div></div>';
 
-    unset($form['account']['name']['#description']);
+    //unset($form['account']['name']['#description']);
     $form['account']['name']['#prefix'] = '<div class="sbq_form_01">';
     $form['account']['name']['#attributes']['class'][] = 'sbq_input_01';
     $form['account']['name']['#suffix'] = '</div>';
 
-    unset($form['account']['mail']['#description']);
+    //unset($form['account']['mail']['#description']);
     $form['account']['mail']['#prefix'] = '<div class="sbq_form_01">';
     $form['account']['mail']['#attributes']['class'][] = 'sbq_input_01';
     $form['account']['mail']['#suffix'] = '</div>';
 
-    unset($form['account']['pass']['#description']);
+    //unset($form['account']['pass']['#description']);
     $form['account']['pass']['#attributes']['class'][] = 'sbq_input_01';
 
     $form['agree']['#prefix'] = '<div class="sbq_checkbox_01">';
@@ -505,7 +584,6 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
       $form['profile_customer_profile']['field_birthday']['#prefix'] = '<div class="sbq_form_01">';
       $form['profile_customer_profile']['field_birthday']['#suffix'] = '</div>';
     }
-
   } elseif ($form_id == 'blog_node_form') {
     $form['#prefix'] = '<div class="sbq_add_content"><div class="sbq_head"><div class="sbq_title">发布文章</div></div>';
     $form['#suffix'] = '</div>';
@@ -560,17 +638,17 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     $form['#prefix'] = '<div class="sbq_user_date"><div class="sbq_form_wrap">';
     $form['#suffix'] = '</div></div>';
 
-    unset($form['account']['current_pass']['#description']);
+    //unset($form['account']['current_pass']['#description']);
     $form['account']['current_pass']['#prefix'] = '<div class="sbq_form_01">';
     $form['account']['current_pass']['#attributes']['class'][] = 'sbq_input_01';
     $form['account']['current_pass']['#suffix'] = '</div>';
 
-    unset($form['account']['mail']['#description']);
+    //unset($form['account']['mail']['#description']);
     $form['account']['mail']['#prefix'] = '<div class="sbq_form_01">';
     $form['account']['mail']['#attributes']['class'][] = 'sbq_input_01';
     $form['account']['mail']['#suffix'] = '</div>';
 
-    unset($form['account']['pass']['#description']);
+    //unset($form['account']['pass']['#description']);
     $form['account']['pass']['#attributes']['class'][] = 'sbq_input_01';
 
     unset($form['picture']['picture_delete']);
@@ -629,11 +707,18 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
 }
 
 
-function tiger_user_login_ajax_callback() {
-  return '<script type="text/javascript">
-    parent.$.fn.colorbox.close();
-    location.reload(true);
-  </script>';
+function tiger_user_login_ajax_callback($form, $form_state) {
+  global $user;
+  $rtn = '';
+  if ($user->uid) {
+    $rtn = '<script type="text/javascript">
+              parent.$.fn.colorbox.close();
+              location.reload(true);
+            </script>';
+  } else {
+    $rtn =  $form;
+  }
+  return $rtn;
 }
 
 /**
