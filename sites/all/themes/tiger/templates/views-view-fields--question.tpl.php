@@ -69,7 +69,14 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
     <div class="sbq_reply_actions">
       <ul>
         <li><?php print $created; ?></li>
-        <li class="sbq_reply_btn"><a href="#" class="sbq_add_reply_btn">
+        <li class="sbq_reply_btn">
+          <?php if (!$user->uid) {?>
+            <a href="#" class="sbq_add_reply_btn2" onclick="alert('请登录后评论！')">
+          <?php } else {?>
+            <a href="#" class="sbq_add_reply_btn2">
+          <?php }?>
+
+          
           <?php if ($node->comment_count == 0) {?>
             添加评论
           <?php } else {?>
