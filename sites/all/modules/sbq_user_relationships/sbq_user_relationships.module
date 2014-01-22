@@ -516,7 +516,8 @@ function sbq_user_relstionships_users($account = NULL, $rtid = NULL, $page_of_nu
 function sbq_user_relationships_user_action($relationship, $account) {
   global $user;
   $this_user_str = $account->uid == $relationship->requestee_id ? 'requester' : 'requestee';
-  $this_user = $relationship->{$this_user_str.'_id'};
+  $this_user = isset($relationship->{$this_user_str}) ? $relationship->{$this_user_str} : $relationship->{$this_user_str.'_id'};
+  
   $row = array(
       'user' => $this_user,
       check_plain(user_relationships_type_get_name($relationship, FALSE, $relationship->is_oneway && $this_user_str == 'requester')),
@@ -553,6 +554,7 @@ function sbq_user_relationships_user_action($relationship, $account) {
   if (!empty($links)) {
     $row[] = implode(' ', $links);
   }
+
   if (variable_get('user_relationships_show_user_pictures', 0)) {
     array_unshift($row, theme('user_picture', array( 'account' => $this_user )));
   }
