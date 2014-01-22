@@ -261,7 +261,7 @@ function sbq_center_reservation_node_submit($node, $form, $form_state) {
 }
 
 /**
- * 
+ *  get reservation
  * @param type $uid
  * @param type $nid
  * @param array $parameters array(target_id ,pagesize)
@@ -309,7 +309,7 @@ function sbq_center_reservation_get_manage_item($row) {
 }
 
 /*
- * 
+ * center reservation alter
  */
 
 function sbq_center_reservation_reservation_status_alter($reservation) {
