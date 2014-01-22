@@ -108,6 +108,7 @@ function tiger_preprocess_page(&$variables) {
   }
   // blog detial page
   if (isset($variables['node']) && $variables['node']->type == 'blog') {
+    global $user;
     $node = $variables['node'];
     drupal_add_css(path_to_theme() . "/css/user.css", array('group' => CSS_THEME));
     $variables['theme_hook_suggestions'][] = 'page__user';
@@ -133,7 +134,7 @@ function tiger_preprocess_page(&$variables) {
       $user_relationship_count = 0;
       $follow_link = '';
     }
-    if (module_exists('sbq_user_relationships')) {
+    if (module_exists('userpoints')) {
       $user_point_count = userpoints_get_current_points($user->uid, 'all');
     } else {
       $user_point_count = 0;
