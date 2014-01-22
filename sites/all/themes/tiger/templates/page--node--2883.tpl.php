@@ -116,7 +116,7 @@
     </div>
   </div>
 </div>
-<div class="sbq_activity_bg" style="background:url('<?php echo drupal_realpath($sbq_activity_bg_uri);?>')"></div>
+<div class="sbq_activity_bg" style="background:url('<?php echo file_create_url($sbq_activity_bg_uri);?>')"></div>
 <div class="body">
   <div class="main">
     <?php print $messages; ?>
