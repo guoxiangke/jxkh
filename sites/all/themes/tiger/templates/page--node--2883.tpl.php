@@ -73,7 +73,7 @@
  */
   $theme_path = drupal_get_path('theme', 'tiger');
   $node = node_load(arg(1));
-  $variables['path'] = $node->field_image[LANGUAGE_NONE][0]['uri'];
+  $sbq_activity_bg_uri = $node->field_image[LANGUAGE_NONE][0]['uri'];
 ?>
 <div class="header">
   <div class="header_inner">
@@ -116,7 +116,7 @@
     </div>
   </div>
 </div>
-<div class="sbq_activity_bg"><?php echo theme_image($variables);?></div>
+<div class="sbq_activity_bg" style="background:url('<?php echo drupal_realpath($sbq_activity_bg_uri);?>')"></div>
 <div class="body">
   <div class="main">
     <?php print $messages; ?>
