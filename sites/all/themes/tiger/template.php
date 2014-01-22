@@ -77,7 +77,7 @@ function tiger_preprocess_page(&$variables) {
       $user_relationship_count = 0;
       $follow_link = '';
     }
-    if (module_exists('sbq_user_relationships')) {
+    if (module_exists('userpoints')) {
       $user_point_count = userpoints_get_current_points($user->uid, 'all');
     } else {
       $user_point_count = 0;
@@ -112,6 +112,7 @@ function tiger_preprocess_page(&$variables) {
   }
   // blog detial page
   if (isset($variables['node']) && $variables['node']->type == 'blog') {
+    global $user;
     $node = $variables['node'];
     drupal_add_css(path_to_theme() . "/css/user.css", array('group' => CSS_THEME));
     $variables['theme_hook_suggestions'][] = 'page__user';
@@ -137,7 +138,7 @@ function tiger_preprocess_page(&$variables) {
       $user_relationship_count = 0;
       $follow_link = '';
     }
-    if (module_exists('sbq_user_relationships')) {
+    if (module_exists('userpoints')) {
       $user_point_count = userpoints_get_current_points($user->uid, 'all');
     } else {
       $user_point_count = 0;
@@ -181,7 +182,7 @@ function tiger_preprocess_page(&$variables) {
       $user_relationship_count = 0;
       $follow_link = '';
     }
-    if (module_exists('sbq_user_relationships')) {
+    if (module_exists('userpoints')) {
       $user_point_count = userpoints_get_current_points($user->uid, 'all');
     } else {
       $user_point_count = 0;
@@ -222,12 +223,11 @@ function tiger_preprocess_views_view(&$vars) {
 
     $follower_active = FALSE;
     $sbq_quick_ask_form = '';
+
       $menu_qa_active = '';
       $menu_blog_active = '';
     if (in_array('followers', arg())) {
       $follower_active = TRUE;
-      $menu_qa_active = '';
-      $menu_blog_active = '';
       if (in_array('qa', arg())) {
         $menu_qa_active = 'class="active"';
       } else {
@@ -251,11 +251,11 @@ function tiger_preprocess_views_view(&$vars) {
     $vars['menu_blog_active'] = $menu_blog_active;
 
     $blog_active = FALSE;
-      $menu_promoted_active = '';
+
+    $menu_promoted_active = '';
+    $menu_blog_active = '';
     if (in_array('blog', arg())) {
       $blog_active = TRUE;
-      $menu_promoted_active = '';
-      $menu_blog_active = '';
       if (in_array('promoted', arg())) {
         $menu_promoted_active = 'class="active"';
       } else {
@@ -473,7 +473,7 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     $form['actions']['submit']['#attributes']['class'][] = 'sbq_login_btn';
     $form['actions']['submit']['#ajax'] = array(
       'callback' => 'tiger_user_login_ajax_callback',
-      'wrapper' => '',
+      'wrapper' => $form['#id'],
       'method' => 'replace',
       'progress' => array( 'type' => 'throbber', 'message' => '请稍候' ),
     );
@@ -584,7 +584,6 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
       $form['profile_customer_profile']['field_birthday']['#prefix'] = '<div class="sbq_form_01">';
       $form['profile_customer_profile']['field_birthday']['#suffix'] = '</div>';
     }
-
   } elseif ($form_id == 'blog_node_form') {
     $form['#prefix'] = '<div class="sbq_add_content"><div class="sbq_head"><div class="sbq_title">发布文章</div></div>';
     $form['#suffix'] = '</div>';
@@ -639,20 +638,20 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     $form['#prefix'] = '<div class="sbq_user_date"><div class="sbq_form_wrap">';
     $form['#suffix'] = '</div></div>';
 
-    unset($form['account']['current_pass']['#description']);
+    //unset($form['account']['current_pass']['#description']);
     $form['account']['current_pass']['#prefix'] = '<div class="sbq_form_01">';
     $form['account']['current_pass']['#attributes']['class'][] = 'sbq_input_01';
     $form['account']['current_pass']['#suffix'] = '</div>';
 
-    unset($form['account']['mail']['#description']);
+    //unset($form['account']['mail']['#description']);
     $form['account']['mail']['#prefix'] = '<div class="sbq_form_01">';
     $form['account']['mail']['#attributes']['class'][] = 'sbq_input_01';
     $form['account']['mail']['#suffix'] = '</div>';
 
-    unset($form['account']['pass']['#description']);
+    //unset($form['account']['pass']['#description']);
     $form['account']['pass']['#attributes']['class'][] = 'sbq_input_01';
 
-    //unset($form['picture']['picture_delete']);
+    unset($form['picture']['picture_delete']);
     $form['picture']['#prefix'] = '<div class="sbq_form_01">';
     $form['picture']['#suffix'] = '</div>';
 
@@ -708,11 +707,18 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
 }
 
 
-function tiger_user_login_ajax_callback() {
-  return '<script type="text/javascript">
-    parent.$.fn.colorbox.close();
-    location.reload(true);
-  </script>';
+function tiger_user_login_ajax_callback($form, $form_state) {
+  global $user;
+  $rtn = '';
+  if ($user->uid) {
+    $rtn = '<script type="text/javascript">
+              parent.$.fn.colorbox.close();
+              location.reload(true);
+            </script>';
+  } else {
+    $rtn =  $form;
+  }
+  return $rtn;
 }
 
 /**
