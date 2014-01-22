@@ -516,7 +516,7 @@ function sbq_user_relstionships_users($account = NULL, $rtid = NULL, $page_of_nu
 function sbq_user_relationships_user_action($relationship, $account) {
   global $user;
   $this_user_str = $account->uid == $relationship->requestee_id ? 'requester' : 'requestee';
-  $this_user = $relationship->{$this_user_str};
+  $this_user = $relationship->{$this_user_str.'_id'};
   $row = array(
       'user' => $this_user,
       check_plain(user_relationships_type_get_name($relationship, FALSE, $relationship->is_oneway && $this_user_str == 'requester')),
