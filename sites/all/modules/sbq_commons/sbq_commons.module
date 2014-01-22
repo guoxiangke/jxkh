@@ -12,10 +12,10 @@ define('FRIEND_DOCTOR_PATIENT', 3);
 
 //rid
 define('USER_ADMINSTRATOR_RID', 3);
-define('USER_DOCTOR_RID', 4);
+define('USER_DOCTOR_RID', 7);
 define('USER_PATIENT_RID', 5);
 define('USER_EDITOR_RID', 6);
-define('USER_CERTIFIED_DOCTOR_RID', 7);
+define('USER_CERTIFIED_DOCTOR_RID', 4);
 
 function sbq_commons_menu() {
   module_load_all_includes('module', 'user_relationships_ui');
