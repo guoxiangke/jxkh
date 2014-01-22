@@ -36,7 +36,7 @@ function _sbq_services_user_login($username, $password) {
   $return->uid = $account->user->uid;
   $return->sessid = session_id();
   $return->session_name = session_name();
-  $users = _sbq_services_user_format($account->user);
+  $users = _sbq_services_user_format(user_load($account->user->uid));
   $return->user = reset($users);
   return $return;
 }
