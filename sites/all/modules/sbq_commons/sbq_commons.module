@@ -238,8 +238,7 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
       $form['agree'] = array(
           '#type' => 'checkbox',
           '#title' => t('同意' . l('伤不起服务条款', "node/20151", array(
-                  'attributes' => array( 'target' => '_blank', 'class' => array('agree_register') ) ))
-              ),
+                  'attributes' => array( 'target' => '_blank', 'class' => 'argee_regester' ) ))),
           '#default_value' => TRUE,
           '#weight' => 99.9
       );

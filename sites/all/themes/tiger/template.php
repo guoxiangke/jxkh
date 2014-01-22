@@ -218,6 +218,8 @@ function tiger_preprocess_views_view(&$vars) {
 
     $follower_active = FALSE;
     $sbq_quick_ask_form = '';
+      $menu_qa_active = '';
+      $menu_blog_active = '';
     if (in_array('followers', arg())) {
       $follower_active = TRUE;
       $menu_qa_active = '';
@@ -245,6 +247,7 @@ function tiger_preprocess_views_view(&$vars) {
     $vars['menu_blog_active'] = $menu_blog_active;
 
     $blog_active = FALSE;
+      $menu_promoted_active = '';
     if (in_array('blog', arg())) {
       $blog_active = TRUE;
       $menu_promoted_active = '';
@@ -260,12 +263,12 @@ function tiger_preprocess_views_view(&$vars) {
     $vars['menu_blog_active'] = $menu_blog_active;
 
     $qa_active = FALSE;
-    if (in_array('qa', arg())) {
-      $qa_active = TRUE;
       $menu_promoted_active = '';
       $menu_followed_active = '';
       $menu_ask_active = '';
       $menu_answer_active = '';
+    if (in_array('qa', arg())) {
+      $qa_active = TRUE;
       if (in_array('promoted', arg())) {
         $menu_promoted_active = 'class="active"';
       } elseif (in_array('followed', arg())) {
