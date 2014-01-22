@@ -54,6 +54,7 @@ function center_message_query($centerid, $fun = NULL, $page, $fields, $parameter
   if (!$centermid = center_message_get_privatemsgid($centerid)) {
     return array();
   }
+
   if (isset($parameters['start'])) {
     $result = privatemsg_thread_load($centermid, NULL, $parameters['start']);
   } else {
@@ -72,7 +73,7 @@ function center_message_query($centerid, $fun = NULL, $page, $fields, $parameter
     $message[] = array(
         'mid' => $value->mid,
         'body' => $value->body,
-        'timestamp' => $value->timestamp,
+        'timestamp' => date('Y-m-d H:i:s', $value->timestamp) ,
         'is_new' => $value->is_new,
         'author' => $user_img[$value->author->uid],
         // 'recipients' => $user_img[$value->user->uid]
@@ -98,7 +99,7 @@ function center_message_get_privatemsgid($centerid, $account = NULL) {
     global $user;
     $account = $user;
   }
-  return 'center|' . $centerid . '|' . $account->uid;
+
   $result = db_select('pm_message', 'pm')
       ->fields('pm', array( 'mid' ))
       ->condition('subject', 'center|' . $centerid . '|' . $account->uid)
