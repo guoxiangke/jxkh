@@ -69,7 +69,7 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
     <div class="sbq_reply_actions">
       <ul>
         <li><?php print $created; ?></li>
-        <li class="sbq_reply_btn"><a href="#">
+        <li class="sbq_reply_btn"><a href="#" class="sbq_add_reply_btn">
           <?php if ($node->comment_count == 0) {?>
             添加评论
           <?php } else {?>
@@ -84,18 +84,23 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
         <?php endif;?>
       </ul>
     </div>
-    <div class="sbq_reply_wrap">
+    <?php
+      $q_comments = comment_get_thread($node, COMMENT_MODE_FLAT, $comments_per_page);
+      $comments_count = $node->comment_count;
+      $warp_add_class = '';
+      if ($comments_count == 0) {
+        $warp_add_class = 'no_reply';
+      }
+    ?>
+    <div class="sbq_reply_wrap <?php print $warp_add_class ?>">
       <div id="comments-<?php print $nid ?>" class="sbq_reply_list">
         <ul>
           <?php
-            $q_comments = comment_get_thread($node, COMMENT_MODE_FLAT, $comments_per_page);
             foreach ($q_comments as $key => $value) {
               $q_comment = comment_load($value);
               $account = user_load($q_comment->uid);
               $qc_name = theme('username', array('account' => $account));
               $qc_picture = theme('user_picture', array('account' =>$account));
-              // $qc_picture = variable_get('user_picture_default', '');
-              // $qc_picture = theme('image_style', array('style_name' => 'profile_small', 'path' => $qc_picture));
               $comment_date = format_date($q_comment->changed, 'short');
               $comment_body = $q_comment->comment_body['und'][0]['safe_value'];
           ?>
