@@ -153,7 +153,9 @@
 <?php endif; ?>
 <div class="body">
   <div class="main">
+    <?php if (!in_array('reset', arg())): ?>
     <?php print $messages; ?>
+    <?php endif; ?>
     <?php if ($logged_in): ?>
     <div class="sbq_user_headr"><img src="/sites/all/themes/tiger/image/sbq_user_headr_bg.jpg" width="960" height="200"  alt=""/></div>
     <div class="sbq_user_info">
@@ -202,7 +204,6 @@
         <?php if ($current_user): ?>
         <li <?php print $menu_relationship_active; ?>><?php print l('圈子', 'user/'.$a_uid.'/relationship'); ?></li>
         <li <?php print $menu_message_active; ?>><?php print l('消息', 'user/message'); ?></li>
-        <li <?php print $menu_edit_active; ?>><?php print l('编辑', 'user/'.$a_uid.'/edit'); ?></li>
         <?php endif; ?>
       </ul>
     </div>
@@ -225,6 +226,18 @@
   </div>
 </div>
 <div class="footer">
+  <div class="footer_inner">
+  <div class="sbq_about_link">
+    <ul>
+      <li><a href="/contact.html">联系我们</a></li>
+      <li><a href="/services.html">注册服务条款</a></li>
+      <li><a href="/copyright.html">免责声明</a></li>
+      <li><a href="/join.html">加入我们</a></li>
+      <li><a href="/about.html">关于我们</a></li>
+    </ul>
+  </div>
+  <div class="sbq_copy">© 2014 伤不起 中国最真实的医疗评价平台(<a href="http://www.miitbeian.gov.cn" target="_bank"> 京ICP备13032461号-1</a>) </div>
+  </div>
   <?php print render($page['footer']); ?>
 </div> <!-- /#footer -->
 
