@@ -27,14 +27,7 @@
  * @ingroup views_templates
  */
 ?>
-<div class="sbq_user_message">
-  <div class="sbq_nav">
-    <ul>
-      <li  class="active"><?php print l('系统消息', 'user/message'); ?></li>
-      <li><?php print l('我发送的请求', 'user/'.$user->uid.'/relationship/default/sent'); ?></li>
-      <li><?php print l('我收到的请求', 'user/'.$user->uid.'/relationship/default/received'); ?></li>
-    </ul>
-  </div>
+<div class="sbq_question_list">
   <?php print render($title_prefix); ?>
   <?php if ($title): ?>
     <?php print $title; ?>
@@ -59,14 +52,12 @@
   <?php endif; ?>
 
   <?php if ($rows): ?>
-    <div class="sbq_con">
-      <?php print $rows; ?>
+    <div class="sbq_tags">
+    <?php print $rows; ?>
     </div>
   <?php elseif ($empty): ?>
-    <div class="sbq_con">
-      <ul>
-        <li><?php print $empty; ?></li>
-      </ul>
+    <div class="view-empty">
+      <?php print $empty; ?>
     </div>
   <?php endif; ?>
 

@@ -116,6 +116,7 @@
 </div>
 <div class="body">
   <div class="main">
+    <?php print $messages; ?>
     <?php if ($page['sidebar_first']): ?>
       <div class="sidebar_first sidebar">
         <?php print render($page['sidebar_first']); ?>
@@ -126,7 +127,7 @@
       <?php print render($page['content']); ?>
     </div>
 
-    <?php if ($page['sidebar_second']): ?>
+    <?php if (isset($page['sidebar_second'])&& $page['sidebar_second']): ?>
       <div class="sidebar_second sidebar">
         <?php print render($page['sidebar_second']); ?>
       </div> <!-- /.sidebar-second -->

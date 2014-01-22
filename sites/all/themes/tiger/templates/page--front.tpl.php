@@ -72,6 +72,7 @@
  * @ingroup themeable
  */
   $theme_path = drupal_get_path('theme', 'tiger');
+  $user_link = '#';
 ?>
 <div class="header">
   <div class="header_inner">
@@ -97,7 +98,6 @@
         global $user;
         $name = theme('username', array('account' => $user));
         $picture = theme('user_picture', array('account' =>$user));
-        $user_link = '###';
         if($user->uid) {
           $user_link = '/user/'.$user->uid;
         }
@@ -120,6 +120,7 @@
 </div>
 <div class="body">
   <div class="main">
+    <?php print $messages; ?>
     <div class="sbq_home_menu">
       <ul class="sbq_patient">
         <li class="front-redblack color_06"><a href="###" onclick="alert('榜单沉淀中～敬请期待！');">
