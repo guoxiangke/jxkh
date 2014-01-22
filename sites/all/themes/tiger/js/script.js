@@ -65,7 +65,9 @@ jQuery(function($) {
   Drupal.behaviors.tiger = {
     attach: function (context, settings) {
       // behaviors here
-
+      $('#user-profile-form .user-picture').click(function(){
+        $('#edit-picture-upload').click();
+      });
       // End of behaviors
     }
   };
