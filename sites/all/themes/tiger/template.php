@@ -218,6 +218,8 @@ function tiger_preprocess_views_view(&$vars) {
 
     $follower_active = FALSE;
     $sbq_quick_ask_form = '';
+      $menu_qa_active = '';
+      $menu_blog_active = '';
     if (in_array('followers', arg())) {
       $follower_active = TRUE;
       $menu_qa_active = '';
