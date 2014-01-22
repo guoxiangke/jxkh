@@ -5,524 +5,325 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/**
- * 预约门诊类型
- */
-define('SBQ_CENTER_RESERVATION_TYPE_OUTPATIMENT', 0);
-/**
- * 预约电话类型
- */
-define('SBQ_CENTER_RESERVATION_TYPE_PHONE', 1);
-/**
- * 预约
- */
-define('SBQ_CENTER_RESERVATION_STATUS_PRE', 0);
-/**
- * 接受
- */
-define('SBQ_CENTER_RESERVATION_STATUS_REQ', 1);
-/**
- * 忽略
- */
-define('SBQ_CENTER_RESERVATION_STATUS_IGN', 2);
+define('SBQ_CENTER_RESERVATION_NODE_TYPE', 'sbq_center_reservation');
+define('SBQ_CENTER_RESERVATION_STATUS_SUBMMIT', 0);
+define('SBQ_CENTER_RESERVATION_STATUS_ACCEPT', 1);
+define('SBQ_CENTER_RESERVATION_STATUS_IGNORE', 2);
 
 /**
- * hook menu
+ * hook  menu
+ * @return array
  */
 function sbq_center_reservation_menu() {
-  $items['node/%/reservation/%'] = array(
-      'page callback' => 'sbq_center_reservation',
-      'page arguments' => array( 1, 3 ),
+  $items['center/%sbq_center/reservation/settings'] = array(
+      'title' => '设置接诊日期',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array( 'sbq_center_opendays_form', 1 ),
       'access callback' => 'sbq_center_reservation_access',
-      'access arguments' => array( 'form', NULL ),
-      'file' => 'sbq_center_reservation.inc',
-      'type' => MENU_CALLBACK,
+      'access arguments' => array( 1, NULL, 'setting center reservation' ),
+      'type' => MENU_NORMAL_ITEM,
+      'file' => 'sbq_center_reservation.inc'
   );
-
-  $items['node/%/reservation/manage'] = array(
-      'page callback' => 'sbq_center_reservation_manage',
-      'page arguments' => array( 1 ),
+  $items['center/%sbq_center/reservation/add'] = array(
+      'title' => '预约',
+      'page callback' => 'sbq_center_reservation_add',
+      'page arguments' => array( 1, 'add' ),
       'access callback' => 'sbq_center_reservation_access',
-      'access arguments' => array( 'manage', NULL ),
-      'file' => 'sbq_center_reservation.inc',
-      'type' => MENU_CALLBACK,
+      'access arguments' => array( 2, NULL, 'add' ),
+      'type' => MENU_NORMAL_ITEM,
+      'file' => 'sbq_center_reservation.inc'
   );
 
   foreach (array( 'accept', 'ignore' ) as $key => $value) {
-    $items['node/%/reservation/%/action/'.$value] = array(
-        'page callback' => 'sbq_center_reservation_action',
-        'page arguments' => array( 1, 3, $value),
+    $items['center/%sbq_center/reservation/%sbq_center_reservation/' . $value] = array(
+        'title' => '预约',
+        'page callback' => 'sbq_center_reservation_manage',
+        'page arguments' => array( 1, 3, 4 ),
         'access callback' => 'sbq_center_reservation_access',
-        'access arguments' => array( $value, NULL ),
-        'file' => 'sbq_center_reservation.inc',
-        'type' => MENU_CALLBACK,
+        'access arguments' => array( 1, 3, 'manage center reservation' ),
+        'type' => MENU_NORMAL_ITEM,
+        'file' => 'sbq_center_reservation.inc'
     );
   }
-  $items['node/%/reservation/%/action'] = array(
-      'page callback' => 'sbq_center_reservation_accept',
-      'page arguments' => array( 1, 3 ),
+
+  $items['center/%sbq_center/reservation/created'] = array(
+      'title' => '创建预约',
+      'page callback' => 'sbq_center_reservation_created',
+      'page arguments' => array( 1 ),
       'access callback' => 'sbq_center_reservation_access',
-      'access arguments' => array( 'accept', NULL ),
-      'file' => 'sbq_center_reservation.inc',
-      'type' => MENU_CALLBACK,
+      'access arguments' => array( 1, NULL, 'create sbq_center_reservation content' ),
+      'type' => MENU_NORMAL_ITEM,
+      'file' => 'sbq_center_reservation.inc'
   );
-
-//  $items['node/%/reservation/%/ignore'] = array(
-//      'page callback' => 'sbq_center_reservation_ignore',
-//      'page arguments' => array( 1, 3 ),
-//      'access callback' => 'sbq_center_reservation_access',
-//      'access arguments' => array( 'ignore', NULL ),
-//      'file' => 'sbq_center_reservation.inc',
-//      'type' => MENU_CALLBACK,
-//  );
-
   return $items;
-}
-
-function sbq_center_reservation_access($type, $account = NULL) {
-  return TRUE;
-}
-
-/**
- * hook_reservation_form_alter
- * 
- * @param type $form
- * @param type $form_state
- * @param type $form_id
- */
-function sbq_center_reservation_form_alter(&$form, $form_state, $form_id) {
-  global $user;
-  if (strpos($form_id, 'webform_client_form_') !== FALSE) {
-    if (isset($form['submitted']['sbq_center_category']) && $user->uid != 1) {
-      $form['submitted']['sbq_center_category']['#access'] = FALSE;
-      $form['submitted']['center_status']['#access'] = FALSE;
-    }
-  }
-//  if (strpos($form_id, 'webform_client_form_') !== FALSE) {
-//    $nid = str_replace('webform_client_form_', '', $form_id);
-//    if ($nid == SBQ_CENTER_RESERVATION_NODE_ID) {
-//      if ($sbq_center = sbq_center_get_center()) {
-//        $form['submitted']['sbq_center_id']['#value'] = $sbq_center->nid;
-//        $form['submitted']['sbq_center_formcategory']['#value'] = SBQ_CENTER_RESERVATION_TYPE_OUTPATIMENT;
-//      }
-//    }
-//  }
-}
-
-/**
- * fetch center reservation form by center node id or arg(1)
- * @param type $sbq_center_reservation_type in SBQ_CENTER_RESERVATION_TYPE_OUTPATIMENT, SBQ_CENTER_RESERVATION_TYPE_PHONE
- * @param type $centerid center node id or arg(1) or center node
- * @return type form
- */
-function sbq_center_reservation_sheet($sbq_center_reservation_type, $centerid = NULL) {
-  if ($sbq_center = sbq_center_reservation_node_by_center($centerid)) {
-    $node = node_load($sbq_center->nid);
-    webform_node_view($node, 'full');
-    $webform = $node->content['webform'];
-    $webform['submitted']['sbq_center_category']['#value'] = $sbq_center_reservation_type;
-  }
-  return isset($webform) ? $webform : '';
-}
-
-/**
- *  hook_webform_submission_insert
- * @param type $node
- * @param type $submission
- */
-function sbq_center_reservation_webform_submission_insert($node, $submission) {
-//  global $user;
-//  $title = $user->name;
-//  if ($user->uid != $submission->uid) {
-//    $account = user_load($submission->uid);
-//    $title = $account->name;
-//  }
-//  db_insert('webform_submissions_center_reservation')
-//      ->fields(array(
-//          'sid' => $submission->sid,
-//          'nid' => $node->nid,
-//          'cid' => $submission->data[9]['value'][0],
-//          'uid' => $submission->uid,
-//          'type' => $submission->data[10]['value'][0],
-//          'is_draft' => $submission->is_draft,
-//          'submitted' => $submission->submitted,
-//          'remote_addr' => $submission->remote_addr,
-//          'short_title' => $title,
-//      ))->execute();
 }
 
 /**
  * Implements hook_og_permission().
  */
 function sbq_center_reservation_og_permission() {
-  $items = array();
-
-  $items['access all center reservation results'] = array(
-      'title' => t('Access all center reservation results in group'),
-      'description' => t('Grants access to the "Results" tab on all reservation in this group. Generally a group admin permission.'),
+  $items['add center reservation'] = array(
+      'title' => t('提交表单预约'),
+      'description' => t('拥有此权限，可以提交预约表单.'),
       'roles' => array( OG_ANONYMOUS_ROLE, OG_AUTHENTICATED_ROLE, OG_ADMINISTRATOR_ROLE ),
   );
-
-  $items['edit all center reservation submissions'] = array(
-      'title' => t('Edit all center reservation submissions in group'),
-      'description' => t('Allows editing of any center reservation submission by any user in this group. Generally a group admin permission.'),
-      'roles' => array( OG_AUTHENTICATED_ROLE, OG_ADMINISTRATOR_ROLE ),
-  );
-
-  $items['delete all center reservation submissions'] = array(
-      'title' => t('Delete all center reservation submissions in group'),
-      'description' => t('Allows deleting of any center reservation submission by any user in this group. Generally a group admin permission.'),
-      'roles' => array( OG_AUTHENTICATED_ROLE, OG_ADMINISTRATOR_ROLE ),
-  );
-
-  $items['access own center reservation submissions'] = array(
-      'title' => t('Access own center reservation submissions'),
+  $items['manage center reservation'] = array(
+      'title' => t('管理中心预约表单'),
+      'description' => t('管理中心预约表单，更新状态，删除表单.'),
       'roles' => array( OG_ANONYMOUS_ROLE, OG_AUTHENTICATED_ROLE, OG_ADMINISTRATOR_ROLE ),
   );
-
-  $items['edit own center reservation submissions'] = array(
-      'title' => t('Edit own center reservation submissions'),
+  $items['cancel own center reservation'] = array(
+      'title' => t('取消自己的预约表单'),
+      'description' => t('取消自己的预约表单.'),
       'roles' => array( OG_ANONYMOUS_ROLE, OG_AUTHENTICATED_ROLE, OG_ADMINISTRATOR_ROLE ),
   );
-
-  $items['delete own center reservation submissions'] = array(
-      'title' => t('Delete own center reservation submissions'),
+  $items['setting center reservation'] = array(
+      'title' => t('设置中心预约'),
+      'description' => t('可以设置预约时间.'),
       'roles' => array( OG_ANONYMOUS_ROLE, OG_AUTHENTICATED_ROLE, OG_ADMINISTRATOR_ROLE ),
   );
-
   return $items;
 }
 
-/**
- * Implements hook_webform_submission_access().
- *
- * @see webform_submission_access()
- */
-function sbq_center_reservation_webform_submission_access($node, $submission, $op = 'view', $account = NULL) {
+function sbq_center_reservation_access($center, $reservation = NULL, $type = NULL, $account = NULL) {
+
   global $user;
-  $account = isset($account) ? $account : $user;
-  // If this webform is not in a group, don't affect access.
-  if (empty($node->og_group_ref['und'])) {
-    return;
+  if (!$account) {
+    $account = $user;
   }
-
-  $access_all = FALSE;
-  $access_own_submission = FALSE;
-  foreach ($node->og_group_ref['und'] as $group) {
-    // Determine if the user has access to all results and submissions.
-    if (og_user_access('node', $group['target_id'], 'access all center reservation results', $account)) {
-      $access_all = TRUE;
-      break; // If we access to everything, "access own" doesn't matter.
-    }
-
-    // Or check if they have access to just their own submissions.
-    if (isset($submission) && og_user_access('node', $group['target_id'], 'access own center reservation submissions', $account) && (($account->uid && $account->uid == $submission->uid) || isset($_SESSION['webform_submission'][$submission->sid]))) {
-      $access_own_submission = TRUE;
-    }
+  if (!og_user_access('node', $center->nid, $type, $account)) {
+    return FALSE;
   }
-
-  // Access to any operation (view/edit/delete) requires access permission.
-  $general_access = $access_all || $access_own_submission;
-
-  switch ($op) {
-    case 'view':
-      return $general_access;
-    case 'save':
-      // The "save" case tells Webform to save a session for anonymous users if
-      // they have permission to access their own permissions.
-      return og_user_access('node', $group['target_id'], 'access own center reservation submissions', $account);
-    case 'list':
-
-      $f = og_user_access('node', $group['target_id'], 'access all center reservation results', $account) || (og_user_access('node', $group['target_id'], 'access own center reservation submissions', $account) && ($account->uid || isset($_SESSION['webform_submission'])));
-      return true;
-    case 'edit':
-      if ($general_access) {
-        foreach ($node->og_group_ref['und'] as $group) {
-          if (og_user_access('node', $group['target_id'], 'edit all center reservation submissions', $account) || (og_user_access('node', $group['target_id'], 'edit own center reservation submissions', $account) && $submission->uid == $account->uid)) {
-            return TRUE;
-          }
-        }
-      }
+  switch ($type) {
+    case 'cancel own center reservation':
+      return $reservation->uid == $account->uid;
       break;
-    case 'delete':
-      if ($general_access) {
-        foreach ($node->og_group_ref['und'] as $group) {
-          if (og_user_access('node', $group['target_id'], 'delete all center reservation submissions', $account) || (og_user_access('node', $group['target_id'], 'delete own center reservation submissions', $account) && $submission->uid == $account->uid)) {
-            return TRUE;
-          }
-        }
-      }
+    default:
       break;
   }
+
+
+  return TRUE;
 }
 
-/**
- * Implements hook_webform_results_access().
- */
-function sbq_center_reservation_webform_results_access($node, $account = NULL) {
-  // If this webform is not in a group, don't affect access.
-  if (empty($node->og_group_ref['und'])) {
-    return;
-  }
-  foreach ($node->og_group_ref['und'] as $group) {
-    if (og_user_access('node', $group['target_id'], 'access all center reservation results', $account)) {
-      return TRUE;
-    }
-  }
-}
-
-/**
- * Implements hook_webform_results_clear_access().
- */
-function sbq_center_reservation_webform_results_clear_access($node, $account = NULL) {
-  if (empty($node->og_group_ref['und'])) {
-    return;
-  }
-
-  foreach ($node->og_group_ref['und'] as $group) {
-    if (og_user_access('node', $group['target_id'], 'delete all center reservation submissions', $account)) {
-      return sbq_center_reservation_webform_results_access($node, $account);
-    }
-  }
-}
-
-/**
- * hook_node_insert
- * after create center create center reservation
- * @param type $node
- * @return type
- */
-function sbq_center_reservation_node_insert($node) {
-  if (!isset($node->type) || $node->type != SBQ_CENTER_NODE_TYPE) {
-    return;
-  }
-  $webform_node = new stdClass();
-  $webform_node->uid = $node->uid;
-  $webform_node->type = 'webform';
-  $webform_node->title = $node->title . '(预约)';
-  node_object_prepare($webform_node);
-  $webform_node->language = $node->language;
-  $webform_node->body = $node->title;
-  $webform_node->og_group_ref['und'][0]['target_id'] = $node->nid;
-  node_save($webform_node);
-}
-
-/**
- * fetch center reservation node by center node id
- * @param type $centerid one center node id or center node
- * @return null
- */
-function sbq_center_reservation_node_by_center($centerid = NULL) {
-  if (!$centerid) {
-    $center_arg1 = arg(1);
-    $centerid = $center_arg1 ? $centerid : 0;
-  }
-  if (is_object($centerid)) {
-    $node = $centerid;
-  } else {
-    $node = node_load($centerid);
-  }
-  if ($node->type != SBQ_CENTER_NODE_TYPE) {
+function sbq_center_reservation_load($rid) {
+  if (!$reservation = node_load($rid)) {
     return NULL;
   }
+  return $reservation->type == SBQ_CENTER_RESERVATION_NODE_TYPE ? $reservation : NULL;
+}
+
+/**
+ * get reservation settings
+ * @param type $type
+ */
+function sbq_center_reservation_setopenday($centerid, $opendays) {
+  if (!$center_node = sbq_center_load($centerid)) {
+    throw new Exception("The parameter {$center_node} is not Center Node");
+  }
+}
+
+function sbq_center_reservation_get_settings($center) {
+  static $center_reservation_opendays = array();
+  $center = sbq_center_load($center);
+
+  if (!$vari = variable_get('center_reservation_' . $center->nid . '_settings')) {
+    return array();
+  }
+  $center_reservation_opendays[$center->nid] = unserialize($vari);
+  return $center_reservation_opendays[$center->nid];
+}
+
+function sbq_center_reservation_theme_registry_alter(&$theme_registry) {
+  if (arg(2) == 'reservation') {
+    $theme_registry['calendar_month_col']['path'] = drupal_get_path('module', 'sbq_center_reservation');
+    $theme_registry['calendar_month_col']['template'] = '/templates/' . $theme_registry['calendar_month_col']['template'];
+    $theme_registry['calendar_month_col']['preprocess functions'][] = 'template_preprocess_sbq_center_reservation_month_col';
+
+    $theme_registry['calendar_item']['path'] = drupal_get_path('module', 'sbq_center_reservation');
+    $theme_registry['calendar_item']['template'] = '/templates/' . $theme_registry['calendar_item']['template'];
+    $theme_registry['calendar_item']['preprocess functions'][] = 'template_preprocess_sbq_center_reservation_item';
+  }
+}
+
+/**
+ * @see template_preprocess_calendar_item()
+ * @param type $vars
+ */
+function template_preprocess_sbq_center_reservation_item(&$vars) {
+  if (isset($vars['rendered_fields'])) {
+    $vars['rendered_fields'] = array();
+  }
+}
+
+function template_preprocess_sbq_center_reservation_month_col(&$vars) {
+  // dpm($vars);
+}
+
+/**
+ * 
+ * @param type $date
+ * @param type $center
+ * @return boolean
+ */
+function sbq_center_reservation_can_reservation($date, $center = '', $display=FALSE) {
+  if (!$center) {
+    $center = arg(1);
+  }
+
+  if (is_array($date)) {
+    $date = $date['date'];
+    $time = $date['time'];
+  } else {
+    $datetime = new DateTime($date);
+    $date = date('Y-m-d', $datetime->getTimestamp());
+    $time = date('H', $datetime->getTimestamp());
+  }
+  $settings = sbq_center_reservation_get_settings($center);
+  $week_index = date_day_of_week($date);
+  $week = array(
+      'sunday',
+      'monday',
+      'tuesday',
+      'wednesday',
+      'thursday',
+      'friday',
+      'saturday',
+  );
+  if (strtotime($date) < time()) {
+    return FALSE;
+  }
+
+  $reservation = $settings['opendays'][$week[$week_index]];
+
+  if ( isset($reservation['a']) && $reservation['a']) {
+    if ($time > 9 && $time < 12) {
+      return true;
+    }
+  }
+  if ( isset($reservation['p']) && $reservation['p']) {
+    if ($time > 13 && $time < 18) {
+      return true;
+    }
+  }
+  if($display){
+    return isset($reservation['a']) && $reservation['a'] || isset($reservation['p']) && $reservation['p'];
+  }
+  return FALSE;
+}
+
+/*
+ * hook_form_alter
+ */
+
+function sbq_center_reservation_form_alter(&$form, $form_states, $form_id) {
+  if ( $form_id == 'sbq_center_reservation_node_form' && isset($form['#bundle']) && $form['#bundle'] == SBQ_CENTER_RESERVATION_NODE_TYPE ) {
+    $form['#validate'][] = 'sbq_center_reservation_form_validate';
+  }
+}
+
+/*
+ * sbq center reservation validate
+ */
+
+function sbq_center_reservation_form_validate($form, &$form_states) {
+  // file_put_contents('/home/chechao/1.log', $form_states['values']['field_node_ref']['und'][0]['target_id']);
+  $c = sbq_center_reservation_can_reservation($form_states['values']['field_reservation_time']['und'][0]['value'], $form_states['values']['og_group_ref']['und'][0]['target_id']);
+
+  if (!$c) {
+    form_set_error('field_reservation_time ', '您输入的预约时间不能预约');
+  }
+}
+
+/**
+ * get reservation node of one center
+ * @param type $centerids
+ */
+function sbq_center_reservation_fetch_by_center($centerid) {
+  if (!$center = sbq_center_load($centerid)) {
+    throw new Exception("the center $centerid is not center");
+  }
+
   $query = new EntityFieldQuery();
   $result = $query->entityCondition('entity_type', 'node')
-      ->fieldCondition('og_group_ref', 'target_id', $node->nid)
-      ->propertyCondition('type', 'webform')
+      ->propertyCondition('type', SBQ_CENTER_RESERVATION_NODE_TYPE)
+      ->fieldCondition('og_group_ref', 'target_id', $center->nid)
       ->execute();
   if (!isset($result['node'])) {
-    return NULL;
+    return FALSE;
   }
   $reservationid = reset(array_keys($result['node']));
   return node_load($reservationid);
 }
 
-/**
- *  fetch user reservation
- * @param type $filter array('uid'=>?, 'nid' => ?), $uid is not must
- * @param type $page
- * @param type $pagesize
- */
-function sbq_center_reservation_get_submissions($filter, $page = 0, $pagesize = 10, $from = 'app') {
-  $query = db_select('webform_submissions', 'wfs')
-      ->fields('wfs', array( 'sid' ))
-      ->orderBy('submitted', 'DESC')
-      ->condition('nid', $filter['nid'])
-      ->condition('is_draft', 0);
+function sbq_center_reservation_node_submit($node, $form, $form_state) {
 
-  if (isset($filter['uid']) && $filter['uid']) {
-    $query->condition('uid', $filter['uid']);
-    $count = webform_get_submission_count($filter['nid'], $filter['uid']);
-  } else {
-    $count = webform_get_submission_count($filter['nid']);
-  }
-
-//  $pages = pager_default_initialize($count, $pagesize);
-//  $result = db_query_range($query->, $pages * $pagesize, $pagesize)->fetchAllAssoc('uid');
-  if ($from == 'app') {
-    $result = $query->range($page * $pagesize, $pagesize)
-        ->execute()
-        ->fetchAllAssoc('sid');
-  } else {
-    $result = $query->extend('PagerDefault')
-        ->limit(10)
-        ->execute()
-        ->fetchAllAssoc('sid');
-  }
-
-  $reservation = array();
-  module_load_include('inc', 'webform', 'includes/webform.submissions');
-  foreach ($result as $key => $value) {
-    $reservation[] = webform_get_submission($filter['nid'], $key);
-  }
-  if ($from != 'app') {
-    return $reservation;
-  }
-  return array(
-      'reservation' => $reservation,
-      'page' => $page,
-      'pagecount' => ceil($count / $pagesize)
-  );
 }
 
 /**
- * hook_theme
- * @return array
+ *  get reservation
+ * @param type $uid
+ * @param type $nid
+ * @param array $parameters array(target_id ,pagesize)
  */
-function sbq_center_reservation_theme() {
-  $tpls = array(
-      'sbq_center_reservation' => array(
-          'template' => 'sbq_center_reservation',
-          'variables' => array()
-      ),
-  );
-  return $tpls;
+function sbq_center_reservation_get_reservation($uid = '', $nid = '', array $parameters) {
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+      ->propertyCondition('type', SBQ_CENTER_RESERVATION_NODE_TYPE);
+  if ($uid) {
+    $query->propertyCondition('uid', $uid);
+  }
+  if ($nid) {
+    $query->propertyCondition('nid', $nid);
+  }
+  if (in_array('target_id', array_keys($parameters))) {
+    $query->fieldCondition('node_ref', 'target_id', $parameters['target_id']);
+  }
+  if (in_array('page', array_keys($parameters))) {
+    $query->range($parameters['page']['page'] * $parameters['page']['pagesize'], $parameters['page']['pagesize']);
+  }
+  $query->propertyOrderBy('created', 'DESC');
+
+  $result = $query->execute();
+  if (!isset($result['node'])) {
+    return array();
+  }
+  return node_load_multiple(array_keys($result['node']));
 }
 
-//function sbq_center_reservation_webform_submission_render_alter(&$renderable) {
-//  $old = $renderable;
-//  foreach ($renderable as $key => $value) {
-//    if (strpos($key, 'sbq') !== FALSE) {
-////      $new = array(
-////          '#title' => $value['#title'],
-////          '#value' => $value['#value'],
-////      );
-////      if(isset($value['#options'])){
-////        $new += array(
-////            '#options' => $value['#options']
-////        );
-////      }
-////      unset($renderable[$key]);
-////      $renderable[$key] = $new;
-//    }
-//  }
-//}
+function sbq_center_reservation_get_manage_item($row) {
+  $centerid = arg(1);
+  $accept = $ignore = '';
+  switch ($row->field_field_reservation_status[0]['raw']['value']) {
+    case SBQ_CENTER_RESERVATION_STATUS_SUBMMIT:
+      $accept = l('接受', "center/{$centerid}/reservation/{$row->nid}/accept");
+      $ignore = l('删除', "center/{$centerid}/reservation/{$row->nid}/ignore");
+      break;
+    case SBQ_CENTER_RESERVATION_STATUS_ACCEPT:
+      // $accept = l('接受', "center/{$centerid}/reservation/{$row->nid}/accept");
+      $accept = '';
+      $ignore = l('删除', "center/{$centerid}/reservation/{$row->nid}/ignore");
+      break;
+  }
+  return $accept . ' ' . $ignore;
+}
 
-/**
- * 
- * @param type $node
- * @param type $submission array($submission);
- * @param type $email
- * @param type $format
- * @return array
- * @see webform_submission_render
+/*
+ * center reservation alter
  */
-function sbq_center_reservation_render($node, $submission, $email, $format, $multi = FALSE) {
-  $component_tree = array();
-  $components = $node->webform['components'];
-  $page_count = 1;
-  _webform_components_tree_build($components, $component_tree, 0, $page_count);
-  if (!$multi) {
-    $submission = array( $submission );
-  }
-  $result = array();
-  foreach ($submission as $k => $v) {
-    dpm($v);
-    if (isset($component_tree['children'])) {
-      foreach ($component_tree['children'] as $cid => $component) {
-        if (_webform_client_form_rule_check($node, $component, $component['page_num'], NULL, $submission)) {
-          _webform_client_form_add_component($node, $component, NULL, $renderable, $renderable, NULL, $v, $format);
-        }
-      }
-    }
-    $fields = isset($renderable) ? $renderable : array();
-    $data = array();
-    foreach ($fields as $key => $value) {
-      $data[$key] = array(
-          '#title' => $value['#title']
-      );
-      switch ($key) {
-        case 'sbq_center_outpatient':
-          $data[$key]['#value'] = $value['#options'][$value['#value'][0]];
-          break;
-        case 'sbq_center_name':
-          $data[$key]['#value'] = $value['#value'];
-          break;
-        case 'sbq_center_sex':
-          $data[$key]['#value'] = $value['#options'][$value['#value'][0]];
-          break;
-        case 'sbq_center_bron':
-        case 'sbq_center_time':
-          $data[$key]['#value'] = $value['#value']['year'] . '-' . $value['#value']['month'] . '-' . $value['#value']['day'];
-          break;
-        case 'sbq_center_body':
-          $data[$key]['#value'] = $value['#value'];
-          break;
-        case 'sbq_center_file':
-          $data[$key]['#value'] = file_create_url($value['#value']->uri);
-          break;
-        case 'sbq_center_recommended':
-          $data[$key]['#value'] = $value['#value'];
-          break;
-        case 'sbq_center_category':
-          $data[$key]['#value'] = $value['#options'][$value['#value'][0]];
-          break;
-        case 'center_status':
-          $data[$key]['#value'] = $value['#options'][$value['#value'][0]];
-          break;
-        default:
-          break;
-      }
-    }
-    $result[$v->sid] = $data;
-  }
-  if (!$multi) {
-    return reset($result);
-  }
-  return $result;
-}
 
-function sbq_center_reservation_update($node, $sid, $submission) {
-  dpm($submission);
-  module_load_include('module', 'webform');
-//  $form_state = array();
-//  $form_state['values']['submitted'] = $submission;
-//
-//  $form_state['values']['details']['sid'] = $sid;
-//  $form_state['values']['op'] = variable_get('services_webform_submit_button_resource_create', t('Submit'));
-//  drupal_form_submit('webform_client_form_' . $node->nid, $form_state, $node, array());
-//  if ($errors = form_get_errors()) {
-//    _drupal_exception_handler(new Exception(implode(" ", $errors)));
-//  }
-  return '预约表单#' . $sid . '更新成功';
-}
+function sbq_center_reservation_reservation_status_alter($reservation) {
+  if ($reservation->field_reservation_status['und'][0]['value'] == SBQ_CENTER_RESERVATION_STATUS_ACCEPT) {
+    global $user;
+    $date = new DateTime($reservation->field_reservation_time['und'][0]['value']);
+    $message = message_create('sbq_center_reservation_accept', array(
+        'arguments' => array( '!time' => date('Y-m-d', $date->getTimestamp()) )
+        ), user_load($reservation->uid));
 
-function sbq_center_reservation_field_keys($key = NULL) {
-  $fields = array(
-      'sbq_center_outpatient' => 1,
-      'sbq_center_name' => 2,
-      'sbq_center_sex' => 3,
-      'sbq_center_bron' => 4,
-      'sbq_center_time' => 5,
-      'sbq_center_body' => 6,
-      'sbq_center_file' => 7,
-      'sbq_center_recommended' => 8,
-      'sbq_center_category' => 10,
-      'sbq_center_status' => 11,
-  );
+    $warpper = entity_metadata_wrapper('message', $message);
 
-  if ($key) {
-    return $fields[$key];
+    $warpper->field_node_ref->set(node_load($reservation->og_group_ref['und'][0]['target_id']));
+    $warpper->field_center_reservation_send->set($user->uid);
+    $warpper->save();
   }
-  return $fields;
 }
