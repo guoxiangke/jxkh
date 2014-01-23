@@ -119,7 +119,11 @@
 <div class="sbq_activity_bg" style="background:url('<?php echo file_create_url($sbq_activity_bg_uri);?>')"></div>
 <div class="body">
   <div class="main">
-    <?php print $messages; ?>
+    <?php if ($messages): ?>
+    <div class="sbq_messages">
+      <?php print $messages; ?>
+    </div>
+    <?php endif; ?>
     <?php if ($page['sidebar_first']): ?>
       <div class="sidebar_first sidebar">
         <?php print render($page['sidebar_first']); ?>

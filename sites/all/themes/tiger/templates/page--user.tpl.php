@@ -154,7 +154,11 @@
 <div class="body">
   <div class="main">
     <?php if (!in_array('reset', arg())): ?>
-    <?php print $messages; ?>
+    <?php if ($messages): ?>
+    <div class="sbq_messages">
+      <?php print $messages; ?>
+    </div>
+    <?php endif; ?>
     <?php endif; ?>
     <?php if ($logged_in): ?>
     <div class="sbq_user_headr"><img src="/sites/all/themes/tiger/image/sbq_user_headr_bg.jpg" width="960" height="200"  alt=""/></div>

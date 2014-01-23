@@ -307,9 +307,12 @@ function tiger_preprocess_node(&$variables) {
     'doctor_legend'
   );
   if (in_array($variables['type'], $news_array)) {
-    //$node = $variables['node'];
     drupal_add_css(path_to_theme() . "/css/news.css", array('group' => CSS_THEME));
     $variables['theme_hook_suggestions'][] = 'node__news';
+  }
+  if ($variables['type'] == 'page') {
+    drupal_add_css(path_to_theme() . "/css/news.css", array('group' => CSS_THEME));
+    $variables['theme_hook_suggestions'][] = 'node__page';
   }
 }
 

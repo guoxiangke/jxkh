@@ -116,7 +116,11 @@
 </div>
 <div class="body">
   <div class="main">
-    <?php print $messages; ?>
+    <?php if ($messages): ?>
+    <div class="sbq_messages">
+      <?php print $messages; ?>
+    </div>
+    <?php endif; ?>
     <?php if ($page['sidebar_first']): ?>
       <div class="sidebar_first sidebar">
         <?php print render($page['sidebar_first']); ?>
