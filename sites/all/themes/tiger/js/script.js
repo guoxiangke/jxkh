@@ -12,11 +12,9 @@ jQuery(function($) {
   reply_hidden = true;
   $('.sbq_add_reply_btn.anonymous_comments').live("click", function(){
     $(this).parent('li').toggleClass('active');
-    if (reply_hidden) {
-      alert('请登录后评论！');
-    };
     $(this).parents('.sbq_reply_actions').next('.sbq_reply_wrap').slideToggle(50, function() {
       if (reply_hidden) {
+        alert('请登录后评论！');
         reply_hidden = false;
       } else{
         reply_hidden = true;
