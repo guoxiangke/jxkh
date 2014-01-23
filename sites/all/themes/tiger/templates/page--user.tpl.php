@@ -166,7 +166,11 @@
       <div class="sbq_user_pic"><?php print $a_picture; ?></div>
       <div class="sbq_user_summary">
         <div class="sbq_user_name">
+          <?php if(isset($is_doctor) && $is_doctor): ?>
+          <strong><?php print $field_author; ?></strong>
+          <?php else: ?>
           <strong><?php print $a_name; ?></strong>
+          <?php endif; ?>
           <?php if (isset($field_doctor_title)): ?>
           <span><?php print $field_doctor_title; ?></span>
           <?php endif; ?>

@@ -97,12 +97,15 @@ function tiger_preprocess_page(&$variables) {
       $a_doctor_profile = profile2_load_by_user($account, 'doctor_profile');
       $variables['is_doctor'] = TRUE;
       $variables['a_doctor_profile'] = $a_doctor_profile;
-      $variables['field_doctor_title'] = drupal_render(field_view_field('profile2', $a_doctor_profile, 'field_doctor_title', 'value'));
-      $field_hospital_name = drupal_render(field_view_field('profile2', $a_doctor_profile, 'field_hospital_name', 'value'));
-      $variables['field_hospital_name'] = $field_hospital_name;
-      $field_department = drupal_render(field_view_field('profile2', $a_doctor_profile, 'field_department', 'value'));
-      $variables['field_department'] = $field_department;
-      $variables['hospitals_departments'] = $field_hospital_name .' '. $field_department;
+      $field_author = field_view_field('profile2', $a_doctor_profile, 'field_author', 'value');
+      $variables['field_author'] = drupal_render($field_author);
+      $field_doctor_title = field_view_field('profile2', $a_doctor_profile, 'field_doctor_title', 'value');
+      $variables['field_doctor_title'] = drupal_render($field_doctor_title);
+      $field_hospital_name = field_view_field('profile2', $a_doctor_profile, 'field_hospital_name', 'value');
+      $variables['field_hospital_name'] = drupal_render($field_hospital_name);
+      $field_department = field_view_field('profile2', $a_doctor_profile, 'field_department', 'value');
+      $variables['field_department'] = drupal_render($field_department);
+      $variables['hospitals_departments'] = $variables['field_hospital_name'] .' '. $variables['field_department'];
     }
   }
   // user edit page
@@ -153,6 +156,21 @@ function tiger_preprocess_page(&$variables) {
       'user_point_count' => $user_point_count,
     );
     $variables['follow_link'] = $follow_link;
+    $variables['is_doctor'] = FALSE;
+    if (in_array('doctor', $account->roles) && module_exists('profile2')) {
+      $a_doctor_profile = profile2_load_by_user($account, 'doctor_profile');
+      $variables['is_doctor'] = TRUE;
+      $variables['a_doctor_profile'] = $a_doctor_profile;
+      $field_author = field_view_field('profile2', $a_doctor_profile, 'field_author', 'value');
+      $variables['field_author'] = drupal_render($field_author);
+      $field_doctor_title = field_view_field('profile2', $a_doctor_profile, 'field_doctor_title', 'value');
+      $variables['field_doctor_title'] = drupal_render($field_doctor_title);
+      $field_hospital_name = field_view_field('profile2', $a_doctor_profile, 'field_hospital_name', 'value');
+      $variables['field_hospital_name'] = drupal_render($field_hospital_name);
+      $field_department = field_view_field('profile2', $a_doctor_profile, 'field_department', 'value');
+      $variables['field_department'] = drupal_render($field_department);
+      $variables['hospitals_departments'] = $variables['field_hospital_name'] .' '. $variables['field_department'];
+    }
   }
   // blog/question add page
   if ((in_array('blog', arg()) || in_array('question', arg())) && in_array('add', arg())) {
@@ -457,11 +475,19 @@ function tiger_preprocess_user_login(&$vars) {
 
 function tiger_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'user_login') {
+    $form['#prefix'] = '<div class="sbq_login"><div class="sbq_reg_nav">'
+        .'<ul>'
+          .'<li class="active"><a class="sbq_reg_l"></a></li>'
+        .'</ul>'
+      .'</div>'
+      .'<div class="sbq_reg_content"><div class="sbq_form_wrap">';
+    $form['#suffix'] = '</div></div></div>';
+
     unset($form['name']['#description']);
     $form['name']['#title'] = '用户名';
     $form['name']['#prefix'] = '<div class="sbq_form_01">';
     $form['name']['#attributes']['class'][] = 'sbq_input_01';
-    $form['name']['#suffix'] = '<div class="sbq_link"><a href="/customer/register"  target="_blank">注册账户</a></div></div>';
+    $form['name']['#suffix'] = '<div class="sbq_link"><a href="/customer/register" target="_blank">注册账户</a></div></div>';
 
     unset($form['pass']['#description']);
     $form['pass']['#prefix'] = '<div class="sbq_form_01">';
@@ -753,7 +779,6 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
       $form['actions']['#prefix'] = '<div class="sbq_botton_01"><label></label>';
       $form['actions']['#suffix'] = '</div>';
     }
-
   } elseif ($form_id == 'user_pass') {
     $form['#prefix'] = '<div class="sbq_findpwd"><div class="sbq_findpwd_nav">'
 

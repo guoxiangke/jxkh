@@ -1,8 +1,25 @@
 jQuery(function($) {
   // jQuery here
-  $('.sbq_add_reply_btn').live("click", function(){
+  $('.sbq_add_reply_btn.login_user').live("click", function(){
     $(this).parent('li').toggleClass('active');
     $(this).parents('.sbq_reply_actions').next('.sbq_reply_wrap').slideToggle(50);
+    return false;
+  });
+  $('.sbq_add_reply_btn.anonymous_no_comment').live("click", function(){
+    alert('请登录后评论！');
+    return false;
+  });
+  reply_hidden = true;
+  $('.sbq_add_reply_btn.anonymous_comments').live("click", function(){
+    $(this).parent('li').toggleClass('active');
+    $(this).parents('.sbq_reply_actions').next('.sbq_reply_wrap').slideToggle(50, function() {
+      if (reply_hidden) {
+        alert('请登录后评论！');
+        reply_hidden = false;
+      } else{
+        reply_hidden = true;
+      };
+    });
     return false;
   });
 
