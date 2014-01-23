@@ -87,6 +87,7 @@ function sbq_user_relationship_pending_page($type, $account = NULL) {
     $options = array(
         'include_user_info' => TRUE,
         'paging' => variable_get('user_relationships_relationships_per_page', 20),
+        'order' => array('created', 'DESC'),
     );
     $relationships = user_relationships_load(array( 'requester_id' => $account->uid, 'approved' => FALSE ), $options);
 
@@ -96,6 +97,7 @@ function sbq_user_relationship_pending_page($type, $account = NULL) {
     $options = array(
         'include_user_info' => TRUE,
         'paging' => variable_get('user_relationships_relationships_per_page', 20),
+        'order' => array('created', 'DESC'),
     );
     $relationships = user_relationships_load(array( 'requestee_id' => $account->uid, 'approved' => FALSE ), $options);
 
