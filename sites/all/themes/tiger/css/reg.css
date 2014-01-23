@@ -6,9 +6,9 @@
 .sbq_login .sbq_botton_01 label,
 .sbq_login .captcha label { float: left; width: 110px; height: 36px; line-height: 36px; margin: 0px 10px 0px 0px; text-align: right; overflow: hidden; }
 /*------sbq_login------*/
-.sbq_login { float: left; width: 500px; background: #FFF; }
+.sbq_login { width: 500px; margin: 0 auto; background: #FFF; }
 .sbq_login .sbq_login_head { float: left; width: 100%; height: 50px; background: url(../image/sbq_login_head_bg.png) left; }
-.sbq_login .sbq_login_content { float: left; width: 100%; padding: 30px 0px; }
+.sbq_login .sbq_login_content { float: left; width: 100%; padding: 30px 0px; background: #FCFCFC; }
 .sbq_login .sbq_tips_error { line-height: 24px; position: absolute; top: 10px; left: 345px; display: none; }
 /*sbq_input_01*/
 .sbq_login .sbq_form_01 .sbq_input_01 { float: left; width: 200px; height: 34px; line-height: 34px; padding: 0px 9px; border: 1px #dddddd solid; background: url(../image/input_bg_01.png) repeat-x; }
@@ -41,7 +41,7 @@
 .sbq_findpwd .sbq_form_wrap .sbq_botton_01 .sbq_btn { float: left; width: auto; height: 36px; line-height: 36px; padding: 0px 10px; border: none; border-radius: 3px; background: #1575D5; color: #FFF; font-size: 14px; }
 /*sbq_step*/
 .sbq_step { float: left; margin: 15px 0px 0px 0px; position: relative; left: 50%; }
-.sbq_step ul { float: left; height: 90px; list-style: none; position: relative; right: 50%; }
+.sbq_step ul { float: left; height: 80px; list-style: none; position: relative; right: 50%; }
 .sbq_step ul li { float: left; width: 220px; padding: 0px 0px 0px 0px; list-style: none; background: url(../image/sbq_step_bg.png); background-position: center 0px; }
 .sbq_step ul .done { background-position: center -30px; }
 .sbq_step ul .last { width: 15px; background: none; }
