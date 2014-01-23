@@ -97,12 +97,15 @@ function tiger_preprocess_page(&$variables) {
       $a_doctor_profile = profile2_load_by_user($account, 'doctor_profile');
       $variables['is_doctor'] = TRUE;
       $variables['a_doctor_profile'] = $a_doctor_profile;
-      $variables['field_doctor_title'] = drupal_render(field_view_field('profile2', $a_doctor_profile, 'field_doctor_title', 'value'));
-      $field_hospital_name = drupal_render(field_view_field('profile2', $a_doctor_profile, 'field_hospital_name', 'value'));
-      $variables['field_hospital_name'] = $field_hospital_name;
-      $field_department = drupal_render(field_view_field('profile2', $a_doctor_profile, 'field_department', 'value'));
-      $variables['field_department'] = $field_department;
-      $variables['hospitals_departments'] = $field_hospital_name .' '. $field_department;
+      $field_author = field_view_field('profile2', $a_doctor_profile, 'field_author', 'value');
+      $variables['field_author'] = drupal_render($field_author);
+      $field_doctor_title = field_view_field('profile2', $a_doctor_profile, 'field_doctor_title', 'value');
+      $variables['field_doctor_title'] = drupal_render($field_doctor_title);
+      $field_hospital_name = field_view_field('profile2', $a_doctor_profile, 'field_hospital_name', 'value');
+      $variables['field_hospital_name'] = drupal_render($field_hospital_name);
+      $field_department = field_view_field('profile2', $a_doctor_profile, 'field_department', 'value');
+      $variables['field_department'] = drupal_render($field_department);
+      $variables['hospitals_departments'] = $variables['field_hospital_name'] .' '. $variables['field_department'];
     }
   }
   // user edit page
@@ -153,6 +156,21 @@ function tiger_preprocess_page(&$variables) {
       'user_point_count' => $user_point_count,
     );
     $variables['follow_link'] = $follow_link;
+    $variables['is_doctor'] = FALSE;
+    if (in_array('doctor', $account->roles) && module_exists('profile2')) {
+      $a_doctor_profile = profile2_load_by_user($account, 'doctor_profile');
+      $variables['is_doctor'] = TRUE;
+      $variables['a_doctor_profile'] = $a_doctor_profile;
+      $field_author = field_view_field('profile2', $a_doctor_profile, 'field_author', 'value');
+      $variables['field_author'] = drupal_render($field_author);
+      $field_doctor_title = field_view_field('profile2', $a_doctor_profile, 'field_doctor_title', 'value');
+      $variables['field_doctor_title'] = drupal_render($field_doctor_title);
+      $field_hospital_name = field_view_field('profile2', $a_doctor_profile, 'field_hospital_name', 'value');
+      $variables['field_hospital_name'] = drupal_render($field_hospital_name);
+      $field_department = field_view_field('profile2', $a_doctor_profile, 'field_department', 'value');
+      $variables['field_department'] = drupal_render($field_department);
+      $variables['hospitals_departments'] = $variables['field_hospital_name'] .' '. $variables['field_department'];
+    }
   }
   // blog/question add page
   if ((in_array('blog', arg()) || in_array('question', arg())) && in_array('add', arg())) {
