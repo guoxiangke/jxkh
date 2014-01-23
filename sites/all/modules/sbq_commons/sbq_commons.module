@@ -1420,6 +1420,29 @@ function sbq_commons_messages_count($account = NULL) {
 }
 
 /**
+ *
+ * @param $node_type : content type name
+ * @return int
+ */
+function sbq_commons_term_node_count($tid, $node_type = NULL) {
+  $rtn = 0;
+  if ($tid) {
+    $query = db_select('taxonomy_term_data', 'td');
+    $query->join('field_data_field_tags', 'tags', 'tags.field_tags_tid = td.tid');
+    $query->join('node', 'n', 'tags.entity_id = n.nid');
+    $query->fields('td',array('tid'));
+    $query->condition('td.tid', $tid,'=');
+
+    if ($node_type) {
+      $query->condition('n.type', $node_type,'=');
+    }
+    $result = $query->execute();
+    $rtn = $result->rowCount();
+  }
+  return $rtn;
+}
+
+/**
  * Implements hook_node_view().
  */
 function sbq_commons_node_view($node, $view_mode, $langcode) {
@@ -1439,7 +1462,7 @@ function sbq_commons_node_view($node, $view_mode, $langcode) {
     // appended to other nodes shown on the page, for example a node_reference
     // displayed in 'full' view mode within another node.
     if ($view_mode == 'full' && node_is_page($node) && empty($node->in_preview)) {
-      
+
       $n_nid = prev_next_nid($node->nid, 'prev');
       $link_text = '上一篇';
       if($n_nid == 0) {
@@ -1452,7 +1475,7 @@ function sbq_commons_node_view($node, $view_mode, $langcode) {
       $links['previous'] = array(
             'title' => $link_text,
             'href' => "node/$n_nid",
-            'attributes' => array('title' => t('Previous page.')),            
+            'attributes' => array('title' => t('Previous page.')),
           );
       $n_nid = prev_next_nid($node->nid, 'next');
 
@@ -1464,7 +1487,7 @@ function sbq_commons_node_view($node, $view_mode, $langcode) {
         $n_node = node_load($n_nid);
         $link_text = $link_text.': '.$n_node->title;
       }
-      
+
       $links['next'] = array(
             'title' => $link_text,
             'href' => "node/$n_nid",

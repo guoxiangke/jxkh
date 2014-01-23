@@ -42,19 +42,13 @@
     $vocabulary = taxonomy_vocabulary_machine_name_load('tags');
     $terms = taxonomy_get_tree($vocabulary->vid);
     $tags_output = '';
+    $tag_name_exclude = array('中心问答', '快速提问');
     foreach ($terms as $key => $tag) {
       $tag_title = trim($tag->name);
-      $tid = trim($tag->tid);
-      if (strlen($tag_title)>0 && $tid>0) {
-        $tag_count = 0;
-        $nids = taxonomy_select_nodes($tid, FALSE);
-        foreach($nids as $nid) {
-          $node = node_load($nid);
-          if ($node->type == 'question' && $node->status) {
-            $tag_count++;
-          }
-        }
-        if ($tag_count > 5) {
+      if (!in_array($tag_title, $tag_name_exclude)) {
+        $tid = trim($tag->tid);
+        $tag_count = sbq_commons_term_node_count($tid, 'question');
+        if ($tag_count >= 1) {
           $tags_output .= '<li>'
             . '<a href="'.url('questions/tagged/').'?field_tags_tid='.$tag_title.'">'
             . '<span class="sbq_tit">'.$tag_title.'</span>'

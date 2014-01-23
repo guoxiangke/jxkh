@@ -34,6 +34,15 @@ function tiger_preprocess_page(&$variables) {
   // news list page
   if (in_array('news', arg())) {
     drupal_add_css(path_to_theme() . "/css/news.css", array('group' => CSS_THEME));
+    drupal_set_message(t('这是个 status'), 'status', FALSE);
+    drupal_set_message(t('这是个 warning'), 'warning', FALSE);
+    drupal_set_message(t('这是个 error'), 'error', FALSE);
+    drupal_set_message(t('这是个 status 2'), 'status', FALSE);
+    drupal_set_message(t('这是个 warning 2'), 'warning', FALSE);
+    drupal_set_message(t('这是个 error 2'), 'error', FALSE);
+    drupal_set_message(t('这是个 status 3'), 'status', FALSE);
+    drupal_set_message(t('这是个 warning 3'), 'warning', FALSE);
+    drupal_set_message(t('这是个 error 3'), 'error', FALSE);
   }
   // question page
   if (arg(0) == 'question' || arg(0) == 'questions') {
