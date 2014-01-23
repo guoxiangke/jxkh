@@ -293,7 +293,7 @@ function center_resource_definition() {
           ),
           array(
               'name' => 'fun',
-              'type' => 'int',
+              'type' => 'string',
               'description' => t('The function .'),
               'source' => array( 'path' => 2 ),
               'default value' => '',
@@ -444,23 +444,32 @@ function center($centerid) {
 
   $node = node_load($centerid);
   $nodes = _center_formate($node, 'data');
-  //return reset($nodes);
   //咨询
-  $question_query = new EntityFieldQuery();
-  $result = $question_query->entityCondition('entity_type', 'node')
-      ->propertyCondition('type', 'question')
-      ->propertyCondition('uid', $user->uid)
-      ->fieldCondition('og_group_ref', 'target_id', $centerid, '=')
-      ->execute();
+//  $question_query = new EntityFieldQuery();
+//  $result = $question_query->entityCondition('entity_type', 'node')
+//      ->propertyCondition('type', 'question')
+//      ->propertyCondition('uid', $user->uid)
+//      ->fieldCondition('og_group_ref', 'target_id', $centerid, '=')
+//      ->execute();
+//
+//  $question = array();
+//
+//  if (isset($result['node']) && $qids = array_keys($result['node'])) {
+//    foreach ($qids as $key => $value) {
+//      $node_q = node_load($value);
+//      $question[$value] = count($node_q->field_answers['und']);
+//    }
+//  }
+  module_load_include('inc', 'sbq_services', 'resources/center_message_resource');
 
-  $question = array();
-
-  if (isset($result['node']) && $qids = array_keys($result['node'])) {
-    foreach ($qids as $key => $value) {
-      $node_q = node_load($value);
-      $question[$value] = count($node_q->field_answers['und']);
-    }
-  }
+  $message_new_count = db_select('pm_index', 'pmi')
+      ->fields('pmi', array( 'mid' ))
+      ->condition('is_new', 1)
+      ->condition('recipient', $user->uid)
+      ->condition('thread_id', center_message_get_privatemsgid($centerid))
+      ->condition('deleted', 0)
+      ->execute()
+      ->rowCount();
   //指导建议
   // 视频
   $view = views_get_view('sbq_center_edu');
@@ -479,16 +488,15 @@ function center($centerid) {
   $view_art->preview();
   $edu_count = count($view->result) + count($view_art->result);
   //预约门诊
-  $reservation = array(
-      '10' => '已经接受'
-  );
+
+  module_load_include('inc', 'sbq_services', 'resources/center_reservation_resource');
+  $messages = center_reservation_message($centerid, $user->uid);
 
   $return = reset($nodes);
-  $return += array(
-      'question' => $question,
-      'edu' => $edu_count,
-      'reservation' => $reservation
-  );
+
+  $return['message'] = $message_new_count;
+  $return['edu'] = $edu_count;
+  $return['reservation'] = $messages;
   return $return;
 }
 
@@ -673,11 +681,14 @@ function center_question_edu_query($centerid, $fun = NULL, $page, $fields, $para
   $view->execute();
   $view->preview();
   $video = array();
+  module_load_include('inc', 'media_youku', 'includes/MediaYouKuStreamWrapper');
   foreach ($view->result as $key => $value) {
+    $media = new MediaYouKuStreamWrapper();
+    $media->setUri($value->field_field_sbq_center_video[0]['rendered']['#file']->uri);
     $v['title'] = $value->node_title;
-    $v['video'] = render($value->field_field_sbq_center_video[0]['rendered']);
-    $v['thumb'] = '';
-    $v['video_url'] = file_create_url($value->field_field_sbq_center_video[0]['rendered']['#file']->uri);
+    $v['video'] = ''; //render($value->field_field_sbq_center_video[0]['rendered']);
+    $v['thumb'] = file_create_url($media->getLocalThumbnailPath());
+    $v['video_url'] = _center_formate_fetch_youku_video($media);
     $video[] = $v;
   }
   // 文章
@@ -802,4 +813,33 @@ function _center_formate($data, $target = 'node', $is_list = FALSE) {
   }
 
   return $nodes;
+}
+
+/**
+ *  get youku realpath
+ * @param MediaYouKuStreamWrapper $media
+ * @return type
+ */
+function _center_formate_fetch_youku_video(MediaYouKuStreamWrapper $media) {
+//  if ($url = variable_get($media->getUri())) {
+//    return $url;
+//  }
+  module_load_include('inc', 'sbq_services', 'resources/includes/youku_analysis');
+  $parts = $media->get_parameters();
+  $link = 'http://v.youku.com/player/getPlayList/VideoIDS/' . urlencode($parts['v']) . '/timezone/+08/version/5/source/out?password=&ran=2513&n=3';
+  $content = file_get_contents($link);
+  $data = @json_decode($content, true);
+
+  foreach ($data['data'][0]['streamfileids'] AS $k => $v) {
+    if ($k == 'mp4') {
+      $sid = getSid();
+      $fileid = getfileid($v, $data['data'][0]['seed']);
+      $url = "http://f.youku.com/player/getFlvPath/sid/{$sid}_00/st/{$k}/fileid/{$fileid}?K={$data['data'][0]['segs'][$k][0]['k']}";
+      variable_set($media->getUri(), $url);
+      return $url;
+    }
+    continue;
+  }
+
+  return file_create_url($media->getUri());
 }
