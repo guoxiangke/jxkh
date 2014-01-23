@@ -48,7 +48,7 @@
       if (!in_array($tag_title, $tag_name_exclude)) {
         $tid = trim($tag->tid);
         $tag_count = sbq_commons_term_node_count($tid, 'question');
-        if ($tag_count >= 1) {
+        if (strlen(trim($tag_title))>0 && $tag_count >= 2) {
           $tags_output .= '<li>'
             . '<a href="'.url('questions/tagged/').'?field_tags_tid='.$tag_title.'">'
             . '<span class="sbq_tit">'.$tag_title.'</span>'
