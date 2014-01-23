@@ -135,8 +135,10 @@ function center_reservation_message($centerid, $userid) {
   }
   $mesage = array();
   foreach (message_load_multiple(array_keys($result['message'])) as $key => $value) {
-    $m = $value->buildContent();
-    $message[] = strip_tags($m['message__message_text__0']['#markup']);
+    $m = (array) $value->buildContent();
+    $text = strip_tags($m['message__message_text__0']['#markup']);
+    $key = $m['field_center_reservation_send']['#object']->field_node_ref['und'][0]['target_id'];
+    $message[] = array( 'nid' => $key, 'text' => $text );
   }
   variable_set('reservation_last_watch_' . $userid . '_' . $centerid, time());
   return $message;
@@ -162,13 +164,13 @@ function center_reservation_fetch($centerid, $uid, $page, $fields, $parameters, 
   $now_day = date('d');
   foreach ($month as $key => $value) {
     $start = 1;
-    if((int)$cur_month === (int)$value){  
+    if ((int) $cur_month === (int) $value) {
       $start = $now_day;
     }
     $days = cal_days_in_month(CAL_GREGORIAN, $value, $year);
     for ($i = $start; $i <= $days; $i++) {
       $date = "$year-$value-$i";
-    //  return $date;
+      //  return $date;
       $dateTime = new DateTime($date);
       if (sbq_center_reservation_can_reservation($date, $centerid, TRUE)) {
         $data[] = array(
@@ -178,7 +180,6 @@ function center_reservation_fetch($centerid, $uid, $page, $fields, $parameters, 
         );
       }
     }
-    
   }
   return isset($data) ? $data : array();
 }
