@@ -15,15 +15,14 @@ function center_message_alter($centerid, $fun, $data) {
     if (is_numeric($fun)) {
       $data['nid'] = $fun;
     } else {
-      return call_user_func('center_question_' . $fun, $centerid, $data);
+      //return call_user_func('center_question_' . $fun, $centerid, $data);
     }
   }
-  if (!$center = sbq_center_get_center($centerid)) {
+  if (!$center = sbq_center_load($centerid)) {
     return services_error('not found the center form ' . $centerid, '404');
   }
-  //return center_message_get_privatemsgid($centerid);
+  
   if ($mid = center_message_get_privatemsgid($centerid)) {
-
     $result = privatemsg_reply($mid, $data['body'], array( 'author' => $user ));
   } else {
     $recipients = user_load($center->uid);
@@ -51,31 +50,29 @@ function center_message_alter($centerid, $fun, $data) {
  * @param type $pagesize
  */
 function center_message_query($centerid, $fun = NULL, $page, $fields, $parameters, $pagesize) {
-
   if (!$centermid = center_message_get_privatemsgid($centerid)) {
     return array();
   }
+
   if (isset($parameters['start'])) {
     $result = privatemsg_thread_load($centermid, NULL, $parameters['start']);
   } else {
     $result = privatemsg_thread_load($centermid);
   }
-
   $message = array();
-  $item = reset($result['messages']);
-
-  foreach (array( $item->author ) as $key => $value) {
-    $user_img[$value->uid] = array(
-        'uid' => $value->uid,
-        'user_avart' => isset($value->uri) ? file_create_url($value->uri) : NULL,
-        'name' => $value->name,
-    );
-  }
+  $user_img = array();
   foreach ($result['messages'] as $key => $value) {
+    if (!isset($user_img[$value->author->uid])) {
+      $user_img[$value->author->uid] = array(
+          'uid' => $value->author->uid,
+          'user_avart' => isset($value->author) ? file_create_url($value->author) : NULL,
+          'name' => $value->author->name,
+      );
+    }
     $message[] = array(
         'mid' => $value->mid,
         'body' => $value->body,
-        'timestamp' => $value->timestamp,
+        'timestamp' => $value->timestamp ,
         'is_new' => $value->is_new,
         'author' => $user_img[$value->author->uid],
         // 'recipients' => $user_img[$value->user->uid]
@@ -101,6 +98,7 @@ function center_message_get_privatemsgid($centerid, $account = NULL) {
     global $user;
     $account = $user;
   }
+
   $result = db_select('pm_message', 'pm')
       ->fields('pm', array( 'mid' ))
       ->condition('subject', 'center|' . $centerid . '|' . $account->uid)

@@ -350,7 +350,8 @@ function sbq_commons_modal_html($data, $id = 'sbq_modal', $title = '') {
  * @see captcha_form_alter
  */
 function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_times = 3, $mintue = 10) {
-  if (!module_exists('captcha')) {
+
+ if (!module_exists('captcha')) {
     return;
   }
   $url = explode('/', $_GET['q']);
