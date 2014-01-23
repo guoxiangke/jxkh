@@ -62,15 +62,23 @@ jQuery(function($) {
   $("#user-login-form #edit-captcha-response").attr("placeholder", "验证码");
   $(".captcha").insertBefore('.sbq_checkbox_01');
 
-      $('#user-profile-form .user-picture').click(function(){
+});
+
+
+(function($) {
+
+/**
+ * Live preview of Administration menu components.
+ */
+Drupal.behaviors.tiger = {
+  attach: function (context, settings) {
+    $('#user-profile-form .user-picture').click(function(){
         $('#edit-picture-upload').click();
         return false;
       });
-  // End of jQuery
-  Drupal.behaviors.tiger = {
-    attach: function (context, settings) {
-      // behaviors here
-      // End of behaviors
-    }
-  };
-});
+
+  }
+};
+
+
+})(jQuery);

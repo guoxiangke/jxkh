@@ -49,7 +49,8 @@ function tiger_preprocess_page(&$variables) {
     drupal_add_css(path_to_theme() . "/css/question.css", array('group' => CSS_THEME));
     if (is_numeric(arg(1)) && ! arg(2)) {
       $node = node_load(arg(1));
-      drupal_set_title($node->title);
+      if(isset($node->title))
+        drupal_set_title($node->title);
     }
   }
   // user center page
