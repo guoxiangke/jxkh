@@ -475,11 +475,19 @@ function tiger_preprocess_user_login(&$vars) {
 
 function tiger_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'user_login') {
+    $form['#prefix'] = '<div class="sbq_login"><div class="sbq_reg_nav">'
+        .'<ul>'
+          .'<li class="active"><a class="sbq_reg_l"></a></li>'
+        .'</ul>'
+      .'</div>'
+      .'<div class="sbq_reg_content"><div class="sbq_form_wrap">';
+    $form['#suffix'] = '</div></div></div>';
+
     unset($form['name']['#description']);
     $form['name']['#title'] = '用户名';
     $form['name']['#prefix'] = '<div class="sbq_form_01">';
     $form['name']['#attributes']['class'][] = 'sbq_input_01';
-    $form['name']['#suffix'] = '<div class="sbq_link"><a href="/customer/register"  target="_blank">注册账户</a></div></div>';
+    $form['name']['#suffix'] = '<div class="sbq_link"><a href="/customer/register" target="_blank">注册账户</a></div></div>';
 
     unset($form['pass']['#description']);
     $form['pass']['#prefix'] = '<div class="sbq_form_01">';
@@ -771,7 +779,6 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
       $form['actions']['#prefix'] = '<div class="sbq_botton_01"><label></label>';
       $form['actions']['#suffix'] = '</div>';
     }
-
   } elseif ($form_id == 'user_pass') {
     $form['#prefix'] = '<div class="sbq_findpwd"><div class="sbq_findpwd_nav">'
 

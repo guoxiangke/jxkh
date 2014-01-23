@@ -7,7 +7,7 @@
 .sbq_login .captcha label { float: left; width: 110px; height: 36px; line-height: 36px; margin: 0px 10px 0px 0px; text-align: right; overflow: hidden; }
 /*------sbq_login------*/
 .sbq_login { width: 500px; margin: 0 auto; background: #FFF; }
-.sbq_login .sbq_login_head { float: left; width: 100%; height: 50px; background: url(../image/sbq_login_head_bg.png) left; }
+/*.sbq_login .sbq_login_head { float: left; width: 100%; height: 50px; background: url(../image/sbq_login_head_bg.png) left; }*/
 .sbq_login .sbq_login_content { float: left; width: 100%; padding: 30px 0px; background: #FCFCFC; }
 .sbq_login .sbq_tips_error { line-height: 24px; position: absolute; top: 10px; left: 345px; display: none; }
 /*sbq_input_01*/
@@ -27,13 +27,14 @@
 .sbq_checkbox_01 label { float: left; height: 26px; line-height: 26px; margin: 0px 5px; }
 /*------sbq_reg------*/
 .sbq_reg { width: 680px; margin: 0 auto; }
-.sbq_reg .sbq_reg_nav { float: left; width: 100%; height: 50px; background: url(../image/sbq_reg_head_bg1.png) repeat-x; }
-.sbq_reg .sbq_reg_nav li { float: left; height: 50px; margin: 0px 10px 0px 0px; border-radius: 5px 5px 0px 0px; background: url(../image/sbq_reg_head_bg2.png) repeat-x; }
-.sbq_reg .sbq_reg_nav .active { background: url(../image/sbq_reg_head_bg.png) repeat-x; }
-.sbq_reg .sbq_reg_nav a { float: left; width: 130px; height: 50px; padding: 0px 20px 0px 10px; background: url(../image/sbq_reg_ud.png) no-repeat; }
-.sbq_reg .sbq_reg_nav .sbq_reg_u { background-position: center 0px; }
-.sbq_reg .sbq_reg_nav .sbq_reg_d { background-position: center -50px; }
-.sbq_reg .sbq_reg_content { float: left; width: 100%; padding: 30px 0px; background: #fcfcfc; }
+.sbq_reg_nav { float: left; width: 100%; height: 50px; background: url(../image/sbq_reg_head_bg1.png) repeat-x; }
+.sbq_reg_nav li { float: left; height: 50px; margin: 0px 10px 0px 0px; border-radius: 5px 5px 0px 0px; background: url(../image/sbq_reg_head_bg2.png) repeat-x; }
+.sbq_reg_nav .active { background: url(../image/sbq_reg_head_bg.png) repeat-x; }
+.sbq_reg_nav a { float: left; width: 130px; height: 50px; padding: 0px 15px  0px 10px; background: url(../image/sbq_reg_ud.png) no-repeat; }
+.sbq_reg_nav .sbq_reg_u { background-position: center 0px; }
+.sbq_reg_nav .sbq_reg_d { background-position: center -50px; }
+.sbq_reg_nav .sbq_reg_l { background-position: center -100px; }
+.sbq_reg .sbq_reg_content { float: left; width: 100%; padding: 15px 0px; background: #fcfcfc; }
 /*------sbq_reg------*/
 .sbq_findpwd { width: 680px; margin: 0 auto; }
 .sbq_findpwd .sbq_findpwd_nav { float: left; width: 100%; height: 50px; background: url(../image/sbq_findpwd_bg.png) left no-repeat; }
