@@ -71,18 +71,21 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
         <li><?php print $created; ?></li>
         <li class="sbq_reply_btn">
           <?php if (!$user->uid) {?>
-            <a href="#" class="sbq_add_reply_btn2" onclick="alert('请登录后评论！')">
+            <?php if ($node->comment_count == 0) {?>
+              <a href="#" class="sbq_add_reply_btn anonymous_no_comment ">添加评论</a>
+            <?php } else {?>
+              <a href="#" class="sbq_add_reply_btn anonymous_comments"><?php print $node->comment_count; ?>条回复</a>
+            <?php }?>
           <?php } else {?>
-            <a href="#" class="sbq_add_reply_btn2">
+            <a href="#" class="sbq_add_reply_btn login_user">
+              <?php if ($node->comment_count == 0) {?>
+              添加评论
+            <?php } else {?>
+              <?php print $node->comment_count; ?>条回复
+            <?php }?>
+            </a>
           <?php }?>
-
-          
-          <?php if ($node->comment_count == 0) {?>
-            添加评论
-          <?php } else {?>
-            <?php print $node->comment_count; ?>条回复
-          <?php }?>
-        </a></li>
+        </li>
         <?php if(!empty($edit_node)): ?>
         <li class="edit"><?php print $edit_node; ?></li>
         <?php endif;?>
