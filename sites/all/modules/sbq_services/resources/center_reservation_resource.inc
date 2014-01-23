@@ -168,10 +168,11 @@ function center_reservation_fetch($centerid, $uid, $page, $fields, $parameters, 
     $days = cal_days_in_month(CAL_GREGORIAN, $value, $year);
     for ($i = $start; $i <= $days; $i++) {
       $date = "$year-$value-$i";
-      $date = new DateTime($date);
+    //  return $date;
+      $dateTime = new DateTime($date);
       if (sbq_center_reservation_can_reservation($date, $centerid, TRUE)) {
         $data[] = array(
-            $date->getTimestamp() => array(
+            $dateTime->getTimestamp() => array(
                 'a' => TRUE, 'p' => TRUE
             )
         );
