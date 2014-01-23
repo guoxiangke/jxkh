@@ -690,46 +690,59 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
       $form['picture']['#suffix'] = '</div>';
 
       if ($is_doctor) {
-        $form['profile_doctor_profile']['field_hospital_name']['#prefix'] = '<div class="sbq_form_01">';
-        $form['profile_doctor_profile']['field_hospital_name']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
-        $form['profile_doctor_profile']['field_hospital_name']['#suffix'] = '</div>';
-
-        $form['profile_doctor_profile']['field_department']['#prefix'] = '<div class="sbq_form_01">';
-        $form['profile_doctor_profile']['field_department']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
-        $form['profile_doctor_profile']['field_department']['#suffix'] = '</div>';
-
-        $form['profile_doctor_profile']['field_author']['#prefix'] = '<div class="sbq_form_01">';
-        $form['profile_doctor_profile']['field_author']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
-        $form['profile_doctor_profile']['field_author']['#suffix'] = '</div>';
-
-        $form['profile_doctor_profile']['field_introduction']['#prefix'] = '<div class="sbq_form_01">';
-        $form['profile_doctor_profile']['field_introduction']['#suffix'] = '</div>';
-
-        $form['profile_doctor_profile']['field_doctor_title']['#prefix'] = '<div class="sbq_form_01">';
-        $form['profile_doctor_profile']['field_doctor_title']['#suffix'] = '</div>';
-
-        $form['profile_doctor_profile']['field_patient_diseases']['#prefix'] = '<div class="sbq_form_01">';
-        $form['profile_doctor_profile']['field_patient_diseases']['#suffix'] = '</div>';
+        if (isset($form['profile_doctor_profile']['field_hospital_name'])) {
+          $form['profile_doctor_profile']['field_hospital_name']['#prefix'] = '<div class="sbq_form_01">';
+          $form['profile_doctor_profile']['field_hospital_name']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
+          $form['profile_doctor_profile']['field_hospital_name']['#suffix'] = '</div>';
+        }
+        if (isset($form['profile_doctor_profile']['field_department'])) {
+          $form['profile_doctor_profile']['field_department']['#prefix'] = '<div class="sbq_form_01">';
+          $form['profile_doctor_profile']['field_department']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
+          $form['profile_doctor_profile']['field_department']['#suffix'] = '</div>';
+        }
+        if (isset($form['profile_doctor_profile']['field_author'])) {
+          $form['profile_doctor_profile']['field_author']['#prefix'] = '<div class="sbq_form_01">';
+          $form['profile_doctor_profile']['field_author']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
+          $form['profile_doctor_profile']['field_author']['#suffix'] = '</div>';
+        }
+        if (isset($form['profile_doctor_profile']['field_introduction'])) {
+          $form['profile_doctor_profile']['field_introduction']['#prefix'] = '<div class="sbq_form_01">';
+          $form['profile_doctor_profile']['field_introduction']['#suffix'] = '</div>';
+        }
+        if (isset($form['profile_doctor_profile']['field_doctor_title'])) {
+          $form['profile_doctor_profile']['field_doctor_title']['#prefix'] = '<div class="sbq_form_01">';
+          $form['profile_doctor_profile']['field_doctor_title']['#suffix'] = '</div>';
+        }
+        if (isset($form['profile_doctor_profile']['field_patient_diseases'])) {
+          $form['profile_doctor_profile']['field_patient_diseases']['#prefix'] = '<div class="sbq_form_01">';
+          $form['profile_doctor_profile']['field_patient_diseases']['#suffix'] = '</div>';
+        }
       }
       if (isset($form['profile_customer_profile'])) {
-        $form['profile_customer_profile']['field_patient_diseases']['#prefix'] = '<div class="sbq_form_01">';
-        $form['profile_customer_profile']['field_patient_diseases']['#suffix'] = '</div>';
-
-        $form['profile_customer_profile']['field_job']['#prefix'] = '<div class="sbq_form_01">';
-        $form['profile_customer_profile']['field_job']['#suffix'] = '</div>';
-
-        $form['profile_customer_profile']['field_sex']['#prefix'] = '<div class="sbq_form_01">';
-        $form['profile_customer_profile']['field_sex']['und']['#attributes']['class'][] = 'sbq_radio_wrap';
-        $form['profile_customer_profile']['field_sex']['#suffix'] = '</div>';
-
-        $form['profile_customer_profile']['field_nickname']['#prefix'] = '<div class="sbq_form_01">';
-        $form['profile_customer_profile']['field_nickname']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
-        $form['profile_customer_profile']['field_nickname']['#suffix'] = '</div>';
-
-        unset($form['profile_customer_profile']['field_birthday']['und']['#prefix']);
-        unset($form['profile_customer_profile']['field_birthday']['und']['#suffix']);
-        $form['profile_customer_profile']['field_birthday']['#prefix'] = '<div class="sbq_form_01">';
-        $form['profile_customer_profile']['field_birthday']['#suffix'] = '</div>';
+        if (isset($form['profile_customer_profile']['field_patient_diseases'])) {
+          $form['profile_customer_profile']['field_patient_diseases']['#prefix'] = '<div class="sbq_form_01">';
+          $form['profile_customer_profile']['field_patient_diseases']['#suffix'] = '</div>';
+        }
+        if (isset($form['profile_doctor_profile']['field_job'])) {
+          $form['profile_customer_profile']['field_job']['#prefix'] = '<div class="sbq_form_01">';
+          $form['profile_customer_profile']['field_job']['#suffix'] = '</div>';
+        }
+        if (isset($form['profile_doctor_profile']['field_sex'])) {
+          $form['profile_customer_profile']['field_sex']['#prefix'] = '<div class="sbq_form_01">';
+          $form['profile_customer_profile']['field_sex']['und']['#attributes']['class'][] = 'sbq_radio_wrap';
+          $form['profile_customer_profile']['field_sex']['#suffix'] = '</div>';
+        }
+        if (isset($form['profile_doctor_profile']['field_nickname'])) {
+          $form['profile_customer_profile']['field_nickname']['#prefix'] = '<div class="sbq_form_01">';
+          $form['profile_customer_profile']['field_nickname']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
+          $form['profile_customer_profile']['field_nickname']['#suffix'] = '</div>';
+        }
+        if (isset($form['profile_doctor_profile']['field_birthday'])) {
+          unset($form['profile_customer_profile']['field_birthday']['und']['#prefix']);
+          unset($form['profile_customer_profile']['field_birthday']['und']['#suffix']);
+          $form['profile_customer_profile']['field_birthday']['#prefix'] = '<div class="sbq_form_01">';
+          $form['profile_customer_profile']['field_birthday']['#suffix'] = '</div>';
+        }
       }
 
       $form['actions']['submit']['#attributes']['class'][] = 'sbq_btn';
