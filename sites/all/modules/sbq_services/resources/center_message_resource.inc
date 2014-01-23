@@ -15,13 +15,12 @@ function center_message_alter($centerid, $fun, $data) {
     if (is_numeric($fun)) {
       $data['nid'] = $fun;
     } else {
-      return call_user_func('center_question_' . $fun, $centerid, $data);
+      //return call_user_func('center_question_' . $fun, $centerid, $data);
     }
   }
   if (!$center = sbq_center_load($centerid)) {
     return services_error('not found the center form ' . $centerid, '404');
   }
-  return center_message_get_privatemsgid($centerid);
   
   if ($mid = center_message_get_privatemsgid($centerid)) {
     $result = privatemsg_reply($mid, $data['body'], array( 'author' => $user ));
