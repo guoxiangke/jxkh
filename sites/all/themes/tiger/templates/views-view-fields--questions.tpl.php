@@ -49,6 +49,7 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
   <?php $$id = $field->wrapper_prefix.$field->label_html.$field->content.$field->wrapper_suffix; ?>
 <?php endforeach; ?>
 <?php $node = node_load($nid); ?>
+<?php $follow_link = flag_create_link('follow', $nid); ?>
 <div class="sbq_question_item">
   <h2 class="sbq_title"><?php print $title; ?></h2>
   <div class="votes"><a href="/question/<?php print $nid; ?>"><span class="count"><?php print $fields['field_computed_answers']->content; ?></span></a></div>
@@ -57,7 +58,9 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
     <div class="sbq_text"><?php print $body; ?></div>
     <div class="sbq_reply_actions">
       <ul>
-        <li class="sbq_follow_btn"><?php print flag_create_link('follow', $nid); ?></li>
+        <?php if (strlen(trim($follow_link)) > 0) {?>
+        <li class="sbq_follow_btn"><?php print $follow_link; ?></li>
+        <?php }?>
         <?php if ($node->comment_count > 0) {?>
           <li class="sbq_reply_btn">回复(<?php print $node->comment_count; ?>)</li>
         <?php }?>
