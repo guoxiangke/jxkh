@@ -2130,6 +2130,7 @@ function _privatemsg_list_headers($keys) {
  *   Row definition for use with theme('table')
  */
 function _privatemsg_list_thread($tableselect) {
+
   foreach ($tableselect['#options'] as $id => $thread) {
     $row = array();
     if (!empty($thread['is_new'])) {
@@ -2141,6 +2142,8 @@ function _privatemsg_list_thread($tableselect) {
       if ($return = theme('privatemsg_list_field__' . $key, array('thread' => $thread))) {
         // The default theme returns nothing, only store the value if we have something.
         $row[$key] = $return;
+      }else{
+        $row[$key] = render($data); //dale add theme email!
       }
     }
     $tableselect['#options'][$id] = $row;
