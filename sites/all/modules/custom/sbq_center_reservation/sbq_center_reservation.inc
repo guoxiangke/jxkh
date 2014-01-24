@@ -14,11 +14,22 @@
  */
 function sbq_center_opendays_form($form, $form_status, $center) {
   $header = $part = array();
+  $settings = sbq_center_reservation_get_settings($center);
   foreach (array( 'monday' => '星期一', 'tuesday' => '星期二', 'wednesday' => '星期三', 'thursday' => '星期四', 'friday' => '星期五', 'saturday' => '星期六', 'sunday' => '星期日', ) as $key => $item) {
     $header[$key] = $item;
+    $default = array();
+    if (isset($settings['opendays'][$key]['a']) && $settings['opendays'][$key]['a']) {
+      $default[] = 'a';
+    }
+    if (isset($settings['opendays'][$key]['p']) && $settings['opendays'][$key]['p']) {
+      $default[] = 'p';
+    }
 
     $part[$key] = array(
+        '#prefix' => '<div style="width:144px; float:left;">',
+        '#suffix' => '</div>',
         '#type' => 'checkboxes',
+        '#default_value' => $default,
         '#options' => array(
             'a' => '上午',
             'p' => '下午'
@@ -55,10 +66,9 @@ function sbq_center_opendays_form_submit($form, $form_status) {
       $data[$key] = $form_status['values'][$key];
     }
   }
-
   $seri = array( 'opendays' => $data, 'numofday' => 10 );
-
   variable_set('center_reservation_' . $form_status['values']['centerid'] . '_settings', serialize($seri));
+  drupal_set_message('设置成功', 'status');
 }
 
 function sbq_center_reservation_manage($center, $reservation, $action) {
@@ -92,9 +102,9 @@ function sbq_center_reservation_created($center, $account = NULL) {
       'uid' => $account->uid,
       'name' => (isset($account->name) ? $account->name : ''),
       'type' => SBQ_CENTER_RESERVATION_NODE_TYPE,
-      'og_group_ref' => array('und'=>array(array('target_id'=>$center->nid))),
+      'og_group_ref' => array( 'und' => array( array( 'target_id' => $center->nid ) ) ),
       'language' => LANGUAGE_NONE
   );
   drupal_set_title(t('Create @name', array( '@name' => $types[SBQ_CENTER_RESERVATION_NODE_TYPE]->name )), PASS_THROUGH);
-  return drupal_get_form('sbq_center_reservation_node_form', (object)$node);
+  return drupal_get_form('sbq_center_reservation_node_form', (object) $node);
 }
