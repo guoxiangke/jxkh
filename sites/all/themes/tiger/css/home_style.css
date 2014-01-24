@@ -1,8 +1,8 @@
 body { background: url(../image/bg.jpg) center top no-repeat fixed; }
 .body { float: left; width: 100%; margin-top: 60px; padding: 0px; }
-.body .main { width: 1070px; padding: 0px 100px; margin: 0 auto; }
+.body .main { width: 1270px; margin: 0 auto; position: relative; }
 /*sbq_home_menu*/
-.sbq_home_menu { float: left; width: 100%; }
+.sbq_home_menu { float: left; width: 1070px; }
 .sbq_home_menu a { color: #FFF; }
 .sbq_home_menu ul { float: left; padding: 5px; }
 .sbq_home_menu .sbq_patient { float: left; width: 520px; }
@@ -66,8 +66,8 @@ body { background: url(../image/bg.jpg) center top no-repeat fixed; }
 .header .sbq_user_links a { padding: 0px 5px; }
 .header .sbq_header_login .sbq_user_pic { float: left; width: 24px; height: 24px; }
 .header .sbq_header_login .sbq_user_pic img { float: left; width: 24px; height: 24px; }
-.sbq_qr_code { float: left; width: 100%; position: absolute; top: 130px; left: 0; }
-.sbq_qr_code .sbq_qr_code_inner { width: 1270px; margin: 0 auto; }
+.sbq_qr_code { float: left; width: 100px; margin: 10px 0px 0px 0px; }
+.sbq_qr_code .sbq_qr_code_inner { width: 100px; }
 .sbq_qr_code img { float: left; width: 100px; overflow: hidden; }
 /*footer*/
 .footer { float: left; width: 100%; overflow: hidden; text-shadow: 1px 1px 1px #666666; }
@@ -78,3 +78,4 @@ body { background: url(../image/bg.jpg) center top no-repeat fixed; }
 .footer .sbq_about_link ul { float: right; }
 .footer .sbq_about_link ul li { float: left; height: 30px; line-height: 30px; padding: 0px 0px 0px 10px; font-size: 16px; }
 .footer .sbq_copy { float: left; width: 100%; height: 20px; line-height: 20px; text-align: right; font-size: 12px; color: #FFF; }
+-align: right; font-size: 12px; color: #FFF; }
