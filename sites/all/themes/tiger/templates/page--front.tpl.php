@@ -115,9 +115,7 @@
 <div class="siteindex" style="display:none;">
 <h1><a href="/sites/index">伤不起文章资讯索引</a></h1>
 </div>
-<div class="sbq_qr_code">
-  <div class="sbq_qr_code_inner"><a href="http://app.shangbq.com/update/CaseHistoryChart.v.1.87.apk"><img src="/<?php print $theme_path; ?>/images/qr_code.png" width="100" height="140"  alt=""/></a></div>
-</div>
+
 <div class="body">
   <div class="main">
     <?php if ($messages): ?>
@@ -125,6 +123,9 @@
       <?php print $messages; ?>
     </div>
     <?php endif; ?>
+    <div class="sbq_qr_code">
+      <div class="sbq_qr_code_inner"><a href="http://app.shangbq.com/update/CaseHistoryChart.v.1.87.apk"><img src="/<?php print $theme_path; ?>/images/qr_code.png" width="100" height="140"  alt=""/></a></div>
+    </div>
     <div class="sbq_home_menu">
       <ul class="sbq_patient">
         <li class="front-redblack color_06"><a href="###" onclick="alert('榜单沉淀中～敬请期待！');">

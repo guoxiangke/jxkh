@@ -54,5 +54,5 @@
 /*sbq_event*/
 .sbq_event { float: left; width: 100%; }
 .sbq_event .sbq_article_content { padding: 0px 0px 0px 0px; border: none; }
-
-
+.sbq_event_btn { float: left; margin: 0px 0px 15px 0px; }
+.sbq_event_btn a { float: left; width: 180px; height: 44px; line-height: 44px; text-align: center; background: #3366cc; color: #FFF; font-size: 18px; font-weight: bold; border: 1px #0643cb solid; border-radius: 5px; }
