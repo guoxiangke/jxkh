@@ -325,12 +325,8 @@ function sbq_center_reservation_reservation_status_alter($reservation) {
             '!center_reservation_id' => $reservation->nid,
         )
         ), user_load($reservation->uid));
-
-
     $warpper = entity_metadata_wrapper('message', $message);
-
     $warpper->field_node_ref->set($center);
-    dpm($reservation);
     $warpper->field_center_reservation_send->set($user->uid);
     $warpper->save();
   }
