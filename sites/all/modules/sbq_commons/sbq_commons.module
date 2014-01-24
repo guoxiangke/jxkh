@@ -1390,8 +1390,18 @@ function sbq_commons_user_avart($account = null, $style_name = "sc80") {
 
 //hook_user_login()
 function sbq_commons_user_login($edit, $account) {
-//  $m = drupal_get_messages();
-//  dpm($m);
+  
+  // Your logic will set $redirection to the desired location
+  $redirection = 'user/followers/qa';
+  
+
+// Unless there is already a redirection going, or the user is trying to reset his password, we redirect to $redirection.
+  if (empty($_GET['destination'])
+    && !is_null($redirection)
+    && (!isset($_POST['form_id']) || $_POST['form_id'] != 'user_pass_reset'))
+  {
+    $_GET['destination'] = $redirection; // Should we use $edit['redirect'] instead..?
+  }
 }
 
 /**
