@@ -820,6 +820,42 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     $form['actions']['submit']['#attributes']['class'][] = 'sbq_login_btn';
     $form['actions']['#prefix'] = '<div class="sbq_botton_01"><label></label>';
     $form['actions']['#suffix'] = '</div>';
+  } elseif ($form_id == 'webform_client_form_23343') {
+    $form['#prefix'] = '<div class="sbq_form_wrap">';
+    $form['#suffix'] = '</div>';
+
+    $form['submitted']['name']['#prefix'] = '<div class="sbq_form_01">';
+    $form['submitted']['name']['#attributes']['class'][] = 'sbq_input_01';
+    $form['submitted']['name']['#suffix'] = '</div>';
+
+    $form['submitted']['telphone']['#prefix'] = '<div class="sbq_form_01">';
+    $form['submitted']['telphone']['#attributes']['class'][] = 'sbq_input_01';
+    $form['submitted']['telphone']['#suffix'] = '</div>';
+
+    $form['submitted']['email']['#prefix'] = '<div class="sbq_form_01">';
+    $form['submitted']['email']['#attributes']['class'][] = 'sbq_input_01';
+    $form['submitted']['email']['#suffix'] = '</div>';
+
+    $form['submitted']['zhicheng']['#prefix'] = '<div class="sbq_form_01">';
+    $form['submitted']['zhicheng']['#attributes']['class'][] = 'sbq_input_01';
+    $form['submitted']['zhicheng']['#suffix'] = '</div>';
+
+    $form['submitted']['yiyuan']['#prefix'] = '<div class="sbq_form_01">';
+    $form['submitted']['yiyuan']['#attributes']['class'][] = 'sbq_input_01';
+    $form['submitted']['yiyuan']['#suffix'] = '</div>';
+
+    $form['submitted']['keshi']['#prefix'] = '<div class="sbq_form_01">';
+    $form['submitted']['keshi']['#attributes']['class'][] = 'sbq_input_01';
+    $form['submitted']['keshi']['#suffix'] = '</div>';
+
+    $form['submitted']['app_more']['#prefix'] = '<div class="sbq_form_01">';
+    $form['submitted']['app_more']['#attributes']['class'][] = 'sbq_input_01';
+    $form['submitted']['app_more']['#suffix'] = '</div>';
+
+    $form['actions']['submit']['#value'] = '提交';
+    $form['actions']['submit']['#attributes']['class'][] = 'sbq_btn';
+    $form['actions']['#prefix'] = '<div class="sbq_botton_01"><label></label>';
+    $form['actions']['#suffix'] = '</div>';
   }
 }
 

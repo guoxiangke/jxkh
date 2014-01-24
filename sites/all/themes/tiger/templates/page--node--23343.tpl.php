@@ -72,9 +72,10 @@
  * @ingroup themeable
  */
   $theme_path = drupal_get_path('theme', 'tiger');
-  $node = node_load(arg(1));
+  $node = node_load(2883);
   $sbq_activity_bg_uri = $node->field_image[LANGUAGE_NONE][0]['uri'];
   drupal_add_css(path_to_theme() . "/css/news.css", array('group' => CSS_THEME));
+  drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
 ?>
 <div class="header">
   <div class="header_inner">
