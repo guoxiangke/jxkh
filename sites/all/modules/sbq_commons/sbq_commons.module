@@ -120,8 +120,17 @@ function sbq_commons_menu() {
  * Implements hook_form_alter().
  */
 function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
-
-// watchdog('sbq_commons', $form_id, array(), WATCHDOG_NOTICE, 'link');
+ 
+  if($form_id == 'privatemsg_list') {
+     $form['updated']['list']['#header']['email'] = 'Email';
+     foreach ($form['updated']['list']['#options'] as $key => $value) {
+      $privatemsg = privatemsg_thread_load($key);
+      $mail = '';
+      if(isset($value['participants']))
+      $mail = $privatemsg['participants'][$value['participants']]->mail;
+      $form['updated']['list']['#options'][$key]['email'] = $mail;
+     }
+  }
   if (isset($form['comment_body'])) {
     $form['comment_body'][LANGUAGE_NONE][0]['#title'] = t('Comment');
   }
