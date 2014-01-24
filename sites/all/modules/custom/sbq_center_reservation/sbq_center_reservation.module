@@ -91,6 +91,7 @@ function sbq_center_reservation_access($center, $reservation = NULL, $type = NUL
   if (!$account) {
     $account = $user;
   }
+
   if (!og_user_access('node', $center->nid, $type, $account)) {
     return FALSE;
   }
@@ -125,7 +126,9 @@ function sbq_center_reservation_setopenday($centerid, $opendays) {
 
 function sbq_center_reservation_get_settings($center) {
   static $center_reservation_opendays = array();
-  $center = sbq_center_load($center);
+  if (!is_object($center)) {
+    $center = sbq_center_load($center);
+  }
 
   if (!$vari = variable_get('center_reservation_' . $center->nid . '_settings')) {
     return array();
@@ -166,7 +169,7 @@ function template_preprocess_sbq_center_reservation_month_col(&$vars) {
  * @param type $center
  * @return boolean
  */
-function sbq_center_reservation_can_reservation($date, $center = '', $display=FALSE) {
+function sbq_center_reservation_can_reservation($date, $center = '', $display = FALSE) {
   if (!$center) {
     $center = arg(1);
   }
@@ -196,17 +199,17 @@ function sbq_center_reservation_can_reservation($date, $center = '', $display=FA
 
   $reservation = $settings['opendays'][$week[$week_index]];
 
-  if ( isset($reservation['a']) && $reservation['a']) {
+  if (isset($reservation['a']) && $reservation['a']) {
     if ($time > 9 && $time < 12) {
       return true;
     }
   }
-  if ( isset($reservation['p']) && $reservation['p']) {
+  if (isset($reservation['p']) && $reservation['p']) {
     if ($time > 13 && $time < 18) {
       return true;
     }
   }
-  if($display){
+  if ($display) {
     return isset($reservation['a']) && $reservation['a'] || isset($reservation['p']) && $reservation['p'];
   }
   return FALSE;
@@ -217,7 +220,7 @@ function sbq_center_reservation_can_reservation($date, $center = '', $display=FA
  */
 
 function sbq_center_reservation_form_alter(&$form, $form_states, $form_id) {
-  if ( $form_id == 'sbq_center_reservation_node_form' && isset($form['#bundle']) && $form['#bundle'] == SBQ_CENTER_RESERVATION_NODE_TYPE ) {
+  if ($form_id == 'sbq_center_reservation_node_form' && isset($form['#bundle']) && $form['#bundle'] == SBQ_CENTER_RESERVATION_NODE_TYPE) {
     $form['#validate'][] = 'sbq_center_reservation_form_validate';
   }
 }
@@ -257,7 +260,7 @@ function sbq_center_reservation_fetch_by_center($centerid) {
 }
 
 function sbq_center_reservation_node_submit($node, $form, $form_state) {
-
+  
 }
 
 /**
@@ -316,14 +319,27 @@ function sbq_center_reservation_reservation_status_alter($reservation) {
   if ($reservation->field_reservation_status['und'][0]['value'] == SBQ_CENTER_RESERVATION_STATUS_ACCEPT) {
     global $user;
     $date = new DateTime($reservation->field_reservation_time['und'][0]['value']);
+    $center = node_load($reservation->og_group_ref['und'][0]['target_id']);
     $message = message_create('sbq_center_reservation_accept', array(
-        'arguments' => array( '!time' => date('Y-m-d', $date->getTimestamp()) )
+        'arguments' => array(
+            '!time' => date('Y-m-d', $date->getTimestamp()),
+            '!centername' => $center->title,
+            '!center_reservation_id' => $reservation->nid,
+        )
         ), user_load($reservation->uid));
-
     $warpper = entity_metadata_wrapper('message', $message);
-
-    $warpper->field_node_ref->set(node_load($reservation->og_group_ref['und'][0]['target_id']));
+    $warpper->field_node_ref->set($center);
     $warpper->field_center_reservation_send->set($user->uid);
     $warpper->save();
   }
+}
+
+function sbq_center_reservation_theme() {
+  $items = array(
+      'sbq_center_reservation_settings' => array(
+          'template' => 'templates/center--reservation--settings',
+          'variables' => array()
+      ),
+  );
+  return $items;
 }
