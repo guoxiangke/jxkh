@@ -140,7 +140,7 @@
         <?php if ($logged_in):?>
           <a href="/node/23343">立即参加</a>
         <?php else: ?>
-          <a href="/user/login">立即参加</a>
+          <a href="/user/login?destination=node/2883">立即参加</a>
         <?php endif; ?>
         </div>
         <?php

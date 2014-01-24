@@ -206,13 +206,17 @@
         <?php if ($current_user): ?>
         <li <?php print $menu_follower_active; ?>><?php print l('动态', 'user/followers/blog'); ?></li>
         <?php endif; ?>
-        <li <?php print $menu_account_active; ?>><?php print l('资料', 'user/'.$a_uid); ?></li>
         <li <?php print $menu_blog_active; ?>><?php print l('文章', 'user/'.$a_uid.'/blog'); ?></li>
+        <?php if ($counts['user_question_count']>=0): ?>
         <li <?php print $menu_qa_active; ?>><?php print l('问答', 'user/'.$a_uid.'/qa/ask'); ?></li>
+        <?php else: ?>
+        <li <?php print $menu_qa_active; ?>><?php print l('问答', 'user/qa/promoted'); ?></li>
+        <?php endif; ?>
         <?php if ($current_user): ?>
         <li <?php print $menu_relationship_active; ?>><?php print l('圈子', 'user/'.$a_uid.'/relationship'); ?></li>
         <li <?php print $menu_message_active; ?>><?php print l('消息', 'user/message'); ?></li>
         <?php endif; ?>
+        <li <?php print $menu_account_active; ?>><?php print l('资料', 'user/'.$a_uid); ?></li>
       </ul>
     </div>
     <?php endif; ?>
