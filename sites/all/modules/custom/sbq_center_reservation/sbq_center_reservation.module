@@ -126,7 +126,9 @@ function sbq_center_reservation_setopenday($centerid, $opendays) {
 
 function sbq_center_reservation_get_settings($center) {
   static $center_reservation_opendays = array();
-  $center = sbq_center_load($center);
+  if (!is_object($center)) {
+    $center = sbq_center_load($center);
+  }
 
   if (!$vari = variable_get('center_reservation_' . $center->nid . '_settings')) {
     return array();
@@ -330,4 +332,14 @@ function sbq_center_reservation_reservation_status_alter($reservation) {
     $warpper->field_center_reservation_send->set($user->uid);
     $warpper->save();
   }
+}
+
+function sbq_center_reservation_theme() {
+  $items = array(
+      'sbq_center_reservation_settings' => array(
+          'template' => 'templates/center--reservation--settings',
+          'variables' => array()
+      ),
+  );
+  return $items;
 }
