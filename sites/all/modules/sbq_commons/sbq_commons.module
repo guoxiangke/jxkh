@@ -123,12 +123,17 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
  
   if($form_id == 'privatemsg_list') {
      $form['updated']['list']['#header']['email'] = 'Email';
+     $form['updated']['list']['#header']['last_message'] = '最后消息';
      foreach ($form['updated']['list']['#options'] as $key => $value) {
       $privatemsg = privatemsg_thread_load($key);
       $mail = '';
+      $last_message = '';
+      $thread = privatemsg_thread_load($privatemsg['thread_id']);
+      $last_message = end($thread['messages'])->body;
+      $form['updated']['list']['#options'][$key]['last_message'] = l($last_message,'messages/view/'.$privatemsg['thread_id']);
       if(isset($value['participants']))
       $mail = $privatemsg['participants'][$value['participants']]->mail;
-      $form['updated']['list']['#options'][$key]['email'] = $mail;
+      $form['updated']['list']['#options'][$key]['email'] = l($mail,'user/'.$privatemsg['participants'][$value['participants']]->uid);
      }
   }
   if (isset($form['comment_body'])) {
