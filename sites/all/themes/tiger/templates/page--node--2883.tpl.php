@@ -137,11 +137,16 @@
 
       <div class="sidebar_second sidebar">
         <div class="sbq_event_btn">
-        <?php if ($logged_in):?>
-          <a href="/node/23343">立即参加</a>
-        <?php else: ?>
-          <a href="/user/login?destination=node/2883">立即参加</a>
-        <?php endif; ?>
+        <?php
+          global $user; 
+          if(!$logged_in){
+            echo '<a href="/user/login?destination=node/2883">立即参加</a>';
+          }elseif(!(in_array('doctor', $user->roles) || in_array('certified doctor',$user->roles))) {
+            echo '<a href="###" onclick="对不起，本活动只对医生开放!">立即参加</a>';
+          }else{
+            echo '<a href="/node/23343">立即参加</a>';
+          }
+        ?>
         </div>
         <?php
         // <div class="sbq_winner_list">
