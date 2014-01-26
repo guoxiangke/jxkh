@@ -122,6 +122,8 @@ function sbq_commons_menu() {
 function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
  
   if($form_id == 'privatemsg_list') {
+    global $user;
+    if(!in_array('center administrator', $user->roles)) return;
      $form['updated']['list']['#header']['email'] = 'Email';
      $form['updated']['list']['#header']['last_message'] = '最后消息';
      foreach ($form['updated']['list']['#options'] as $key => $value) {
