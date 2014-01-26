@@ -142,7 +142,7 @@
           if(!$logged_in){
             echo '<a href="/user/login?destination=node/2883">立即参加</a>';
           }elseif(!(in_array('doctor', $user->roles) || in_array('certified doctor',$user->roles))) {
-            echo '<a href="###" onclick="对不起，本活动只对医生开放!">立即参加</a>';
+            echo '<a href="###" onclick="alert(对不起，本活动只对医生开放!);">立即参加</a>';
           }else{
             echo '<a href="/node/23343">立即参加</a>';
           }
