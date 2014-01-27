@@ -38,6 +38,14 @@ core = 7.x
 ; CSS3 media queries: http://www.w3.org/TR/css3-mediaqueries/
 
 ; First we remove the system's menu and message styling since Zen has its own.
+stylesheets[all][] = system.menus.css
+stylesheets[all][] = system.messages.css
+stylesheets[all][] = system.theme.css
+stylesheets[all][] = system.base.css
+stylesheets[all][] = questions.css
+stylesheets[all][] = filter.css
+stylesheets[all][] = flag.css
+stylesheets[all][] = user.css
 
 ; Then we add our own stylesheet.
 stylesheets[all][] = css/general.css
