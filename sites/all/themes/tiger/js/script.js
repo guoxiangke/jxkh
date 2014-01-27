@@ -105,7 +105,7 @@ Drupal.behaviors.tiger = {
       $('#user-register-form .password-suggestions').hide();
     });
 
-    $('#user-register-form .form-submit').click(function(e){      
+    $('form .form-submit').click(function(e){      
       $('input.required').each(function(){
         if($(this).val()==''){
           $(this).focus();
