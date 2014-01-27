@@ -93,18 +93,24 @@ Drupal.behaviors.tiger = {
         $('#edit-picture-upload').click();
         return false;
       });
-    $('#user-register-form .form-type-textfield .description').hide()
+
+    $('#user-register-form .form-type-textfield .description').hide();
     $('#user-register-form .form-type-textfield ').click(function(){
       $(this).children('.description').show();
     });
     $('#user-register-form .form-type-textfield input').blur(function(){
-      $(this).parent('.form-type-textfield').children('.description').hide();
+      var warning_str = '必须填写'+$(this).prev('label').text().replace('*','');
+      if($(this).val() == '' && $(this).hasClass('required')) {
+        $(this).parent('.form-type-textfield').children('.description').text(warning_str);
+      }else{
+        $(this).parent('.form-type-textfield').children('.description').hide();
+      };
     });
     $('#user-register-form .form-item-pass .description').hide();
     $('#user-register-form .password-field').blur(function(){
       $('#user-register-form .password-suggestions').hide();
     });
-
+    //form behaviors
     $('form .form-submit').click(function(e){      
       $('input.required').each(function(){
         if($(this).val()==''){
