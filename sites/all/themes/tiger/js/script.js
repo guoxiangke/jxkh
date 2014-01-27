@@ -93,7 +93,17 @@ Drupal.behaviors.tiger = {
         $('#edit-picture-upload').click();
         return false;
       });
-
+    $('#user-register-form .form-type-textfield .description').hide()
+    $('#user-register-form .form-type-textfield ').click(function(){
+      $(this).children('.description').show();
+    });
+    $('#user-register-form .form-type-textfield input').blur(function(){
+      $(this).parent('.form-type-textfield').children('.description').hide();
+    });
+    $('#user-register-form .form-item-pass .description').hide();
+    $('#user-register-form .password-field').blur(function(){
+      $('#user-register-form .password-suggestions').hide();
+    });
   }
 };
 

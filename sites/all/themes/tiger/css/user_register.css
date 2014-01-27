@@ -1,0 +1,17 @@
+#user-register-form .description{
+	position: absolute;
+	float: right;
+	width: 50%;
+	margin-left: 51%;
+	margin-top: -4px;
+}
+#user-register-form .password-suggestions {
+	position: absolute;
+	float: right;
+	width: 50%;
+	margin-left: 27%;
+}
+#user-register-form .confirm-parent .description,
+#user-register-form .password-strength {
+	display: none;
+}
