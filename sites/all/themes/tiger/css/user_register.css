@@ -15,3 +15,8 @@
 #user-register-form .password-strength {
 	display: none;
 }
+
+#user-register-form .text {
+	margin-left: 14px;
+	color: #999;
+}
