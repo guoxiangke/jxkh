@@ -21,13 +21,23 @@
 	margin-left: 14px;
 	color: #999;
 }
-#user-register-form .captcha img,#user-login .captcha img{
+#user-register-form .captcha img{
 	float: right;
 	position: absolute;
 	right: 367px;
 }
-#user-register-form .reload-captcha-wrapper,#user-login .reload-captcha-wrapper{
+#user-register-form .reload-captcha-wrapper{
 	display: block;
 	position: absolute;
 	right: 337px;
+}
+#user-login .captcha img{
+	float: right;
+	position: absolute;
+	right: 187px;
+}
+#user-login .reload-captcha-wrapper{
+	display: block;
+	position: absolute;
+	right: 158px;
 }
