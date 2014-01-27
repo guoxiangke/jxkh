@@ -110,6 +110,14 @@ Drupal.behaviors.tiger = {
     $('#user-register-form .password-field').blur(function(){
       $('#user-register-form .password-suggestions').hide();
     });
+    //username min length 2
+    $('#user-register-form input.username').blur(function(){
+      if($(this).val().length<2) {
+        if(confirm('用户名至少2个字符')){
+          $(this).focus();
+        };
+      }
+    });
     //form behaviors
     $('form .form-submit').click(function(e){      
       $('input.required').each(function(){
