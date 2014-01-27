@@ -17,6 +17,12 @@
 }
 
 #user-register-form .text {
+	font-size: 12px;
 	margin-left: 14px;
 	color: #999;
+}
+#user-register-form .captcha img{
+	float: right;
+	position: absolute;
+	right: 356px;
 }
