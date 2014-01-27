@@ -26,3 +26,8 @@
 	position: absolute;
 	right: 356px;
 }
+#user-register-form .reload-captcha-wrapper{
+	display: block;
+	position: absolute;
+	right: 337px;
+}
