@@ -112,9 +112,16 @@
     </div>
   </div>
 </div>
-<?php if ($logged_in  || is_numeric(arg(1))): ?>
+<?php if ($logged_in || is_numeric(arg(1))): ?>
 <?php
   $a_name = theme('username', array('account' => $account));
+  if ($account->uid == $user->uid) {
+    $uid = $user->uid;
+    drupal_add_js("jQuery(document).ready(function () {
+      $('.sbq_user_info .sbq_user_pic a').attr('href','/user/$uid/edit#edit-picture');
+    });", 'inline');
+  }
+
   $a_picture = theme('user_picture', array('account' =>$account));
   $a_uid = $account->uid;
 
