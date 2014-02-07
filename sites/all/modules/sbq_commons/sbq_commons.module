@@ -261,6 +261,7 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
       break;
     case 'user_login_block':
       //@see template.php in zen_sbq
+      // dpm($from);
       break;
     case 'general_group_node_form':
     case 'doctor_group_node_form':
@@ -393,6 +394,8 @@ function sbq_commons_init() {
       drupal_add_js(drupal_get_path('module', 'sbq_commons') . '/js/topic-page.js');
     }
   }
+  //dale add ckfinder.js
+  drupal_add_js('sites/all/libraries/ckfinder/ckfinder.js');
 }
 
 /**
@@ -778,7 +781,8 @@ function sbq_commons_node_submit(&$node, &$form, &$form_state) {
   // for question node title
   if ($node->type == 'question') {
     $max_length = 29;
-    $subject = trim(truncate_utf8(decode_entities(strip_tags(check_markup($node->body['und'][0]['value']))), $max_length, TRUE));
+    // $subject = trim(truncate_utf8(decode_entities(strip_tags(check_markup($node->body['und'][0]['value']))), $max_length, TRUE));
+    $subject =strip_tags(trim(truncate_utf8(decode_entities(check_markup($node->body['und'][0]['value'])), $max_length, TRUE)));
     $node->title = $subject;
   }
 }

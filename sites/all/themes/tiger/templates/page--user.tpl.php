@@ -112,9 +112,16 @@
     </div>
   </div>
 </div>
-<?php if ($logged_in): ?>
+<?php if ($logged_in || is_numeric(arg(1))): ?>
 <?php
   $a_name = theme('username', array('account' => $account));
+  if ($account->uid == $user->uid) {
+    $uid = $user->uid;
+    drupal_add_js("jQuery(document).ready(function () {
+      $('.sbq_user_info .sbq_user_pic a').attr('href','/user/$uid/edit#edit-picture');
+    });", 'inline');
+  }
+
   $a_picture = theme('user_picture', array('account' =>$account));
   $a_uid = $account->uid;
 
@@ -160,7 +167,7 @@
     </div>
     <?php endif; ?>
     <?php endif; ?>
-    <?php if ($logged_in): ?>
+    <?php if ($logged_in || is_numeric(arg(1))): ?>
     <div class="sbq_user_headr"><img src="/sites/all/themes/tiger/image/sbq_user_headr_bg.jpg" width="960" height="200"  alt=""/></div>
     <div class="sbq_user_info">
       <div class="sbq_user_pic"><?php print $a_picture; ?></div>
