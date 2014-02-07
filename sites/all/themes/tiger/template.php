@@ -15,7 +15,7 @@ function tiger_preprocess_page(&$variables) {
     drupal_add_css(path_to_theme() . "/css/home_style.css", array('group' => CSS_THEME));
   }
   // login page and register page
-  if (!$variables['logged_in'] && arg(0) == 'user') {
+  if (!$variables['logged_in'] && arg(0) == 'user' && (arg(1) == 'login' || in_array('register', arg()))) {
     drupal_add_css(path_to_theme() . "/css/reg.css", array('group' => CSS_THEME));
     drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
     $variables['page']['sidebar_second'] = FALSE;
@@ -45,7 +45,8 @@ function tiger_preprocess_page(&$variables) {
     }
   }
   // user center page
-  if ($variables['logged_in'] && arg(0) == 'user') {
+  //if ($variables['logged_in'] && arg(0) == 'user') {
+  if (arg(0) == 'user') {
     drupal_add_css(path_to_theme() . "/css/user.css", array('group' => CSS_THEME));
 
     global $user;
@@ -69,14 +70,14 @@ function tiger_preprocess_page(&$variables) {
       $user_question_count = 0;
       $user_answer_count = 0;
     }
-    if (module_exists('sbq_user_relationships')) {
+    if ($variables['logged_in'] && module_exists('sbq_user_relationships')) {
       $user_relationship_count = sbq_user_relationships_my_relstionships($account);
       $follow_link = sbq_user_relationships_action_between_user($user, $account);
     } else {
       $user_relationship_count = 0;
       $follow_link = '';
     }
-    if (module_exists('userpoints')) {
+    if ($variables['logged_in'] && module_exists('userpoints')) {
       $user_point_count = userpoints_get_current_points($user->uid, 'all');
     } else {
       $user_point_count = 0;
