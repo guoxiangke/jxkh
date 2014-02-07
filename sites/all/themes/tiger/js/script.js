@@ -138,14 +138,26 @@ Drupal.behaviors.tiger = {
 
       // Check if the definition is from the dialog we're
       // interested on (the Link and Image dialog).
-      if ( dialogName == 'link' || dialogName == 'image' )
+      if (dialogName == 'image' )
       {
          // remove Upload tab
          dialogDefinition.removeContents( 'advanced' );
-         dialogDefinition.removeContents( 'target' );         
-         dialogDefinition.removeContents( 'Link' );       
-         dialogDefinition.removeContents( 'link' );
+         dialogDefinition.removeContents( 'target' );    
+         dialogDefinition.removeContents( 'Link' );
+
+        
+          dialogDefinition.onShow = function () {
+            // This code will open the Advanced tab.
+            this.selectPage('Upload');
+          };
       }
+
+      if ( dialogName == 'link') { 
+         // remove Upload tab
+         dialogDefinition.removeContents( 'advanced' );
+         dialogDefinition.removeContents( 'target' );
+      }
+
    });
 
 

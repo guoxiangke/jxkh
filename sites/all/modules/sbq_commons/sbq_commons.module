@@ -259,9 +259,9 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
           '#weight' => 99.9
       );
       break;
-    case 'user_login_block':
+    case 'user_login':
       //@see template.php in zen_sbq
-      // dpm($from);
+      $form['remember_me']['#weight'] = $form['captcha']['#weight'] +1;
       break;
     case 'general_group_node_form':
     case 'doctor_group_node_form':
