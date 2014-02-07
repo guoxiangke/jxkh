@@ -23,6 +23,7 @@
 .sbq_user_info .sbq_user_follower li + li { border-left: 1px solid #E5E5E5; }
 .sbq_user_info .sbq_user_follower li strong { float: left; width: 80px; height: 26px; line-height: 26px; font-size: 16px; overflow: hidden; font-family: Arial; }
 .sbq_user_info .sbq_user_follower li span { float: left; width: 80px; height: 20px; line-height: 20px; font-size: 12px; overflow: hidden; font-family: Arial; }
+.sbq_user_info .sbq_user_follower li a span { color: #333; }
 .sbq_user_info .sbq_user_follower a { color: #225599; }
 .sbq_user_info .sbq_user_follower a:hover { text-decoration: underline; }
 /*sbq_user_menu*/

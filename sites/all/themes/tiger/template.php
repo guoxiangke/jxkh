@@ -889,3 +889,35 @@ function tiger_menu_tree($variables) {
 function tiger_html_head_alter(&$head_elements) {
   unset($head_elements['system_meta_generator']);
 }
+
+function tiger_preprocess_user_picture(&$variables) {
+  $variables['user_picture'] = '';
+  if (variable_get('user_pictures', 0)) {
+    $account = $variables['account'];
+    if (!empty($account->picture)) {
+      if (is_numeric($account->picture)) {
+        $account->picture = file_load($account->picture);
+      }
+      if (!empty($account->picture->uri)) {
+        $filepath = $account->picture->uri;
+      }
+    }
+    elseif (variable_get('user_picture_default', '')) {
+      $filepath = variable_get('user_picture_default', '');
+    }
+    if (isset($filepath)) {
+      $alt = '';
+
+      if (module_exists('image') && file_valid_uri($filepath) && $style = variable_get('user_picture_style', '')) {
+        $variables['user_picture'] = theme('image_style', array('style_name' => $style, 'path' => $filepath, 'alt' => $alt, 'title' => $alt));
+      }
+      else {
+        $variables['user_picture'] = theme('image', array('path' => $filepath, 'alt' => $alt, 'title' => $alt));
+      }
+      if (!empty($account->uid) && user_access('access user profiles')) {
+        $attributes = array('attributes' => array('title' => t('View user profile.')), 'html' => TRUE);
+        $variables['user_picture'] = l($variables['user_picture'], "user/$account->uid", $attributes);
+      }
+    }
+  }
+}
