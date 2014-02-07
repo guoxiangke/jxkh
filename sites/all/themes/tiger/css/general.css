@@ -40,6 +40,8 @@ input,
 .sbq_event_btn { font-family: "Microsoft Yahei", "微软雅黑", "Arial" !important; }
 /*-----sbq_messages-----*/
 .sbq_messages .messages { clear: both; padding: 8px 5px 8px 28px; line-height: 20px; margin: 5px 0px; font-size: 12px; color: #666; }
+.sbq_messages .messages a { color: #3366CC; margin: 0px 1px; }
+.sbq_messages .messages a:hover { text-decoration: underline; }
 .sbq_messages .element-invisible { display: none; }
 .sbq_messages .status { border: 1px #009900 solid; background: url(../image/sbq_msg_info.png) #F8FFF0 no-repeat 6px 10px; }
 .sbq_messages .error { border: 1px #E6393D solid; background: url(../image/sbq_msg_error.png) #FEF5F1 no-repeat 6px 10px; }

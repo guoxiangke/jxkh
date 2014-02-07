@@ -70,7 +70,7 @@ function tiger_preprocess_page(&$variables) {
       $user_question_count = 0;
       $user_answer_count = 0;
     }
-    if ($variables['logged_in'] && module_exists('sbq_user_relationships')) {
+    if (module_exists('sbq_user_relationships')) {
       $user_relationship_count = sbq_user_relationships_my_relstionships($account);
       $follow_link = sbq_user_relationships_action_between_user($user, $account);
     } else {
@@ -644,7 +644,7 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     }
 
     if ($is_followers_page) {
-      $form['#prefix'] = '<div class="sbq_add_content">';
+      $form['#prefix'] = '<div class="sbq_add_content sbq_form_wrap">';
       $form['#suffix'] = '</div>';
 
       $form['body']['und'][0]['#format'] = 'plain_text';
