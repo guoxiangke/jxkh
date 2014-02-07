@@ -177,6 +177,7 @@ function tiger_preprocess_page(&$variables) {
   if ((in_array('blog', arg()) || in_array('question', arg())) && in_array('add', arg())) {
     global $user;
     drupal_add_css(path_to_theme() . "/css/user.css", array('group' => CSS_THEME));
+    drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
     $variables['theme_hook_suggestions'][] = 'page__user';
     $account = $user;
     $variables['account'] = $account;
