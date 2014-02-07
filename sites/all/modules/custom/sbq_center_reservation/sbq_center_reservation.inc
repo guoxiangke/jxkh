@@ -106,5 +106,9 @@ function sbq_center_reservation_created($center, $account = NULL) {
       'language' => LANGUAGE_NONE
   );
   drupal_set_title(t('Create @name', array( '@name' => $types[SBQ_CENTER_RESERVATION_NODE_TYPE]->name )), PASS_THROUGH);
+  $param = drupal_get_query_parameters();
+  if(isset($param['date'])){
+    $node['field_reservation_time']['und'][0]['value'] = $param['date'].' 09:00';
+  }
   return drupal_get_form('sbq_center_reservation_node_form', (object) $node);
 }
