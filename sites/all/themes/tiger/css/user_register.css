@@ -41,3 +41,7 @@
 	position: absolute;
 	right: 158px;
 }
+
+#user-register-form .password-confirm span {
+	float: none;
+}
