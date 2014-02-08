@@ -30,8 +30,8 @@
     <ul>
       <li <?php print $menu_default_doctor; ?>><?php print l('医生圈', 'user/'.$uid.'/relationship/default/doctor'); ?></li>
       <li <?php print $menu_default_patient; ?>><?php print l('病友圈', 'user/'.$uid.'/relationship/default/patient'); ?></li>
-      <li <?php print $menu_recommand_doctor; ?>><?php print l('推荐医生', 'user/'.$uid.'/relationship/recommand/doctor'); ?></li>
-      <li <?php print $menu_recommand_patient; ?>><?php print l('推荐患者', 'user/'.$uid.'/relationship/recommand/patient'); ?></li>
+      <li <?php print $menu_recommand_doctor; ?>><?php print l('推荐医生', 'user/relationship/recommand/doctor'); ?></li>
+      <li <?php print $menu_recommand_patient; ?>><?php print l('推荐患者', 'user/relationship/recommand/patient'); ?></li>
     </ul>
   </div>
   <div class="sbq_con">
