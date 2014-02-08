@@ -9,7 +9,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 CKEDITOR.editorConfig = function(config) {
   config.indentClasses = [ 'rteindent1', 'rteindent2', 'rteindent3', 'rteindent4' ];
-
+  config.language = 'zh-cn';
   // [ Left, Center, Right, Justified ]
   config.justifyClasses = [ 'rteleft', 'rtecenter', 'rteright', 'rtejustify' ];
 

@@ -1,4 +1,4 @@
-.body { float: left; width: 100%; margin-top: 60px; }
+.body { float: left; width: 100%; }
 .body .main { width: 680px; margin: 0 auto; }
 /*------sbq_login------*/
 .sbq_login .sbq_form_01 { float: left; width: 100%; padding: 10px 0px; font-size: 14px; position: relative; }
@@ -6,9 +6,9 @@
 .sbq_login .sbq_botton_01 label,
 .sbq_login .captcha label { float: left; width: 110px; height: 36px; line-height: 36px; margin: 0px 10px 0px 0px; text-align: right; overflow: hidden; }
 /*------sbq_login------*/
-.sbq_login { float: left; width: 500px; background: #FFF; }
-.sbq_login .sbq_login_head { float: left; width: 100%; height: 50px; background: url(../image/sbq_login_head_bg.png) left; }
-.sbq_login .sbq_login_content { float: left; width: 100%; padding: 30px 0px; }
+.sbq_login { width: 500px; margin: 0 auto; background: #FFF; }
+/*.sbq_login .sbq_login_head { float: left; width: 100%; height: 50px; background: url(../image/sbq_login_head_bg.png) left; }*/
+.sbq_login .sbq_login_content { float: left; width: 100%; padding: 30px 0px; background: #FCFCFC; }
 .sbq_login .sbq_tips_error { line-height: 24px; position: absolute; top: 10px; left: 345px; display: none; }
 /*sbq_input_01*/
 .sbq_login .sbq_form_01 .sbq_input_01 { float: left; width: 200px; height: 34px; line-height: 34px; padding: 0px 9px; border: 1px #dddddd solid; background: url(../image/input_bg_01.png) repeat-x; }
@@ -27,21 +27,26 @@
 .sbq_checkbox_01 label { float: left; height: 26px; line-height: 26px; margin: 0px 5px; }
 /*------sbq_reg------*/
 .sbq_reg { width: 680px; margin: 0 auto; }
-.sbq_reg .sbq_reg_nav { float: left; width: 100%; height: 50px; background: url(../image/sbq_reg_head_bg1.png) repeat-x; }
-.sbq_reg .sbq_reg_nav li { float: left; height: 50px; margin: 0px 10px 0px 0px; border-radius: 5px 5px 0px 0px; background: url(../image/sbq_reg_head_bg2.png) repeat-x; }
-.sbq_reg .sbq_reg_nav .active { background: url(../image/sbq_reg_head_bg.png) repeat-x; }
-.sbq_reg .sbq_reg_nav a { float: left; width: 130px; height: 50px; padding: 0px 20px 0px 10px; background: url(../image/sbq_reg_ud.png) no-repeat; }
-.sbq_reg .sbq_reg_nav .sbq_reg_u { background-position: center 0px; }
-.sbq_reg .sbq_reg_nav .sbq_reg_d { background-position: center -50px; }
-.sbq_reg .sbq_reg_content { float: left; width: 100%; padding: 30px 0px; background: #fcfcfc; }
-/*------sbq_reg------*/
+.sbq_reg_nav { float: left; width: 100%; height: 50px; background: url(../image/sbq_reg_head_bg1.png) repeat-x; }
+.sbq_reg_nav li { float: left; height: 50px; margin: 0px 10px 0px 0px; border-radius: 5px 5px 0px 0px; background: url(../image/sbq_reg_head_bg2.png) repeat-x; }
+.sbq_reg_nav .active { background: url(../image/sbq_reg_head_bg.png) repeat-x; }
+.sbq_reg_nav a { float: left; width: 130px; height: 50px; padding: 0px 15px 0px 10px; background: url(../image/sbq_reg_ud.png) no-repeat; }
+.sbq_reg_nav .sbq_reg_u { background-position: center 0px; }
+.sbq_reg_nav .sbq_reg_d { background-position: center -50px; }
+.sbq_reg_nav .sbq_reg_l { background-position: center -100px; }
+.sbq_reg .sbq_reg_content { float: left; width: 100%; padding: 15px 0px; background: #fcfcfc; }
+/*------sbq_findpwd------*/
 .sbq_findpwd { width: 680px; margin: 0 auto; }
 .sbq_findpwd .sbq_findpwd_nav { float: left; width: 100%; height: 50px; background: url(../image/sbq_findpwd_bg.png) left no-repeat; }
 .sbq_findpwd .sbq_reg_content { float: left; width: 100%; padding: 30px 0px; background: #fcfcfc; }
 .sbq_findpwd .sbq_form_wrap .sbq_botton_01 .sbq_btn { float: left; width: auto; height: 36px; line-height: 36px; padding: 0px 10px; border: none; border-radius: 3px; background: #1575D5; color: #FFF; font-size: 14px; }
+.sbq_findpwd .sbq_form_wrap label { width: 160px; }
+.sbq_findpwd .sbq_form_01 .sbq_tips { width: 260px; }
+.sbq_findpwd .sbq_form_wrap .password-strength,
+.sbq_findpwd .sbq_form_wrap .password-confirm { width: 200px; margin: 0px 80px 0px 0px; }
 /*sbq_step*/
 .sbq_step { float: left; margin: 15px 0px 0px 0px; position: relative; left: 50%; }
-.sbq_step ul { float: left; height: 90px; list-style: none; position: relative; right: 50%; }
+.sbq_step ul { float: left; height: 80px; list-style: none; position: relative; right: 50%; }
 .sbq_step ul li { float: left; width: 220px; padding: 0px 0px 0px 0px; list-style: none; background: url(../image/sbq_step_bg.png); background-position: center 0px; }
 .sbq_step ul .done { background-position: center -30px; }
 .sbq_step ul .last { width: 15px; background: none; }

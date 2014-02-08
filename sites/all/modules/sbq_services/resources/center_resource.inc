@@ -441,9 +441,11 @@ function center_resource_definition() {
 
 function center($centerid) {
   global $user;
+  if (!$center = sbq_center_load($centerid)) {
+    return services_error('not found the center form ' . $centerid, '404');
+  }
 
-  $node = node_load($centerid);
-  $nodes = _center_formate($node, 'data');
+  $nodes = _center_formate($center, 'data');
   //咨询
 //  $question_query = new EntityFieldQuery();
 //  $result = $question_query->entityCondition('entity_type', 'node')
@@ -466,7 +468,7 @@ function center($centerid) {
       ->fields('pmi', array( 'mid' ))
       ->condition('is_new', 1)
       ->condition('recipient', $user->uid)
-      ->condition('thread_id', center_message_get_privatemsgid($centerid))
+      ->condition('thread_id', center_message_get_privatemsgid($center->uid))
       ->condition('deleted', 0)
       ->execute()
       ->rowCount();
@@ -704,6 +706,7 @@ function center_question_edu_query($centerid, $fun = NULL, $page, $fields, $para
     $art['title'] = $value->node_title;
     $art['nid'] = (int) $value->nid;
     $art['body'] = $node->body['und'][0]['value'];
+    $art['image'] = file_create_url($node->field_image['und'][0]['uri']);
     $article[] = $art;
   }
   return array( 'video' => $video, 'article' => $article );

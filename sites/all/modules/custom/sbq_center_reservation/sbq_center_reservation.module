@@ -91,6 +91,7 @@ function sbq_center_reservation_access($center, $reservation = NULL, $type = NUL
   if (!$account) {
     $account = $user;
   }
+
   if (!og_user_access('node', $center->nid, $type, $account)) {
     return FALSE;
   }
@@ -125,7 +126,9 @@ function sbq_center_reservation_setopenday($centerid, $opendays) {
 
 function sbq_center_reservation_get_settings($center) {
   static $center_reservation_opendays = array();
-  $center = sbq_center_load($center);
+  if (!is_object($center)) {
+    $center = sbq_center_load($center);
+  }
 
   if (!$vari = variable_get('center_reservation_' . $center->nid . '_settings')) {
     return array();
@@ -136,13 +139,22 @@ function sbq_center_reservation_get_settings($center) {
 
 function sbq_center_reservation_theme_registry_alter(&$theme_registry) {
   if (arg(2) == 'reservation') {
-    $theme_registry['calendar_month_col']['path'] = drupal_get_path('module', 'sbq_center_reservation');
+    $module_path = drupal_get_path('module', 'sbq_center_reservation');
+    $theme_registry['calendar_month_col']['path'] = $module_path;
     $theme_registry['calendar_month_col']['template'] = '/templates/' . $theme_registry['calendar_month_col']['template'];
     $theme_registry['calendar_month_col']['preprocess functions'][] = 'template_preprocess_sbq_center_reservation_month_col';
 
-    $theme_registry['calendar_item']['path'] = drupal_get_path('module', 'sbq_center_reservation');
+    $theme_registry['calendar_item']['path'] = $module_path;
     $theme_registry['calendar_item']['template'] = '/templates/' . $theme_registry['calendar_item']['template'];
     $theme_registry['calendar_item']['preprocess functions'][] = 'template_preprocess_sbq_center_reservation_item';
+
+    $theme_registry['calendar_month_row']['path'] = $module_path;
+    $theme_registry['calendar_month_row']['template'] = '/templates/' . $theme_registry['calendar_month_row']['template'];
+    $theme_registry['calendar_month_row']['preprocess functions'][] = 'template_preprocess_sbq_center_reservation_month_row';
+    
+    $theme_registry['calendar_month']['path'] = $module_path;
+    $theme_registry['calendar_month']['template'] = '/templates/' . $theme_registry['calendar_month']['template'];
+ //  $theme_registry['calendar_month']['preprocess functions'][] = 'template_preprocess_sbq_center_reservation_month_row';
   }
 }
 
@@ -151,13 +163,27 @@ function sbq_center_reservation_theme_registry_alter(&$theme_registry) {
  * @param type $vars
  */
 function template_preprocess_sbq_center_reservation_item(&$vars) {
-  if (isset($vars['rendered_fields'])) {
-    $vars['rendered_fields'] = array();
-  }
+// unset($vars);
+//  unset($vars['item']);
+//  $vars['item'] = NULL;
+//  if (isset($vars['rendered_fields'])) {
+//    $vars['rendered_fields'] = array();
+//  }
 }
 
 function template_preprocess_sbq_center_reservation_month_col(&$vars) {
-  // dpm($vars);
+
+  if ($vars['item']['class'] == 'date-box future') {
+
+  $item = $vars['item']['date'];
+  $datetime = new DateTime($item);
+  $day = date('d', $datetime->getTimestamp());
+  $vars['item']['entry'] = $day;
+  }
+}
+
+function template_preprocess_sbq_center_reservation_month_row(&$vars) {
+
 }
 
 /**
@@ -166,7 +192,7 @@ function template_preprocess_sbq_center_reservation_month_col(&$vars) {
  * @param type $center
  * @return boolean
  */
-function sbq_center_reservation_can_reservation($date, $center = '', $display=FALSE) {
+function sbq_center_reservation_can_reservation($date, $center = '', $display = FALSE) {
   if (!$center) {
     $center = arg(1);
   }
@@ -196,17 +222,17 @@ function sbq_center_reservation_can_reservation($date, $center = '', $display=FA
 
   $reservation = $settings['opendays'][$week[$week_index]];
 
-  if ( isset($reservation['a']) && $reservation['a']) {
+  if (isset($reservation['a']) && $reservation['a']) {
     if ($time > 9 && $time < 12) {
       return true;
     }
   }
-  if ( isset($reservation['p']) && $reservation['p']) {
+  if (isset($reservation['p']) && $reservation['p']) {
     if ($time > 13 && $time < 18) {
       return true;
     }
   }
-  if($display){
+  if ($display) {
     return isset($reservation['a']) && $reservation['a'] || isset($reservation['p']) && $reservation['p'];
   }
   return FALSE;
@@ -217,7 +243,7 @@ function sbq_center_reservation_can_reservation($date, $center = '', $display=FA
  */
 
 function sbq_center_reservation_form_alter(&$form, $form_states, $form_id) {
-  if ( $form_id == 'sbq_center_reservation_node_form' && isset($form['#bundle']) && $form['#bundle'] == SBQ_CENTER_RESERVATION_NODE_TYPE ) {
+  if ($form_id == 'sbq_center_reservation_node_form' && isset($form['#bundle']) && $form['#bundle'] == SBQ_CENTER_RESERVATION_NODE_TYPE) {
     $form['#validate'][] = 'sbq_center_reservation_form_validate';
   }
 }
@@ -227,7 +253,7 @@ function sbq_center_reservation_form_alter(&$form, $form_states, $form_id) {
  */
 
 function sbq_center_reservation_form_validate($form, &$form_states) {
-  // file_put_contents('/home/chechao/1.log', $form_states['values']['field_node_ref']['und'][0]['target_id']);
+// file_put_contents('/home/chechao/1.log', $form_states['values']['field_node_ref']['und'][0]['target_id']);
   $c = sbq_center_reservation_can_reservation($form_states['values']['field_reservation_time']['und'][0]['value'], $form_states['values']['og_group_ref']['und'][0]['target_id']);
 
   if (!$c) {
@@ -257,7 +283,7 @@ function sbq_center_reservation_fetch_by_center($centerid) {
 }
 
 function sbq_center_reservation_node_submit($node, $form, $form_state) {
-
+  
 }
 
 /**
@@ -300,7 +326,7 @@ function sbq_center_reservation_get_manage_item($row) {
       $ignore = l('删除', "center/{$centerid}/reservation/{$row->nid}/ignore");
       break;
     case SBQ_CENTER_RESERVATION_STATUS_ACCEPT:
-      // $accept = l('接受', "center/{$centerid}/reservation/{$row->nid}/accept");
+// $accept = l('接受', "center/{$centerid}/reservation/{$row->nid}/accept");
       $accept = '';
       $ignore = l('删除', "center/{$centerid}/reservation/{$row->nid}/ignore");
       break;
@@ -316,14 +342,27 @@ function sbq_center_reservation_reservation_status_alter($reservation) {
   if ($reservation->field_reservation_status['und'][0]['value'] == SBQ_CENTER_RESERVATION_STATUS_ACCEPT) {
     global $user;
     $date = new DateTime($reservation->field_reservation_time['und'][0]['value']);
+    $center = node_load($reservation->og_group_ref['und'][0]['target_id']);
     $message = message_create('sbq_center_reservation_accept', array(
-        'arguments' => array( '!time' => date('Y-m-d', $date->getTimestamp()) )
+        'arguments' => array(
+            '!time' => date('Y-m-d', $date->getTimestamp()),
+            '!centername' => $center->title,
+            '!center_reservation_id' => $reservation->nid,
+        )
         ), user_load($reservation->uid));
-
     $warpper = entity_metadata_wrapper('message', $message);
-
-    $warpper->field_node_ref->set(node_load($reservation->og_group_ref['und'][0]['target_id']));
+    $warpper->field_node_ref->set($center);
     $warpper->field_center_reservation_send->set($user->uid);
     $warpper->save();
   }
+}
+
+function sbq_center_reservation_theme() {
+  $items = array(
+      'sbq_center_reservation_settings' => array(
+          'template' => 'templates/center--reservation--settings',
+          'variables' => array()
+      ),
+  );
+  return $items;
 }

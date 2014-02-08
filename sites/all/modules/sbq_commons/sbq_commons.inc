@@ -350,6 +350,7 @@ function sbq_commons_modal_html($data, $id = 'sbq_modal', $title = '') {
  * @see captcha_form_alter
  */
 function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_times = 3, $mintue = 10) {
+/*
 
  if (!module_exists('captcha')) {
     return;
@@ -384,7 +385,19 @@ function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_time
   } elseif (count($result) == $fail_times && ((time() - $result[2]->timestamp)/60) < $mintue) {
     return;
   }
+=======
+>>>>>>> 25c226a5413d33719091be2b60ac3b8e403dc5da */
 
+//  if (!module_exists('captcha')) {
+//    return;
+//  }
+//  $url = explode('/', $_GET['q']);
+//  if (isset($url[0]) && $url[0] == 'api') {
+//    if (isset($form['captcha'])) {
+//      unset($form['captcha']);
+//    }
+//    return;
+//  }
 }
 
 /**
@@ -506,9 +519,9 @@ function _sbq_commons_block_html($delta) {
   global $user;
   switch ($delta) {
     case 'sbq_user_profile':
-      $arg1=0;
-      $arg1=arg(1);
-      if (arg(0)=='user' && ($arg1>0 && $arg1!=$user->uid)) {
+      $arg1 = 0;
+      $arg1 = arg(1);
+      if (arg(0) == 'user' && ($arg1 > 0 && $arg1 != $user->uid)) {
         $account = user_load($arg1);
       } else {
         $account = $user;
@@ -539,7 +552,7 @@ function _sbq_commons_block_html($delta) {
 EOF;
       break;
     case 'sbq_quick_ask':
-      if ($user->uid && arg(1)==$user->uid) {
+      if ($user->uid && arg(1) == $user->uid) {
         module_load_include('inc', 'node', 'node.pages');
         $node = (object) array(
                 'uid' => $user->uid,
@@ -669,7 +682,7 @@ function _sbq_commons_user_recommonds_friends_ids($roles, $num = 2, $account = n
       "where requester_id = {$account->uid}) " .
       "and u.uid not in( select requester_id from user_relationships where requestee_id = {$account->uid}) " .
       "and u.uid <> {$account->uid} " .
-      "and u.uid in ( select uid from users_roles where rid = {$roles}) order by uid ASC limit 0,{$num} ");
+      "and u.uid in ( select uid from users_roles where rid = {$roles}) order by uid DESC limit 0,{$num} ");
 
   $result = $query_user->fetchAllAssoc('uid');
 

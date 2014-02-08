@@ -15,15 +15,14 @@ function center_message_alter($centerid, $fun, $data) {
     if (is_numeric($fun)) {
       $data['nid'] = $fun;
     } else {
-      return call_user_func('center_question_' . $fun, $centerid, $data);
+      //return call_user_func('center_question_' . $fun, $centerid, $data);
     }
   }
   if (!$center = sbq_center_load($centerid)) {
     return services_error('not found the center form ' . $centerid, '404');
   }
-  return center_message_get_privatemsgid($centerid);
-  
-  if ($mid = center_message_get_privatemsgid($centerid)) {
+
+  if ($mid = center_message_get_privatemsgid($centerid->uid)) {
     $result = privatemsg_reply($mid, $data['body'], array( 'author' => $user ));
   } else {
     $recipients = user_load($center->uid);
@@ -51,7 +50,10 @@ function center_message_alter($centerid, $fun, $data) {
  * @param type $pagesize
  */
 function center_message_query($centerid, $fun = NULL, $page, $fields, $parameters, $pagesize) {
-  if (!$centermid = center_message_get_privatemsgid($centerid)) {
+  if (!$center = sbq_center_load($centerid)) {
+    return services_error('not found the center form ' . $centerid, '404');
+  }
+  if (!$centermid = center_message_get_privatemsgid($center->uid)) {
     return array();
   }
 
@@ -73,7 +75,7 @@ function center_message_query($centerid, $fun = NULL, $page, $fields, $parameter
     $message[] = array(
         'mid' => $value->mid,
         'body' => $value->body,
-        'timestamp' => date('Y-m-d H:i:s', $value->timestamp) ,
+        'timestamp' => $value->timestamp,
         'is_new' => $value->is_new,
         'author' => $user_img[$value->author->uid],
         // 'recipients' => $user_img[$value->user->uid]
@@ -94,19 +96,15 @@ function center_message_query($centerid, $fun = NULL, $page, $fields, $parameter
  * @param type $centerid 
  * @param type $user
  */
-function center_message_get_privatemsgid($centerid, $account = NULL) {
+function center_message_get_privatemsgid($center_user_id, $account = NULL) {
   if (!$account) {
     global $user;
     $account = $user;
   }
-
-  $result = db_select('pm_message', 'pm')
-      ->fields('pm', array( 'mid' ))
-      ->condition('subject', 'center|' . $centerid . '|' . $account->uid)
-      ->orderBy('timestamp', 'ASC')
-      ->range(0, 1)
-      ->execute()
-      ->fetchCol();
-
-  return reset($result);
+  $query = 'select r.mid from pm_index r '
+      . 'inner join pm_index p on r.thread_id = p.thread_id '
+      . 'where p.recipient = :user_id and r.recipient =  :center_user_id '
+      . 'order by mid asc limit 1';
+  $mids = db_query($query, array( ':user_id' => $account->uid, ':center_user_id' => $center_user_id ))->fetchCol('r.mid');
+  return reset($mids);
 }

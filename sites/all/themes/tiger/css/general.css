@@ -36,7 +36,16 @@ input,
 .form-item-pass,
 .confirmation,
 .sbq_step,
-.sbq_findpwd .sbq_text { font-family: "Microsoft Yahei", "微软雅黑", "Arial" !important; }
+.sbq_findpwd .sbq_text,
+.sbq_event_btn { font-family: "Microsoft Yahei", "微软雅黑", "Arial" !important; }
+/*-----sbq_messages-----*/
+.sbq_messages .messages { clear: both; padding: 8px 5px 8px 28px; line-height: 20px; margin: 5px 0px; font-size: 12px; color: #666; }
+.sbq_messages .messages a { color: #3366CC; margin: 0px 1px; }
+.sbq_messages .messages a:hover { text-decoration: underline; }
+.sbq_messages .element-invisible { display: none; }
+.sbq_messages .status { border: 1px #009900 solid; background: url(../image/sbq_msg_info.png) #F8FFF0 no-repeat 6px 10px; }
+.sbq_messages .error { border: 1px #E6393D solid; background: url(../image/sbq_msg_error.png) #FEF5F1 no-repeat 6px 10px; }
+.sbq_messages .warning { border: 1px #fab418 solid; background: url(../image/sbq_msg_warning.png) #ffe9ad no-repeat 6px 10px; }
 /*------header------*/
 .header { float: left; width: 100%; }
 .header .header_inner { width: 960px; height: 60px; margin: 0 auto; padding: 0px 0px 10px 0px; overflow: hidden; border-bottom: 1px #E5E5E5 solid; }
@@ -124,6 +133,14 @@ input,
 .sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_follow { float: left; width: auto; }
 .sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_follow a { float: left; height: 20px; line-height: 20px; padding: 0px 0px 0px 17px; color: #999999; background: url(../image/sbq_reply_actions_icon.png) no-repeat; background-position: left -44px; }
 .sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_follow a:hover { color: #698EBF; text-decoration: underline; background-position: left -66px; }
+/*sbq_winner_list*/
+.sidebar_second .sbq_winner_list { float: left; width: 100%; padding: 15px 0px 10px 0px; border-top: 1px solid #EEEEEE; }
+.sidebar_second .sbq_winner_list .sbq_head { float: left; width: 100%; height: 24px; line-height: 24px; margin: 0px 0px 6px 0px; overflow: hidden; font-size: 14px; font-weight: bold; }
+.sidebar_second .sbq_winner_list ul { float: left; width: 100%; }
+.sidebar_second .sbq_winner_list ul li { float: left; width: 100%; line-height: 22px; padding: 4px 0px; border-bottom: 1px #EEE dotted; }
+.sidebar_second .sbq_winner_list ul li a { color: #225599; }
+.sidebar_second .sbq_winner_list ul li a:hover { text-decoration: underline; }
+.sidebar_second .sbq_winner_list ul li span { float: right; color: #999; margin: 0px 0px 0px 5px; display: inline-block; }
 /*sbq_user_badge*/
 .sidebar_second .sbq_badge { float: left; width: 100%; padding: 0px 0px 15px 0px; }
 .sidebar_second .sbq_badge .sbq_head { float: left; width: 100%; height: 24px; line-height: 24px; margin: 0px 0px 5px 0px; overflow: hidden; font-size: 14px; font-weight: bold; }

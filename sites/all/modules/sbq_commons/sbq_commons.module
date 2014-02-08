@@ -12,10 +12,10 @@ define('FRIEND_DOCTOR_PATIENT', 3);
 
 //rid
 define('USER_ADMINSTRATOR_RID', 3);
-define('USER_DOCTOR_RID', 4);
+define('USER_DOCTOR_RID', 7);
 define('USER_PATIENT_RID', 5);
 define('USER_EDITOR_RID', 6);
-define('USER_CERTIFIED_DOCTOR_RID', 7);
+define('USER_CERTIFIED_DOCTOR_RID', 4);
 
 function sbq_commons_menu() {
   module_load_all_includes('module', 'user_relationships_ui');
@@ -120,8 +120,24 @@ function sbq_commons_menu() {
  * Implements hook_form_alter().
  */
 function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
-
-// watchdog('sbq_commons', $form_id, array(), WATCHDOG_NOTICE, 'link');
+  
+  if($form_id == 'privatemsg_list') {
+    global $user;
+    if(!in_array('center administrator', $user->roles)) return;
+     $form['updated']['list']['#header']['email'] = 'Email';
+     $form['updated']['list']['#header']['last_message'] = '最后消息';
+     foreach ($form['updated']['list']['#options'] as $key => $value) {
+      $privatemsg = privatemsg_thread_load($key);
+      $mail = '';
+      $last_message = '';
+      $thread = privatemsg_thread_load($privatemsg['thread_id']);
+      $last_message = end($thread['messages'])->body;
+      $form['updated']['list']['#options'][$key]['last_message'] = l($last_message,'messages/view/'.$privatemsg['thread_id']);
+      if(isset($value['participants']))
+      $mail = $privatemsg['participants'][$value['participants']]->mail;
+      $form['updated']['list']['#options'][$key]['email'] = l($mail,'user/'.$privatemsg['participants'][$value['participants']]->uid);
+     }
+  }
   if (isset($form['comment_body'])) {
     $form['comment_body'][LANGUAGE_NONE][0]['#title'] = t('Comment');
   }
@@ -243,8 +259,9 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
           '#weight' => 99.9
       );
       break;
-    case 'user_login_block':
+    case 'user_login':
       //@see template.php in zen_sbq
+      $form['remember_me']['#weight'] = $form['captcha']['#weight'] +1;
       break;
     case 'general_group_node_form':
     case 'doctor_group_node_form':
@@ -311,8 +328,10 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
   }
   module_load_include('inc', 'sbq_commons', 'sbq_commons');
   // 验证码判断
+
   _sbq_commons_captcha_display($form, $form_alter, $form_id);
 }
+
 
 function sbq_commons_get_rid_by_name($name) {
   $rate_widget_id = FALSE;
@@ -377,6 +396,8 @@ function sbq_commons_init() {
       drupal_add_js(drupal_get_path('module', 'sbq_commons') . '/js/topic-page.js');
     }
   }
+  //dale add ckfinder.js
+  drupal_add_js('sites/all/libraries/ckfinder/ckfinder.js');
 }
 
 /**
@@ -762,7 +783,8 @@ function sbq_commons_node_submit(&$node, &$form, &$form_state) {
   // for question node title
   if ($node->type == 'question') {
     $max_length = 29;
-    $subject = trim(truncate_utf8(decode_entities(strip_tags(check_markup($node->body['und'][0]['value']))), $max_length, TRUE));
+    // $subject = trim(truncate_utf8(decode_entities(strip_tags(check_markup($node->body['und'][0]['value']))), $max_length, TRUE));
+    $subject =strip_tags(trim(truncate_utf8(decode_entities(check_markup($node->body['und'][0]['value'])), $max_length, TRUE)));
     $node->title = $subject;
   }
 }
@@ -1390,8 +1412,18 @@ function sbq_commons_user_avart($account = null, $style_name = "sc80") {
 
 //hook_user_login()
 function sbq_commons_user_login($edit, $account) {
-//  $m = drupal_get_messages();
-//  dpm($m);
+  
+  // Your logic will set $redirection to the desired location
+  $redirection = 'user/followers/qa';
+  
+
+// Unless there is already a redirection going, or the user is trying to reset his password, we redirect to $redirection.
+  if (empty($_GET['destination'])
+    && !is_null($redirection)
+    && (!isset($_POST['form_id']) || $_POST['form_id'] != 'user_pass_reset'))
+  {
+    $_GET['destination'] = $redirection; // Should we use $edit['redirect'] instead..?
+  }
 }
 
 /**
@@ -1420,6 +1452,29 @@ function sbq_commons_messages_count($account = NULL) {
 }
 
 /**
+ *
+ * @param $node_type : content type name
+ * @return int
+ */
+function sbq_commons_term_node_count($tid, $node_type = NULL) {
+  $rtn = 0;
+  if ($tid) {
+    $query = db_select('taxonomy_term_data', 'td');
+    $query->join('field_data_field_tags', 'tags', 'tags.field_tags_tid = td.tid');
+    $query->join('node', 'n', 'tags.entity_id = n.nid');
+    $query->fields('td',array('tid'));
+    $query->condition('td.tid', $tid,'=');
+
+    if ($node_type) {
+      $query->condition('n.type', $node_type,'=');
+    }
+    $result = $query->execute();
+    $rtn = $result->rowCount();
+  }
+  return $rtn;
+}
+
+/**
  * Implements hook_node_view().
  */
 function sbq_commons_node_view($node, $view_mode, $langcode) {
@@ -1439,7 +1494,7 @@ function sbq_commons_node_view($node, $view_mode, $langcode) {
     // appended to other nodes shown on the page, for example a node_reference
     // displayed in 'full' view mode within another node.
     if ($view_mode == 'full' && node_is_page($node) && empty($node->in_preview)) {
-      
+
       $n_nid = prev_next_nid($node->nid, 'prev');
       $link_text = '上一篇';
       if($n_nid == 0) {
@@ -1452,7 +1507,7 @@ function sbq_commons_node_view($node, $view_mode, $langcode) {
       $links['previous'] = array(
             'title' => $link_text,
             'href' => "node/$n_nid",
-            'attributes' => array('title' => t('Previous page.')),            
+            'attributes' => array('title' => t('Previous page.')),
           );
       $n_nid = prev_next_nid($node->nid, 'next');
 
@@ -1464,7 +1519,7 @@ function sbq_commons_node_view($node, $view_mode, $langcode) {
         $n_node = node_load($n_nid);
         $link_text = $link_text.': '.$n_node->title;
       }
-      
+
       $links['next'] = array(
             'title' => $link_text,
             'href' => "node/$n_nid",

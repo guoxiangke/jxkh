@@ -42,6 +42,18 @@
 <?php unset($user_profile['privatemsg_send_new_message']); ?>
 <?php unset($user_profile['user_relationships_ui']); ?>
 <?php unset($user_profile['userpoints']); ?>
+<?php
+  global $user;
+  $uid = arg(1);
+?>
+<div class="sbq_nav">
+  <ul>
+    <li class="active"><?php print l('资料', 'user/'.$uid); ?></li>
+    <?php if ($user->uid == $uid):?>
+    <li><?php print l('编辑', 'user/'.$uid.'/edit'); ?></li>
+    <?php endif;?>
+  </ul>
+</div>
 <div class="sbq_user_date">
   <?php print render($user_profile); ?>
 </div>

@@ -240,6 +240,10 @@ class OgBehaviorHandler extends EntityReference_BehaviorHandler_Abstract {
    * @see entityreference_field_validate().
    */
   public function validate($entity_type, $entity, $field, $instance, $langcode, $items, &$errors) {
+        // We only need to validate if the widget is the og_complex widget.
+    if ($instance['widget']['type'] != 'og_complex') {
+      return;
+    }
     $new_errors = array();
     $values = array('default' => array(), 'admin' => array());
     foreach ($items as $item) {

@@ -6,9 +6,10 @@
  * and open the template in the editor.
  */
 
-function sbq_user_relationships_follow_view($display, $account) {
+function sbq_user_relationships_follow_view($display, $account = NULL) {
   global $user;
   $accounts = $accounts_view = array();
+  if(!$account) $account = $user;
   switch ($display) {
     case 'default':
       if (in_array(USER_PATIENT_RID, array_keys($account->roles))) {
@@ -87,6 +88,7 @@ function sbq_user_relationship_pending_page($type, $account = NULL) {
     $options = array(
         'include_user_info' => TRUE,
         'paging' => variable_get('user_relationships_relationships_per_page', 20),
+        'order' => array('created', 'DESC'),
     );
     $relationships = user_relationships_load(array( 'requester_id' => $account->uid, 'approved' => FALSE ), $options);
 
@@ -96,6 +98,7 @@ function sbq_user_relationship_pending_page($type, $account = NULL) {
     $options = array(
         'include_user_info' => TRUE,
         'paging' => variable_get('user_relationships_relationships_per_page', 20),
+        'order' => array('created', 'DESC'),
     );
     $relationships = user_relationships_load(array( 'requestee_id' => $account->uid, 'approved' => FALSE ), $options);
 

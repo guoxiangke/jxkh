@@ -1,8 +1,10 @@
 body { background: url(../image/bg.jpg) center top no-repeat fixed; }
 .body { float: left; width: 100%; margin-top: 60px; padding: 0px; }
-.body .main { width: 1070px; padding: 0px 100px; margin: 0 auto; }
+.body .main { width: 1270px; margin: 0 auto; position: relative; }
+.sbq_messages { width: 1050px; margin: 0 auto; }
+.sbq_messages .messages { margin: 0px; }
 /*sbq_home_menu*/
-.sbq_home_menu { float: left; width: 100%; }
+.sbq_home_menu { float: left; width: 1070px; }
 .sbq_home_menu a { color: #FFF; }
 .sbq_home_menu ul { float: left; padding: 5px; }
 .sbq_home_menu .sbq_patient { float: left; width: 520px; }
@@ -54,6 +56,7 @@ body { background: url(../image/bg.jpg) center top no-repeat fixed; }
 .sbq_home_menu ul .pic .sbq_img img { width: 250px; height: 120px; }
 .sbq_home_menu ul .pic .sbq_title { float: left; width: 240px; height: 30px; line-height: 30px; margin: 0px; padding: 0px 5px; position: absolute; bottom: 0px; left: 0px; font-weight: bold; background: url(../image/bg_01.png); font-size: 16px; word-break: break-all; word-wrap: break-word; }
 .sbq_home_menu ul .pic .sbq_text { display: none; }
+.sbq_home_menu .sbq_focus .sbq_img { background: none; }
 /*header*/
 .header { float: left; width: 100%; height: 60px; overflow: hidden; }
 .header .header_inner { width: 1070px; padding: 0px 100px; margin: 0 auto; }
@@ -66,8 +69,8 @@ body { background: url(../image/bg.jpg) center top no-repeat fixed; }
 .header .sbq_user_links a { padding: 0px 5px; }
 .header .sbq_header_login .sbq_user_pic { float: left; width: 24px; height: 24px; }
 .header .sbq_header_login .sbq_user_pic img { float: left; width: 24px; height: 24px; }
-.sbq_qr_code { float: left; width: 100%; position: absolute; top: 130px; left: 0; }
-.sbq_qr_code .sbq_qr_code_inner { width: 1270px; margin: 0 auto; }
+.sbq_qr_code { float: left; width: 100px; margin: 10px 0px 0px 0px; }
+.sbq_qr_code .sbq_qr_code_inner { width: 100px; }
 .sbq_qr_code img { float: left; width: 100px; overflow: hidden; }
 /*footer*/
 .footer { float: left; width: 100%; overflow: hidden; text-shadow: 1px 1px 1px #666666; }

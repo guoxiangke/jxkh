@@ -90,8 +90,8 @@ function _center_reservation_format($data, $type = 'node', $is_list = FALSE) {
       $node['og_group_ref']['und'][0]['target_id'] = $value['centerid'];
       //pop-up
       $node['field_reservation_time']['und'][0]['value']['date'] = date('Y-m-d', $value['reservation_time']);
-     // $node['field_reservation_time']['und'][0]['value']['time'] = date('H:i', $value['reservation_time']);
-       $node['field_reservation_time']['und'][0]['value']['time'] = '11:00';
+      // $node['field_reservation_time']['und'][0]['value']['time'] = date('H:i', $value['reservation_time']);
+      $node['field_reservation_time']['und'][0]['value']['time'] = '11:00';
       // $node['field_reservation_time']['und'][0]['value']['date'] = date('Y-m-d', $value['reservation_time']);
     } else {
       $node['nid'] = (int) $value['nid'];
@@ -135,8 +135,11 @@ function center_reservation_message($centerid, $userid) {
   }
   $mesage = array();
   foreach (message_load_multiple(array_keys($result['message'])) as $key => $value) {
-    $m = $value->buildContent();
-    $message[] = strip_tags($m['message__message_text__0']['#markup']);
+    $m = (array) $value->buildContent();
+    $text = strip_tags($m['message__message_text__0']['#markup']);
+    $key = $value->arguments['!center_reservation_id'];
+    //$key = $m['field_center_reservation_send']['#object']->field_node_ref['und'][0]['target_id'];
+    $message[] = array( 'nid' => $key, 'text' => $text );
   }
   variable_set('reservation_last_watch_' . $userid . '_' . $centerid, time());
   return $message;
@@ -155,20 +158,28 @@ function center_reservation_message($centerid, $userid) {
 function center_reservation_fetch($centerid, $uid, $page, $fields, $parameters, $pagesize) {
   $month = $parameters['month'];
   if (is_null($month)) {
-    $month = date('m');
+    $month = array( date('m') );
   }
+  $cur_month = date('m');
   $year = date('Y');
   $now_day = date('d');
-  $days = cal_days_in_month(CAL_GREGORIAN, $month, $year);
-  for ($i = $now_day; $i <= $days; $i++) {
-    $date = "$year-$month-$i";
-    if (sbq_center_reservation_can_reservation($date, $centerid, TRUE)) {
-      $date = new DateTime($date);
-      $data[] = array(
-          $date->getTimestamp() => array(
-              'a'=>TRUE, 'p'=>TRUE
-          )
-      ); 
+  foreach ($month as $key => $value) {
+    $start = 1;
+    if ((int) $cur_month === (int) $value) {
+      $start = $now_day;
+    }
+    $days = cal_days_in_month(CAL_GREGORIAN, $value, $year);
+    for ($i = $start; $i <= $days; $i++) {
+      $date = "$year-$value-$i";
+      //  return $date;
+      $dateTime = new DateTime($date);
+      if (sbq_center_reservation_can_reservation($date, $centerid, TRUE)) {
+        $data[] = array(
+            $dateTime->getTimestamp() => array(
+                'a' => TRUE, 'p' => TRUE
+            )
+        );
+      }
     }
   }
   return isset($data) ? $data : array();

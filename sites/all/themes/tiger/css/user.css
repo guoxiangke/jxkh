@@ -21,8 +21,11 @@
 .sbq_user_info .sbq_user_follower ul { float: right; margin: 5px 0px 0px 0px; padding: 5px 0px; }
 .sbq_user_info .sbq_user_follower li { float: left; max-width: 80px; padding: 0px 5px; overflow: hidden; text-align: center; }
 .sbq_user_info .sbq_user_follower li + li { border-left: 1px solid #E5E5E5; }
-.sbq_user_info .sbq_user_follower li strong { float: left; width: 80px; height: 26px; line-height: 26px; color: #225599; font-size: 16px; overflow: hidden; font-family: Arial; }
+.sbq_user_info .sbq_user_follower li strong { float: left; width: 80px; height: 26px; line-height: 26px; font-size: 16px; overflow: hidden; font-family: Arial; }
 .sbq_user_info .sbq_user_follower li span { float: left; width: 80px; height: 20px; line-height: 20px; font-size: 12px; overflow: hidden; font-family: Arial; }
+.sbq_user_info .sbq_user_follower li a span { color: #333; }
+.sbq_user_info .sbq_user_follower a { color: #225599; }
+.sbq_user_info .sbq_user_follower a:hover { text-decoration: underline; }
 /*sbq_user_menu*/
 .sbq_user_menu { float: left; width: 100%; margin: 0px 0px 20px 0px; background: #F3F3F3; position: relative; z-index: 999; }
 .sbq_user_menu ul { float: left; width: 100%; height: 49px; border-bottom: 1px #E5E5E5 solid; }
@@ -142,10 +145,10 @@
 .sbq_form_wrap .sbq_form_01 label { float: left; width: 110px; height: 36px; line-height: 36px; margin: 0px 10px 0px 0px; text-align: right; overflow: hidden; }
 .sbq_form_wrap .sbq_form_01 .sbq_text { float: left; width: 550px; line-height: 22px; padding: 7px 0px; word-break: break-all; word-wrap: break-word; }
 /*sbq_tips*/
-.sbq_form_01 .sbq_tips { clear: both; width: 340px; line-height: 20px; margin: 0px 0px 0px 10px; font-size: 12px; display: inline-block; }
-.sbq_form_01 .sbq_tips_error { float: left; padding: 5px; border: 1px #E6393D solid; background: #FEF5F1; color: #E6393D; }
-.sbq_form_01 .sbq_tips_pass { float: left; padding: 5px; border: 1px #009900 solid; background: #F8FFF0; color: #009900; }
-.sbq_form_01 .sbq_tips_text { float: left; padding: 6px; color: #666; }
+.sbq_form_01 .sbq_tips { clear: both; width: 300px; line-height: 24px; margin: 0px 0px 0px 10px; font-size: 12px; display: inline-block; }
+.sbq_form_01 .sbq_tips_error { float: left; height: 24px; padding: 5px; border: 1px #E6393D solid; background: #FEF5F1; color: #E6393D; overflow: hidden; }
+.sbq_form_01 .sbq_tips_pass { float: left; height: 24px; padding: 5px; border: 1px #009900 solid; background: #F8FFF0; color: #009900; overflow: hidden; }
+.sbq_form_01 .sbq_tips_text { float: left; height: 24px; padding: 6px; color: #666; overflow: hidden; }
 /*.sbq_form_01 label,
 .sbq_botton_01 label,
 .field-type-datetime legend,
@@ -234,6 +237,9 @@
 .sbq_article_content u { text-decoration: underline; }
 .sbq_article_content em { font-style: italic; }
 .sbq_article_content blockquote { margin: 0.8em 0px; padding: 0px 0px 0px 10px; border-left: 3px solid #D0E5F2; vertical-align: baseline; display: block; font-size: 12px; }
+.sbq_article_content .field-name-field-tags { float: left; width: 100%; height: 26px; line-height: 26px; padding: 10px 0px; overflow: hidden; }
+.sbq_article_content .field-name-field-tags .field-label { float: left; font-weight: bold; color: #225599; }
+.sbq_article_content .field-name-field-tags .field-item { float: left; margin: 0px 5px 0px 0px; }
 /*sbq_user_badge*/
 .sbq_user_badge { float: left; width: 100%; }
 .sbq_user_badge .sbq_con { float: left; width: 690px; }
@@ -242,26 +248,3 @@
 .sbq_user_badge .sbq_con .sbq_content { float: left; width: 245px; margin: 0px 0px 0px 10px; }
 .sbq_user_badge .sbq_con .sbq_title { float: left; width: 100%; height: 20px; line-height: 20px; font-size: 14px; font-weight: bold; }
 .sbq_user_badge .sbq_con .sbq_text { float: left; width: 100%; height: 40px; line-height: 20px; margin: 0px 0px 0px 0px; overflow: hidden; }
-x; line-height: 20px; font-size: 14px; font-weight: bold; }
-.sbq_user_badge .sbq_con .sbq_text { float: left; width: 100%; height: 40px; line-height: 20px; margin: 0px 0px 0px 0px; overflow: hidden; }
- left; width: 100%; height: 20px; line-height: 20px; font-size: 14px; font-weight: bold; }
-.sbq_user_badge .sbq_con .sbq_text { float: left; width: 100%; height: 40px; line-height: 20px; margin: 0px 0px 0px 0px; overflow: hidden; }
-idth: 80px; height: 80px; }
-.sbq_user_badge .sbq_con .sbq_content { float: left; width: 245px; margin: 0px 0px 0px 10px; }
-.sbq_user_badge .sbq_con .sbq_title { float: left; width: 100%; height: 20px; line-height: 20px; font-size: 14px; font-weight: bold; }
-.sbq_user_badge .sbq_con .sbq_text { float: left; width: 100%; height: 40px; line-height: 20px; margin: 0px 0px 0px 0px; overflow: hidden; }
-e .sbq_con { float: left; width: 690px; }
-.sbq_user_badge .sbq_con .sbq_item { float: left; width: 335px; padding: 10px 0px; margin: 0px 10px 0px 0px; border-bottom: 1px #DDD dotted; }
-.sbq_user_badge .sbq_con .sbq_item .sbq_icon { float: left; width: 80px; height: 80px; }
-.sbq_user_badge .sbq_con .sbq_content { float: left; width: 245px; margin: 0px 0px 0px 10px; }
-.sbq_user_badge .sbq_con .sbq_title { float: left; width: 100%; height: 20px; line-height: 20px; font-size: 14px; font-weight: bold; }
-.sbq_user_badge .sbq_con .sbq_text { float: left; width: 100%; height: 40px; line-height: 20px; margin: 0px 0px 0px 0px; overflow: hidden; }
- { float: left; width: 100%; height: 40px; line-height: 20px; margin: 0px 0px 0px 0px; overflow: hidden; }
-margin: 0px 0px 0px 10px; }
-.sbq_user_badge .sbq_con .sbq_title { float: left; width: 100%; height: 20px; line-height: 20px; font-size: 14px; font-weight: bold; }
-.sbq_user_badge .sbq_con .sbq_text { float: left; width: 100%; height: 40px; line-height: 20px; margin: 0px 0px 0px 0px; overflow: hidden; }
-px; margin: 0px 0px 0px 0px; overflow: hidden; }
-e .sbq_con .sbq_title { float: left; width: 100%; height: 20px; line-height: 20px; font-size: 14px; font-weight: bold; }
-.sbq_user_badge .sbq_con .sbq_text { float: left; width: 100%; height: 40px; line-height: 20px; margin: 0px 0px 0px 0px; overflow: hidden; }
- 40px; line-height: 20px; margin: 0px 0px 0px 0px; overflow: hidden; }
-; height: 40px; line-height: 20px; margin: 0px 0px 0px 0px; overflow: hidden; }

@@ -36,23 +36,24 @@ function sbq_user_relationships_menu() {
       'file' => 'sbq_user_relationships.inc',
   );
 
-  $items['user/%user/relationship/recommand/doctor'] = array(
+  $items['user/relationship/recommand/doctor'] = array(
       'title' => t('推荐医生'),
       'type' => MENU_LOCAL_TASK,
-      'page arguments' => array( 'recommand_doctor', 1 ),
+      'page callback' => 'sbq_user_relationships_follow_view',
+      'page arguments' => array( 'recommand_doctor' ),
       'access callback' => 'sbq_user_relationships_access_callback',
       'file' => 'sbq_user_relationships.inc',
-      'access arguments' => array( 1 ),
+      // 'access arguments' => array( 1 ),
       'weight' => 2,
   );
 
-  $items['user/%user/relationship/recommand/patient'] = array(
+  $items['user/relationship/recommand/patient'] = array(
       'title' => t('推荐病友'),
       'type' => MENU_LOCAL_TASK,
       'page callback' => 'sbq_user_relationships_follow_view',
-      'page arguments' => array( 'recommand_patient', 1 ),
+      'page arguments' => array( 'recommand_patient'),
       'access callback' => 'sbq_user_relationships_access_callback',
-      'access arguments' => array( 1 ),
+      // 'access arguments' => array( 1 ),
       'file' => 'sbq_user_relationships.inc',
       'weight' => 3,
   );
@@ -516,7 +517,12 @@ function sbq_user_relstionships_users($account = NULL, $rtid = NULL, $page_of_nu
 function sbq_user_relationships_user_action($relationship, $account) {
   global $user;                                                                   
   $this_user_str = $account->uid == $relationship->requestee_id ? 'requester' : 'requestee';
+/*<<<<<<< HEAD
   $this_user = $relationship->{$this_user_str.'_id'};
+=======*/
+  $this_user = isset($relationship->{$this_user_str}) ? $relationship->{$this_user_str} : $relationship->{$this_user_str.'_id'};
+  
+/*>>>>>>> 25c226a5413d33719091be2b60ac3b8e403dc5da*/
   $row = array(
       'user' => $this_user,
       check_plain(user_relationships_type_get_name($relationship, FALSE, $relationship->is_oneway && $this_user_str == 'requester')),
@@ -553,6 +559,7 @@ function sbq_user_relationships_user_action($relationship, $account) {
   if (!empty($links)) {
     $row[] = implode(' ', $links);
   }
+
   if (variable_get('user_relationships_show_user_pictures', 0)) {
     array_unshift($row, theme('user_picture', array( 'account' => $this_user )));
   }

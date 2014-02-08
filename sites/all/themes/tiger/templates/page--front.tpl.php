@@ -115,12 +115,17 @@
 <div class="siteindex" style="display:none;">
 <h1><a href="/sites/index">伤不起文章资讯索引</a></h1>
 </div>
-<div class="sbq_qr_code">
-  <div class="sbq_qr_code_inner"><a href="http://app.shangbq.com/update/CaseHistoryChart.v.1.87.apk"><img src="<?php print $theme_path; ?>/images/qr_code.png" width="100" height="140"  alt=""/></a></div>
-</div>
+
 <div class="body">
   <div class="main">
-    <?php print $messages; ?>
+    <?php if ($messages): ?>
+    <div class="sbq_messages">
+      <?php print $messages; ?>
+    </div>
+    <?php endif; ?>
+    <div class="sbq_qr_code">
+      <div class="sbq_qr_code_inner"><a href="http://app.shangbq.com/update/CaseHistoryChart.v.1.87.apk"><img src="/<?php print $theme_path; ?>/images/qr_code.png" width="100" height="140"  alt=""/></a></div>
+    </div>
     <div class="sbq_home_menu">
       <ul class="sbq_patient">
         <li class="front-redblack color_06"><a href="###" onclick="alert('榜单沉淀中～敬请期待！');">
@@ -133,7 +138,7 @@
           <div class="sbq_title">问答</div>
           <div class="sbq_text">除了专业还要对症 </div>
           </a></li>
-        <li class="front-event color_05"><a href="###" onclick="alert('精彩活动，即将开启,敬请期待！');">
+        <li class="front-event color_05"><a href="/activity/2883">
           <div class="sbq_img"></div>
           <div class="sbq_title">活动</div>
           <div class="sbq_text">有你参与大不同</div>
@@ -159,21 +164,21 @@
 
         <li class="front-relationship color_04">
           <?php if($user->uid) { ?>
-            <a href="user/<?php echo $user->uid;?>/relationship" alt="人以群分确实必要">  
+            <a href="user/<?php echo $user->uid;?>/relationship" alt="人以群分确实必要">
           <?php
           }else { ?>
-            <a href="###" title="圈子" alt="人以群分确实必要" onclick="alert('请登录后使用!');">  
+            <a href="user/login?destination=user/relationship/recommand/patient" title="圈子" alt="人以群分确实必要">
           <?php } ?>
           <div class="sbq_img"></div>
           <div class="sbq_title">圈子</div>
           <div class="sbq_text">人以群分确实必要</div>
           </a></li>
-        <li class="front-doctor color_08">          
+        <li class="front-doctor color_08">
           <?php if($user->uid) { ?>
-            <a href="user/<?php echo $user->uid;?>/relationship/recommand/doctor" alt="人以群分确实必要">  
+            <a href="user/<?php echo $user->uid;?>/relationship/recommand/doctor" alt="人以群分确实必要">
           <?php
           }else { ?>
-            <a href="###" title="医生馆" alt="专业医生的网上医院" onclick="alert('请登录后使用!');">  
+            <a href="user/login?destination=user/relationship/recommand/doctor" title="医生馆" alt="专业医生的网上医院">
           <?php } ?>
           <div class="sbq_img"></div>
           <div class="sbq_title">医生馆</div>

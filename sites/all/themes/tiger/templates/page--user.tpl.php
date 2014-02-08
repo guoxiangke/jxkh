@@ -112,9 +112,16 @@
     </div>
   </div>
 </div>
-<?php if ($logged_in): ?>
+<?php if ($logged_in || is_numeric(arg(1))): ?>
 <?php
   $a_name = theme('username', array('account' => $account));
+  if ($account->uid == $user->uid) {
+    $uid = $user->uid;
+    drupal_add_js("jQuery(document).ready(function () {
+      $('.sbq_user_info .sbq_user_pic a').attr('href','/user/$uid/edit#edit-picture');
+    });", 'inline');
+  }
+
   $a_picture = theme('user_picture', array('account' =>$account));
   $a_uid = $account->uid;
 
@@ -153,14 +160,24 @@
 <?php endif; ?>
 <div class="body">
   <div class="main">
-    <?php print $messages; ?>
-    <?php if ($logged_in): ?>
+    <?php if (!in_array('reset', arg())): ?>
+    <?php if ($messages): ?>
+    <div class="sbq_messages">
+      <?php print $messages; ?>
+    </div>
+    <?php endif; ?>
+    <?php endif; ?>
+    <?php if ($logged_in || is_numeric(arg(1))): ?>
     <div class="sbq_user_headr"><img src="/sites/all/themes/tiger/image/sbq_user_headr_bg.jpg" width="960" height="200"  alt=""/></div>
     <div class="sbq_user_info">
       <div class="sbq_user_pic"><?php print $a_picture; ?></div>
       <div class="sbq_user_summary">
         <div class="sbq_user_name">
+          <?php if(isset($is_doctor) && $is_doctor): ?>
+          <strong><?php print $field_author; ?></strong>
+          <?php else: ?>
           <strong><?php print $a_name; ?></strong>
+          <?php endif; ?>
           <?php if (isset($field_doctor_title)): ?>
           <span><?php print $field_doctor_title; ?></span>
           <?php endif; ?>
@@ -179,13 +196,13 @@
       <div class="sbq_user_follower">
         <ul>
           <?php if (isset($counts['user_relationship_count']['doctor_count'])): ?>
-          <li><strong><a href="/user/<?php print $a_uid; ?>/relationship/default/doctor"><?php print $counts['user_relationship_count']['doctor_count']; ?></a></strong><span>医生圈</span></li>
+          <li><a href="/user/<?php print $a_uid; ?>/relationship/default/doctor"><strong><?php print $counts['user_relationship_count']['doctor_count']; ?></strong><span>医生圈</span></a></li>
           <?php endif; ?>
           <?php if (isset($counts['user_relationship_count']['patient_count'])): ?>
-          <li><strong><a href="/user/<?php print $a_uid; ?>/relationship/default/patient"><?php print $counts['user_relationship_count']['patient_count']; ?></a></strong><span>病友圈</span></li>
+          <li><a href="/user/<?php print $a_uid; ?>/relationship/default/patient"><strong><?php print $counts['user_relationship_count']['patient_count']; ?></strong><span>病友圈</span></a></li>
           <?php endif; ?>
           <?php if ($counts['user_question_count']>=0 && $counts['user_answer_count']>=0): ?>
-          <li><strong><a href="/user/<?php print $a_uid; ?>/qa/ask"><?php print $counts['user_question_count']; ?></a>/<a href="/user/<?php print $a_uid; ?>/qa/answer"><?php print $counts['user_answer_count']; ?></a></strong><span>提问/回答</span></li>
+          <li><a href="/user/<?php print $a_uid; ?>/qa/ask"><strong><?php print $counts['user_question_count']; ?>/<?php print $counts['user_answer_count']; ?></strong><span>提问/回答</span></a></li>
           <?php endif; ?>
         </ul>
       </div>
@@ -196,14 +213,17 @@
         <?php if ($current_user): ?>
         <li <?php print $menu_follower_active; ?>><?php print l('动态', 'user/followers/blog'); ?></li>
         <?php endif; ?>
-        <li <?php print $menu_account_active; ?>><?php print l('资料', 'user/'.$a_uid); ?></li>
         <li <?php print $menu_blog_active; ?>><?php print l('文章', 'user/'.$a_uid.'/blog'); ?></li>
+        <?php if ($counts['user_question_count']>=0): ?>
         <li <?php print $menu_qa_active; ?>><?php print l('问答', 'user/'.$a_uid.'/qa/ask'); ?></li>
+        <?php else: ?>
+        <li <?php print $menu_qa_active; ?>><?php print l('问答', 'user/qa/promoted'); ?></li>
+        <?php endif; ?>
         <?php if ($current_user): ?>
         <li <?php print $menu_relationship_active; ?>><?php print l('圈子', 'user/'.$a_uid.'/relationship'); ?></li>
         <li <?php print $menu_message_active; ?>><?php print l('消息', 'user/message'); ?></li>
-        <li <?php print $menu_edit_active; ?>><?php print l('编辑', 'user/'.$a_uid.'/edit'); ?></li>
         <?php endif; ?>
+        <li <?php print $menu_account_active; ?>><?php print l('资料', 'user/'.$a_uid); ?></li>
       </ul>
     </div>
     <?php endif; ?>
@@ -225,6 +245,18 @@
   </div>
 </div>
 <div class="footer">
+  <div class="footer_inner">
+  <div class="sbq_about_link">
+    <ul>
+      <li><a href="/contact.html">联系我们</a></li>
+      <li><a href="/services.html">注册服务条款</a></li>
+      <li><a href="/copyright.html">免责声明</a></li>
+      <li><a href="/join.html">加入我们</a></li>
+      <li><a href="/about.html">关于我们</a></li>
+    </ul>
+  </div>
+  <div class="sbq_copy">© 2014 伤不起 中国最真实的医疗评价平台(<a href="http://www.miitbeian.gov.cn" target="_bank"> 京ICP备13032461号-1</a>) </div>
+  </div>
   <?php print render($page['footer']); ?>
 </div> <!-- /#footer -->
 
