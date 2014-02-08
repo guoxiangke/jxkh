@@ -6,9 +6,10 @@
  * and open the template in the editor.
  */
 
-function sbq_user_relationships_follow_view($display, $account) {
+function sbq_user_relationships_follow_view($display, $account = NULL) {
   global $user;
   $accounts = $accounts_view = array();
+  if(!$account) $account = $user;
   switch ($display) {
     case 'default':
       if (in_array(USER_PATIENT_RID, array_keys($account->roles))) {
