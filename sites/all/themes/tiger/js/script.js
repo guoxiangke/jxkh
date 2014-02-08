@@ -128,7 +128,7 @@ Drupal.behaviors.tiger = {
         }
       });
     });
-
+    if(!typeof(CKEDITOR) === 'undefined')
     CKEDITOR.on( 'dialogDefinition', function( ev )
    {
       // Take the dialog name and its definition from the event
