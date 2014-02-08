@@ -36,23 +36,24 @@ function sbq_user_relationships_menu() {
       'file' => 'sbq_user_relationships.inc',
   );
 
-  $items['user/%user/relationship/recommand/doctor'] = array(
+  $items['user/relationship/recommand/doctor'] = array(
       'title' => t('推荐医生'),
       'type' => MENU_LOCAL_TASK,
-      'page arguments' => array( 'recommand_doctor', 1 ),
+      'page callback' => 'sbq_user_relationships_follow_view',
+      'page arguments' => array( 'recommand_doctor' ),
       'access callback' => 'sbq_user_relationships_access_callback',
       'file' => 'sbq_user_relationships.inc',
-      'access arguments' => array( 1 ),
+      // 'access arguments' => array( 1 ),
       'weight' => 2,
   );
 
-  $items['user/%user/relationship/recommand/patient'] = array(
+  $items['user/relationship/recommand/patient'] = array(
       'title' => t('推荐病友'),
       'type' => MENU_LOCAL_TASK,
       'page callback' => 'sbq_user_relationships_follow_view',
-      'page arguments' => array( 'recommand_patient', 1 ),
+      'page arguments' => array( 'recommand_patient'),
       'access callback' => 'sbq_user_relationships_access_callback',
-      'access arguments' => array( 1 ),
+      // 'access arguments' => array( 1 ),
       'file' => 'sbq_user_relationships.inc',
       'weight' => 3,
   );
