@@ -1,5 +1,6 @@
 * { margin: 0px; padding: 0px; list-style: none; }
-.sbq_hide { display: none; }
+.sbq_hide,
+.element-invisible { display: none; }
 /*------font------*/
 textarea,
 input,
@@ -82,8 +83,8 @@ input,
 .sbq_page_num ul li a { float: left; color: #999999; }
 .sbq_page_num ul li a:hover,
 .sbq_page_num .active { text-decoration: underline; color: #225599; }
-/*------sidebar_second------*/
-.sidebar_second { float: left; width: 260px; margin: 0px 0px 0px 20px; }
+/*---sidebar_second---*/
+.sidebar_second { float: left; width: 260px; margin: 0px 0px 0px 20px; overflow: hidden; }
 .sidebar_second .more-link { float: left; width: 100%; line-height: 22px; text-align: right; font-size: 12px; color: #225599; }
 /*sbq_follow*/
 .sidebar_second .sbq_follow { float: left; width: 100%; }
@@ -129,7 +130,9 @@ input,
 .sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_user_name a:hover { text-decoration: underline; }
 .sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_user_badge { float: left; width: auto; max-width: 66px; height: 20px; overflow: hidden; }
 .sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_user_badge a { float: left; margin: 0px 2px 0px 0px; }
-.sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_text { float: left; width: 100%; line-height: 20px; color: #999999; font-family: "Arial"; }
+.sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_text { float: left; width: 100%; line-height: 20px; }
+.sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_text a { color: #999999; font-family: "Arial"; }
+.sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_text a:hover { color: #225599; }
 .sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_follow { float: left; width: auto; }
 .sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_follow a { float: left; height: 20px; line-height: 20px; padding: 0px 0px 0px 17px; color: #999999; background: url(../image/sbq_reply_actions_icon.png) no-repeat; background-position: left -44px; }
 .sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_follow a:hover { color: #698EBF; text-decoration: underline; background-position: left -66px; }
@@ -147,7 +150,8 @@ input,
 .sidebar_second .sbq_badge ul { float: left; width: 100%; }
 .sidebar_second .sbq_badge ul li { float: left; width: 20px; height: 20px; margin: 0px 3px 3px 0px; }
 .sidebar_second .sbq_badge ul li img { float: left; width: 20px; height: 20px; }
-.sidebar_first { float: left; width: 260px; margin: 0px 20px 0px 0px; }
+/*---sidebar_first---*/
+.sidebar_first { float: left; width: 220px; margin: 0px 20px 0px 0px; overflow: hidden; }
 /*sbq_blog_user*/
 .sidebar_second .sbq_blog_user { float: left; width: 100%; margin: 0px 0px 20px 0px; }
 .sidebar_second .sbq_blog_user .sbq_user_pic,
@@ -281,7 +285,6 @@ input,
 #cboxClose { float: left; width: 40px; height: 40px; position: absolute; top: 5px; right: 5px; display: block; text-indent: -999px; overflow: hidden; background: url(../image/close.png) no-repeat; }
 /*------cke_editable------*/
 .cke_editable { float: left; width: 100%; height: 100%; line-height: 24px; font-size: 14px; word-break: break-all; word-wrap: break-word; }
-.cke_editable span { display: none; }
 .cke_editable ol,
 .cke_editable ul { list-style-position: outside; margin: 0.8em 0px 0.8em 1.5em; font-family: "Arial", sans-serif; }
 .cke_editable ol li { margin: 0px 0px 5px 0px; list-style-position: outside; list-style-type: decimal; }
