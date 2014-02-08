@@ -350,8 +350,9 @@ function sbq_commons_modal_html($data, $id = 'sbq_modal', $title = '') {
  * @see captcha_form_alter
  */
 function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_times = 3, $mintue = 10) {
+/*
 
-  if (!module_exists('captcha')) {
+ if (!module_exists('captcha')) {
     return;
   }
   $url = explode('/', $_GET['q']);
@@ -381,9 +382,22 @@ function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_time
   $result = $fail_login->fetchAll();
   if (!$result) {
     unset($form['captcha']);
-  } elseif (count($result) == $fail_times && ((time() - $result[2]->timestamp) / 60) < $mintue) {
+  } elseif (count($result) == $fail_times && ((time() - $result[2]->timestamp)/60) < $mintue) {
     return;
   }
+=======
+>>>>>>> 25c226a5413d33719091be2b60ac3b8e403dc5da */
+
+//  if (!module_exists('captcha')) {
+//    return;
+//  }
+//  $url = explode('/', $_GET['q']);
+//  if (isset($url[0]) && $url[0] == 'api') {
+//    if (isset($form['captcha'])) {
+//      unset($form['captcha']);
+//    }
+//    return;
+//  }
 }
 
 /**
