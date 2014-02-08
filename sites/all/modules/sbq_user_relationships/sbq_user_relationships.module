@@ -232,6 +232,7 @@ function sbq_user_relationships_profile($info, $view = 'list') {
   module_load_include('inc', 'sbq_commons', 'sbq_commons_og_ui');
   $account = $info['user'];
   $image = sbq_commons_user_avart($account);
+  $profile['uid'] = $account->uid;
   $profile['name'] = $account->name;
   if (module_exists('user_badges')) {
     $profile['bedges'] = user_badges_for_uid($account->uid);
@@ -258,6 +259,7 @@ function sbq_user_relationships_profile($info, $view = 'list') {
 
   $items = $profile;
   unset($profile);
+  $profile['uid'] = $items['uid'];
   $profile['name'] = $items['name'];
   $profile['bedges'] = $items['bedges'];
   if (isset($items['hospital'])) {
