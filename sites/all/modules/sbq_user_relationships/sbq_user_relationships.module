@@ -232,6 +232,7 @@ function sbq_user_relationships_profile($info, $view = 'list') {
   module_load_include('inc', 'sbq_commons', 'sbq_commons_og_ui');
   $account = $info['user'];
   $image = sbq_commons_user_avart($account);
+  $profile['uid'] = $account->uid;
   $profile['name'] = $account->name;
   if (module_exists('user_badges')) {
     $profile['bedges'] = user_badges_for_uid($account->uid);
@@ -258,6 +259,7 @@ function sbq_user_relationships_profile($info, $view = 'list') {
 
   $items = $profile;
   unset($profile);
+  $profile['uid'] = $items['uid'];
   $profile['name'] = $items['name'];
   $profile['bedges'] = $items['bedges'];
   if (isset($items['hospital'])) {
@@ -334,8 +336,9 @@ function sbq_user_relationships_action_between_user($viewer, $viewed, $action_ty
   module_load_include('inc', 'user_relationships_ui', 'user_relationships_ui.forms');
   if (isset($action_types['requested'])) {
     $relationships = user_relationships_load(array( 'requester_id' => $viewer->uid, 'requestee_id' => $viewed->uid, 'approved' => FALSE ));
-    
-    foreach ($relationships as $relationship) {dpm($relationships);
+
+    foreach ($relationships as $relationship) {
+      dpm($relationships);
       $list[] = t('You have sent a new @rel_name request to this user. (!pending_requests)', array(
           '!pending_requests' => l(t('pending requests'), "relationships/sent"),
           ) + user_relationships_type_translations($relationship));
@@ -518,7 +521,6 @@ function sbq_user_relationships_user_action($relationship, $account) {
   global $user;
   $this_user_str = $account->uid == $relationship->requestee_id ? 'requester' : 'requestee';
   $this_user = isset($relationship->{$this_user_str}) ? $relationship->{$this_user_str} : $relationship->{$this_user_str . '_id'};
-
   $row = array(
       'user' => $this_user,
       check_plain(user_relationships_type_get_name($relationship, FALSE, $relationship->is_oneway && $this_user_str == 'requester')),

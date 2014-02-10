@@ -350,6 +350,43 @@ function sbq_commons_modal_html($data, $id = 'sbq_modal', $title = '') {
  * @see captcha_form_alter
  */
 function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_times = 3, $mintue = 10) {
+/*
+
+ if (!module_exists('captcha')) {
+    return;
+  }
+  $url = explode('/', $_GET['q']);
+  if (isset($url[0]) && $url[0] == 'api') {
+    if (isset($form['captcha'])) {
+      unset($form['captcha']);
+    }
+    return;
+  }
+  if (!in_array($form_id, array( 'user_login_block', 'user_login' ))) {
+    return;
+  }
+  module_load_include('inc', 'captcha');
+  $captcha_point = captcha_get_form_id_setting($form_id);
+  if (!$captcha_point || !$captcha_point->captcha_type) {
+    return;
+  }
+
+  $current_ip = ip_address();
+  $fail_login = db_select('flood', 'f')
+      ->fields('f')
+      ->condition('event', 'failed_login_attempt_ip')
+      ->condition('identifier', $current_ip)
+      ->range(0, $fail_times)
+      ->orderBy('timestamp', 'desc')
+      ->execute();
+  $result = $fail_login->fetchAll();
+  if (!$result) {
+    unset($form['captcha']);
+  } elseif (count($result) == $fail_times && ((time() - $result[2]->timestamp)/60) < $mintue) {
+    return;
+  }
+=======
+>>>>>>> 25c226a5413d33719091be2b60ac3b8e403dc5da */
 
 //  if (!module_exists('captcha')) {
 //    return;

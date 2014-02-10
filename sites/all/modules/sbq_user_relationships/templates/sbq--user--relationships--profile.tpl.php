@@ -22,7 +22,7 @@
     <div class="sbq_user_badge"><?php print $profile['bedges']; ?></div>
     <?php endif; ?>
     <div class="sbq_follow"><?php print $profile['follow']; ?></div>
-    <div class="sbq_text">回答了 <?php print $profile['answers_count']; ?> 个问题</div>
+    <div class="sbq_text"><a href="/user/<?php print $profile['uid']; ?>/qa/answer">回答了 <?php print $profile['answers_count']; ?> 个问题</a></div>
   </div>
 </li>
 <?php endif; ?>
