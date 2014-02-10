@@ -21,6 +21,30 @@
 	margin-left: 14px;
 	color: #999;
 }
+
+.node-form .captcha img{
+	float: right;
+	position: absolute;
+	right: 367px;
+}
+.node-form .captcha .reload-captcha-wrapper{
+	display: block;
+	position: absolute;
+	left: 189px;
+	top: 41px;
+}
+.node-form .captcha img{
+	float: right;
+	position: absolute;
+	left: 91px;
+	top: 41px;
+}
+.node-form .reload-captcha-wrapper{
+	display: block;
+	position: absolute;
+	right: 158px;
+}
+
 #user-register-form .captcha img{
 	float: right;
 	position: absolute;
@@ -36,11 +60,13 @@
 	position: absolute;
 	right: 187px;
 }
-#user-login .reload-captcha-wrapper{
+#user-login .captcha .reload-captcha-wrapper{
 	display: block;
 	position: absolute;
 	right: 158px;
 }
+
+
 
 #user-register-form .password-confirm span {
 	float: none;
