@@ -661,7 +661,8 @@ function druedu_qa_ajax_comments_submit_js($form, &$form_state) {
   elseif (isset($form_state['values']['pid'])) { //watchdog('5.2.ajax_sumit', ' Append comment to parent wrapper.');
     // Append comment to parent wrapper.
     $comment_output = drupal_render($comment_build);
-    $commands[] = ajax_command_append('#comment-wrapper-' . $comment->pid, $notify_text . $comment_output);
+
+    $commands[] = ajax_command_append('#comments-' . $comment->pid . ' ul', $notify_text . $comment_output);
 
     // Delete the form.
     $commands[] = ajax_command_invoke('#' . $form['#id'], 'remove');
@@ -685,7 +686,7 @@ function druedu_qa_ajax_comments_submit_js($form, &$form_state) {
     if ($node->type == 'question' || $node->type == 'answer') {
       //$commands[] = ajax_command_append("#comments-wrapper-".$node->nid, $comment_output); //not use ajax_command_append necause issue jump top of the page
       $commands[] = ajax_command_invoke(NULL, 'insertComment', array(
-          array( 'selector' => "#comments-wrapper-" . $node->nid, 'data' => $comment_output ) )
+          array( 'selector' => "#comments-" . $node->nid . ' ul', 'data' => '<li>'.$comment_output.'</li>' ) )
       );
     } else {
       $commands[] = ajax_command_after('#comment-wrapper', $comment_output);
