@@ -23,6 +23,18 @@ jQuery(function($) {
     return false;
   });
 
+  $('.sbq_follow_btn a.flag-action').live("click", function() {
+    var num = $('.sbq_follow_num a').html();
+    num = parseInt(num)+1;
+    $('.sbq_follow_num a').html(num);
+  });
+
+  $('.sbq_follow_btn a.unflag-action').live("click", function() {
+    var num = $('.sbq_follow_num a').html();
+    num = parseInt(num)-1;
+    $('.sbq_follow_num a').html(num);
+  });
+
   $('.ckeditor_links').hide();
 
   $('.sbq_all_reply_btn a').live("click", function() {
@@ -89,7 +101,8 @@ jQuery(function($) {
  */
 Drupal.behaviors.tiger = {
   attach: function (context, settings) {
-    $('#user-profile-form .user-picture').click(function(){
+
+    $('#user-profile-form .user-picture a').click(function(){
         $('#edit-picture-upload').click();
         return false;
       });
@@ -110,6 +123,7 @@ Drupal.behaviors.tiger = {
     $('#user-register-form .password-field').blur(function(){
       $('#user-register-form .password-suggestions').hide();
     });
+
     //username min length 2
     // $('#user-register-form input.username').blur(function(){
     //   if($(this).val().length<2) {
@@ -119,12 +133,12 @@ Drupal.behaviors.tiger = {
     //   }
     // });
     //form behaviors
-    $('form .form-submit').click(function(e){      
+    $('form .form-submit').click(function(e){
       $('input.required').each(function(){
         if($(this).val()==''){
           $(this).focus();
           e.preventDefault()
-          return false; 
+          return false;
         }
       });
     });
@@ -142,17 +156,17 @@ Drupal.behaviors.tiger = {
       {
          // remove Upload tab
          dialogDefinition.removeContents( 'advanced' );
-         dialogDefinition.removeContents( 'target' );    
+         dialogDefinition.removeContents( 'target' );
          dialogDefinition.removeContents( 'Link' );
 
-        
+
           dialogDefinition.onShow = function () {
             // This code will open the Advanced tab.
             this.selectPage('Upload');
           };
       }
 
-      if ( dialogName == 'link') { 
+      if ( dialogName == 'link') {
          // remove Upload tab
          dialogDefinition.removeContents( 'advanced' );
          dialogDefinition.removeContents( 'target' );
