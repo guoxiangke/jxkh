@@ -45,12 +45,23 @@
 <?php
   global $user;
   $uid = arg(1);
+  $is_doctor = FALSE;
+  if (in_array('doctor', $user->roles)) {
+    $is_doctor = TRUE;
+  }
 ?>
 <div class="sbq_nav">
   <ul>
     <li class="active"><?php print l('资料', 'user/'.$uid); ?></li>
     <?php if ($user->uid == $uid):?>
-    <li><?php print l('编辑', 'user/'.$uid.'/edit'); ?></li>
+    <li><?php print l('编辑账户资料', 'user/'.$uid.'/edit'); ?></li>
+    <?php if ($is_doctor):?>
+    <li><?php print l('编辑医生注册信息', 'user/'.$uid.'/edit/doctor_profile'); ?></li>
+    <li><?php print l('编辑医生认证信息', 'user/'.$uid.'/edit/doctor_private_profile'); ?></li>
+    <?php else:?>
+    <li><?php print l('编辑患者公开信息', 'user/'.$uid.'/edit/customer_profile'); ?></li>
+    <li><?php print l('编辑患者私人信息', 'user/'.$uid.'/edit/patient_private_profile'); ?></li>
+    <?php endif;?>
     <?php endif;?>
   </ul>
 </div>

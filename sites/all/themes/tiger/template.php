@@ -695,13 +695,37 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
       if  (in_array('doctor', $roles_array)) {
         $is_doctor = TRUE;
       }
-      $form['#prefix'] = '<div class="sbq_nav">
-          <ul>
-            <li>'.l('资料', 'user/'.$form['#user']->uid).'</li>
-            <li class="active">'.l('编辑', 'user/'.$form['#user']->uid.'/edit').'</li>
-          </ul>
-        </div>
-        <div class="sbq_user_date"><div class="sbq_form_wrap">';
+      $menu_edit_active = '';
+      $menu_doctor_active = '';
+      $menu_doctor_private_active = '';
+      $menu_customer_active = '';
+      $menu_patient_private_active = '';
+      if (in_array('doctor_profile', arg())) {
+        $menu_doctor_active = ' class="active"';
+      } elseif (in_array('doctor_private_profile', arg())) {
+        $menu_doctor_private_active = ' class="active"';
+      } elseif (in_array('customer_profile', arg())) {
+        $menu_customer_active = ' class="active"';
+      } elseif (in_array('patient_private_profile', arg())) {
+        $menu_patient_private_active = ' class="active"';
+      } else {
+        $menu_edit_active = ' class="active"';
+      }
+      $prefix = '<div class="sbq_nav">'
+        .'<ul>'
+          .'<li>'.l('资料', 'user/'.$form['#user']->uid).'</li>'
+          .'<li'.$menu_edit_active.'>'.l('编辑账户资料', 'user/'.$form['#user']->uid.'/edit').'</li>';
+      if ($is_doctor) {
+        $prefix .= '<li'.$menu_doctor_active.'>'.l('编辑医生注册信息', 'user/'.$form['#user']->uid.'/edit/doctor_profile').'</li>'
+          .'<li'.$menu_doctor_private_active.'>'.l('编辑医生认证信息', 'user/'.$form['#user']->uid.'/edit/doctor_private_profile').'</li>';
+      } else {
+        $prefix .= '<li'.$menu_customer_active.'>'.l('编辑患者公开信息', 'user/'.$form['#user']->uid.'/edit/customer_profile').'</li>'
+          .'<li'.$menu_patient_private_active.'>'.l('编辑患者私人信息', 'user/'.$form['#user']->uid.'/edit/patient_private_profile').'</li>';
+      }
+      $prefix .= '</ul>'
+        .'</div>'
+        .'<div class="sbq_user_date"><div class="sbq_form_wrap">';
+      $form['#prefix'] = $prefix;
       $form['#suffix'] = '</div></div>';
 
       //unset($form['account']['current_pass']['#description']);
@@ -764,12 +788,12 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
           $form['profile_customer_profile']['field_sex']['und']['#attributes']['class'][] = 'sbq_radio_wrap';
           $form['profile_customer_profile']['field_sex']['#suffix'] = '</div>';
         }
-        if (isset($form['profile_doctor_profile']['field_nickname'])) {
+        if (isset($form['profile_customer_profile']['field_nickname'])) {
           $form['profile_customer_profile']['field_nickname']['#prefix'] = '<div class="sbq_form_01">';
           $form['profile_customer_profile']['field_nickname']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
           $form['profile_customer_profile']['field_nickname']['#suffix'] = '</div>';
         }
-        if (isset($form['profile_doctor_profile']['field_birthday'])) {
+        if (isset($form['profile_customer_profile']['field_birthday'])) {
           unset($form['profile_customer_profile']['field_birthday']['und']['#prefix']);
           unset($form['profile_customer_profile']['field_birthday']['und']['#suffix']);
           $form['profile_customer_profile']['field_birthday']['#prefix'] = '<div class="sbq_form_01">';
