@@ -736,6 +736,7 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
       //unset($form['account']['mail']['#description']);
       $form['account']['mail']['#prefix'] = '<div class="sbq_form_01">';
       $form['account']['mail']['#attributes']['class'][] = 'sbq_input_01';
+      $form['account']['mail']['#attributes']['disabled'] = 'disabled';
       $form['account']['mail']['#suffix'] = '</div>';
 
       //unset($form['account']['pass']['#description']);
