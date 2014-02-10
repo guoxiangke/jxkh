@@ -45,3 +45,7 @@
 #user-register-form .password-confirm span {
 	float: none;
 }
+
+#user-register-form .register_error .description{
+	color: #E6393D;
+}

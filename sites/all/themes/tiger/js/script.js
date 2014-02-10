@@ -101,7 +101,7 @@ Drupal.behaviors.tiger = {
     $('#user-register-form .form-type-textfield input').blur(function(){
       var warning_str = '必须填写'+$(this).prev('label').text().replace('*','');
       if($(this).val() == '' && $(this).hasClass('required')) {
-        $(this).parent('.form-type-textfield').children('.description').text(warning_str);
+        $(this).parent('.form-type-textfield').children('.description').wrap('<span class="register_error"/>').text(warning_str);
       }else{
         $(this).parent('.form-type-textfield').children('.description').hide();
       };
