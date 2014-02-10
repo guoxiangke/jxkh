@@ -29,7 +29,7 @@ function sbq_center_reservation_menu() {
       'page callback' => 'sbq_center_reservation_add',
       'page arguments' => array( 1, 'add' ),
       'access callback' => 'sbq_center_reservation_access',
-      'access arguments' => array( 2, NULL, 'add' ),
+      'access arguments' => array( 1, NULL, 'add' ),
       'type' => MENU_NORMAL_ITEM,
       'file' => 'sbq_center_reservation.inc'
   );
@@ -85,8 +85,16 @@ function sbq_center_reservation_og_permission() {
   return $items;
 }
 
+/**
+ * center reservation access control
+ * @global type $user
+ * @param type $center center node
+ * @param type $reservation reservation node
+ * @param type $type pemission name
+ * @param type $account currenter user 
+ * @return boolean
+ */
 function sbq_center_reservation_access($center, $reservation = NULL, $type = NULL, $account = NULL) {
-
   global $user;
   if (!$account) {
     $account = $user;
@@ -151,10 +159,10 @@ function sbq_center_reservation_theme_registry_alter(&$theme_registry) {
     $theme_registry['calendar_month_row']['path'] = $module_path;
     $theme_registry['calendar_month_row']['template'] = '/templates/' . $theme_registry['calendar_month_row']['template'];
     $theme_registry['calendar_month_row']['preprocess functions'][] = 'template_preprocess_sbq_center_reservation_month_row';
-    
+
     $theme_registry['calendar_month']['path'] = $module_path;
     $theme_registry['calendar_month']['template'] = '/templates/' . $theme_registry['calendar_month']['template'];
- //  $theme_registry['calendar_month']['preprocess functions'][] = 'template_preprocess_sbq_center_reservation_month_row';
+    //  $theme_registry['calendar_month']['preprocess functions'][] = 'template_preprocess_sbq_center_reservation_month_row';
   }
 }
 
@@ -175,15 +183,15 @@ function template_preprocess_sbq_center_reservation_month_col(&$vars) {
 
   if ($vars['item']['class'] == 'date-box future') {
 
-  $item = $vars['item']['date'];
-  $datetime = new DateTime($item);
-  $day = date('d', $datetime->getTimestamp());
-  $vars['item']['entry'] = $day;
+    $item = $vars['item']['date'];
+    $datetime = new DateTime($item);
+    $day = date('d', $datetime->getTimestamp());
+    $vars['item']['entry'] = $day;
   }
 }
 
 function template_preprocess_sbq_center_reservation_month_row(&$vars) {
-
+  
 }
 
 /**
@@ -365,4 +373,46 @@ function sbq_center_reservation_theme() {
       ),
   );
   return $items;
+}
+
+/*
+ * hook_block_info
+ */
+
+function sbq_center_reservation_block_info() {
+  $display = FALSE;
+
+  $blocks['resevation_manage'] = array(
+      'info' => t('center reservation:resevation_manage'),
+      'status' => TRUE,
+      'region' => 'sidebar_second', // Not usually provided.
+      'cache' => DRUPAL_CACHE_PER_ROLE, // default
+  );
+  return $blocks;
+}
+
+/*
+ * hook_block_view
+ */
+
+function sbq_center_reservation_block_view($delta = '') {
+  if ($delta != 'resevation_manage') {
+    return;
+  }
+  $center = sbq_center_load(arg(1));
+  if (arg(0) != 'center' || !$center || !sbq_center_reservation_access($center, NULL, 'setting center reservation')) {
+    return;
+  }
+  $subject = '中心管理';
+  $html = '<ul>';
+  $html .= '<li class="leaf">' . l('查看预约日期', "center/{$center->nid}/reservation/month") . '</li>';
+  $html .= '<li class="leaf">' . l('预约日期设置', "center/{$center->nid}/reservation/settings") . '</li>';
+  $html .= '<li class="leaf">' . l('添加健康教育', "node/add/sbq-center-edu") . '</li>';
+  $html .= '<li class="leaf">' . l('咨询管理', "messages") . '</li>';
+  $html .= '</ul>';
+
+  return array(
+      'subject' => $subject,
+      'content' => $html,
+  );
 }
