@@ -8,7 +8,8 @@
  */
 ?>
 <?php
-  $uid = arg(1);
+  global $user;
+  $uid = $user->uid;
   $menu_default_doctor = '';
   $menu_default_patient = '';
   $menu_recommand_doctor = '';
