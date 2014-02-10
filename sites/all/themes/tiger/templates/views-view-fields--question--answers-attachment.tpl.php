@@ -69,14 +69,14 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
             <?php if ($node->comment_count == 0) {?>
               <a href="#" class="sbq_add_reply_btn anonymous_no_comment ">添加评论</a>
             <?php } else {?>
-              <a href="#" class="sbq_add_reply_btn anonymous_comments"><?php print $node->comment_count; ?>条回复</a>
+              <a href="#" class="sbq_add_reply_btn anonymous_comments"><?php print $node->comment_count; ?>条评论</a>
             <?php }?>
           <?php } else {?>
             <a href="#" class="sbq_add_reply_btn login_user">
               <?php if ($node->comment_count == 0) {?>
               添加评论
             <?php } else {?>
-              <?php print $node->comment_count; ?>条回复
+              <?php print $node->comment_count; ?>条评论
             <?php }?>
             </a>
           <?php }?>
