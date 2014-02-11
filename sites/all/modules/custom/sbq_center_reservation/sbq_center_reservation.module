@@ -380,14 +380,12 @@ function sbq_center_reservation_theme() {
  */
 
 function sbq_center_reservation_block_info() {
-  $display = FALSE;
-
   $blocks['resevation_manage'] = array(
       'info' => t('center reservation:resevation_manage'),
       'status' => TRUE,
      // 'region' => 'sidebar_second', // Not usually provided.
       'cache' => DRUPAL_CACHE_PER_ROLE, // default
-  );
+  );dpm($blocks);
   return $blocks;
 }
 
