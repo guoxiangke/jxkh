@@ -93,6 +93,7 @@ input,
 .sidebar_second .sbq_follow .sbq_follow_btn { float: left; width: 100%; margin: 0px 0px 15px 0px; }
 .sidebar_second .sbq_follow .sbq_follow_btn a { float: left; width: 78px; height: 32px; line-height: 32px; margin: 0px 10px 0px 0px; border: 1px #6D8F29 solid; border-radius: 3px; background: url(../image/sbq_follow_btn_bg.png) repeat-x; color: #3E5E00; font-size: 14px; text-align: center; box-shadow: 0px 1px 0px #d6eca7 inset, 0px 1px 0px #cdcdcd; overflow: hidden; }
 .sidebar_second .sbq_follow .sbq_follow_btn a.unflag-action { color: #666666; border: 1px #bbbbbb solid; background: url(../image/sbq_follow_btn_bg_ON.png) repeat-x; box-shadow: none; }
+.sidebar_second .sbq_follow .sbq_follow_btn a.sbq_ask { color: #FFFFFF; border: 1px #0D6EB8 solid; background: #1575D5; box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.196) inset, 0px 1px 0px rgba(0, 0, 0, 0.196); }
 .sidebar_second .sbq_follow .sbq_follow_num { float: left; width: 100%; height: 22px; line-height: 22px; margin: 0px 0px 10px 0px; color: #999; }
 .sidebar_second .sbq_follow .sbq_follow_num a { color: #225599; font-weight: bold; margin: 0px 5px 0px 0px; }
 .sidebar_second .sbq_follow .sbq_follow_num a:hover { text-decoration: underline; }
