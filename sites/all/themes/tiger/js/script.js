@@ -142,7 +142,7 @@ Drupal.behaviors.tiger = {
         }
       });
     });
-    
+
    //  if(typeof(CKEDITOR) === 'object')
    //  CKEDITOR.on( 'dialogDefinition', function( ev )
    // {

@@ -167,17 +167,17 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
         unset($form['body']['und']['0']['format']);
         unset($form['body']['und']['0']['summary']);
         $form['actions']['submit'] = array(
-            '#type' => 'submit',
-            '#value' => '提问',
-            //'#attributes' => array('class'=>'use-ajax'),
-            '#ajax' => array(
-                'callback' => 'ajax_quick_ask_callback',
-                'wrapper' => 'question-node-form',
-                'method' => 'replace',
-                'effect' => 'fade',
-                'progress' => array( 'type' => 'throbber', 'message' => '请稍候' ),
-                'file' => 'sbq_commons.inc',
-            ),
+          '#type' => 'submit',
+          '#value' => '提问',
+          //'#attributes' => array('class'=>'use-ajax'),
+          '#ajax' => array(
+            'callback' => 'ajax_quick_ask_callback',
+            'wrapper' => 'question-node-form',
+            'method' => 'replace',
+            'effect' => 'fade',
+            'progress' => array( 'type' => 'throbber', 'message' => '请稍候' ),
+            'file' => 'sbq_commons.inc',
+          ),
         );
       } else {
         $form['body']['und']['0']['#title'] = t('问题');
