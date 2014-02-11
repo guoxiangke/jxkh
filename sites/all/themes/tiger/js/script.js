@@ -173,7 +173,7 @@ Drupal.behaviors.tiger = {
          dialogDefinition.removeContents( 'target' );
       }
 
-   // });
+   });
 
 
   }
