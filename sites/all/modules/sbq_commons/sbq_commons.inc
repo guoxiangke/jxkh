@@ -824,19 +824,26 @@ function ajax_quick_ask_callback($form, &$form_state) {
       watchdog('content', '@type: added %title.', $watchdog_args, WATCHDOG_NOTICE, $node_link);
     }
     if ($node->nid) {
-      $form_state['values']['nid'] = $node->nid;
-      $form_state['nid'] = $node->nid;
-      $title = l($node->title, 'node/' . $node->nid);
-      $str_date = format_date(time(), 'custom', 'Y-m-d');
-      $nqs = '<div class="views-row views-row-1 views-row-odd views-row-first">'
-          . '<div class="views-field views-field-title"><span class="field-content">' . $title . '</span></div>'
-          . '<div class="views-field views-field-value"><span class="field-content">0</span></div>'
-          . '<div class="views-field views-field-field-mark-question-resolved"><div class="field-content">未解决</div></div>'
-          . '<div class="views-field views-field-created"><span class="field-content">' . $str_date . '</span></div></div>';
-      $new_textarea = '<textarea class="text-full ckeditor-mod form-textarea" id="edit-body-und-0-value" name="body[und][0][value]" cols="60" rows="20"></textarea>';
-      $commands[] = ajax_command_replace('#edit-body-und-0-value', $new_textarea);
-      $commands[] = ajax_command_prepend('#block-views-my-qa-my-ask .view-content', $nqs);
-      $commands[] = ajax_command_replace('#sbq-message-error', '');
+      // $form_state['values']['nid'] = $node->nid;
+      // $form_state['nid'] = $node->nid;
+      // $title = l($node->title, 'node/' . $node->nid);
+      // $str_date = format_date(time(), 'custom', 'Y-m-d');
+      // $nqs = '<div class="views-row views-row-1 views-row-odd views-row-first">'
+      //     . '<div class="views-field views-field-title"><span class="field-content">' . $title . '</span></div>'
+      //     . '<div class="views-field views-field-value"><span class="field-content">0</span></div>'
+      //     . '<div class="views-field views-field-field-mark-question-resolved"><div class="field-content">未解决</div></div>'
+      //     . '<div class="views-field views-field-created"><span class="field-content">' . $str_date . '</span></div></div>';
+      // $new_textarea = '<textarea class="text-full ckeditor-mod form-textarea" id="edit-body-und-0-value" name="body[und][0][value]" cols="60" rows="20"></textarea>';
+      // $commands[] = ajax_command_replace('#edit-body-und-0-value', $new_textarea);
+      // $commands[] = ajax_command_prepend('#block-views-my-qa-my-ask .view-content', $nqs);
+      // $commands[] = ajax_command_replace('#sbq-message-error', '');
+      global $user;
+      ctools_include('ajax');
+      ctools_add_js('ajax-responder');
+      $url = 'user/'.$user->uid.'/qa/ask';
+      $commands[] = ctools_ajax_command_redirect($url);
+      print ajax_render($commands);
+      exit;
     } else {
       // In the unlikely case something went wrong on save, the node will be
       // rebuilt and node form redisplayed the same way as in preview.
