@@ -380,12 +380,17 @@ function sbq_center_reservation_theme() {
  */
 
 function sbq_center_reservation_block_info() {
+  $blocks['sbq_add_ask_link'] = array(
+      'info' => t('user: sbq_add_ask_link'),
+      'cache' => DRUPAL_CACHE_PER_ROLE, // default
+  );
   $blocks['resevation_manage'] = array(
       'info' => t('center reservation:resevation_manage'),
-      'status' => TRUE,
-     // 'region' => 'sidebar_second', // Not usually provided.
+      ..'status' => TRUE,
+      // 'region' => 'sidebar_second', // Not usually provided.
       'cache' => DRUPAL_CACHE_PER_ROLE, // default
-  );dpm($blocks);
+  );
+  dpm($blocks);
   return $blocks;
 }
 
