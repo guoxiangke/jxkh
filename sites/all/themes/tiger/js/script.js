@@ -142,7 +142,6 @@ Drupal.behaviors.tiger = {
         }
       });
     });
-    
     if(typeof(CKEDITOR) === 'object')
     CKEDITOR.on( 'dialogDefinition', function( ev )
    {
@@ -157,7 +156,7 @@ Drupal.behaviors.tiger = {
       {
          // remove Upload tab
          dialogDefinition.removeContents( 'advanced' );
-         // dialogDefinition.removeContents( 'target' );
+         dialogDefinition.removeContents( 'target' );
          dialogDefinition.removeContents( 'Link' );
 
 
@@ -170,6 +169,7 @@ Drupal.behaviors.tiger = {
       if ( dialogName == 'link') {
          // remove Upload tab
          dialogDefinition.removeContents( 'advanced' );
+         dialogDefinition.removeContents( 'Upload' );
          dialogDefinition.removeContents( 'target' );
       }
 
