@@ -160,16 +160,17 @@ Drupal.behaviors.tiger = {
          dialogDefinition.removeContents( 'Link' );
 
 
-          dialogDefinition.onShow = function () {
-            // This code will open the Advanced tab.
-            this.selectPage('Upload');
-          };
+          // dialogDefinition.onShow = function () {
+          //   // This code will open the Advanced tab.
+          //   this.selectPage('Upload');
+          // };
       }
 
       if ( dialogName == 'link') {
          // remove Upload tab
          dialogDefinition.removeContents( 'advanced' );
          dialogDefinition.removeContents( 'Upload' );
+         dialogDefinition.removeContents( 'upload' );
          dialogDefinition.removeContents( 'target' );
       }
 
