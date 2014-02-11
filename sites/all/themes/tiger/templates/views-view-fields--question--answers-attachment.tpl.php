@@ -53,6 +53,7 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
   global $base_url, $user;
   $share_a_node = $base_url.'/node/'.$row->nid.'/share/'.$user->uid.'/nojs';
   $comments_per_page = 4;
+  $qnid = arg(1);
 ?>
 
 <div class="sbq_answer">
@@ -67,7 +68,7 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
         <li class="sbq_reply_btn">
           <?php if (!$user->uid) {?>
             <?php if ($node->comment_count == 0) {?>
-              <a href="#" class="sbq_add_reply_btn anonymous_no_comment ">添加评论</a>
+              <a href="/user/login?destination=question/<?php print $qnid; ?>" class="sbq_add_reply_btn anonymous_no_comment ">添加评论</a>
             <?php } else {?>
               <a href="#" class="sbq_add_reply_btn anonymous_comments"><?php print $node->comment_count; ?>条评论</a>
             <?php }?>
