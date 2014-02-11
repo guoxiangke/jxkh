@@ -338,10 +338,14 @@ function sbq_user_relationships_action_between_user($viewer, $viewed, $action_ty
     $relationships = user_relationships_load(array( 'requester_id' => $viewer->uid, 'requestee_id' => $viewed->uid, 'approved' => FALSE ));
 
     foreach ($relationships as $relationship) {
-      dpm($relationships);
-      $list[] = t('You have sent a new @rel_name request to this user. (!pending_requests)', array(
-          '!pending_requests' => l(t('pending requests'), "relationships/sent"),
-          ) + user_relationships_type_translations($relationship));
+      $html = sbq_user_relationships_user_action($relationship, $viewer);
+      $list[] = array(
+          'relationship_type' => $html[0],
+          'relationship_action' => $html[1],
+      );
+//      $list[] = t('You have sent a new @rel_name request to this user. (!pending_requests)', array(
+//          '!pending_requests' => l(t('pending requests'), "relationships/sent"),
+//          ) + user_relationships_type_translations($relationship));
     }
   }
 //
@@ -406,8 +410,7 @@ function sbq_user_relationships_action_between_user($viewer, $viewed, $action_ty
           }
         }
       } else {
-        $list[] = theme('user_relationships_request_relationship_link', array(
-            'relate_to' => $viewed ));
+        $list[] = theme('user_relationships_request_relationship_link', array( 'relate_to' => $viewed ));
       }
     }
   }

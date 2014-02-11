@@ -411,7 +411,6 @@ function sbq_center_reservation_block_view($delta = '') {
   $html .= '<li class="leaf">' . l('添加健康教育', "node/add/sbq-center-edu") . '</li>';
   $html .= '<li class="leaf">' . l('咨询管理', "messages") . '</li>';
   $html .= '</ul>';
-
   return array(
       'subject' => $subject,
       'content' => $html,

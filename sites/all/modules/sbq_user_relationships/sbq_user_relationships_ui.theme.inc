@@ -104,7 +104,7 @@ function theme_sbq_user_relationships_pending_request_cancel_link($variables) {
   $rid = $variables['rid'];
   $vid = $variables['vid'];
   $ajax_token = 'pending_request_cancel' . $vid;
-  return l(t('取消'), 'user/' . $uid . '/relationship/action/' . $rid . '/cancel', array(
+  return '<span class="requested">请求已发送</span>'.l(t('取消'), 'user/' . $uid . '/relationship/action/' . $rid . '/cancel', array(
       'query' => array( 'destination' => $ajax_token ),
       'attributes' => array( 'class' => 'use-ajax pending-cancel ' . $ajax_token )
       )
