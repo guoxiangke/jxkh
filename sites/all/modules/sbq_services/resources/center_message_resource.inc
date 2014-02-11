@@ -22,7 +22,8 @@ function center_message_alter($centerid, $fun, $data) {
     return services_error('not found the center form ' . $centerid, '404');
   }
 
-  if ($mid = center_message_get_privatemsgid($centerid->uid)) {
+
+  if ($mid = center_message_get_privatemsgid($center->uid)) {
     $result = privatemsg_reply($mid, $data['body'], array( 'author' => $user ));
   } else {
     $recipients = user_load($center->uid);
@@ -62,6 +63,7 @@ function center_message_query($centerid, $fun = NULL, $page, $fields, $parameter
   } else {
     $result = privatemsg_thread_load($centermid);
   }
+
   $message = array();
   $user_img = array();
   foreach ($result['messages'] as $key => $value) {
