@@ -931,7 +931,11 @@ function tiger_preprocess_user_picture(&$variables) {
       $filepath = variable_get('user_picture_default', '');
     }
     if (isset($filepath)) {
+      global $user;
       $alt = '';
+      if ($account->uid == $user->uid && arg(1) != $user->uid) {
+        $alt = t('我的个人中心');
+      }
 
       if (module_exists('image') && file_valid_uri($filepath) && $style = variable_get('user_picture_style', '')) {
         $variables['user_picture'] = theme('image_style', array('style_name' => $style, 'path' => $filepath, 'alt' => $alt, 'title' => $alt));
