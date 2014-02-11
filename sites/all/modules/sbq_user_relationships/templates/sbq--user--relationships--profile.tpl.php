@@ -9,7 +9,7 @@
   <li>
     <div class="sbq_user_pic"><?php print $image; ?></div>
     <div class="sbq_content">
-      <div class="sbq_user_name"><?php print $profile['name']; ?></div>
+      <div class="sbq_user_name"><a href="/user/<?php print $profile['uid']; ?>"><?php print $profile['name']; ?></a></div>
       <div class="sbq_follow"><?php print $profile['follow']; ?></div>
     </div>
   </li>
@@ -17,7 +17,7 @@
 <li>
   <div class="sbq_user_pic"><?php print $image ?></div>
   <div class="sbq_content">
-    <div class="sbq_user_name"><?php print $profile['name']; ?></div>
+    <div class="sbq_user_name"><a href="/user/<?php print $profile['uid']; ?>"><?php print $profile['name']; ?></a></div>
     <?php if (isset($profile['bedges']) && strlen(trim($profile['bedges'])) > 0): ?>
     <div class="sbq_user_badge"><?php print $profile['bedges']; ?></div>
     <?php endif; ?>
