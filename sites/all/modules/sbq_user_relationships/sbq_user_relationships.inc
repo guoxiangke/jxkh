@@ -132,6 +132,7 @@ function sbq_user_relationships_ui_pending_requested_ajax($account, $relationshi
       }
       $relationship->approved = TRUE;
       user_relationships_save_relationship($relationship, $action);
+
       if ($_GET['destination']) {
         $commands[] = ajax_command_html('.' . $_GET['destination'], '已同意');
       }
@@ -141,7 +142,7 @@ function sbq_user_relationships_ui_pending_requested_ajax($account, $relationshi
         drupal_access_denied();
         exit();
       }
-      user_relationships_delete_relationship($relationship, $account, $action);
+     // user_relationships_delete_relationship($relationship, $account, $action);
 
       if ($_GET['destination']) {
         $commands[] = ajax_command_html('.' . $_GET['destination'], '已拒绝');

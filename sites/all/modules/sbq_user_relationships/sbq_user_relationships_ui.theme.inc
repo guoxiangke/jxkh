@@ -71,11 +71,11 @@ function theme_sbq_user_relationships_pending_request_approve_link($variables) {
   $uid = $variables['uid'];
   $rid = $variables['rid'];
   $vid = $variables['vid'];
-  $ajax_token = 'received' . $vid;
+  $ajax_token = 'message_' . $rid;
   return l(
       t('同意'), "user/{$uid}/relationship/action/{$rid}/approve", array(
       'query' => array( 'destination' => $ajax_token ),
-      'attributes' => array( 'class' => array( 'use-ajax pending_request_approve_link '.$ajax_token ) ),
+      'attributes' => array( 'class' => array( 'use-ajax pending_request_approve_link '  ) ),
       )
   );
 }
@@ -87,11 +87,11 @@ function theme_sbq_user_relationships_pending_request_disapprove_link($variables
   $uid = $variables['uid'];
   $rid = $variables['rid'];
   $vid = $variables['vid'];
-  $ajax_token = 'ignore' . $vid;
+  $ajax_token = 'message_' . $rid;
   return l(
       t('拒绝'), "user/{$uid}/relationship/action/{$rid}/disapprove", array(
       'query' => array( 'destination' => $ajax_token ),
-      'attributes' => array( 'class' => array( 'use-ajax pending_request_disapprove_link refuse '.$ajax_token ) ),
+      'attributes' => array( 'class' => array( 'use-ajax pending_request_disapprove_link refuse '  ) ),
       )
   );
 }
@@ -134,7 +134,7 @@ function theme_sbq_user_relationships_add_user_link($variables) {
     $replace = '关注';
   }
   $rand = uniqid();
-  $ajax_token = 'user_relationships_' . $vid.$rand;
+  $ajax_token = 'user_relationships_' . $vid . $rand;
   return l($replace, "relationship/ajax/{$uid}/request/{$rid}/{$vid}?destination={$ajax_token}", array(
       'attributes' => array( 'class' => 'use-ajax sbq_add_follow_btn add ' . $ajax_token ) )
   );
@@ -156,23 +156,25 @@ function theme_sbq_user_relationships_process_status($variables) {
     $menu_received_active = 'class="active"';
   }
   $nav = '<div class="sbq_nav">'
-          .'<ul>'
-            .'<li>'.l('系统消息', 'user/message').'</li>'
-            .'<li '.$menu_sent_active.'>'.l('我发送的请求', 'user/'.$user->uid.'/relationship/default/sent').'</li>'
-            .'<li '.$menu_received_active.'>'.l('我收到的请求', 'user/'.$user->uid.'/relationship/default/received').'</li>'
-          .'</ul>'
-        .'</div>';
+      . '<ul>'
+      . '<li>' . l('系统消息', 'user/message') . '</li>'
+      . '<li ' . $menu_sent_active . '>' . l('我发送的请求', 'user/' . $user->uid . '/relationship/default/sent') . '</li>'
+      . '<li ' . $menu_received_active . '>' . l('我收到的请求', 'user/' . $user->uid . '/relationship/default/received') . '</li>'
+      . '</ul>'
+      . '</div>';
   $output = array(
-      '#prefix' => '<div class="sbq_user_message">'.$nav.'<div class="sbq_con"><ul>',
+      '#prefix' => '<div class="sbq_user_message">' . $nav . '<div class="sbq_con"><ul>',
       '#suffix' => '</ul></div></div>'
   );
   $li = '';
   foreach ($variables['relationships'] as $relationship) {
     $row = sbq_user_relationships_user_action($relationship, $variables['account']);
+    dpm($relationship);
     if ($variables['type'] == 'sent') {
-      $li .= '<li><div class="sbq_text">请求'.$row['user']->name.'成为你的好友</div><div class="sbq_actions">'.$row[1].'</div></li>';
+      $li .= '<li><div class="sbq_text">请求' . $row['user']->name . '成为你的好友</div><div class="sbq_actions message_' . $relationship->rid . '">' . $row[1] . '</div></li>';
     } elseif ($variables['type'] == 'received') {
-      $li .= '<li><div class="sbq_text">'.$row['user']->name.'</div>请求成为你的好友<div class="sbq_actions">'.$row[1].'</div></li>';
+      // dpm($variables);
+     $li .= '<li><div class="sbq_text">' . $row['user']->name . '</div>请求成为你的好友<div class="sbq_actions message_'.$relationship->rid.' ">' . $row[1] . '</div></li>';
     }
   }
   if (empty($li)) {
