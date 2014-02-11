@@ -39,6 +39,8 @@ input,
 .sbq_step,
 .sbq_findpwd .sbq_text,
 .sbq_event_btn { font-family: "Microsoft Yahei", "微软雅黑", "Arial" !important; }
+#sbq_gototop { float: left; width: 40px; height: 40px; margin: 0px 0px 0px 490px; background: url(../image/sbq_gototop.png) no-repeat; position: fixed; bottom: 20px; left: 50%; display: none; }
+#sbq_gototop:hover { background-position: 0px -40px; }
 /*-----sbq_messages-----*/
 .sbq_messages .messages { clear: both; padding: 8px 5px 8px 28px; line-height: 20px; margin: 5px 0px; font-size: 12px; color: #666; }
 .sbq_messages .messages a { color: #3366CC; margin: 0px 1px; }
@@ -125,7 +127,7 @@ input,
 .sidebar_second .sbq_sidebar_list_03 .sbq_user_pic img { float: left; width: 40px; height: 40px; border-radius: 2px; overflow: hidden; }
 .sidebar_second .sbq_sidebar_list_03 .sbq_content { float: left; width: 210px; line-height: 20px; margin: 0px 0px 0px 10px; }
 .sidebar_second .sbq_sidebar_list_03 .sbq_content span { float: left; }
-.sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_user_name { float: left; max-width: 90px; height: 20px; margin: 0px 5px 0px 0px; font-size: 12px; font-weight: bold; overflow: hidden; }
+.sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_user_name { float: left; max-width: 90px; height: 20px; margin: 0px 5px 0px 0px; font-size: 12px; font-weight: bold; word-break: break-all; word-wrap: break-word; overflow: hidden; }
 .sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_user_name a { float: left; color: #225599; word-break: break-all; word-wrap: break-word; }
 .sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_user_name a:hover { text-decoration: underline; }
 .sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_user_badge { float: left; width: auto; max-width: 66px; height: 20px; overflow: hidden; }
@@ -297,6 +299,7 @@ input,
 .cke_editable em { font-style: italic; }
 .cke_editable blockquote { margin: 0.8em 0px; padding: 0px 0px 0px 10px; border-left: 3px solid #D0E5F2; vertical-align: baseline; display: block; font-size: 12px; }
 .cke_contents { padding: 5px !important; }
+.rtecenter { text-align: center; }
 /*------page-node-delete------*/
 .page-node-delete .content { width: 100%; }
 .page-node-delete .confirmation { line-height: 24px; font-size: 16px; font-weight: bold; }
