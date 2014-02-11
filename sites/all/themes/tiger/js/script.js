@@ -142,39 +142,40 @@ Drupal.behaviors.tiger = {
         }
       });
     });
-    if(typeof(CKEDITOR) === 'object')
-    CKEDITOR.on( 'dialogDefinition', function( ev )
-   {
-      // Take the dialog name and its definition from the event
-      // data.
-      var dialogName = ev.data.name;
-      var dialogDefinition = ev.data.definition;
+    
+   //  if(typeof(CKEDITOR) === 'object')
+   //  CKEDITOR.on( 'dialogDefinition', function( ev )
+   // {
+   //    // Take the dialog name and its definition from the event
+   //    // data.
+   //    var dialogName = ev.data.name;
+   //    var dialogDefinition = ev.data.definition;
 
-      // Check if the definition is from the dialog we're
-      // interested on (the Link and Image dialog).
-      if (dialogName == 'image' )
-      {
-         // remove Upload tab
-         dialogDefinition.removeContents( 'advanced' );
-         dialogDefinition.removeContents( 'target' );
-         dialogDefinition.removeContents( 'Link' );
+   //    // Check if the definition is from the dialog we're
+   //    // interested on (the Link and Image dialog).
+   //    if (dialogName == 'image' )
+   //    {
+   //       // remove Upload tab
+   //       dialogDefinition.removeContents( 'advanced' );
+   //       dialogDefinition.removeContents( 'target' );
+   //       dialogDefinition.removeContents( 'Link' );
 
 
-          // dialogDefinition.onShow = function () {
-          //   // This code will open the Advanced tab.
-          //   this.selectPage('Upload');
-          // };
-      }
+   //        // dialogDefinition.onShow = function () {
+   //        //   // This code will open the Advanced tab.
+   //        //   this.selectPage('Upload');
+   //        // };
+   //    }
 
-      if ( dialogName == 'link') {
-         // remove Upload tab
-         dialogDefinition.removeContents( 'advanced' );
-         dialogDefinition.removeContents( 'Upload' );
-         dialogDefinition.removeContents( 'upload' );
-         dialogDefinition.removeContents( 'target' );
-      }
+   //    if ( dialogName == 'link') {
+   //       // remove Upload tab
+   //       dialogDefinition.removeContents( 'advanced' );
+   //       dialogDefinition.removeContents( 'Upload' );
+   //       dialogDefinition.removeContents( 'upload' );
+   //       dialogDefinition.removeContents( 'target' );
+   //    }
 
-   });
+   // });
 
 
   }
