@@ -1,18 +1,49 @@
 jQuery(function($) {
-  // $("a.log").colorbox({
-  //   innerWidth : "500px",
-  //   height : "370px",
-  //   onClosed : function(){
-  //     location.reload(true);
-  //   }
-  // });
+	//login light BOX
+	/*$("a.log").colorbox({
+	innerWidth : "500px",
+	height : "320px"
+	});*/
+	//textarea focus
+	$(".sbq_quick_question textarea").focus(function() {
+		$(this).parent().addClass('on');
+	});
+	$(".sbq_quick_question textarea").blur(function() {
+		$(this).parent().removeClass('on');
+	});
+	//sbq_user_menu
+	$(".sbq_user_menu .sbq_more_list").hover(function() {
+		$(this).find('span').show();
+		$(this).addClass('on');
+	}, function() {
+		$(this).find('span').hide();
+		$(this).removeClass('on');
+	});
+	//go to top
+	$(".header_inner").append("<a href='#' id='sbq_gototop'></a>");
 
-  //textarea focus
-  $(".sbq_quick_question textarea").focus(function() {
-    $(this).parent().addClass('on');
-  });
-  $(".sbq_quick_question textarea").blur(function() {
-    $(this).parent().removeClass('on');
-  });
+	$(function() {
+		//F5
+		if ($(window).scrollTop() > 100) {
+			$("#sbq_gototop").show();
+		} else {
+			$("#sbq_gototop").hide();
+		}
+		//scroll show hide
+		$(window).scroll(function() {
+			if ($(window).scrollTop() > 100) {
+				$("#sbq_gototop").fadeIn(100);
+			} else {
+				$("#sbq_gototop").fadeOut(50);
+			}
+		});
+		//btn
+		$("#sbq_gototop").click(function() {
+			$('body,html').animate({
+				scrollTop : 0
+			}, 500);
+			return false;
+		});
+	});
 
 });

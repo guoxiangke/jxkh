@@ -958,7 +958,7 @@ function tiger_preprocess_user_picture(&$variables) {
       global $user;
       $alt = '';
       if ($account->uid == $user->uid && arg(1) != $user->uid) {
-        $alt = t('我的个人中心');
+        $alt = t('返回我的主页');
       }
 
       if (module_exists('image') && file_valid_uri($filepath) && $style = variable_get('user_picture_style', '')) {

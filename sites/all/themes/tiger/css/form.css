@@ -24,6 +24,7 @@
 /*.sbq_form_01 select { float: left; height: 24px; line-height: 24px; margin: 4px 0px 0px 0px; }*/
 /*sbq_file_01*/
 .sbq_form_wrap input[type="file"] { float: left; width: 220px; height: 36px; line-height: 32px; margin: 0px; padding: 0px; border: 1px #DDDDDD solid; }
+.sbq_form_wrap .field-type-image input[type="submit"] { display: none; }
 /*radio*/
 .sbq_form_wrap .sbq_form_01 .sbq_radio_wrap { float: left; width: 220px; }
 .sbq_form_wrap .sbq_form_01 .sbq_radio_wrap label { width: auto; margin: 0px 5px; }

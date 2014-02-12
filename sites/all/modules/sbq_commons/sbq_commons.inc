@@ -533,7 +533,7 @@ EOF;
       if (!$user->uid) {
         return;
       }
-      $block_html = '<div class="sbq-user-add-question">' . l('我要提问', 'node/add/question') . '</div>';
+      $block_html = '<div class="sbq_follow"><div class="sbq_follow_btn"><a href="/node/add/question" title="我要提问" class="sbq_ask" rel="nofollow">我要提问</a></div></div>';
       break;
 
     case 'sbq_user_menu':
