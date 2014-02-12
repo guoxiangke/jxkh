@@ -171,18 +171,22 @@ function sbq_user_relationships_ui_request_ajax($viewer_id, $rid, $viewed_id) {
   if ($relationship === FALSE || !$relationship) {
     ajax_deliver('error');
   }
+  $time = date('Y-m-d H:i:s');
+  $requestee = $relationship->requestee;
   if ($relationship->type->rtid == FRIEND_DOCTOR_PATIENT) {
     $replace = '<span>已发送请求</span>';
+    $title = "{$relationship->requester->name}向你发出好友请求";
+  //  $href = l('查看', "user/{$requestee->uid}/relationship/default/received");
+    $href = '';
+    $body = $title . ' ' . $href . ' ' . $time;
   } else {
     $replace = '<span>已关注</span>';
+    $title = "{$relationship->requester->name}关注了你";
+    $body = $title.' '.$time;
   }
-  if ($relationship->type->rtid == FOLLOWER_PATIENT && module_exists('privatemsg')) {
-    $time = date('Y-m-d H:i:s');
-    $requestee = $relationship->requestee;
-    privatemsg_new_thread(array( $requestee ), "{$relationship->requester->name}关注了你", "{$relationship->requester->namer}关注了你 {$time}", array( 'author' => user_load(1) )
-    );
+  if (module_exists('privatemsg')) {
+    privatemsg_new_thread(array( $requestee ), $title, $body, array( 'author' => user_load(1) ));
   }
-
   $path = $_GET['q'];
   if ($position = strpos($path, 'destination=')) {
     if ($token = substr($path, $position, strlen($path))) {
