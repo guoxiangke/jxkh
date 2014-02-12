@@ -9,7 +9,8 @@
 function sbq_user_relationships_follow_view($display, $account = NULL) {
   global $user;
   $accounts = $accounts_view = array();
-  if(!$account) $account = $user;
+  if (!$account)
+    $account = $user;
   switch ($display) {
     case 'default':
       if (in_array(USER_PATIENT_RID, array_keys($account->roles))) {
@@ -88,7 +89,7 @@ function sbq_user_relationship_pending_page($type, $account = NULL) {
     $options = array(
         'include_user_info' => TRUE,
         'paging' => variable_get('user_relationships_relationships_per_page', 20),
-        'order' => array('created', 'DESC'),
+        'order' => array( 'created', 'DESC' ),
     );
     $relationships = user_relationships_load(array( 'requester_id' => $account->uid, 'approved' => FALSE ), $options);
 
@@ -98,7 +99,7 @@ function sbq_user_relationship_pending_page($type, $account = NULL) {
     $options = array(
         'include_user_info' => TRUE,
         'paging' => variable_get('user_relationships_relationships_per_page', 20),
-        'order' => array('created', 'DESC'),
+        'order' => array( 'created', 'DESC' ),
     );
     $relationships = user_relationships_load(array( 'requestee_id' => $account->uid, 'approved' => FALSE ), $options);
 
@@ -165,7 +166,7 @@ function sbq_user_relationships_ui_request_ajax($viewer_id, $rid, $viewed_id) {
   $relationship->requester = user_load($viewer_id);
   $relationship->requestee = user_load($viewed_id);
   $relationship->type = user_relationships_type_load($rid);
-  $relationship = user_relationships_request_relationship($relationship);
+  //$relationship = user_relationships_request_relationship($relationship);
 
   if ($relationship === FALSE || !$relationship) {
     ajax_deliver('error');
@@ -175,6 +176,13 @@ function sbq_user_relationships_ui_request_ajax($viewer_id, $rid, $viewed_id) {
   } else {
     $replace = '<span>已关注</span>';
   }
+  if ($relationship->type->rtid == FOLLOWER_PATIENT && module_exists('privatemsg')) {
+    $time = date('Y-m-d H:i:s');
+    $requestee = $relationship->requestee;
+    privatemsg_new_thread(array( $requestee ), "{$relationship->requester->name}关注了你", "{$relationship->requester->namer}关注了你 {$time}", array( 'author' => user_load(1) )
+    );
+  }
+
   $path = $_GET['q'];
   if ($position = strpos($path, 'destination=')) {
     if ($token = substr($path, $position, strlen($path))) {
