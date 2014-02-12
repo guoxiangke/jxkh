@@ -170,7 +170,12 @@
     <?php if ($logged_in || is_numeric(arg(1))): ?>
     <div class="sbq_user_headr"><img src="/sites/all/themes/tiger/image/sbq_user_headr_bg.jpg" width="960" height="200"  alt=""/></div>
     <div class="sbq_user_info">
-      <div class="sbq_user_pic"><?php print $a_picture; ?></div>
+      <div class="sbq_user_pic">
+        <?php print $a_picture; ?>
+        <?php if (!$current_user && $logged_in): ?>
+        <div class="sbq_my_pic"><?php print $picture; ?></div>
+        <?php endif; ?>
+      </div>
       <div class="sbq_user_summary">
         <div class="sbq_user_name">
           <?php if(isset($is_doctor) && $is_doctor): ?>

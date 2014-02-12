@@ -576,15 +576,15 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
       $form['profile_doctor_profile']['field_introduction']['#suffix'] = '</div>';
 
       // profile_doctor_private_profile
-      if (isset($form['profile_doctor_private_profile']['field_personal_phone'])) {
-        $form['profile_doctor_private_profile']['field_personal_phone']['#prefix'] = '<div class="sbq_form_01">';
-        $form['profile_doctor_private_profile']['field_personal_phone']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
-        $form['profile_doctor_private_profile']['field_personal_phone']['#suffix'] = '</div>';
+      if (isset($form['profile_doctor_private_profile']['field_phone_number'])) {
+        $form['profile_doctor_private_profile']['field_phone_number']['#prefix'] = '<div class="sbq_form_01">';
+        $form['profile_doctor_private_profile']['field_phone_number']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
+        $form['profile_doctor_private_profile']['field_phone_number']['#suffix'] = '</div>';
       }
-      if (isset($form['profile_doctor_private_profile']['field_work_phone'])) {
-        $form['profile_doctor_private_profile']['field_work_phone']['#prefix'] = '<div class="sbq_form_01">';
-        $form['profile_doctor_private_profile']['field_work_phone']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
-        $form['profile_doctor_private_profile']['field_work_phone']['#suffix'] = '</div>';
+      if (isset($form['profile_doctor_private_profile']['field_doctor_hospital_phone'])) {
+        $form['profile_doctor_private_profile']['field_doctor_hospital_phone']['#prefix'] = '<div class="sbq_form_01">';
+        $form['profile_doctor_private_profile']['field_doctor_hospital_phone']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
+        $form['profile_doctor_private_profile']['field_doctor_hospital_phone']['#suffix'] = '</div>';
       }
       if (isset($form['profile_doctor_private_profile']['field_image'])) {
         $form['profile_doctor_private_profile']['field_image']['#prefix'] = '<div class="sbq_form_01">';
@@ -594,7 +594,7 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
         $form['profile_doctor_private_profile']['field_license']['#prefix'] = '<div class="sbq_form_01">';
         $form['profile_doctor_private_profile']['field_license']['#suffix'] = '</div>';
       }
-      if (isset($form['profile_doctor_private_profile']['field_personal_phone'])) {
+      if (isset($form['profile_doctor_private_profile']['field_license_num'])) {
         $form['profile_doctor_private_profile']['field_license_num']['#prefix'] = '<div class="sbq_form_01">';
         $form['profile_doctor_private_profile']['field_license_num']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
         $form['profile_doctor_private_profile']['field_license_num']['#suffix'] = '</div>';
@@ -774,6 +774,30 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
           $form['profile_doctor_profile']['field_patient_diseases']['#prefix'] = '<div class="sbq_form_01">';
           $form['profile_doctor_profile']['field_patient_diseases']['#suffix'] = '</div>';
         }
+        // profile_doctor_private_profile
+        if (isset($form['profile_doctor_private_profile']['field_phone_number'])) {
+          $form['profile_doctor_private_profile']['field_phone_number']['#prefix'] = '<div class="sbq_form_01">';
+          $form['profile_doctor_private_profile']['field_phone_number']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
+          $form['profile_doctor_private_profile']['field_phone_number']['#suffix'] = '</div>';
+        }
+        if (isset($form['profile_doctor_private_profile']['field_doctor_hospital_phone'])) {
+          $form['profile_doctor_private_profile']['field_doctor_hospital_phone']['#prefix'] = '<div class="sbq_form_01">';
+          $form['profile_doctor_private_profile']['field_doctor_hospital_phone']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
+          $form['profile_doctor_private_profile']['field_doctor_hospital_phone']['#suffix'] = '</div>';
+        }
+        if (isset($form['profile_doctor_private_profile']['field_image'])) {
+          $form['profile_doctor_private_profile']['field_image']['#prefix'] = '<div class="sbq_form_01">';
+          $form['profile_doctor_private_profile']['field_image']['#suffix'] = '</div>';
+        }
+        if (isset($form['profile_doctor_private_profile']['field_license'])) {
+          $form['profile_doctor_private_profile']['field_license']['#prefix'] = '<div class="sbq_form_01">';
+          $form['profile_doctor_private_profile']['field_license']['#suffix'] = '</div>';
+        }
+        if (isset($form['profile_doctor_private_profile']['field_license_num'])) {
+          $form['profile_doctor_private_profile']['field_license_num']['#prefix'] = '<div class="sbq_form_01">';
+          $form['profile_doctor_private_profile']['field_license_num']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
+          $form['profile_doctor_private_profile']['field_license_num']['#suffix'] = '</div>';
+        }
       }
       if (isset($form['profile_customer_profile'])) {
         if (isset($form['profile_customer_profile']['field_patient_diseases'])) {
@@ -931,7 +955,11 @@ function tiger_preprocess_user_picture(&$variables) {
       $filepath = variable_get('user_picture_default', '');
     }
     if (isset($filepath)) {
+      global $user;
       $alt = '';
+      if ($account->uid == $user->uid && arg(1) != $user->uid) {
+        $alt = t('返回我的主页');
+      }
 
       if (module_exists('image') && file_valid_uri($filepath) && $style = variable_get('user_picture_style', '')) {
         $variables['user_picture'] = theme('image_style', array('style_name' => $style, 'path' => $filepath, 'alt' => $alt, 'title' => $alt));

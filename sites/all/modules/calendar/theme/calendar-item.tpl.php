@@ -42,22 +42,21 @@ $index = 0;
 ?>
 <div class="<?php print !empty($item->class) ? $item->class : 'item'; ?>">
   <div class="view-item view-item-<?php print $view->name ?>">
-    <div class="calendar <?php print $item->granularity; ?>view">
-      <?php print theme('calendar_stripe_stripe', array( 'item' => $item )); ?>
-      <div class="<?php print $item->date_id ?> contents">
-        <?php foreach ($rendered_fields as $field): ?>
-          <?php if ($index++ == 0 && (isset($item->continuation) && $item->continuation)) : ?>
-            <div class="continuation">&laquo;</div>
-          <?php endif; ?>
-          <?php print $field; ?>
-        <?php endforeach; ?>
-      </div>  
-      <?php if (isset($item->continues) && $item->continues) : ?>
-        <div class="continues">&raquo;</div>
-      <?php else : ?>
-        <div class="cutoff">&nbsp;</div>
-      <?php endif; ?>
-    </div> 
+  <div class="calendar <?php print $item->granularity; ?>view">
+    <?php print theme('calendar_stripe_stripe', array('item' => $item)); ?>
+    <div class="<?php print $item->date_id ?> contents">
+      <?php foreach ($rendered_fields as $field): ?>
+        <?php if ($index++ == 0 && (isset($item->continuation) && $item->continuation)) : ?>
+        <div class="continuation">&laquo;</div>
+        <?php endif;?>
+        <?php print $field; ?>
+      <?php endforeach; ?>
+    </div>  
+    <?php if (isset($item->continues) && $item->continues) : ?>
+    <div class="continues">&raquo;</div>
+    <?php else : ?>
+    <div class="cutoff">&nbsp;</div>
+    <?php endif;?>
+  </div> 
   </div>   
 </div>
-

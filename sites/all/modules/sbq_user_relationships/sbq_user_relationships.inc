@@ -132,8 +132,9 @@ function sbq_user_relationships_ui_pending_requested_ajax($account, $relationshi
       }
       $relationship->approved = TRUE;
       user_relationships_save_relationship($relationship, $action);
+
       if ($_GET['destination']) {
-        $commands[] = ajax_command_html('.' . $_GET['destination'], '已同意');
+        $commands[] = ajax_command_html('.' . $_GET['destination'], '<span class="sbq_text">已同意</span>');
       }
       break;
     case 'disapprove':
@@ -144,7 +145,7 @@ function sbq_user_relationships_ui_pending_requested_ajax($account, $relationshi
       user_relationships_delete_relationship($relationship, $account, $action);
 
       if ($_GET['destination']) {
-        $commands[] = ajax_command_html('.' . $_GET['destination'], '已拒绝');
+        $commands[] = ajax_command_html('.' . $_GET['destination'], '<span class="sbq_text">已拒绝</span>');
       }
       break;
     default:

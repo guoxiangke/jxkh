@@ -379,38 +379,42 @@ function sbq_center_reservation_theme() {
  * hook_block_info
  */
 
-function sbq_center_reservation_block_info() {
-  $blocks['resevation_manage'] = array(
-      'info' => t('center reservation:resevation_manage'),
-      'status' => TRUE,
-     // 'region' => 'sidebar_second', // Not usually provided.
-      'cache' => DRUPAL_CACHE_PER_ROLE, // default
-  );dpm($blocks);
-  return $blocks;
-}
+//function sbq_center_reservation_block_info() {
+//  $blocks['resevation_manage'] = array(
+//      'info' => t('center: resevation_manage'),
+//      //'region' => 'sidebar_second', // Not usually provided.
+//      'cache' => DRUPAL_CACHE_PER_ROLE, // default
+//  );
+//  return $blocks;
+//}
 
 /*
  * hook_block_view
  */
 
-function sbq_center_reservation_block_view($delta = '') {
-  if ($delta != 'resevation_manage') {
-    return;
-  }
-  $center = sbq_center_load(arg(1));
-  if (arg(0) != 'center' || !$center || !sbq_center_reservation_access($center, NULL, 'setting center reservation')) {
-    return;
-  }
-  $subject = '中心管理';
-  $html = '<ul>';
-  $html .= '<li class="leaf">' . l('查看预约日期', "center/{$center->nid}/reservation/month") . '</li>';
-  $html .= '<li class="leaf">' . l('预约日期设置', "center/{$center->nid}/reservation/settings") . '</li>';
-  $html .= '<li class="leaf">' . l('预约表单管理', "center/{$center->nid}/reservation/manage") . '</li>';
-  $html .= '<li class="leaf">' . l('添加健康教育', "node/add/sbq-center-edu") . '</li>';
-  $html .= '<li class="leaf">' . l('咨询管理', "messages") . '</li>';
-  $html .= '</ul>';
-  return array(
-      'subject' => $subject,
-      'content' => $html,
-  );
-}
+//function sbq_center_reservation_block_view($delta = '') {
+//  if ($delta != 'resevation_manage') {
+//    return;
+//  }
+//  $center = sbq_center_load(arg(1));
+//  if (arg(0) != 'center' || !$center || !sbq_center_reservation_access($center, NULL, 'setting center reservation')) {
+//    return;
+//  }
+//  $subject = '中心管理';
+//  $html = '<ul>';
+//  $html .= '<li class="leaf">' . l('查看预约日期', "center/{$center->nid}/reservation/month") . '</li>';
+//  $html .= '<li class="leaf">' . l('预约日期设置', "center/{$center->nid}/reservation/settings") . '</li>';
+//  $html .= '<li class="leaf">' . l('预约表单管理', "center/{$center->nid}/reservation/manage") . '</li>';
+//  $html .= '<li class="leaf">' . l('添加健康教育', "node/add/sbq-center-edu") . '</li>';
+//  $html .= '<li class="leaf">' . l('咨询管理', "messages") . '</li>';
+//  $html .= '</ul>';
+//  return array(
+//      'subject' => $subject,
+//      'content' => $html,
+//  );
+  
+//    return array(
+//      'subject' => 'a',
+//      'content' => 'a',
+//  );
+//}

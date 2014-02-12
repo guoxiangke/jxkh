@@ -31,11 +31,12 @@ function template_preprocess_calendar_month(&$vars) {
     $day_names = $rows;
     $rows = array();
   }
+
   $month_rows = $rows;
   foreach ($rows as $weekno => $row) {
     foreach ($row as $day => $data) {
       $cell = $data['data'];
-    
+
       // If this cell is already rendered, like the weekno column,
       // move to the next item.
       if (!is_array($cell)) {
@@ -527,6 +528,7 @@ function template_preprocess_calendar_item(&$vars) {
   // At the last possible minute we fix the values in rendered_fields so it
   // contains the correct rendered content for the type of item and item display.
   $item = $vars['item'];
+
   $multiday_hidden = !empty($vars['view']->style_options['multiday_hidden']) ? $vars['view']->style_options['multiday_hidden'] : array();
 
   if (!empty($item->rendered) && empty($item->is_multi_day)) {

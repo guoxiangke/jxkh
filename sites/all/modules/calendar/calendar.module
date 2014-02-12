@@ -266,7 +266,6 @@ function calendar_theme() {
  */
 function calendar_node_view($node, $view_mode, $langcode) {
   $path = variable_get('calendar_date_link_' . $node->type);
-
   if (!empty($path)) {
     $links['calendar_link'] = array(
       'title' => t('Calendar'),

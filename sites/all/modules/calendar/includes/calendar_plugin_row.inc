@@ -507,6 +507,7 @@ class calendar_plugin_row extends views_plugin_row_fields {
       }
 
     }
+
     return $rows;
   }
 

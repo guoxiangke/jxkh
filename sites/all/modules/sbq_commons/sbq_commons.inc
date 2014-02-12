@@ -350,9 +350,7 @@ function sbq_commons_modal_html($data, $id = 'sbq_modal', $title = '') {
  * @see captcha_form_alter
  */
 function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_times = 3, $mintue = 10) {
-/*
-
- if (!module_exists('captcha')) {
+  if (!module_exists('captcha')) {
     return;
   }
   $url = explode('/', $_GET['q']);
@@ -362,42 +360,6 @@ function _sbq_commons_captcha_display(&$form, &$form_alter, $form_id, $fail_time
     }
     return;
   }
-  if (!in_array($form_id, array( 'user_login_block', 'user_login' ))) {
-    return;
-  }
-  module_load_include('inc', 'captcha');
-  $captcha_point = captcha_get_form_id_setting($form_id);
-  if (!$captcha_point || !$captcha_point->captcha_type) {
-    return;
-  }
-
-  $current_ip = ip_address();
-  $fail_login = db_select('flood', 'f')
-      ->fields('f')
-      ->condition('event', 'failed_login_attempt_ip')
-      ->condition('identifier', $current_ip)
-      ->range(0, $fail_times)
-      ->orderBy('timestamp', 'desc')
-      ->execute();
-  $result = $fail_login->fetchAll();
-  if (!$result) {
-    unset($form['captcha']);
-  } elseif (count($result) == $fail_times && ((time() - $result[2]->timestamp)/60) < $mintue) {
-    return;
-  }
-=======
->>>>>>> 25c226a5413d33719091be2b60ac3b8e403dc5da */
-
-//  if (!module_exists('captcha')) {
-//    return;
-//  }
-//  $url = explode('/', $_GET['q']);
-//  if (isset($url[0]) && $url[0] == 'api') {
-//    if (isset($form['captcha'])) {
-//      unset($form['captcha']);
-//    }
-//    return;
-//  }
 }
 
 /**
@@ -571,7 +533,7 @@ EOF;
       if (!$user->uid) {
         return;
       }
-      $block_html = '<div class="sbq-user-add-question">' . l('我要提问', 'node/add/question') . '</div>';
+      $block_html = '<div class="sbq_follow"><div class="sbq_follow_btn"><a href="/node/add/question" title="我要提问" class="sbq_ask" rel="nofollow">我要提问</a></div></div>';
       break;
 
     case 'sbq_user_menu':
@@ -824,19 +786,26 @@ function ajax_quick_ask_callback($form, &$form_state) {
       watchdog('content', '@type: added %title.', $watchdog_args, WATCHDOG_NOTICE, $node_link);
     }
     if ($node->nid) {
-      $form_state['values']['nid'] = $node->nid;
-      $form_state['nid'] = $node->nid;
-      $title = l($node->title, 'node/' . $node->nid);
-      $str_date = format_date(time(), 'custom', 'Y-m-d');
-      $nqs = '<div class="views-row views-row-1 views-row-odd views-row-first">'
-          . '<div class="views-field views-field-title"><span class="field-content">' . $title . '</span></div>'
-          . '<div class="views-field views-field-value"><span class="field-content">0</span></div>'
-          . '<div class="views-field views-field-field-mark-question-resolved"><div class="field-content">未解决</div></div>'
-          . '<div class="views-field views-field-created"><span class="field-content">' . $str_date . '</span></div></div>';
-      $new_textarea = '<textarea class="text-full ckeditor-mod form-textarea" id="edit-body-und-0-value" name="body[und][0][value]" cols="60" rows="20"></textarea>';
-      $commands[] = ajax_command_replace('#edit-body-und-0-value', $new_textarea);
-      $commands[] = ajax_command_prepend('#block-views-my-qa-my-ask .view-content', $nqs);
-      $commands[] = ajax_command_replace('#sbq-message-error', '');
+      // $form_state['values']['nid'] = $node->nid;
+      // $form_state['nid'] = $node->nid;
+      // $title = l($node->title, 'node/' . $node->nid);
+      // $str_date = format_date(time(), 'custom', 'Y-m-d');
+      // $nqs = '<div class="views-row views-row-1 views-row-odd views-row-first">'
+      //     . '<div class="views-field views-field-title"><span class="field-content">' . $title . '</span></div>'
+      //     . '<div class="views-field views-field-value"><span class="field-content">0</span></div>'
+      //     . '<div class="views-field views-field-field-mark-question-resolved"><div class="field-content">未解决</div></div>'
+      //     . '<div class="views-field views-field-created"><span class="field-content">' . $str_date . '</span></div></div>';
+      // $new_textarea = '<textarea class="text-full ckeditor-mod form-textarea" id="edit-body-und-0-value" name="body[und][0][value]" cols="60" rows="20"></textarea>';
+      // $commands[] = ajax_command_replace('#edit-body-und-0-value', $new_textarea);
+      // $commands[] = ajax_command_prepend('#block-views-my-qa-my-ask .view-content', $nqs);
+      // $commands[] = ajax_command_replace('#sbq-message-error', '');
+      global $user;
+      ctools_include('ajax');
+      ctools_add_js('ajax-responder');
+      $url = 'user/'.$user->uid.'/qa/ask';
+      $commands[] = ctools_ajax_command_redirect($url);
+      print ajax_render($commands);
+      exit;
     } else {
       // In the unlikely case something went wrong on save, the node will be
       // rebuilt and node form redisplayed the same way as in preview.
