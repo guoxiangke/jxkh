@@ -166,20 +166,21 @@ function sbq_user_relationships_ui_request_ajax($viewer_id, $rid, $viewed_id) {
   $relationship->requester = user_load($viewer_id);
   $relationship->requestee = user_load($viewed_id);
   $relationship->type = user_relationships_type_load($rid);
-  //$relationship = user_relationships_request_relationship($relationship);
-
+  $relationship = user_relationships_request_relationship($relationship);
   if ($relationship === FALSE || !$relationship) {
     ajax_deliver('error');
   }
   $time = date('Y-m-d H:i:s');
   $requestee = $relationship->requestee;
+  
+
   if ($relationship->type->rtid == FRIEND_DOCTOR_PATIENT) {
     $replace = '<span>已发送请求</span>';
     $title = "{$relationship->requester->name}向你发出好友请求";
   //  $href = l('查看', "user/{$requestee->uid}/relationship/default/received");
     $href = '';
     $body = $title . ' ' . $href . ' ' . $time;
-  } else {
+  } elseif($relationship->type->rtid == FOLLOWER_DOCTOR || $relationship->type->rtid == FOLLOWER_PATIENT) {
     $replace = '<span>已关注</span>';
     $title = "{$relationship->requester->name}关注了你";
     $body = $title.' '.$time;
