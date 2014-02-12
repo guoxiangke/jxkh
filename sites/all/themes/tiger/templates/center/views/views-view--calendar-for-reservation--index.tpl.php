@@ -27,8 +27,17 @@
  * @ingroup views_templates
  */
 $center_node = node_load(arg(1));
-$center_top_banner_pic = $center_node->field_image;
-dpm($center_top_banner_pic);
+// $center_top_banner_pic = file_create_url($uri);
+$variables = array(
+      'path' => $center_node->field_image[LANGUAGE_NONE][0]['uri'], 
+      // 'alt' => 'Test alt',
+      // 'title' => 'Test title',
+      // 'width' => '50%',
+      // 'height' => '50%',
+      // 'attributes' => array('class' => 'some-img', 'id' => 'my-img'),
+      );
+echo theme('image', $variables);
+//for more styles, @see theme_image_style()
 ?>
 <div class="<?php print $classes; ?>">
   <?php print render($title_prefix); ?>
