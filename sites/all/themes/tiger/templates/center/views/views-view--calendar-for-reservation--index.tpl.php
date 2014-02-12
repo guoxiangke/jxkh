@@ -26,6 +26,7 @@
  *
  * @ingroup views_templates
  */
+///=dale added==========
 $center_node = node_load(arg(1));
 // $center_top_banner_pic = file_create_url($uri);
 $variables = array(
@@ -99,4 +100,7 @@ echo theme('image', $variables);
     </div>
   <?php endif; ?>
 
-</div><?php /* class view */ ?>
+</div><?php /* class view */ 
+//dale added =============
+echo views_embed_view('center_notice', $display_id = 'block_1');
+?>
