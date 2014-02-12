@@ -10,7 +10,7 @@ define('SBQ_CENTER_NODE_TYPE', 'sbq_center');
  */
 function sbq_center_node_access($node, $op, $account) {
   //$limit_content_type = 'sbq_center';
-  if ($op == 'create' && $node == SBQ_CENTER_NODE_TYPE  && current_path() == "node/add/".SBQ_CENTER_NODE_TYPE) {
+  if ($op == 'create' && $node == SBQ_CENTER_NODE_TYPE && current_path() == "node/add/" . SBQ_CENTER_NODE_TYPE) {
     $node_count = db_query('SELECT nid FROM {node} WHERE type = :type AND uid = :uid', array( ':type' => SBQ_CENTER_NODE_TYPE, ':uid' => $account->uid ))->rowCount();
     if ($node_count >= SBQ_CENTER_NODE_LIMIT) {
       // drupal_set_message(t("Your can't create antoher page of !type",array('!type'=>$limit_content_type)), 'status', FALSE);
@@ -117,6 +117,14 @@ function sbq_center_form_alter(&$form, &$form_state, $form_id) {
               ),
           );
         }
+      }
+      break;
+    case 'sbq_center_edu_node_form' :
+      $parm = drupal_get_query_parameters();
+      if (isset($parm['og_group_ref']) && $node = sbq_center_load($parm['og_group_ref'])) {
+        $form['og_group_ref']['und'][0]['default'][0]['target_id']['#default_value'] = "$node->title ($node->nid)";
+        $form['og_group_ref'][LANGUAGE_NONE]['#default_value'] = $node->nid;
+       // $form['og_group_ref'][LANGUAGE_NONE]['#attributes']['disabled'] = TRUE;
       }
       break;
     default:
