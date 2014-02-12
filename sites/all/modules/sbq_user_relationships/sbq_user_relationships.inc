@@ -9,7 +9,8 @@
 function sbq_user_relationships_follow_view($display, $account = NULL) {
   global $user;
   $accounts = $accounts_view = array();
-  if(!$account) $account = $user;
+  if (!$account)
+    $account = $user;
   switch ($display) {
     case 'default':
       if (in_array(USER_PATIENT_RID, array_keys($account->roles))) {
@@ -88,7 +89,7 @@ function sbq_user_relationship_pending_page($type, $account = NULL) {
     $options = array(
         'include_user_info' => TRUE,
         'paging' => variable_get('user_relationships_relationships_per_page', 20),
-        'order' => array('created', 'DESC'),
+        'order' => array( 'created', 'DESC' ),
     );
     $relationships = user_relationships_load(array( 'requester_id' => $account->uid, 'approved' => FALSE ), $options);
 
@@ -98,7 +99,7 @@ function sbq_user_relationship_pending_page($type, $account = NULL) {
     $options = array(
         'include_user_info' => TRUE,
         'paging' => variable_get('user_relationships_relationships_per_page', 20),
-        'order' => array('created', 'DESC'),
+        'order' => array( 'created', 'DESC' ),
     );
     $relationships = user_relationships_load(array( 'requestee_id' => $account->uid, 'approved' => FALSE ), $options);
 
@@ -166,14 +167,26 @@ function sbq_user_relationships_ui_request_ajax($viewer_id, $rid, $viewed_id) {
   $relationship->requestee = user_load($viewed_id);
   $relationship->type = user_relationships_type_load($rid);
   $relationship = user_relationships_request_relationship($relationship);
-
   if ($relationship === FALSE || !$relationship) {
     ajax_deliver('error');
   }
+  $time = date('Y-m-d H:i:s');
+  $requestee = $relationship->requestee;
+  
+
   if ($relationship->type->rtid == FRIEND_DOCTOR_PATIENT) {
     $replace = '<span>已发送请求</span>';
-  } else {
+    $title = "{$relationship->requester->name}向你发出好友请求";
+  //  $href = l('查看', "user/{$requestee->uid}/relationship/default/received");
+    $href = '';
+    $body = $title . ' ' . $href . ' ' . $time;
+  } elseif($relationship->type->rtid == FOLLOWER_DOCTOR || $relationship->type->rtid == FOLLOWER_PATIENT) {
     $replace = '<span>已关注</span>';
+    $title = "{$relationship->requester->name}关注了你";
+    $body = $title.' '.$time;
+  }
+  if (module_exists('privatemsg')) {
+    privatemsg_new_thread(array( $requestee ), $title, $body, array( 'author' => user_load(1) ));
   }
   $path = $_GET['q'];
   if ($position = strpos($path, 'destination=')) {
