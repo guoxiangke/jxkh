@@ -647,10 +647,6 @@ function _sbq_commons_user_recommonds_friends_ids($roles, $num = 2, $account = n
       "and u.uid in ( select uid from users_roles where rid = {$roles}) ";
 
   if (!empty($recently_user)) {
-
-//    $rid = implode(',', array_keys($recently));
-//    $query .= " ORDER BY  CASE WHEN uid in (" . $rid . ") then 0 else 1 end ";
-
     $recently_user = implode(',', array_keys($recently_user));
     $query .= " ORDER BY CASE WHEN u.uid in (".$recently_user.") then 0 else 1 end limit 0,{$num} ";
   } else {
