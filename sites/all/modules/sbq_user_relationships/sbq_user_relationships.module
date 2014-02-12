@@ -288,8 +288,11 @@ function sbq_user_relationships_recommond($account = NULL, $roles, $is_page = TR
   } elseif (!is_object($account)) {
     $account = user_load($account);
   }
-  if ($roles) {
 
+  //活跃用户
+  //$c = drupal_get_query_parameters();
+  $recently = sbq_user_relationships_recently_user();
+  if ($roles) {
     $query = "SELECT uid from {users_roles} roles "
         . "where roles.uid NOT IN "
         . "(SELECT r.requestee_id FROM {user_relationships} r WHERE r.requester_id = {$account->uid}) "
@@ -303,13 +306,18 @@ function sbq_user_relationships_recommond($account = NULL, $roles, $is_page = TR
         . "and roles.uid <> {$account->uid}";
   }
   if ($is_page) {
-    $query .= " ORDER BY uid ASC ";
+    if (!empty($recently)) {
+      $rid = implode(',', array_keys($recently));
+      $query .= " ORDER BY  CASE WHEN uid in (" . $rid . ") then 0 else 1 end ";
+    } else {
+      $query .= " ORDER BY uid DESC";
+    }
+    $db = db_query($query)->fetchAll();
     $pages = pager_default_initialize(db_query($query)->rowCount(), $count_of_page);
     $result = db_query_range($query, $pages * $count_of_page, $count_of_page)->fetchAllAssoc('uid');
   } else {
     $result = db_query($query)->fetchAllAssoc('uid');
   }
-
   return user_load_multiple(array_keys($result));
 }
 
@@ -594,4 +602,12 @@ function sbq_user_relationships_user_delete($account) {
   foreach ($relstionships as $rel) {
     user_relationships_delete_relationship($rel, $account->uid);
   }
+}
+
+function sbq_user_relationships_recently_user() {
+
+  $recently_user_query = 'select distinct(uid) as uid from {node} order by created desc limit 100 ';
+  $result = db_query($recently_user_query)->fetchAllAssoc('uid');
+  //$rid = implode(',', array_keys($result));
+  return $result;
 }

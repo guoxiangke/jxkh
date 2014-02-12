@@ -638,13 +638,25 @@ function _sbq_commons_user_recommonds_friends_ids($roles, $num = 2, $account = n
     global $user;
     $account = $user;
   }
-  $query_user = db_query(
-      "select uid from {users} u where " .
+  $recently_user = sbq_user_relationships_recently_user();
+  $query = "select uid from {users} u where " .
       "u.uid not in ( select requestee_id from user_relationships " .
       "where requester_id = {$account->uid}) " .
       "and u.uid not in( select requester_id from user_relationships where requestee_id = {$account->uid}) " .
       "and u.uid <> {$account->uid} " .
-      "and u.uid in ( select uid from users_roles where rid = {$roles}) order by uid DESC limit 0,{$num} ");
+      "and u.uid in ( select uid from users_roles where rid = {$roles}) ";
+
+  if (!empty($recently_user)) {
+
+//    $rid = implode(',', array_keys($recently));
+//    $query .= " ORDER BY  CASE WHEN uid in (" . $rid . ") then 0 else 1 end ";
+
+    $recently_user = implode(',', array_keys($recently_user));
+    $query .= " ORDER BY CASE WHEN u.uid in (".$recently_user.") then 0 else 1 end limit 0,{$num} ";
+  } else {
+    $query .= " ORDER BY u.uid DESC ";
+  }
+  $query_user = db_query($query);
 
   $result = $query_user->fetchAllAssoc('uid');
 
@@ -802,7 +814,7 @@ function ajax_quick_ask_callback($form, &$form_state) {
       global $user;
       ctools_include('ajax');
       ctools_add_js('ajax-responder');
-      $url = 'user/'.$user->uid.'/qa/ask';
+      $url = 'user/' . $user->uid . '/qa/ask';
       $commands[] = ctools_ajax_command_redirect($url);
       print ajax_render($commands);
       exit;
