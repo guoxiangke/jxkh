@@ -22,23 +22,30 @@ function center_message_alter($centerid, $fun, $data) {
     return services_error('not found the center form ' . $centerid, '404');
   }
 
-
-  if ($mid = center_message_get_privatemsgid($center->uid)) {
-    $result = privatemsg_reply($mid, $data['body'], array( 'author' => $user ));
+  $message = array(
+      'author' => $user,
+  );
+  if (isset($data['image_fid'])) {
+    $message['field_message_image']['und'][0]['fid'] = $data['image_fid'];
+  }
+  if ($data['video_fid']) {
+    $message['field_message_video']['und'][0]['fid'] = $data['video_fid'];
+  }
+  if ($mid = center_message_get_privatemsgid($center->uid) && false) {
+    $message['thread_id'] = $mid;
+    $result = privatemsg_reply($mid, $data['body'], $message);
   } else {
     $recipients = user_load($center->uid);
     list($recipients, $invalid) = _privatemsg_parse_userstring($recipients->name);
-    $result = privatemsg_new_thread($recipients, 'center|' . $centerid . '|' . $user->uid, $data['body'], array( 'author' => $user ));
+    $result = privatemsg_new_thread($recipients, 'center|' . $centerid . '|' . $user->uid, $data['body'], $message);
   }
   if (isset($result['success']) && $result['success']) {
     return array(
         'mid' => $result['message']->mid,
-//    'author' => $result['message']->author->uid,
-//    'recipients' => $resul['message']->recipients->uid,
         'centermid' => $result['message']->thread_id
     );
   }
-  return $result;
+  return $result['error'];
 }
 
 /**
@@ -74,13 +81,19 @@ function center_message_query($centerid, $fun = NULL, $page, $fields, $parameter
           'name' => $value->author->name,
       );
     }
+    if (!empty($value->field_message_image)) {
+      $image = file_create_url($value->field_message_image['und'][0]['uri']);
+    }
+//    if (!empty($value->field_message_video)) {
+//      $video = file_create_url($value->field_message_video['und'][0]['uri']);
+//    }
     $message[] = array(
         'mid' => $value->mid,
         'body' => $value->body,
         'timestamp' => $value->timestamp,
         'is_new' => $value->is_new,
         'author' => $user_img[$value->author->uid],
-        // 'recipients' => $user_img[$value->user->uid]
+        'image' => isset($image) ? $image : '',
     );
   }
   return array(
