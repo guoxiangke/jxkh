@@ -22,23 +22,30 @@ function center_message_alter($centerid, $fun, $data) {
     return services_error('not found the center form ' . $centerid, '404');
   }
 
-
+  $message = array(
+      'author' => $user,
+  );
+  if (isset($data['image_fid'])) {
+    $message['field_message_image']['und'][0]['fid'] = $data['image_fid'];
+  }
+  if ($data['video_fid']) {
+    $message['field_message_video']['und'][0]['fid'] = $data['video_fid'];
+  }
   if ($mid = center_message_get_privatemsgid($center->uid)) {
-    $result = privatemsg_reply($mid, $data['body'], array( 'author' => $user ));
+    $message['thread_id'] = $mid;
+    $result = privatemsg_reply($mid, $data['body'], $message);
   } else {
     $recipients = user_load($center->uid);
     list($recipients, $invalid) = _privatemsg_parse_userstring($recipients->name);
-    $result = privatemsg_new_thread($recipients, 'center|' . $centerid . '|' . $user->uid, $data['body'], array( 'author' => $user ));
+    $result = privatemsg_new_thread($recipients, 'center|' . $centerid . '|' . $user->uid, $data['body'], $message);
   }
   if (isset($result['success']) && $result['success']) {
     return array(
         'mid' => $result['message']->mid,
-//    'author' => $result['message']->author->uid,
-//    'recipients' => $resul['message']->recipients->uid,
         'centermid' => $result['message']->thread_id
     );
   }
-  return $result;
+  return $result['error'];
 }
 
 /**
@@ -58,6 +65,18 @@ function center_message_query($centerid, $fun = NULL, $page, $fields, $parameter
     return array();
   }
 
+  if ($fun) {
+    if (!is_numeric($fun)) {
+      $function = 'center_message_' . $fun;
+      if (!function_exists($function)) {
+        services_error("not found $fun interface", 404);
+      }
+      return $function($centerid, $mid, $page, $fields, $parameters, $pagesize);
+    } else {
+      return 'error : not found this interface';
+    }
+  }
+
   if (isset($parameters['start'])) {
     $result = privatemsg_thread_load($centermid, NULL, $parameters['start']);
   } else {
@@ -74,13 +93,19 @@ function center_message_query($centerid, $fun = NULL, $page, $fields, $parameter
           'name' => $value->author->name,
       );
     }
+    if (!empty($value->field_message_image)) {
+      $image = file_create_url($value->field_message_image['und'][0]['uri']);
+    }
+//    if (!empty($value->field_message_video)) {
+//      $video = file_create_url($value->field_message_video['und'][0]['uri']);
+//    }
     $message[] = array(
         'mid' => $value->mid,
         'body' => $value->body,
         'timestamp' => $value->timestamp,
         'is_new' => $value->is_new,
         'author' => $user_img[$value->author->uid],
-        // 'recipients' => $user_img[$value->user->uid]
+        'image' => isset($image) ? $image : '',
     );
   }
   return array(
@@ -109,4 +134,19 @@ function center_message_get_privatemsgid($center_user_id, $account = NULL) {
       . 'order by mid asc limit 1';
   $mids = db_query($query, array( ':user_id' => $account->uid, ':center_user_id' => $center_user_id ))->fetchCol('r.mid');
   return reset($mids);
+}
+
+function center_message_new($centerid, $mid, $page, $fields, $parameters, $pagesize) {
+  $message_new_count = db_select('pm_index', 'pmi')
+      ->fields('pmi', array( 'mid' ))
+      ->condition('is_new', 1)
+      ->condition('recipient', $user->uid)
+      ->condition('thread_id', center_message_get_privatemsgid($center->uid))
+      ->condition('deleted', 0)
+      ->execute()
+      ->rowCount();
+
+  //预约门诊
+  module_load_include('inc', 'sbq_services', 'resources/center_reservation_resource');
+  $messages = center_reservation_message($centerid, $user->uid);
 }

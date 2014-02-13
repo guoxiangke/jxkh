@@ -556,7 +556,6 @@ EOF;
       $user_message_count = sbq_commons_messages_count($user);
       $user_blog_count = sbq_commons_get_count($user->uid, 'blog');
       $user_qa_count = sbq_commons_get_count($user->uid, 'question') + sbq_commons_get_count($user->uid, 'answer');
-      ;
 
       //$user_group_count = 0;
       $user_relationship_count = sbq_user_relationships_my_relstionships($user);
@@ -622,9 +621,9 @@ EOF;
       drupal_add_css(drupal_get_path('module', 'sbq_commons') . '/css/app-download.css');
       $block_html = '<div class="second-code">'
           . '<h2>扫描二维码 即可下载应用</h2>'
-          . '<image src="http://app.shangbq.com/res/api.png">'
+          . '<image src="http://app.shangbq.com/res/api.png" width="100%">'
           . '</div>'
-          . '<iframe width="270" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=270&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=3910809638&verifier=480ee660&dpc=1"></iframe>';
+          . '<iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=270&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=3910809638&verifier=480ee660&dpc=1"></iframe>';
 
       break;
     default:
