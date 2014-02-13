@@ -47,7 +47,14 @@ function tiger_preprocess_page(&$variables) {
   // user center page
   //if ($variables['logged_in'] && arg(0) == 'user') {
   if (arg(0) == 'user') {
-    drupal_add_css(path_to_theme() . "/css/user.css", array('group' => CSS_THEME));
+    // drupal_add_css(path_to_theme() . "/css/user.css", array('group' => CSS_THEME));
+    if (!$variables['logged_in'] && count(arg()) == 1) {
+      drupal_add_css(path_to_theme() . "/css/reg.css", array('group' => CSS_THEME));
+      drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
+      $variables['page']['sidebar_second'] = FALSE;
+    } else {
+      drupal_add_css(path_to_theme() . "/css/user.css", array('group' => CSS_THEME));
+    }
 
     global $user;
     $variables['user'] = $user;
@@ -217,6 +224,10 @@ function tiger_preprocess_page(&$variables) {
       'user_point_count' => $user_point_count,
     );
     $variables['follow_link'] = $follow_link;
+  }
+  // center page
+  if (arg(0) == 'center') {
+    drupal_add_css(path_to_theme() . "/css/hospital.css", array('group' => CSS_THEME));
   }
 }
 
