@@ -119,6 +119,24 @@ Drupal.behaviors.tiger = {
         $(this).parent('.form-type-textfield').children('.description').hide();
       };
     });
+
+    $('#user-register-form .form-type-password input').blur(function(){
+      var warning_str = '必须填写'+$(this).prev('label').text().replace('*','');
+      if($(this).val() == '' && $(this).hasClass('required')) {
+        //<span class="register_error"><div class="description" style="display: block;">必须填写邮箱 </div></span>
+        $(this).parent('.form-type-password').wrap('<span class="register_error"/>').append('<div class="description" style="display: block;">'+warning_str+'</div>');
+      }else{
+        $(this).parent('.form-type-password').children('.register_error').hide();
+      };
+    });
+
+    $('#user-register-form input').blur(function(){
+      if(!($(this).val() == '')) {
+        $(this).parent('.form-item').children('.register_error').hide();
+        $(this).parent('.form-item').children('.description').hide();
+      }
+    });
+
     $('#user-register-form .form-item-pass .description').hide();
     $('#user-register-form .password-field').blur(function(){
       $('#user-register-form .password-suggestions').hide();

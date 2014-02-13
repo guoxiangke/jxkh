@@ -46,9 +46,11 @@
 <html>
 <head>
 <?php print $head; ?>
+<meta name="description" content="伤不起平台致力于建立中国最真实的医疗评价网站,为用户提供真实、全面的鉴别评价体系,是医患沟通和解决问题的集中性平台">
+<meta name="keywords" content="伤不起,医疗信用,医院,医生,医疗,医疗卫生,健康管理,医疗资讯,医疗榜,医疗人才">
+<title><?php print $head_title; ?></title>
 <?php print $styles; ?>
 <?php print $scripts; ?>
-<title><?php print $head_title; ?></title>
 </head>
 <body class="<?php print $classes; ?>" <?php print $attributes;?>>
   <?php print $page_top; ?>

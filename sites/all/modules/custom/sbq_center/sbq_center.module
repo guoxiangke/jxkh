@@ -252,3 +252,45 @@ function sbq_center_group_post($centerid = NULL) {
 function sbq_center_privatemsg_view_alter(&$content) {
   $content['messages'] = array_reverse($content['messages']);
 }
+/*
+* get current user's center nid.
+* 
+*/
+
+function _sbq_center_nid_get($account = NULL) {
+  if(!$account) {
+    global $user;
+    $account = $user;
+  }
+  if($center_nid = variable_get('center_'.$account->uid)) return $center_nid;
+  if(!array_key_exists(USER_CENTER_ADMINSTRATOR_RID, $account->roles))return FALSE;
+  $result = db_query("SELECT node.nid FROM {node} node WHERE (( (node.uid = :uid) AND (node.status = '1') AND (node.type IN  ('sbq_center')) ))",array(':uid' => $account->uid));
+  $record = $result->fetchField();
+  variable_set('center_'.$account->uid, $record);
+  return $record;
+}
+
+/**
+ * Implements hook_node_delete().
+ */
+function sbq_center_node_delete($node) {
+  if($node->type == 'sbq_center') {
+    variable_del('center_'.$node->uid);
+  }
+}
+
+/**
+ * Implements hook_node_update().
+ */
+function sbq_center_node_update($node) {
+  variable_set('center_'.$account->uid, $node->nid);
+}
+
+/**
+ * Implements hook_user_delete().
+ */
+function sbq_center_user_delete($account) {
+  if(variable_get('center_'.$account->uid)) {
+    variable_del('center_'.$account->uid);    
+  }    
+}

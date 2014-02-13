@@ -16,6 +16,7 @@ define('USER_DOCTOR_RID', 7);
 define('USER_PATIENT_RID', 5);
 define('USER_EDITOR_RID', 6);
 define('USER_CERTIFIED_DOCTOR_RID', 4);
+define('USER_CENTER_ADMINSTRATOR_RID', 8);
 
 function sbq_commons_menu() {
   module_load_all_includes('module', 'user_relationships_ui');
