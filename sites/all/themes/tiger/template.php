@@ -228,6 +228,7 @@ function tiger_preprocess_page(&$variables) {
   // center page
   if (arg(0) == 'center') {
     drupal_add_css(path_to_theme() . "/css/hospital.css", array('group' => CSS_THEME));
+    $variables['page']['sidebar_second'] = FALSE;
   }
 }
 

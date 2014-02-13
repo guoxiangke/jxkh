@@ -46,6 +46,8 @@ stylesheets[all][] = questions.css
 stylesheets[all][] = filter.css
 stylesheets[all][] = flag.css
 stylesheets[all][] = user.css
+stylesheets[all][] = calendar_multiday.css
+stylesheets[all][] = date_views.css
 
 ; Then we add our own stylesheet.
 stylesheets[all][] = css/general.css
