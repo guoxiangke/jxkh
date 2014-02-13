@@ -556,7 +556,6 @@ EOF;
       $user_message_count = sbq_commons_messages_count($user);
       $user_blog_count = sbq_commons_get_count($user->uid, 'blog');
       $user_qa_count = sbq_commons_get_count($user->uid, 'question') + sbq_commons_get_count($user->uid, 'answer');
-      ;
 
       //$user_group_count = 0;
       $user_relationship_count = sbq_user_relationships_my_relstionships($user);
