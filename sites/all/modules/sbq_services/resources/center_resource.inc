@@ -691,7 +691,7 @@ function center_question_edu_query($centerid, $fun = NULL, $page, $fields, $para
     $art['title'] = $value->node_title;
     $art['nid'] = (int) $value->nid;
     $art['body'] = $node->body['und'][0]['value'];
-    $art['image'] = file_create_url($node->field_image['und'][0]['uri']);
+    $art['thumb'] = file_create_url($node->field_image['und'][0]['uri']);
     $article[] = $art;
   }
   return array( 'video' => $video, 'article' => $article );
