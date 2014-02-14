@@ -146,7 +146,7 @@ function sbq_center_reservation_get_settings($center) {
 }
 
 function sbq_center_reservation_theme_registry_alter(&$theme_registry) {
-  if (arg(2) == 'reservation') {
+  if (arg(0) == 'center') {
     $module_path = drupal_get_path('module', 'sbq_center_reservation');
     $theme_registry['calendar_month_col']['path'] = $module_path;
     $theme_registry['calendar_month_col']['template'] = '/templates/' . $theme_registry['calendar_month_col']['template'];
