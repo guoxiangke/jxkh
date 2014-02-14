@@ -446,22 +446,7 @@ function center($centerid) {
   }
 
   $nodes = _center_formate($center, 'data');
-  //咨询
-//  $question_query = new EntityFieldQuery();
-//  $result = $question_query->entityCondition('entity_type', 'node')
-//      ->propertyCondition('type', 'question')
-//      ->propertyCondition('uid', $user->uid)
-//      ->fieldCondition('og_group_ref', 'target_id', $centerid, '=')
-//      ->execute();
-//
-//  $question = array();
-//
-//  if (isset($result['node']) && $qids = array_keys($result['node'])) {
-//    foreach ($qids as $key => $value) {
-//      $node_q = node_load($value);
-//      $question[$value] = count($node_q->field_answers['und']);
-//    }
-//  }
+
   module_load_include('inc', 'sbq_services', 'resources/center_message_resource');
 
   $message_new_count = db_select('pm_index', 'pmi')

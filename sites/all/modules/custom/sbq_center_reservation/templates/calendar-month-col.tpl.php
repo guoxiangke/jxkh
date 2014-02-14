@@ -9,7 +9,7 @@ $id = (isset($item['id'])) ? 'id="' . $item['id'] . '" ' : '';
 $date = (isset($item['date'])) ? ' data-date="' . $item['date'] . '" ' : '';
 $day = (isset($item['day_of_month'])) ? ' data-day-of-month="' . $item['day_of_month'] . '" ' : '';
 $headers = (isset($item['header_id'])) ? ' headers="' . $item['header_id'] . '" ' : '';
-$is_reservation = sbq_center_reservation_can_reservation($item['date'], '', TRUE);
+$is_reservation = sbq_center_reservation_can_reservation($item['date'], '', 'day');
 $display_item = $item['class'] != 'single-day no-entry future' && $item['class'] != 'single-day no-entry past' && $item['class'] != 'single-day no-entry today';
 ?>
 
@@ -19,20 +19,26 @@ $display_item = $item['class'] != 'single-day no-entry future' && $item['class']
     print $item['entry'];
     ?>
     <?php if ($is_reservation): ?>
-    <div>
-      <span>上午</span>
-      <span> 
-        <a href="/center/<?php echo arg(1); ?>/reservation/created?date=<?php echo $item['date'] ?>">预约</a>
-      </span>
-    </div>
-    <div>
-      <span>下午</span>
-      <span>
-        <a href="/center/<?php echo arg(1); ?>/reservation/created?date=<?php echo $item['date'] ?>">预约</a>
-      </span>
-    </div>
+      <div>
+        <span>上午</span>
+        <span > 
+          <?php if ($is_reservation['am']): ?>
+            <a href="/center/<?php echo arg(1); ?>/reservation/created?date=<?php echo $item['date'] ?> 10:00">预约</a>
+          <?php else: ?>
+            <span>约满</span>
+          <?php endif; ?>
 
-  <?php endif;?>
-</div>
+        </span>
+      </div>
+      <div>
+        <span>下午</span>
+        <?php if ($is_reservation['pm']): ?>
+        <span><a href="/center/<?php echo arg(1); ?>/reservation/created?date=<?php echo $item['date'] ?> 14:00">预约</a></span>
+        <?php else: ?>
+          <span>约满</span>
+        <?php endif; ?>
+      </div>
+    <?php endif; ?>
+  </div>
 
 </td>

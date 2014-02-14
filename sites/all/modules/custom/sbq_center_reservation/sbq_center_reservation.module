@@ -200,7 +200,7 @@ function template_preprocess_sbq_center_reservation_month_row(&$vars) {
  * @param type $center
  * @return boolean
  */
-function sbq_center_reservation_can_reservation($date, $center = '', $display = FALSE) {
+function sbq_center_reservation_can_reservation($date, $center = '', $output = 'day') {
   if (!$center) {
     $center = arg(1);
   }
@@ -215,34 +215,30 @@ function sbq_center_reservation_can_reservation($date, $center = '', $display = 
   }
   $settings = sbq_center_reservation_get_settings($center);
   $week_index = date_day_of_week($date);
-  $week = array(
-      'sunday',
-      'monday',
-      'tuesday',
-      'wednesday',
-      'thursday',
-      'friday',
-      'saturday',
-  );
+  $week = array( 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', );
   if (strtotime($date) < time()) {
     return FALSE;
   }
 
   $reservation = $settings['opendays'][$week[$week_index]];
-
+  if ($output == 'day') {
+    return array(
+        'am' => isset($reservation['a']) && $reservation['a'],
+        'pm' => $reservation['p'] && $reservation['p']
+    );
+  }
   if (isset($reservation['a']) && $reservation['a']) {
     if ($time > 9 && $time < 12) {
-      return true;
+      return TRUE;
     }
   }
   if (isset($reservation['p']) && $reservation['p']) {
     if ($time > 13 && $time < 18) {
-      return true;
+      return TRUE;
     }
   }
-  if ($display) {
-    return isset($reservation['a']) && $reservation['a'] || isset($reservation['p']) && $reservation['p'];
-  }
+
+
   return FALSE;
 }
 
@@ -262,7 +258,7 @@ function sbq_center_reservation_form_alter(&$form, $form_states, $form_id) {
 
 function sbq_center_reservation_form_validate($form, &$form_states) {
 // file_put_contents('/home/chechao/1.log', $form_states['values']['field_node_ref']['und'][0]['target_id']);
-  $c = sbq_center_reservation_can_reservation($form_states['values']['field_reservation_time']['und'][0]['value'], $form_states['values']['og_group_ref']['und'][0]['target_id']);
+  $c = sbq_center_reservation_can_reservation($form_states['values']['field_reservation_time']['und'][0]['value'], $form_states['values']['og_group_ref']['und'][0]['target_id'], 'time');
 
   if (!$c) {
     form_set_error('field_reservation_time ', '您输入的预约时间不能预约');
