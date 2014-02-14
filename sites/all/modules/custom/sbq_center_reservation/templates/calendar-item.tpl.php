@@ -40,7 +40,12 @@
  */
 $index = 0;
 /**
- * <div class="<?php print !empty($item->class) ? $item->class : 'item'; ?>">
+ * 
+ */
+?>
+
+<?php if(arg(0) != 'center'):?>
+<div class="<?php print !empty($item->class) ? $item->class : 'item'; ?>">
   <div class="view-item view-item-<?php print $view->name ?>">
     <div class="calendar <?php print $item->granularity; ?>view">
       <?php print theme('calendar_stripe_stripe', array( 'item' => $item )); ?>
@@ -60,7 +65,5 @@ $index = 0;
     </div> 
   </div>   
 </div>
-
- */
-?>
+<?php endif; ?>
 

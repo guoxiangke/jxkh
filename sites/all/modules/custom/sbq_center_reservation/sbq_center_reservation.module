@@ -146,7 +146,7 @@ function sbq_center_reservation_get_settings($center) {
 }
 
 function sbq_center_reservation_theme_registry_alter(&$theme_registry) {
-  if (arg(0) == 'center') {
+
     $module_path = drupal_get_path('module', 'sbq_center_reservation');
     $theme_registry['calendar_month_col']['path'] = $module_path;
     $theme_registry['calendar_month_col']['template'] = '/templates/' . $theme_registry['calendar_month_col']['template'];
@@ -154,44 +154,27 @@ function sbq_center_reservation_theme_registry_alter(&$theme_registry) {
 
     $theme_registry['calendar_item']['path'] = $module_path;
     $theme_registry['calendar_item']['template'] = '/templates/' . $theme_registry['calendar_item']['template'];
-    $theme_registry['calendar_item']['preprocess functions'][] = 'template_preprocess_sbq_center_reservation_item';
+//    $theme_registry['calendar_item']['preprocess functions'][] = 'template_preprocess_sbq_center_reservation_item';
 
-    $theme_registry['calendar_month_row']['path'] = $module_path;
-    $theme_registry['calendar_month_row']['template'] = '/templates/' . $theme_registry['calendar_month_row']['template'];
-    $theme_registry['calendar_month_row']['preprocess functions'][] = 'template_preprocess_sbq_center_reservation_month_row';
+//    $theme_registry['calendar_month_row']['path'] = $module_path;
+//    $theme_registry['calendar_month_row']['template'] = '/templates/' . $theme_registry['calendar_month_row']['template'];
+//    $theme_registry['calendar_month_row']['preprocess functions'][] = 'template_preprocess_sbq_center_reservation_month_row';
 
-    $theme_registry['calendar_month']['path'] = $module_path;
-    $theme_registry['calendar_month']['template'] = '/templates/' . $theme_registry['calendar_month']['template'];
+//    $theme_registry['calendar_month']['path'] = $module_path;
+//    $theme_registry['calendar_month']['template'] = '/templates/' . $theme_registry['calendar_month']['template'];
     //  $theme_registry['calendar_month']['preprocess functions'][] = 'template_preprocess_sbq_center_reservation_month_row';
-  }
+
 }
 
-/**
- * @see template_preprocess_calendar_item()
- * @param type $vars
- */
-function template_preprocess_sbq_center_reservation_item(&$vars) {
-// unset($vars);
-//  unset($vars['item']);
-//  $vars['item'] = NULL;
-//  if (isset($vars['rendered_fields'])) {
-//    $vars['rendered_fields'] = array();
-//  }
-}
 
 function template_preprocess_sbq_center_reservation_month_col(&$vars) {
-
-  if ($vars['item']['class'] == 'date-box future') {
-
+  
+  if ($vars['item']['class'] == 'date-box future' && arg(0) == 'center') {
     $item = $vars['item']['date'];
     $datetime = new DateTime($item);
     $day = date('d', $datetime->getTimestamp());
     $vars['item']['entry'] = $day;
   }
-}
-
-function template_preprocess_sbq_center_reservation_month_row(&$vars) {
-  
 }
 
 /**
