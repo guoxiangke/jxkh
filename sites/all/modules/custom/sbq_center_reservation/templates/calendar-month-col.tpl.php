@@ -2,7 +2,7 @@
 /**
  * @file
  * Template to display a column
- * 
+ *
  * - $item: The item to render within a td element.
  */
 $id = (isset($item['id'])) ? 'id="' . $item['id'] . '" ' : '';
@@ -15,30 +15,41 @@ $display_item = $item['class'] != 'single-day no-entry future' && $item['class']
 
 <td <?php print $id ?>class="<?php print $item['class'] ?>" colspan="<?php print $item['colspan'] ?>" rowspan="<?php print $item['rowspan'] ?>"<?php print $date . $headers . $day; ?>>
   <div class="inner reservation-item">
-    <?php
-    print $item['entry'];
-    ?>
-    <?php if ($is_reservation): ?>
-      <div>
-        <span>上午</span>
-        <span > 
-          <?php if ($is_reservation['am']): ?>
-            <a href="/center/<?php echo arg(1); ?>/reservation/created?date=<?php echo $item['date'] ?> 10:00">预约</a>
-          <?php else: ?>
-            <span>约满</span>
-          <?php endif; ?>
 
-        </span>
+    <?php if ($is_reservation): ?>
+    <div class="month day">
+    <?php
+      print $item['entry'];
+    ?>
+    </div>
+    <div class="inner">
+      <div class="sbq_order_actions">
+        <dl>
+          <dt>上午</dt>
+          <dd>
+            <?php if ($is_reservation['am']): ?>
+              <a href="/center/<?php echo arg(1); ?>/reservation/created?date=<?php echo $item['date'] ?> 10:00" class="sbq_add">预约</a>
+            <?php else: ?>
+              <a href="#" class="sbq_full">约满</a>
+            <?php endif; ?>
+          </dd>
+        </dl>
+        <dl>
+          <dt>下午</dt>
+          <dd>
+            <?php if ($is_reservation['am']): ?>
+              <a href="/center/<?php echo arg(1); ?>/reservation/created?date=<?php echo $item['date'] ?> 14:00" class="sbq_add">预约</a>
+            <?php else: ?>
+              <a href="#" class="sbq_full">约满</a>
+            <?php endif; ?>
+          </dd>
+        </dl>
       </div>
-      <div>
-        <span>下午</span>
-        <?php if ($is_reservation['pm']): ?>
-        <span><a href="/center/<?php echo arg(1); ?>/reservation/created?date=<?php echo $item['date'] ?> 14:00">预约</a></span>
-        <?php else: ?>
-          <span>约满</span>
-        <?php endif; ?>
-      </div>
+    </div>
+    <?php else: ?>
+    <?php
+      print $item['entry'];
+    ?>
     <?php endif; ?>
   </div>
-
 </td>
