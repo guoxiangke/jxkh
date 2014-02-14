@@ -195,7 +195,7 @@ function template_preprocess_sbq_center_reservation_month_row(&$vars) {
 }
 
 /**
- * 
+ * reservation check
  * @param type $date
  * @param type $center
  * @return boolean
@@ -224,7 +224,7 @@ function sbq_center_reservation_can_reservation($date, $center = '', $output = '
   if ($output == 'day') {
     return array(
         'am' => isset($reservation['a']) && $reservation['a'],
-        'pm' => $reservation['p'] && $reservation['p']
+        'pm' => isset($reservation['p']) && $reservation['p']
     );
   }
   if (isset($reservation['a']) && $reservation['a']) {
@@ -257,7 +257,6 @@ function sbq_center_reservation_form_alter(&$form, $form_states, $form_id) {
  */
 
 function sbq_center_reservation_form_validate($form, &$form_states) {
-// file_put_contents('/home/chechao/1.log', $form_states['values']['field_node_ref']['und'][0]['target_id']);
   $c = sbq_center_reservation_can_reservation($form_states['values']['field_reservation_time']['und'][0]['value'], $form_states['values']['og_group_ref']['und'][0]['target_id'], 'time');
 
   if (!$c) {
