@@ -124,7 +124,10 @@ Drupal.behaviors.tiger = {
       var warning_str = '必须填写'+$(this).prev('label').text().replace('*','');
       if($(this).val() == '' && $(this).hasClass('required')) {
         //<span class="register_error"><div class="description" style="display: block;">必须填写邮箱 </div></span>
-        $(this).parent('.form-type-password').wrap('<span class="register_error"/>').append('<div class="description" style="display: block;">'+warning_str+'</div>');
+        if($(this).parent('.form-type-password').find('.description').length == 0) {
+          $(this).parent('.form-type-password').wrap('<span class="register_error"/>').append('<div class="description" style="display: block;">'+warning_str+'</div>');  
+        }
+        $(this).parent('.form-type-password').children('.register_error').show();
       }else{
         $(this).parent('.form-type-password').children('.register_error').hide();
       };
@@ -134,6 +137,9 @@ Drupal.behaviors.tiger = {
       if(!($(this).val() == '')) {
         $(this).parent('.form-item').children('.register_error').hide();
         $(this).parent('.form-item').children('.description').hide();
+      }else {        
+        $(this).parent('.form-item').children('.register_error').show();
+        $(this).parent('.form-item').children('.description').show();
       }
     });
 
@@ -143,13 +149,24 @@ Drupal.behaviors.tiger = {
     });
 
     //username min length 2
-    // $('#user-register-form input.username').blur(function(){
-    //   if($(this).val().length<2) {
-    //     if(confirm('用户名至少2个字符')){
-    //       $(this).focus();
-    //     };
-    //   }
-    // });
+    //email 
+    
+    $('#user-register-form .form-item-mail input').blur(function(){
+      if(!($(this).val() == '')) {
+        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        if(!regex.test($(this).val())) {          
+          $(this).parent('.form-item').find('.description').addClass('error_message').html('邮箱格式不正确');
+          $(this).parent('.form-item').find('.description').show();
+        }
+      }
+    });
+
+    $('#user-register-form input.username').blur(function(){
+      if($(this).val() != '' && $(this).val().length<2) {
+        $(this).parent('.form-item').find('.description').addClass('error_message').html('用户名至少2个字符');
+        $(this).parent('.form-item').find('.description').show();
+      }
+    });
     //form behaviors
     $('form .form-submit').click(function(e){
       $('input.required').each(function(){
