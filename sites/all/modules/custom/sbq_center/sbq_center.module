@@ -294,3 +294,25 @@ function sbq_center_user_delete($account) {
     variable_del('center_'.$account->uid);    
   }    
 }
+
+/**
+ * Implements hook_menu().
+ */
+function sbq_center_menu() {
+  $items['center/%node/info'] = array(
+    'title callback' => 'node_page_title',
+    'title arguments' => array(1),
+    // The page callback also invokes drupal_set_title() in case
+    // the menu router's title is overridden by a menu link.
+    'page callback' => 'node_page_view4sbq_center',
+    'page arguments' => array(1),
+    'access callback' => 'node_access',
+    'access arguments' => array('view', 1),
+  );
+  return $items;
+}
+
+function node_page_view4sbq_center() {
+  //show blocks only in this url
+  return '';
+}
