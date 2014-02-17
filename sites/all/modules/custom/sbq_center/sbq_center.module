@@ -312,7 +312,23 @@ function sbq_center_menu() {
   return $items;
 }
 
+/**
+ * This is for empty page for center/%node/info
+ */
 function node_page_view4sbq_center() {
   //show blocks only in this url
   return '';
+}
+
+/**
+ * get the pm thread_id between give user & the center user
+ */
+function _sbq_get_pm_thread_id_to_sbqcenter($center_account_uid, $account = NULL) {
+  if(!$account) {
+    global $user;
+    $account = $user;
+  }
+  $thread_id = NULL;
+  $thread_id = db_query('SELECT pi.thread_id FROM {pm_index} pi where pi.recipient = :center_uid AND pi.mid in ( SELECT pm.mid FROM {pm_message} pm WHERE pm.author = :uid)',array(':center_uid'=>$center_account_uid,':uid'=>$account->uid))->fetchField();
+  return $thread_id;
 }
