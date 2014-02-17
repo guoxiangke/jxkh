@@ -114,13 +114,26 @@
     </div>
   </div>
 </div>
+<?php
+  $menu_index_active = '';
+  $menu_reservation_active = '';
+  $menu_info_active = '';
+  if (in_array('index', arg())) {
+    $menu_index_active = ' class="active"';
+  } elseif (in_array('reservation', arg())) {
+    $menu_reservation_active = ' class="active"';
+  } elseif (in_array('info', arg())) {
+    $menu_info_active = ' class="active"';
+  }
+  $center_id = arg(1);
+?>
 <div class="sbq_hospital_nav">
   <ul>
-    <li class="active"><a href="hospital.html">医院首页</a></li>
-    <li><a href="hospital_order_add.html">预约就诊</a></li>
+    <li<?php print $menu_index_active; ?>><?php print l('医院首页', 'center/'.$center_id.'/index'); ?></li>
+    <li<?php print $menu_reservation_active; ?>><?php print l('预约就诊', 'center/'.$center_id.'/reservation'); ?></li>
     <li><a href="hospital_messages.html">咨询医生</a></li>
     <li><a href="hospital_news_list.html">健康讲堂</a></li>
-    <li><a href="hospital_final.html">中心介绍</a></li>
+    <li<?php print $menu_info_active; ?>><?php print l('中心介绍', 'center/'.$center_id.'/info'); ?></li>
   </ul>
 </div>
 <div class="body">

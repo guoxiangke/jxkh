@@ -88,7 +88,7 @@
 .sbq_user_article_list .sbq_quick_question label { display: none; }
 .sbq_user_article_list .sbq_quick_question .form-textarea-wrapper { float: left; width: 658px; padding: 10px; border: 1px #CCC solid; background: #FFF; box-shadow: 0px 1px 3px #CCC inset; border-radius: 3px; }
 .sbq_user_article_list .sbq_quick_question .on { border: 1px #3385D6 solid; }
-.sbq_user_article_list .sbq_quick_question .form-textarea-wrapper textarea { float: left; width: 100%; height: 66px; line-height: 22px; margin: 0px; padding: 0px; border: none; resize: none; overflow: hidden; font-size: 12px; }
+.sbq_user_article_list .sbq_quick_question .form-textarea-wrapper textarea { float: left; width: 100%; height: 72px; line-height: 24px; margin: 0px; padding: 0px; border: none; resize: none; overflow: hidden; font-size: 14px; }
 .sbq_user_article_list .sbq_quick_question .grippie { display: none; }
 .sbq_user_article_list .sbq_quick_question .form-actions { float: right; width: 60px; height: 30px; margin: 10px 0px 0px 0px; position: relative; }
 .sbq_user_article_list .sbq_quick_question .form-actions input { float: left; width: 60px; height: 30px; border-radius: 3px; border: 1px #0D6EB8 solid; background: #1575d5; font-size: 14px; color: #FFF; overflow: hidden; }
@@ -253,3 +253,8 @@
 .sbq_user_badge .sbq_con .sbq_content { float: left; width: 245px; margin: 0px 0px 0px 10px; }
 .sbq_user_badge .sbq_con .sbq_title { float: left; width: 100%; height: 20px; line-height: 20px; font-size: 14px; font-weight: bold; }
 .sbq_user_badge .sbq_con .sbq_text { float: left; width: 100%; height: 40px; line-height: 20px; margin: 0px 0px 0px 0px; overflow: hidden; }
+/*------sbq_user_pm------*/
+.sbq_user_pm { float: left; width: 100%; }
+.sbq_user_pm .sbq_pm_wrap { width: 640px; }
+.sbq_user_pm .sbq_pm_editor { width: 660px; }
+.sbq_user_pm .sbq_pm_editor .form-textarea-wrapper { width: 580px; }

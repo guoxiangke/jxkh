@@ -18,7 +18,6 @@ if (arg(0) == 'center') {
 <td <?php print $id ?>class="<?php print $item['class'] ?>" colspan="<?php print $item['colspan'] ?>" rowspan="<?php print $item['rowspan'] ?>"<?php print $date . $headers . $day; ?>>
   <?php if(arg(0) == 'center') : ?>
   <div class="inner reservation-item">
-
     <?php if ($is_reservation): ?>
       <div class="month day">
         <?php
