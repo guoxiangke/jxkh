@@ -64,6 +64,12 @@ function tiger_preprocess_page(&$variables) {
       $account = $user;
     }
     $variables['account'] = $account;
+    if ($variables['logged_in'] || is_numeric(arg(1))) {
+      $name = $account->name;
+      $title = $name.'的个人主页';
+      drupal_set_title($title);
+    }
+
     if (module_exists('sbq_commons')) {
       $user_post_count = sbq_commons_get_count($account->uid, 'post');
       $user_message_count = sbq_commons_messages_count($account);
@@ -229,6 +235,9 @@ function tiger_preprocess_page(&$variables) {
   if (arg(0) == 'center') {
     drupal_add_css(path_to_theme() . "/css/hospital.css", array('group' => CSS_THEME));
     $variables['page']['sidebar_second'] = FALSE;
+    if (in_array('reservation', arg()) && in_array('created', arg())) {
+      drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
+    }
   }
 }
 
@@ -914,6 +923,67 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     $form['submitted']['app_more']['#prefix'] = '<div class="sbq_form_01">';
     $form['submitted']['app_more']['#attributes']['class'][] = 'sbq_input_01';
     $form['submitted']['app_more']['#suffix'] = '</div>';
+
+    $form['actions']['submit']['#value'] = '提交';
+    $form['actions']['submit']['#attributes']['class'][] = 'sbq_btn';
+    $form['actions']['#prefix'] = '<div class="sbq_botton_01"><label></label>';
+    $form['actions']['#suffix'] = '</div>';
+  } elseif ($form_id == 'sbq_center_reservation_node_form') {
+    $center_calendar = views_embed_view('calendar_for_reservation', $display_id = 'page_4');
+    $center_notice = views_embed_view('center_notice', $display_id = 'block_1');
+    $para = drupal_get_query_parameters();
+    $date = $para['date'];
+    $date = str_replace('10:00', '上午', $date);
+    $date = str_replace('14:00', '下午', $date);
+    $form['#prefix'] = '<div class="hospital_order_add">
+      <div class="sbq_wrap">
+        <div class="sbq_head">请登记患者信息</div>
+        <div class="sbq_form_wrap">
+          <div class="sbq_form_01">
+            <label>预约时间</label>
+            <div class="sbq_text">'.$date.'</div>
+        </div>';
+    $form['#suffix'] = '</div></div>';
+
+    $form['field_visited']['#prefix'] = '<div class="sbq_form_01">';
+    $form['field_visited']['#attributes']['class'][] = 'sbq_input_01';
+    $form['field_visited']['#suffix'] = '</div>';
+
+    $form['field_case_num']['#prefix'] = '<div id="sbq_case_num" class="sbq_form_01">';
+    $form['field_case_num']['#attributes']['class'][] = 'sbq_input_01';
+    $form['field_case_num']['#suffix'] = '</div>';
+
+    $form['field_real_name']['#prefix'] = '<div class="sbq_form_01">';
+    $form['field_real_name']['#attributes']['class'][] = 'sbq_input_01';
+    $form['field_real_name']['#suffix'] = '</div>';
+
+    $form['field_age']['#prefix'] = '<div class="sbq_form_01">';
+    $form['field_age']['#attributes']['class'][] = 'sbq_input_01';
+    $form['field_age']['#suffix'] = '</div>';
+
+    $form['field_sex']['#prefix'] = '<div class="sbq_form_01">';
+    $form['field_sex']['#attributes']['class'][] = 'sbq_input_01';
+    $form['field_sex']['#suffix'] = '</div>';
+
+    $form['field_identity']['#prefix'] = '<div class="sbq_form_01">';
+    $form['field_identity']['#attributes']['class'][] = 'sbq_input_01';
+    $form['field_identity']['#suffix'] = '</div>';
+
+    $form['field_phone']['#prefix'] = '<div class="sbq_form_01">';
+    $form['field_phone']['#attributes']['class'][] = 'sbq_input_01';
+    $form['field_phone']['#suffix'] = '</div>';
+
+    $form['body']['#prefix'] = '<div class="sbq_form_01">';
+    $form['body']['#suffix'] = '</div>';
+
+    $form['field_reservation_status']['#prefix'] = '<div class="sbq_hide">';
+    $form['field_reservation_status']['#suffix'] = '</div>';
+
+    $form['field_reservation_time']['#prefix'] = '<div class="sbq_hide">';
+    $form['field_reservation_time']['#suffix'] = '</div>';
+
+    $form['og_group_ref']['#prefix'] = '<div class="sbq_hide">';
+    $form['og_group_ref']['#suffix'] = '</div>';
 
     $form['actions']['submit']['#value'] = '提交';
     $form['actions']['submit']['#attributes']['class'][] = 'sbq_btn';
