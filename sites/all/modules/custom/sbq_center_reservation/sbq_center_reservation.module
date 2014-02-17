@@ -99,7 +99,7 @@ function sbq_center_reservation_access($center, $reservation = NULL, $type = NUL
   if (!$account) {
     $account = $user;
   }
-  if($account == 0){
+  if($account->uid == 0){
     return FALSE;
   }
   if (!og_user_access('node', $center->nid, $type, $account)) {
