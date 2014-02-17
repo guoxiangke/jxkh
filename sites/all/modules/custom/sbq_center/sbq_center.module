@@ -283,7 +283,7 @@ function sbq_center_node_delete($node) {
  * Implements hook_node_update().
  */
 function sbq_center_node_update($node) {
-  variable_set('center_'.$account->uid, $node->nid);
+  variable_set('center_'.$node->uid, $node->nid);
 }
 
 /**
