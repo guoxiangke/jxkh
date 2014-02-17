@@ -81,3 +81,4 @@ body { background: url(../image/bg.jpg) center top no-repeat fixed; }
 .footer .sbq_about_link ul { float: right; }
 .footer .sbq_about_link ul li { float: left; height: 30px; line-height: 30px; padding: 0px 0px 0px 10px; font-size: 16px; }
 .footer .sbq_copy { float: left; width: 100%; height: 20px; line-height: 20px; text-align: right; font-size: 12px; color: #FFF; }
+#gototop { margin: 0px 0px 0px 540px; }

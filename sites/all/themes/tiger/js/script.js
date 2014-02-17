@@ -86,6 +86,15 @@ jQuery(function($) {
     return false;
   });
 
+  $('#edit-field-visited input:radio').change(function (event) {
+    var value = $(this).val();
+    if (value == 1) {
+      $('#sbq_case_num').show();
+    } else{
+      $('#sbq_case_num').hide();
+    };
+  });
+
   // $(".captcha img").appendTo('.captcha .form-item-captcha-response');
   // $(".captcha .reload-captcha-wrapper a").appendTo('.captcha .form-item-captcha-response');
   $("#user-login-form #edit-captcha-response").attr("placeholder", "验证码");
@@ -125,7 +134,7 @@ Drupal.behaviors.tiger = {
       if($(this).val() == '' && $(this).hasClass('required')) {
         //<span class="register_error"><div class="description" style="display: block;">必须填写邮箱 </div></span>
         if($(this).parent('.form-type-password').find('.description').length == 0) {
-          $(this).parent('.form-type-password').wrap('<span class="register_error"/>').append('<div class="description" style="display: block;">'+warning_str+'</div>');  
+          $(this).parent('.form-type-password').wrap('<span class="register_error"/>').append('<div class="description" style="display: block;">'+warning_str+'</div>');
         }
         $(this).parent('.form-type-password').children('.register_error').show();
       }else{
@@ -137,7 +146,7 @@ Drupal.behaviors.tiger = {
       if(!($(this).val() == '')) {
         $(this).parent('.form-item').children('.register_error').hide();
         $(this).parent('.form-item').children('.description').hide();
-      }else {        
+      }else {
         $(this).parent('.form-item').children('.register_error').show();
         $(this).parent('.form-item').children('.description').show();
       }
@@ -149,12 +158,12 @@ Drupal.behaviors.tiger = {
     });
 
     //username min length 2
-    //email 
-    
+    //email
+
     $('#user-register-form .form-item-mail input').blur(function(){
       if(!($(this).val() == '')) {
         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        if(!regex.test($(this).val())) {          
+        if(!regex.test($(this).val())) {
           $(this).parent('.form-item').find('.description').addClass('error_message').html('邮箱格式不正确');
           $(this).parent('.form-item').find('.description').show();
         }
