@@ -27,22 +27,23 @@
  * @ingroup views_templates
  */
 ///=dale added==========
-$center_node = node_load(arg(1));
-// $center_top_banner_pic = file_create_url($uri);
-$variables = array(
-      'path' => $center_node->field_image[LANGUAGE_NONE][0]['uri'],
-      // 'alt' => 'Test alt',
-      // 'title' => 'Test title',
-      'width' => '740',
-      'height' => '300',
-      // 'attributes' => array('class' => 'some-img', 'id' => 'my-img'),
-      );
-$img = theme('image', $variables);
+// $center_node = node_load(arg(1));
+// // $center_top_banner_pic = file_create_url($uri);
+// $variables = array(
+//       'path' => $center_node->field_image[LANGUAGE_NONE][0]['uri'],
+//       // 'alt' => 'Test alt',
+//       // 'title' => 'Test title',
+//       'width' => '740',
+//       'height' => '300',
+//       // 'attributes' => array('class' => 'some-img', 'id' => 'my-img'),
+//       );
+// $img = theme('image', $variables);
 //for more styles, @see theme_image_style()
+// <div class="sbq_focus">
+//   ?php print $img; ?
+// </div>
 ?>
-<div class="sbq_focus">
-  <?php print $img; ?>
-</div>
+
 <div class="sbq_calendar">
 <div class="<?php print $classes; ?>">
   <?php print render($title_prefix); ?>
