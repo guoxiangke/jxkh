@@ -28,9 +28,15 @@ function center_message_alter($centerid, $fun, $data) {
   if (isset($data['image_fid'])) {
     $message['field_message_image']['und'][0]['fid'] = $data['image_fid'];
   }
-  if ($data['video_fid']) {
+  if (isset($data['video_fid'])) {
     $message['field_message_video']['und'][0]['fid'] = $data['video_fid'];
+    $message['field_message_video']['und'][0]['display'] = 1;
   }
+  if (isset($data['voice_fid'])) {
+    $message['field_message_voice']['und'][0]['fid'] = $data['voice_fid'];
+    $message['field_message_voice']['und'][0]['display'] = 1;
+  }
+
   if ($mid = center_message_get_privatemsgid($center->uid)) {
     $message['thread_id'] = $mid;
     $result = privatemsg_reply($mid, $data['body'], $message);
@@ -85,6 +91,7 @@ function center_message_query($centerid, $fun = NULL, $page, $fields, $parameter
 
   $message = array();
   $user_img = array();
+
   foreach ($result['messages'] as $key => $value) {
     if (!isset($user_img[$value->author->uid])) {
       $user_img[$value->author->uid] = array(
@@ -93,20 +100,28 @@ function center_message_query($centerid, $fun = NULL, $page, $fields, $parameter
           'name' => $value->author->name,
       );
     }
-    if (!empty($value->field_message_image)) {
-      $image = file_create_url($value->field_message_image['und'][0]['uri']);
-    }
-//    if (!empty($value->field_message_video)) {
-//      $video = file_create_url($value->field_message_video['und'][0]['uri']);
-//    }
-    $message[] = array(
+
+    $data = array(
         'mid' => $value->mid,
         'body' => $value->body,
         'timestamp' => $value->timestamp,
         'is_new' => $value->is_new,
         'author' => $user_img[$value->author->uid],
-        'image' => isset($image) ? $image : '',
     );
+   
+    if (!empty($value->field_message_image)) {
+      $data['image'] = file_create_url($value->field_message_image['und'][0]['uri']);
+    }
+    if (!empty($value->field_message_video)) {
+      $data['video'] = file_create_url($value->field_message_video['und'][0]['uri']);
+    }
+    if (!empty($value->field_message_voice)) {
+      $data['voice'] = file_create_url($value->field_message_voice['und'][0]['uri']);
+    }
+    $message[] = $data;
+//    if (!empty($value->field_message_video)) {
+//      $video = file_create_url($value->field_message_video['und'][0]['uri']);
+//    }
   }
   return array(
       'centermid' => $result['thread_id'],
