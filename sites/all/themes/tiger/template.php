@@ -498,6 +498,7 @@ function tiger_preprocess_user_login(&$vars) {
 
 function tiger_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'user_login') {
+
     $form['#prefix'] = '<div class="sbq_login"><div class="sbq_reg_nav">'
         .'<ul>'
           .'<li class="active"><a class="sbq_reg_l"></a></li>'
@@ -557,6 +558,9 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     $form['account']['name']['#attributes']['class'][] = 'sbq_input_01';
     $form['account']['name']['#suffix'] = '</div>';
 
+    $form['account']['name']['#attributes']['autocomplete'] = 'off';
+    $form['account']['mail']['#attributes']['autocomplete'] = 'off';
+    $form['account']['pass']['#attributes']['autocomplete'] = 'off';
     //unset($form['account']['mail']['#description']);
     $form['account']['mail']['#prefix'] = '<div class="sbq_form_01">';
     $form['account']['mail']['#attributes']['class'][] = 'sbq_input_01';
