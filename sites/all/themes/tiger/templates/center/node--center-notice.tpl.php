@@ -80,14 +80,16 @@
  * @ingroup themeable
  */
 ?>
-<div id="node-<?php print $node->nid; ?>" class="sbq_wrap">
-  <div class="sbq_head"><?php print $title; ?></div>
-  <div class="sbq_text">
-    <?php
-      // We hide the comments and links now so that we can render them later.
-      hide($content['comments']);
-      hide($content['links']);
-      print render($content);
-    ?>
+<div id="node-<?php print $node->nid; ?>" class="sbq_hospital_final">
+  <div class="sbq_wrap">
+    <div class="sbq_head"><?php print $title; ?></div>
+    <div class="sbq_article_content">
+      <?php
+        // We hide the comments and links now so that we can render them later.
+        hide($content['comments']);
+        hide($content['links']);
+        print render($content);
+      ?>
+    </div>
   </div>
 </div>
