@@ -17,7 +17,26 @@
 /*sbq_hospital_sidebar*/
 .sbq_hospital_sidebar { float: left; width: 200px; margin: 0px 20px 0px 0px; }
 /*---sbq_focus---*/
-.sbq_focus { float: left; margin: 0px 0px 15px 0px; }
+.sbq_focus { float: left; width: 100%; height: 260px; margin: 0px 0px 15px 0px; overflow: hidden; position: relative; }
+/*.sbq_focus .view-sbq-center-blocks,
+.sbq_focus .view-content,
+.sbq_focus .skin-default,
+.sbq_focus .views_slideshow_cycle_main,
+.sbq_focus .views-slideshow-cycle-main-frame,*/
+.sbq_focus .views-slideshow-cycle-main-frame-row { float: left; width: 100%; }
+.sbq_focus .views-slideshow-cycle-main-frame-row-item { float: left; width: 100%; height: 260px; overflow: hidden; }
+.sbq_focus .views-slideshow-cycle-main-frame-row-item .sbq_img { float: left; width: 100%; height: 260px; overflow: hidden; position: absolute; top: 0; left: 0; z-index: 9; }
+.sbq_focus .views-slideshow-cycle-main-frame-row-item .sbq_img img { float: left; width: 100%; height: 260px; }
+.sbq_focus .views-slideshow-cycle-main-frame-row-item .sbq_title { float: left; width: 100%; height: 30px; position: absolute; bottom: 0; left: 0; z-index: 99; overflow: hidden; background: url(../image/sbq_focus_bg1.png); }
+.sbq_focus .views-slideshow-cycle-main-frame-row-item .sbq_title a { float: left; width: 540px; height: 30px; line-height: 30px; padding: 0px 10px; color: #FFF; font-size: 14px; overflow: hidden; }
+/*.sbq_focus .views-slideshow-controls-bottom { float: left; width: 100%; height: 30px; }*/
+.sbq_focus .widget_pager { float: left; height: 30px; position: absolute; bottom: 0; right: 0; z-index: 9; }
+.sbq_focus .widget_pager .views-slideshow-pager-field-item { float: left; width: 30px; height: 30px; line-height: 30px; text-align: center; color: #FFF; font-size: 14px; font-family: "Arial"; cursor: pointer; background: url(../image/sbq_focus_bg2.png); }
+.sbq_focus .widget_pager .active { background: #1575d5; }
+.sbq_focus .views-slideshow-controls-text span { float: left; width: 36px; height: 64px; background: url(../image/sbq_focus_controls.png) no-repeat; text-indent: -999px; overflow: hidden; position: absolute; z-index: 9; }
+.sbq_focus .views-slideshow-controls-text .views-slideshow-controls-text-previous { background-position: 0px 0px; top: 98px; left: 5px; }
+.sbq_focus .views-slideshow-controls-text .views-slideshow-controls-text-pause { display: none; }
+.sbq_focus .views-slideshow-controls-text .views-slideshow-controls-text-next { background-position: -36px 0px; top: 98px; right: 5px; }
 /*sbq_hospital_sub_nav*/
 .sbq_hospital_sidebar .sbq_hospital_sub_nav { float: left; width: 200px; background: #FFF; }
 .sbq_hospital_sidebar .sbq_hospital_sub_nav ul { float: left; width: 100%; }
@@ -70,7 +89,9 @@
 .hospital_order_setting table td,
 .hospital_order_setting table th { border: 1px #E5E5E5 solid; padding: 5px 10px; line-height: 22px; text-align: left; word-break: break-all; word-wrap: break-word; white-space: normal; }
 .hospital_order_setting table th { background: #EFF6FA; }
+.hospital_order_setting table .on { background: #F8FFF0; }
 .hospital_order_setting .form-submit { float: left; width: 60px; height: 30px; border: none; margin: 10px 0px 0px 0px; background: #1575d5; font-size: 14px; color: #FFF; overflow: hidden; border: 1px #0D6EB8 solid; border-radius: 3px; }
+.hospital_order_setting .form-checkboxes .form-item { height: 22px; line-height: 22px; }
 /*------hospital_order_add------*/
 .hospital_order_add { float: left; width: 100%; }
 .hospital_order_add .sbq_form_wrap { padding: 10px 0px; }
