@@ -1569,7 +1569,7 @@ function sbq_commons_node_view($node, $view_mode, $langcode) {
  * Implements hook_node_insert().
  */
 function sbq_commons_node_insert($node) {
-  if ($node->type = 'answer' && module_exists('druedu_qa')) {
+  if ($node->type == 'answer' && module_exists('druedu_qa')) {
 
     $q_node = node_load($node->field_answer[LANGUAGE_NONE][0]['target_id']);
     $received = user_load($q_node->uid);
