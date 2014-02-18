@@ -100,6 +100,7 @@ jQuery(function($) {
   $("#user-login-form #edit-captcha-response").attr("placeholder", "验证码");
   // $(".captcha").insertBefore('.sbq_checkbox_01');
 
+  // center info page left menu
   var menu = $("#block-views-sbq-center-blocks-menu .sbq_hospital_sub_nav");
   var offset = menu.offset();
   var top = offset.top;
@@ -109,7 +110,18 @@ jQuery(function($) {
     } else {
       menu.css("position", "relative");
     };
+    // TODO: make the menu link active style
   });
+  $(".sbq_hospital_sub_nav li a").click(function() {
+    var target = $($(this).attr("href"));
+    var target_offset = target.offset();
+    var target_top = target_offset.top;
+    $('body,html').animate({
+      scrollTop : target_top
+    }, 500);
+    return false;
+  });
+
 });
 
 
