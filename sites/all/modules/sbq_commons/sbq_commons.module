@@ -1281,6 +1281,9 @@ function sbq_commons_preprocess_views_view(&$vars) {
   //   // drupal_add_css(drupal_get_path('module', 'druedu_qa') . '/css/druedu_qa.css');
   //   drupal_add_css(drupal_get_path('module', 'druedu_qa') . '/css/questions.css');
   // }
+  if ($vars['view']->name == 'sbq_user_center') {
+    $vars['view']->build_info['title'] = '个人中心';
+  }
 }
 
 /**
