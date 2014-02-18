@@ -80,14 +80,9 @@
  * @ingroup themeable
  */
 ?>
-<div class="sbq_user_blog_final">
-  <h2 class="sbq_article_title"><?php print $title; ?></h2>
-  <div class="sbq_article_info">
-    <ul>
-      <li><?php print $date; ?></li>
-    </ul>
-  </div>
-  <div class="sbq_article_content">
+<div id="node-<?php print $node->nid; ?>" class="sbq_wrap">
+  <div class="sbq_head"><?php print $title; ?></div>
+  <div class="sbq_text">
     <?php
       // We hide the comments and links now so that we can render them later.
       hide($content['comments']);
@@ -95,5 +90,4 @@
       print render($content);
     ?>
   </div>
-  <?php print render($content['comments']); ?>
 </div>

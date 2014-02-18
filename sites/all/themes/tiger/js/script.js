@@ -100,6 +100,16 @@ jQuery(function($) {
   $("#user-login-form #edit-captcha-response").attr("placeholder", "验证码");
   // $(".captcha").insertBefore('.sbq_checkbox_01');
 
+  var menu = $("#block-views-sbq-center-blocks-menu .sbq_hospital_sub_nav");
+  var offset = menu.offset();
+  var top = offset.top;
+  $(window).scroll(function() {
+    if ($(window).scrollTop() > top) {
+      menu.css({"position": "fixed", "top": "10px"});
+    } else {
+      menu.css("position", "relative");
+    };
+  });
 });
 
 
@@ -112,9 +122,9 @@ Drupal.behaviors.tiger = {
   attach: function (context, settings) {
 
     $('#user-profile-form .user-picture a').click(function(){
-        $('#edit-picture-upload').click();
-        return false;
-      });
+      $('#edit-picture-upload').click();
+      return false;
+    });
 
     $('#user-register-form .form-type-textfield .description').hide();
     $('#user-register-form .form-type-textfield ').click(function(){
