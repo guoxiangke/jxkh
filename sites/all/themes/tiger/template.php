@@ -38,11 +38,6 @@ function tiger_preprocess_page(&$variables) {
   // question page
   if (arg(0) == 'question' || arg(0) == 'questions') {
     drupal_add_css(path_to_theme() . "/css/question.css", array('group' => CSS_THEME));
-    if (is_numeric(arg(1)) && ! arg(2)) {
-      $node = node_load(arg(1));
-      if(isset($node->title))
-        drupal_set_title($node->title);
-    }
   }
   // user center page
   //if ($variables['logged_in'] && arg(0) == 'user') {
@@ -532,6 +527,34 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     $form['actions']['#prefix'] = '<div class="sbq_botton_01"><label></label>';
     $form['actions']['#suffix'] = '</div>';
   } elseif ($form_id == 'user_register_form') {
+    global $user;
+
+    $js_settings = array(
+      'password' => array(
+        'strengthTitle' => t('Password strength:'),
+        'hasWeaknesses' => t('To make your password stronger:'),
+        'tooShort' => '',
+        'addLowerCase' => '',
+        'addUpperCase' => '',
+        'addNumbers' => '',
+        'addPunctuation' => '',
+        'sameAsUsername' => t('Make it different from your username'),
+        'confirmSuccess' => t('yes'),
+        'confirmFailure' => t('no'),
+        'weak' => t('Weak'),
+        'fair' => t('Fair'),
+        'good' => t('Good'),
+        'strong' => t('Strong'),
+        'confirmTitle' => t('Passwords match:'),
+        'username' => (isset($user->name) ? $user->name : ''),
+      ),
+    );
+    static $already_added = FALSE;
+    if (!$already_added) {
+      $already_added = TRUE;
+      $element['#attached']['js'][] = array('data' => $js_settings, 'type' => 'setting');
+    }
+
     $user_reg_active = '';
     $doctor_reg_active = '';
     $reg = arg(0);
