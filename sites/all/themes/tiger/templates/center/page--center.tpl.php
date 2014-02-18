@@ -73,22 +73,24 @@
  */
   $theme_path = drupal_get_path('theme', 'tiger');
 ?>
+
+<?php
+  $menu_index_active = '';
+  $menu_reservation_active = '';
+  $menu_info_active = '';
+  if (in_array('index', arg())) {
+    $menu_index_active = ' class="active"';
+  } elseif (in_array('reservation', arg())) {
+    $menu_reservation_active = ' class="active"';
+  } elseif (in_array('info', arg())) {
+    $menu_info_active = ' class="active"';
+  }
+  $center_id = arg(1);
+  $center = node_load($center_id);
+  $header_image = file_create_url($center->field_image['und'][0]['uri']);
+?>
 <div class="header">
-  <div class="header_inner">
-    <?php if ($logo): ?>
-    <div class="sbq_logo">
-      <div class="sbq_img">
-        <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo">
-          <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
-        </a>
-      </div>
-    </div>
-    <?php endif; ?>
-    <div class="sbq_main_nav">
-      <?php if ($main_menu || $secondary_menu): ?>
-        <?php print theme('links__system_main_menu', array('links' => $main_menu, 'attributes' => array('id' => 'main-menu', 'class' => array('links', 'inline', 'clearfix')))); ?>
-      <?php endif; ?>
-    </div>
+  <div class="header_inner" style="background:url(<?php print $header_image; ?>) no-repeat;">
     <div class="sbq_header_login">
       <?php if (!$logged_in): ?>
       <div class="sbq_user_links">
@@ -112,21 +114,8 @@
       </div>
       <?php endif; ?>
     </div>
-  </div>
+  <a href="#" id="sbq_gototop" style="display: none;"></a></div>
 </div>
-<?php
-  $menu_index_active = '';
-  $menu_reservation_active = '';
-  $menu_info_active = '';
-  if (in_array('index', arg())) {
-    $menu_index_active = ' class="active"';
-  } elseif (in_array('reservation', arg())) {
-    $menu_reservation_active = ' class="active"';
-  } elseif (in_array('info', arg())) {
-    $menu_info_active = ' class="active"';
-  }
-  $center_id = arg(1);
-?>
 <div class="sbq_hospital_nav">
   <ul>
     <li<?php print $menu_index_active; ?>><?php print l('医院首页', 'center/'.$center_id.'/index'); ?></li>

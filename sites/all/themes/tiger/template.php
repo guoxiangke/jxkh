@@ -233,6 +233,10 @@ function tiger_preprocess_page(&$variables) {
     if (in_array('reservation', arg()) && in_array('created', arg())) {
       drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
     }
+    if (!$variables['logged_in'] && in_array('reservation', arg()) && in_array('my', arg())) {
+      // TODO: hook_menu_alert or something else to control access
+      $variables['page']['content']['system_main']['main']['#markup'] = 'Access denied';
+    }
   }
 }
 

@@ -26,26 +26,8 @@
  *
  * @ingroup views_templates
  */
-///=dale added==========
-// $center_node = node_load(arg(1));
-// // $center_top_banner_pic = file_create_url($uri);
-// $variables = array(
-//       'path' => $center_node->field_image[LANGUAGE_NONE][0]['uri'],
-//       // 'alt' => 'Test alt',
-//       // 'title' => 'Test title',
-//       'width' => '740',
-//       'height' => '300',
-//       // 'attributes' => array('class' => 'some-img', 'id' => 'my-img'),
-//       );
-// $img = theme('image', $variables);
-//for more styles, @see theme_image_style()
-// <div class="sbq_focus">
-//   ?php print $img; ?
-// </div>
 ?>
-
-<div class="sbq_calendar">
-<div class="<?php print $classes; ?>">
+<div class="hospital_order_list">
   <?php print render($title_prefix); ?>
   <?php if ($title): ?>
     <?php print $title; ?>
@@ -70,13 +52,24 @@
   <?php endif; ?>
 
   <?php if ($rows): ?>
-    <div class="view-content">
+    <div class="hospital_order_table">
       <?php print $rows; ?>
     </div>
   <?php elseif ($empty): ?>
-    <div class="view-empty">
-      <?php print $empty; ?>
-    </div>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tbody>
+        <tr>
+          <th width="120">预约号</th>
+          <th width="100">患者姓名</th>
+          <th width="120">联系电话</th>
+          <th width="120">就诊时间</th>
+          <th width="100">预约状态</th>
+        </tr>
+        <tr>
+          <td colspan="5">暂无预约记录</td>
+        </tr>
+      </tbody>
+    </table>
   <?php endif; ?>
 
   <?php if ($pager): ?>
@@ -104,8 +97,5 @@
       <?php print $feed_icon; ?>
     </div>
   <?php endif; ?>
-</div>
-</div><?php /* class view */
-//dale added =============
-echo views_embed_view('center_notice', $display_id = 'block_1');
-?>
+
+</div><?php /* class view */ ?>
