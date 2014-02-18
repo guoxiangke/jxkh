@@ -62,7 +62,7 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
         <li class="sbq_follow_btn"><?php print $follow_link; ?></li>
         <?php }?>
         <?php if ($node->comment_count > 0) {?>
-          <li class="sbq_reply_btn">回复(<?php print $node->comment_count; ?>)</li>
+          <li class="sbq_reply_btn"><?php print l("回复($node->comment_count)",'node/'.$nid); ?></li>
         <?php }?>
         <li><?php print $published_at; ?></li>
         <?php if(!empty($edit_node)): ?>

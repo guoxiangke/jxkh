@@ -341,6 +341,17 @@ function druedu_qa_preprocess_views_view(&$vars) {
     // drupal_add_css(drupal_get_path('module', 'druedu_qa') . '/css/druedu_qa.css');
     drupal_add_css(drupal_get_path('module', 'druedu_qa') . '/css/questions.css');
   }
+   // My view
+  if ($vars['view']->name == 'question') {
+    $q_nid = $vars['view']->args[0];
+    $node = node_load($q_nid);
+    if(isset($node->title)) {
+      $title = $node->title;
+    }else {     
+      $title = truncate_utf8(strip_tags($node->body[LANGUAGE_NONE][0]['value']),15);
+    }
+    $vars['view']->build_info['title'] = $title;
+  }
 }
 
 /**
