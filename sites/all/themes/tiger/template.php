@@ -257,6 +257,17 @@ function tiger_preprocess_page(&$variables) {
     $expert_nid = _sbq_center_expert_nid_get($center_nid);
     $variables['expert_nid'] = $expert_nid;
   }
+  if (isset($variables['node']) && $variables['node']->type == 'center_notice') {
+    drupal_add_css(path_to_theme() . "/css/hospital.css", array('group' => CSS_THEME));
+    drupal_add_css(path_to_theme() . "/css/news.css", array('group' => CSS_THEME));
+    $variables['theme_hook_suggestions'][] = 'page__center';
+    $variables['page']['sidebar_second'] = FALSE;
+    $node = $variables['node'];
+    $center_nid = $node->og_group_ref['und']['0']['target_id'];
+    $variables['center_id'] = $center_nid;
+    $expert_nid = _sbq_center_expert_nid_get($center_nid);
+    $variables['expert_nid'] = $expert_nid;
+  }
 }
 
 function tiger_preprocess_views_view(&$vars) {
