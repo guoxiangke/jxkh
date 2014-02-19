@@ -82,10 +82,12 @@
   $menu_edu_active = '';
   $is_edu = FALSE;
   $is_info = FALSE;
+  $is_reservation = FALSE;
   if (in_array('index', arg())) {
     $menu_index_active = ' class="active"';
   } elseif (in_array('reservation', arg())) {
     $menu_reservation_active = ' class="active"';
+    $is_reservation = TRUE;
   } elseif (in_array('info', arg())) {
     $menu_info_active = ' class="active"';
     $is_info = TRUE;
@@ -153,6 +155,17 @@
         <ul>
           <li><?php print l('专科资讯', 'center/'.$center_id.'/edu/article'); ?></li>
           <li><?php print l('精选视频', 'center/'.$center_id.'/edu'); ?></li>
+        </ul>
+        <?php elseif ($is_reservation): ?>
+        <ul>
+          <li><?php print l('预约就诊', 'center/'.$center_id.'/reservation'); ?></li>
+          <?php if($is_admin || $is_center_owner): ?>
+          <li><?php print l('预约管理', 'center/'.$center_id.'/reservation/manage'); ?></li>
+          <?php elseif($logged_in): ?>
+          <li><?php print l('我的预约', 'center/'.$center_id.'/reservation/my'); ?></li>
+          <?php endif; ?>
+          <li><a href="#">就诊流程</a></li>
+          <li><a href="#">治疗方案</a></li>
         </ul>
         <?php else: ?>
         <ul>
