@@ -78,14 +78,16 @@
   $menu_index_active = '';
   $menu_reservation_active = '';
   $menu_info_active = '';
+  $menu_edu_active = '';
   if (in_array('index', arg())) {
     $menu_index_active = ' class="active"';
   } elseif (in_array('reservation', arg())) {
     $menu_reservation_active = ' class="active"';
   } elseif (in_array('info', arg())) {
     $menu_info_active = ' class="active"';
+  } elseif (in_array('edu', arg())) {
+    $menu_edu_active = ' class="active"';
   }
-  $center_id = arg(1);
   $center = node_load($center_id);
   $header_image = file_create_url($center->field_image['und'][0]['uri']);
 ?>
@@ -121,7 +123,7 @@
     <li<?php print $menu_index_active; ?>><?php print l('医院首页', 'center/'.$center_id.'/index'); ?></li>
     <li<?php print $menu_reservation_active; ?>><?php print l('预约就诊', 'center/'.$center_id.'/reservation'); ?></li>
     <li><a href="hospital_messages.html">咨询医生</a></li>
-    <li><a href="hospital_news_list.html">健康讲堂</a></li>
+    <li<?php print $menu_edu_active; ?>><?php print l('健康讲堂', 'center/'.$center_id.'/edu'); ?></li>
     <li<?php print $menu_info_active; ?>><?php print l('中心介绍', 'center/'.$center_id.'/info'); ?></li>
   </ul>
 </div>

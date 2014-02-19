@@ -229,6 +229,7 @@ function tiger_preprocess_page(&$variables) {
   // center page
   if (arg(0) == 'center') {
     drupal_add_css(path_to_theme() . "/css/hospital.css", array('group' => CSS_THEME));
+    $variables['center_id'] = arg(1);
     $variables['page']['sidebar_second'] = FALSE;
     if (in_array('reservation', arg()) && in_array('created', arg())) {
       drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
@@ -240,6 +241,14 @@ function tiger_preprocess_page(&$variables) {
     if (in_array('info', arg())) {
       drupal_add_css(path_to_theme() . "/css/news.css", array('group' => CSS_THEME));
     }
+  }
+  if (isset($variables['node']) && $variables['node']->type == 'sbq_center_edu') {
+    drupal_add_css(path_to_theme() . "/css/hospital.css", array('group' => CSS_THEME));
+    drupal_add_css(path_to_theme() . "/css/news.css", array('group' => CSS_THEME));
+    $variables['theme_hook_suggestions'][] = 'page__center';
+    $variables['page']['sidebar_second'] = FALSE;
+    $node = $variables['node'];
+    $variables['center_id'] = $node->og_group_ref['und']['0']['target_id'];
   }
 }
 
