@@ -593,7 +593,7 @@ EOF;
         $block_html .= sbq_user_relationships_profile($accounts_view, 'block');
       }
       if ($block_html) {
-        $block_html .= '</ul><div class="more-link"><a href="/user/' . $user->uid . '/relationship/recommand/doctor">更多</a></div>';
+        $block_html .= '</ul><div class="more-link"><a href="/user/relationship/recommand/doctor">更多</a></div>';
       }
       break;
     case 'recommond_patients':
@@ -614,7 +614,7 @@ EOF;
         $block_html .= sbq_user_relationships_profile($accounts_view, 'block');
       }
       if ($block_html) {
-        $block_html .= '</ul><div class="more-link"><a href="/user/' . $user->uid . '/relationship/recommand/patient">更多</a></div>';
+        $block_html .= '</ul><div class="more-link"><a href="/user/relationship/recommand/patient">更多</a></div>';
       }
       break;
     case 'app_page':
@@ -647,7 +647,7 @@ function _sbq_commons_user_recommonds_friends_ids($roles, $num = 2, $account = n
 
   if (!empty($recently_user)) {
     $recently_user = implode(',', array_keys($recently_user));
-    $query .= " ORDER BY CASE WHEN u.uid in (".$recently_user.") then 0 else 1 end limit 0,{$num} ";
+    $query .= " ORDER BY CASE WHEN u.uid in (" . $recently_user . ") then 0 else 1 end limit 0,{$num} ";
   } else {
     $query .= " ORDER BY u.uid DESC ";
   }
