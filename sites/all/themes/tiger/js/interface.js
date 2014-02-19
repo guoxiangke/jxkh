@@ -4,14 +4,14 @@ jQuery(function($) {
 	innerWidth : "500px",
 	height : "320px"
 	});*/
-	//textarea focus
+	//USER textarea focus
 	$(".sbq_quick_question textarea").focus(function() {
 		$(this).parent().addClass('on');
 	});
 	$(".sbq_quick_question textarea").blur(function() {
 		$(this).parent().removeClass('on');
 	});
-	//sbq_user_menu
+	//USER sbq_user_menu
 	$(".sbq_user_menu .sbq_more_list").hover(function() {
 		$(this).find('span').show();
 		$(this).addClass('on');
@@ -19,9 +19,8 @@ jQuery(function($) {
 		$(this).find('span').hide();
 		$(this).removeClass('on');
 	});
-	//go to top
-	$(".header_inner").append("<a href='#' id='sbq_gototop'></a>");
-
+	//ALL go to top
+	$(".header").append('<a href="#" id="sbq_gototop"></a>');
 	$(function() {
 		//F5
 		if ($(window).scrollTop() > 100) {
@@ -45,5 +44,11 @@ jQuery(function($) {
 			return false;
 		});
 	});
-
+	//ALL close
+	$(".sbq_messages .messages").append('<span id="sbq_close">关闭</span>');
+	$(".sbq_messages #sbq_close").click(function() {
+		$(this).parents(".messages").fadeOut(500);
+	});
+	//test
+	$(".header_inner").append('<div class="sbq_search_form"><input type="text" class="sbq_search_form_text" placeholder="请输入搜索关键字"><input type="submit" value="搜索" class="sbq_search_form_btn"></div>');
 });

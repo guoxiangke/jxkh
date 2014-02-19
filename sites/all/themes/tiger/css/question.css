@@ -143,6 +143,6 @@
 .sbq_reply_actions ul .sbq_delete a { background: url(../image/sbq_reply_actions_icon.png) no-repeat; background-position: 0px -132px; padding: 0px 0px 0px 18px; }
 .sbq_reply_actions ul .sbq_delete a:hover { background-position: 0px -154px; }
 /*------messages------*/
-.messages.warning { display: none; }
-.messages.error { width: 100%; line-height: 22px; margin: 0px 0px 5px 0px; color: #900; }
-.messages .element-invisible { display: none; }
+.sbq_answer_form .messages.warning { display: none; }
+.sbq_answer_form .messages.error { width: 100%; line-height: 22px; margin: 0px 0px 5px 0px; color: #900; }
+.sbq_answer_form .messages .element-invisible { display: none; }

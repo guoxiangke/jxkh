@@ -75,6 +75,7 @@
 ?>
 
 <?php
+  global $user;
   $menu_index_active = '';
   $menu_reservation_active = '';
   $menu_info_active = '';
@@ -96,6 +97,10 @@
     $is_edu = TRUE;
   }
   $center = node_load($center_id);
+  $is_center_owner = FALSE;;
+  if ($user->uid == $center->uid) {
+    $is_center_owner = TRUE;
+  }
   $header_image = file_create_url($center->field_image['und'][0]['uri']);
 ?>
 <div class="header">
@@ -111,7 +116,6 @@
       <?php endif; ?>
       <?php if ($logged_in): ?>
       <?php
-        global $user;
         $name = theme('username', array('account' => $user));
         $picture = theme('user_picture', array('account' =>$user));
       ?>
@@ -129,7 +133,7 @@
   <ul>
     <li<?php print $menu_index_active; ?>><?php print l('医院首页', 'center/'.$center_id.'/index'); ?></li>
     <li<?php print $menu_reservation_active; ?>><?php print l('预约就诊', 'center/'.$center_id.'/reservation'); ?></li>
-    <li><a href="hospital_messages.html">咨询医生</a></li>
+    <li><a href="#">咨询医生</a></li>
     <li<?php print $menu_edu_active; ?>><?php print l('健康讲堂', 'center/'.$center_id.'/edu'); ?></li>
     <li<?php print $menu_info_active; ?>><?php print l('中心介绍', 'center/'.$center_id.'/info'); ?></li>
   </ul>
@@ -153,8 +157,12 @@
         <?php else: ?>
         <ul>
           <li><?php print l('预约就诊', 'center/'.$center_id.'/reservation'); ?></li>
-          <li><a href="hospital_qa_list.html">常见问题解答</a></li>
+          <li><a href="#">常见问题解答</a></li>
+          <?php if ($expert_nid): ?>
           <li><?php print l('专家团队', 'center/'.$center_id.'/info', array('fragment' => 'node-'.$expert_nid)); ?></li>
+          <?php elseif($is_admin || $is_center_owner): ?>
+          <li><?php print l('专家团队', 'node/add/center-notice', array('query' => array('og_group_ref' => $center_id))); ?></li>
+          <?php endif; ?>
         </ul>
         <?php endif; ?>
       </div>

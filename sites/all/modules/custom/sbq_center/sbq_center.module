@@ -272,16 +272,16 @@ function _sbq_center_nid_get($account = NULL) {
 
 function _sbq_center_expert_nid_get($center_nid = 0) {
   if ($center_nid == 0) {
-    return 0;
+    $expert_nid =  0;
   }
   $expert_nid = variable_get('center_'.$center_nid.'_expert_nid');
   if($expert_nid) {
     return $expert_nid;
   } else {
+    $expert_nid =  0;
     $query = db_select('node', 'n');
     $query->join('field_data_field_center_taxonomy', 't', 't.entity_id=n.nid');
     $query->join('og_membership', 'm', 'm.etid=n.nid');
-
     $query->fields('n', array('nid'));
     $query->condition('t.entity_type', 'node','=');
     $query->condition('t.deleted', '0');
@@ -290,6 +290,8 @@ function _sbq_center_expert_nid_get($center_nid = 0) {
     $query->condition('m.gid', $center_nid,'=');
     $query->condition('n.status', 1,'=');
     $query->condition('n.type', 'center_notice','=');
+    $query->orderBy('n.created', 'DESC');
+    $query->range(0, 1);
     $query->execute();
     $expert_nid = $query->execute()->fetchField();
     variable_set('center_'.$center_nid.'_expert_nid', $expert_nid);

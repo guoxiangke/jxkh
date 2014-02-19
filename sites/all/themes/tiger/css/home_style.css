@@ -1,8 +1,8 @@
 body { background: url(../image/bg.jpg) center top no-repeat fixed; }
 .body { float: left; width: 100%; margin-top: 60px; padding: 0px; }
 .body .main { width: 1270px; margin: 0 auto; position: relative; }
-.sbq_messages { width: 1050px; margin: 0 auto; }
-.sbq_messages .messages { margin: 0px; }
+.sbq_messages { width: 1050px; margin: 5px auto; }
+#sbq_gototop { margin: 0px 0px 0px 535px; }
 /*sbq_home_menu*/
 .sbq_home_menu { float: left; width: 1070px; }
 .sbq_home_menu a { color: #FFF; }
@@ -58,11 +58,11 @@ body { background: url(../image/bg.jpg) center top no-repeat fixed; }
 .sbq_home_menu ul .pic .sbq_text { display: none; }
 .sbq_home_menu .sbq_focus .sbq_img { background: none; }
 /*header*/
-.header { float: left; width: 100%; height: 60px; overflow: hidden; }
-.header .header_inner { width: 1070px; padding: 0px 100px; margin: 0 auto; }
+.header { float: left; width: 100%; height: 65px; overflow: hidden; border: none; }
+.header .header_inner { width: 1070px; margin: 0 auto; }
 .header .sbq_logo { float: left; }
 .header .sbq_logo a { float: left; width: 300px; height: 60px; background: url(../image/logo.png) no-repeat; }
-.header .sbq_header_login { float: right; height: 24px; margin: 28px 5px 0px 0px; padding: 5px; font-size: 14px; color: #FFF; }
+.header .sbq_header_login { float: right; height: 24px; padding: 5px; font-size: 14px; color: #FFF; }
 .header .sbq_header_login a { color: #FFF; }
 .header .sbq_header_login a:hover { color: #eeeeee; }
 .header .sbq_user_links { float: left; height: 24px; line-height: 24px; margin: 0px 5px 0px 0px; overflow: hidden; white-space: nowrap; }

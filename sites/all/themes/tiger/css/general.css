@@ -41,10 +41,12 @@ input,
 .sbq_event_btn,
 .sbq_pm,
 .sbq_pm textarea { font-family: "Microsoft Yahei", "微软雅黑", "Arial" !important; }
+/*---sbq_gototop---*/
 #sbq_gototop { float: left; width: 40px; height: 40px; margin: 0px 0px 0px 490px; background: url(../image/sbq_gototop.png) no-repeat; position: fixed; bottom: 20px; left: 50%; display: none; }
 #sbq_gototop:hover { background-position: 0px -40px; }
-/*-----sbq_messages-----*/
-.sbq_messages .messages { clear: both; padding: 8px 5px 8px 28px; line-height: 20px; margin: 5px 0px; font-size: 12px; color: #666; }
+/*---sbq_messages---*/
+.sbq_messages #sbq_close { float: left; width: 20px; height: 20px; position: absolute; top: 8px; right: 5px; cursor: pointer; background: url(../image/sbq_close.png) no-repeat; background-position: 50% 50%; text-indent: -999px; overflow: hidden; }
+.sbq_messages .messages { clear: both; padding: 8px 28px 8px 28px; line-height: 20px; margin: 5px 0px; font-size: 12px; color: #666; position: relative; word-wrap: break-word; word-wrap: break-word; }
 .sbq_messages .messages a { color: #3366CC; margin: 0px 1px; }
 .sbq_messages .messages a:hover { text-decoration: underline; }
 .sbq_messages .element-invisible { display: none; }
@@ -52,10 +54,10 @@ input,
 .sbq_messages .error { border: 1px #E6393D solid; background: url(../image/sbq_msg_error.png) #FEF5F1 no-repeat 6px 10px; }
 .sbq_messages .warning { border: 1px #fab418 solid; background: url(../image/sbq_msg_warning.png) #ffe9ad no-repeat 6px 10px; }
 /*------header------*/
-.header { float: left; width: 100%; }
-.header .header_inner { width: 960px; height: 60px; margin: 0 auto; padding: 0px 0px 10px 0px; overflow: hidden; border-bottom: 1px #E5E5E5 solid; }
+.header { float: left; width: 100%; border-bottom: 1px #E5E5E5 solid; }
+.header .header_inner { width: 960px; height: 65px; margin: 0 auto; padding: 0px 0px 5px 0px; overflow: hidden; position: relative; }
 .header .sbq_logo { float: left; }
-.header .sbq_header_login { float: right; height: 24px; margin: 28px 0px 0px 0px; padding: 5px; font-size: 14px; color: #333333; }
+.header .sbq_header_login { float: right; height: 24px; /*margin: 28px 0px 0px 0px;*/ padding: 5px; font-size: 14px; color: #333333; }
 .header .sbq_header_login a { color: #333333; }
 .header .sbq_header_login a:hover { color: #424242; }
 .header .sbq_user_links { float: left; height: 24px; line-height: 24px; margin: 0px 5px 0px 0px; overflow: hidden; white-space: nowrap; }
@@ -350,6 +352,10 @@ Colorbox
 .page-node-delete .form-actions { width: 100%; height: 30px; margin: 10px 0px 0px 0px; position: relative; }
 .page-node-delete .form-actions input { float: left; width: 60px; height: 30px; border-radius: 3px; border: 1px #0D6EB8 solid; background: #1575d5; font-size: 14px; color: #FFF; overflow: hidden; }
 .page-node-delete .form-actions #edit-cancel { float: left; width: 60px; height: 30px; line-height: 30px; font-size: 14px; font-weight: normal; text-align: center; }
+/*sbq_search_form*/
+.sbq_search_form { height: 26px; border-radius: 3px; border: 2px #DDD solid; position: absolute; bottom: 5px; right: 5px; background: #FFF; }
+.sbq_search_form .sbq_search_form_text { float: left; width: 160px; height: 26px; line-height: 26px; padding: 0px 6px; border-radius: 3px; border: none; }
+.sbq_search_form .sbq_search_form_btn { float: left; width: 26px; height: 26px; border-radius: 3px; border: none; background: url(../image/sbq_search_form_btn.png); text-indent: -999px; overflow: hidden; cursor: pointer; }
 /*
 DEV
 */
