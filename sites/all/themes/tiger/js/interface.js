@@ -50,5 +50,5 @@ jQuery(function($) {
 		$(this).parents(".messages").fadeOut(500);
 	});
 	//test
-	$(".header_inner").append('<div class="sbq_search_form"><input type="text" class="sbq_search_form_text" placeholder="请输入搜索关键字"><input type="submit" value="搜索" class="sbq_search_form_btn"></div>');
+	//$(".header_inner").append('<div class="sbq_search_form"><input type="text" class="sbq_search_form_text" placeholder="请输入搜索关键字"><input type="submit" value="搜索" class="sbq_search_form_btn"></div>');
 });
