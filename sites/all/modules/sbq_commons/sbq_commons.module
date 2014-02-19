@@ -18,6 +18,8 @@ define('USER_EDITOR_RID', 6);
 define('USER_CERTIFIED_DOCTOR_RID', 4);
 define('USER_CENTER_ADMINSTRATOR_RID', 8);
 
+define('SBQ_SERIVCE_UID', 1);
+
 function sbq_commons_menu() {
   module_load_all_includes('module', 'user_relationships_ui');
   module_load_include('inc', 'og_ui');
@@ -1279,6 +1281,9 @@ function sbq_commons_preprocess_views_view(&$vars) {
   //   // drupal_add_css(drupal_get_path('module', 'druedu_qa') . '/css/druedu_qa.css');
   //   drupal_add_css(drupal_get_path('module', 'druedu_qa') . '/css/questions.css');
   // }
+  if ($vars['view']->name == 'sbq_user_center') {
+    $vars['view']->build_info['title'] = '个人中心';
+  }
 }
 
 /**
@@ -1561,4 +1566,25 @@ function sbq_commons_node_view($node, $view_mode, $langcode) {
           '#attributes' => array( 'class' => array( 'links', 'inline' ) ),
       );
     }
+}
+
+/**
+ * Implements hook_node_insert().
+ */
+function sbq_commons_node_insert($node) {
+  if ($node->type == 'answer' && module_exists('druedu_qa')) {
+
+    $q_node = node_load($node->field_answer[LANGUAGE_NONE][0]['target_id']);
+    $received = user_load($q_node->uid);
+    $send = user_load(SBQ_SERIVCE_UID);
+    global $user;
+    $title = $user->name." 回答了您的问题";
+    $body = $user->name." 回答了您的问题:".l($q_node->title,'node/'.$q_node->nid);
+    $args['author'] = $send;
+    $args['body'] = $body;
+    $args['format'] = 'full_html';
+    if (module_exists('privatemsg')) {
+      privatemsg_new_thread(array($received), $title, $body, $args);
+    }
+  }
 }

@@ -43,7 +43,9 @@
 <div class="sbq_follow_btn <?php print $flag_wrapper_classes; ?>">
   <?php if ($link_href): ?>
     <a href="<?php print $link_href; ?>" title="<?php print $link_title; ?>" class="<?php print $flag_classes ?>" rel="nofollow"><?php print $link_text; ?></a>
+    <?php if (arg(0)=='question'): ?>
     <a href="/node/add/question" title="我要提问" class="sbq_ask" rel="nofollow">我要提问</a>
+    <?php endif; ?>
   <?php else: ?>
     <span class="<?php print $flag_classes ?>"><?php print $link_text; ?></span>
   <?php endif; ?>

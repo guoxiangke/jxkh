@@ -43,7 +43,12 @@
 //   ?php print $img; ?
 // </div>
 ?>
-
+<div class="sbq_focus">
+<?php /* class view */
+//Felix added =============
+echo views_embed_view('sbq_center_blocks', $display_id = 'slideshow');
+?>
+</div>
 <div class="sbq_calendar">
 <div class="<?php print $classes; ?>">
   <?php print render($title_prefix); ?>
@@ -105,7 +110,8 @@
     </div>
   <?php endif; ?>
 </div>
-</div><?php /* class view */
+</div>
+<?php /* class view */
 //dale added =============
 echo views_embed_view('center_notice', $display_id = 'block_1');
 ?>
