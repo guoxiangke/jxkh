@@ -79,14 +79,21 @@
   $menu_reservation_active = '';
   $menu_info_active = '';
   $menu_edu_active = '';
+  $is_edu = FALSE;
+  $is_info = FALSE;
   if (in_array('index', arg())) {
     $menu_index_active = ' class="active"';
   } elseif (in_array('reservation', arg())) {
     $menu_reservation_active = ' class="active"';
   } elseif (in_array('info', arg())) {
     $menu_info_active = ' class="active"';
+    $is_info = TRUE;
   } elseif (in_array('edu', arg())) {
     $menu_edu_active = ' class="active"';
+    $is_edu = TRUE;
+  } elseif (isset($node) && $node->type == 'sbq_center_edu') {
+    $menu_edu_active = ' class="active"';
+    $is_edu = TRUE;
   }
   $center = node_load($center_id);
   $header_image = file_create_url($center->field_image['und'][0]['uri']);
@@ -134,11 +141,25 @@
       <?php print $messages; ?>
     </div>
     <?php endif; ?>
-    <?php if ($page['sidebar_first']): ?>
-      <div class="sidebar_first sidebar sbq_hospital_sidebar">
-        <?php print render($page['sidebar_first']); ?>
-      </div> <!-- /.sidebar-first -->
-    <?php endif; ?>
+    <div class="sidebar_first sidebar sbq_hospital_sidebar">
+      <?php print render($page['sidebar_first']); ?>
+      <?php if (!$is_info): ?>
+      <div class="sbq_hospital_sub_nav">
+        <?php if ($is_edu): ?>
+        <ul>
+          <li><?php print l('专科资讯', 'center/'.$center_id.'/edu/article'); ?></li>
+          <li><?php print l('精选视频', 'center/'.$center_id.'/edu'); ?></li>
+        </ul>
+        <?php else: ?>
+        <ul>
+          <li><?php print l('预约就诊', 'center/'.$center_id.'/reservation'); ?></li>
+          <li><a href="hospital_qa_list.html">常见问题解答</a></li>
+          <li><?php print l('专家团队', 'center/'.$center_id.'/info', array('fragment' => 'node-'.$expert_nid)); ?></li>
+        </ul>
+        <?php endif; ?>
+      </div>
+      <?php endif; ?>
+    </div> <!-- /.sidebar-first -->
 
     <div class="content">
       <?php print render($page['content']); ?>

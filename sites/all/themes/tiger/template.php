@@ -229,7 +229,11 @@ function tiger_preprocess_page(&$variables) {
   // center page
   if (arg(0) == 'center') {
     drupal_add_css(path_to_theme() . "/css/hospital.css", array('group' => CSS_THEME));
-    $variables['center_id'] = arg(1);
+    $center_nid = arg(1);
+    //var_dump($center_nid);die();
+    $variables['center_id'] = $center_nid;
+    $expert_nid = _sbq_center_expert_nid_get($center_nid);
+    $variables['expert_nid'] = $expert_nid;
     $variables['page']['sidebar_second'] = FALSE;
     if (in_array('reservation', arg()) && in_array('created', arg())) {
       drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
@@ -248,7 +252,10 @@ function tiger_preprocess_page(&$variables) {
     $variables['theme_hook_suggestions'][] = 'page__center';
     $variables['page']['sidebar_second'] = FALSE;
     $node = $variables['node'];
-    $variables['center_id'] = $node->og_group_ref['und']['0']['target_id'];
+    $center_nid = $node->og_group_ref['und']['0']['target_id'];
+    $variables['center_id'] = $center_nid;
+    $expert_nid = _sbq_center_expert_nid_get($center_nid);
+    $variables['expert_nid'] = $expert_nid;
   }
 }
 

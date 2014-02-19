@@ -197,7 +197,7 @@ function ajax_center_ask_callback($form, &$form_state) {
 }
 
 /**
- * get sbq center node by user 
+ * get sbq center node by user
  * @global type $user
  * @param type $account one of array(account,uid,null)
  * @return type node object
@@ -254,7 +254,7 @@ function sbq_center_privatemsg_view_alter(&$content) {
 }
 /*
 * get current user's center nid.
-* 
+*
 */
 
 function _sbq_center_nid_get($account = NULL) {
@@ -268,6 +268,33 @@ function _sbq_center_nid_get($account = NULL) {
   $record = $result->fetchField();
   variable_set('center_'.$account->uid, $record);
   return $record;
+}
+
+function _sbq_center_expert_nid_get($center_nid = 0) {
+  if ($center_nid == 0) {
+    return 0;
+  }
+  $expert_nid = variable_get('center_'.$center_nid.'_expert_nid');
+  if($expert_nid) {
+    return $expert_nid;
+  } else {
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_center_taxonomy', 't', 't.entity_id=n.nid');
+    $query->join('og_membership', 'm', 'm.etid=n.nid');
+
+    $query->fields('n', array('nid'));
+    $query->condition('t.entity_type', 'node','=');
+    $query->condition('t.deleted', '0');
+    $query->condition('t.field_center_taxonomy_tid', '24749','=');
+    $query->condition('m.entity_type', 'node','=');
+    $query->condition('m.gid', $center_nid,'=');
+    $query->condition('n.status', 1,'=');
+    $query->condition('n.type', 'center_notice','=');
+    $query->execute();
+    $expert_nid = $query->execute()->fetchField();
+    variable_set('center_'.$center_nid.'_expert_nid', $expert_nid);
+  }
+  return $expert_nid;
 }
 
 /**
@@ -291,8 +318,8 @@ function sbq_center_node_update($node) {
  */
 function sbq_center_user_delete($account) {
   if(variable_get('center_'.$account->uid)) {
-    variable_del('center_'.$account->uid);    
-  }    
+    variable_del('center_'.$account->uid);
+  }
 }
 
 /**
