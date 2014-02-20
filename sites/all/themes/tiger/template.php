@@ -38,6 +38,18 @@ function tiger_preprocess_page(&$variables) {
   // question page
   if (arg(0) == 'question' || arg(0) == 'questions') {
     drupal_add_css(path_to_theme() . "/css/question.css", array('group' => CSS_THEME));
+    if (arg(0) == 'question') {
+      $qa_nid = arg(1);
+      $center_nid = _sbq_center_get_nid_by_node($qa_nid);
+      if ($center_nid) {
+        drupal_add_css(path_to_theme() . "/css/hospital.css", array('group' => CSS_THEME));
+        $variables['theme_hook_suggestions'][] = 'page__center';
+        $variables['page']['sidebar_second'] = FALSE;
+        $variables['center_id'] = $center_nid;
+        $expert_nid = _sbq_center_expert_nid_get($center_nid);
+        $variables['expert_nid'] = $expert_nid;
+      }
+    }
   }
   // user center page
   //if ($variables['logged_in'] && arg(0) == 'user') {
@@ -357,6 +369,13 @@ function tiger_preprocess_views_view(&$vars) {
     $vars['menu_followed_active'] = $menu_followed_active;
     $vars['menu_ask_active'] = $menu_ask_active;
     $vars['menu_answer_active'] = $menu_answer_active;
+  }
+  if ($vars['view']->name == 'question' && $vars['view']->current_display == 'single_question_page') {
+    $vars['is_center'] = FALSE;
+    $center_nid = $vars['view']->field['og_group_ref']->original_value;
+    if ($center_nid) {
+      $vars['is_center'] = TRUE;
+    }
   }
 }
 
@@ -1050,6 +1069,9 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     $form['actions']['submit']['#attributes']['class'][] = 'sbq_btn';
     $form['actions']['#prefix'] = '<div class="sbq_botton_01"><label></label>';
     $form['actions']['#suffix'] = '</div>';
+  } elseif ($form_id == 'answer_node_form') {
+    $form['title']['#title'] = '我来帮他解答';
+    $form['body']['und'][0]['#title'] = '我来帮他解答';
   }
 }
 
@@ -1116,4 +1138,12 @@ function tiger_preprocess_user_picture(&$variables) {
       }
     }
   }
+}
+
+function tiger_apachesolr_search_noresults() {
+  return t('<div class="search-noresult"><ul>
+<li>Check if your spelling is correct, or try removing filters.</li>
+<li>Remove quotes around phrases to match each word individually: <em>"blue drop"</em> will match less than <em>blue drop</em>.</li>
+<li>You can require or exclude terms using + and -: <em>big +blue drop</em> will require a match on <em>blue</em> while <em>big blue -drop</em> will exclude results that contain <em>drop</em>.</li>
+</ul></div>');
 }
