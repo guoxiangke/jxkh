@@ -1268,7 +1268,7 @@ function sbq_commons_preprocess_views_view(&$vars) {
       $center_nid = $question->og_group_ref[LANGUAGE_NONE][0]['target_id'];//23277
       $center_node = node_load($center_nid);
       global $user;
-      if($user->id != $center_node->uid && $center_node->type =='sbq_center') {
+      if($user->uid != $center_node->uid && $center_node->type =='sbq_center') {
         unset($vars['answer_node_form']);
       }
     }
