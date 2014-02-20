@@ -40,7 +40,9 @@ input,
 .sbq_findpwd .sbq_text,
 .sbq_event_btn,
 .sbq_pm,
-.sbq_pm textarea { font-family: "Microsoft Yahei", "微软雅黑", "Arial" !important; }
+.sbq_pm textarea,
+.search-info,
+.sbq_answer_form label { font-family: "Microsoft Yahei", "微软雅黑", "Arial" !important; }
 /*---sbq_gototop---*/
 #sbq_gototop { float: left; width: 40px; height: 40px; margin: 0px 0px 0px 490px; background: url(../image/sbq_gototop.png) no-repeat; position: fixed; bottom: 20px; left: 50%; display: none; }
 #sbq_gototop:hover { background-position: 0px -40px; }
@@ -56,20 +58,19 @@ input,
 /*------header------*/
 .header { float: left; width: 100%; border-bottom: 1px #E5E5E5 solid; }
 .header .header_inner { width: 960px; height: 65px; margin: 0 auto; padding: 0px 0px 5px 0px; overflow: hidden; position: relative; }
-.header .sbq_logo { float: left; }
+.header .sbq_logo { float: left; margin: 3px 0px 0px 0px; }
 .header .sbq_header_login { float: right; height: 24px; /*margin: 28px 0px 0px 0px;*/ padding: 5px; font-size: 14px; color: #333333; }
-.header .sbq_header_login a { color: #333333; }
-.header .sbq_header_login a:hover { color: #424242; }
+.header .sbq_header_login a { color: #225599; }
 .header .sbq_user_links { float: left; height: 24px; line-height: 24px; margin: 0px 5px 0px 0px; overflow: hidden; white-space: nowrap; }
 .header .sbq_user_links a { padding: 0px 5px; }
 .header .sbq_header_login .sbq_user_pic,
 .header .sbq_header_login .sbq_user_pic img { float: left; width: 24px; height: 24px; border-radius: 2px; }
 /*sbq_main_nav*/
-.sbq_main_nav { float: left; height: 26px; margin: 32px 0px 0px 50px; }
-.sbq_main_nav ul { float: left; }
-.sbq_main_nav ul li { float: left; font-size: 14px; margin: 0px 30px 0px 0px; }
-.sbq_main_nav ul li a { float: left; height: 26px; line-height: 26px; padding: 0px 8px; border-radius: 2px; }
-.sbq_main_nav ul li a:hover { background: #1575D5; color: #FFF; }
+.header .sbq_main_nav { float: left; height: 26px; margin: 32px 0px 0px 50px; }
+.header .sbq_main_nav ul { float: left; }
+.header .sbq_main_nav ul li { float: left; font-size: 14px; margin: 0px 30px 0px 0px; }
+.header .sbq_main_nav ul li a { float: left; height: 26px; line-height: 26px; padding: 0px 8px; border-radius: 2px; }
+.header .sbq_main_nav ul li a:hover { background: #1575D5; color: #FFF; }
 /*------footer------*/
 .footer { float: left; width: 100%; }
 .footer .footer_inner { width: 960px; margin: 0 auto; border-top: 1px #E5E5E5 solid; }
@@ -334,7 +335,7 @@ Colorbox
 /*------cke_editable------*/
 .cke_editable { float: left; width: 100%; height: 100%; line-height: 24px; font-size: 14px; word-break: break-all; word-wrap: break-word; }
 .cke_editable ol,
-.cke_editable ul { list-style-position: outside; margin: 0.8em 0px 0.8em 1.5em; font-family: "Arial", sans-serif; }
+.cke_editable ul { list-style-position: outside; margin: 0.8em 0px 0.8em auto; font-family: "Arial", sans-serif; }
 .cke_editable ol li { margin: 0px 0px 5px 0px; list-style-position: outside; list-style-type: decimal; }
 .cke_editable ul li { margin: 0px 0px 5px 0px; list-style-position: outside; list-style-type: disc; }
 .cke_editable a { color: #225599; }
@@ -352,17 +353,41 @@ Colorbox
 .page-node-delete .form-actions { width: 100%; height: 30px; margin: 10px 0px 0px 0px; position: relative; }
 .page-node-delete .form-actions input { float: left; width: 60px; height: 30px; border-radius: 3px; border: 1px #0D6EB8 solid; background: #1575d5; font-size: 14px; color: #FFF; overflow: hidden; }
 .page-node-delete .form-actions #edit-cancel { float: left; width: 60px; height: 30px; line-height: 30px; font-size: 14px; font-weight: normal; text-align: center; }
-/*sbq_search_form*/
+/*---sbq_search_form---*/
 .sbq_search_form { height: 26px; border-radius: 3px; border: 2px #DDD solid; position: absolute; bottom: 5px; right: 5px; background: #FFF; }
-.sbq_search_form .sbq_search_form_text { float: left; width: 160px; height: 26px; line-height: 26px; padding: 0px 6px; border-radius: 3px; border: none; }
-.sbq_search_form .sbq_search_form_btn { float: left; width: 26px; height: 26px; border-radius: 3px; border: none; background: url(../image/sbq_search_form_btn.png); text-indent: -999px; overflow: hidden; cursor: pointer; }
+.sbq_search_form input[type="text"] { float: left; width: 160px; height: 26px; line-height: 26px; padding: 0px 6px; border-radius: 3px; border: none; }
+.sbq_search_form .form-actions,
+.sbq_search_form .form-type-textfield { float: left; }
+.sbq_search_form input[type="submit"] { float: left; width: 26px; height: 26px; border-radius: 3px; border: none; background: url(../image/sbq_search_form_btn.png); text-indent: -999px; overflow: hidden; cursor: pointer; }
+/*---sbq_search---*/
+.sbq_search { float: left; width: 100%; }
+.sbq_search h2 { display: none; }
+.page-search .container-inline { float: left; width: 100%; margin: 0px 0px 10px 0px; }
+.page-search .container-inline .form-type-textfield { float: left; width: 575px; height: 32px; line-height: 32px; border-radius: 3px; margin: 0px 5px 0px 0px; padding: 0px 8px; border: 2px solid #DDDDDD; }
+.page-search .container-inline .form-type-textfield label { display: none; }
+.page-search .container-inline .form-type-textfield input { float: left; width: 100%; height: 32px; line-height: 32px; border-radius: 3px; border: none; }
+.page-search .container-inline .form-submit { float: left; width: 78px; height: 36px; border-radius: 3px; border: 1px solid #0D6EB8; overflow: hidden; color: #FFF; font-size: 14px; background: #1575d5; box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.196) inset, 0px 1px 0px rgba(0, 0, 0, 0.196); }
+.sbq_search .search-results { float: left; width: 100%; padding: 10px 0px; }
+.sbq_search .search-results .search-result { float: left; width: 100%; padding: 10px 0px; }
+.sbq_search .search-results .search-result+.search-result { border-top: 1px #CCCCCC dotted; }
+.sbq_search .search-results .title { float: left; width: 100%; line-height: 26px; font-size: 14px; word-break: break-all; word-wrap: break-word; }
+.sbq_search .search-results .title a { color: #225599; font-size: 14px; }
+.sbq_search .search-results .title a:hover { text-decoration: underline; }
+.sbq_search .search-results .search-snippet-info .search-snippet { float: left; width: 100%; height: 60px; line-height: 20px; margin: 5px 0px; font-size: 12px; word-break: break-all; word-wrap: break-word; overflow: hidden; }
+.sbq_search .search-results .search-snippet-info .search-snippet strong { color: #C00; }
+.sbq_search .search-results .search-snippet-info .search-info { float: left; width: 100%; height: 22px; line-height: 22px; color: #999; font-size: 12px; text-align: right; }
+.sbq_search .search-results .search-snippet-info .search-info a { color: #225599; }
+.sbq_search .sbq_page_num { margin: 0px 0px 20px 0px; }
+.page-search .search-noresult { float: left; width: 100%; line-height: 24px; font-size: 14px; word-break: break-all; word-wrap: break-word; overflow: hidden; }
+.page-search .search-noresult em { color: #C00; font-weight: bold; font-style: normal; }
 /*
 DEV
 */
 .footer .links { width: 120px; height: 300px; position: fixed; right: 0; bottom: 20px; background: #FFF; }
-.footer .links li { float: left; width: 100%; height: 30px; line-height: 30px; padding: 0px 0px 1px 0px; overflow: hidden; }
-.footer .links li a { float: left; width: 100%; height: 30px; padding: 0px 0px 0px 5px; background: #EFF6FA; font-size: 14px; word-break: break-all; word-wrap: break-word; }
-.footer .links li a:hover { background: #1575D5; color: #FFF; text-decoration: none; }
+.footer .links li { float: left; width: 100%; height: 30px; line-height: 30px; padding: 0px 0px 1px 0px; overflow: hidden; font-family: 'Century Gothic', "Microsoft Yahei"; }
+.footer .links li a { float: left; width: 100%; height: 30px; background: #EFF6FA; font-size: 14px; word-break: break-all; word-wrap: break-word; text-indent: 0.5em; }
+.footer .links li a:hover,
+.footer .links li strong { float: left; width: 100%; height: 30px; background: #1575D5; color: #FFF; text-decoration: none; }
 .footer .links li a em { font-style: normal; }
 #devel-switch-user-form { position: fixed; top: 111px; right: 0; }
 .footer .links li:nth-child(1) { -webkit-animation: fadeInLeft 0.1s .2s ease both; }

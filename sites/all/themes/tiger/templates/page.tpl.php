@@ -112,6 +112,11 @@
       </div>
       <?php endif; ?>
     </div>
+    <?php if ($page['header']): ?>
+      <div class="sbq_search_form">
+        <?php print render($page['header']); ?>
+      </div> <!-- /.sidebar-first -->
+    <?php endif; ?>
   </div>
 </div>
 <div class="body">
