@@ -782,14 +782,17 @@ function sbq_commons_node_submit(&$node, &$form, &$form_state) {
       }
     }
   }
-
+  
   // for question node title
   if ($node->type == 'question') {
     $max_length = 29;
+    watchdog('ori-title', $node->title, array(), WATCHDOG_NOTICE, 'link');
     // $subject = trim(truncate_utf8(decode_entities(strip_tags(check_markup($node->body['und'][0]['value']))), $max_length, TRUE));
     $subject = strip_tags(trim(truncate_utf8(decode_entities(check_markup($node->body['und'][0]['value'])), $max_length, TRUE)));
+    watchdog('new-title', $subject, array(), WATCHDOG_NOTICE, 'link');
     $node->title = $subject;
   }
+
 }
 
 /**
