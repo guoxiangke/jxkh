@@ -105,6 +105,14 @@ jQuery(function($) {
     var menu = $("#block-views-sbq-center-blocks-menu .sbq_hospital_sub_nav");
     var menu_offset = menu.offset();
     var menu_top = menu_offset.top;
+    // All list items
+    var menuItems = menu.find("a");
+    // Anchors corresponding to menu items
+    var scrollItems = menuItems.map(function(){
+      var item = $($(this).attr("href"));
+      if (item.length) { return item; }
+    });
+
     $(window).scroll(function() {
       if ($(window).scrollTop() > menu_top) {
         menu.css({"position": "fixed", "top": "10px"});
@@ -112,6 +120,21 @@ jQuery(function($) {
         menu.css("position", "relative");
       };
       // TODO: make the menu link active style
+      // Get container scroll position
+      var fromTop = $(this).scrollTop();
+
+      // Get id of current scroll item
+      var cur = scrollItems.map(function(){
+        if ($(this).offset().top < fromTop)
+          return this;
+      });
+      // Get the id of the current element
+      cur = cur[cur.length-1];
+      var id = cur && cur.length ? cur[0].id : "";
+      // Set/remove active class
+      menuItems
+        .parent().removeClass("active")
+        .end().filter("[href=#"+id+"]").parent().addClass("active");
     });
     $(".sbq_hospital_sub_nav li a").click(function() {
       var target = $($(this).attr("href"));

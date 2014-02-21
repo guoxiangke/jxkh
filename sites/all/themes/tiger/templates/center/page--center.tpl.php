@@ -80,6 +80,16 @@
   $menu_reservation_active = '';
   $menu_info_active = '';
   $menu_edu_active = '';
+
+  $left_reservation_active = '';
+  $left_reservation_manage_active = '';
+  $left_reservation_my_active = '';
+
+  $left_edu_active = '';
+  $left_edu_article_active = '';
+
+  $left_questions_active = '';
+
   $is_edu = FALSE;
   $is_info = FALSE;
   $is_reservation = FALSE;
@@ -88,16 +98,32 @@
   } elseif (in_array('reservation', arg())) {
     $menu_reservation_active = ' class="active"';
     $is_reservation = TRUE;
+    if (in_array('manage', arg())) {
+      $left_reservation_manage_active = ' class="active"';
+    } elseif (in_array('my', arg())) {
+      $left_reservation_my_active = ' class="active"';
+    } else {
+      $left_reservation_active = ' class="active"';
+    }
   } elseif (in_array('info', arg())) {
     $menu_info_active = ' class="active"';
     $is_info = TRUE;
   } elseif (in_array('edu', arg())) {
     $menu_edu_active = ' class="active"';
     $is_edu = TRUE;
+    if (in_array('article', arg())) {
+      $left_edu_article_active = ' class="active"';
+    } else {
+      $left_edu_active = ' class="active"';
+    }
   } elseif (isset($node) && $node->type == 'sbq_center_edu') {
     $menu_edu_active = ' class="active"';
     $is_edu = TRUE;
   }
+  if (in_array('questions', arg()) || in_array('question', arg())) {
+    $left_questions_active = ' class="active"';
+  }
+
   $center = node_load($center_id);
   $is_center_owner = FALSE;;
   if ($user->uid == $center->uid) {
@@ -153,24 +179,24 @@
       <div class="sbq_hospital_sub_nav">
         <?php if ($is_edu): ?>
         <ul>
-          <li><?php print l('专科资讯', 'center/'.$center_id.'/edu/article'); ?></li>
-          <li><?php print l('精选视频', 'center/'.$center_id.'/edu'); ?></li>
+          <li<?php print $left_edu_article_active; ?>><?php print l('专科资讯', 'center/'.$center_id.'/edu/article'); ?></li>
+          <li<?php print $left_edu_active; ?>><?php print l('精选视频', 'center/'.$center_id.'/edu'); ?></li>
         </ul>
         <?php elseif ($is_reservation): ?>
         <ul>
-          <li><?php print l('预约就诊', 'center/'.$center_id.'/reservation'); ?></li>
+          <li<?php print $left_reservation_active; ?>><?php print l('预约就诊', 'center/'.$center_id.'/reservation'); ?></li>
           <?php if($is_admin || $is_center_owner): ?>
-          <li><?php print l('预约管理', 'center/'.$center_id.'/reservation/manage'); ?></li>
+          <li<?php print $left_reservation_manage_active; ?>><?php print l('预约管理', 'center/'.$center_id.'/reservation/manage'); ?></li>
           <?php elseif($logged_in): ?>
-          <li><?php print l('我的预约', 'center/'.$center_id.'/reservation/my'); ?></li>
+          <li<?php print $left_reservation_my_active; ?>><?php print l('我的预约', 'center/'.$center_id.'/reservation/my'); ?></li>
           <?php endif; ?>
           <li><a href="#">就诊流程</a></li>
           <li><a href="#">治疗方案</a></li>
         </ul>
         <?php else: ?>
         <ul>
-          <li><?php print l('预约就诊', 'center/'.$center_id.'/reservation'); ?></li>
-          <li><a href="#">常见问题解答</a></li>
+          <li<?php print $left_reservation_active; ?>><?php print l('预约就诊', 'center/'.$center_id.'/reservation'); ?></li>
+          <li<?php print $left_questions_active; ?>><?php print l('常见问题解答', 'center/'.$center_id.'/questions'); ?></li>
           <?php if ($expert_nid): ?>
           <li><?php print l('专家团队', 'center/'.$center_id.'/info', array('fragment' => 'node-'.$expert_nid)); ?></li>
           <?php elseif($is_admin || $is_center_owner): ?>
