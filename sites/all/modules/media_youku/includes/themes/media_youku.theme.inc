@@ -31,8 +31,8 @@ function media_youku_preprocess_media_youku_video(&$variables) {
     <object width="{$variables['width']}" height="{$variables['height']}">
       <param name="movie" value="http://www.youku.com/v/{$variables['video_id']}"></param>
       <param name="allowFullScreen" value="{$variables['fullscreen']}"></param>
-      <param name="wmode" value="transparent" />
-      <embed src="http://player.youku.com/player.php/sid/{$variables['video_id']}/.v.swf" type="application/x-shockwave-flash" width="{$variables['width']}" height="{$variables['height']}" allowfullscreen="{$variables['fullscreen']}"></embed>
+      <param name="wmode" value="transparent" />   
+      <embed src="http://player.youku.com/player.php/Type/Folder/Fid/21967310/Ob/1/sid/{$variables['video_id']}/v.swf" type="application/x-shockwave-flash" width="{$variables['width']}" height="{$variables['height']}" allowfullscreen="{$variables['fullscreen']}"></embed>
     </object>
 OUTPUT;
 
