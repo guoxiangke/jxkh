@@ -30,6 +30,9 @@
  * @see crystal_qa_preprocess_views_view()
  */
 ?>
+<?php if ($is_center): ?>
+<div class="sbq_hospital_qa_final">
+<?php endif; ?>
 <div class="sbq_question_final">
   <?php if ($rows): ?>
     <?php print $rows; ?>
@@ -81,3 +84,6 @@
     ?>
   <?php endif; ?>
 </div><?php /* class view */ ?>
+<?php if ($is_center): ?>
+</div>
+<?php endif; ?>

@@ -299,6 +299,24 @@ function _sbq_center_expert_nid_get($center_nid = 0) {
   return $expert_nid;
 }
 
+function _sbq_center_get_nid_by_node($nid = 0) {
+  if ($nid == 0) {
+    $center_nid =  0;
+  }
+  $center_nid = variable_get('question_'.$nid.'_center_nid');
+  if($center_nid) {
+    return $center_nid;
+  } else {
+    $center_nid =  0;
+    $node = node_load($nid);
+    if (isset($node->og_group_ref['und'][0]['target_id'])) {
+      $center_nid = $node->og_group_ref['und'][0]['target_id'];
+    }
+    variable_set('question_'.$nid.'_center_nid', $center_nid);
+  }
+  return $center_nid;
+}
+
 /**
  * Implements hook_node_delete().
  */

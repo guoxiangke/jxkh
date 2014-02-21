@@ -74,12 +74,13 @@
 .sbq_question_final .sbq_more_link { float: left; width: 628px; height: 32px; line-height: 32px; margin: 0px 0px 20px 50px; border-radius: 3px; text-align: center; border: 1px #BBB solid; background: url(../image/more_link_bg.png) repeat-x; font-size: 12px; cursor: pointer; color: #333; }
 .sbq_question_final .sbq_more_link:hover { text-decoration: none; }
 /*sbq_answer*/
-.sbq_question_final .sbq_answer_info { float: left; width: 630px; margin: 10px 0px 10px 50px; }
+.sbq_question_final .sbq_answer_info { float: left; width: 630px; margin: 10px 0px 0px 50px; }
 .sbq_answer_list { float: left; width: 100%; margin: 0px 0px 20px 0px; }
 .sbq_question_final .sbq_answer { float: left; width: 100%; }
 /*sbq_answer_form*/
 .sbq_question_final .sbq_answer_form { float: left; width: 630px; margin: 0px 0px 0px 50px; line-height: 22px; font-size: 12px; }
-.sbq_question_final .sbq_answer_form label,
+.sbq_question_final .sbq_answer_form label { height: 26px; line-height: 26px; font-size: 14px; font-weight: bold; color: #666; }
+.sbq_question_final .sbq_answer_form label .form-required { display: none; }
 .sbq_question_final .sbq_answer_form .cke_bottom,
 .sbq_question_final .sbq_answer_form .ckeditor_links,
 .sbq_question_final .sbq_answer_form .element-invisible { display: none !important; }
@@ -88,6 +89,9 @@
 .sbq_question_final .sbq_answer_form .form-actions .ajax-progress { float: left; width: 72px; height: 36px; overflow: hidden; position: absolute; top: -1px; left: -1px; }
 .sbq_question_final .sbq_answer_form .form-actions .ajax-progress .throbber { display: none; }
 .sbq_question_final .sbq_answer_form .form-actions .ajax-progress .message { float: left; width: 70px; height: 34px; line-height: 34px; border-radius: 3px; border: 1px #818181 solid; background: #999; color: #FFF; font-size: 14px; text-align: center; overflow: hidden; }
+.sbq_question_final .sbq_answer_form { }
+/*.sbq_question_final .sbq_answer_form .form-textarea-wrapper { float: left; width: 610px; padding: 5px 9px; border: 1px #CCC solid; background: #FFF; box-shadow: 0px 1px 3px #CCC inset; border-radius: 3px; }
+*/.sbq_question_final .sbq_answer_form .form-textarea-wrapper textarea { float: left; width: 610px; min-height: 24px; line-height: 24px; margin: 0px; padding: 5px 9px; border: 1px #CCC solid; background: #FFF; box-shadow: 0px 1px 3px #CCC inset; border-radius: 3px; resize: none; overflow: hidden; color: #333; font-size: 14px; }
 /*sbq_tags*/
 .sbq_question_final .sbq_tags { float: left; width: 630px; margin: 0px 0px 0px 50px; }
 .sbq_question_list .sbq_tags { float: left; margin: 0px 0px 10px 0px; }

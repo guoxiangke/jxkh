@@ -32,6 +32,7 @@
   <?php print $pager; ?>
 <?php else : ?>
   <h2><?php print t('Your search yielded no results');?></h2>
-  <?php print search_help('search#noresults', drupal_help_arg()); ?>
+  <?php //print search_help('search#noresults', drupal_help_arg()); ?>
+  <div>根据当地法律，您搜索的结果不予显示</div>
 <?php endif; ?>
 </div>
