@@ -108,7 +108,7 @@ function center_message_query($centerid, $fun = NULL, $page, $fields, $parameter
         'is_new' => $value->is_new,
         'author' => $user_img[$value->author->uid],
     );
-   
+
     if (!empty($value->field_message_image)) {
       $data['image'] = file_create_url($value->field_message_image['und'][0]['uri']);
     }
@@ -123,13 +123,15 @@ function center_message_query($centerid, $fun = NULL, $page, $fields, $parameter
 //      $video = file_create_url($value->field_message_video['und'][0]['uri']);
 //    }
   }
+  
+  
   return array(
       'centermid' => $result['thread_id'],
       'to' => $result['to'],
       'from' => $result['from'],
       'start' => $result['start'],
       'count' => $result['message_count'],
-      'message' => $message
+      'message' => isset($message) ? $message : array()
   );
 }
 
