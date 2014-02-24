@@ -175,7 +175,7 @@ function druedu_qa_init() {
     if ($node) {
       if ($node->type == 'answer') {
         if (isset($node->field_answer[LANGUAGE_NONE][0]['target_id'])) { // ajax prepare form node_add_form node_object_prepare()
-          drupal_goto('questions/' . $node->field_answer[LANGUAGE_NONE][0]['target_id']);
+          drupal_goto('question/' . $node->field_answer[LANGUAGE_NONE][0]['target_id']);
         }
       } elseif ($node->type == 'question') {
         drupal_goto('question/' . $node->nid);
@@ -327,7 +327,7 @@ function druedu_qa_preprocess_views_view(&$vars) {
   if ($view->name == 'questions' && isset($view->args[0]) && !in_array($view->args[0], $args)) {
     //dpm($view);
     drupal_set_title('This page has no result.');
-    $vars['empty'] = '<div class="qa-empty">If you came here using a hyperlink, please check the URL and try again.</div>';
+    $vars['empty'] = '<div class="qa-empty">链接出错，请检查链接！</div>';
     //$view->attachment_before =array('#markup'=>'no result found.');
     //$views= views_get_view('questions');dpm($views,'dpm($view)s');
   }

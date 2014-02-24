@@ -394,8 +394,9 @@ function tiger_preprocess_views_view(&$vars) {
   }
   if ($vars['view']->name == 'question' && $vars['view']->current_display == 'single_question_page') {
     $vars['is_center'] = FALSE;
-    $center_nid = $vars['view']->field['og_group_ref']->original_value;
-    if ($center_nid) {
+    if(isset($vars['view']->field['og_group_ref']->original_value))
+      $center_nid = $vars['view']->field['og_group_ref']->original_value;
+    if (isset($center_nid)) {
       $vars['is_center'] = TRUE;
     }
   }
