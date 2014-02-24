@@ -48,7 +48,4 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
 
   <?php $$id = $field->wrapper_prefix.$field->label_html.$field->content.$field->wrapper_suffix; ?>
 <?php endforeach; ?>
-<div class="sbq_item">
-  <div class="sbq_title"><?php print $title; ?></div>
-  <div class="sbq_text"><?php print views_embed_view('questions', 'answer', $nid); ?></div>
-</div>
+<?php print $body; ?>
