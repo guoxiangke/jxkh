@@ -160,29 +160,15 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
 //            $form['view']['#markup']            = $view;
       unset($form['select']['operation']['#options']['action::og_user_roles_action']);
       break;
-    case 'question_node_form':
-      
+    case 'question_node_form':      
+      $form['title']['#access'] = TRUE;
       if (arg(0) == 'user') { // Quick Ask form for User Center
         $form['body']['und']['0']['#title'] = t('快速提问');
         $form['field_tags']['und']['#value'] = '快速提问';
         $form['title']['#access'] = FALSE;
-        // unset($form['#validate']);
-        // unset($form['#submit']);
-        // unset($form['body']['und']['0']['format']);
-        // unset($form['body']['und']['0']['summary']);
-        // $form['actions']['submit'] = array(
-        //     '#type' => 'submit',
-        //     '#value' => '提问',
-        //     //'#attributes' => array('class'=>'use-ajax'),
-        //     '#ajax' => array(
-        //         'callback' => 'ajax_quick_ask_callback',
-        //         'wrapper' => 'question-node-form',
-        //         'method' => 'replace',
-        //         'effect' => 'fade',
-        //         'progress' => array( 'type' => 'throbber', 'message' => '请稍候' ),
-        //         'file' => 'sbq_commons.inc',
-        //     ),
-        // );
+        // unset($form['#submit'])
+        // $form['#submit'][] = 'sbq_commons_quick_qa_redirct';
+        $form['actions']['submit']['#submit'][] = 'sbq_commons_quick_qa_redirct';
       } else {
         $form['body']['und']['0']['#title'] = t('问题');
       }
@@ -193,6 +179,7 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
         $form['comment_settings']['#access'] = TRUE;
         $form['additional_settings']['#access'] = TRUE;
       }
+      dpm($form);
       break;
     case 'post_node_form'://禁止评论 for post
       global $user;
@@ -248,14 +235,6 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
 
       break;
     case 'user_register_form':
-      // $form['profile_doctor_profile']['#access'] = FALSE;
-      // $form['profile_customer_profile']['#access'] = FALSE;
-      // //隐藏csna登录
-      // $form['csna_login']['#access'] = FALSE;
-      // $form['account']['name']['#title'] = t('登录帐户');
-      // $form['account']['mail']['#title'] = t('电子邮箱');
-      // $form['actions']['submit']['#value'] = t('立即注册');
-
       $form['agree'] = array(
           '#type' => 'checkbox',
           '#title' => t('同意' . l('伤不起服务条款', "node/20151", array(
@@ -294,20 +273,6 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
           'file' => 'sbq_commons_og_ui.inc',
       );
       break;
-//        case 'user_relationships_ui_remove' :
-//            dpm($form);
-//            module_load_include('inc', 'user_relationships_ui', 'user_relationships_ui.actions');
-//            unset($form['description']);
-//            unset($form['actions']['cancel']);
-//            $form['actions']['submit']['#value'] = t('移除');
-//            $form['actions']['submit']['#ajax'] = array(
-//                'callback' => '_sbq_commons_user_relationships_ui_remove_ajax',
-//                'wrapper' => 'user_relationships_ui_remove_submit',
-//                'method' => 'replace',
-//                'effect' => 'fade',
-//                'file' => drupal_get_path('module', 'user_relationships_ui') . '/user_relationships_ui.actions.inc',
-//            );
-//            break;
     case 'user_profile_form' ://remove user local
       if (!user_access('set default language')) {
         unset($form['locale']);
@@ -337,6 +302,10 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
   _sbq_commons_captcha_display($form, $form_alter, $form_id);
 }
 
+function sbq_commons_quick_qa_redirct(&$form, &$form_state) {
+  global $user;
+  drupal_goto("user/$user->uid/qa/ask");
+}
 function sbq_commons_get_rid_by_name($name) {
   $rate_widget_id = FALSE;
   $rate_widgets = variable_get('rate_widgets', NUll);
@@ -1229,17 +1198,6 @@ function sbq_commons_views_query_alter(&$view, &$query) {
   }
 }
 
-function sbq_commons_module_implements_alter(&$implementations, $hook) {
-//  if ($hook == 'sbq_commons') {
-//// Move my_module_rdf_mapping() to the end of the list. module_implements()
-//// iterates through $implementations with a foreach loop which PHP iterates
-//// in the order that the items were added, so to move an item to the end of
-//// the array, we remove it and then add it.
-//    $group = $implementations['sbq_commons'];
-//    unset($implementations['sbq_commons']);
-//    $implementations['sbq_commons'] = $group;
-//  }
-}
 
 /**
  * 暂时隐藏的QA功能，发布时带图片，匿名问答！
@@ -1331,20 +1289,6 @@ function sbq_commons_block_info() {
   );
   return $blocks;
 }
-
-//function sbq_commons_block_configure($delta = '') {
-//    $form = array();
-//    if ($delta == 'sbq_user_profile') {
-//        $form['block_example_string'] = array(
-//            '#type' => 'textfield',
-//            '#title' => t('Block contents'),
-//            '#size' => 60,
-//            '#description' => t('This text will appear in the example block.'),
-//                //'#default_value' => variable_get('block_example_string', t('Some example content.')),
-//        );
-//    }
-//    return $form;
-//}
 
 function sbq_commons_block_view($delta = '') {
   switch ($delta) {

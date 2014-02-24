@@ -90,35 +90,6 @@ function sbq_center_form_alter(&$form, &$form_state, $form_id) {
     $form['field_image'][LANGUAGE_NONE]['#title'] = t('image');
   }
   switch ($form_id) {
-    case 'question_node_form':
-      // $form['title']['#access'] = FALSE;
-      $p_nid = arg(1);
-      if (isset($p_nid) && $p_nid > 0) { // Ask form for Center
-        $p_node = node_load($p_nid);
-        $p_type = $p_node->type;
-        if ($p_type == 'sbq_center') {
-          $form['body']['und']['0']['#title'] = t('问答');
-          $form['field_tags']['und']['#value'] = '中心问答';
-          // $form['actions']['submit']['#submit'][] = 'sbq_center_ask_form_submit';
-          // unset($form['#validate']);
-          // unset($form['#submit']);
-          // unset($form['body']['und']['0']['format']);
-          // unset($form['body']['und']['0']['summary']);
-          // $form['actions']['submit'] = array(
-          //     '#type' => 'submit',
-          //     '#value' => '提问',
-          //     //'#attributes' => array('class'=>'use-ajax'),
-          //     '#ajax' => array(
-          //         'callback' => 'ajax_center_ask_callback',
-          //         'wrapper' => 'question-node-form',
-          //         'method' => 'replace',
-          //         'effect' => 'fade',
-          //         'progress' => array( 'type' => 'throbber', 'message' => '请稍候' ),
-          //     ),
-          // );
-        }
-      }
-      break;
     case 'sbq_center_edu_node_form' :
       $parm = drupal_get_query_parameters();
       if (isset($parm['og_group_ref']) && $node = sbq_center_load($parm['og_group_ref'])) {
@@ -132,69 +103,6 @@ function sbq_center_form_alter(&$form, &$form_state, $form_id) {
   }
 }
 
-function sbq_center_ask_form_submit($form, &$form_state) {
-  $form_state['redirect'] = FALSE;
-}
-
-/*
- * ajax_center_ask_callback
- */
-
-function ajax_center_ask_callback($form, &$form_state) {
-  $body = $form_state['input']['body']['und'][0]['value'];
-  if (isset($body) && strlen(trim($body)) > 0) {
-    $commands = array();
-    module_load_include('inc', 'node', 'node.pages');
-    $node = node_form_submit_build_node($form, $form_state);
-    $insert = empty($node->nid);
-    node_save($node);
-    $node_link = l(t('view'), 'node/' . $node->nid);
-    $watchdog_args = array(
-        '@type' => $node->type,
-        '%title' => $node->title,
-    );
-
-    if ($insert) {
-      watchdog('content', '@type: added %title.', $watchdog_args, WATCHDOG_NOTICE, $node_link);
-    }
-    if ($node->nid) {
-      $form_state['values']['nid'] = $node->nid;
-      $form_state['nid'] = $node->nid;
-      $title = l($node->title, 'node/' . $node->nid);
-      $str_date = format_date(time(), 'custom', 'Y-m-d');
-      $nqs = '<div class="views-row views-row-1 views-row-odd views-row-first">'
-          . '<div class="views-field views-field-title"><span class="field-content">' . $title . '</span></div>'
-          . '<div class="views-field views-field-field-mark-question-resolved"><div class="field-content">未解决</div></div>'
-          . '<div class="views-field views-field-created"><span class="field-content">' . $str_date . '</span></div></div>';
-      $success_msg = '<div id="sbq-message-status" class="messages--status messages status sbq-message">'
-          . '<h2 class="element-invisible">状态消息</h2>'
-          . '<pre>' . $node->title . ' 已经提交给中心</pre></div>';
-      $new_textarea = '<textarea class="text-full ckeditor-mod form-textarea" id="edit-body-und-0-value" name="body[und][0][value]" cols="60" rows="20"></textarea>';
-      $commands[] = ajax_command_replace('#edit-body-und-0-value', $new_textarea);
-      $commands[] = ajax_command_prepend('#sbq-center-ask-form', $success_msg);
-      $commands[] = ajax_command_prepend('#block-views-my-qa-center-new .view-content', $nqs);
-      // $commands[] = ajax_command_replace('#sbq-message-error', '');
-    } else {
-      // In the unlikely case something went wrong on save, the node will be
-      // rebuilt and node form redisplayed the same way as in preview.
-      drupal_set_message(t('The post could not be saved.'), 'error');
-      $form_state['rebuild'] = TRUE;
-    }
-  } else {
-    $error_msg = '<div id="sbq-message-error" class="messages--error messages error sbq-message">'
-        . '<h2 class="element-invisible">错误信息</h2>'
-        . '<ul class="messages__list">'
-        . '<li class="messages__item">请输入您的问题</li>'
-        . '</ul></div>';
-    $commands[] = ajax_command_prepend('#sbq-center-ask-form', $error_msg);
-    $form_state['rebuild'] = TRUE;
-  }
-
-  $page = array(
-      '#type' => 'ajax',
-      '#commands' => $commands );
-  ajax_deliver($page);
-}
 
 /**
  * get sbq center node by user
