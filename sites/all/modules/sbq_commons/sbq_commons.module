@@ -179,7 +179,6 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
         $form['comment_settings']['#access'] = TRUE;
         $form['additional_settings']['#access'] = TRUE;
       }
-      dpm($form);
       break;
     case 'post_node_form'://禁止评论 for post
       global $user;
