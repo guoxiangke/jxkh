@@ -1254,12 +1254,6 @@ function sbq_commons_form_question_node_form_alter(&$form, &$form_state, $form_i
   $form['field_qa_attachment']['#access'] = $switch;
   $form['field_ask_anonymous']['#access'] = $switch;
 
-  if(isset($_GET['og_group_ref'])) {
-    $gid = $_GET['og_group_ref'];
-    $group_node = node_load($gid);
-    if(og_is_group('node', $group_node))
-      $form['og_group_ref'][LANGUAGE_NONE][0]['default']['#default_value'] = $gid;
-  }
 }
 
 /**
@@ -1608,4 +1602,16 @@ function sbq_commons_getip() {
   if (false !== strpos($ip, ','))  
     $ip = reset(explode(',', $ip));  
  return $ip;  
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for FORM_ID().
+ */
+function sbq_commons_form_node_form_alter(&$form, &$form_state, $form_id) {
+  if(isset($_GET['og_group_ref'])) {
+    $gid = $_GET['og_group_ref'];
+    $group_node = node_load($gid);
+    if(og_is_group('node', $group_node))
+      $form['og_group_ref'][LANGUAGE_NONE][0]['default']['#default_value'] = $gid;
+  }
 }
