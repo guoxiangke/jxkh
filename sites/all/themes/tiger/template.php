@@ -290,17 +290,156 @@ function tiger_preprocess_page(&$variables) {
       $expert_nid = _sbq_center_expert_nid_get($center_nid);
       $variables['expert_nid'] = $expert_nid;
       $variables['page']['sidebar_second'] = FALSE;
+      $variables['page']['content']['system_main']['#prefix'] = '<div class="sbq_pm_list"><div class="sbq_wrap"><div class="sbq_head">咨询管理</div>';
+      $variables['page']['content']['system_main']['#suffix'] = '</div></div>';
+    } else {
+      drupal_add_css(path_to_theme() . "/css/user.css", array('group' => CSS_THEME));
+      $variables['theme_hook_suggestions'][] = 'page__user';
+      $variables['page']['content']['system_main']['#prefix'] = '<div class="sbq_user_pm"><div class="sbq_pm_list"><div class="sbq_wrap">';
+      $variables['page']['content']['system_main']['#suffix'] = '</div></div></div>';
+
+      $account = $user;
+      $variables['account'] = $account;
+      if (module_exists('sbq_commons')) {
+        $user_post_count = sbq_commons_get_count($account->uid, 'post');
+        $user_message_count = sbq_commons_messages_count($account);
+        $user_blog_count = sbq_commons_get_count($account->uid, 'blog');
+        $user_question_count = sbq_commons_get_count($account->uid, 'question');
+        $user_answer_count = sbq_commons_get_count($account->uid, 'answer');
+      } else {
+        $user_post_count = 0;
+        $user_message_count = 0;
+        $user_blog_count = 0;
+        $user_question_count = 0;
+        $user_answer_count = 0;
+      }
+      if (module_exists('sbq_user_relationships')) {
+        $user_relationship_count = sbq_user_relationships_my_relstionships($account);
+        $follow_link = sbq_user_relationships_action_between_user($user, $account);
+      } else {
+        $user_relationship_count = 0;
+        $follow_link = '';
+      }
+      if (module_exists('userpoints')) {
+        $user_point_count = userpoints_get_current_points($user->uid, 'all');
+      } else {
+        $user_point_count = 0;
+      }
+
+      $variables['counts'] = array(
+        'user_post_count' => $user_post_count,
+        'user_message_count' => $user_message_count,
+        'user_blog_count' => $user_blog_count,
+        'user_question_count' => $user_question_count,
+        'user_answer_count' => $user_answer_count,
+        'user_relationship_count' => $user_relationship_count,
+        'user_point_count' => $user_point_count,
+      );
+      $variables['follow_link'] = $follow_link;
+      $variables['is_doctor'] = FALSE;
+      if (in_array('doctor', $account->roles) && module_exists('profile2')) {
+        $a_doctor_profile = profile2_load_by_user($account, 'doctor_profile');
+        $variables['is_doctor'] = TRUE;
+        $variables['a_doctor_profile'] = $a_doctor_profile;
+        $field_author = field_view_field('profile2', $a_doctor_profile, 'field_author', 'value');
+        $variables['field_author'] = drupal_render($field_author);
+        $field_doctor_title = field_view_field('profile2', $a_doctor_profile, 'field_doctor_title', 'value');
+        $variables['field_doctor_title'] = drupal_render($field_doctor_title);
+        $field_hospital_name = field_view_field('profile2', $a_doctor_profile, 'field_hospital_name', 'value');
+        $variables['field_hospital_name'] = drupal_render($field_hospital_name);
+        $field_department = field_view_field('profile2', $a_doctor_profile, 'field_department', 'value');
+        $variables['field_department'] = drupal_render($field_department);
+        $variables['hospitals_departments'] = $variables['field_hospital_name'] .' '. $variables['field_department'];
+      }
     }
-    if (arg(1) == 'view') {
+  }
+  if (arg(0) == 'messages' && arg(1) == 'view') {
+    $participants = $variables['page']['content']['system_main']['#thread']['participants'];
+    $center_nid = 0;
+    foreach ($participants as $value) {
+      $c_nid = _sbq_center_nid_get($value);
+      if ($c_nid) {
+        $center_nid = $c_nid;
+      }
+    }
+
+    if ($center_nid) {
+      drupal_add_css(path_to_theme() . "/css/hospital.css", array('group' => CSS_THEME));
+      $variables['theme_hook_suggestions'][] = 'page__center';
+      $variables['center_id'] = $center_nid;
+      $expert_nid = _sbq_center_expert_nid_get($center_nid);
+      $variables['expert_nid'] = $expert_nid;
+      $variables['page']['sidebar_second'] = FALSE;
       $variables['page']['content']['system_main']['#prefix'] = '<div class="sbq_pm">';
       $variables['page']['content']['system_main']['#suffix'] = '</div>';
+    } else {
+      global $user;
+      drupal_add_css(path_to_theme() . "/css/user.css", array('group' => CSS_THEME));
+      $variables['theme_hook_suggestions'][] = 'page__user';
+      $variables['page']['content']['system_main']['#prefix'] = '<div class="sbq_user_pm"><div class="sbq_pm">';
+      $variables['page']['content']['system_main']['#suffix'] = '</div></div>';
+      $account = $user;
+      $variables['account'] = $account;
+      if (module_exists('sbq_commons')) {
+        $user_post_count = sbq_commons_get_count($account->uid, 'post');
+        $user_message_count = sbq_commons_messages_count($account);
+        $user_blog_count = sbq_commons_get_count($account->uid, 'blog');
+        $user_question_count = sbq_commons_get_count($account->uid, 'question');
+        $user_answer_count = sbq_commons_get_count($account->uid, 'answer');
+      } else {
+        $user_post_count = 0;
+        $user_message_count = 0;
+        $user_blog_count = 0;
+        $user_question_count = 0;
+        $user_answer_count = 0;
+      }
+      if (module_exists('sbq_user_relationships')) {
+        $user_relationship_count = sbq_user_relationships_my_relstionships($account);
+        $follow_link = sbq_user_relationships_action_between_user($user, $account);
+      } else {
+        $user_relationship_count = 0;
+        $follow_link = '';
+      }
+      if (module_exists('userpoints')) {
+        $user_point_count = userpoints_get_current_points($user->uid, 'all');
+      } else {
+        $user_point_count = 0;
+      }
 
-      $variables['page']['content']['system_main']['messages']['#prefix'] = '<div class="sbq_pm_wrap">';
-      $variables['page']['content']['system_main']['messages']['#suffix'] = '</div>';
-
-      $variables['page']['content']['system_main']['participants']['#prefix'] = '<div class="sbq_hide">';
-      $variables['page']['content']['system_main']['participants']['#suffix'] = '</div>';
+      $variables['counts'] = array(
+        'user_post_count' => $user_post_count,
+        'user_message_count' => $user_message_count,
+        'user_blog_count' => $user_blog_count,
+        'user_question_count' => $user_question_count,
+        'user_answer_count' => $user_answer_count,
+        'user_relationship_count' => $user_relationship_count,
+        'user_point_count' => $user_point_count,
+      );
+      $variables['follow_link'] = $follow_link;
+      $variables['is_doctor'] = FALSE;
+      if (in_array('doctor', $account->roles) && module_exists('profile2')) {
+        $a_doctor_profile = profile2_load_by_user($account, 'doctor_profile');
+        $variables['is_doctor'] = TRUE;
+        $variables['a_doctor_profile'] = $a_doctor_profile;
+        $field_author = field_view_field('profile2', $a_doctor_profile, 'field_author', 'value');
+        $variables['field_author'] = drupal_render($field_author);
+        $field_doctor_title = field_view_field('profile2', $a_doctor_profile, 'field_doctor_title', 'value');
+        $variables['field_doctor_title'] = drupal_render($field_doctor_title);
+        $field_hospital_name = field_view_field('profile2', $a_doctor_profile, 'field_hospital_name', 'value');
+        $variables['field_hospital_name'] = drupal_render($field_hospital_name);
+        $field_department = field_view_field('profile2', $a_doctor_profile, 'field_department', 'value');
+        $variables['field_department'] = drupal_render($field_department);
+        $variables['hospitals_departments'] = $variables['field_hospital_name'] .' '. $variables['field_department'];
+      }
     }
+
+
+
+    $variables['page']['content']['system_main']['messages']['#prefix'] = '<div class="sbq_pm_wrap">';
+    $variables['page']['content']['system_main']['messages']['#suffix'] = '</div>';
+
+    $variables['page']['content']['system_main']['participants']['#prefix'] = '<div class="sbq_hide">';
+    $variables['page']['content']['system_main']['participants']['#suffix'] = '</div>';
   }
 }
 
@@ -1096,8 +1235,8 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     $form['title']['#title'] = '我来帮他解答';
     $form['body']['und'][0]['#title'] = '我来帮他解答';
   } elseif ($form_id == 'privatemsg_list') {
-    $form['#prefix'] = '<div class="sbq_pm_list"><div class="sbq_wrap"><div class="sbq_head">咨询管理</div>';
-    $form['#suffix'] = '</div></div>';
+    $form['#prefix'] = '<div class="sbq_pm_list">';
+    $form['#suffix'] = '</div>';
     $form['updated']['actions']['#weight'] = '99';
   } elseif ($form_id == 'privatemsg_new') {
     $form['#prefix'] = '<div class="sbq_pm_editor">';

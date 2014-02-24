@@ -156,6 +156,8 @@
     $menu_relationship_active = 'class="active"';
   } elseif (in_array('message', arg())) {
     $menu_message_active = 'class="active"';
+  } elseif (in_array('messages', arg())) {
+    $menu_message_active = 'class="active"';
   } elseif (in_array('edit', arg())) {
     $menu_edit_active = 'class="active"';
   } else {
