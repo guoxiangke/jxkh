@@ -280,6 +280,19 @@ function tiger_preprocess_page(&$variables) {
     $expert_nid = _sbq_center_expert_nid_get($center_nid);
     $variables['expert_nid'] = $expert_nid;
   }
+  if (arg(0) == 'messages') {
+    global $user;
+    $center_nid = _sbq_center_nid_get();
+    //kpr($center_nid);
+    if ($center_nid) {
+      drupal_add_css(path_to_theme() . "/css/hospital.css", array('group' => CSS_THEME));
+      $variables['theme_hook_suggestions'][] = 'page__center';
+      $variables['center_id'] = $center_nid;
+      $expert_nid = _sbq_center_expert_nid_get($center_nid);
+      $variables['expert_nid'] = $expert_nid;
+      $variables['page']['sidebar_second'] = FALSE;
+    }
+  }
 }
 
 function tiger_preprocess_views_view(&$vars) {
@@ -1073,6 +1086,10 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
   } elseif ($form_id == 'answer_node_form') {
     $form['title']['#title'] = '我来帮他解答';
     $form['body']['und'][0]['#title'] = '我来帮他解答';
+  } elseif ($form_id == 'privatemsg_list') {
+    $form['#prefix'] = '<div class="sbq_pm_list"><div class="sbq_wrap"><div class="sbq_head">咨询管理</div>';
+    $form['#suffix'] = '</div></div>';
+    $form['updated']['actions']['#weight'] = '99';
   }
 }
 
