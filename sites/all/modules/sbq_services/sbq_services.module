@@ -42,7 +42,7 @@ function _sbq_services_user_login($username, $password) {
 }
 
 function _sbq_services_user_format($accounts) {
-  if (!is_array($account)) {
+  if (!is_array($accounts)) {
     $accounts = array( $accounts );
   }
   $format = array();
