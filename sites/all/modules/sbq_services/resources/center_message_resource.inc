@@ -131,7 +131,7 @@ function center_message_query($centerid, $fun = NULL, $page, $fields, $parameter
       'from' => $result['from'],
       'start' => $result['start'],
       'count' => $result['message_count'],
-      'message' => isset($message) ? $message : array()
+      'message' => $message,
   );
 }
 

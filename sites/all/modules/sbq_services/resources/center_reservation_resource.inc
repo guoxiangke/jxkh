@@ -130,7 +130,7 @@ function center_reservation_message($centerid, $userid) {
     //$query->propertyCondition('timestamp', $time, '>');
   }
   $result = $query->execute();
-  if (!$result['message']) {
+  if (!isset($result['message'])) {
     return '';
   }
   $mesage = array();
