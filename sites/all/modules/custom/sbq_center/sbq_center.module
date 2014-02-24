@@ -91,7 +91,7 @@ function sbq_center_form_alter(&$form, &$form_state, $form_id) {
   }
   switch ($form_id) {
     case 'question_node_form':
-      $form['title']['#access'] = FALSE;
+      // $form['title']['#access'] = FALSE;
       $p_nid = arg(1);
       if (isset($p_nid) && $p_nid > 0) { // Ask form for Center
         $p_node = node_load($p_nid);
@@ -99,23 +99,23 @@ function sbq_center_form_alter(&$form, &$form_state, $form_id) {
         if ($p_type == 'sbq_center') {
           $form['body']['und']['0']['#title'] = t('问答');
           $form['field_tags']['und']['#value'] = '中心问答';
-          $form['actions']['submit']['#submit'][] = 'sbq_center_ask_form_submit';
-          unset($form['#validate']);
-          unset($form['#submit']);
-          unset($form['body']['und']['0']['format']);
-          unset($form['body']['und']['0']['summary']);
-          $form['actions']['submit'] = array(
-              '#type' => 'submit',
-              '#value' => '提问',
-              //'#attributes' => array('class'=>'use-ajax'),
-              '#ajax' => array(
-                  'callback' => 'ajax_center_ask_callback',
-                  'wrapper' => 'question-node-form',
-                  'method' => 'replace',
-                  'effect' => 'fade',
-                  'progress' => array( 'type' => 'throbber', 'message' => '请稍候' ),
-              ),
-          );
+          // $form['actions']['submit']['#submit'][] = 'sbq_center_ask_form_submit';
+          // unset($form['#validate']);
+          // unset($form['#submit']);
+          // unset($form['body']['und']['0']['format']);
+          // unset($form['body']['und']['0']['summary']);
+          // $form['actions']['submit'] = array(
+          //     '#type' => 'submit',
+          //     '#value' => '提问',
+          //     //'#attributes' => array('class'=>'use-ajax'),
+          //     '#ajax' => array(
+          //         'callback' => 'ajax_center_ask_callback',
+          //         'wrapper' => 'question-node-form',
+          //         'method' => 'replace',
+          //         'effect' => 'fade',
+          //         'progress' => array( 'type' => 'throbber', 'message' => '请稍候' ),
+          //     ),
+          // );
         }
       }
       break;
