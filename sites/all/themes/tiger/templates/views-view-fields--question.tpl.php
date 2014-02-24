@@ -54,7 +54,7 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
     $picture = theme('image_style',array('style_name' => 'profile_small', 'path' => $picture));
   }
 ?>
-<?php if(!$og_group_ref):?>
+<?php if(!isset($og_group_ref)):?>
 <div class="sbq_tags">
   <?php if(isset($field_tags)) print $field_tags; ?>
 </div>
