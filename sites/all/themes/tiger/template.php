@@ -283,7 +283,6 @@ function tiger_preprocess_page(&$variables) {
   if (arg(0) == 'messages') {
     global $user;
     $center_nid = _sbq_center_nid_get();
-    //kpr($center_nid);
     if ($center_nid) {
       drupal_add_css(path_to_theme() . "/css/hospital.css", array('group' => CSS_THEME));
       $variables['theme_hook_suggestions'][] = 'page__center';
@@ -291,6 +290,16 @@ function tiger_preprocess_page(&$variables) {
       $expert_nid = _sbq_center_expert_nid_get($center_nid);
       $variables['expert_nid'] = $expert_nid;
       $variables['page']['sidebar_second'] = FALSE;
+    }
+    if (arg(1) == 'view') {
+      $variables['page']['content']['system_main']['#prefix'] = '<div class="sbq_pm">';
+      $variables['page']['content']['system_main']['#suffix'] = '</div>';
+
+      $variables['page']['content']['system_main']['messages']['#prefix'] = '<div class="sbq_pm_wrap">';
+      $variables['page']['content']['system_main']['messages']['#suffix'] = '</div>';
+
+      $variables['page']['content']['system_main']['participants']['#prefix'] = '<div class="sbq_hide">';
+      $variables['page']['content']['system_main']['participants']['#suffix'] = '</div>';
     }
   }
 }
@@ -1089,6 +1098,11 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     $form['#prefix'] = '<div class="sbq_pm_list"><div class="sbq_wrap"><div class="sbq_head">咨询管理</div>';
     $form['#suffix'] = '</div></div>';
     $form['updated']['actions']['#weight'] = '99';
+  } elseif ($form_id == 'privatemsg_new') {
+    $form['#prefix'] = '<div class="sbq_pm_editor">';
+    $form['#suffix'] = '</div>';
+
+    $form['body']['#rows'] = 1;
   }
 }
 
@@ -1163,4 +1177,13 @@ function tiger_apachesolr_search_noresults() {
 <li>Remove quotes around phrases to match each word individually: <em>"blue drop"</em> will match less than <em>blue drop</em>.</li>
 <li>You can require or exclude terms using + and -: <em>big +blue drop</em> will require a match on <em>blue</em> while <em>big blue -drop</em> will exclude results that contain <em>drop</em>.</li>
 </ul></div>');
+}
+
+function tiger_preprocess_privatemsg_view(&$vars) {
+  global $user;
+  $message = $vars['message'];
+  $vars['self'] = FALSE;
+  if ($user->uid == $message->author->uid) {
+    $vars['self'] = TRUE;
+  }
 }
