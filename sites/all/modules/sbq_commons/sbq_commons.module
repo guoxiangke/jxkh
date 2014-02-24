@@ -162,7 +162,7 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
       break;
     case 'question_node_form':      
       $form['title']['#access'] = TRUE;
-      $form['title'][LANGUAGE_NONE]['0']['#title'] = '标题';
+      $form['title']['#title'] = '标题';
       if (arg(0) == 'user') { // Quick Ask form for User Center
         $form['body']['und']['0']['#title'] = t('快速提问');
         $form['field_tags']['und']['#value'] = '快速提问';
