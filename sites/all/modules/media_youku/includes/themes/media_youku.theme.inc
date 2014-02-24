@@ -32,9 +32,11 @@ function media_youku_preprocess_media_youku_video(&$variables) {
       <param name="movie" value="http://www.youku.com/v/{$variables['video_id']}"></param>
       <param name="allowFullScreen" value="{$variables['fullscreen']}"></param>
       <param name="wmode" value="transparent" />
-      <embed src="http://player.youku.com/player.php/sid/{$variables['video_id']}/.v.swf" type="application/x-shockwave-flash" width="{$variables['width']}" height="{$variables['height']}" allowfullscreen="{$variables['fullscreen']}"></embed>
+      <embed src="http://player.youku.com/player.php/sid/{$variables['video_id']}/v.swf" type="application/x-shockwave-flash" width="{$variables['width']}" height="{$variables['height']}" allowfullscreen="{$variables['fullscreen']}"></embed>
     </object>
 OUTPUT;
+// <embed src="http://player.youku.com/player.php/sid/XNjc1Njk4ODg4/v.swf" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
+
 
 	// @todo Replace this inline JavaScript with at least calls to
 	//   drupal_add_js()/drupal_get_js(), and ideally, with a behavior. Keep

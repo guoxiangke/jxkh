@@ -43,7 +43,8 @@
 .sbq_hospital_sidebar .sbq_hospital_sub_nav ul { float: left; width: 100%; }
 .sbq_hospital_sidebar .sbq_hospital_sub_nav ul li { float: left; width: 100%; margin: 0px 0px 5px 0px; }
 .sbq_hospital_sidebar .sbq_hospital_sub_nav ul li a { float: left; width: 100%; line-height: 36px; background: #f6f6f6; border-radius: 5px; font-size: 14px; text-indent: 15px; }
-.sbq_hospital_sidebar .sbq_hospital_sub_nav ul li a:hover { background: #EFF6FA; }
+.sbq_hospital_sidebar .sbq_hospital_sub_nav ul li a:hover,
+.sbq_hospital_sidebar .sbq_hospital_sub_nav ul .active a { background: #EFF6FA; color: #225599; }
 /*sbq_notice*/
 .sbq_hospital_sidebar .sbq_notice { float: left; width: 100%; margin: 0px 0px 15px 0px; }
 .sbq_hospital_sidebar .sbq_notice .sbq_head { float: left; width: 180px; height: 32px; line-height: 32px; padding: 0px 9px; border: 1px #E5E5E5 solid; background: #f6f6f6; }

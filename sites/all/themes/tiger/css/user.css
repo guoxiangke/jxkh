@@ -6,7 +6,7 @@
 .sbq_user_info .sbq_user_pic img { float: left; width: 140px; height: 140px; overflow: hidden; }
 .sbq_user_info .sbq_my_pic { float: left; width: 40px; height: 40px; padding: 1px; background: #FFF; overflow: hidden; position: absolute; right: -10px; bottom: -10px; z-index: 9; box-shadow: 0px 2px 4px #b2b2b2; border-radius: 20px; }
 .sbq_user_info .sbq_my_pic img { float: left; width: 40px; height: 40px; overflow: hidden; border-radius: 20px; }
-.sbq_user_info .sbq_user_summary { float: left; width: 500px; height: 74px; margin: 0px 0px 0px 20px; overflow: hidden; }
+.sbq_user_info .sbq_user_summary { float: left; width: 500px; margin: 0px 0px 0px 20px; overflow: hidden; }
 .sbq_user_info .sbq_user_name { float: left; width: 100%; height: 32px; line-height: 32px; font-size: 20px; }
 .sbq_user_info .sbq_user_name strong { float: left; }
 .sbq_user_info .sbq_user_name span { float: left; margin: 0px 0px 0px 5px; }
@@ -71,10 +71,10 @@
 .sbq_user_article_list .sbq_con .sbq_item .sbq_reply_actions ul li { float: left; margin: 0px 10px 0px 0px; color: #999999; font-family: Arial; }
 .sbq_user_article_list .sbq_con .sbq_item .sbq_reply_actions ul li a { float: left; height: 22px; line-height: 22px; color: #999999; }
 .sbq_user_article_list .sbq_con .sbq_item .sbq_reply_actions ul li a:hover { color: #698EBF; text-decoration: underline; }
-.sbq_user_article_list .sbq_con .sbq_item .sbq_reply_actions ul li .sbq_edit_btn { background: url(../image/sbq_reply_actions_icon.png) no-repeat; background-position: 0px -88px; padding: 0px 0px 0px 18px; }
-.sbq_user_article_list .sbq_con .sbq_item .sbq_reply_actions ul li .sbq_edit_btn:hover { background-position: 0px -110px; }
-.sbq_user_article_list .sbq_con .sbq_item .sbq_reply_actions ul li .sbq_del_btn { background: url(../image/sbq_reply_actions_icon.png) no-repeat; background-position: 0px -132px; padding: 0px 0px 0px 18px; }
-.sbq_user_article_list .sbq_con .sbq_item .sbq_reply_actions ul li .sbq_del_btn:hover { background-position: 0px -154px; }
+.sbq_user_article_list .sbq_con .sbq_item .sbq_reply_actions ul .sbq_edit_btn a { background: url(../image/sbq_reply_actions_icon.png) no-repeat; background-position: 0px -88px; padding: 0px 0px 0px 18px; }
+.sbq_user_article_list .sbq_con .sbq_item .sbq_reply_actions ul .sbq_edit_btn:hover a { background-position: 0px -110px; }
+.sbq_user_article_list .sbq_con .sbq_item .sbq_reply_actions ul .sbq_del_btn a { background: url(../image/sbq_reply_actions_icon.png) no-repeat; background-position: 0px -132px; padding: 0px 0px 0px 18px; }
+.sbq_user_article_list .sbq_con .sbq_item .sbq_reply_actions ul .sbq_del_btn:hover a { background-position: 0px -154px; }
 /*sbq_quick_question*/
 .sbq_user_article_list .sbq_quick_question { float: left; width: 100%; margin: 0px 0px 10px 0px; }
 /*sbq_head*/

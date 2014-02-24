@@ -786,9 +786,9 @@ function sbq_commons_node_submit(&$node, &$form, &$form_state) {
   // for question node title
   if ($node->type == 'question') {
     $max_length = 29;
-    watchdog('ori-title', $node->title, array(), WATCHDOG_NOTICE, 'link');
+    watchdog('ori-title-bock-ip', sbq_commons_getip(), array(), WATCHDOG_NOTICE, 'link');
     // $subject = trim(truncate_utf8(decode_entities(strip_tags(check_markup($node->body['und'][0]['value']))), $max_length, TRUE));
-    $subject = strip_tags(trim(truncate_utf8(decode_entities(check_markup($node->body['und'][0]['value'])), $max_length, TRUE)));
+    $subject = strip_tags(trim(truncate_utf8(decode_entities(check_markup($node->body[LANGUAGE_NONE][0]['value'])), $max_length, TRUE)));
     watchdog('new-title', $subject, array(), WATCHDOG_NOTICE, 'link');
     $node->title = $subject;
   }
@@ -1590,4 +1590,22 @@ function sbq_commons_node_insert($node) {
       privatemsg_new_thread(array($received), $title, $body, $args);
     }
   }
+}
+
+function sbq_commons_getip() {  
+  $unknown = 'unknown';  
+  if ( isset($_SERVER['HTTP_X_FORWARDED_FOR']) && $_SERVER['HTTP_X_FORWARDED_FOR'] & strcasecmp($_SERVER['HTTP_X_FORWARDED_FOR'], 
+  $unknown) ) {  
+    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];  
+  } elseif ( isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], $unknown) ) {
+    $ip = $_SERVER['REMOTE_ADDR'];
+  }
+  /*  
+  处理多层代理的情况  
+  或者使用正则方式：$ip = preg_match("/[\d\.]
+  {7,15}/", $ip, $matches) ? $matches[0] : $unknown;  
+  */  
+  if (false !== strpos($ip, ','))  
+    $ip = reset(explode(',', $ip));  
+ return $ip;  
 }
