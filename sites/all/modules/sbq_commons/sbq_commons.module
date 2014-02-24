@@ -162,6 +162,7 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
       break;
     case 'question_node_form':      
       $form['title']['#access'] = TRUE;
+      $form['title'][LANGUAGE_NONE]['0']['#title'] = '标题';
       if (arg(0) == 'user') { // Quick Ask form for User Center
         $form['body']['und']['0']['#title'] = t('快速提问');
         $form['field_tags']['und']['#value'] = '快速提问';
@@ -303,7 +304,8 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
 
 function sbq_commons_quick_qa_redirct(&$form, &$form_state) {
   global $user;
-  drupal_goto("user/$user->uid/qa/ask");
+  $form_state['redirect'] ="user/$user->uid/qa/ask";
+  // drupal_goto("user/$user->uid/qa/ask");
 }
 function sbq_commons_get_rid_by_name($name) {
   $rate_widget_id = FALSE;
