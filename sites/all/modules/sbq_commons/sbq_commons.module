@@ -1561,3 +1561,14 @@ function sbq_commons_form_node_form_alter(&$form, &$form_state, $form_id) {
       $form['og_group_ref'][LANGUAGE_NONE][0]['default']['#default_value'] = $gid;
   }
 }
+
+
+/**
+ * Add content to the view thread page.
+ *
+ * @param $content
+ *   Render-able array, contains the thread object in #thread.
+ */
+function sbq_commons_privatemsg_view_alter(&$content) {
+  $content['messages'] = array_reverse($content['messages'],TRUE);
+}
