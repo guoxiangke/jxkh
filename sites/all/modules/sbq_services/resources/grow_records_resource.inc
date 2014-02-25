@@ -139,7 +139,7 @@ function _create($node) {
   $obj->type = 'grow_records';
   node_object_prepare($node);
   $obj->title = $node['title'];
-  $obj->body = $node['body'];
+  $obj->body['und'][0]['value'] = $node['body'];
   $obj->field_grow_records_file['und'][0]['fid'] = $node['fid'];
   $obj->field_grow_records_file['und'][0]['display'] = 1;
   $obj->field_grow_records_flags['und'][0]['value'] = $node['flags'];
@@ -159,6 +159,7 @@ function _create($node) {
   }
   node_save($obj);
   $node = node_load($obj->nid);
+
   $nodes = _grow_records_format($node);
   return reset($nodes);
 }
@@ -356,26 +357,24 @@ function _grow_records_extract($data, $is_already_upload = TRUE) {
     return array();
   }
 
-  $archive = update_manager_archive_extract($uri, 'public://temp');
+  $listContents = mutiple_extract_zip($uri);
 
-  $file_data = array();
-  foreach ($archive->listContents() as $basename) {
-    $file_tmp = drupal_realpath('public://temp/' . $basename);
-    $file_name = explode('.', basename($file_tmp));
+  foreach ($listContents as $file) {
+    $basename = basename($file);
+
+    $file_name = explode('.', $basename);
     if (!isset($file_name[1])) {
       continue;
     }
-
     if (in_array($file_name[1], array( 'jpg', 'amr', '3gp' ))) {
       $file_data[$file_name[1]][] = array(
-          'filesize' => filesize($file_tmp),
-          'filename' => basename($file_tmp),
-          'file' => base64_encode(file_get_contents($file_tmp)),
-          'filepath' => 'private://grow_records/' . basename($file_tmp),
+          'filesize' => filesize($file),
+          'filename' => $basename,
+          'file' => base64_encode(file_get_contents($file)),
+          'filepath' => 'private://grow_records/' . uniqid() . '.'.$file_name[1],
       );
     }
   }
-
   foreach ($file_data as $type => $value) {
     foreach ($value as $v_file) {
       $after_files = _sbq_services_file_create($v_file);
@@ -392,6 +391,26 @@ function _grow_records_extract($data, $is_already_upload = TRUE) {
       }
     }
   }
-
   return isset($node) ? $node : array();
+}
+
+function mutiple_extract_zip($uri, $depth = 0, $temp = 'public://temp/') {
+  if ($depth === 1) {
+    $temp .= $depth . '/';
+  }
+  $archive = update_manager_archive_extract($uri, $temp);
+
+  $file_list = array();
+  foreach ($archive->listContents() as $file_name) {
+    $full_file = drupal_realpath($temp) . '/' . $file_name;
+    $arr_file = explode('.', $file_name);
+    $uri = $temp . $file_name;
+    if (is_array($arr_file) && $arr_file[1] == 'zip') {
+      $depth_list = mutiple_extract_zip($uri, ++$depth, $temp); 
+      $file_list = array_merge($file_list, $depth_list);
+    } else {
+      $file_list[] = $full_file;
+    }
+  }
+  return $file_list;
 }
