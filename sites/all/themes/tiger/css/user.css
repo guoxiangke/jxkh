@@ -1,17 +1,18 @@
 .body { padding: 20px 0px; }
 .sbq_user_headr { float: left; width: 100%; }
 /*sbq_user_info*/
-.sbq_user_info { float: left; width: 100%; height: 90px; background: #FCFCFC; }
+.sbq_user_info { float: left; width: 100%; min-height: 90px; background: #FCFCFC; }
 .sbq_user_info .sbq_user_pic { float: left; width: 140px; height: 140px; margin: -70px 0px 0px 20px; padding: 2px; box-shadow: 0px 2px 4px #b2b2b2; background: #FFF; position: relative; }
 .sbq_user_info .sbq_user_pic img { float: left; width: 140px; height: 140px; overflow: hidden; }
 .sbq_user_info .sbq_my_pic { float: left; width: 40px; height: 40px; padding: 1px; background: #FFF; overflow: hidden; position: absolute; right: -10px; bottom: -10px; z-index: 9; box-shadow: 0px 2px 4px #b2b2b2; border-radius: 20px; }
 .sbq_user_info .sbq_my_pic img { float: left; width: 40px; height: 40px; overflow: hidden; border-radius: 20px; }
 .sbq_user_info .sbq_user_summary { float: left; width: 500px; margin: 0px 0px 0px 20px; overflow: hidden; }
-.sbq_user_info .sbq_user_name { float: left; width: 100%; height: 32px; line-height: 32px; font-size: 20px; }
+.sbq_user_info .sbq_user_name { float: left; width: 100%; height: 32px; line-height: 32px; font-size: 20px; overflow: hidden; }
 .sbq_user_info .sbq_user_name strong { float: left; }
 .sbq_user_info .sbq_user_name span { float: left; margin: 0px 0px 0px 5px; }
-.sbq_user_info .sbq_user_hospital { float: left; width: 100%; height: 22px; line-height: 22px; color: #999; }
+.sbq_user_info .sbq_user_hospital { float: left; width: 100%; height: 22px; line-height: 22px; color: #666; overflow: hidden; }
 .sbq_user_info .sbq_user_hospital a { color: #225599; }
+.sbq_user_info .sbq_user_tag { float: left; width: 100%; height: 20px; line-height: 20px; color: #999; word-break: break-all; word-wrap: break-word; }
 /*sbq_user_follow*/
 .sbq_user_info .sbq_user_follow { float: left; height: 24px; line-height: 24px; margin: 4px 0px 0px 0px; color: #999999; }
 .sbq_user_info .sbq_user_follow a { float: left; height: 24px; line-height: 24px; margin: 0px 0px 0px 5px; color: #999999; font-size: 12px; }
@@ -242,7 +243,7 @@
 .sbq_article_content u { text-decoration: underline; }
 .sbq_article_content em { font-style: italic; }
 .sbq_article_content blockquote { margin: 0.8em 0px; padding: 0px 0px 0px 10px; border-left: 3px solid #D0E5F2; vertical-align: baseline; display: block; font-size: 12px; }
-.sbq_article_content .field-name-field-tags { float: left; width: 100%; height: 26px; line-height: 26px; padding: 10px 0px; overflow: hidden; }
+.sbq_article_content .field-name-field-tags { float: left; width: 100%; line-height: 26px; padding: 10px 0px; overflow: hidden; }
 .sbq_article_content .field-name-field-tags .field-label { float: left; font-weight: bold; color: #225599; }
 .sbq_article_content .field-name-field-tags .field-item { float: left; margin: 0px 5px 0px 0px; }
 /*sbq_user_badge*/

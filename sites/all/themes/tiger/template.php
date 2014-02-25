@@ -295,7 +295,14 @@ function tiger_preprocess_page(&$variables) {
     } else {
       drupal_add_css(path_to_theme() . "/css/user.css", array('group' => CSS_THEME));
       $variables['theme_hook_suggestions'][] = 'page__user';
-      $variables['page']['content']['system_main']['#prefix'] = '<div class="sbq_user_pm"><div class="sbq_pm_list"><div class="sbq_wrap">';
+      $variables['page']['content']['system_main']['#prefix'] = '<div class="sbq_user_pm"><div class="sbq_nav">
+          <ul>
+            <li>'.l('系统消息', 'user/message').'</li>
+            <li>'.l('我发送的请求', 'user/'.$user->uid.'/relationship/default/sent').'</li>
+            <li>'.l('我收到的请求', 'user/'.$user->uid.'/relationship/default/received').'</li>
+            <li class="active">'.l('我的私信', 'messages').'</li>
+          </ul>
+        </div><div class="sbq_pm_list"><div class="sbq_wrap">';
       $variables['page']['content']['system_main']['#suffix'] = '</div></div></div>';
 
       $account = $user;

@@ -6,6 +6,7 @@ drupal_add_css(drupal_get_path('module', 'privatemsg') . '/styles/privatemsg-vie
 $my = '';
 if ($self) {
   $my = ' my';
+  $author_name_link = '我';
 }
 ?>
 <?php print $anchors; ?>

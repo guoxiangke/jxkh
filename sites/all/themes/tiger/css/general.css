@@ -359,6 +359,7 @@ Colorbox
 .sbq_search_form .form-actions,
 .sbq_search_form .form-type-textfield { float: left; }
 .sbq_search_form input[type="submit"] { float: left; width: 26px; height: 26px; border-radius: 3px; border: none; background: url(../image/sbq_search_form_btn.png); text-indent: -999px; overflow: hidden; cursor: pointer; }
+input.placeholder { color: #666; }
 /*---sbq_search---*/
 .sbq_search { float: left; width: 100%; }
 .sbq_search h2 { display: none; }
