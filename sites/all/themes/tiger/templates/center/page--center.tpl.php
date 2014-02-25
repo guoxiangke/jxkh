@@ -164,7 +164,7 @@
   <ul>
     <li<?php print $menu_index_active; ?>><?php print l('医院首页', 'center/'.$center_id.'/index'); ?></li>
     <li<?php print $menu_reservation_active; ?>><?php print l('预约就诊', 'center/'.$center_id.'/reservation'); ?></li>
-    <li<?php print $menu_messages_active; ?>><?php print l('咨询医生', 'messages'); ?></li>
+    <li<?php print $menu_messages_active; ?>><?php print l('咨询医生', 'messages/new/'.$owner_uid); ?></li>
     <li<?php print $menu_edu_active; ?>><?php print l('健康讲堂', 'center/'.$center_id.'/edu'); ?></li>
     <li<?php print $menu_info_active; ?>><?php print l('中心介绍', 'center/'.$center_id.'/info'); ?></li>
   </ul>

@@ -225,6 +225,22 @@ function _sbq_center_get_nid_by_node($nid = 0) {
   return $center_nid;
 }
 
+function _sbq_center_owner_uid_get($center_nid = 0) {
+  if ($center_nid == 0) {
+    $owner_uid =  0;
+  }
+  $owner_uid = variable_get('canter_'.$center_nid.'_owner_uid', 0);
+  if($owner_uid) {
+    return $owner_uid;
+  } else {
+    $owner_uid =  0;
+    $center = node_load($center_nid);
+    $owner_uid = $center->uid;
+    variable_set('canter_'.$center_nid.'_owner_uid', $owner_uid);
+  }
+  return $owner_uid;
+}
+
 /**
  * Implements hook_node_delete().
  */

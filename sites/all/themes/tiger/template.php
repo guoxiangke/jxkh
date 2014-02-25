@@ -242,10 +242,11 @@ function tiger_preprocess_page(&$variables) {
   if (arg(0) == 'center') {
     drupal_add_css(path_to_theme() . "/css/hospital.css", array('group' => CSS_THEME));
     $center_nid = arg(1);
-    //var_dump($center_nid);die();
     $variables['center_id'] = $center_nid;
     $expert_nid = _sbq_center_expert_nid_get($center_nid);
+    $owner_uid = _sbq_center_owner_uid_get($center_nid);
     $variables['expert_nid'] = $expert_nid;
+    $variables['owner_uid'] = $owner_uid;
     $variables['page']['sidebar_second'] = FALSE;
     if (in_array('reservation', arg()) && in_array('created', arg())) {
       drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
@@ -267,7 +268,9 @@ function tiger_preprocess_page(&$variables) {
     $center_nid = $node->og_group_ref['und']['0']['target_id'];
     $variables['center_id'] = $center_nid;
     $expert_nid = _sbq_center_expert_nid_get($center_nid);
+    $owner_uid = _sbq_center_owner_uid_get($center_nid);
     $variables['expert_nid'] = $expert_nid;
+    $variables['owner_uid'] = $owner_uid;
   }
   if (isset($variables['node']) && $variables['node']->type == 'center_notice') {
     drupal_add_css(path_to_theme() . "/css/hospital.css", array('group' => CSS_THEME));
@@ -278,7 +281,9 @@ function tiger_preprocess_page(&$variables) {
     $center_nid = $node->og_group_ref['und']['0']['target_id'];
     $variables['center_id'] = $center_nid;
     $expert_nid = _sbq_center_expert_nid_get($center_nid);
+    $owner_uid = _sbq_center_owner_uid_get($center_nid);
     $variables['expert_nid'] = $expert_nid;
+    $variables['owner_uid'] = $owner_uid;
   }
   if (arg(0) == 'messages') {
     global $user;
@@ -288,7 +293,9 @@ function tiger_preprocess_page(&$variables) {
       $variables['theme_hook_suggestions'][] = 'page__center';
       $variables['center_id'] = $center_nid;
       $expert_nid = _sbq_center_expert_nid_get($center_nid);
+      $owner_uid = _sbq_center_owner_uid_get($center_nid);
       $variables['expert_nid'] = $expert_nid;
+      $variables['owner_uid'] = $owner_uid;
       $variables['page']['sidebar_second'] = FALSE;
       $variables['page']['content']['system_main']['#prefix'] = '<div class="sbq_pm_list"><div class="sbq_wrap"><div class="sbq_head">咨询管理</div>';
       $variables['page']['content']['system_main']['#suffix'] = '</div></div>';
@@ -375,7 +382,9 @@ function tiger_preprocess_page(&$variables) {
       $variables['theme_hook_suggestions'][] = 'page__center';
       $variables['center_id'] = $center_nid;
       $expert_nid = _sbq_center_expert_nid_get($center_nid);
+      $owner_uid = _sbq_center_owner_uid_get($center_nid);
       $variables['expert_nid'] = $expert_nid;
+      $variables['owner_uid'] = $owner_uid;
       $variables['page']['sidebar_second'] = FALSE;
       $variables['page']['content']['system_main']['#prefix'] = '<div class="sbq_pm">';
       $variables['page']['content']['system_main']['#suffix'] = '</div>';
