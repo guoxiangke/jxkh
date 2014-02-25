@@ -1250,6 +1250,9 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     $form['#suffix'] = '</div>';
 
     $form['body']['#rows'] = 1;
+  } elseif ($form_id == 'sbq_center_opendays_form') {
+    $form['#prefix'] = '<div class="hospital_order_setting"><div class="sbq_wrap"><div class="sbq_head">预约设置</div>';
+    $form['#suffix'] = '</div></div>';
   }
 }
 
