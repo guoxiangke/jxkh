@@ -127,13 +127,12 @@ function grow_records_resource_definition() {
  */
 
 function _create($node) {
-  module_load_include('inc', 'update', 'update.manager');
   if (isset($node['fid']) && $node['fid']) {
     $extra = _grow_records_extract($node['fid']);
   } elseif (isset($node['file']) && $node['file']) {
     $extra = _grow_records_extract($node['file']['file'], FALSE);
   }
-  return $extra;
+
   global $user;
   $obj = new stdClass();
   $obj->uid = $user->uid;
@@ -141,23 +140,24 @@ function _create($node) {
   node_object_prepare($node);
   $obj->title = $node['title'];
   $obj->body = $node['body'];
-  //return $node;
   $obj->field_grow_records_file['und'][0]['fid'] = $node['fid'];
   $obj->field_grow_records_file['und'][0]['display'] = 1;
   $obj->field_grow_records_flags['und'][0]['value'] = $node['flags'];
   $obj->field_grow_records_circle['und'][0]['value'] = $node['circle'];
   $obj->field_grow_records_local_id['und'][0]['value'] = $node['local_id'];
+
   if (isset($extra['field_grow_records_img'])) {
     $obj->field_grow_records_img = $extra['field_grow_records_img'];
   }
   if (isset($extra['field_grow_records_voice'])) {
-    $obj->field_grow_records_img = $extra['field_grow_records_voice'];
+    $obj->field_grow_records_voice = $extra['field_grow_records_voice'];
+    $obj->field_grow_records_voice['und'][0]['display'] = 1;
   }
   if (isset($extra['field_grow_records_video'])) {
-    $obj->field_grow_records_img = $extra['field_grow_records_video'];
+    $obj->field_grow_records_video = $extra['field_grow_records_video'];
+    $obj->field_grow_records_video['und'][0]['display'] = 1;
   }
   node_save($obj);
-
   $node = node_load($obj->nid);
   $nodes = _grow_records_format($node);
   return reset($nodes);
@@ -344,17 +344,21 @@ function _grow_records_format($data, $target, $fields = '*') {
 }
 
 function _grow_records_extract($data, $is_already_upload = TRUE) {
-
+  module_load_include('inc', 'update', 'update.manager');
   if ($is_already_upload) {
     $file = file_load($data);
-
     $uri = $file->uri;
   } else {
     $uri = file_unmanaged_save_data(base64_decode($data), 'public://temp/' . time() . '.zip', FILE_EXISTS_REPLACE);
   }
 
+  if (!isset($uri)) {
+    return array();
+  }
+
   $archive = update_manager_archive_extract($uri, 'public://temp');
-  return $archive;
+
+  $file_data = array();
   foreach ($archive->listContents() as $basename) {
     $file_tmp = drupal_realpath('public://temp/' . $basename);
     $file_name = explode('.', basename($file_tmp));
@@ -371,6 +375,7 @@ function _grow_records_extract($data, $is_already_upload = TRUE) {
       );
     }
   }
+
   foreach ($file_data as $type => $value) {
     foreach ($value as $v_file) {
       $after_files = _sbq_services_file_create($v_file);
