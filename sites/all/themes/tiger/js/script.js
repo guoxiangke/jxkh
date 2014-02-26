@@ -233,6 +233,10 @@ Drupal.behaviors.tiger = {
       });
     });
 
+    $('#user-register-form input').mousedown(function(){
+      $(this).parent('.form-item').children('.register_error').hide();
+      $(this).parent('.form-item').children('.description').hide();
+    });
    //  if(typeof(CKEDITOR) === 'object')
    //  CKEDITOR.on( 'dialogDefinition', function( ev )
    // {
