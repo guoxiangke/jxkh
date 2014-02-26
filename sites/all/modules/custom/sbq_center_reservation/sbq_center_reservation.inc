@@ -85,7 +85,9 @@ function sbq_center_reservation_manage($center, $reservation, $action) {
       node_save($reservation);
       break;
   }
-  return 'success';
+
+
+  return '操作成功，'.l('点击返回',"center/{$center->nid}/reservation/manage");
 }
 
 function sbq_center_reservation_created($center, $account = NULL) {

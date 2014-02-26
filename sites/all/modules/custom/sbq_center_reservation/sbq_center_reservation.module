@@ -304,7 +304,8 @@ function sbq_center_reservation_get_reservation($uid = '', $nid = '', array $par
 
 function sbq_center_reservation_get_manage_item($row, $cancle = FALSE) {
   $centerid = arg(1);
-  $accept = $ignore = '';
+  $accept = $ignore = $delete = '';
+
   switch ($row->field_field_reservation_status[0]['raw']['value']) {
     case SBQ_CENTER_RESERVATION_STATUS_SUBMMIT:
       $accept = l('接受', "center/{$centerid}/reservation/{$row->nid}/accept");
@@ -315,11 +316,14 @@ function sbq_center_reservation_get_manage_item($row, $cancle = FALSE) {
       $accept = '';
       $ignore = l('删除', "center/{$centerid}/reservation/{$row->nid}/ignore");
       break;
+    case SBQ_CENTER_RESERVATION_STATUS_IGNORE:
+      $delete = '已删除';
+      break;
   }
   if ($cancle) {
     return l('取消预约', "center/{$centerid}/reservation/{$row->nid}/ignore");
   }
-  return $accept . ' ' . $ignore;
+  return $accept . ' ' . $ignore . $delete;
 }
 
 /*
