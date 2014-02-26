@@ -3,7 +3,9 @@
 /**
  * @file template.php
  */
-
+define('SBQ_CENTER_EXPERT_TID', 24749);
+define('SBQ_CENTER_VISIT_TID', 24752);
+define('SBQ_CENTER_PLAN_TID', 24753);
 /**
  * hook_preprocess_page
  *
@@ -46,8 +48,14 @@ function tiger_preprocess_page(&$variables) {
         $variables['theme_hook_suggestions'][] = 'page__center';
         $variables['page']['sidebar_second'] = FALSE;
         $variables['center_id'] = $center_nid;
-        $expert_nid = _sbq_center_expert_nid_get($center_nid);
+        $expert_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_EXPERT_TID);
+        $owner_uid = _sbq_center_owner_uid_get($center_nid);
+        $visit_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_VISIT_TID);
+        $plan_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_PLAN_TID);
         $variables['expert_nid'] = $expert_nid;
+        $variables['owner_uid'] = $owner_uid;
+        $variables['visit_nid'] = $visit_nid;
+        $variables['plan_nid'] = $plan_nid;
       }
     }
   }
@@ -243,10 +251,14 @@ function tiger_preprocess_page(&$variables) {
     drupal_add_css(path_to_theme() . "/css/hospital.css", array('group' => CSS_THEME));
     $center_nid = arg(1);
     $variables['center_id'] = $center_nid;
-    $expert_nid = _sbq_center_expert_nid_get($center_nid);
+    $expert_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_EXPERT_TID);
     $owner_uid = _sbq_center_owner_uid_get($center_nid);
+    $visit_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_VISIT_TID);
+    $plan_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_PLAN_TID);
     $variables['expert_nid'] = $expert_nid;
     $variables['owner_uid'] = $owner_uid;
+    $variables['visit_nid'] = $visit_nid;
+    $variables['plan_nid'] = $plan_nid;
     $variables['page']['sidebar_second'] = FALSE;
     if (in_array('reservation', arg()) && in_array('created', arg())) {
       drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
@@ -267,10 +279,14 @@ function tiger_preprocess_page(&$variables) {
     $node = $variables['node'];
     $center_nid = $node->og_group_ref['und']['0']['target_id'];
     $variables['center_id'] = $center_nid;
-    $expert_nid = _sbq_center_expert_nid_get($center_nid);
+    $expert_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_EXPERT_TID);
     $owner_uid = _sbq_center_owner_uid_get($center_nid);
+    $visit_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_VISIT_TID);
+    $plan_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_PLAN_TID);
     $variables['expert_nid'] = $expert_nid;
     $variables['owner_uid'] = $owner_uid;
+    $variables['visit_nid'] = $visit_nid;
+    $variables['plan_nid'] = $plan_nid;
   }
   if (isset($variables['node']) && $variables['node']->type == 'center_notice') {
     drupal_add_css(path_to_theme() . "/css/hospital.css", array('group' => CSS_THEME));
@@ -280,10 +296,14 @@ function tiger_preprocess_page(&$variables) {
     $node = $variables['node'];
     $center_nid = $node->og_group_ref['und']['0']['target_id'];
     $variables['center_id'] = $center_nid;
-    $expert_nid = _sbq_center_expert_nid_get($center_nid);
+    $expert_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_EXPERT_TID);
     $owner_uid = _sbq_center_owner_uid_get($center_nid);
+    $visit_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_VISIT_TID);
+    $plan_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_PLAN_TID);
     $variables['expert_nid'] = $expert_nid;
     $variables['owner_uid'] = $owner_uid;
+    $variables['visit_nid'] = $visit_nid;
+    $variables['plan_nid'] = $plan_nid;
   }
   if (arg(0) == 'messages') {
     global $user;
@@ -292,10 +312,14 @@ function tiger_preprocess_page(&$variables) {
       drupal_add_css(path_to_theme() . "/css/hospital.css", array('group' => CSS_THEME));
       $variables['theme_hook_suggestions'][] = 'page__center';
       $variables['center_id'] = $center_nid;
-      $expert_nid = _sbq_center_expert_nid_get($center_nid);
+      $expert_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_EXPERT_TID);
       $owner_uid = _sbq_center_owner_uid_get($center_nid);
+      $visit_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_VISIT_TID);
+      $plan_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_PLAN_TID);
       $variables['expert_nid'] = $expert_nid;
       $variables['owner_uid'] = $owner_uid;
+      $variables['visit_nid'] = $visit_nid;
+      $variables['plan_nid'] = $plan_nid;
       $variables['page']['sidebar_second'] = FALSE;
       $variables['page']['content']['system_main']['#prefix'] = '<div class="sbq_pm_list"><div class="sbq_wrap"><div class="sbq_head">咨询管理</div>';
       $variables['page']['content']['system_main']['#suffix'] = '</div></div>';
@@ -381,10 +405,14 @@ function tiger_preprocess_page(&$variables) {
       drupal_add_css(path_to_theme() . "/css/hospital.css", array('group' => CSS_THEME));
       $variables['theme_hook_suggestions'][] = 'page__center';
       $variables['center_id'] = $center_nid;
-      $expert_nid = _sbq_center_expert_nid_get($center_nid);
+      $expert_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_EXPERT_TID);
       $owner_uid = _sbq_center_owner_uid_get($center_nid);
+      $visit_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_VISIT_TID);
+      $plan_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_PLAN_TID);
       $variables['expert_nid'] = $expert_nid;
       $variables['owner_uid'] = $owner_uid;
+      $variables['visit_nid'] = $visit_nid;
+      $variables['plan_nid'] = $plan_nid;
       $variables['page']['sidebar_second'] = FALSE;
       $variables['page']['content']['system_main']['#prefix'] = '<div class="sbq_pm">';
       $variables['page']['content']['system_main']['#suffix'] = '</div>';
@@ -510,29 +538,29 @@ function tiger_preprocess_views_view(&$vars) {
 
     $blog_active = FALSE;
 
-    $menu_promoted_active = '';
+    $menu_blog_promoted_active = '';
     $menu_blog_active = '';
     if (in_array('blog', arg())) {
       $blog_active = TRUE;
       if (in_array('promoted', arg())) {
-        $menu_promoted_active = 'class="active"';
+        $menu_blog_promoted_active = 'class="active"';
       } else {
         $menu_blog_active = 'class="active"';
       }
     }
     $vars['blog_active'] = $blog_active;
-    $vars['menu_promoted_active'] = $menu_promoted_active;
+    $vars['menu_blog_promoted_active'] = $menu_blog_promoted_active;
     $vars['menu_blog_active'] = $menu_blog_active;
 
     $qa_active = FALSE;
-    $menu_promoted_active = '';
+    $menu_qa_promoted_active = '';
     $menu_followed_active = '';
     $menu_ask_active = '';
     $menu_answer_active = '';
     if (in_array('qa', arg())) {
       $qa_active = TRUE;
       if (in_array('promoted', arg())) {
-        $menu_promoted_active = 'class="active"';
+        $menu_qa_promoted_active = 'class="active"';
       } elseif (in_array('followed', arg())) {
         $menu_followed_active = 'class="active"';
       } elseif (in_array('ask', arg())) {
@@ -542,7 +570,7 @@ function tiger_preprocess_views_view(&$vars) {
       }
     }
     $vars['qa_active'] = $qa_active;
-    $vars['menu_promoted_active'] = $menu_promoted_active;
+    $vars['menu_qa_promoted_active'] = $menu_qa_promoted_active;
     $vars['menu_followed_active'] = $menu_followed_active;
     $vars['menu_ask_active'] = $menu_ask_active;
     $vars['menu_answer_active'] = $menu_answer_active;
