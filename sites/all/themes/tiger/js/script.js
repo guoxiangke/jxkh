@@ -117,7 +117,7 @@ jQuery(function($) {
       if ($(window).scrollTop() > menu_top) {
         menu.css({"position": "fixed", "top": "10px"});
       } else {
-        menu.css("position", "relative");
+        menu.css({"position": "relative", "top": "0px"});
       };
       // TODO: make the menu link active style
       // Get container scroll position
