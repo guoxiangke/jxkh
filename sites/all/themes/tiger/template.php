@@ -71,7 +71,7 @@ function tiger_preprocess_page(&$variables) {
       $account = $user;
     }
     $variables['account'] = $account;
-    if ($variables['logged_in'] || is_numeric(arg(1))) {
+    if ($variables['logged_in'] && is_numeric(arg(1))) {
       $name = $account->name;
       $title = $name.'的个人主页';
       drupal_set_title($title);
