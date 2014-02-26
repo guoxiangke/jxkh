@@ -206,8 +206,8 @@
           <?php elseif($logged_in): ?>
           <li<?php print $left_reservation_my_active; ?>><?php print l('我的预约', 'center/'.$center_id.'/reservation/my'); ?></li>
           <?php endif; ?>
-          <li><a href="#">就诊流程</a></li>
-          <li><a href="#">治疗方案</a></li>
+          <li><?php print l('就诊流程', 'node/'.$visit_nid); ?></li>
+          <li><?php print l('治疗方案', 'node/'.$plan_nid); ?></li>
         </ul>
         <?php else: ?>
         <ul>
