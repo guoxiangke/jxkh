@@ -128,10 +128,11 @@
   }
 
   $center = node_load($center_id);
-  $is_center_owner = FALSE;;
+  $is_center_owner = FALSE;
   if ($user->uid == $center->uid) {
     $is_center_owner = TRUE;
   }
+  $pm_thread_id = _sbq_get_pm_thread_id_to_sbqcenter($center->uid);
   $header_image = file_create_url($center->field_image['und'][0]['uri']);
 ?>
 <div class="header">
@@ -164,7 +165,19 @@
   <ul>
     <li<?php print $menu_index_active; ?>><?php print l('医院首页', 'center/'.$center_id.'/index'); ?></li>
     <li<?php print $menu_reservation_active; ?>><?php print l('预约就诊', 'center/'.$center_id.'/reservation'); ?></li>
-    <li<?php print $menu_messages_active; ?>><?php print l('咨询医生', 'messages/new/'.$owner_uid); ?></li>
+    <?php if ($logged_in): ?>
+      <?php if ($is_center_owner): ?>
+        <li<?php print $menu_messages_active; ?>><?php print l('咨询管理', 'messages'); ?></li>
+      <?php else: ?>
+        <?php if ($pm_thread_id): ?>
+          <li<?php print $menu_messages_active; ?>><?php print l('咨询医生', 'messages/view/'.$pm_thread_id); ?></li>
+        <?php else: ?>
+          <li<?php print $menu_messages_active; ?>><?php print l('咨询医生', 'messages/new/'.$owner_uid); ?></li>
+        <?php endif; ?>
+      <?php endif; ?>
+    <?php else: ?>
+      <li<?php print $menu_messages_active; ?>><?php print l('咨询医生', 'user/login', array('query' => array('destination' => 'center/'.$center_id.'/index'))); ?></li>
+    <?php endif; ?>
     <li<?php print $menu_edu_active; ?>><?php print l('健康讲堂', 'center/'.$center_id.'/edu'); ?></li>
     <li<?php print $menu_info_active; ?>><?php print l('中心介绍', 'center/'.$center_id.'/info'); ?></li>
   </ul>
