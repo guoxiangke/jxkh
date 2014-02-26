@@ -820,7 +820,7 @@ function _center_formate_fetch_youku_video(MediaYouKuStreamWrapper $media) {
 
   foreach ($data['data'][0]['streamfileids'] AS $k => $v) {
     if ($k == 'mp4') {
-      $sid = getSid();
+      $sid = time() . (rand(0, 9000) + 10000);
       $fileid = getfileid($v, $data['data'][0]['seed']);
       $url = "http://f.youku.com/player/getFlvPath/sid/{$sid}_00/st/{$k}/fileid/{$fileid}?K={$data['data'][0]['segs'][$k][0]['k']}";
       variable_set($media->getUri(), $url);
