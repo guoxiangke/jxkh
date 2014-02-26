@@ -233,7 +233,7 @@ Drupal.behaviors.tiger = {
       });
     });
 
-    $('#user-register-form input').mousedown(function(){
+    $('#user-register-form input').live("mousedown",function(){
       $(this).parent('.form-item').children('.register_error').hide();
       $(this).parent('.form-item').children('.description').hide();
     });

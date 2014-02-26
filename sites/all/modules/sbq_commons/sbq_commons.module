@@ -758,10 +758,10 @@ function sbq_commons_node_submit(&$node, &$form, &$form_state) {
   if ($node->type == 'question') {
     $max_length = 29;
     watchdog('ori-title-bock-ip', sbq_commons_getip(), array(), WATCHDOG_NOTICE, 'link');
-    // $subject = trim(truncate_utf8(decode_entities(strip_tags(check_markup($node->body['und'][0]['value']))), $max_length, TRUE));
-    $subject = strip_tags(trim(truncate_utf8(decode_entities(check_markup($node->body[LANGUAGE_NONE][0]['value'])), $max_length, TRUE)));
-    watchdog('new-title', $subject, array(), WATCHDOG_NOTICE, 'link');
-    $node->title = $subject;
+    $subject = trim(truncate_utf8(decode_entities(strip_tags(check_markup($node->body['und'][0]['value']))), $max_length, TRUE));
+    watchdog('ori-title-bock-subject', $subject, array(), WATCHDOG_NOTICE, 'link');
+    if(!$node->title)
+      $node->title= $subject;
   }
 
 }
