@@ -19,8 +19,6 @@ function sbq_services_services_resources() {
 function sbq_services_services_resources_alter(&$resources, $endpoint) {
   $resources['user']['actions']['login']['callback'] = '_sbq_services_user_login';
   $resources['file']['operations']['create']['callback'] = '_sbq_services_file_create';
-
-  dpm($resources);
 }
 
 /*
