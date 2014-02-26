@@ -128,10 +128,11 @@
   }
 
   $center = node_load($center_id);
-  $is_center_owner = FALSE;;
+  $is_center_owner = FALSE;
   if ($user->uid == $center->uid) {
     $is_center_owner = TRUE;
   }
+  $pm_thread_id = _sbq_get_pm_thread_id_to_sbqcenter($center->uid);
   $header_image = file_create_url($center->field_image['und'][0]['uri']);
 ?>
 <div class="header">
@@ -164,7 +165,19 @@
   <ul>
     <li<?php print $menu_index_active; ?>><?php print l('医院首页', 'center/'.$center_id.'/index'); ?></li>
     <li<?php print $menu_reservation_active; ?>><?php print l('预约就诊', 'center/'.$center_id.'/reservation'); ?></li>
-    <li<?php print $menu_messages_active; ?>><?php print l('咨询医生', 'messages/new/'.$owner_uid); ?></li>
+    <?php if ($logged_in): ?>
+      <?php if ($is_center_owner): ?>
+        <li<?php print $menu_messages_active; ?>><?php print l('咨询管理', 'messages'); ?></li>
+      <?php else: ?>
+        <?php if ($pm_thread_id): ?>
+          <li<?php print $menu_messages_active; ?>><?php print l('咨询医生', 'messages/view/'.$pm_thread_id); ?></li>
+        <?php else: ?>
+          <li<?php print $menu_messages_active; ?>><?php print l('咨询医生', 'messages/new/'.$owner_uid); ?></li>
+        <?php endif; ?>
+      <?php endif; ?>
+    <?php else: ?>
+      <li<?php print $menu_messages_active; ?>><?php print l('咨询医生', 'user/login', array('query' => array('destination' => 'center/'.$center_id.'/index'))); ?></li>
+    <?php endif; ?>
     <li<?php print $menu_edu_active; ?>><?php print l('健康讲堂', 'center/'.$center_id.'/edu'); ?></li>
     <li<?php print $menu_info_active; ?>><?php print l('中心介绍', 'center/'.$center_id.'/info'); ?></li>
   </ul>
@@ -193,8 +206,8 @@
           <?php elseif($logged_in): ?>
           <li<?php print $left_reservation_my_active; ?>><?php print l('我的预约', 'center/'.$center_id.'/reservation/my'); ?></li>
           <?php endif; ?>
-          <li><a href="#">就诊流程</a></li>
-          <li><a href="#">治疗方案</a></li>
+          <li><?php print l('就诊流程', 'node/'.$visit_nid); ?></li>
+          <li><?php print l('治疗方案', 'node/'.$plan_nid); ?></li>
         </ul>
         <?php else: ?>
         <ul>
@@ -204,6 +217,13 @@
           <li><?php print l('专家团队', 'center/'.$center_id.'/info', array('fragment' => 'node-'.$expert_nid)); ?></li>
           <?php elseif($is_admin || $is_center_owner): ?>
           <li><?php print l('专家团队', 'node/add/center-notice', array('query' => array('og_group_ref' => $center_id))); ?></li>
+          <?php endif; ?>
+          <?php if($is_admin || $is_center_owner): ?>
+          <li><?php print l('中心管理', 'node/'.$center_id.'/edit'); ?></li>
+          <li<?php print $left_reservation_manage_active; ?>><?php print l('预约管理', 'center/'.$center_id.'/reservation/manage'); ?></li>
+          <li><?php print l('预约设置', 'center/'.$center_id.'/reservation/settings'); ?></li>
+          <li><?php print l('添加健康教育', 'node/add/sbq-center-edu', array('query' => array('og_group_ref' => $center_id))); ?></li>
+          <li><?php print l('添加文章', 'node/add/center-notice', array('query' => array('og_group_ref' => $center_id))); ?></li>
           <?php endif; ?>
         </ul>
         <?php endif; ?>
@@ -224,16 +244,18 @@
 </div>
 <div class="footer">
   <div class="footer_inner">
-  <div class="sbq_about_link">
-    <ul>
-      <li><a href="/contact.html">联系我们</a></li>
-      <li><a href="/services.html">注册服务条款</a></li>
-      <li><a href="/copyright.html">免责声明</a></li>
-      <li><a href="/join.html">加入我们</a></li>
-      <li><a href="/about.html">关于我们</a></li>
-    </ul>
-  </div>
-  <div class="sbq_copy">© 2014 伤不起 中国最真实的医疗评价平台(<a href="http://www.miitbeian.gov.cn" target="_bank"> 京ICP备13032461号-1</a>) </div>
+    <div class="sbq_about_link">
+      <?php
+      // <ul>
+      //   <li><a href="/contact.html">联系我们</a></li>
+      //   <li><a href="/services.html">注册服务条款</a></li>
+      //   <li><a href="/copyright.html">免责声明</a></li>
+      //   <li><a href="/join.html">加入我们</a></li>
+      //   <li><a href="/about.html">关于我们</a></li>
+      // </ul>
+      ?>
+    </div>
+    <?php //<div class="sbq_copy">© 2014 伤不起 中国最真实的医疗评价平台(<a href="http://www.miitbeian.gov.cn" target="_bank"> 京ICP备13032461号-1</a>) </div> ?>
   </div>
   <?php print render($page['footer']); ?>
 </div> <!-- /#footer -->

@@ -91,7 +91,6 @@ function center_message_query($centerid, $fun = NULL, $page, $fields, $parameter
 
   $message = array();
   $user_img = array();
-
   foreach ($result['messages'] as $key => $value) {
     if (!isset($user_img[$value->author->uid])) {
       $user_img[$value->author->uid] = array(
@@ -100,7 +99,6 @@ function center_message_query($centerid, $fun = NULL, $page, $fields, $parameter
           'name' => $value->author->name,
       );
     }
-
     $data = array(
         'mid' => $value->mid,
         'body' => $value->body,
@@ -108,9 +106,17 @@ function center_message_query($centerid, $fun = NULL, $page, $fields, $parameter
         'is_new' => $value->is_new,
         'author' => $user_img[$value->author->uid],
     );
-
     if (!empty($value->field_message_image)) {
-      $data['image'] = file_create_url($value->field_message_image['und'][0]['uri']);
+      $image_uri = $value->field_message_image['und'][0]['uri'];
+      $data['image'] = file_create_url($image_uri);
+      if ($style = image_style_load('sc120')) {
+        $derivative_uri = image_style_path($style['name'], $image_uri);
+        $success = file_exists($derivative_uri) || image_style_create_derivative($style, $image_uri, $derivative_uri);
+        if ($success) {
+          $image_uri = $derivative_uri;
+        }
+        $data['thumb'] = image_style_url($style['name'], $image_uri);
+      }
     }
     if (!empty($value->field_message_video)) {
       $data['video'] = file_create_url($value->field_message_video['und'][0]['uri']);
@@ -123,8 +129,8 @@ function center_message_query($centerid, $fun = NULL, $page, $fields, $parameter
 //      $video = file_create_url($value->field_message_video['und'][0]['uri']);
 //    }
   }
-  
-  
+
+
   return array(
       'centermid' => $result['thread_id'],
       'to' => $result['to'],
