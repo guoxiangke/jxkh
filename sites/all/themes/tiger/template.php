@@ -510,29 +510,29 @@ function tiger_preprocess_views_view(&$vars) {
 
     $blog_active = FALSE;
 
-    $menu_promoted_active = '';
+    $menu_blog_promoted_active = '';
     $menu_blog_active = '';
     if (in_array('blog', arg())) {
       $blog_active = TRUE;
       if (in_array('promoted', arg())) {
-        $menu_promoted_active = 'class="active"';
+        $menu_blog_promoted_active = 'class="active"';
       } else {
         $menu_blog_active = 'class="active"';
       }
     }
     $vars['blog_active'] = $blog_active;
-    $vars['menu_promoted_active'] = $menu_promoted_active;
+    $vars['menu_blog_promoted_active'] = $menu_blog_promoted_active;
     $vars['menu_blog_active'] = $menu_blog_active;
 
     $qa_active = FALSE;
-    $menu_promoted_active = '';
+    $menu_qa_promoted_active = '';
     $menu_followed_active = '';
     $menu_ask_active = '';
     $menu_answer_active = '';
     if (in_array('qa', arg())) {
       $qa_active = TRUE;
       if (in_array('promoted', arg())) {
-        $menu_promoted_active = 'class="active"';
+        $menu_qa_promoted_active = 'class="active"';
       } elseif (in_array('followed', arg())) {
         $menu_followed_active = 'class="active"';
       } elseif (in_array('ask', arg())) {
@@ -542,7 +542,7 @@ function tiger_preprocess_views_view(&$vars) {
       }
     }
     $vars['qa_active'] = $qa_active;
-    $vars['menu_promoted_active'] = $menu_promoted_active;
+    $vars['menu_qa_promoted_active'] = $menu_qa_promoted_active;
     $vars['menu_followed_active'] = $menu_followed_active;
     $vars['menu_ask_active'] = $menu_ask_active;
     $vars['menu_answer_active'] = $menu_answer_active;

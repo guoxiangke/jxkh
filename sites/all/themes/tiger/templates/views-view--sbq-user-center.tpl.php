@@ -48,14 +48,14 @@
           <li <?php print $menu_qa_active; ?>><?php print l('问答动态', 'user/followers/qa'); ?></li>
       <?php elseif ($blog_active): ?>
         <?php if ($account->uid==$user->uid): ?>
-          <li <?php print $menu_promoted_active; ?>><?php print l('推荐文章', 'user/blog/promoted'); ?></li>
+          <li <?php print $menu_blog_promoted_active; ?>><?php print l('推荐文章', 'user/blog/promoted'); ?></li>
           <li <?php print $menu_blog_active; ?>><?php print l('我的文章', 'user/'.$account->uid.'/blog'); ?></li>
         <?php else: ?>
           <li <?php print $menu_blog_active; ?>><?php print l('TA的文章', 'user/'.$account->uid.'/blog'); ?></li>
         <?php endif; ?>
       <?php elseif ($qa_active): ?>
         <?php if ($account->uid==$user->uid): ?>
-          <li <?php print $menu_promoted_active; ?>><?php print l('推荐问答', 'user/qa/promoted'); ?></li>
+          <li <?php print $menu_qa_promoted_active; ?>><?php print l('推荐问答', 'user/qa/promoted'); ?></li>
           <li <?php print $menu_followed_active; ?>><?php print l('我关注的问答', 'user/qa/followed'); ?></li>
           <li <?php print $menu_ask_active; ?>><?php print l('我的提问', 'user/'.$account->uid.'/qa/ask'); ?></li>
           <li <?php print $menu_answer_active; ?>><?php print l('我的回答', 'user/'.$account->uid.'/qa/answer'); ?></li>
