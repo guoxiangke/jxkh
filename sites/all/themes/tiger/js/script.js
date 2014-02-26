@@ -117,7 +117,7 @@ jQuery(function($) {
       if ($(window).scrollTop() > menu_top) {
         menu.css({"position": "fixed", "top": "10px"});
       } else {
-        menu.css("position", "relative");
+        menu.css({"position": "relative", "top": "0px"});
       };
       // TODO: make the menu link active style
       // Get container scroll position
@@ -233,6 +233,10 @@ Drupal.behaviors.tiger = {
       });
     });
 
+    $('#user-register-form input').mousedown(function(){
+      $(this).parent('.form-item').children('.register_error').hide();
+      $(this).parent('.form-item').children('.description').hide();
+    });
    //  if(typeof(CKEDITOR) === 'object')
    //  CKEDITOR.on( 'dialogDefinition', function( ev )
    // {

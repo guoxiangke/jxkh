@@ -30,9 +30,10 @@
 <div class="sbq_user_message">
   <div class="sbq_nav">
     <ul>
-      <li  class="active"><?php print l('系统消息', 'user/message'); ?></li>
+      <li class="active"><?php print l('系统消息', 'user/message'); ?></li>
       <li><?php print l('我发送的请求', 'user/'.$user->uid.'/relationship/default/sent'); ?></li>
       <li><?php print l('我收到的请求', 'user/'.$user->uid.'/relationship/default/received'); ?></li>
+      <li><?php print l('我的私信', 'messages'); ?></li>
     </ul>
   </div>
   <?php print render($title_prefix); ?>

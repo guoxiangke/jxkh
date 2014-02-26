@@ -92,6 +92,7 @@
 .hospital_order_setting table th { border: 1px #E5E5E5 solid; padding: 5px 10px; line-height: 22px; text-align: left; word-break: break-all; word-wrap: break-word; white-space: normal; }
 .hospital_order_setting table th { background: #EFF6FA; }
 .hospital_order_setting table .on { background: #F8FFF0; }
+.hospital_order_setting table td span { float: left; width: 100%; }
 .hospital_order_setting .form-submit { float: left; width: 60px; height: 30px; border: none; margin: 10px 0px 0px 0px; background: #1575d5; font-size: 14px; color: #FFF; overflow: hidden; border: 1px #0D6EB8 solid; border-radius: 3px; }
 .hospital_order_setting .form-checkboxes .form-item { height: 22px; line-height: 22px; }
 /*------hospital_order_add------*/
@@ -143,11 +144,12 @@
 .sbq_hospital_qa_final { float: left; width: 100%; }
 .sbq_hospital_qa_final .sbq_question .sbq_content { width: 100%; margin: 0px; padding: 0px; }
 .sbq_hospital_qa_final .sbq_question .sbq_content .sbq_title { font-size: 16px; }
-.sbq_hospital_qa_final .sbq_answer_list .sbq_content { width: 100%; margin: 0px; }
-.sbq_hospital_qa_final .sbq_answer_list .votes { display: none; }
+.sbq_hospital_qa_final .sbq_content { width: 100%; margin: 0px; }
+.sbq_hospital_qa_final .votes { display: none; }
 .sbq_hospital_qa_final .sbq_more_link { width: 738px; margin: 0px; }
 .sbq_hospital_qa_final .sbq_answer_info { width: 100%; margin: 10px 0px; }
 .sbq_hospital_qa_final .sbq_answer_form { width: 100%; margin: 0px; }
+.sbq_hospital_qa_final .sbq_answer_form .form-textarea-wrapper textarea { width: 720px; }
 /*------sbq_hospital_contact_us------*/
 .sbq_hospital_contact_us { float: left; width: 100%; }
 .sbq_hospital_contact_us .sbq_content { margin: 15px 0px 0px 0px; }

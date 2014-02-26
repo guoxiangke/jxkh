@@ -80,6 +80,7 @@
   $menu_reservation_active = '';
   $menu_info_active = '';
   $menu_edu_active = '';
+  $menu_messages_active = '';
 
   $left_reservation_active = '';
   $left_reservation_manage_active = '';
@@ -108,6 +109,8 @@
   } elseif (in_array('info', arg())) {
     $menu_info_active = ' class="active"';
     $is_info = TRUE;
+  } elseif (in_array('messages', arg())) {
+    $menu_messages_active = ' class="active"';
   } elseif (in_array('edu', arg())) {
     $menu_edu_active = ' class="active"';
     $is_edu = TRUE;
@@ -161,7 +164,7 @@
   <ul>
     <li<?php print $menu_index_active; ?>><?php print l('医院首页', 'center/'.$center_id.'/index'); ?></li>
     <li<?php print $menu_reservation_active; ?>><?php print l('预约就诊', 'center/'.$center_id.'/reservation'); ?></li>
-    <li><a href="#">咨询医生</a></li>
+    <li<?php print $menu_messages_active; ?>><?php print l('咨询医生', 'messages/new/'.$owner_uid); ?></li>
     <li<?php print $menu_edu_active; ?>><?php print l('健康讲堂', 'center/'.$center_id.'/edu'); ?></li>
     <li<?php print $menu_info_active; ?>><?php print l('中心介绍', 'center/'.$center_id.'/info'); ?></li>
   </ul>

@@ -121,7 +121,7 @@ function sbq_user_relationships_access_callback($account = NULL) {
   } elseif (!is_object($account)) {
     $account = user_load($account);
   }
-  if ($user->uid == 1 || $user->uid == $account->uid) {
+  if (($user->uid == 1 || $user->uid == $account->uid) && $user->uid > 0) {
     return TRUE;
   }
   return FALSE;

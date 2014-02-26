@@ -15,40 +15,37 @@
 function sbq_center_opendays_form($form, $form_status, $center) {
   $header = $part = array();
   $settings = sbq_center_reservation_get_settings($center);
-  foreach (array( 'monday' => '星期一', 'tuesday' => '星期二', 'wednesday' => '星期三', 'thursday' => '星期四', 'friday' => '星期五', 'saturday' => '星期六', 'sunday' => '星期日', ) as $key => $item) {
-    $header[$key] = $item;
-    $default = array();
-    if (isset($settings['opendays'][$key]['a']) && $settings['opendays'][$key]['a']) {
-      $default[] = 'a';
-    }
-    if (isset($settings['opendays'][$key]['p']) && $settings['opendays'][$key]['p']) {
-      $default[] = 'p';
-    }
+  // foreach (array( 'monday' => '星期一', 'tuesday' => '星期二', 'wednesday' => '星期三', 'thursday' => '星期四', 'friday' => '星期五', 'saturday' => '星期六', 'sunday' => '星期日', ) as $key => $item) {
+  //   $header[$key] = $item;
+  //   $default = array();
+  //   if (isset($settings['opendays'][$key]['a']) && $settings['opendays'][$key]['a']) {
+  //     $default[] = 'a';
+  //   }
+  //   if (isset($settings['opendays'][$key]['p']) && $settings['opendays'][$key]['p']) {
+  //     $default[] = 'p';
+  //   }
 
-    $part[$key] = array(
-        '#prefix' => '<div style="width:144px; float:left;">',
-        '#suffix' => '</div>',
-        '#type' => 'checkboxes',
-        '#default_value' => $default,
-        '#options' => array(
-            'a' => '上午',
-            'p' => '下午'
-        )
-    );
-  }
-  $form['centerid'] = array(
-      '#type' => 'hidden',
-      '#value' => $center->nid
-  );
+  //   $part[$key] = array(
+  //     '#type' => 'checkboxes',
+  //     '#default_value' => $default,
+  //     '#options' => array(
+  //       'a' => '上午',
+  //       'p' => '下午'
+  //     )
+  //   );
+  // }
+  // $form['centerid'] = array(
+  //   '#type' => 'hidden',
+  //   '#value' => $center->nid
+  // );
   $form['content'] = array(
-      '#type' => 'tableselect',
-      '#header' => $header,
+    '#markup' => theme('sbq_center_reservation_settings', array('settings'=>$settings['opendays'])),
   );
-  $form['opendays'] = $part;
+  //$form['opendays'] = $part;
 
   $form['submit'] = array(
-      '#type' => 'submit',
-      '#value' => t('提交'),
+    '#type' => 'submit',
+    '#value' => t('提交'),
   );
 
   return $form;

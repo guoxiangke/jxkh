@@ -71,7 +71,7 @@ function tiger_preprocess_page(&$variables) {
       $account = $user;
     }
     $variables['account'] = $account;
-    if ($variables['logged_in'] || is_numeric(arg(1))) {
+    if ($variables['logged_in'] && is_numeric(arg(1))) {
       $name = $account->name;
       $title = $name.'的个人主页';
       drupal_set_title($title);
@@ -242,10 +242,11 @@ function tiger_preprocess_page(&$variables) {
   if (arg(0) == 'center') {
     drupal_add_css(path_to_theme() . "/css/hospital.css", array('group' => CSS_THEME));
     $center_nid = arg(1);
-    //var_dump($center_nid);die();
     $variables['center_id'] = $center_nid;
     $expert_nid = _sbq_center_expert_nid_get($center_nid);
+    $owner_uid = _sbq_center_owner_uid_get($center_nid);
     $variables['expert_nid'] = $expert_nid;
+    $variables['owner_uid'] = $owner_uid;
     $variables['page']['sidebar_second'] = FALSE;
     if (in_array('reservation', arg()) && in_array('created', arg())) {
       drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
@@ -267,7 +268,9 @@ function tiger_preprocess_page(&$variables) {
     $center_nid = $node->og_group_ref['und']['0']['target_id'];
     $variables['center_id'] = $center_nid;
     $expert_nid = _sbq_center_expert_nid_get($center_nid);
+    $owner_uid = _sbq_center_owner_uid_get($center_nid);
     $variables['expert_nid'] = $expert_nid;
+    $variables['owner_uid'] = $owner_uid;
   }
   if (isset($variables['node']) && $variables['node']->type == 'center_notice') {
     drupal_add_css(path_to_theme() . "/css/hospital.css", array('group' => CSS_THEME));
@@ -278,7 +281,9 @@ function tiger_preprocess_page(&$variables) {
     $center_nid = $node->og_group_ref['und']['0']['target_id'];
     $variables['center_id'] = $center_nid;
     $expert_nid = _sbq_center_expert_nid_get($center_nid);
+    $owner_uid = _sbq_center_owner_uid_get($center_nid);
     $variables['expert_nid'] = $expert_nid;
+    $variables['owner_uid'] = $owner_uid;
   }
   if (arg(0) == 'messages') {
     global $user;
@@ -288,14 +293,23 @@ function tiger_preprocess_page(&$variables) {
       $variables['theme_hook_suggestions'][] = 'page__center';
       $variables['center_id'] = $center_nid;
       $expert_nid = _sbq_center_expert_nid_get($center_nid);
+      $owner_uid = _sbq_center_owner_uid_get($center_nid);
       $variables['expert_nid'] = $expert_nid;
+      $variables['owner_uid'] = $owner_uid;
       $variables['page']['sidebar_second'] = FALSE;
       $variables['page']['content']['system_main']['#prefix'] = '<div class="sbq_pm_list"><div class="sbq_wrap"><div class="sbq_head">咨询管理</div>';
       $variables['page']['content']['system_main']['#suffix'] = '</div></div>';
     } else {
       drupal_add_css(path_to_theme() . "/css/user.css", array('group' => CSS_THEME));
       $variables['theme_hook_suggestions'][] = 'page__user';
-      $variables['page']['content']['system_main']['#prefix'] = '<div class="sbq_user_pm"><div class="sbq_pm_list"><div class="sbq_wrap">';
+      $variables['page']['content']['system_main']['#prefix'] = '<div class="sbq_user_pm"><div class="sbq_nav">
+          <ul>
+            <li>'.l('系统消息', 'user/message').'</li>
+            <li>'.l('我发送的请求', 'user/'.$user->uid.'/relationship/default/sent').'</li>
+            <li>'.l('我收到的请求', 'user/'.$user->uid.'/relationship/default/received').'</li>
+            <li class="active">'.l('我的私信', 'messages').'</li>
+          </ul>
+        </div><div class="sbq_pm_list"><div class="sbq_wrap">';
       $variables['page']['content']['system_main']['#suffix'] = '</div></div></div>';
 
       $account = $user;
@@ -368,7 +382,9 @@ function tiger_preprocess_page(&$variables) {
       $variables['theme_hook_suggestions'][] = 'page__center';
       $variables['center_id'] = $center_nid;
       $expert_nid = _sbq_center_expert_nid_get($center_nid);
+      $owner_uid = _sbq_center_owner_uid_get($center_nid);
       $variables['expert_nid'] = $expert_nid;
+      $variables['owner_uid'] = $owner_uid;
       $variables['page']['sidebar_second'] = FALSE;
       $variables['page']['content']['system_main']['#prefix'] = '<div class="sbq_pm">';
       $variables['page']['content']['system_main']['#suffix'] = '</div>';
@@ -1243,6 +1259,9 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     $form['#suffix'] = '</div>';
 
     $form['body']['#rows'] = 1;
+  } elseif ($form_id == 'sbq_center_opendays_form') {
+    $form['#prefix'] = '<div class="hospital_order_setting"><div class="sbq_wrap"><div class="sbq_head">预约设置</div>';
+    $form['#suffix'] = '</div></div>';
   }
 }
 
