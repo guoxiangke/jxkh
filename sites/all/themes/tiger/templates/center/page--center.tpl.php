@@ -218,6 +218,13 @@
           <?php elseif($is_admin || $is_center_owner): ?>
           <li><?php print l('专家团队', 'node/add/center-notice', array('query' => array('og_group_ref' => $center_id))); ?></li>
           <?php endif; ?>
+          <?php if($is_admin || $is_center_owner): ?>
+          <li><?php print l('中心管理', 'node/'.$center_id.'/edit'); ?></li>
+          <li<?php print $left_reservation_manage_active; ?>><?php print l('预约管理', 'center/'.$center_id.'/reservation/manage'); ?></li>
+          <li><?php print l('预约设置', 'center/'.$center_id.'/reservation/settings'); ?></li>
+          <li><?php print l('添加健康教育', 'node/add/sbq-center-edu', array('query' => array('og_group_ref' => $center_id))); ?></li>
+          <li><?php print l('添加文章', 'node/add/center-notice', array('query' => array('og_group_ref' => $center_id))); ?></li>
+          <?php endif; ?>
         </ul>
         <?php endif; ?>
       </div>
