@@ -160,7 +160,7 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
 //            $form['view']['#markup']            = $view;
       unset($form['select']['operation']['#options']['action::og_user_roles_action']);
       break;
-    case 'question_node_form':      
+    case 'question_node_form':
       $form['title']['#access'] = TRUE;
       $form['title']['#title'] = '标题';
       if (arg(0) == 'user') { // Quick Ask form for User Center
@@ -304,9 +304,10 @@ function sbq_commons_form_alter(&$form, &$form_state, $form_id) {
 
 function sbq_commons_quick_qa_redirct(&$form, &$form_state) {
   global $user;
-  $form_state['redirect'] ="user/$user->uid/qa/ask";
+  $form_state['redirect'] = "user/$user->uid/qa/ask";
   // drupal_goto("user/$user->uid/qa/ask");
 }
+
 function sbq_commons_get_rid_by_name($name) {
   $rate_widget_id = FALSE;
   $rate_widgets = variable_get('rate_widgets', NUll);
@@ -753,17 +754,16 @@ function sbq_commons_node_submit(&$node, &$form, &$form_state) {
       }
     }
   }
-  
+
   // for question node title
   if ($node->type == 'question') {
     $max_length = 29;
     watchdog('ori-title-bock-ip', sbq_commons_getip(), array(), WATCHDOG_NOTICE, 'link');
     $subject = trim(truncate_utf8(decode_entities(strip_tags(check_markup($node->body['und'][0]['value']))), $max_length, TRUE));
     watchdog('ori-title-bock-subject', $subject, array(), WATCHDOG_NOTICE, 'link');
-    if(!$node->title)
-      $node->title= $subject;
+    if (!$node->title)
+      $node->title = $subject;
   }
-
 }
 
 /**
@@ -1199,7 +1199,6 @@ function sbq_commons_views_query_alter(&$view, &$query) {
   }
 }
 
-
 /**
  * 暂时隐藏的QA功能，发布时带图片，匿名问答！
  * Implements hook_form_FORM_ID_alter() for question_node_form().
@@ -1213,7 +1212,6 @@ function sbq_commons_form_question_node_form_alter(&$form, &$form_state, $form_i
   }
   $form['field_qa_attachment']['#access'] = $switch;
   $form['field_ask_anonymous']['#access'] = $switch;
-
 }
 
 /**
@@ -1228,11 +1226,11 @@ function sbq_commons_preprocess_views_view(&$vars) {
   }
   if ($view->name == 'question' && $view->current_display == 'single_question_page' && count($view->args)) {
     $question = node_load($view->args[0]);
-    if(isset($question->og_group_ref[LANGUAGE_NONE][0]['target_id'])) {
-      $center_nid = $question->og_group_ref[LANGUAGE_NONE][0]['target_id'];//23277
+    if (isset($question->og_group_ref[LANGUAGE_NONE][0]['target_id'])) {
+      $center_nid = $question->og_group_ref[LANGUAGE_NONE][0]['target_id']; //23277
       $center_node = node_load($center_nid);
       global $user;
-      if($user->uid != $center_node->uid && $center_node->type =='sbq_center') {
+      if ($user->uid != $center_node->uid && $center_node->type == 'sbq_center') {
         unset($vars['answer_node_form']);
       }
     }
@@ -1338,7 +1336,7 @@ function sbq_commons_block_view($delta = '') {
       $html .= '<li class="leaf">' . l('预约日期设置', "center/{$center->nid}/reservation/settings") . '</li>';
       $html .= '<li class="leaf">' . l('预约表单管理', "center/{$center->nid}/reservation/manage") . '</li>';
       //$html .= '<li class="leaf">' . l('添加健康教育', "node/add/sbq-center-edu?og_group_ref={$center->nid}") . '</li>';
-      $html .= '<li class="leaf">' . l('添加健康教育', "node/add/sbq-center-edu", array('query'=>array('og_group_ref'=>$center->nid))) . '</li>';
+      $html .= '<li class="leaf">' . l('添加健康教育', "node/add/sbq-center-edu", array( 'query' => array( 'og_group_ref' => $center->nid ) )) . '</li>';
       $html .= '<li class="leaf">' . l('咨询管理', "messages") . '</li>';
       $html .= '</ul>';
       $block = array(
@@ -1521,47 +1519,45 @@ function sbq_commons_node_insert($node) {
     $received = user_load($q_node->uid);
     $send = user_load(SBQ_SERIVCE_UID);
     global $user;
-    $title = $user->name." 回答了您的问题";
-    $body = $user->name." 回答了您的问题:".l($q_node->title,'node/'.$q_node->nid);
+    $title = $user->name . " 回答了您的问题";
+    $body = $user->name . " 回答了您的问题:" . l($q_node->title, 'node/' . $q_node->nid);
     $args['author'] = $send;
     $args['body'] = $body;
     $args['format'] = 'full_html';
     if (module_exists('privatemsg')) {
-      privatemsg_new_thread(array($received), $title, $body, $args);
+      privatemsg_new_thread(array( $received ), $title, $body, $args);
     }
   }
 }
 
-function sbq_commons_getip() {  
-  $unknown = 'unknown';  
-  if ( isset($_SERVER['HTTP_X_FORWARDED_FOR']) && $_SERVER['HTTP_X_FORWARDED_FOR'] & strcasecmp($_SERVER['HTTP_X_FORWARDED_FOR'], 
-  $unknown) ) {  
-    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];  
-  } elseif ( isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], $unknown) ) {
+function sbq_commons_getip() {
+  $unknown = 'unknown';
+  if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && $_SERVER['HTTP_X_FORWARDED_FOR'] & strcasecmp($_SERVER['HTTP_X_FORWARDED_FOR'], $unknown)) {
+    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+  } elseif (isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], $unknown)) {
     $ip = $_SERVER['REMOTE_ADDR'];
   }
-  /*  
-  处理多层代理的情况  
-  或者使用正则方式：$ip = preg_match("/[\d\.]
-  {7,15}/", $ip, $matches) ? $matches[0] : $unknown;  
-  */  
-  if (false !== strpos($ip, ','))  
-    $ip = reset(explode(',', $ip));  
- return $ip;  
+  /*
+    处理多层代理的情况
+    或者使用正则方式：$ip = preg_match("/[\d\.]
+    {7,15}/", $ip, $matches) ? $matches[0] : $unknown;
+   */
+  if (false !== strpos($ip, ','))
+    $ip = reset(explode(',', $ip));
+  return $ip;
 }
 
 /**
  * Implements hook_form_FORM_ID_alter() for FORM_ID().
  */
 function sbq_commons_form_node_form_alter(&$form, &$form_state, $form_id) {
-  if(isset($_GET['og_group_ref'])) {
+  if (isset($_GET['og_group_ref'])) {
     $gid = $_GET['og_group_ref'];
     $group_node = node_load($gid);
-    if(og_is_group('node', $group_node))
+    if (og_is_group('node', $group_node))
       $form['og_group_ref'][LANGUAGE_NONE][0]['default']['#default_value'] = $gid;
   }
 }
-
 
 /**
  * Add content to the view thread page.
@@ -1570,5 +1566,16 @@ function sbq_commons_form_node_form_alter(&$form, &$form_state, $form_id) {
  *   Render-able array, contains the thread object in #thread.
  */
 function sbq_commons_privatemsg_view_alter(&$content) {
-  $content['messages'] = array_reverse($content['messages'],TRUE);
+  $content['messages'] = array_reverse($content['messages'], TRUE);
+}
+
+function sbq_commons_node_access($node, $op, $account) {
+  if (is_object($node) && $node->type == 'grow_records' && $op == 'view') {
+    global $user;
+    if ($user->uid == $node->uid) {
+      return NODE_ACCESS_ALLOW;
+    }
+    return NODE_ACCESS_DENY;
+  }
+  return NODE_ACCESS_IGNORE;
 }
