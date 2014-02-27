@@ -326,7 +326,7 @@ function tiger_preprocess_page(&$variables) {
     }
     if (!$variables['logged_in'] && in_array('reservation', arg()) && in_array('my', arg())) {
       // TODO: hook_menu_alert or something else to control access
-      $variables['page']['content']['system_main']['main']['#markup'] = 'Access denied';
+      $variables['page']['content']['system_main']['main']['#markup'] = '您未被授权访问此页面。';
     }
     if (in_array('info', arg())) {
       drupal_add_css(path_to_theme() . "/css/news.css", array('group' => CSS_THEME));
