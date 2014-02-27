@@ -91,14 +91,16 @@ function center_message_query($centerid, $fun = NULL, $page, $fields, $parameter
 
   $message = array();
   $user_img = array();
+
   foreach ($result['messages'] as $key => $value) {
     if (!isset($user_img[$value->author->uid])) {
       $user_img[$value->author->uid] = array(
           'uid' => $value->author->uid,
-          'user_avart' => isset($value->author) ? file_create_url($value->author) : NULL,
+          'user_avart' => $value->author->picture ? file_create_url($value->author->picture->uri) : NULL,
           'name' => $value->author->name,
       );
-    }
+    }  
+
     $data = array(
         'mid' => $value->mid,
         'body' => $value->body,
