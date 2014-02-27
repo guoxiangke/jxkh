@@ -71,7 +71,10 @@
  *
  * @ingroup themeable
  */
+define('SBQ_CENTER_EDU_VIDEO_TID', 24706);
+define('SBQ_CENTER_EDU_ARTICLE_TID', 24705);
   $theme_path = drupal_get_path('theme', 'tiger');
+
 ?>
 
 <?php
@@ -146,6 +149,12 @@
   } elseif (isset($node) && $node->type == 'sbq_center_edu') {
     $menu_edu_active = ' class="active"';
     $is_edu = TRUE;
+    if ($node->field_sbq_center_edu_tax['und'][0]['tid'] == SBQ_CENTER_EDU_VIDEO_TID) {
+      $left_edu_active = ' class="active"';
+    }
+    if ($node->field_sbq_center_edu_tax['und'][0]['tid'] == SBQ_CENTER_EDU_ARTICLE_TID) {
+      $left_edu_article_active = ' class="active"';
+    }
   }
   if (in_array('questions', arg()) || in_array('question', arg())) {
     $left_questions_active = ' class="active"';
