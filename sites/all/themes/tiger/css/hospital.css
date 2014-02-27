@@ -130,8 +130,8 @@
 .sbq_hospital_final .sbq_wrap { margin: 0px; }
 .sbq_hospital_final .sbq_article_title { margin: 0px; padding: 15px 0px; text-align: center; border-bottom: 1px #e5e5e5 dotted; }
 .sbq_article_content { border-bottom: none !important; }
-.field-name-field-sbq-center-video { clear: both; width: 100%; margin: 0px 0px 30px 0px; }
-.field-name-field-sbq-center-video .media-youku-outer-wrapper { margin: 0 auto; }
+.sbq_hospital_final .field-name-field-sbq-center-video { clear: both; width: 100%; margin: 0px 0px 30px 0px; }
+.sbq_hospital_final .field-name-field-sbq-center-video .media-youku-outer-wrapper { margin: 0 auto; }
 /*------sbq_hospital_qa_list------*/
 .sbq_hospital_qa_list { float: left; width: 100%; }
 .sbq_hospital_qa_list .sbq_content { float: left; width: 100%; }
@@ -162,3 +162,14 @@
 .sbq_hospital_contact_us .sbq_contact_us .sbq_qq dt { background-position: 0px -80px; }
 .sbq_hospital_contact_us .sbq_contact_us dd { float: left; width: 358px; line-height: 20px; padding: 2px 0px 2px 22px; color: #666; font-size: 12px; font-family: "Arial"; }
 .sbq_hospital_contact_us .sbq_map { float: left; width: 340px; }
+/*.sbq_form_wrap .sbq_form_02 { float: left; width: 100%; margin: 0px 0px 10px 0px; }
+.sbq_form_wrap .sbq_form_02 label { float: left; width: 100%; margin: 0px; font-size: 14px; text-align: left; }
+*/
+.sbq_form_wrap .sbq_form_02 .form-text { float: left; width: 720px; }
+/*.sbq_form_wrap .sbq_form_02 .description { float: left; width: 100%; margin: 5px 0px 0px 0px; }*/
+.field-type-text-with-summary { float: left; width: 100%; }
+.field-type-text-with-summary label { display: none; }
+.sbq_add_content .cke_bottom,
+.sbq_add_content .ckeditor_links,
+.sbq_add_content .element-invisible { display: none !important; }
+.sbq_botton_01 #edit-delete { float: left; width: 80px; height: 36px; line-height: 36px; margin: 0px 5px; padding: 0px; border: none; border-radius: 3px; background: #ddd; color: #666; font-size: 14px; }

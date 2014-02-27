@@ -72,9 +72,10 @@
 /*field-name-field-department*/
 .sbq_form_wrap .field-name-field-department input { display: none; }
 /*autocomplete*/
-.sbq_form_wrap .sbq_form_01 #autocomplete { float: left; width: 218px !important; min-height: 30px; margin: 0px; border-left: 1px #eee solid; border-right: 1px #eee solid; border-bottom: 1px #eee solid; position: absolute; z-index: 10; display: block !important; background: url(../image/loading.gif) 50% 50% no-repeat #FFF; overflow: hidden; }
-.sbq_form_wrap .sbq_form_01 #autocomplete li { float: left; width: 200px; padding: 0px 9px; height: 30px; line-height: 30px; background: #EFF6FA; color: #698EBF; cursor: pointer; }
-.sbq_form_wrap .sbq_form_01 #autocomplete li:hover { background: #698EBF; color: #FFF; }
+.sbq_form_wrap #autocomplete { float: left; /*width: 218px !important;*/ min-height: 30px; margin: 0px; border-left: 1px #eee solid; border-right: 1px #eee solid; border-bottom: 1px #eee solid; position: absolute; z-index: 10; display: block !important; background: url(../image/loading.gif) 50% 50% no-repeat #FFF; overflow: hidden; }
+.sbq_form_wrap #autocomplete ul { float: left; width: 100%; }
+.sbq_form_wrap #autocomplete li { clear: both; padding: 0px 9px; line-height: 30px; background: #EFF6FA; color: #698EBF; cursor: pointer; }
+.sbq_form_wrap #autocomplete li:hover { background: #698EBF; color: #FFF; }
 .sbq_form_wrap .sbq_form_01 .element-invisible { display: none!important; }
 /*field-name-field-birthday*/
 .sbq_form_wrap .field-name-field-birthday { float: left; width: 100%; }
@@ -101,3 +102,6 @@
 .captcha input:focus { border: 1px #3385d6 solid; box-shadow: 0px 0px 2px #3385d6; }
 .captcha img { float: left; width: 88px; height: 34px; border: 1px #eee solid; margin: 0px 0px 0px 10px; }
 .captcha a { float: left; height: 36px; line-height: 36px; margin: 0px 0px 0px 5px; color: #225599; }
+.sbq_form_wrap .sbq_form_02 { float: left; width: 100%; margin: 0px 0px 15px 0px; }
+.sbq_form_wrap .sbq_form_02 label { float: left; width: 100%; margin: 0px; font-size: 14px; text-align: left; }
+.sbq_form_wrap .sbq_form_02 .description { float: left; width: 100%; margin: 5px 0px 0px 0px; }

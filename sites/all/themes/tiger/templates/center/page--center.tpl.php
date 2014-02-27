@@ -81,6 +81,7 @@
   $menu_info_active = '';
   $menu_edu_active = '';
   $menu_messages_active = '';
+  $menu_manage_active = '';
 
   $left_reservation_active = '';
   $left_reservation_manage_active = '';
@@ -91,12 +92,35 @@
 
   $left_questions_active = '';
 
+  $left_reservation_manage_active = '';
+  $left_reservation_settings_active = '';
+  $left_center_edit_active = '';
+  $left_edu_add_active = '';
+  $left_notice_add_active = '';
+
   $is_edu = FALSE;
   $is_info = FALSE;
   $is_reservation = FALSE;
+  $is_edu = FALSE;
+  $is_manage = FALSE;
   if (in_array('index', arg())) {
     $menu_index_active = ' class="active"';
-  } elseif (in_array('reservation', arg())) {
+  } elseif (in_array('add', arg()) || in_array('edit', arg()) || in_array('manage', arg()) || in_array('settings', arg()) ){
+    $menu_manage_active = ' class="active"';
+    $is_manage = TRUE;
+    if (in_array('manage', arg())) {
+      $left_reservation_manage_active = ' class="active"';
+    } elseif (in_array('settings', arg())) {
+      $left_reservation_settings_active = ' class="active"';
+    } elseif (in_array('edit', arg())) {
+      $left_center_edit_active = ' class="active"';
+    } elseif (in_array('add', arg()) || in_array('sbq-center-edu', arg())) {
+      $left_edu_add_active = ' class="active"';
+    } elseif (in_array('add', arg()) || in_array('center-notice', arg())) {
+      $left_notice_add_active = ' class="active"';
+    }
+
+  }elseif (in_array('reservation', arg())) {
     $menu_reservation_active = ' class="active"';
     $is_reservation = TRUE;
     if (in_array('manage', arg())) {
@@ -180,6 +204,9 @@
     <?php endif; ?>
     <li<?php print $menu_edu_active; ?>><?php print l('健康讲堂', 'center/'.$center_id.'/edu'); ?></li>
     <li<?php print $menu_info_active; ?>><?php print l('中心介绍', 'center/'.$center_id.'/info'); ?></li>
+    <?php if ($is_center_owner): ?>
+      <li<?php print $menu_manage_active; ?>><?php print l('中心管理', 'center/'.$center_id.'/reservation/manage'); ?></li>
+    <?php endif; ?>
   </ul>
 </div>
 <div class="body">
@@ -209,6 +236,16 @@
           <li><?php print l('就诊流程', 'node/'.$visit_nid); ?></li>
           <li><?php print l('治疗方案', 'node/'.$plan_nid); ?></li>
         </ul>
+        <?php elseif ($is_manage): ?>
+        <ul>
+          <?php if($is_admin || $is_center_owner): ?>
+          <li<?php print $left_center_edit_active; ?>><?php print l('中心管理', 'node/'.$center_id.'/edit'); ?></li>
+          <li<?php print $left_reservation_manage_active; ?>><?php print l('预约管理', 'center/'.$center_id.'/reservation/manage'); ?></li>
+          <li<?php print $left_reservation_settings_active; ?>><?php print l('预约设置', 'center/'.$center_id.'/reservation/settings'); ?></li>
+          <li<?php print $left_edu_add_active; ?>><?php print l('添加健康教育', 'node/add/sbq-center-edu', array('query' => array('og_group_ref' => $center_id))); ?></li>
+          <li<?php print $left_notice_add_active; ?>><?php print l('添加文章', 'node/add/center-notice', array('query' => array('og_group_ref' => $center_id))); ?></li>
+          <?php endif; ?>
+        </ul>
         <?php else: ?>
         <ul>
           <li<?php print $left_reservation_active; ?>><?php print l('预约就诊', 'center/'.$center_id.'/reservation'); ?></li>
@@ -218,13 +255,7 @@
           <?php elseif($is_admin || $is_center_owner): ?>
           <li><?php print l('专家团队', 'node/add/center-notice', array('query' => array('og_group_ref' => $center_id))); ?></li>
           <?php endif; ?>
-          <?php if($is_admin || $is_center_owner): ?>
-          <li><?php print l('中心管理', 'node/'.$center_id.'/edit'); ?></li>
-          <li<?php print $left_reservation_manage_active; ?>><?php print l('预约管理', 'center/'.$center_id.'/reservation/manage'); ?></li>
-          <li><?php print l('预约设置', 'center/'.$center_id.'/reservation/settings'); ?></li>
-          <li><?php print l('添加健康教育', 'node/add/sbq-center-edu', array('query' => array('og_group_ref' => $center_id))); ?></li>
-          <li><?php print l('添加文章', 'node/add/center-notice', array('query' => array('og_group_ref' => $center_id))); ?></li>
-          <?php endif; ?>
+
         </ul>
         <?php endif; ?>
       </div>

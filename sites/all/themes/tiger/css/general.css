@@ -285,6 +285,7 @@ input,
 .sbq_pm_list input[type="submit"] { float: left; width: 60px; height: 30px; border: none; background: #1575d5; font-size: 14px; color: #FFF; overflow: hidden; border: 1px #0D6EB8 solid; border-radius: 3px; }
 .sbq_pm_list .form-item-operation { float: left; padding: 4px; margin: 0px 5px; border-radius: 3px; border: 1px #E5E5E5 solid; }
 .sbq_pm_list .form-item-operation select { float: left; height: 20px; margin: 0px; padding: 0px; border: none; }
+.sbq_pm_list .privatemsg-unread td { font-weight: bold; }
 /*------
 Colorbox
 ------*/
