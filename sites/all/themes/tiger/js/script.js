@@ -86,15 +86,6 @@ jQuery(function($) {
     return false;
   });
 
-  $('#edit-field-visited input:radio').change(function (event) {
-    var value = $(this).val();
-    if (value == 1) {
-      $('#sbq_case_num').show();
-    } else{
-      $('#sbq_case_num').hide();
-    };
-  });
-
   // $(".captcha img").appendTo('.captcha .form-item-captcha-response');
   // $(".captcha .reload-captcha-wrapper a").appendTo('.captcha .form-item-captcha-response');
   $("#user-login-form #edit-captcha-response").attr("placeholder", "验证码");
