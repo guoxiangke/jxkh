@@ -117,9 +117,9 @@ define('SBQ_CENTER_EDU_ARTICLE_TID', 24705);
       $left_reservation_settings_active = ' class="active"';
     } elseif (in_array('edit', arg())) {
       $left_center_edit_active = ' class="active"';
-    } elseif (in_array('add', arg()) || in_array('sbq-center-edu', arg())) {
+    } elseif (in_array('add', arg()) && in_array('sbq-center-edu', arg())) {
       $left_edu_add_active = ' class="active"';
-    } elseif (in_array('add', arg()) || in_array('center-notice', arg())) {
+    } elseif (in_array('add', arg()) && in_array('center-notice', arg())) {
       $left_notice_add_active = ' class="active"';
     }
 
