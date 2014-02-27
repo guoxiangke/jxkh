@@ -229,14 +229,14 @@ function _sbq_center_owner_uid_get($center_nid = 0) {
   if ($center_nid == 0) {
     $owner_uid =  0;
   }
-  $owner_uid = variable_get('canter_'.$center_nid.'_owner_uid', 0);
+  $owner_uid = variable_get('center_'.$center_nid.'_owner_uid', 0);
   if($owner_uid) {
     return $owner_uid;
   } else {
     $owner_uid =  0;
     $center = node_load($center_nid);
     $owner_uid = $center->uid;
-    variable_set('canter_'.$center_nid.'_owner_uid', $owner_uid);
+    variable_set('center_'.$center_nid.'_owner_uid', $owner_uid);
   }
   return $owner_uid;
 }
@@ -254,7 +254,8 @@ function sbq_center_node_delete($node) {
  * Implements hook_node_update().
  */
 function sbq_center_node_update($node) {
-  variable_set('center_'.$node->uid, $node->nid);
+  if($node->type == 'sbq_center')
+    variable_set('center_'.$node->uid, $node->nid);
 }
 
 /**
