@@ -142,12 +142,17 @@
   $menu_relationship_active = '';
   $menu_message_active = '';
   $menu_account_active = '';
+  $menu_records_active = '';
   if (in_array('followers', arg())) {
     $menu_follower_active = 'class="active"';
   } elseif (in_array('blog', arg())) {
     $menu_blog_active = 'class="active"';
   } elseif (isset($node) && $node->type == 'blog') {
     $menu_blog_active = 'class="active"';
+  } elseif (in_array('records', arg())) {
+    $menu_records_active = 'class="active"';
+  } elseif (isset($node) && $node->type == 'grow_records') {
+    $menu_records_active = 'class="active"';
   } elseif (in_array('qa', arg())) {
     $menu_qa_active = 'class="active"';
   } elseif (in_array('relationship', arg()) && ( in_array('received', arg()) || in_array('sent', arg()) )) {
@@ -234,6 +239,7 @@
         <?php if ($current_user): ?>
         <li <?php print $menu_relationship_active; ?>><?php print l('圈子', 'user/'.$a_uid.'/relationship'); ?></li>
         <li <?php print $menu_message_active; ?>><?php print l('消息', 'user/message'); ?></li>
+        <li <?php print $menu_records_active; ?>><?php print l('病历', 'user/records'); ?></li>
         <?php endif; ?>
         <li <?php print $menu_account_active; ?>><?php print l('资料', 'user/'.$a_uid); ?></li>
       </ul>

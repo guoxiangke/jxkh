@@ -1,3 +1,4 @@
+.user_notes_final .sbq_head .sbq_title { font-family: "Microsoft Yahei", "微软雅黑", "Arial" !important; }
 .body { padding: 20px 0px; }
 .sbq_user_headr { float: left; width: 100%; }
 /*sbq_user_info*/
@@ -216,7 +217,7 @@
 .sbq_add_content .sbq_form_02 { float: left; width: 100%; margin: 0px 0px 10px 0px; }
 .sbq_add_content label { float: left; width: 100%; height: 26px; line-height: 26px; margin: 0px 0px 5px 0px; color: #666; font-size: 14px; }
 .sbq_add_content label .form-required { line-height: 26px; color: #900; font-size: 14px; font-family: "Arial"; display: inline-block; }
-.sbq_form_02 .form-text { float: left; width: 660px; height: 30px; line-height: 30px; padding: 0px 9px; border: 1px #B6B6B6 solid; }
+.sbq_add_content .sbq_form_02 .form-text { float: left; width: 660px; }
 .sbq_add_content .form-actions { float: left; }
 .sbq_add_content .form-actions input { float: left; width: 50px; height: 34px; border: none; background: #1575d5; font-size: 14px; color: #FFF; overflow: hidden; border: 1px #0D6EB8 solid; border-radius: 3px; }
 /*user_blog_final*/
@@ -260,3 +261,32 @@
 .sbq_user_pm .sbq_pm_editor { width: 660px; }
 .sbq_user_pm .sbq_pm_editor .form-textarea-wrapper { width: 580px; }
 .sbq_user_pm .sbq_nav { margin: 0px; }
+/*------sbq_notes_list------*/
+.sbq_notes_list { float: left; width: 100%; }
+.sbq_notes_list .sbq_item { float: left; width: 100%; padding: 10px 0px; border-bottom: 1px #EEE dotted; }
+.sbq_notes_list .sbq_item .sbq_head { float: left; width: 100%; }
+.sbq_notes_list .sbq_item .sbq_title { float: left; width: 500px; height: 30px; line-height: 30px; font-size: 14px; font-weight: bold; word-break: break-all; word-wrap: break-word; overflow: hidden; }
+.sbq_notes_list .sbq_item .sbq_title span { float: left; }
+.sbq_notes_list .sbq_item .sbq_title span i { float: left; width: 22px; height: 22px; margin: 4px 0px; overflow: hidden; background: url(../image/sbq_notes_icon.png) no-repeat; }
+.sbq_notes_list .sbq_item .sbq_title .sbq_record { background-position: 0px 0px; }
+.sbq_notes_list .sbq_item .sbq_title .sbq_video { background-position: 0px -22px; }
+.sbq_notes_list .sbq_item .sbq_text { float: left; width: 100%; line-height: 24px; padding: 0px 0px 5px 0px; font-size: 14px; word-break: break-all; word-wrap: break-word; }
+.sbq_notes_list .sbq_item .sbq_time { float: right; line-height: 30px; color: #999; font-family: "Arial"; }
+.sbq_notes_list .sbq_item .sbq_img { float: left; width: 100%; margin: 0px 0px 5px 0px; }
+.sbq_notes_list .sbq_item .sbq_img img { float: left; width: 100px; height: 100px; margin: 0px 5px 0px 0px; }
+/*sbq_notes_down*/
+.user_notes_final { float: left; width: 100%; }
+.user_notes_final .sbq_notes_down { float: left; width: 100%; margin: 0px 0px 5px 0px; }
+.user_notes_final .sbq_notes_down .sbq_inner { float: left; border-radius: 3px; border: 1px #E5E5E5 solid; }
+.user_notes_final .sbq_notes_down .sbq_inner a { float: left; line-height: 22px; padding: 2px 5px 2px 0px; border-radius: 3px; border: 1px #FFF solid; background: #f6f6f6; font-size: 12px; color: #225599; overflow: hidden; }
+.user_notes_final .sbq_notes_down .sbq_inner a:hover { text-decoration: none; }
+.user_notes_final .sbq_notes_down .sbq_inner a .sbq_icon { float: left; width: 26px; height: 22px; background: url(../image/sbq_notes_icon.png) no-repeat; display: inline-block; }
+.user_notes_final .sbq_video .sbq_inner a .sbq_icon { background-position: 50% 0px; }
+.user_notes_final .sbq_record .sbq_inner a .sbq_icon { background-position: 50% -22px; }
+.user_notes_final .sbq_notes_down .sbq_inner .sbq_title { float: left; max-width: 500px; padding: 0px 0px 0px 3px; border-left: 1px #E5E5E5 solid; word-break: break-all; word-wrap: break-word; }
+.user_notes_final .sbq_notes_down .sbq_inner:hover { border: 1px #698EBF solid; }
+.user_notes_final .sbq_notes_down .sbq_inner:hover a { background: #EFF6FA; }
+.user_notes_final .sbq_notes_down .sbq_inner:hover .sbq_title { border-left: 1px #698EBF solid; }
+.user_notes_final .sbq_head { float: left; width: 100%; padding: 0px 0px 15px 0px; border-bottom: 1px #E5E5E5 dotted; }
+.user_notes_final .sbq_head .sbq_title { float: left; width: 500px; line-height: 30px; font-size: 16px; word-break: break-all; word-wrap: break-word; overflow: hidden; }
+.user_notes_final .sbq_head .sbq_time { float: right; height: 30px; line-height: 30px; padding: 0px 0px 2px 0px; color: #999; font-family: "Arial"; }
