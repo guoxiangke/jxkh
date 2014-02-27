@@ -97,6 +97,7 @@
 .hospital_order_setting .form-checkboxes .form-item { height: 22px; line-height: 22px; }
 /*------hospital_order_add------*/
 .hospital_order_add { float: left; width: 100%; }
+.hospital_order_add .field-type-text-with-summary label { height: auto; }
 .hospital_order_add .sbq_form_wrap { padding: 10px 0px; }
 .hospital_order_add .sbq_form_wrap .sbq_text { width: auto; height: 36px; line-height: 36px; padding: 0px; }
 /*------hospital_order_list------*/
@@ -168,7 +169,7 @@
 .sbq_form_wrap .sbq_form_02 .form-text { float: left; width: 720px; }
 /*.sbq_form_wrap .sbq_form_02 .description { float: left; width: 100%; margin: 5px 0px 0px 0px; }*/
 .field-type-text-with-summary { float: left; width: 100%; }
-.field-type-text-with-summary label { display: none; }
+.sbq_add_content .field-type-text-with-summary label { display: none; }
 .sbq_add_content .cke_bottom,
 .sbq_add_content .ckeditor_links,
 .sbq_add_content .element-invisible { display: none !important; }

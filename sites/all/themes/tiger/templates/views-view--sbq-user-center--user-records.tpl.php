@@ -33,7 +33,12 @@ $menu_diary_active = '';
 $menu_other_active = '';
 
 $url_query = drupal_get_query_parameters();
-$url_records = $url_query['records'];
+if (isset($url_query['records'])) {
+  $url_records = $url_query['records'];
+} else {
+  $url_records = '医嘱';
+}
+
 if ($url_records == '医嘱') {
   $menu_advice_active = ' class="active"';
 } elseif ($url_records == '化验单') {

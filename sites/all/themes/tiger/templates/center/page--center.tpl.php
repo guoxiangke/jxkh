@@ -165,6 +165,13 @@ define('SBQ_CENTER_EDU_ARTICLE_TID', 24705);
   if ($user->uid == $center->uid) {
     $is_center_owner = TRUE;
   }
+  $edu_menu_text = '健康教育';
+  if (isset($center->field_sbq_center_edu_switch['und'][0]['value'])) {
+    $text = $center->field_sbq_center_edu_switch['und'][0]['value'];
+    if (strlen(trim($text)) > 0) {
+      $edu_menu_text = $text;
+    }
+  }
   $pm_thread_id = _sbq_get_pm_thread_id_to_sbqcenter($center->uid);
   $header_image = file_create_url($center->field_image['und'][0]['uri']);
 ?>
@@ -211,7 +218,7 @@ define('SBQ_CENTER_EDU_ARTICLE_TID', 24705);
     <?php else: ?>
       <li<?php print $menu_messages_active; ?>><?php print l('咨询医生', 'user/login', array('query' => array('destination' => 'center/'.$center_id.'/index'))); ?></li>
     <?php endif; ?>
-    <li<?php print $menu_edu_active; ?>><?php print l('健康讲堂', 'center/'.$center_id.'/edu'); ?></li>
+    <li<?php print $menu_edu_active; ?>><?php print l($edu_menu_text, 'center/'.$center_id.'/edu'); ?></li>
     <li<?php print $menu_info_active; ?>><?php print l('中心介绍', 'center/'.$center_id.'/info'); ?></li>
     <?php if ($is_center_owner): ?>
       <li<?php print $menu_manage_active; ?>><?php print l('中心管理', 'center/'.$center_id.'/reservation/manage'); ?></li>
