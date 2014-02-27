@@ -324,7 +324,7 @@ function tiger_preprocess_page(&$variables) {
     if (in_array('reservation', arg()) && in_array('created', arg())) {
       drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
     }
-  
+
     if (in_array('info', arg())) {
       drupal_add_css(path_to_theme() . "/css/news.css", array('group' => CSS_THEME));
     }
@@ -1449,6 +1449,7 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
 
     $form['body']['#prefix'] = '<div class="sbq_form_01">';
     $form['body']['#suffix'] = '</div>';
+    $form['body']['und'][0]['#title'] = '请输入基本病情和检查';
 
     $form['field_reservation_status']['#prefix'] = '<div class="sbq_hide">';
     $form['field_reservation_status']['#suffix'] = '</div>';

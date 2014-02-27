@@ -49,6 +49,7 @@ stylesheets[all][] = user.css
 stylesheets[all][] = calendar_multiday.css
 stylesheets[all][] = date_views.css
 stylesheets[all][] = search.css
+stylesheets[all][] = privatemsg-list.css
 
 ; Then we add our own stylesheet.
 stylesheets[all][] = css/general.css

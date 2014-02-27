@@ -4,7 +4,8 @@
 .sbq_title,
 .sbq_calendar .view-header,
 .sbq_head,
-.sbq_hospital_contact_us .sbq_contact_us dt { font-family: "Microsoft Yahei", "微软雅黑", "Arial" !important; }
+.sbq_hospital_contact_us .sbq_contact_us dt,
+.sbq_add_content .field-type-media .button.launcher { font-family: "Microsoft Yahei", "微软雅黑", "Arial" !important; }
 .header { border: none; }
 .header .header_inner { height: 100px; padding: 0px; }
 /*.header .sbq_header_login { margin: 58px 0px 0px 0px; }*/
@@ -168,9 +169,10 @@
 */
 .sbq_form_wrap .sbq_form_02 .form-text { float: left; width: 720px; }
 /*.sbq_form_wrap .sbq_form_02 .description { float: left; width: 100%; margin: 5px 0px 0px 0px; }*/
-.field-type-text-with-summary { float: left; width: 100%; }
+.sbq_add_content .field-type-text-with-summary { float: left; width: 100%; }
 .sbq_add_content .field-type-text-with-summary label { display: none; }
 .sbq_add_content .cke_bottom,
 .sbq_add_content .ckeditor_links,
 .sbq_add_content .element-invisible { display: none !important; }
-.sbq_botton_01 #edit-delete { float: left; width: 80px; height: 36px; line-height: 36px; margin: 0px 5px; padding: 0px; border: none; border-radius: 3px; background: #ddd; color: #666; font-size: 14px; }
+.sbq_add_content .sbq_botton_01 #edit-delete { float: left; width: 80px; height: 36px; line-height: 36px; margin: 0px 5px; padding: 0px; border: none; border-radius: 3px; background: #ddd; color: #666; font-size: 14px; }
+.sbq_add_content .field-type-media .button.launcher { float: left; height: 30px; line-height: 30px; border: none; padding: 0px 9px; background: #1575d5; font-size: 14px; color: #FFF; overflow: hidden; border: 1px #0D6EB8 solid; border-radius: 3px; }
