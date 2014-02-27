@@ -313,7 +313,6 @@ function sbq_center_reservation_get_manage_item($row, $cancle = FALSE) {
       break;
     case SBQ_CENTER_RESERVATION_STATUS_ACCEPT:
 // $accept = l('接受', "center/{$centerid}/reservation/{$row->nid}/accept");
-      $accept = '';
       $ignore = l('删除', "center/{$centerid}/reservation/{$row->nid}/ignore");
       break;
     case SBQ_CENTER_RESERVATION_STATUS_IGNORE:
