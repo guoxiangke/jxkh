@@ -99,7 +99,7 @@ function sbq_center_reservation_access($center, $reservation = NULL, $type = NUL
   if (!$account) {
     $account = $user;
   }
-  if($account->uid == 0){
+  if ($account->uid == 0) {
     return FALSE;
   }
   if (!og_user_access('node', $center->nid, $type, $account)) {
@@ -149,28 +149,25 @@ function sbq_center_reservation_get_settings($center) {
 
 function sbq_center_reservation_theme_registry_alter(&$theme_registry) {
 
-    $module_path = drupal_get_path('module', 'sbq_center_reservation');
-    $theme_registry['calendar_month_col']['path'] = $module_path;
-    $theme_registry['calendar_month_col']['template'] = '/templates/' . $theme_registry['calendar_month_col']['template'];
-    $theme_registry['calendar_month_col']['preprocess functions'][] = 'template_preprocess_sbq_center_reservation_month_col';
+  $module_path = drupal_get_path('module', 'sbq_center_reservation');
+  $theme_registry['calendar_month_col']['path'] = $module_path;
+  $theme_registry['calendar_month_col']['template'] = '/templates/' . $theme_registry['calendar_month_col']['template'];
+  $theme_registry['calendar_month_col']['preprocess functions'][] = 'template_preprocess_sbq_center_reservation_month_col';
 
-    $theme_registry['calendar_item']['path'] = $module_path;
-    $theme_registry['calendar_item']['template'] = '/templates/' . $theme_registry['calendar_item']['template'];
+  $theme_registry['calendar_item']['path'] = $module_path;
+  $theme_registry['calendar_item']['template'] = '/templates/' . $theme_registry['calendar_item']['template'];
 //    $theme_registry['calendar_item']['preprocess functions'][] = 'template_preprocess_sbq_center_reservation_item';
 
-    $theme_registry['calendar_month_row']['path'] = $module_path;
-    $theme_registry['calendar_month_row']['template'] = '/templates/' . $theme_registry['calendar_month_row']['template'];
+  $theme_registry['calendar_month_row']['path'] = $module_path;
+  $theme_registry['calendar_month_row']['template'] = '/templates/' . $theme_registry['calendar_month_row']['template'];
 //    $theme_registry['calendar_month_row']['preprocess functions'][] = 'template_preprocess_sbq_center_reservation_month_row';
-
 //    $theme_registry['calendar_month']['path'] = $module_path;
 //    $theme_registry['calendar_month']['template'] = '/templates/' . $theme_registry['calendar_month']['template'];
-    //  $theme_registry['calendar_month']['preprocess functions'][] = 'template_preprocess_sbq_center_reservation_month_row';
-
+  //  $theme_registry['calendar_month']['preprocess functions'][] = 'template_preprocess_sbq_center_reservation_month_row';
 }
 
-
 function template_preprocess_sbq_center_reservation_month_col(&$vars) {
-  
+
   if ($vars['item']['class'] == 'date-box future' && arg(0) == 'center') {
     $item = $vars['item']['date'];
     $datetime = new DateTime($item);
@@ -307,7 +304,8 @@ function sbq_center_reservation_get_reservation($uid = '', $nid = '', array $par
 
 function sbq_center_reservation_get_manage_item($row, $cancle = FALSE) {
   $centerid = arg(1);
-  $accept = $ignore = '';
+  $accept = $ignore = $delete = '';
+
   switch ($row->field_field_reservation_status[0]['raw']['value']) {
     case SBQ_CENTER_RESERVATION_STATUS_SUBMMIT:
       $accept = l('接受', "center/{$centerid}/reservation/{$row->nid}/accept");
@@ -318,11 +316,14 @@ function sbq_center_reservation_get_manage_item($row, $cancle = FALSE) {
       $accept = '';
       $ignore = l('删除', "center/{$centerid}/reservation/{$row->nid}/ignore");
       break;
+    case SBQ_CENTER_RESERVATION_STATUS_IGNORE:
+      $delete = '已删除';
+      break;
   }
   if ($cancle) {
     return l('取消预约', "center/{$centerid}/reservation/{$row->nid}/ignore");
   }
-  return $accept . ' ' . $ignore;
+  return $accept . ' ' . $ignore . $delete;
 }
 
 /*
@@ -358,46 +359,22 @@ function sbq_center_reservation_theme() {
   return $items;
 }
 
-/*
- * hook_block_info
- */
-
-//function sbq_center_reservation_block_info() {
-//  $blocks['resevation_manage'] = array(
-//      'info' => t('center: resevation_manage'),
-//      //'region' => 'sidebar_second', // Not usually provided.
-//      'cache' => DRUPAL_CACHE_PER_ROLE, // default
-//  );
-//  return $blocks;
-//}
-
-/*
- * hook_block_view
- */
-
-//function sbq_center_reservation_block_view($delta = '') {
-//  if ($delta != 'resevation_manage') {
-//    return;
-//  }
-//  $center = sbq_center_load(arg(1));
-//  if (arg(0) != 'center' || !$center || !sbq_center_reservation_access($center, NULL, 'setting center reservation')) {
-//    return;
-//  }
-//  $subject = '中心管理';
-//  $html = '<ul>';
-//  $html .= '<li class="leaf">' . l('查看预约日期', "center/{$center->nid}/reservation/month") . '</li>';
-//  $html .= '<li class="leaf">' . l('预约日期设置', "center/{$center->nid}/reservation/settings") . '</li>';
-//  $html .= '<li class="leaf">' . l('预约表单管理', "center/{$center->nid}/reservation/manage") . '</li>';
-//  $html .= '<li class="leaf">' . l('添加健康教育', "node/add/sbq-center-edu") . '</li>';
-//  $html .= '<li class="leaf">' . l('咨询管理', "messages") . '</li>';
-//  $html .= '</ul>';
-//  return array(
-//      'subject' => $subject,
-//      'content' => $html,
-//  );
-  
-//    return array(
-//      'subject' => 'a',
-//      'content' => 'a',
-//  );
-//}
+function sbq_center_reservation_node_access($node, $op, $account) {
+  if (!is_object($node) || $node->type != SBQ_CENTER_RESERVATION_NODE_TYPE) {
+    return NODE_ACCESS_IGNORE;
+  }
+  switch ($op) {
+    case 'view':
+      if ($account->uid == $node->uid) {
+        return NODE_ACCESS_ALLOW;
+      }
+      if (sbq_center_reservation_access(sbq_center_load($node->og_group_ref['und'][0]['target_id']), $node, 'manage center reservation')) {
+        return NODE_ACCESS_ALLOW;
+      } else {
+        return NODE_ACCESS_DENY;
+      }
+      break;
+    default:
+      break;
+  }
+}
