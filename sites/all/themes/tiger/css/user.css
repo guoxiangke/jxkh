@@ -259,7 +259,7 @@
 .sbq_user_pm { float: left; width: 100%; }
 .sbq_user_pm .sbq_pm_wrap { width: 640px; }
 .sbq_user_pm .sbq_pm_editor { width: 660px; }
-.sbq_user_pm .sbq_pm_editor .form-textarea-wrapper { width: 580px; }
+.sbq_user_pm .sbq_pm_editor .form-textarea-wrapper { width: 490px; }
 .sbq_user_pm .sbq_nav { margin: 0px; }
 /*------sbq_notes_list------*/
 .sbq_notes_list { float: left; width: 100%; }
