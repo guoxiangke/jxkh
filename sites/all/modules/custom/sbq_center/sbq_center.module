@@ -312,7 +312,7 @@ function _sbq_get_pm_thread_id_to_sbqcenter($center_account_uid, $account = NULL
  * Implements hook_node_view().
  */
 function sbq_center_node_view($node, $view_mode, $langcode) {
-  if($view_mode == 'full' && $node->type = 'sbq_center') {
+  if($view_mode == 'full' && $node->type == 'sbq_center') {
     drupal_goto("center/$node->nid/index");
   }
 }
