@@ -142,13 +142,14 @@ function sbq_center_reservation_get_settings($center) {
 
   if (!$center || !$vari = variable_get('center_reservation_' . $center->nid . '_settings')) {
     $week = array(
-        'monday' => array( 'a' => 0, 'p' => 0 ),
-        'tuesday' => array( 'a' => 0, 'p' => 0 ),
-        'wednesday' => array( 'a' => 0, 'p' => 0 ),
-        'thursday' => array( 'a' => 0, 'p' => 0 ),
-        'friday' => array( 'a' => 0, 'p' => 0 ),
-        'saturday' => array( 'a' => 0, 'p' => 0 ),
-        'sunday' => array( 'a' => 0, 'p' => 0 ) );
+        'sunday' => array( 'a' => 0, 'p' => 0),
+        'monday' => array( 'a' => 0, 'p' => 0),
+        'tuesday' => array( 'a' => 0, 'p' => 0),
+        'wednesday' => array( 'a' => 0, 'p' => 0),
+        'thursday' => array( 'a' => 0, 'p' => 0),
+        'friday' => array( 'a' => 0, 'p' => 0),
+        'saturday' => array( 'a' => 0, 'p' => 0),
+    );
 
     return array( 'opendays' => $week, 'numofday' => 11 );
   }
