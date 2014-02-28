@@ -136,12 +136,21 @@ function sbq_center_reservation_setopenday($centerid, $opendays) {
 
 function sbq_center_reservation_get_settings($center) {
   static $center_reservation_opendays = array();
-  if (!is_object($center)) {
+  if (!is_object($center) && $center) {
     $center = sbq_center_load($center);
   }
 
-  if (!$vari = variable_get('center_reservation_' . $center->nid . '_settings')) {
-    return array();
+  if (!$center || !$vari = variable_get('center_reservation_' . $center->nid . '_settings')) {
+    $week = array(
+        'monday' => array( 'a' => 0, 'p' => 0 ),
+        'tuesday' => array( 'a' => 0, 'p' => 0 ),
+        'wednesday' => array( 'a' => 0, 'p' => 0 ),
+        'thursday' => array( 'a' => 0, 'p' => 0 ),
+        'friday' => array( 'a' => 0, 'p' => 0 ),
+        'saturday' => array( 'a' => 0, 'p' => 0 ),
+        'sunday' => array( 'a' => 0, 'p' => 0 ) );
+
+    return array( 'opendays' => $week, 'numofday' => 11 );
   }
   $center_reservation_opendays[$center->nid] = unserialize($vari);
   return $center_reservation_opendays[$center->nid];

@@ -14,6 +14,7 @@
  */
 function sbq_center_opendays_form($form, $form_status, $center) {
   $header = $part = array();
+  //variable_delete('center_reservation_23277_settings');
   $settings = sbq_center_reservation_get_settings($center);
   // foreach (array( 'monday' => '星期一', 'tuesday' => '星期二', 'wednesday' => '星期三', 'thursday' => '星期四', 'friday' => '星期五', 'saturday' => '星期六', 'sunday' => '星期日', ) as $key => $item) {
   //   $header[$key] = $item;
@@ -24,7 +25,6 @@ function sbq_center_opendays_form($form, $form_status, $center) {
   //   if (isset($settings['opendays'][$key]['p']) && $settings['opendays'][$key]['p']) {
   //     $default[] = 'p';
   //   }
-
   //   $part[$key] = array(
   //     '#type' => 'checkboxes',
   //     '#default_value' => $default,
@@ -37,15 +37,16 @@ function sbq_center_opendays_form($form, $form_status, $center) {
   // $form['centerid'] = array(
   //   '#type' => 'hidden',
   //   '#value' => $center->nid
-  // );
+  // )
+
   $form['content'] = array(
-    '#markup' => theme('sbq_center_reservation_settings', array('settings'=>$settings['opendays'])),
+      '#markup' => theme('sbq_center_reservation_settings', array( 'settings' => $settings['opendays'], 'centerid' => $center->nid )),
   );
   //$form['opendays'] = $part;
 
   $form['submit'] = array(
-    '#type' => 'submit',
-    '#value' => t('提交'),
+      '#type' => 'submit',
+      '#value' => t('提交'),
   );
 
   return $form;
@@ -57,14 +58,33 @@ function sbq_center_opendays_form($form, $form_status, $center) {
  * @param type $form_status
  */
 function sbq_center_opendays_form_submit($form, $form_status) {
-  $data = array();
-  foreach ($form['opendays'] as $key => $value) {
-    if (strpos($key, '#') !== 0) {
-      $data[$key] = $form_status['values'][$key];
+
+//  $data = array();
+//  foreach ($form['opendays'] as $key => $value) {
+//    if (strpos($key, '#') !== 0) {
+//      $data[$key] = $form_status['values'][$key];
+//    }
+//  }
+  $settings = sbq_center_reservation_get_settings(0);
+
+  $input = $form_status['input'];
+
+
+  foreach ($settings['opendays'] as $key => $values) {
+    if (in_array($key, array_keys($input))) {
+      $item = array(
+          'a' => isset($input[$key]['a']) ? 'a' : 0,
+          'p' => isset($input[$key]['p']) ? 'p' : 0,
+      );
+    } else {
+      $item = array(
+          'a' => 0, 'p' => 0,
+      );
     }
+    $data[$key] = $item;
   }
   $seri = array( 'opendays' => $data, 'numofday' => 10 );
-  variable_set('center_reservation_' . $form_status['values']['centerid'] . '_settings', serialize($seri));
+  variable_set('center_reservation_' . $input['centerid'] . '_settings', serialize($seri));
   drupal_set_message('设置成功', 'status');
 }
 
@@ -87,7 +107,7 @@ function sbq_center_reservation_manage($center, $reservation, $action) {
   }
 
 
-  return '操作成功，'.l('点击返回',"center/{$center->nid}/reservation/manage");
+  return '操作成功，' . l('点击返回', "center/{$center->nid}/reservation/manage");
 }
 
 function sbq_center_reservation_created($center, $account = NULL) {
@@ -106,7 +126,7 @@ function sbq_center_reservation_created($center, $account = NULL) {
   );
   drupal_set_title(t('Create @name', array( '@name' => $types[SBQ_CENTER_RESERVATION_NODE_TYPE]->name )), PASS_THROUGH);
   $param = drupal_get_query_parameters();
-  if(isset($param['date'])){
+  if (isset($param['date'])) {
     $node['field_reservation_time']['und'][0]['value'] = $param['date'];
   }
   return drupal_get_form('sbq_center_reservation_node_form', (object) $node);

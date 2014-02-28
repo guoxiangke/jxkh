@@ -20,18 +20,20 @@
   </thead>
   <tbody>
     <tr>
-      <?php foreach ($settings as $key=>$s): ?>
+      <?php foreach ($settings as $key => $s): ?>
         <td>
           <span class="am">
-            <input type="checkbox" id="edit-<?php echo $key?>-a" name="<?php echo $key?>[a]" value="a" class="form-checkbox" <?php echo $s['a'] ? 'checked' : '';?>>
-            <label class="option" for="edit-<?php echo $key?>-a">上午</label>
+            <input type="checkbox" id="edit-<?php echo $key ?>-a" name="<?php echo $key ?>[a]" value="a" class="form-checkbox" <?php echo $s['a'] ? 'checked' : ''; ?>>
+            <label class="option" for="edit-<?php echo $key ?>-a">上午</label>
           </span>
           <span class="pm">
-            <input type="checkbox" id="edit-<?php echo $key?>-p" name="<?php echo $key?>[p]" value="p" class="form-checkbox" <?php  echo $s['p'] ? 'checked' : '';?>>
-            <label class="option" for="edit-<?php echo $key?>-p">下午</label>
+            <input type="checkbox" id="edit-<?php echo $key ?>-p" name="<?php echo $key ?>[p]" value="p" class="form-checkbox" <?php echo $s['p'] ? 'checked' : ''; ?>>
+
+            <label class="option" for="edit-<?php echo $key ?>-p">下午</label>
           </span>
         </td>
       <?php endforeach; ?>
-    </tr>
+  <input type="hidden" name="centerid" value="<?php echo $centerid; ?>">
+  </tr>
   </tbody>
 </table>
