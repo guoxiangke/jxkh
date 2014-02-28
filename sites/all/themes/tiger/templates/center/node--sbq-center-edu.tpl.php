@@ -82,7 +82,14 @@
 ?>
 <div id="node-<?php print $node->nid; ?>" class="sbq_hospital_final">
   <div class="sbq_wrap">
-    <div class="sbq_head">讲堂文章</div>
+    <div class="sbq_head">讲堂文章
+      <?php
+        global $user;
+        if ($user->uid == $uid || $is_admin) {
+          print l(t('edit'), 'node/'.$node->nid.'/edit');
+        }
+      ?>
+    </div>
     <h2 class="sbq_article_title"><?php print $title; ?></h2>
     <div class="sbq_article_content">
       <?php

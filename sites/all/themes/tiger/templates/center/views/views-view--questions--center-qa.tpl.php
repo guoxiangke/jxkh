@@ -31,11 +31,12 @@
  //   $main_title = 'All Questions';
  // }
  // echo "<h1>$main_title</h1>";
+  $center_id = arg(1);
 ?>
 
 <div class="sbq_hospital_qa_list">
   <div class="sbq_wrap">
-    <div class="sbq_head">常见问题解答</div>
+    <div class="sbq_head">常见问题解答<span class="sbq_center_ask"><?php print l('向专家提问', 'node/add/question', array('query' => array('og_group_ref' => $center_id))); ?></span></div>
   <?php print render($title_prefix); ?>
   <?php if ($title): ?>
     <h2 class="sbq_list_title"><?php print $title; ?></h2>
