@@ -94,7 +94,7 @@
 .hospital_order_setting table th { background: #EFF6FA; }
 .hospital_order_setting table .on { background: #F8FFF0; }
 .hospital_order_setting table td span { float: left; width: 100%; }
-.hospital_order_setting .form-submit { float: left; width: 60px; height: 30px; border: none; margin: 10px 0px 0px 0px; background: #1575d5; font-size: 14px; color: #FFF; overflow: hidden; border: 1px #0D6EB8 solid; border-radius: 3px; }
+.hospital_order_setting .form-submit { float: left; width: 60px; height: 36px; border: none; margin: 10px 0px 0px 0px; background: #1575d5; font-size: 14px; color: #FFF; overflow: hidden; border: 1px #0D6EB8 solid; border-radius: 3px; }
 .hospital_order_setting .form-checkboxes .form-item { height: 22px; line-height: 22px; }
 /*------hospital_order_add------*/
 .hospital_order_add { float: left; width: 100%; }

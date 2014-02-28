@@ -153,6 +153,21 @@ Drupal.behaviors.tiger = {
       return false;
     });
 
+    $('.sbq_pm_icon .sbq_mp4 a').click(function(){
+      $('.field-name-field-message-video input[type="file"]').click();
+      return false;
+    });
+
+    $('.sbq_pm_icon .sbq_amr a').click(function(){
+      $('.field-name-field-message-voice input[type="file"]').click();
+      return false;
+    });
+
+    $('.sbq_pm_icon .sbq_pic a').click(function(){
+      $('.field-name-field-message-image input[type="file"]').click();
+      return false;
+    });
+
     $('#user-register-form .form-type-textfield .description').hide();
     $('#user-register-form .form-type-textfield ').click(function(){
       $(this).children('.description').show();
