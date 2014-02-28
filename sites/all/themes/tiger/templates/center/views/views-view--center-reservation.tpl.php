@@ -56,20 +56,22 @@
       <?php print $rows; ?>
     </div>
   <?php elseif ($empty): ?>
-    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tbody>
-        <tr>
-          <th width="120">预约号</th>
-          <th width="100">患者姓名</th>
-          <th width="120">联系电话</th>
-          <th width="120">就诊时间</th>
-          <th width="100">预约状态</th>
-        </tr>
-        <tr>
-          <td colspan="5">暂无预约记录</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="hospital_order_table">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tbody>
+          <tr>
+            <th width="120">预约号</th>
+            <th width="100">患者姓名</th>
+            <th width="120">联系电话</th>
+            <th width="120">就诊时间</th>
+            <th width="100">预约状态</th>
+          </tr>
+          <tr>
+            <td colspan="5">暂无预约记录</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   <?php endif; ?>
 
   <?php if ($pager): ?>
