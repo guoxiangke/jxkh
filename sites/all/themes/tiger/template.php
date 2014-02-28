@@ -264,48 +264,69 @@ function tiger_preprocess_page(&$variables) {
   }
   // blog/question add page
   if ((in_array('blog', arg()) || in_array('question', arg())) && in_array('add', arg())) {
-    global $user;
-    drupal_add_css(path_to_theme() . "/css/user.css", array('group' => CSS_THEME));
-    drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
-    $variables['theme_hook_suggestions'][] = 'page__user';
-    $account = $user;
-    $variables['account'] = $account;
-    if (module_exists('sbq_commons')) {
-      $user_post_count = sbq_commons_get_count($account->uid, 'post');
-      $user_message_count = sbq_commons_messages_count($account);
-      $user_blog_count = sbq_commons_get_count($account->uid, 'blog');
-      $user_question_count = sbq_commons_get_count($account->uid, 'question');
-      $user_answer_count = sbq_commons_get_count($account->uid, 'answer');
-    } else {
-      $user_post_count = 0;
-      $user_message_count = 0;
-      $user_blog_count = 0;
-      $user_question_count = 0;
-      $user_answer_count = 0;
+    $url_query = drupal_get_query_parameters();
+    $center_nid = 0;
+    if (isset($url_query['og_group_ref'])) {
+      $center_nid = $url_query['og_group_ref'];
     }
-    if (module_exists('sbq_user_relationships')) {
-      $user_relationship_count = sbq_user_relationships_my_relstionships($account);
-      $follow_link = sbq_user_relationships_action_between_user($user, $account);
+    if ($center_nid) {
+      drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
+      drupal_add_css(path_to_theme() . "/css/hospital.css", array('group' => CSS_THEME));
+      $variables['theme_hook_suggestions'][] = 'page__center';
+      $variables['center_id'] = $center_nid;
+      $expert_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_EXPERT_TID);
+      $owner_uid = _sbq_center_owner_uid_get($center_nid);
+      $visit_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_VISIT_TID);
+      $plan_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_PLAN_TID);
+      $variables['expert_nid'] = $expert_nid;
+      $variables['owner_uid'] = $owner_uid;
+      $variables['visit_nid'] = $visit_nid;
+      $variables['plan_nid'] = $plan_nid;
+      $variables['page']['sidebar_second'] = FALSE;
     } else {
-      $user_relationship_count = 0;
-      $follow_link = '';
-    }
-    if (module_exists('userpoints')) {
-      $user_point_count = userpoints_get_current_points($user->uid, 'all');
-    } else {
-      $user_point_count = 0;
-    }
+      global $user;
+      drupal_add_css(path_to_theme() . "/css/user.css", array('group' => CSS_THEME));
+      drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
+      $variables['theme_hook_suggestions'][] = 'page__user';
+      $account = $user;
+      $variables['account'] = $account;
+      if (module_exists('sbq_commons')) {
+        $user_post_count = sbq_commons_get_count($account->uid, 'post');
+        $user_message_count = sbq_commons_messages_count($account);
+        $user_blog_count = sbq_commons_get_count($account->uid, 'blog');
+        $user_question_count = sbq_commons_get_count($account->uid, 'question');
+        $user_answer_count = sbq_commons_get_count($account->uid, 'answer');
+      } else {
+        $user_post_count = 0;
+        $user_message_count = 0;
+        $user_blog_count = 0;
+        $user_question_count = 0;
+        $user_answer_count = 0;
+      }
+      if (module_exists('sbq_user_relationships')) {
+        $user_relationship_count = sbq_user_relationships_my_relstionships($account);
+        $follow_link = sbq_user_relationships_action_between_user($user, $account);
+      } else {
+        $user_relationship_count = 0;
+        $follow_link = '';
+      }
+      if (module_exists('userpoints')) {
+        $user_point_count = userpoints_get_current_points($user->uid, 'all');
+      } else {
+        $user_point_count = 0;
+      }
 
-    $variables['counts'] = array(
-      'user_post_count' => $user_post_count,
-      'user_message_count' => $user_message_count,
-      'user_blog_count' => $user_blog_count,
-      'user_question_count' => $user_question_count,
-      'user_answer_count' => $user_answer_count,
-      'user_relationship_count' => $user_relationship_count,
-      'user_point_count' => $user_point_count,
-    );
-    $variables['follow_link'] = $follow_link;
+      $variables['counts'] = array(
+        'user_post_count' => $user_post_count,
+        'user_message_count' => $user_message_count,
+        'user_blog_count' => $user_blog_count,
+        'user_question_count' => $user_question_count,
+        'user_answer_count' => $user_answer_count,
+        'user_relationship_count' => $user_relationship_count,
+        'user_point_count' => $user_point_count,
+      );
+      $variables['follow_link'] = $follow_link;
+    }
   }
   // center page
   if (arg(0) == 'center') {
@@ -1516,7 +1537,6 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
       $form['field_message_voice']['#prefix'] = '<div class="sbq_hide">';
       $form['field_message_voice']['#suffix'] = '</div>';
     }
-
   } elseif ($form_id == 'sbq_center_opendays_form') {
     $form['#prefix'] = '<div class="hospital_order_setting"><div class="sbq_wrap"><div class="sbq_head">预约设置</div>';
     $form['#suffix'] = '</div></div>';
