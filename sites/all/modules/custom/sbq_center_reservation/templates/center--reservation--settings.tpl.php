@@ -9,13 +9,13 @@
 <table id="center-reservation-table" class="center-reservation">
   <thead>
     <tr>
+      <th>星期日</th>
       <th>星期一</th>
       <th>星期二</th>
       <th>星期三</th>
       <th>星期四</th>
       <th>星期五</th>
       <th>星期六</th>
-      <th>星期日</th>
     </tr>
   </thead>
   <tbody>
