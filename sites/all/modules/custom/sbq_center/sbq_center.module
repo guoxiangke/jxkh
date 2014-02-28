@@ -248,6 +248,9 @@ function sbq_center_node_delete($node) {
   if($node->type == 'sbq_center') {
     variable_del('center_'.$node->uid);
   }
+  if($node->type == 'sbq_notice' || $node->type == 'sbq_center_edu') {
+    drupal_goto('center/'.$node->og_group_ref[LANGUAGE_NONE][0]['target_id'].'/index');
+  }
 }
 
 /**
@@ -303,4 +306,13 @@ function _sbq_get_pm_thread_id_to_sbqcenter($center_account_uid, $account = NULL
   $thread_id = NULL;
   $thread_id = db_query('SELECT pi.thread_id FROM {pm_index} pi where pi.recipient = :center_uid AND pi.mid in ( SELECT pm.mid FROM {pm_message} pm WHERE pm.author = :uid)',array(':center_uid'=>$center_account_uid,':uid'=>$account->uid))->fetchField();
   return $thread_id;
+}
+
+/**
+ * Implements hook_node_view().
+ */
+function sbq_center_node_view($node, $view_mode, $langcode) {
+  if($view_mode == 'full' && $node->type == 'sbq_center') {
+    drupal_goto("center/$node->nid/index");
+  }
 }

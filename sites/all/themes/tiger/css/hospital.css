@@ -82,7 +82,8 @@
 /*.sbq_calendar .sbq_order_actions .sbq_off { border: 1px #990033 solid; background: #cc3333; color: #990033; }*/
 /*sbq_wrap*/
 .sbq_wrap { float: left; width: 100%; margin: 0px 0px 15px 0px; }
-.sbq_wrap .sbq_head { float: left; width: 100%; height: 26px; line-height: 26px; padding: 0px 0px 5px 0px; border-bottom: 1px #E5E5E5 solid; color: #225599; font-size: 18px; }
+.sbq_wrap .sbq_head { float: left; width: 100%; line-height: 26px; padding: 0px 0px 5px 0px; border-bottom: 1px #E5E5E5 solid; color: #225599; font-size: 18px; }
+.sbq_wrap .sbq_head a { float: right; height: 26px; line-height: 26px; padding: 0px 9px; border-radius: 3px; border: 1px #1575d5 solid; font-size: 14px; color: #1575d5; }
 .sbq_wrap .sbq_content { float: left; width: 100%; }
 .sbq_wrap .sbq_text { float: left; width: 100%; padding: 5px 0px; line-height: 26px; }
 /*------hospital_order_setting------*/
@@ -93,10 +94,11 @@
 .hospital_order_setting table th { background: #EFF6FA; }
 .hospital_order_setting table .on { background: #F8FFF0; }
 .hospital_order_setting table td span { float: left; width: 100%; }
-.hospital_order_setting .form-submit { float: left; width: 60px; height: 30px; border: none; margin: 10px 0px 0px 0px; background: #1575d5; font-size: 14px; color: #FFF; overflow: hidden; border: 1px #0D6EB8 solid; border-radius: 3px; }
+.hospital_order_setting .form-submit { float: left; width: 60px; height: 36px; border: none; margin: 10px 0px 0px 0px; background: #1575d5; font-size: 14px; color: #FFF; overflow: hidden; border: 1px #0D6EB8 solid; border-radius: 3px; }
 .hospital_order_setting .form-checkboxes .form-item { height: 22px; line-height: 22px; }
 /*------hospital_order_add------*/
 .hospital_order_add { float: left; width: 100%; }
+.hospital_order_add .field-type-text-with-summary label { height: auto; }
 .hospital_order_add .sbq_form_wrap { padding: 10px 0px; }
 .hospital_order_add .sbq_form_wrap .sbq_text { width: auto; height: 36px; line-height: 36px; padding: 0px; }
 /*------hospital_order_list------*/
@@ -167,9 +169,15 @@
 */
 .sbq_form_wrap .sbq_form_02 .form-text { float: left; width: 720px; }
 /*.sbq_form_wrap .sbq_form_02 .description { float: left; width: 100%; margin: 5px 0px 0px 0px; }*/
-.field-type-text-with-summary { float: left; width: 100%; }
-.field-type-text-with-summary label { display: none; }
+.sbq_add_content .field-type-text-with-summary { float: left; width: 100%; }
+.sbq_add_content .field-type-text-with-summary label { display: none; }
 .sbq_add_content .cke_bottom,
 .sbq_add_content .ckeditor_links,
 .sbq_add_content .element-invisible { display: none !important; }
-.sbq_botton_01 #edit-delete { float: left; width: 80px; height: 36px; line-height: 36px; margin: 0px 5px; padding: 0px; border: none; border-radius: 3px; background: #ddd; color: #666; font-size: 14px; }
+.sbq_add_content .sbq_botton_01 #edit-delete { float: left; width: 80px; height: 36px; line-height: 36px; margin: 0px 5px; padding: 0px; border: none; border-radius: 3px; background: #ddd; color: #666; font-size: 14px; }
+.sbq_add_content .preview.launcher { float: left; width: 100%; }
+.sbq_add_content .field-type-media .button.launcher { float: left; height: 30px; line-height: 30px; padding: 0px 9px; border-radius: 3px; background: #1575d5; font-size: 12px; color: #FFF; }
+.sbq_add_content .field-type-media .button.remove { float: left; height: 30px; line-height: 30px; padding: 0px 9px; margin: 0px 5px; border-radius: 3px; background: #ddd; color: #666; font-size: 12px; }
+.sbq_add_content .field-type-media .media-item { margin: 0px 5px 5px 0px; }
+.sbq_add_content .field-type-media .media-item .label-wrapper:hover { margin: 0px; border: none; }
+.sbq_add_content .field-type-media .media-item .label-wrapper:hover .media-filename { margin: 0px; border: none; background: #f3f3f3; }

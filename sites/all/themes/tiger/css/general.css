@@ -258,10 +258,17 @@ input,
 .sbq_pm .sbq_pm_item .sbq_content .sbq_text a { margin: 0px 2px; color: #225599; text-decoration: underline; }
 /*sbq_editor*/
 .sbq_pm .sbq_pm_editor { float: left; width: 720px; padding: 9px; border-left: 1px #E5E5E5 solid; border-right: 1px #E5E5E5 solid; border-bottom: 1px #E5E5E5 solid; background: #f6f6f6; }
+.sbq_pm .sbq_pm_editor .sbq_pm_icon { float: left; }
+.sbq_pm .sbq_pm_editor .sbq_pm_icon ul { float: left; }
+.sbq_pm .sbq_pm_editor .sbq_pm_icon ul li { float: left; width: 24px; height: 24px; margin: 4px 6px 4px 0px; }
+.sbq_pm .sbq_pm_editor .sbq_pm_icon ul li a { float: left; width: 24px; height: 24px; background: url(../image/sbq_pm_icon.png) no-repeat; overflow: hidden; }
+.sbq_pm .sbq_pm_editor .sbq_pm_icon ul .sbq_mp4 a { background-position: 0px 0px; }
+.sbq_pm .sbq_pm_editor .sbq_pm_icon ul .sbq_amr a { background-position: 0px -24px; }
+.sbq_pm .sbq_pm_editor .sbq_pm_icon ul .sbq_pic a { background-position: 0px -48px; }
 .sbq_pm .sbq_pm_editor label,
 .sbq_pm .sbq_pm_editor .privatemsg-reply,
 .sbq_pm .sbq_pm_editor #edit-cancel { display: none; }
-.sbq_pm .sbq_pm_editor .form-textarea-wrapper { float: left; width: 640px; padding: 4px; border: 1px #CCC solid; background: #FFF; box-shadow: 0px 1px 3px #CCC inset; border-radius: 3px; }
+.sbq_pm .sbq_pm_editor .form-textarea-wrapper { float: left; width: 550px; padding: 4px; border: 1px #CCC solid; background: #FFF; box-shadow: 0px 1px 3px #CCC inset; border-radius: 3px; }
 .sbq_pm .sbq_pm_editor .form-textarea-wrapper textarea { float: left; width: 100%; min-height: 22px; line-height: 22px; margin: 0px; padding: 0px; border: none; resize: none; overflow-x: hidden; overflow-y: auto; font-size: 12px; }
 .sbq_pm .sbq_pm_editor .grippie { display: none; }
 .sbq_pm .sbq_pm_editor .form-actions { float: right; width: 60px; height: 32px; margin: 0px 0px 0px 0px; position: relative; overflow: hidden; }
@@ -271,21 +278,35 @@ input,
 .sbq_pm_editor  .form-actions .ajax-progress .message { float: left; width: 60px; height: 34px; line-height: 30px; border-radius: 3px; border: 1px #818181 solid; background: #999; color: #FFF; font-size: 14px; text-align: center; overflow: hidden; }*/
 /*------sbq_pm_list------*/
 .sbq_pm_list { float: left; width: 100%; }
-.sbq_pm_list .sbq_wrap { float: left; width: 100%; margin: 0px 0px 15px 0px; }
-.sbq_pm_list table { float: left; width: 100%; border-collapse: collapse; }
+.sbq_pm_list .messages { float: left; width: 100%; line-height: 22px; margin: 15px 0px 0px 0px; }
+.sbq_pm_list .messages.warning { color: #E6393D; }
+.sbq_pm_list .messages li { float: left; margin: 0px 10px 0px 0px; }
+.sbq_pm_list .messages a { color: #225599; }
+.sbq_pm_list .sbq_wrap { float: left; width: 100%; }
+.sbq_pm_list table { float: left; width: 100%; margin: 15px 0px 0px 0px; border-collapse: collapse; }
 .sbq_pm_list table a { float: left; line-height: 22px; color: #225599; }
 .sbq_pm_list table .username { width: 100px; }
 .sbq_pm_list table td,
-.sbq_pm_list table th { border-bottom: 1px #E5E5E5 solid; padding: 5px 8px; line-height: 22px; text-align: left; word-break: break-all; word-wrap: break-word; white-space: normal; }
+.sbq_pm_list table th { border: 1px #E5E5E5 solid; padding: 5px 8px; line-height: 22px; text-align: left; word-break: break-all; word-wrap: break-word; white-space: normal; }
 .sbq_pm_list table th a { float: left; height: 22px; line-height: 22px; color: #225599; }
 .sbq_pm_list table th a img { float: right; margin: 0px 3px; }
 .sbq_pm_list table th { background: #EFF6FA; }
 .sbq_pm_list table .even { background: #f6f6f6; }
 .sbq_pm_list .container-inline { float: left; width: 100%; margin: 10px 0px 0px 0px; }
-.sbq_pm_list input[type="submit"] { float: left; width: 60px; height: 30px; border: none; background: #1575d5; font-size: 14px; color: #FFF; overflow: hidden; border: 1px #0D6EB8 solid; border-radius: 3px; }
-.sbq_pm_list .form-item-operation { float: left; padding: 4px; margin: 0px 5px; border-radius: 3px; border: 1px #E5E5E5 solid; }
+.sbq_pm_list input[type="submit"] { float: left; width: 60px; height: 30px; margin: 0px 5px 0px 0px; border: none; background: #1575d5; font-size: 14px; color: #FFF; overflow: hidden; border: 1px #0D6EB8 solid; border-radius: 3px; }
+.sbq_pm_list .form-item-operation { float: left; padding: 4px; border-radius: 3px; border: 1px #E5E5E5 solid; }
+.sbq_pm_list .container-inline .ajax-progress { display: none; }
 .sbq_pm_list .form-item-operation select { float: left; height: 20px; margin: 0px; padding: 0px; border: none; }
 .sbq_pm_list .privatemsg-unread td { font-weight: bold; }
+.sbq_pm_list .marker { color: #900; margin: 0px 1px; }
+.sbq_pm_list .messages { }
+/*.sbq_pm_list .messages { clear: both; padding: 8px 28px 8px 28px; line-height: 20px; margin: 5px 0px; font-size: 12px; color: #666; position: relative; word-wrap: break-word; word-wrap: break-word; }
+.sbq_pm_list .messages a { color: #3366CC; margin: 0px 1px; }
+.sbq_pm_list .messages a:hover { text-decoration: underline; }
+.sbq_pm_list .element-invisible { display: none; }
+.sbq_pm_list .status { border: 1px #009900 solid; background: url(../image/sbq_msg_info.png) #F8FFF0 no-repeat 6px 10px; }
+.sbq_pm_list .error { border: 1px #E6393D solid; background: url(../image/sbq_msg_error.png) #FEF5F1 no-repeat 6px 10px; }
+.sbq_pm_list .warning { border: 1px #fab418 solid; background: url(../image/sbq_msg_warning.png) #ffe9ad no-repeat 6px 10px; }*/
 /*------
 Colorbox
 ------*/

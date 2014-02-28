@@ -324,7 +324,7 @@ function tiger_preprocess_page(&$variables) {
     if (in_array('reservation', arg()) && in_array('created', arg())) {
       drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
     }
-  
+
     if (in_array('info', arg())) {
       drupal_add_css(path_to_theme() . "/css/news.css", array('group' => CSS_THEME));
     }
@@ -452,10 +452,14 @@ function tiger_preprocess_page(&$variables) {
   if (arg(0) == 'messages' && arg(1) == 'view') {
     $participants = $variables['page']['content']['system_main']['#thread']['participants'];
     $center_nid = 0;
-    foreach ($participants as $value) {
-      $c_nid = _sbq_center_nid_get($value);
-      if ($c_nid) {
-        $center_nid = $c_nid;
+    global $user;
+    $center_nid = _sbq_center_nid_get();
+    if (!$center_nid) {
+      foreach ($participants as $value) {
+        $c_nid = _sbq_center_nid_get($value);
+        if ($c_nid) {
+          $center_nid = $c_nid;
+        }
       }
     }
 
@@ -544,10 +548,13 @@ function tiger_preprocess_page(&$variables) {
   if (arg(0) == 'messages' && arg(1) == 'new') {
     global $user;
     $center_nid = 0;
-    if (is_numeric(arg(2)) && arg(2)!=$user->uid) {
-      $c_uid = arg(2);
-      $center_owner = user_load($c_uid);
-      $center_nid = _sbq_center_nid_get($center_owner);
+    $center_nid = _sbq_center_nid_get($user);
+    if (!$center_nid) {
+      if (is_numeric(arg(2)) && arg(2)!=$user->uid) {
+        $c_uid = arg(2);
+        $center_owner = user_load($c_uid);
+        $center_nid = _sbq_center_nid_get($center_owner);
+      }
     }
 
     if ($center_nid) {
@@ -563,8 +570,8 @@ function tiger_preprocess_page(&$variables) {
       $variables['visit_nid'] = $visit_nid;
       $variables['plan_nid'] = $plan_nid;
       $variables['page']['sidebar_second'] = FALSE;
-      $variables['page']['content']['system_main']['#prefix'] = '<div class="sbq_pm">';
-      $variables['page']['content']['system_main']['#suffix'] = '</div>';
+      $variables['page']['content']['system_main']['#prefix'] = '<div class="sbq_pm"><div class="sbq_pm_wrap"></div><div class="sbq_pm_editor">';
+      $variables['page']['content']['system_main']['#suffix'] = '</div></div>';
     } else {
       global $user;
       drupal_add_css(path_to_theme() . "/css/user.css", array('group' => CSS_THEME));
@@ -625,12 +632,6 @@ function tiger_preprocess_page(&$variables) {
         $variables['hospitals_departments'] = $variables['field_hospital_name'] .' '. $variables['field_department'];
       }
     }
-
-    $variables['page']['content']['system_main']['messages']['#prefix'] = '<div class="sbq_pm_wrap">';
-    $variables['page']['content']['system_main']['messages']['#suffix'] = '</div>';
-
-    $variables['page']['content']['system_main']['participants']['#prefix'] = '<div class="sbq_hide">';
-    $variables['page']['content']['system_main']['participants']['#suffix'] = '</div>';
   }
   if ((in_array('sbq-center-edu', arg()) || in_array('center-notice', arg())) && in_array('add', arg())) {
     drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
@@ -1449,6 +1450,7 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
 
     $form['body']['#prefix'] = '<div class="sbq_form_01">';
     $form['body']['#suffix'] = '</div>';
+    $form['body']['und'][0]['#title'] = '请输入基本病情和检查';
 
     $form['field_reservation_status']['#prefix'] = '<div class="sbq_hide">';
     $form['field_reservation_status']['#suffix'] = '</div>';
@@ -1471,10 +1473,50 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     $form['#suffix'] = '</div>';
     $form['updated']['actions']['#weight'] = '99';
   } elseif ($form_id == 'privatemsg_new') {
-    $form['#prefix'] = '<div class="sbq_pm_editor">';
-    $form['#suffix'] = '</div>';
+    if (in_array('view', arg())) {
+      $form['#prefix'] = '<div class="sbq_pm_editor"><div class="sbq_pm_icon">
+              <ul>
+                <li class="sbq_mp4"><a href="#"></a></li>
+                <li class="sbq_amr"><a href="#"></a></li>
+                <li class="sbq_pic"><a href="#"></a></li>
+              </ul>
+            </div>';
+      $form['#suffix'] = '</div>';
 
-    $form['body']['#rows'] = 1;
+      $form['body']['#rows'] = 1;
+
+      $form['field_message_image']['#prefix'] = '<div class="sbq_hide">';
+      $form['field_message_image']['#suffix'] = '</div>';
+
+      $form['field_message_video']['#prefix'] = '<div class="sbq_hide">';
+      $form['field_message_video']['#suffix'] = '</div>';
+
+      $form['field_message_voice']['#prefix'] = '<div class="sbq_hide">';
+      $form['field_message_voice']['#suffix'] = '</div>';
+    } elseif (in_array('new', arg())) {
+      $form['#prefix'] = '';
+      $form['#suffix'] = '';
+
+      $form['body']['#rows'] = 1;
+      $form['body']['#prefix'] = '<div class="sbq_pm_icon">
+              <ul>
+                <li class="sbq_mp4"><a href="#"></a></li>
+                <li class="sbq_amr"><a href="#"></a></li>
+                <li class="sbq_pic"><a href="#"></a></li>
+              </ul>
+            </div>';
+      $form['body']['#suffix'] = '';
+
+      $form['field_message_image']['#prefix'] = '<div class="sbq_hide">';
+      $form['field_message_image']['#suffix'] = '</div>';
+
+      $form['field_message_video']['#prefix'] = '<div class="sbq_hide">';
+      $form['field_message_video']['#suffix'] = '</div>';
+
+      $form['field_message_voice']['#prefix'] = '<div class="sbq_hide">';
+      $form['field_message_voice']['#suffix'] = '</div>';
+    }
+
   } elseif ($form_id == 'sbq_center_opendays_form') {
     $form['#prefix'] = '<div class="hospital_order_setting"><div class="sbq_wrap"><div class="sbq_head">预约设置</div>';
     $form['#suffix'] = '</div></div>';
@@ -1490,6 +1532,9 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
 
     $form['field_image']['#prefix'] = '<div class="sbq_form_02">';
     $form['field_image']['#suffix'] = '</div>';
+
+    $form['body']['#prefix'] = '<div class="sbq_form_02">';
+    $form['body']['#suffix'] = '</div>';
 
     $form['field_sbq_center_edu_tax']['#prefix'] = '<div class="sbq_form_02">';
     $form['field_sbq_center_edu_tax']['#suffix'] = '</div>';
@@ -1513,6 +1558,9 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     $form['field_image']['#prefix'] = '<div class="sbq_form_02">';
     $form['field_image']['#suffix'] = '</div>';
 
+    $form['body']['#prefix'] = '<div class="sbq_form_02">';
+    $form['body']['#suffix'] = '</div>';
+
     $form['field_center_taxonomy']['#prefix'] = '<div class="sbq_form_02">';
     $form['field_center_taxonomy']['#suffix'] = '</div>';
 
@@ -1526,23 +1574,26 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
     $form['#prefix'] = '<div class="sbq_add_content sbq_form_wrap">';
     $form['#suffix'] = '</div>';
 
-    $form['title']['#prefix'] = '<div class="sbq_form_02">';
+    $form['title']['#prefix'] = '<div class="sbq_form_01">';
     $form['title']['#suffix'] = '</div>';
 
-    $form['field_image']['#prefix'] = '<div class="sbq_form_02">';
+    $form['field_image']['#prefix'] = '<div class="sbq_form_01">';
     $form['field_image']['#suffix'] = '</div>';
 
-    $form['field_sbq_center_img']['#prefix'] = '<div class="sbq_form_02">';
+    $form['field_sbq_center_img']['#prefix'] = '<div class="sbq_form_01">';
     $form['field_sbq_center_img']['#suffix'] = '</div>';
 
-    $form['field_sbq_center_edu_switch']['#prefix'] = '<div class="sbq_form_02">';
+    $form['field_sbq_center_edu_switch']['#prefix'] = '<div class="sbq_form_01">';
     $form['field_sbq_center_edu_switch']['#suffix'] = '</div>';
 
     $form['group_group']['#prefix'] = '<div class="sbq_hide">';
     $form['group_group']['#suffix'] = '</div>';
 
+    $form['body']['#prefix'] = '<div class="sbq_hide">';
+    $form['body']['#suffix'] = '</div>';
+
     $form['actions']['submit']['#attributes']['class'][] = 'sbq_btn';
-    $form['actions']['#prefix'] = '<div class="sbq_botton_01">';
+    $form['actions']['#prefix'] = '<div class="sbq_botton_01"><label></label>';
     $form['actions']['#suffix'] = '</div>';
   }
 }

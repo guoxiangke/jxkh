@@ -71,7 +71,10 @@
  *
  * @ingroup themeable
  */
+define('SBQ_CENTER_EDU_VIDEO_TID', 24706);
+define('SBQ_CENTER_EDU_ARTICLE_TID', 24705);
   $theme_path = drupal_get_path('theme', 'tiger');
+
 ?>
 
 <?php
@@ -114,9 +117,9 @@
       $left_reservation_settings_active = ' class="active"';
     } elseif (in_array('edit', arg())) {
       $left_center_edit_active = ' class="active"';
-    } elseif (in_array('add', arg()) || in_array('sbq-center-edu', arg())) {
+    } elseif (in_array('add', arg()) && in_array('sbq-center-edu', arg())) {
       $left_edu_add_active = ' class="active"';
-    } elseif (in_array('add', arg()) || in_array('center-notice', arg())) {
+    } elseif (in_array('add', arg()) && in_array('center-notice', arg())) {
       $left_notice_add_active = ' class="active"';
     }
 
@@ -146,6 +149,12 @@
   } elseif (isset($node) && $node->type == 'sbq_center_edu') {
     $menu_edu_active = ' class="active"';
     $is_edu = TRUE;
+    if ($node->field_sbq_center_edu_tax['und'][0]['tid'] == SBQ_CENTER_EDU_VIDEO_TID) {
+      $left_edu_active = ' class="active"';
+    }
+    if ($node->field_sbq_center_edu_tax['und'][0]['tid'] == SBQ_CENTER_EDU_ARTICLE_TID) {
+      $left_edu_article_active = ' class="active"';
+    }
   }
   if (in_array('questions', arg()) || in_array('question', arg())) {
     $left_questions_active = ' class="active"';
@@ -155,6 +164,13 @@
   $is_center_owner = FALSE;
   if ($user->uid == $center->uid) {
     $is_center_owner = TRUE;
+  }
+  $edu_menu_text = '健康教育';
+  if (isset($center->field_sbq_center_edu_switch['und'][0]['value'])) {
+    $text = $center->field_sbq_center_edu_switch['und'][0]['value'];
+    if (strlen(trim($text)) > 0) {
+      $edu_menu_text = $text;
+    }
   }
   $pm_thread_id = _sbq_get_pm_thread_id_to_sbqcenter($center->uid);
   $header_image = file_create_url($center->field_image['und'][0]['uri']);
@@ -202,7 +218,7 @@
     <?php else: ?>
       <li<?php print $menu_messages_active; ?>><?php print l('咨询医生', 'user/login', array('query' => array('destination' => 'center/'.$center_id.'/index'))); ?></li>
     <?php endif; ?>
-    <li<?php print $menu_edu_active; ?>><?php print l('健康讲堂', 'center/'.$center_id.'/edu'); ?></li>
+    <li<?php print $menu_edu_active; ?>><?php print l($edu_menu_text, 'center/'.$center_id.'/edu'); ?></li>
     <li<?php print $menu_info_active; ?>><?php print l('中心介绍', 'center/'.$center_id.'/info'); ?></li>
     <?php if ($is_center_owner): ?>
       <li<?php print $menu_manage_active; ?>><?php print l('中心管理', 'center/'.$center_id.'/reservation/manage'); ?></li>

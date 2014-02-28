@@ -86,15 +86,6 @@ jQuery(function($) {
     return false;
   });
 
-  $('#edit-field-visited input:radio').change(function (event) {
-    var value = $(this).val();
-    if (value == 1) {
-      $('#sbq_case_num').show();
-    } else{
-      $('#sbq_case_num').hide();
-    };
-  });
-
   // $(".captcha img").appendTo('.captcha .form-item-captcha-response');
   // $(".captcha .reload-captcha-wrapper a").appendTo('.captcha .form-item-captcha-response');
   $("#user-login-form #edit-captcha-response").attr("placeholder", "验证码");
@@ -159,6 +150,21 @@ Drupal.behaviors.tiger = {
 
     $('#user-profile-form .user-picture a').click(function(){
       $('#edit-picture-upload').click();
+      return false;
+    });
+
+    $('.sbq_pm_icon .sbq_mp4 a').click(function(){
+      $('.field-name-field-message-video input[type="file"]').click();
+      return false;
+    });
+
+    $('.sbq_pm_icon .sbq_amr a').click(function(){
+      $('.field-name-field-message-voice input[type="file"]').click();
+      return false;
+    });
+
+    $('.sbq_pm_icon .sbq_pic a').click(function(){
+      $('.field-name-field-message-image input[type="file"]').click();
       return false;
     });
 
