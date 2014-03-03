@@ -1393,7 +1393,12 @@ function sbq_commons_user_login($edit, $account) {
 
   // Your logic will set $redirection to the desired location
   $redirection = 'user/followers/qa';
-
+  if(array_key_exists(USER_CENTER_ADMINSTRATOR_RID, $account->roles)){
+    $center_nid = _sbq_center_nid_get($account);
+    if($center_nid){
+      $redirection = "center/$center_nid/index";
+    }
+  }
 
 // Unless there is already a redirection going, or the user is trying to reset his password, we redirect to $redirection.
   if (empty($_GET['destination']) && !is_null($redirection) && (!isset($_POST['form_id']) || $_POST['form_id'] != 'user_pass_reset')) {
