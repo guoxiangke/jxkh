@@ -470,7 +470,7 @@ function tiger_preprocess_page(&$variables) {
       }
     }
   }
-  if (arg(0) == 'messages' && arg(1) == 'view') {
+  if (user_is_logged_in() && arg(0) == 'messages' && arg(1) == 'view') {
     $participants = $variables['page']['content']['system_main']['#thread']['participants'];
     $center_nid = 0;
     global $user;
