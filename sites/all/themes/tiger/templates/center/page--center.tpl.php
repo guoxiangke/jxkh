@@ -266,7 +266,7 @@ define('SBQ_CENTER_EDU_ARTICLE_TID', 24705);
           <li<?php print $left_reservation_manage_active; ?>><?php print l('预约管理', 'center/'.$center_id.'/reservation/manage'); ?></li>
           <li<?php print $left_reservation_settings_active; ?>><?php print l('预约设置', 'center/'.$center_id.'/reservation/settings'); ?></li>
           <li<?php print $left_edu_add_active; ?>><?php print l('添加健康教育', 'node/add/sbq-center-edu', array('query' => array('og_group_ref' => $center_id))); ?></li>
-          <li<?php print $left_notice_add_active; ?>><?php print l('添加文章', 'node/add/center-notice', array('query' => array('og_group_ref' => $center_id))); ?></li>
+          <li<?php print $left_notice_add_active; ?>><?php print l('编辑中心资料', 'node/add/center-notice', array('query' => array('og_group_ref' => $center_id))); ?></li>
           <?php endif; ?>
         </ul>
         <?php else: ?>
