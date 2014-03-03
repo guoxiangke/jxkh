@@ -91,6 +91,28 @@ jQuery(function($) {
   $("#user-login-form #edit-captcha-response").attr("placeholder", "验证码");
   // $(".captcha").insertBefore('.sbq_checkbox_01');
 
+  $('.sbq_pm_icon .sbq_mp4 a').click(function(){
+    $('.sbq_pm_editor textarea').attr('value', '视频:');
+    $('.field-name-field-message-video input[type="file"]').click();
+    return false;
+  });
+
+  $('.sbq_pm_icon .sbq_amr a').click(function(){
+    $('.sbq_pm_editor textarea').attr('value', '音频:');
+    $('.field-name-field-message-voice input[type="file"]').click();
+    return false;
+  });
+
+  $('.sbq_pm_icon .sbq_pic a').click(function(){
+    $('.sbq_pm_editor textarea').attr('value', '图片:');
+    $('.field-name-field-message-image input[type="file"]').click();
+    return false;
+  });
+
+  $('.sbq_pm_editor input[type=file]').change(function() {
+    $('.sbq_pm_editor form').submit();
+  });
+
   // center info page left menu
   if ($('body').hasClass('page-center-info')) {
     var menu = $("#block-views-sbq-center-blocks-menu .sbq_hospital_sub_nav");
@@ -151,28 +173,6 @@ Drupal.behaviors.tiger = {
     $('#user-profile-form .user-picture a').click(function(){
       $('#edit-picture-upload').click();
       return false;
-    });
-
-    $('.sbq_pm_icon .sbq_mp4 a').click(function(){
-      $('.sbq_pm_editor textarea').attr('value', '视频:');
-      $('.field-name-field-message-video input[type="file"]').click();
-      return false;
-    });
-
-    $('.sbq_pm_icon .sbq_amr a').click(function(){
-      $('.sbq_pm_editor textarea').attr('value', '音频:');
-      $('.field-name-field-message-voice input[type="file"]').click();
-      return false;
-    });
-
-    $('.sbq_pm_icon .sbq_pic a').click(function(){
-      $('.sbq_pm_editor textarea').attr('value', '图片:');
-      $('.field-name-field-message-image input[type="file"]').click();
-      return false;
-    });
-
-    $('.sbq_pm_editor input[type=file]').change(function() {
-      $('.sbq_pm_editor form').submit();
     });
 
     $('#user-register-form .form-type-textfield .description').hide();
