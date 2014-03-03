@@ -79,6 +79,13 @@ define('SBQ_CENTER_EDU_ARTICLE_TID', 24705);
 
 <?php
   global $user;
+
+  $center = node_load($center_id);
+  $is_center_owner = FALSE;
+  if ($user->uid == $center->uid) {
+    $is_center_owner = TRUE;
+  }
+
   $menu_index_active = '';
   $menu_reservation_active = '';
   $menu_info_active = '';
@@ -100,6 +107,7 @@ define('SBQ_CENTER_EDU_ARTICLE_TID', 24705);
   $left_center_edit_active = '';
   $left_edu_add_active = '';
   $left_notice_add_active = '';
+  $left_messages_active = '';
 
   $is_edu = FALSE;
   $is_info = FALSE;
@@ -136,7 +144,13 @@ define('SBQ_CENTER_EDU_ARTICLE_TID', 24705);
     $menu_info_active = ' class="active"';
     $is_info = TRUE;
   } elseif (in_array('messages', arg())) {
-    $menu_messages_active = ' class="active"';
+    if ($is_center_owner) {
+      $is_manage = TRUE;
+      $menu_manage_active = ' class="active"';
+      $left_messages_active = ' class="active"';
+    } else {
+      $menu_messages_active = ' class="active"';
+    }
   } elseif (in_array('edu', arg())) {
     $menu_edu_active = ' class="active"';
     $is_edu = TRUE;
@@ -159,11 +173,6 @@ define('SBQ_CENTER_EDU_ARTICLE_TID', 24705);
     $left_questions_active = ' class="active"';
   }
 
-  $center = node_load($center_id);
-  $is_center_owner = FALSE;
-  if ($user->uid == $center->uid) {
-    $is_center_owner = TRUE;
-  }
   $edu_menu_text = '健康教育';
   if (isset($center->field_sbq_center_edu_switch['und'][0]['value'])) {
     $text = $center->field_sbq_center_edu_switch['und'][0]['value'];
@@ -205,9 +214,7 @@ define('SBQ_CENTER_EDU_ARTICLE_TID', 24705);
     <li<?php print $menu_index_active; ?>><?php print l('医院首页', 'center/'.$center_id.'/index'); ?></li>
     <li<?php print $menu_reservation_active; ?>><?php print l('预约就诊', 'center/'.$center_id.'/reservation'); ?></li>
     <?php if ($logged_in): ?>
-      <?php if ($is_center_owner): ?>
-        <li<?php print $menu_messages_active; ?>><?php print l('咨询管理', 'messages'); ?></li>
-      <?php else: ?>
+      <?php if (!$is_center_owner): ?>
         <?php if ($pm_thread_id): ?>
           <li<?php print $menu_messages_active; ?>><?php print l('咨询医生', 'messages/view/'.$pm_thread_id); ?></li>
         <?php else: ?>
@@ -255,10 +262,11 @@ define('SBQ_CENTER_EDU_ARTICLE_TID', 24705);
         <ul>
           <?php if($is_admin || $is_center_owner): ?>
           <li<?php print $left_center_edit_active; ?>><?php print l('中心管理', 'node/'.$center_id.'/edit'); ?></li>
+          <li<?php print $left_messages_active; ?>><?php print l('咨询管理', 'messages'); ?></li>
           <li<?php print $left_reservation_manage_active; ?>><?php print l('预约管理', 'center/'.$center_id.'/reservation/manage'); ?></li>
           <li<?php print $left_reservation_settings_active; ?>><?php print l('预约设置', 'center/'.$center_id.'/reservation/settings'); ?></li>
           <li<?php print $left_edu_add_active; ?>><?php print l('添加健康教育', 'node/add/sbq-center-edu', array('query' => array('og_group_ref' => $center_id))); ?></li>
-          <li<?php print $left_notice_add_active; ?>><?php print l('添加文章', 'node/add/center-notice', array('query' => array('og_group_ref' => $center_id))); ?></li>
+          <li<?php print $left_notice_add_active; ?>><?php print l('编辑中心资料', 'node/add/center-notice', array('query' => array('og_group_ref' => $center_id))); ?></li>
           <?php endif; ?>
         </ul>
         <?php else: ?>
