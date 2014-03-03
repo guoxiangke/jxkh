@@ -58,9 +58,11 @@ global $user;
           </div>
         </div>
       <?php else: ?>
+        <div class="month day">
         <?php
         print $item['entry'];
         ?>
+        </div>
       <?php endif; ?>
     </div>
   <?php else: ?>

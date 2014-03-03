@@ -122,8 +122,7 @@ define('SBQ_CENTER_EDU_ARTICLE_TID', 24705);
     } elseif (in_array('add', arg()) && in_array('center-notice', arg())) {
       $left_notice_add_active = ' class="active"';
     }
-
-  }elseif (in_array('reservation', arg())) {
+  } elseif (in_array('reservation', arg())) {
     $menu_reservation_active = ' class="active"';
     $is_reservation = TRUE;
     if (in_array('manage', arg())) {

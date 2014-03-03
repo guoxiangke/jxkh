@@ -154,18 +154,25 @@ Drupal.behaviors.tiger = {
     });
 
     $('.sbq_pm_icon .sbq_mp4 a').click(function(){
+      $('.sbq_pm_editor textarea').attr('value', '视频:');
       $('.field-name-field-message-video input[type="file"]').click();
       return false;
     });
 
     $('.sbq_pm_icon .sbq_amr a').click(function(){
+      $('.sbq_pm_editor textarea').attr('value', '音频:');
       $('.field-name-field-message-voice input[type="file"]').click();
       return false;
     });
 
     $('.sbq_pm_icon .sbq_pic a').click(function(){
+      $('.sbq_pm_editor textarea').attr('value', '图片:');
       $('.field-name-field-message-image input[type="file"]').click();
       return false;
+    });
+
+    $('.sbq_pm_editor input[type=file]').change(function() {
+      $('.sbq_pm_editor form').submit();
     });
 
     $('#user-register-form .form-type-textfield .description').hide();
