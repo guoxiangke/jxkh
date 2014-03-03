@@ -43,7 +43,8 @@ function center_message_alter($centerid, $fun, $data) {
   } else {
     $recipients = user_load($center->uid);
     list($recipients, $invalid) = _privatemsg_parse_userstring($recipients->name);
-    $result = privatemsg_new_thread($recipients, 'center|' . $centerid . '|' . $user->uid, $data['body'], $message);
+    $title = trim(truncate_utf8(strip_tags($data['body']), 50, TRUE, TRUE));
+    $result = privatemsg_new_thread($recipients,  $title, $data['body'], $message);
   }
   if (isset($result['success']) && $result['success']) {
     return array(
@@ -67,10 +68,11 @@ function center_message_query($centerid, $fun = NULL, $page, $fields, $parameter
   if (!$center = sbq_center_load($centerid)) {
     return services_error('not found the center form ' . $centerid, '404');
   }
+  
   if (!$centermid = center_message_get_privatemsgid($center->uid)) {
     return array();
   }
-
+  return $centermid;
   if ($fun) {
     if (!is_numeric($fun)) {
       $function = 'center_message_' . $fun;
@@ -157,6 +159,7 @@ function center_message_get_privatemsgid($center_user_id, $account = NULL) {
       . 'inner join pm_index p on r.thread_id = p.thread_id '
       . 'where p.recipient = :user_id and r.recipient =  :center_user_id '
       . 'order by mid asc limit 1';
+
   $mids = db_query($query, array( ':user_id' => $account->uid, ':center_user_id' => $center_user_id ))->fetchCol('r.mid');
   return reset($mids);
 }
