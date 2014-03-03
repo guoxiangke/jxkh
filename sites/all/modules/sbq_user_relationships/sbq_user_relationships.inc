@@ -186,7 +186,7 @@ function sbq_user_relationships_ui_request_ajax($viewer_id, $rid, $viewed_id) {
     $body = $title.' '.$time;
   }
   if (module_exists('privatemsg')) {
-    privatemsg_new_thread(array( $requestee ), $title, $body, array( 'author' => user_load(1) ));
+    privatemsg_new_thread(array( $requestee ), $title, $body, array( 'author' => user_load(1581) ));
   }
   $path = $_GET['q'];
   if ($position = strpos($path, 'destination=')) {
