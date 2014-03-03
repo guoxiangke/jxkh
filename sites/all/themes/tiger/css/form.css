@@ -66,7 +66,7 @@
 .sbq_form_wrap .field-type-image table th,
 .sbq_form_wrap .field-type-image table td { line-height: 22px; border: 1px #E5E5E5 solid; padding: 5px; }
 .sbq_form_wrap .field-type-image .fieldset-wrapper .description { width: 100%; margin: 5px 0px 0px 0px; }
-.sbq_form_wrap .field-type-image .messages { float: left; width: 100%; line-height: 20px; margin: 0px 0px 10px 0px; color: #900; font-size: 12px; }
+.sbq_form_wrap .field-type-image .messages { float: left; width: 560px; line-height: 20px; margin: 0px 0px 10px 0px; color: #900; font-size: 12px; }
 /*form-item-pass*/
 .sbq_form_wrap .form-item-pass { float: left; }
 .sbq_form_wrap .form-item-pass .form-item { float: left; width: 100%; }
