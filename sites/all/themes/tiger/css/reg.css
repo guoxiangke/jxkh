@@ -12,7 +12,8 @@
 .sbq_login .sbq_tips_error { line-height: 24px; position: absolute; top: 10px; left: 345px; display: none; }
 /*sbq_input_01*/
 .sbq_login .sbq_form_01 .sbq_input_01 { float: left; width: 200px; height: 34px; line-height: 34px; padding: 0px 9px; border: 1px #dddddd solid; background: url(../image/input_bg_01.png) repeat-x; }
-.sbq_login .sbq_form_01 .sbq_input_01:focus { border: 1px #3385d6 solid; box-shadow: 0px 0px 2px #3385d6; }
+.sbq_login .sbq_form_01 .sbq_input_01:focus { border: 1px #3385d6 solid !important; box-shadow: 0px 0px 2px #3385d6; }
+.sbq_login input.error { border: 1px #E6393D solid !important; box-shadow: 0px 0px 2px #E6393D; }
 .sbq_login .form-required { display: none; }
 /*sbq_botton_01*/
 .sbq_botton_01 { float: left; width: 100%; padding: 10px 0px; }

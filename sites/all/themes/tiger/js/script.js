@@ -142,6 +142,10 @@ jQuery(function($) {
     }
   });
 
+  $('form input').focus(function(){
+    $(this).removeClass('error');
+  });
+
   // center info page left menu
   if ($('body').hasClass('page-center-info')) {
     var menu = $("#block-views-sbq-center-blocks-menu .sbq_hospital_sub_nav");
