@@ -205,6 +205,12 @@ function tiger_preprocess_page(&$variables) {
       $field_department = field_view_field('profile2', $a_doctor_profile, 'field_department', 'value');
       $variables['field_department'] = drupal_render($field_department);
       $variables['hospitals_departments'] = $variables['field_hospital_name'] .' '. $variables['field_department'];
+      $field_patient_diseases = field_view_field('profile2', $a_doctor_profile, 'field_patient_diseases', 'value');
+      $variables['user_tag'] = drupal_render($field_patient_diseases);
+    } elseif (in_array('patient', $account->roles) && module_exists('profile2')) {
+      $a_patient_profile = profile2_load_by_user($account, 'customer_profile');
+      $field_patient_diseases = field_view_field('profile2', $a_patient_profile, 'field_patient_diseases', 'value');
+      $variables['user_tag'] = drupal_render($field_patient_diseases);
     }
   }
   // grow_records detial page
@@ -266,6 +272,12 @@ function tiger_preprocess_page(&$variables) {
       $field_department = field_view_field('profile2', $a_doctor_profile, 'field_department', 'value');
       $variables['field_department'] = drupal_render($field_department);
       $variables['hospitals_departments'] = $variables['field_hospital_name'] .' '. $variables['field_department'];
+      $field_patient_diseases = field_view_field('profile2', $a_doctor_profile, 'field_patient_diseases', 'value');
+      $variables['user_tag'] = drupal_render($field_patient_diseases);
+    } elseif (in_array('patient', $account->roles) && module_exists('profile2')) {
+      $a_patient_profile = profile2_load_by_user($account, 'customer_profile');
+      $field_patient_diseases = field_view_field('profile2', $a_patient_profile, 'field_patient_diseases', 'value');
+      $variables['user_tag'] = drupal_render($field_patient_diseases);
     }
   }
   // blog/question add page

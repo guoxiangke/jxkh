@@ -13,9 +13,10 @@
 .sbq_user_info .sbq_user_name span { float: left; margin: 0px 0px 0px 5px; }
 .sbq_user_info .sbq_user_hospital { float: left; width: 100%; height: 22px; line-height: 22px; color: #666; overflow: hidden; }
 .sbq_user_info .sbq_user_hospital a { color: #225599; }
-.sbq_user_info .sbq_user_tag { float: left; width: 100%; height: 20px; line-height: 20px; color: #999; word-break: break-all; word-wrap: break-word; }
-.sbq_user_info .sbq_user_tag span { float: left; }
-.sbq_user_info .sbq_user_tag .field-item { float: left; margin: 0px 5px 0px 0px; }
+.sbq_user_info .sbq_user_tag { float: left; width: 100%; line-height: 20px; margin: 0px 0px 5px 0px; color: #999; word-break: break-all; word-wrap: break-word; }
+.sbq_user_info .sbq_user_tag span { }
+.sbq_user_info .sbq_user_tag div { display: inline; }
+.sbq_user_info .sbq_user_tag .field-item { margin: 0px 5px 0px 0px; }
 /*sbq_user_follow*/
 .sbq_user_info .sbq_user_follow { float: left; height: 24px; line-height: 24px; margin: 4px 0px 0px 0px; color: #999999; }
 .sbq_user_info .sbq_user_follow a { float: left; height: 24px; line-height: 24px; margin: 0px 0px 0px 5px; color: #999999; font-size: 12px; }
