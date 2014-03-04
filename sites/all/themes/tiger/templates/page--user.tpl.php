@@ -209,6 +209,16 @@
         <?php elseif(isset($is_doctor) && $is_doctor): ?>
         <div class="sbq_user_hospital"><a href="/user/edit">填写所在医院及科室</a></div>
         <?php endif; ?>
+        <?php if (isset($user_tag)): ?>
+        <div class="sbq_user_tag">
+          <?php if(isset($is_doctor) && $is_doctor): ?>
+          <span>擅长疾病：</span>
+          <?php else: ?>
+          <span>关注疾病：</span>
+          <?php endif; ?>
+          <?php print $user_tag; ?>
+        </div>
+        <?php endif; ?>
       </div>
       <div class="sbq_user_follower">
         <ul>
