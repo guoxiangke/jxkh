@@ -212,11 +212,10 @@
         <?php if (isset($user_tag)): ?>
         <div class="sbq_user_tag">
           <?php if(isset($is_doctor) && $is_doctor): ?>
-          <span>擅长疾病：</span>
+          <span>擅长疾病：</span><?php print $user_tag; ?>
           <?php else: ?>
-          <span>关注疾病：</span>
+          <span>关注疾病：</span><?php print $user_tag; ?>
           <?php endif; ?>
-          <?php print $user_tag; ?>
         </div>
         <?php endif; ?>
       </div>
