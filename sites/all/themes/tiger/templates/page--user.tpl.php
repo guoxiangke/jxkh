@@ -213,10 +213,18 @@
       <div class="sbq_user_follower">
         <ul>
           <?php if (isset($counts['user_relationship_count']['doctor_count'])): ?>
+          <?php if ($current_user && $logged_in): ?>
           <li><a href="/user/<?php print $a_uid; ?>/relationship/default/doctor"><strong><?php print $counts['user_relationship_count']['doctor_count']; ?></strong><span>医生圈</span></a></li>
+          <?php else: ?>
+          <li><strong><?php print $counts['user_relationship_count']['doctor_count']; ?></strong><span>医生圈</span></li>
+          <?php endif; ?>
           <?php endif; ?>
           <?php if (isset($counts['user_relationship_count']['patient_count'])): ?>
+          <?php if ($current_user && $logged_in): ?>
           <li><a href="/user/<?php print $a_uid; ?>/relationship/default/patient"><strong><?php print $counts['user_relationship_count']['patient_count']; ?></strong><span>病友圈</span></a></li>
+          <?php else: ?>
+          <li><strong><?php print $counts['user_relationship_count']['patient_count']; ?></strong><span>病友圈</span></li>
+          <?php endif; ?>
           <?php endif; ?>
           <?php if ($counts['user_question_count']>=0 && $counts['user_answer_count']>=0): ?>
           <li><a href="/user/<?php print $a_uid; ?>/qa/ask"><strong><?php print $counts['user_question_count']; ?>/<?php print $counts['user_answer_count']; ?></strong><span>提问/回答</span></a></li>
