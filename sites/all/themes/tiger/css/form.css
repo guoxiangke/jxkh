@@ -122,3 +122,11 @@
 .sbq_form_wrap .sbq_form_02 { float: left; width: 100%; margin: 0px 0px 10px 0px; }
 .sbq_form_wrap .sbq_form_02 label { float: left; width: 100%; margin: 0px; font-size: 14px; text-align: left; }
 .sbq_form_wrap .sbq_form_02 .description { float: left; width: 100%; margin: 5px 0px 0px 0px; }
+/*vertical-tabs */
+.vertical-tabs { clear: both; }
+.vertical-tabs input.form-checkbox,
+.vertical-tabs input.form-radio { vertical-align: middle; }
+.vertical-tabs label,
+.vertical-tabs legend { float: none; width: auto; line-height: normal; margin: 0px; }
+.vertical-tabs .description { float: left; width: 100%; margin: 0px; }
+.vertical-tabs fieldset { float: left; width: 100%; }
