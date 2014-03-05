@@ -93,6 +93,10 @@ function sbq_center_reservation_manage($center, $reservation, $action) {
     case 'accept':
       if ($reservation->field_reservation_status['und'][0]['value'] == SBQ_CENTER_RESERVATION_STATUS_SUBMMIT) {
         $reservation->field_reservation_status['und'][0]['value'] = SBQ_CENTER_RESERVATION_STATUS_ACCEPT;
+
+        if (!sbq_center_reservation_status($reservation->field_reservation_time['und'][0]['value'], $center->nid)) {
+          return '操作失败，这个时间段已经约满，' . l('点击返回', "center/{$center->nid}/reservation/manage");
+        }
         node_save($reservation);
         foreach (module_implements('reservation_status_alter') as $key => $value) {
           module_invoke($value, 'reservation_status_alter', $reservation);
@@ -126,8 +130,11 @@ function sbq_center_reservation_created($center, $account = NULL) {
   );
   drupal_set_title(t('Create @name', array( '@name' => $types[SBQ_CENTER_RESERVATION_NODE_TYPE]->name )), PASS_THROUGH);
   $param = drupal_get_query_parameters();
+  
   if (isset($param['date'])) {
     $node['field_reservation_time']['und'][0]['value'] = $param['date'];
+  }else{
+    drupal_goto('center/'.$center->nid.'/index');
   }
   return drupal_get_form('sbq_center_reservation_node_form', (object) $node);
 }

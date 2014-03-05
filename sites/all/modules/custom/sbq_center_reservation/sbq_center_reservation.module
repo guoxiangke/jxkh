@@ -142,13 +142,13 @@ function sbq_center_reservation_get_settings($center) {
 
   if (!$center || !$vari = variable_get('center_reservation_' . $center->nid . '_settings')) {
     $week = array(
-        'sunday' => array( 'a' => 0, 'p' => 0),
-        'monday' => array( 'a' => 0, 'p' => 0),
-        'tuesday' => array( 'a' => 0, 'p' => 0),
-        'wednesday' => array( 'a' => 0, 'p' => 0),
-        'thursday' => array( 'a' => 0, 'p' => 0),
-        'friday' => array( 'a' => 0, 'p' => 0),
-        'saturday' => array( 'a' => 0, 'p' => 0),
+        'sunday' => array( 'a' => 0, 'p' => 0 ),
+        'monday' => array( 'a' => 0, 'p' => 0 ),
+        'tuesday' => array( 'a' => 0, 'p' => 0 ),
+        'wednesday' => array( 'a' => 0, 'p' => 0 ),
+        'thursday' => array( 'a' => 0, 'p' => 0 ),
+        'friday' => array( 'a' => 0, 'p' => 0 ),
+        'saturday' => array( 'a' => 0, 'p' => 0 ),
     );
 
     return array( 'opendays' => $week, 'numofday' => 11 );
@@ -193,8 +193,11 @@ function template_preprocess_sbq_center_reservation_month_col(&$vars) {
  * @return boolean
  */
 function sbq_center_reservation_can_reservation($date, $center = '', $output = 'day') {
+
   if (!$center) {
     $center = arg(1);
+  } elseif (is_object($center)) {
+    $center = $center->nid;
   }
 
   if (is_array($date)) {
@@ -205,6 +208,7 @@ function sbq_center_reservation_can_reservation($date, $center = '', $output = '
     $date = date('Y-m-d', $datetime->getTimestamp());
     $time = date('H', $datetime->getTimestamp());
   }
+
   $settings = sbq_center_reservation_get_settings($center);
   $week_index = date_day_of_week($date);
   $week = array( 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', );
@@ -214,9 +218,19 @@ function sbq_center_reservation_can_reservation($date, $center = '', $output = '
 
   $reservation = $settings['opendays'][$week[$week_index]];
   if ($output == 'day') {
+    $am_reservation = $pm_reservation = $am = $pm = FALSE;
+    
+    if ($am = isset($reservation['a']) && $reservation['a']) {
+      $am_reservation = TRUE;
+      $am = sbq_center_reservation_status($date . ' 10:00:00', $center);
+    }
+    if ($pm = isset($reservation['p']) && $reservation['p']) {
+      $pm_reservation = TRUE;
+      $pm = sbq_center_reservation_status($date . ' 14:00:00', $center);
+    }
     return array(
-        'am' => isset($reservation['a']) && $reservation['a'],
-        'pm' => isset($reservation['p']) && $reservation['p']
+        'am' => array( 'is_reservation' => $am_reservation, 'is_full' => !$am ),
+        'pm' => array( 'is_reservation' => $pm_reservation, 'is_full' => !$pm ),
     );
   }
   if (isset($reservation['a']) && $reservation['a']) {
@@ -250,7 +264,6 @@ function sbq_center_reservation_form_alter(&$form, $form_states, $form_id) {
 
 function sbq_center_reservation_form_validate($form, &$form_states) {
   $c = sbq_center_reservation_can_reservation($form_states['values']['field_reservation_time']['und'][0]['value'], $form_states['values']['og_group_ref']['und'][0]['target_id'], 'time');
-
   if (!$c) {
     form_set_error('field_reservation_time ', '您输入的预约时间不能预约');
   }
@@ -318,7 +331,9 @@ function sbq_center_reservation_get_manage_item($row, $cancle = FALSE) {
 
   switch ($row->field_field_reservation_status[0]['raw']['value']) {
     case SBQ_CENTER_RESERVATION_STATUS_SUBMMIT:
-      $accept = l('接受', "center/{$centerid}/reservation/{$row->nid}/accept");
+      if (sbq_center_reservation_status($row->field_field_reservation_time[0]['raw']['value'], $row->_field_data['nid']['entity']->og_group_ref['und'][0]['target_id'])) {
+        $accept = l('接受', "center/{$centerid}/reservation/{$row->nid}/accept");
+      }
       $ignore = l('删除', "center/{$centerid}/reservation/{$row->nid}/ignore");
       break;
     case SBQ_CENTER_RESERVATION_STATUS_ACCEPT:
@@ -355,6 +370,21 @@ function sbq_center_reservation_reservation_status_alter($reservation) {
     $warpper->field_node_ref->set($center);
     $warpper->field_center_reservation_send->set($user->uid);
     $warpper->save();
+    
+    $key = date('Y-m-d a', $date->getTimestamp());
+    if ($settings = variable_get("center_reservation_status_{$center->nid}")) {
+      $settings = unserialize($settings);
+      $base = isset($settings[$key]) ? $settings[$key] : 0;
+      $settings[$key] = $base + 1;
+    } else {
+      $settings = array(
+          $key => 1,
+      );
+    }
+    variable_set("center_reservation_status_{$center->nid}", serialize($settings));
+
+    $f = variable_get("center_reservation_status_{$center->nid}");
+    dpm($f);
   }
 }
 
@@ -386,4 +416,20 @@ function sbq_center_reservation_node_access($node, $op, $account) {
     default:
       break;
   }
+}
+
+function sbq_center_reservation_status($day, $center) {
+  if (!isset($center_reservation_status)) {
+    static $center_reservation_status = array();
+    $center_reservation_status = variable_get('center_reservation_status_' . $center);
+    $center_reservation_status = unserialize($center_reservation_status);
+  }
+  $dateTime = new DateTime($day);
+  $day = date('Y-m-d a', $dateTime->getTimestamp());
+  $settings = sbq_center_reservation_get_settings($center);
+
+  if (isset($center_reservation_status[$day]) && $center_reservation_status[$day] >= floor($settings['numofday'])) {
+    return FALSE;
+  }
+  return TRUE;
 }
