@@ -688,21 +688,26 @@ function tiger_preprocess_page(&$variables) {
     }
   }
   if ((in_array('sbq-center-edu', arg()) || in_array('center-notice', arg())) && in_array('add', arg())) {
-    drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
-    drupal_add_css(path_to_theme() . "/css/hospital.css", array('group' => CSS_THEME));
-    $variables['theme_hook_suggestions'][] = 'page__center';
     $url_query = drupal_get_query_parameters();
-    $center_nid = $url_query['og_group_ref'];
-    $variables['center_id'] = $center_nid;
-    $expert_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_EXPERT_TID);
-    $owner_uid = _sbq_center_owner_uid_get($center_nid);
-    $visit_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_VISIT_TID);
-    $plan_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_PLAN_TID);
-    $variables['expert_nid'] = $expert_nid;
-    $variables['owner_uid'] = $owner_uid;
-    $variables['visit_nid'] = $visit_nid;
-    $variables['plan_nid'] = $plan_nid;
-    $variables['page']['sidebar_second'] = FALSE;
+    if (isset($url_query['og_group_ref']) && $url_query['og_group_ref'] > 0) {
+      drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
+      drupal_add_css(path_to_theme() . "/css/hospital.css", array('group' => CSS_THEME));
+      $variables['theme_hook_suggestions'][] = 'page__center';
+      $center_nid = $url_query['og_group_ref'];
+      $variables['center_id'] = $center_nid;
+      $expert_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_EXPERT_TID);
+      $owner_uid = _sbq_center_owner_uid_get($center_nid);
+      $visit_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_VISIT_TID);
+      $plan_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_PLAN_TID);
+      $variables['expert_nid'] = $expert_nid;
+      $variables['owner_uid'] = $owner_uid;
+      $variables['visit_nid'] = $visit_nid;
+      $variables['plan_nid'] = $plan_nid;
+      $variables['page']['sidebar_second'] = FALSE;
+    } else {
+      drupal_set_message(t('您无权限发布，请检查链接.'), 'status', FALSE);
+      drupal_goto();
+    }
   }
   if (in_array('node', arg()) && in_array('edit', arg())) {
     drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
