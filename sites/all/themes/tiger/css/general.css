@@ -1,4 +1,5 @@
 * { margin: 0px; padding: 0px; list-style: none; }
+.clearfix { clear: both; }
 .sbq_hide,
 .element-invisible { display: none; }
 /*------font------*/
