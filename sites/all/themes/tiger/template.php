@@ -1225,6 +1225,10 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
 
     $form['og_group_ref']['#prefix'] = '<div class="sbq_hide">';
     $form['og_group_ref']['#suffix'] = '</div>';
+
+    $form['actions']['submit']['#attributes']['class'][] = 'sbq_btn';
+    $form['actions']['#prefix'] = '<div class="sbq_botton_01">';
+    $form['actions']['#suffix'] = '</div>';
   } elseif ($form_id == 'user_profile_form') {
     if (arg(0) == 'user' && arg(1) == 'reset' && in_array('brief', arg())) {
       $form['#prefix'] = '<div class="sbq_findpwd"><div class="sbq_findpwd_nav">'

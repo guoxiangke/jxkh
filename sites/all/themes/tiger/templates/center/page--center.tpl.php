@@ -103,6 +103,7 @@ define('SBQ_CENTER_EDU_ARTICLE_TID', 24705);
   $left_questions_active = '';
 
   $left_reservation_manage_active = '';
+  $left_questions_manage_active = '';
   $left_reservation_settings_active = '';
   $left_center_edit_active = '';
   $left_edu_add_active = '';
@@ -119,8 +120,10 @@ define('SBQ_CENTER_EDU_ARTICLE_TID', 24705);
   } elseif (in_array('add', arg()) || in_array('edit', arg()) || in_array('manage', arg()) || in_array('settings', arg()) ){
     $menu_manage_active = ' class="active"';
     $is_manage = TRUE;
-    if (in_array('manage', arg())) {
+    if (in_array('reservation', arg()) && in_array('manage', arg())) {
       $left_reservation_manage_active = ' class="active"';
+    } elseif (in_array('questions', arg()) && in_array('manage', arg())) {
+      $left_questions_manage_active = ' class="active"';
     } elseif (in_array('settings', arg())) {
       $left_reservation_settings_active = ' class="active"';
     } elseif (in_array('edit', arg())) {
@@ -264,6 +267,7 @@ define('SBQ_CENTER_EDU_ARTICLE_TID', 24705);
           <li<?php print $left_center_edit_active; ?>><?php print l('中心管理', 'node/'.$center_id.'/edit'); ?></li>
           <li<?php print $left_messages_active; ?>><?php print l('咨询管理', 'messages'); ?></li>
           <li<?php print $left_reservation_manage_active; ?>><?php print l('预约管理', 'center/'.$center_id.'/reservation/manage'); ?></li>
+          <li<?php print $left_questions_manage_active; ?>><?php print l('问答管理', 'center/'.$center_id.'/questions/manage'); ?></li>
           <li<?php print $left_reservation_settings_active; ?>><?php print l('预约设置', 'center/'.$center_id.'/reservation/settings'); ?></li>
           <li<?php print $left_edu_add_active; ?>><?php print l('添加健康教育', 'node/add/sbq-center-edu', array('query' => array('og_group_ref' => $center_id))); ?></li>
           <li<?php print $left_notice_add_active; ?>><?php print l('编辑中心资料', 'node/add/center-notice', array('query' => array('og_group_ref' => $center_id))); ?></li>
