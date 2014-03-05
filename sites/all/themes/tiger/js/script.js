@@ -95,7 +95,6 @@ jQuery(function($) {
   $('.field-name-field-message-voice input[type="file"]').attr('accept', 'audio/amr');
   $('.field-name-field-message-image input[type="file"]').attr('accept', 'image/png,image/gif,image/jpg,image/jpeg');
   $('.sbq_pm_icon .sbq_mp4 a').click(function(){
-    $('.sbq_pm_editor textarea').attr('value', '视频:');
     $('.field-name-field-message-video input[type="file"]').click();
     return false;
   });
@@ -103,6 +102,7 @@ jQuery(function($) {
     var file = $(this).val();
     var extension = file.substr( (file.lastIndexOf('.') +1) );
     if (extension == 'mp4') {
+      $('.sbq_pm_editor textarea').attr('value', '视频:');
       $('.sbq_pm_editor form').submit();
     } else {
       alert('请选择mp4格式的视频文件');
@@ -111,7 +111,6 @@ jQuery(function($) {
   });
 
   $('.sbq_pm_icon .sbq_amr a').click(function(){
-    $('.sbq_pm_editor textarea').attr('value', '音频:');
     $('.field-name-field-message-voice input[type="file"]').click();
     return false;
   });
@@ -119,6 +118,7 @@ jQuery(function($) {
     var file = $(this).val();
     var extension = file.substr( (file.lastIndexOf('.') +1) );
     if (extension == 'amr') {
+      $('.sbq_pm_editor textarea').attr('value', '音频:');
       $('.sbq_pm_editor form').submit();
     } else {
       alert('请选择amr格式的音频文件');
@@ -127,7 +127,6 @@ jQuery(function($) {
   });
 
   $('.sbq_pm_icon .sbq_pic a').click(function(){
-    $('.sbq_pm_editor textarea').attr('value', '图片:');
     $('.field-name-field-message-image input[type="file"]').click();
     return false;
   });
@@ -135,6 +134,7 @@ jQuery(function($) {
     var file = $(this).val();
     var extension = file.substr( (file.lastIndexOf('.') +1) );
     if (extension == 'png' || extension == 'gif' || extension == 'jpg' || extension == 'jpeg') {
+      $('.sbq_pm_editor textarea').attr('value', '图片:');
       $('.sbq_pm_editor form').submit();
     } else {
       alert('请选择png、gif、jpg、jpeg格式的音频文件');
