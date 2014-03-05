@@ -141,6 +141,11 @@ function tiger_preprocess_page(&$variables) {
       $a_patient_profile = profile2_load_by_user($account, 'customer_profile');
       $field_patient_diseases = field_view_field('profile2', $a_patient_profile, 'field_patient_diseases', 'value');
       $variables['user_tag'] = drupal_render($field_patient_diseases);
+      if (isset($field_patient_diseases['#items'])) {
+        $variables['user_tag_count'] = count($field_patient_diseases['#items']);
+      } else {
+        $variables['user_tag_count'] = 0;
+      }
     }
   }
   // user edit page
@@ -1339,11 +1344,11 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
           $form['profile_customer_profile']['field_patient_diseases']['#prefix'] = '<div class="sbq_form_01">';
           $form['profile_customer_profile']['field_patient_diseases']['#suffix'] = '</div>';
         }
-        if (isset($form['profile_doctor_profile']['field_job'])) {
+        if (isset($form['profile_customer_profile']['field_job'])) {
           $form['profile_customer_profile']['field_job']['#prefix'] = '<div class="sbq_form_01">';
           $form['profile_customer_profile']['field_job']['#suffix'] = '</div>';
         }
-        if (isset($form['profile_doctor_profile']['field_sex'])) {
+        if (isset($form['profile_customer_profile']['field_sex'])) {
           $form['profile_customer_profile']['field_sex']['#prefix'] = '<div class="sbq_form_01">';
           $form['profile_customer_profile']['field_sex']['und']['#attributes']['class'][] = 'sbq_radio_wrap';
           $form['profile_customer_profile']['field_sex']['#suffix'] = '</div>';

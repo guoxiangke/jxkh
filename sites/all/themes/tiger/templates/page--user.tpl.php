@@ -209,7 +209,7 @@
         <?php elseif(isset($is_doctor) && $is_doctor): ?>
         <div class="sbq_user_hospital"><a href="/user/edit">填写所在医院及科室</a></div>
         <?php endif; ?>
-        <?php if (isset($user_tag)): ?>
+        <?php if (isset($user_tag_count) && $user_tag_count > 0): ?>
         <div class="sbq_user_tag">
           <?php if(isset($is_doctor) && $is_doctor): ?>
           <span>擅长疾病：</span><?php print $user_tag; ?>
