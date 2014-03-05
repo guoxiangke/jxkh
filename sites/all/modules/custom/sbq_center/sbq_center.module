@@ -316,3 +316,17 @@ function sbq_center_node_view($node, $view_mode, $langcode) {
     drupal_goto("center/$node->nid/index");
   }
 }
+
+/**
+ * Implements hook_node_insert().
+ */
+function sbq_center_node_presave($node) {
+  if($node->type == 'question') {
+    if (isset($_GET['og_group_ref'])) {
+      $gid = $_GET['og_group_ref'];
+      $group_node = node_load($gid);
+      if (og_is_group('node', $group_node))
+        $node->og_group_ref[LANGUAGE_NONE][0]['target_id'] = $gid;   
+    }    
+  }
+}
