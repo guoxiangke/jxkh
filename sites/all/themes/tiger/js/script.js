@@ -202,6 +202,11 @@ jQuery(function($) {
  */
 Drupal.behaviors.tiger = {
   attach: function (context, settings) {
+    $('.sbq_pm_list .messages').ready(function(){
+      setTimeout(function(){
+        $('.sbq_pm_list .messages').hide();
+      }, 3000);
+    });
 
     $('#user-profile-form .user-picture a').click(function(){
       $('#edit-picture-upload').click();
