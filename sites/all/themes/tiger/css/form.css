@@ -16,6 +16,7 @@
 .sbq_form_wrap input[type="text"]:focus,
 .sbq_form_wrap input[type="password"]:focus,
 .sbq_form_wrap input[type="email"]:focus { border: 1px #3385d6 solid; box-shadow: 0px 0px 2px #3385d6; }
+.sbq_form_wrap input.error { border: 1px #E6393D solid !important; box-shadow: 0px 0px 2px #E6393D; }
 /*textarea*/
 .sbq_form_wrap .sbq_form_01 .grippie { display: none; }
 .sbq_form_wrap .sbq_form_01 textarea { float: left; width: 398px; padding: 10px; height: 66px; line-height: 22px; border: 1px #dddddd solid; resize: none; overflow: hidden; }
@@ -66,7 +67,7 @@
 .sbq_form_wrap .field-type-image table th,
 .sbq_form_wrap .field-type-image table td { line-height: 22px; border: 1px #E5E5E5 solid; padding: 5px; }
 .sbq_form_wrap .field-type-image .fieldset-wrapper .description { width: 100%; margin: 5px 0px 0px 0px; }
-.sbq_form_wrap .field-type-image .messages { float: left; width: 100%; line-height: 20px; margin: 0px 0px 10px 0px; color: #900; font-size: 12px; }
+.sbq_form_wrap .field-type-image .messages { float: left; width: 560px; line-height: 20px; margin: 0px 0px 10px 0px; color: #900; font-size: 12px; }
 /*form-item-pass*/
 .sbq_form_wrap .form-item-pass { float: left; }
 .sbq_form_wrap .form-item-pass .form-item { float: left; width: 100%; }
@@ -121,3 +122,11 @@
 .sbq_form_wrap .sbq_form_02 { float: left; width: 100%; margin: 0px 0px 10px 0px; }
 .sbq_form_wrap .sbq_form_02 label { float: left; width: 100%; margin: 0px; font-size: 14px; text-align: left; }
 .sbq_form_wrap .sbq_form_02 .description { float: left; width: 100%; margin: 5px 0px 0px 0px; }
+/*vertical-tabs */
+.vertical-tabs { clear: both; }
+.vertical-tabs input.form-checkbox,
+.vertical-tabs input.form-radio { vertical-align: middle; }
+.vertical-tabs label,
+.vertical-tabs legend { float: none; width: auto; line-height: normal; margin: 0px; }
+.vertical-tabs .description { float: left; width: 100%; margin: 0px; }
+.vertical-tabs fieldset { float: left; width: 100%; }

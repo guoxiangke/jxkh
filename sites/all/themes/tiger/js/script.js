@@ -91,6 +91,61 @@ jQuery(function($) {
   $("#user-login-form #edit-captcha-response").attr("placeholder", "验证码");
   // $(".captcha").insertBefore('.sbq_checkbox_01');
 
+  $('.field-name-field-message-video input[type="file"]').attr('accept', 'video/mp4');
+  $('.field-name-field-message-voice input[type="file"]').attr('accept', 'audio/amr');
+  $('.field-name-field-message-image input[type="file"]').attr('accept', 'image/png,image/gif,image/jpg,image/jpeg');
+  $('.sbq_pm_icon .sbq_mp4 a').click(function(){
+    $('.field-name-field-message-video input[type="file"]').click();
+    return false;
+  });
+  $('.field-name-field-message-video input[type="file"]').change(function() {
+    var file = $(this).val();
+    var extension = file.substr( (file.lastIndexOf('.') +1) );
+    if (extension == 'mp4') {
+      $('.sbq_pm_editor textarea').attr('value', '视频:');
+      $('.sbq_pm_editor form').submit();
+    } else {
+      alert('请选择mp4格式的视频文件');
+      $('.sbq_pm_editor textarea').attr('value', '');
+    }
+  });
+
+  $('.sbq_pm_icon .sbq_amr a').click(function(){
+    $('.field-name-field-message-voice input[type="file"]').click();
+    return false;
+  });
+  $('.field-name-field-message-voice input[type="file"]').change(function() {
+    var file = $(this).val();
+    var extension = file.substr( (file.lastIndexOf('.') +1) );
+    if (extension == 'amr') {
+      $('.sbq_pm_editor textarea').attr('value', '音频:');
+      $('.sbq_pm_editor form').submit();
+    } else {
+      alert('请选择amr格式的音频文件');
+      $('.sbq_pm_editor textarea').attr('value', '');
+    }
+  });
+
+  $('.sbq_pm_icon .sbq_pic a').click(function(){
+    $('.field-name-field-message-image input[type="file"]').click();
+    return false;
+  });
+  $('.field-name-field-message-image input[type="file"]').change(function() {
+    var file = $(this).val();
+    var extension = file.substr( (file.lastIndexOf('.') +1) );
+    if (extension == 'png' || extension == 'gif' || extension == 'jpg' || extension == 'jpeg') {
+      $('.sbq_pm_editor textarea').attr('value', '图片:');
+      $('.sbq_pm_editor form').submit();
+    } else {
+      alert('请选择png、gif、jpg、jpeg格式的音频文件');
+      $('.sbq_pm_editor textarea').attr('value', '');
+    }
+  });
+
+  $('form input').focus(function(){
+    $(this).removeClass('error');
+  });
+
   // center info page left menu
   if ($('body').hasClass('page-center-info')) {
     var menu = $("#block-views-sbq-center-blocks-menu .sbq_hospital_sub_nav");
@@ -147,32 +202,15 @@ jQuery(function($) {
  */
 Drupal.behaviors.tiger = {
   attach: function (context, settings) {
+    $('.sbq_pm_list .messages').ready(function(){
+      setTimeout(function(){
+        $('.sbq_pm_list .messages').hide();
+      }, 3000);
+    });
 
     $('#user-profile-form .user-picture a').click(function(){
       $('#edit-picture-upload').click();
       return false;
-    });
-
-    $('.sbq_pm_icon .sbq_mp4 a').click(function(){
-      $('.sbq_pm_editor textarea').attr('value', '视频:');
-      $('.field-name-field-message-video input[type="file"]').click();
-      return false;
-    });
-
-    $('.sbq_pm_icon .sbq_amr a').click(function(){
-      $('.sbq_pm_editor textarea').attr('value', '音频:');
-      $('.field-name-field-message-voice input[type="file"]').click();
-      return false;
-    });
-
-    $('.sbq_pm_icon .sbq_pic a').click(function(){
-      $('.sbq_pm_editor textarea').attr('value', '图片:');
-      $('.field-name-field-message-image input[type="file"]').click();
-      return false;
-    });
-
-    $('.sbq_pm_editor input[type=file]').change(function() {
-      $('.sbq_pm_editor form').submit();
     });
 
     $('#user-register-form .form-type-textfield .description').hide();

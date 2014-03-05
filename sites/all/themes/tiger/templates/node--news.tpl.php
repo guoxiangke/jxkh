@@ -87,7 +87,7 @@
       <li><?php print render($content['field_source']); ?></li>
       <li><?php print render($content['field_author']); ?></li>
       <li><?php print date('Y/m/d', $created); ?></li>
-      <!-- <li class="sbq_comment_num"><a href="#comments">评论(<?php print $comment_count; ?>)</a></li> -->
+      <!-- <li class="sbq_comment_num"><a href="#comments">评论(<?php //print $comment_count; ?>)</a></li> -->
     </ul>
   </div>
   <div class="sbq_article_content">

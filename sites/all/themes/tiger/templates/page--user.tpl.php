@@ -209,14 +209,31 @@
         <?php elseif(isset($is_doctor) && $is_doctor): ?>
         <div class="sbq_user_hospital"><a href="/user/edit">填写所在医院及科室</a></div>
         <?php endif; ?>
+        <?php if (isset($user_tag_count) && $user_tag_count > 0): ?>
+        <div class="sbq_user_tag">
+          <?php if(isset($is_doctor) && $is_doctor): ?>
+          <span>擅长疾病：</span><?php print $user_tag; ?>
+          <?php else: ?>
+          <span>关注疾病：</span><?php print $user_tag; ?>
+          <?php endif; ?>
+        </div>
+        <?php endif; ?>
       </div>
       <div class="sbq_user_follower">
         <ul>
           <?php if (isset($counts['user_relationship_count']['doctor_count'])): ?>
+          <?php if ($current_user && $logged_in): ?>
           <li><a href="/user/<?php print $a_uid; ?>/relationship/default/doctor"><strong><?php print $counts['user_relationship_count']['doctor_count']; ?></strong><span>医生圈</span></a></li>
+          <?php else: ?>
+          <li><strong><?php print $counts['user_relationship_count']['doctor_count']; ?></strong><span>医生圈</span></li>
+          <?php endif; ?>
           <?php endif; ?>
           <?php if (isset($counts['user_relationship_count']['patient_count'])): ?>
+          <?php if ($current_user && $logged_in): ?>
           <li><a href="/user/<?php print $a_uid; ?>/relationship/default/patient"><strong><?php print $counts['user_relationship_count']['patient_count']; ?></strong><span>病友圈</span></a></li>
+          <?php else: ?>
+          <li><strong><?php print $counts['user_relationship_count']['patient_count']; ?></strong><span>病友圈</span></li>
+          <?php endif; ?>
           <?php endif; ?>
           <?php if ($counts['user_question_count']>=0 && $counts['user_answer_count']>=0): ?>
           <li><a href="/user/<?php print $a_uid; ?>/qa/ask"><strong><?php print $counts['user_question_count']; ?>/<?php print $counts['user_answer_count']; ?></strong><span>提问/回答</span></a></li>

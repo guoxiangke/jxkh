@@ -124,17 +124,38 @@ function tiger_preprocess_page(&$variables) {
     $variables['is_doctor'] = FALSE;
     if (in_array('doctor', $account->roles) && module_exists('profile2')) {
       $a_doctor_profile = profile2_load_by_user($account, 'doctor_profile');
-      $variables['is_doctor'] = TRUE;
-      $variables['a_doctor_profile'] = $a_doctor_profile;
-      $field_author = field_view_field('profile2', $a_doctor_profile, 'field_author', 'value');
-      $variables['field_author'] = drupal_render($field_author);
-      $field_doctor_title = field_view_field('profile2', $a_doctor_profile, 'field_doctor_title', 'value');
-      $variables['field_doctor_title'] = drupal_render($field_doctor_title);
-      $field_hospital_name = field_view_field('profile2', $a_doctor_profile, 'field_hospital_name', 'value');
-      $variables['field_hospital_name'] = drupal_render($field_hospital_name);
-      $field_department = field_view_field('profile2', $a_doctor_profile, 'field_department', 'value');
-      $variables['field_department'] = drupal_render($field_department);
-      $variables['hospitals_departments'] = $variables['field_hospital_name'] .' '. $variables['field_department'];
+      if ($a_doctor_profile) {
+        $variables['is_doctor'] = TRUE;
+        $variables['a_doctor_profile'] = $a_doctor_profile;
+        $field_author = field_view_field('profile2', $a_doctor_profile, 'field_author', 'value');
+        $variables['field_author'] = drupal_render($field_author);
+        $field_doctor_title = field_view_field('profile2', $a_doctor_profile, 'field_doctor_title', 'value');
+        $variables['field_doctor_title'] = drupal_render($field_doctor_title);
+        $field_hospital_name = field_view_field('profile2', $a_doctor_profile, 'field_hospital_name', 'value');
+        $variables['field_hospital_name'] = drupal_render($field_hospital_name);
+        $field_department = field_view_field('profile2', $a_doctor_profile, 'field_department', 'value');
+        $variables['field_department'] = drupal_render($field_department);
+        $variables['hospitals_departments'] = $variables['field_hospital_name'] .' '. $variables['field_department'];
+        $field_patient_diseases = field_view_field('profile2', $a_doctor_profile, 'field_patient_diseases', 'value');
+        if (isset($field_patient_diseases['#items'])) {
+          $variables['user_tag'] = drupal_render($field_patient_diseases);
+          $variables['user_tag_count'] = count($field_patient_diseases['#items']);
+        } else {
+          $variables['user_tag_count'] = 0;
+        }
+      }
+    } elseif (in_array('patient', $account->roles) && module_exists('profile2')) {
+      $a_patient_profile = profile2_load_by_user($account, 'customer_profile');
+      if ($a_patient_profile) {
+        $field_patient_diseases = field_view_field('profile2', $a_patient_profile, 'field_patient_diseases', 'value');
+        if (isset($field_patient_diseases['#items'])) {
+          $variables['user_tag'] = drupal_render($field_patient_diseases);
+          $variables['user_tag_count'] = count($field_patient_diseases['#items']);
+        } else {
+          $variables['user_tag'] = '';
+          $variables['user_tag_count'] = 0;
+        }
+      }
     }
   }
   // user edit page
@@ -199,6 +220,12 @@ function tiger_preprocess_page(&$variables) {
       $field_department = field_view_field('profile2', $a_doctor_profile, 'field_department', 'value');
       $variables['field_department'] = drupal_render($field_department);
       $variables['hospitals_departments'] = $variables['field_hospital_name'] .' '. $variables['field_department'];
+      $field_patient_diseases = field_view_field('profile2', $a_doctor_profile, 'field_patient_diseases', 'value');
+      $variables['user_tag'] = drupal_render($field_patient_diseases);
+    } elseif (in_array('patient', $account->roles) && module_exists('profile2')) {
+      $a_patient_profile = profile2_load_by_user($account, 'customer_profile');
+      $field_patient_diseases = field_view_field('profile2', $a_patient_profile, 'field_patient_diseases', 'value');
+      $variables['user_tag'] = drupal_render($field_patient_diseases);
     }
   }
   // grow_records detial page
@@ -260,6 +287,12 @@ function tiger_preprocess_page(&$variables) {
       $field_department = field_view_field('profile2', $a_doctor_profile, 'field_department', 'value');
       $variables['field_department'] = drupal_render($field_department);
       $variables['hospitals_departments'] = $variables['field_hospital_name'] .' '. $variables['field_department'];
+      $field_patient_diseases = field_view_field('profile2', $a_doctor_profile, 'field_patient_diseases', 'value');
+      $variables['user_tag'] = drupal_render($field_patient_diseases);
+    } elseif (in_array('patient', $account->roles) && module_exists('profile2')) {
+      $a_patient_profile = profile2_load_by_user($account, 'customer_profile');
+      $field_patient_diseases = field_view_field('profile2', $a_patient_profile, 'field_patient_diseases', 'value');
+      $variables['user_tag'] = drupal_render($field_patient_diseases);
     }
   }
   // blog/question add page
@@ -655,21 +688,26 @@ function tiger_preprocess_page(&$variables) {
     }
   }
   if ((in_array('sbq-center-edu', arg()) || in_array('center-notice', arg())) && in_array('add', arg())) {
-    drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
-    drupal_add_css(path_to_theme() . "/css/hospital.css", array('group' => CSS_THEME));
-    $variables['theme_hook_suggestions'][] = 'page__center';
     $url_query = drupal_get_query_parameters();
-    $center_nid = $url_query['og_group_ref'];
-    $variables['center_id'] = $center_nid;
-    $expert_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_EXPERT_TID);
-    $owner_uid = _sbq_center_owner_uid_get($center_nid);
-    $visit_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_VISIT_TID);
-    $plan_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_PLAN_TID);
-    $variables['expert_nid'] = $expert_nid;
-    $variables['owner_uid'] = $owner_uid;
-    $variables['visit_nid'] = $visit_nid;
-    $variables['plan_nid'] = $plan_nid;
-    $variables['page']['sidebar_second'] = FALSE;
+    if (isset($url_query['og_group_ref']) && $url_query['og_group_ref'] > 0) {
+      drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
+      drupal_add_css(path_to_theme() . "/css/hospital.css", array('group' => CSS_THEME));
+      $variables['theme_hook_suggestions'][] = 'page__center';
+      $center_nid = $url_query['og_group_ref'];
+      $variables['center_id'] = $center_nid;
+      $expert_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_EXPERT_TID);
+      $owner_uid = _sbq_center_owner_uid_get($center_nid);
+      $visit_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_VISIT_TID);
+      $plan_nid = _sbq_center_article_nid_get($center_nid, SBQ_CENTER_PLAN_TID);
+      $variables['expert_nid'] = $expert_nid;
+      $variables['owner_uid'] = $owner_uid;
+      $variables['visit_nid'] = $visit_nid;
+      $variables['plan_nid'] = $plan_nid;
+      $variables['page']['sidebar_second'] = FALSE;
+    } else {
+      drupal_set_message(t('您无权限发布，请检查链接.'), 'status', FALSE);
+      drupal_goto();
+    }
   }
   if (in_array('node', arg()) && in_array('edit', arg())) {
     drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
@@ -1187,6 +1225,10 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
 
     $form['og_group_ref']['#prefix'] = '<div class="sbq_hide">';
     $form['og_group_ref']['#suffix'] = '</div>';
+
+    $form['actions']['submit']['#attributes']['class'][] = 'sbq_btn';
+    $form['actions']['#prefix'] = '<div class="sbq_botton_01">';
+    $form['actions']['#suffix'] = '</div>';
   } elseif ($form_id == 'user_profile_form') {
     if (arg(0) == 'user' && arg(1) == 'reset' && in_array('brief', arg())) {
       $form['#prefix'] = '<div class="sbq_findpwd"><div class="sbq_findpwd_nav">'
@@ -1321,11 +1363,11 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
           $form['profile_customer_profile']['field_patient_diseases']['#prefix'] = '<div class="sbq_form_01">';
           $form['profile_customer_profile']['field_patient_diseases']['#suffix'] = '</div>';
         }
-        if (isset($form['profile_doctor_profile']['field_job'])) {
+        if (isset($form['profile_customer_profile']['field_job'])) {
           $form['profile_customer_profile']['field_job']['#prefix'] = '<div class="sbq_form_01">';
           $form['profile_customer_profile']['field_job']['#suffix'] = '</div>';
         }
-        if (isset($form['profile_doctor_profile']['field_sex'])) {
+        if (isset($form['profile_customer_profile']['field_sex'])) {
           $form['profile_customer_profile']['field_sex']['#prefix'] = '<div class="sbq_form_01">';
           $form['profile_customer_profile']['field_sex']['und']['#attributes']['class'][] = 'sbq_radio_wrap';
           $form['profile_customer_profile']['field_sex']['#suffix'] = '</div>';
