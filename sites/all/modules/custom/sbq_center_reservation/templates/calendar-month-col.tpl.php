@@ -42,7 +42,7 @@ global $user;
                     echo '<a href="/user/login?destination=center/' . arg(1) . '/reservation" class="sbq_add">预约</a>';
                   }
                 } else {
-                  echo '停诊';
+                  echo '<a class="sbq_full">停诊</a>';
                 }
                 ?>
               </dd>
@@ -61,7 +61,7 @@ global $user;
                     echo '<a href="/user/login?destination=center/' . arg(1) . '/reservation" class="sbq_add">预约</a>';
                   }
                 } else {
-                  echo '停诊';
+                  echo '<a class="sbq_full">停诊</a>';
                 }
                 ?>
               </dd>

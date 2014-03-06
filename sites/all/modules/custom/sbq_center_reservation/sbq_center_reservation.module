@@ -219,7 +219,7 @@ function sbq_center_reservation_can_reservation($date, $center = '', $output = '
   $reservation = $settings['opendays'][$week[$week_index]];
   if ($output == 'day') {
     $am_reservation = $pm_reservation = $am = $pm = FALSE;
-    
+
     if ($am = isset($reservation['a']) && $reservation['a']) {
       $am_reservation = TRUE;
       $am = sbq_center_reservation_status($date . ' 10:00:00', $center);
@@ -370,7 +370,7 @@ function sbq_center_reservation_reservation_status_alter($reservation) {
     $warpper->field_node_ref->set($center);
     $warpper->field_center_reservation_send->set($user->uid);
     $warpper->save();
-    
+
     $key = date('Y-m-d a', $date->getTimestamp());
     if ($settings = variable_get("center_reservation_status_{$center->nid}")) {
       $settings = unserialize($settings);
@@ -384,7 +384,6 @@ function sbq_center_reservation_reservation_status_alter($reservation) {
     variable_set("center_reservation_status_{$center->nid}", serialize($settings));
 
     //$f = variable_get("center_reservation_status_{$center->nid}");
-
   }
 }
 
@@ -419,6 +418,7 @@ function sbq_center_reservation_node_access($node, $op, $account) {
 }
 
 function sbq_center_reservation_status($day, $center) {
+
   if (!isset($center_reservation_status)) {
     static $center_reservation_status = array();
     $center_reservation_status = variable_get('center_reservation_status_' . $center);
@@ -427,8 +427,7 @@ function sbq_center_reservation_status($day, $center) {
   $dateTime = new DateTime($day);
   $day = date('Y-m-d a', $dateTime->getTimestamp());
   $settings = sbq_center_reservation_get_settings($center);
-
-  if (isset($center_reservation_status[$day]) && $center_reservation_status[$day] >= floor($settings['numofday'])) {
+  if (isset($center_reservation_status[$day]) && $center_reservation_status[$day] >= $settings['numofday']) {
     return FALSE;
   }
   return TRUE;

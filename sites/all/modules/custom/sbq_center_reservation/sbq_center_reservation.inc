@@ -136,5 +136,9 @@ function sbq_center_reservation_created($center, $account = NULL) {
   }else{
     drupal_goto('center/'.$center->nid.'/index');
   }
+  if(!sbq_center_reservation_status($node['field_reservation_time']['und'][0]['value'], $center->nid)){
+    drupal_set_message('该日期已经约满,请重新选择日期！', 'warning');
+    drupal_goto('center/'.$center->nid.'/index');
+  }
   return drupal_get_form('sbq_center_reservation_node_form', (object) $node);
 }
