@@ -209,32 +209,37 @@ function tiger_preprocess_page(&$variables) {
     $variables['is_doctor'] = FALSE;
     if (in_array('doctor', $account->roles) && module_exists('profile2')) {
       $a_doctor_profile = profile2_load_by_user($account, 'doctor_profile');
-      $variables['is_doctor'] = TRUE;
-      $variables['a_doctor_profile'] = $a_doctor_profile;
-      $field_author = field_view_field('profile2', $a_doctor_profile, 'field_author', 'value');
-      $variables['field_author'] = drupal_render($field_author);
-      $field_doctor_title = field_view_field('profile2', $a_doctor_profile, 'field_doctor_title', 'value');
-      $variables['field_doctor_title'] = drupal_render($field_doctor_title);
-      $field_hospital_name = field_view_field('profile2', $a_doctor_profile, 'field_hospital_name', 'value');
-      $variables['field_hospital_name'] = drupal_render($field_hospital_name);
-      $field_department = field_view_field('profile2', $a_doctor_profile, 'field_department', 'value');
-      $variables['field_department'] = drupal_render($field_department);
-      $variables['hospitals_departments'] = $variables['field_hospital_name'] .' '. $variables['field_department'];
-      $field_patient_diseases = field_view_field('profile2', $a_doctor_profile, 'field_patient_diseases', 'value');
-      if (isset($field_patient_diseases['#items'])) {
-        $variables['user_tag'] = drupal_render($field_patient_diseases);
-        $variables['user_tag_count'] = count($field_patient_diseases['#items']);
-      } else {
-        $variables['user_tag_count'] = 0;
+      if ($a_doctor_profile) {
+        $variables['is_doctor'] = TRUE;
+        $variables['a_doctor_profile'] = $a_doctor_profile;
+        $field_author = field_view_field('profile2', $a_doctor_profile, 'field_author', 'value');
+        $variables['field_author'] = drupal_render($field_author);
+        $field_doctor_title = field_view_field('profile2', $a_doctor_profile, 'field_doctor_title', 'value');
+        $variables['field_doctor_title'] = drupal_render($field_doctor_title);
+        $field_hospital_name = field_view_field('profile2', $a_doctor_profile, 'field_hospital_name', 'value');
+        $variables['field_hospital_name'] = drupal_render($field_hospital_name);
+        $field_department = field_view_field('profile2', $a_doctor_profile, 'field_department', 'value');
+        $variables['field_department'] = drupal_render($field_department);
+        $variables['hospitals_departments'] = $variables['field_hospital_name'] .' '. $variables['field_department'];
+        $field_patient_diseases = field_view_field('profile2', $a_doctor_profile, 'field_patient_diseases', 'value');
+        if (isset($field_patient_diseases['#items'])) {
+          $variables['user_tag'] = drupal_render($field_patient_diseases);
+          $variables['user_tag_count'] = count($field_patient_diseases['#items']);
+        } else {
+          $variables['user_tag_count'] = 0;
+        }
       }
     } elseif (in_array('patient', $account->roles) && module_exists('profile2')) {
       $a_patient_profile = profile2_load_by_user($account, 'customer_profile');
-      $field_patient_diseases = field_view_field('profile2', $a_patient_profile, 'field_patient_diseases', 'value');
-      if (isset($field_patient_diseases['#items'])) {
-        $variables['user_tag'] = drupal_render($field_patient_diseases);
-        $variables['user_tag_count'] = count($field_patient_diseases['#items']);
-      } else {
-        $variables['user_tag_count'] = 0;
+      if ($a_patient_profile) {
+        $field_patient_diseases = field_view_field('profile2', $a_patient_profile, 'field_patient_diseases', 'value');
+        if (isset($field_patient_diseases['#items'])) {
+          $variables['user_tag'] = drupal_render($field_patient_diseases);
+          $variables['user_tag_count'] = count($field_patient_diseases['#items']);
+        } else {
+          $variables['user_tag'] = '';
+          $variables['user_tag_count'] = 0;
+        }
       }
     }
   }
@@ -286,32 +291,37 @@ function tiger_preprocess_page(&$variables) {
     $variables['is_doctor'] = FALSE;
     if (in_array('doctor', $account->roles) && module_exists('profile2')) {
       $a_doctor_profile = profile2_load_by_user($account, 'doctor_profile');
-      $variables['is_doctor'] = TRUE;
-      $variables['a_doctor_profile'] = $a_doctor_profile;
-      $field_author = field_view_field('profile2', $a_doctor_profile, 'field_author', 'value');
-      $variables['field_author'] = drupal_render($field_author);
-      $field_doctor_title = field_view_field('profile2', $a_doctor_profile, 'field_doctor_title', 'value');
-      $variables['field_doctor_title'] = drupal_render($field_doctor_title);
-      $field_hospital_name = field_view_field('profile2', $a_doctor_profile, 'field_hospital_name', 'value');
-      $variables['field_hospital_name'] = drupal_render($field_hospital_name);
-      $field_department = field_view_field('profile2', $a_doctor_profile, 'field_department', 'value');
-      $variables['field_department'] = drupal_render($field_department);
-      $variables['hospitals_departments'] = $variables['field_hospital_name'] .' '. $variables['field_department'];
-      $field_patient_diseases = field_view_field('profile2', $a_doctor_profile, 'field_patient_diseases', 'value');
-      if (isset($field_patient_diseases['#items'])) {
-        $variables['user_tag'] = drupal_render($field_patient_diseases);
-        $variables['user_tag_count'] = count($field_patient_diseases['#items']);
-      } else {
-        $variables['user_tag_count'] = 0;
+      if ($a_doctor_profile) {
+        $variables['is_doctor'] = TRUE;
+        $variables['a_doctor_profile'] = $a_doctor_profile;
+        $field_author = field_view_field('profile2', $a_doctor_profile, 'field_author', 'value');
+        $variables['field_author'] = drupal_render($field_author);
+        $field_doctor_title = field_view_field('profile2', $a_doctor_profile, 'field_doctor_title', 'value');
+        $variables['field_doctor_title'] = drupal_render($field_doctor_title);
+        $field_hospital_name = field_view_field('profile2', $a_doctor_profile, 'field_hospital_name', 'value');
+        $variables['field_hospital_name'] = drupal_render($field_hospital_name);
+        $field_department = field_view_field('profile2', $a_doctor_profile, 'field_department', 'value');
+        $variables['field_department'] = drupal_render($field_department);
+        $variables['hospitals_departments'] = $variables['field_hospital_name'] .' '. $variables['field_department'];
+        $field_patient_diseases = field_view_field('profile2', $a_doctor_profile, 'field_patient_diseases', 'value');
+        if (isset($field_patient_diseases['#items'])) {
+          $variables['user_tag'] = drupal_render($field_patient_diseases);
+          $variables['user_tag_count'] = count($field_patient_diseases['#items']);
+        } else {
+          $variables['user_tag_count'] = 0;
+        }
       }
     } elseif (in_array('patient', $account->roles) && module_exists('profile2')) {
       $a_patient_profile = profile2_load_by_user($account, 'customer_profile');
-      $field_patient_diseases = field_view_field('profile2', $a_patient_profile, 'field_patient_diseases', 'value');
-      if (isset($field_patient_diseases['#items'])) {
-        $variables['user_tag'] = drupal_render($field_patient_diseases);
-        $variables['user_tag_count'] = count($field_patient_diseases['#items']);
-      } else {
-        $variables['user_tag_count'] = 0;
+      if ($a_patient_profile) {
+        $field_patient_diseases = field_view_field('profile2', $a_patient_profile, 'field_patient_diseases', 'value');
+        if (isset($field_patient_diseases['#items'])) {
+          $variables['user_tag'] = drupal_render($field_patient_diseases);
+          $variables['user_tag_count'] = count($field_patient_diseases['#items']);
+        } else {
+          $variables['user_tag'] = '';
+          $variables['user_tag_count'] = 0;
+        }
       }
     }
   }
@@ -382,32 +392,37 @@ function tiger_preprocess_page(&$variables) {
       $variables['is_doctor'] = FALSE;
       if (in_array('doctor', $account->roles) && module_exists('profile2')) {
         $a_doctor_profile = profile2_load_by_user($account, 'doctor_profile');
-        $variables['is_doctor'] = TRUE;
-        $variables['a_doctor_profile'] = $a_doctor_profile;
-        $field_author = field_view_field('profile2', $a_doctor_profile, 'field_author', 'value');
-        $variables['field_author'] = drupal_render($field_author);
-        $field_doctor_title = field_view_field('profile2', $a_doctor_profile, 'field_doctor_title', 'value');
-        $variables['field_doctor_title'] = drupal_render($field_doctor_title);
-        $field_hospital_name = field_view_field('profile2', $a_doctor_profile, 'field_hospital_name', 'value');
-        $variables['field_hospital_name'] = drupal_render($field_hospital_name);
-        $field_department = field_view_field('profile2', $a_doctor_profile, 'field_department', 'value');
-        $variables['field_department'] = drupal_render($field_department);
-        $variables['hospitals_departments'] = $variables['field_hospital_name'] .' '. $variables['field_department'];
-        $field_patient_diseases = field_view_field('profile2', $a_doctor_profile, 'field_patient_diseases', 'value');
-        if (isset($field_patient_diseases['#items'])) {
-          $variables['user_tag'] = drupal_render($field_patient_diseases);
-          $variables['user_tag_count'] = count($field_patient_diseases['#items']);
-        } else {
-          $variables['user_tag_count'] = 0;
+        if ($a_doctor_profile) {
+          $variables['is_doctor'] = TRUE;
+          $variables['a_doctor_profile'] = $a_doctor_profile;
+          $field_author = field_view_field('profile2', $a_doctor_profile, 'field_author', 'value');
+          $variables['field_author'] = drupal_render($field_author);
+          $field_doctor_title = field_view_field('profile2', $a_doctor_profile, 'field_doctor_title', 'value');
+          $variables['field_doctor_title'] = drupal_render($field_doctor_title);
+          $field_hospital_name = field_view_field('profile2', $a_doctor_profile, 'field_hospital_name', 'value');
+          $variables['field_hospital_name'] = drupal_render($field_hospital_name);
+          $field_department = field_view_field('profile2', $a_doctor_profile, 'field_department', 'value');
+          $variables['field_department'] = drupal_render($field_department);
+          $variables['hospitals_departments'] = $variables['field_hospital_name'] .' '. $variables['field_department'];
+          $field_patient_diseases = field_view_field('profile2', $a_doctor_profile, 'field_patient_diseases', 'value');
+          if (isset($field_patient_diseases['#items'])) {
+            $variables['user_tag'] = drupal_render($field_patient_diseases);
+            $variables['user_tag_count'] = count($field_patient_diseases['#items']);
+          } else {
+            $variables['user_tag_count'] = 0;
+          }
         }
       } elseif (in_array('patient', $account->roles) && module_exists('profile2')) {
         $a_patient_profile = profile2_load_by_user($account, 'customer_profile');
-        $field_patient_diseases = field_view_field('profile2', $a_patient_profile, 'field_patient_diseases', 'value');
-        if (isset($field_patient_diseases['#items'])) {
-          $variables['user_tag'] = drupal_render($field_patient_diseases);
-          $variables['user_tag_count'] = count($field_patient_diseases['#items']);
-        } else {
-          $variables['user_tag_count'] = 0;
+        if ($a_patient_profile) {
+          $field_patient_diseases = field_view_field('profile2', $a_patient_profile, 'field_patient_diseases', 'value');
+          if (isset($field_patient_diseases['#items'])) {
+            $variables['user_tag'] = drupal_render($field_patient_diseases);
+            $variables['user_tag_count'] = count($field_patient_diseases['#items']);
+          } else {
+            $variables['user_tag'] = '';
+            $variables['user_tag_count'] = 0;
+          }
         }
       }
     }
@@ -540,32 +555,37 @@ function tiger_preprocess_page(&$variables) {
       $variables['is_doctor'] = FALSE;
       if (in_array('doctor', $account->roles) && module_exists('profile2')) {
         $a_doctor_profile = profile2_load_by_user($account, 'doctor_profile');
-        $variables['is_doctor'] = TRUE;
-        $variables['a_doctor_profile'] = $a_doctor_profile;
-        $field_author = field_view_field('profile2', $a_doctor_profile, 'field_author', 'value');
-        $variables['field_author'] = drupal_render($field_author);
-        $field_doctor_title = field_view_field('profile2', $a_doctor_profile, 'field_doctor_title', 'value');
-        $variables['field_doctor_title'] = drupal_render($field_doctor_title);
-        $field_hospital_name = field_view_field('profile2', $a_doctor_profile, 'field_hospital_name', 'value');
-        $variables['field_hospital_name'] = drupal_render($field_hospital_name);
-        $field_department = field_view_field('profile2', $a_doctor_profile, 'field_department', 'value');
-        $variables['field_department'] = drupal_render($field_department);
-        $variables['hospitals_departments'] = $variables['field_hospital_name'] .' '. $variables['field_department'];
-        $field_patient_diseases = field_view_field('profile2', $a_doctor_profile, 'field_patient_diseases', 'value');
-        if (isset($field_patient_diseases['#items'])) {
-          $variables['user_tag'] = drupal_render($field_patient_diseases);
-          $variables['user_tag_count'] = count($field_patient_diseases['#items']);
-        } else {
-          $variables['user_tag_count'] = 0;
+        if ($a_doctor_profile) {
+          $variables['is_doctor'] = TRUE;
+          $variables['a_doctor_profile'] = $a_doctor_profile;
+          $field_author = field_view_field('profile2', $a_doctor_profile, 'field_author', 'value');
+          $variables['field_author'] = drupal_render($field_author);
+          $field_doctor_title = field_view_field('profile2', $a_doctor_profile, 'field_doctor_title', 'value');
+          $variables['field_doctor_title'] = drupal_render($field_doctor_title);
+          $field_hospital_name = field_view_field('profile2', $a_doctor_profile, 'field_hospital_name', 'value');
+          $variables['field_hospital_name'] = drupal_render($field_hospital_name);
+          $field_department = field_view_field('profile2', $a_doctor_profile, 'field_department', 'value');
+          $variables['field_department'] = drupal_render($field_department);
+          $variables['hospitals_departments'] = $variables['field_hospital_name'] .' '. $variables['field_department'];
+          $field_patient_diseases = field_view_field('profile2', $a_doctor_profile, 'field_patient_diseases', 'value');
+          if (isset($field_patient_diseases['#items'])) {
+            $variables['user_tag'] = drupal_render($field_patient_diseases);
+            $variables['user_tag_count'] = count($field_patient_diseases['#items']);
+          } else {
+            $variables['user_tag_count'] = 0;
+          }
         }
       } elseif (in_array('patient', $account->roles) && module_exists('profile2')) {
         $a_patient_profile = profile2_load_by_user($account, 'customer_profile');
-        $field_patient_diseases = field_view_field('profile2', $a_patient_profile, 'field_patient_diseases', 'value');
-        if (isset($field_patient_diseases['#items'])) {
-          $variables['user_tag'] = drupal_render($field_patient_diseases);
-          $variables['user_tag_count'] = count($field_patient_diseases['#items']);
-        } else {
-          $variables['user_tag_count'] = 0;
+        if ($a_patient_profile) {
+          $field_patient_diseases = field_view_field('profile2', $a_patient_profile, 'field_patient_diseases', 'value');
+          if (isset($field_patient_diseases['#items'])) {
+            $variables['user_tag'] = drupal_render($field_patient_diseases);
+            $variables['user_tag_count'] = count($field_patient_diseases['#items']);
+          } else {
+            $variables['user_tag'] = '';
+            $variables['user_tag_count'] = 0;
+          }
         }
       }
     }
@@ -646,32 +666,37 @@ function tiger_preprocess_page(&$variables) {
       $variables['is_doctor'] = FALSE;
       if (in_array('doctor', $account->roles) && module_exists('profile2')) {
         $a_doctor_profile = profile2_load_by_user($account, 'doctor_profile');
-        $variables['is_doctor'] = TRUE;
-        $variables['a_doctor_profile'] = $a_doctor_profile;
-        $field_author = field_view_field('profile2', $a_doctor_profile, 'field_author', 'value');
-        $variables['field_author'] = drupal_render($field_author);
-        $field_doctor_title = field_view_field('profile2', $a_doctor_profile, 'field_doctor_title', 'value');
-        $variables['field_doctor_title'] = drupal_render($field_doctor_title);
-        $field_hospital_name = field_view_field('profile2', $a_doctor_profile, 'field_hospital_name', 'value');
-        $variables['field_hospital_name'] = drupal_render($field_hospital_name);
-        $field_department = field_view_field('profile2', $a_doctor_profile, 'field_department', 'value');
-        $variables['field_department'] = drupal_render($field_department);
-        $variables['hospitals_departments'] = $variables['field_hospital_name'] .' '. $variables['field_department'];
-        $field_patient_diseases = field_view_field('profile2', $a_doctor_profile, 'field_patient_diseases', 'value');
-        if (isset($field_patient_diseases['#items'])) {
-          $variables['user_tag'] = drupal_render($field_patient_diseases);
-          $variables['user_tag_count'] = count($field_patient_diseases['#items']);
-        } else {
-          $variables['user_tag_count'] = 0;
+        if ($a_doctor_profile) {
+          $variables['is_doctor'] = TRUE;
+          $variables['a_doctor_profile'] = $a_doctor_profile;
+          $field_author = field_view_field('profile2', $a_doctor_profile, 'field_author', 'value');
+          $variables['field_author'] = drupal_render($field_author);
+          $field_doctor_title = field_view_field('profile2', $a_doctor_profile, 'field_doctor_title', 'value');
+          $variables['field_doctor_title'] = drupal_render($field_doctor_title);
+          $field_hospital_name = field_view_field('profile2', $a_doctor_profile, 'field_hospital_name', 'value');
+          $variables['field_hospital_name'] = drupal_render($field_hospital_name);
+          $field_department = field_view_field('profile2', $a_doctor_profile, 'field_department', 'value');
+          $variables['field_department'] = drupal_render($field_department);
+          $variables['hospitals_departments'] = $variables['field_hospital_name'] .' '. $variables['field_department'];
+          $field_patient_diseases = field_view_field('profile2', $a_doctor_profile, 'field_patient_diseases', 'value');
+          if (isset($field_patient_diseases['#items'])) {
+            $variables['user_tag'] = drupal_render($field_patient_diseases);
+            $variables['user_tag_count'] = count($field_patient_diseases['#items']);
+          } else {
+            $variables['user_tag_count'] = 0;
+          }
         }
       } elseif (in_array('patient', $account->roles) && module_exists('profile2')) {
         $a_patient_profile = profile2_load_by_user($account, 'customer_profile');
-        $field_patient_diseases = field_view_field('profile2', $a_patient_profile, 'field_patient_diseases', 'value');
-        if (isset($field_patient_diseases['#items'])) {
-          $variables['user_tag'] = drupal_render($field_patient_diseases);
-          $variables['user_tag_count'] = count($field_patient_diseases['#items']);
-        } else {
-          $variables['user_tag_count'] = 0;
+        if ($a_patient_profile) {
+          $field_patient_diseases = field_view_field('profile2', $a_patient_profile, 'field_patient_diseases', 'value');
+          if (isset($field_patient_diseases['#items'])) {
+            $variables['user_tag'] = drupal_render($field_patient_diseases);
+            $variables['user_tag_count'] = count($field_patient_diseases['#items']);
+          } else {
+            $variables['user_tag'] = '';
+            $variables['user_tag_count'] = 0;
+          }
         }
       }
     }
@@ -756,32 +781,37 @@ function tiger_preprocess_page(&$variables) {
       $variables['is_doctor'] = FALSE;
       if (in_array('doctor', $account->roles) && module_exists('profile2')) {
         $a_doctor_profile = profile2_load_by_user($account, 'doctor_profile');
-        $variables['is_doctor'] = TRUE;
-        $variables['a_doctor_profile'] = $a_doctor_profile;
-        $field_author = field_view_field('profile2', $a_doctor_profile, 'field_author', 'value');
-        $variables['field_author'] = drupal_render($field_author);
-        $field_doctor_title = field_view_field('profile2', $a_doctor_profile, 'field_doctor_title', 'value');
-        $variables['field_doctor_title'] = drupal_render($field_doctor_title);
-        $field_hospital_name = field_view_field('profile2', $a_doctor_profile, 'field_hospital_name', 'value');
-        $variables['field_hospital_name'] = drupal_render($field_hospital_name);
-        $field_department = field_view_field('profile2', $a_doctor_profile, 'field_department', 'value');
-        $variables['field_department'] = drupal_render($field_department);
-        $variables['hospitals_departments'] = $variables['field_hospital_name'] .' '. $variables['field_department'];
-        $field_patient_diseases = field_view_field('profile2', $a_doctor_profile, 'field_patient_diseases', 'value');
-        if (isset($field_patient_diseases['#items'])) {
-          $variables['user_tag'] = drupal_render($field_patient_diseases);
-          $variables['user_tag_count'] = count($field_patient_diseases['#items']);
-        } else {
-          $variables['user_tag_count'] = 0;
+        if ($a_doctor_profile) {
+          $variables['is_doctor'] = TRUE;
+          $variables['a_doctor_profile'] = $a_doctor_profile;
+          $field_author = field_view_field('profile2', $a_doctor_profile, 'field_author', 'value');
+          $variables['field_author'] = drupal_render($field_author);
+          $field_doctor_title = field_view_field('profile2', $a_doctor_profile, 'field_doctor_title', 'value');
+          $variables['field_doctor_title'] = drupal_render($field_doctor_title);
+          $field_hospital_name = field_view_field('profile2', $a_doctor_profile, 'field_hospital_name', 'value');
+          $variables['field_hospital_name'] = drupal_render($field_hospital_name);
+          $field_department = field_view_field('profile2', $a_doctor_profile, 'field_department', 'value');
+          $variables['field_department'] = drupal_render($field_department);
+          $variables['hospitals_departments'] = $variables['field_hospital_name'] .' '. $variables['field_department'];
+          $field_patient_diseases = field_view_field('profile2', $a_doctor_profile, 'field_patient_diseases', 'value');
+          if (isset($field_patient_diseases['#items'])) {
+            $variables['user_tag'] = drupal_render($field_patient_diseases);
+            $variables['user_tag_count'] = count($field_patient_diseases['#items']);
+          } else {
+            $variables['user_tag_count'] = 0;
+          }
         }
       } elseif (in_array('patient', $account->roles) && module_exists('profile2')) {
         $a_patient_profile = profile2_load_by_user($account, 'customer_profile');
-        $field_patient_diseases = field_view_field('profile2', $a_patient_profile, 'field_patient_diseases', 'value');
-        if (isset($field_patient_diseases['#items'])) {
-          $variables['user_tag'] = drupal_render($field_patient_diseases);
-          $variables['user_tag_count'] = count($field_patient_diseases['#items']);
-        } else {
-          $variables['user_tag_count'] = 0;
+        if ($a_patient_profile) {
+          $field_patient_diseases = field_view_field('profile2', $a_patient_profile, 'field_patient_diseases', 'value');
+          if (isset($field_patient_diseases['#items'])) {
+            $variables['user_tag'] = drupal_render($field_patient_diseases);
+            $variables['user_tag_count'] = count($field_patient_diseases['#items']);
+          } else {
+            $variables['user_tag'] = '';
+            $variables['user_tag_count'] = 0;
+          }
         }
       }
     }
