@@ -383,8 +383,8 @@ function sbq_center_reservation_reservation_status_alter($reservation) {
     }
     variable_set("center_reservation_status_{$center->nid}", serialize($settings));
 
-    $f = variable_get("center_reservation_status_{$center->nid}");
-    dpm($f);
+    //$f = variable_get("center_reservation_status_{$center->nid}");
+
   }
 }
 
