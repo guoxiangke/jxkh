@@ -94,7 +94,7 @@
       hide($content['links']);
       print render($content);
     ?>
-    <?php if ($content['field_grow_records_video']):?>
+    <?php if (isset($content['field_grow_records_video'][0]['#file'])):?>
     <div class="sbq_notes_down sbq_video">
       <div class="sbq_inner">
         <a href="<?php print file_create_url($content['field_grow_records_video'][0]['#file']->uri); ?>" title="点击下载">
@@ -104,7 +104,7 @@
       </div>
     </div>
     <?php endif; ?>
-    <?php if ($content['field_grow_records_voice']):?>
+    <?php if (isset($content['field_grow_records_voice'][0]['#file'])):?>
     <div class="sbq_notes_down sbq_record">
       <div class="sbq_inner">
         <a href="<?php print file_create_url($content['field_grow_records_voice'][0]['#file']->uri); ?>" title="点击下载">
