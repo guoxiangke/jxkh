@@ -164,10 +164,10 @@
 
         <li class="front-relationship color_04">
           <?php if($user->uid) { ?>
-            <a href="user/<?php echo $user->uid;?>/relationship" alt="人以群分确实必要">
+            <a href="/user/<?php echo $user->uid;?>/relationship" alt="人以群分确实必要">
           <?php
           }else { ?>
-            <a href="user/login?destination=user/relationship/recommand/patient" title="圈子" alt="人以群分确实必要">
+            <a href="/user/login?destination=user/relationship/recommand/patient" title="圈子" alt="人以群分确实必要">
           <?php } ?>
           <div class="sbq_img"></div>
           <div class="sbq_title">圈子</div>
@@ -175,10 +175,10 @@
           </a></li>
         <li class="front-doctor color_08">
           <?php if($user->uid) { ?>
-            <a href="user/<?php echo $user->uid;?>/relationship/recommand/doctor" alt="人以群分确实必要">
+            <a href="/user/<?php echo $user->uid;?>/relationship/recommand/doctor" alt="人以群分确实必要">
           <?php
           }else { ?>
-            <a href="user/login?destination=user/relationship/recommand/doctor" title="医生馆" alt="专业医生的网上医院">
+            <a href="/user/login?destination=user/relationship/recommand/doctor" title="医生馆" alt="专业医生的网上医院">
           <?php } ?>
           <div class="sbq_img"></div>
           <div class="sbq_title">医生馆</div>
@@ -186,7 +186,7 @@
           </a></li>
       </ul>
       <ul class="sbq_focus">
-        <li class="color_03 pic"><a href="center/23277/index">
+        <li class="color_03 pic"><a href="/center/23277/index">
           <div class="sbq_img"><img src="/<?php print $theme_path; ?>/images/307.png" width="250" height="120"  alt=""/></div>
           <div class="sbq_title">307习惯性流产治疗中心</div>
           </a></li>
