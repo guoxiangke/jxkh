@@ -138,7 +138,7 @@
           <div class="sbq_title">问答</div>
           <div class="sbq_text">除了专业还要对症 </div>
           </a></li>
-        <li class="front-event color_05"><a href="/activity/2883">
+        <li class="front-event color_05"><a href="/node/2883">
           <div class="sbq_img"></div>
           <div class="sbq_title">活动</div>
           <div class="sbq_text">有你参与大不同</div>
