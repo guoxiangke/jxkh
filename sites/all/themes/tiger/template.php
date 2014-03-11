@@ -1260,10 +1260,10 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
       $form['profile_doctor_profile']['field_introduction']['#suffix'] = '</div>';
 
       // profile_doctor_private_profile
-      if (isset($form['profile_doctor_private_profile']['field_phone_number'])) {
-        $form['profile_doctor_private_profile']['field_phone_number']['#prefix'] = '<div class="sbq_form_01">';
-        $form['profile_doctor_private_profile']['field_phone_number']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
-        $form['profile_doctor_private_profile']['field_phone_number']['#suffix'] = '</div>';
+      if (isset($form['profile_doctor_private_profile']['field_phone'])) {
+        $form['profile_doctor_private_profile']['field_phone']['#prefix'] = '<div class="sbq_form_01">';
+        $form['profile_doctor_private_profile']['field_phone']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
+        $form['profile_doctor_private_profile']['field_phone']['#suffix'] = '</div>';
       }
       if (isset($form['profile_doctor_private_profile']['field_doctor_hospital_phone'])) {
         $form['profile_doctor_private_profile']['field_doctor_hospital_phone']['#prefix'] = '<div class="sbq_form_01">';
@@ -1463,10 +1463,10 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
           $form['profile_doctor_profile']['field_patient_diseases']['#suffix'] = '</div>';
         }
         // profile_doctor_private_profile
-        if (isset($form['profile_doctor_private_profile']['field_phone_number'])) {
-          $form['profile_doctor_private_profile']['field_phone_number']['#prefix'] = '<div class="sbq_form_01">';
-          $form['profile_doctor_private_profile']['field_phone_number']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
-          $form['profile_doctor_private_profile']['field_phone_number']['#suffix'] = '</div>';
+        if (isset($form['profile_doctor_private_profile']['field_phone'])) {
+          $form['profile_doctor_private_profile']['field_phone']['#prefix'] = '<div class="sbq_form_01">';
+          $form['profile_doctor_private_profile']['field_phone']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
+          $form['profile_doctor_private_profile']['field_phone']['#suffix'] = '</div>';
         }
         if (isset($form['profile_doctor_private_profile']['field_doctor_hospital_phone'])) {
           $form['profile_doctor_private_profile']['field_doctor_hospital_phone']['#prefix'] = '<div class="sbq_form_01">';
