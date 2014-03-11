@@ -283,11 +283,11 @@
   <div class="footer_inner">
   <div class="sbq_about_link">
     <ul>
-      <li><?php l('联系我们','node/2790')?></li>
-      <li><?php l('注册服务条款','node/2789')?></li>
-      <li><?php l('免责声明','node/2788')?></li>
-      <li><?php l('加入我们','node/2787')?></li>
-      <li><?php l('关于我们','node/2786')?></li>
+      <li><?php echo l('联系我们','node/2790')?></li>
+      <li><?php echo l('注册服务条款','node/2789')?></li>
+      <li><?php echo l('免责声明','node/2788')?></li>
+      <li><?php echo l('加入我们','node/2787')?></li>
+      <li><?php echo l('关于我们','node/2786')?></li>
     </ul>
   </div>
   <div class="sbq_copy">© 2014 伤不起 中国最真实的医疗评价平台(<a href="http://www.miitbeian.gov.cn" target="_bank"> 京ICP备13032461号-1</a>) </div>
