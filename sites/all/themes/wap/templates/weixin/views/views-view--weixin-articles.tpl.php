@@ -26,55 +26,22 @@
  *
  * @ingroup views_templates
  */
- // $main_title = drupal_get_title();
- // if($main_title=='QA') {//???
- //   $main_title = 'All Questions';
- // }
- // echo "<h1>$main_title</h1>";
 ?>
-<?php
-  // get tags
-  if ($cache = cache_get('sbq_questions_list_tags')) {
-    $tags_output = $cache->data;
-  }
-  else {
-    // Create data.
-    $vocabulary = taxonomy_vocabulary_machine_name_load('tags');
-    $terms = taxonomy_get_tree($vocabulary->vid);
-    $tags_output = '';
-    $tag_name_exclude = array('中心问答', '快速提问');
-    foreach ($terms as $key => $tag) {
-      $tag_title = trim($tag->name);
-      if (!in_array($tag_title, $tag_name_exclude)) {
-        $tid = trim($tag->tid);
-        $tag_count = sbq_commons_term_node_count($tid, 'question');
-        if (strlen(trim($tag_title))>0 && $tag_count >= 2) {
-          $tags_output .= '<li>'
-            . '<a href="'.url('questions/tagged/').'?field_tags_tid='.$tag_title.'">'
-            . '<span class="sbq_tit">'.$tag_title.'</span>'
-            . '<span class="sbq_num">'.$tag_count.'</span>'
-            . '</a>'
-            . '</li>';
-        }
-      }
-    }
-    cache_set('sbq_questions_list_tags', $tags_output);
-  }
-?>
-<div class="sbq_question_list">
-  <div class="sbq_tags">
-    <ul>
-      <?php print $tags_output; ?>
-    </ul>
-  </div>
+<div class="news_list">
   <?php print render($title_prefix); ?>
   <?php if ($title): ?>
-    <h2 class="sbq_list_title"><?php print $title; ?></h2>
+    <?php print $title; ?>
   <?php endif; ?>
   <?php print render($title_suffix); ?>
   <?php if ($header): ?>
     <div class="view-header">
       <?php print $header; ?>
+    </div>
+  <?php endif; ?>
+
+  <?php if ($exposed): ?>
+    <div class="view-filters">
+      <?php print $exposed; ?>
     </div>
   <?php endif; ?>
 
@@ -85,9 +52,7 @@
   <?php endif; ?>
 
   <?php if ($rows): ?>
-    <div class="sbq_question_list_inner view-content">
       <?php print $rows; ?>
-    </div>
   <?php elseif ($empty): ?>
     <div class="view-empty">
       <?php print $empty; ?>
@@ -119,5 +84,4 @@
       <?php print $feed_icon; ?>
     </div>
   <?php endif; ?>
-
 </div><?php /* class view */ ?>

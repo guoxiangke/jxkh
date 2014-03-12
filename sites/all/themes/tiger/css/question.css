@@ -150,3 +150,5 @@
 .sbq_answer_form .messages.warning { display: none; }
 .sbq_answer_form .messages.error { width: 100%; line-height: 22px; margin: 0px 0px 5px 0px; color: #900; }
 .sbq_answer_form .messages .element-invisible { display: none; }
+/*vertical-tabs*/
+.sbq_question_final .sbq_answer_form .vertical-tabs .form-textarea-wrapper textarea { width: 405px; }

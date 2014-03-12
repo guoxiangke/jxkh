@@ -862,6 +862,19 @@ function tiger_preprocess_page(&$variables) {
       }
     }
   }
+  // weixin
+  if (arg(0) == 'weixin') {
+    drupal_add_css(path_to_theme() . "/css/weixin.css", array('group' => CSS_THEME));
+    $variables['theme_hook_suggestions'][] = 'page__weixin';
+    if (arg(1) == 'articles') {
+      drupal_add_css(path_to_theme() . "/css/news.css", array('group' => CSS_THEME));
+    } else {
+      $variables['page']['sidebar_second'] = FALSE;
+    }
+  }
+  if (isset($variables['node']) && $variables['node']->type == 'weixin') {
+    drupal_add_css(path_to_theme() . "/css/news.css", array('group' => CSS_THEME));
+  }
 }
 
 function tiger_preprocess_views_view(&$vars) {
@@ -977,7 +990,8 @@ function tiger_preprocess_node(&$variables) {
     'friend_activities',
     'red_list',
     'black_list',
-    'doctor_legend'
+    'doctor_legend',
+    'weixin'
   );
   if (in_array($variables['type'], $news_array)) {
     drupal_add_css(path_to_theme() . "/css/news.css", array('group' => CSS_THEME));
