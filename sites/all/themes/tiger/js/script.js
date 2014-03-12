@@ -328,6 +328,7 @@ Drupal.behaviors.tiger = {
       if(!partten.test(value)) {
         e.preventDefault();
         alert('手机号码填写不正确!');
+        $(this).focus();
       }
     });
   });
