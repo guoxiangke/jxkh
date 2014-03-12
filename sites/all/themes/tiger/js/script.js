@@ -321,7 +321,17 @@ Drupal.behaviors.tiger = {
    //    }
 
    // });
-
+  $('form [type=submit]').click(function(e){
+    $('form input[name*=field_phone]').each(function(){
+      value = $(this).val();
+      var partten = /^0?1[3|4|5|8][0-9]\d{8}$/;
+      if(!partten.test(value)) {
+        e.preventDefault();
+        alert('手机号码填写不正确!');
+        $(this).focus();
+      }
+    });
+  });
 
   }
 };
