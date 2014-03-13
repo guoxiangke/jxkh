@@ -162,6 +162,10 @@ function tiger_preprocess_page(&$variables) {
   if ($variables['logged_in'] && arg(0) == 'user' && in_array('edit', arg())) {
     drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
   }
+  // blog list page
+  if (arg(0) == 'blog') {
+    drupal_add_css(path_to_theme() . "/css/user.css", array('group' => CSS_THEME));
+  }
   // blog detial page
   if (isset($variables['node']) && $variables['node']->type == 'blog') {
     global $user;

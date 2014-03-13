@@ -81,9 +81,16 @@
  */
 ?>
 <div class="sbq_user_blog_final">
+  <?php if ($teaser): ?>
+  <h2 class="sbq_article_title"><?php print l($title, $node_url); ?></h2>
+  <?php else: ?>
   <h2 class="sbq_article_title"><?php print $title; ?></h2>
+  <?php endif; ?>
   <div class="sbq_article_info">
     <ul>
+      <?php if ($teaser): ?>
+      <li><?php print $name; ?></li>
+      <?php endif; ?>
       <li><?php print $date; ?></li>
     </ul>
   </div>
