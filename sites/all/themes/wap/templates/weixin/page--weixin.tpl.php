@@ -72,36 +72,6 @@
  * @ingroup themeable
  */
 ?>
-<?php
-  // $weixin_tid = $weixin_id;
-  // // get tags
-  // if ($cache = cache_get('sbq_weixin_'.$weixin_tid.'_menu_tags')) {
-  //   $weixin_menu = $cache->data;
-  // } else {
-  //   // Create data.
-  //   $vocabulary = taxonomy_vocabulary_machine_name_load('wx_service');
-  //   $vid = $vocabulary->vid;
-  //   $p_terms = taxonomy_get_tree($vid, $weixin_tid, 1);
-  //   $p_terms_count = count($p_terms);
-  //   $weixin_menu = '';
-  //   if ($p_terms_count > 0) {
-  //     $weixin_menu.='<ul>';
-  //     foreach ($p_terms as $p_key => $p_term) {
-  //       $p_name = trim($p_term->name);
-  //       $p_tid = trim($p_term->tid);
-  //       $c_terms = taxonomy_get_tree($vid, $p_tid, 1);
-  //       $c_terms_count = count($c_terms);
-  //       if ($c_terms_count > 0) {
-  //         if (strlen(trim($p_name))>0) {
-  //           $weixin_menu .= '<li>'.l($p_name, 'wap/weixin/articles/'.$p_tid).'</li>';
-  //         }
-  //       }
-  //     }
-  //     $weixin_menu.='</ul>';
-  //   }
-  //   cache_set('sbq_weixin_'.$weixin_tid.'_menu_tags', $weixin_menu);
-  // }
-?>
 <div class="header">
   <a href="<?php print $weixin_index; ?>" class="index">首页</a>
   <a href="<?php print $front_page; ?>" class="logo"> </a>

@@ -15,6 +15,9 @@ function wap_preprocess_page(&$variables) {
     if (!isset($variables['node'])) {
       $tid = arg(3);
     }
+    $term = taxonomy_term_load($tid);
+    $title = $term->name;
+    drupal_set_title($title);
     $weixin_id = wap_get_weixin_id($tid);
     $variables['weixin_id'] = $weixin_id;
     $variables['weixin_index'] = '/wap/weixin/articles/'.$weixin_id;
