@@ -1703,6 +1703,7 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
 
       $form['field_message_voice']['#prefix'] = '<div class="sbq_hide">';
       $form['field_message_voice']['#suffix'] = '</div>';
+      $form['actions']['submit']['#value'] = '发送';
     } elseif (in_array('new', arg())) {
       $form['#prefix'] = '';
       $form['#suffix'] = '';
@@ -1725,6 +1726,7 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
 
       $form['field_message_voice']['#prefix'] = '<div class="sbq_hide">';
       $form['field_message_voice']['#suffix'] = '</div>';
+      $form['actions']['submit']['#value'] = '发送';
     }
   } elseif ($form_id == 'sbq_center_opendays_form') {
     $form['#prefix'] = '<div class="hospital_order_setting"><div class="sbq_wrap"><div class="sbq_head">预约设置</div>';
