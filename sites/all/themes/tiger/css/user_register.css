@@ -75,3 +75,11 @@
 #user-register-form .register_error .description{
 	color: #E6393D;
 }
+
+.sbq_question_list_inner .sbq_text_all{
+    display: none;
+}
+.sbq_question_list_inner .sbq_text  a{
+	color: rgb(34, 85, 153);
+	cursor: auto;
+}

@@ -333,6 +333,18 @@ Drupal.behaviors.tiger = {
     });
   });
 
+
+  $('.sbq_question_list_inner a.views-more-link').click(function(e){
+    e.preventDefault();
+    $(this).parent('.sbq_text').hide().parents('.sbq_content').children('.sbq_text_all').slideDown();
+  });
+
+  $('.sbq_question_list_inner a.views-less-link').click(function(e){
+    e.preventDefault();
+    $(this).parent('.sbq_text').slideUp().parents('.sbq_content').children('.sbq_text_less').show();
+  });
+
+
   }
 };
 
