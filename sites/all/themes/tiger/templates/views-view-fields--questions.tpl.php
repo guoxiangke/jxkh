@@ -41,6 +41,7 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
   <?php print $field->wrapper_suffix; ?>
 <?php endforeach; */?>
 
+</script>
 <?php foreach ($fields as $id => $field): ?>
   <?php if (!empty($field->separator)): ?>
     <?php $$id = $field->separator; ?>
@@ -55,7 +56,8 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
   <div class="votes"><a href="/question/<?php print $nid; ?>"><span class="count"><?php print $fields['field_computed_answers']->content; ?></span></a></div>
   <div class="sbq_content">
     <div class="sbq_user_name"><?php print $name; ?></div>
-    <div class="sbq_text"><?php print $body; ?></div>
+    <div class="sbq_text sbq_text_less"><?php print $body; ?></div>
+    <div class="sbq_text sbq_text_all"><?php print $body_1; ?><a href="###" class="views-less-link">收起</a></div>
     <div class="sbq_reply_actions">
       <ul>
         <?php if (strlen(trim($follow_link)) > 0) {?>
