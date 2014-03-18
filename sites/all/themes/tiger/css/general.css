@@ -81,9 +81,14 @@ input,
 .footer a:hover { color: #999; text-decoration: underline; }
 .footer .sbq_copy { clear: both; height: 20px; line-height: 20px; padding: 5px 0px 20px 0px; text-align: center; color: #999; }
 /*------body------*/
-.body { float: left; width: 100%; padding: 30px 0px; }
+.body { float: left; width: 100%; padding: 20px 0px 30px 0px; }
 .body .main { width: 960px; margin: 0 auto; }
 .body .content { float: left; width: 680px; }
+/*sbq_breadcrumb*/
+.sbq_breadcrumb { float: left; width: 100%; line-height: 20px; margin: 0px 0px 10px 0px; color: #666; }
+.sbq_breadcrumb a { color: #666; }
+.sbq_breadcrumb a:hover { color: #225599; }
+.sbq_breadcrumb b { color: #333; font-weight: normal; }
 /*------sbq_page_num------*/
 .sbq_page_num { float: left; position: relative; left: 50%; }
 .sbq_page_num ul { float: left; position: relative; right: 50%; }
@@ -170,7 +175,7 @@ input,
 .sidebar_second .sbq_sidebar_list_04 .sbq_head { float: left; width: 240px; height: 32px; line-height: 32px; padding: 0px 9px; border: 1px #E5E5E5 solid; background: #F6F6F6; }
 .sidebar_second .sbq_sidebar_list_04 .sbq_title { font-size: 14px; font-weight: bold; }
 .sidebar_second .sbq_sidebar_list_04 ul { float: left; width: 240px; padding: 5px 9px; border-left: 1px #E5E5E5 solid; border-right: 1px #E5E5E5 solid; border-bottom: 1px #E5E5E5 solid; }
-.sidebar_second .sbq_sidebar_list_04 ul li { float: left; width: 100%; line-height: 22px; padding: 2px 0px; }
+.sidebar_second .sbq_sidebar_list_04 ul li { float: left; width: 100%; height: 22px; line-height: 22px; padding: 2px 0px; overflow: hidden; }
 .sidebar_second .sbq_sidebar_list_04 ul li a { color: #225599; }
 .sidebar_second .sbq_sidebar_list_04 ul li a:hover { text-decoration: underline; }
 .sidebar_second .sbq_sidebar_list_04 ul li .sidebar_num { color: #999; margin: 0px 0px 0px 5px; display: inline-block; }
@@ -189,7 +194,7 @@ input,
 .sidebar_second .sbq_badge ul li { float: left; width: 20px; height: 20px; margin: 0px 3px 3px 0px; }
 .sidebar_second .sbq_badge ul li img { float: left; width: 20px; height: 20px; }
 /*---sidebar_first---*/
-.sidebar_first { float: left; width: 220px; margin: 0px 20px 0px 0px; overflow: hidden; }
+.sidebar_first { float: left; width: 260px; margin: 0px 20px 0px 0px; overflow: hidden; }
 /*sbq_blog_user*/
 .sidebar_second .sbq_blog_user { float: left; width: 100%; margin: 0px 0px 20px 0px; }
 .sidebar_second .sbq_blog_user .sbq_user_pic,

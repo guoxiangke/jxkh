@@ -742,8 +742,8 @@ function tiger_preprocess_page(&$variables) {
       global $user;
       drupal_add_css(path_to_theme() . "/css/user.css", array('group' => CSS_THEME));
       $variables['theme_hook_suggestions'][] = 'page__user';
-      $variables['page']['content']['system_main']['#prefix'] = '<div class="sbq_user_pm"><div class="sbq_pm">';
-      $variables['page']['content']['system_main']['#suffix'] = '</div></div>';
+      $variables['page']['content']['system_main']['#prefix'] = '<div class="sbq_user_pm"><div class="sbq_pm"><div class="sbq_pm_wrap"></div><div class="sbq_pm_editor">';
+      $variables['page']['content']['system_main']['#suffix'] = '</div></div></div>';
       $account = $user;
       $variables['account'] = $account;
       if (module_exists('sbq_commons')) {

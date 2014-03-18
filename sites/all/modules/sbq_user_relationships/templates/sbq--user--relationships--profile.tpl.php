@@ -10,7 +10,7 @@
     <div class="sbq_user_pic"><?php print $image; ?></div>
     <div class="sbq_content">
       <div class="sbq_user_name"><a href="/user/<?php print $profile['uid']; ?>"><?php print $profile['name']; ?></a></div>
-      <div class="sbq_follow"><?php print $profile['follow']; ?></div>
+      <div class="sbq_user_actions"><span><?php print $profile['follow']; ?></span><span class="add_pm"><a href="/messages/new/<?php print $profile['uid']; ?>">私信</a></span></div>
     </div>
   </li>
 <?php elseif ($view == 'block') : ?>

@@ -198,11 +198,16 @@
           <?php if (isset($field_doctor_title)): ?>
           <span><?php print $field_doctor_title; ?></span>
           <?php endif; ?>
-          <?php if (isset($follow_link[0]) && isset($follow_link[0]['relationship_action'])): ?>
+
           <div class="sbq_user_follow">
+            <?php if (isset($follow_link[0]) && isset($follow_link[0]['relationship_action'])): ?>
             <?php print $follow_link[0]['relationship_action']; ?>
+            <?php endif; ?>
+            <?php if (!$current_user && $logged_in): ?>
+            <a href="/messages/new/<?php print $a_uid; ?>" class="sbq_add_pm_btn">私信</a>
+            <?php endif; ?>
           </div>
-          <?php endif; ?>
+
         </div>
         <?php if (isset($hospitals_departments)): ?>
         <div class="sbq_user_hospital"><?php print $hospitals_departments; ?></div>
