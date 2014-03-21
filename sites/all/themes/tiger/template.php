@@ -1891,3 +1891,26 @@ function tiger_preprocess_privatemsg_view(&$vars) {
     $vars['self'] = TRUE;
   }
 }
+
+/**
+ * http://www.jiathis.com/send/?webid=shareID&url=$siteUrl&title=$siteTitle&uid=$uid 
+ * shareID 分享ID参数代表你要分享到哪个站点的ID编号, 可以通过这个文档查询：分享网站ID清单 
+ * $siteUrl 参数代表你要分享的网站链接地址，可以通过动态程序调用 
+ * $siteTitle 参数代表你要分享的网站页面标题，可以通过动态程序调用，也可自定义。
+ * $uid(非必须) 代表你注册JiaThis的会员UID，可以登录网站后查到您的UID，用于数据统计。
+ */
+function jiathis_html_custom($siteUrl, $siteTitle, $uid = '91212', $webid_array = array()) {
+  drupal_add_js('http://v3.jiathis.com/code_mini/jia.js', 'external');
+  $webid_array = array('tsina','tqq');//,'weixin','renren','qzone'
+  $output = '<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">';
+  foreach ($webid_array as $key => $shareID) {
+    $output .= '<a target="_blank" class="jiathis_button_'.$shareID.'" href="http://www.jiathis.com/send/?webid='.$shareID.'&url='.$siteUrl.'&title='.$siteTitle.'&uid='.$uid.'"><span class="jiathis_txt jtico jtico_'.$shareID.'"></span></a>';     
+  }
+  // <!--a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a-->
+  //
+  return $output .= '
+  </div>  
+  <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=91212" charset="utf-8"></script>
+<!-- JiaThis Button END -->';
+}

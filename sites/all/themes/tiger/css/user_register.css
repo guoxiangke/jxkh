@@ -83,3 +83,12 @@
 	color: rgb(34, 85, 153);
 	cursor: auto;
 }
+
+
+li.sbq-share {
+	width: 40px;
+}
+.sbq-share .jiathis_style{
+	position: relative;
+	display: none;
+}

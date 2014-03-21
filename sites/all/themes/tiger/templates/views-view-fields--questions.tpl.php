@@ -66,6 +66,7 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
         <?php if ($node->comment_count > 0) {?>
           <li class="sbq_reply_btn"><?php print l("回复($node->comment_count)",'node/'.$nid); ?></li>
         <?php }?>
+        <li class="sbq-share"><span class="sbq-share-click">分享到</span><?php echo jiathis_html_custom(url(NULL, array('absolute' => TRUE)) . (variable_get('clean_url', 0) ? '' : '?q=').'/node/'.$nid, "伤不起问答:".$node->title, $uid = '91212', $webid_array = array())?></li>
         <li><?php print $published_at; ?></li>
         <?php if(!empty($edit_node)): ?>
         <li class="sbq_edit"><?php print $edit_node; ?></li>
