@@ -40,6 +40,8 @@ function tiger_preprocess_page(&$variables) {
   // question page
   if (arg(0) == 'question' || arg(0) == 'questions') {
     drupal_add_css(path_to_theme() . "/css/question.css", array('group' => CSS_THEME));
+    drupal_set_title('Title');
+    //kpr($variables);
     if (arg(0) == 'question') {
       $qa_nid = arg(1);
       $center_nid = _sbq_center_get_nid_by_node($qa_nid);
@@ -879,11 +881,16 @@ function tiger_preprocess_page(&$variables) {
   if (isset($variables['node']) && $variables['node']->type == 'weixin') {
     drupal_add_css(path_to_theme() . "/css/news.css", array('group' => CSS_THEME));
   }
+  if (isset($variables['node']) && $variables['node']->type == 'ranking_news_list') {
+    drupal_add_css(path_to_theme() . "/css/ranking.css", array('group' => CSS_THEME));
+  }
 }
 
 function tiger_preprocess_views_view(&$vars) {
   if ($vars['view']->name == 'questions' && $vars['view']->current_display == 'page_questions_tagged') {
-    $title = $vars['view']->exposed_input['field_tags_tid'];
+    $query_parameters = drupal_get_query_parameters();
+    $title = $query_parameters['field_tags_tid'];
+    drupal_set_title($title);
     if (strlen(trim($title))>0) {
       $vars['title'] = $title;
       $vars['view']->build_info['title'] = $title;
@@ -1877,10 +1884,10 @@ function tiger_preprocess_user_picture(&$variables) {
 
 function tiger_apachesolr_search_noresults() {
   return t('<div class="search-noresult"><ul>
-<li>Check if your spelling is correct, or try removing filters.</li>
-<li>Remove quotes around phrases to match each word individually: <em>"blue drop"</em> will match less than <em>blue drop</em>.</li>
-<li>You can require or exclude terms using + and -: <em>big +blue drop</em> will require a match on <em>blue</em> while <em>big blue -drop</em> will exclude results that contain <em>drop</em>.</li>
-</ul></div>');
+    <li>Check if your spelling is correct, or try removing filters.</li>
+    <li>Remove quotes around phrases to match each word individually: <em>"blue drop"</em> will match less than <em>blue drop</em>.</li>
+    <li>You can require or exclude terms using + and -: <em>big +blue drop</em> will require a match on <em>blue</em> while <em>big blue -drop</em> will exclude results that contain <em>drop</em>.</li>
+    </ul></div>');
 }
 
 function tiger_preprocess_privatemsg_view(&$vars) {
