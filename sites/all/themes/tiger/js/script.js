@@ -202,6 +202,17 @@ jQuery(function($) {
  */
 Drupal.behaviors.tiger = {
   attach: function (context, settings) {
+
+    // Ranking list page
+    $(".sbq_ranking_news_list .sbq_prev").click(function(){
+      $("#views_slideshow_controls_text_previous_ranking_list-page").click();
+      return false;
+    });
+    $(".sbq_ranking_news_list .sbq_next").click(function(){
+      $("#views_slideshow_controls_text_next_ranking_list-page").click();
+      return false;
+    });
+
     $('.sbq_pm_list .messages').ready(function(){
       setTimeout(function(){
         $('.sbq_pm_list .messages').hide();
