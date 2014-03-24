@@ -344,6 +344,9 @@ Drupal.behaviors.tiger = {
     $(this).parent('.sbq_text').hide('fast').parents('.sbq_content').children('.sbq_text_less').slideDown();
   });
 
+  $('.sbq-share').hover(function(){
+    $(this).children('.jiathis_style').toggle();
+  });
 
   }
 };
