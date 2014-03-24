@@ -81,9 +81,14 @@ input,
 .footer a:hover { color: #999; text-decoration: underline; }
 .footer .sbq_copy { clear: both; height: 20px; line-height: 20px; padding: 5px 0px 20px 0px; text-align: center; color: #999; }
 /*------body------*/
-.body { float: left; width: 100%; padding: 30px 0px; }
+.body { float: left; width: 100%; padding: 20px 0px 30px 0px; }
 .body .main { width: 960px; margin: 0 auto; }
 .body .content { float: left; width: 680px; }
+/*sbq_breadcrumb*/
+.sbq_breadcrumb { float: left; width: 100%; line-height: 20px; margin: 0px 0px 10px 0px; color: #666; }
+.sbq_breadcrumb a { color: #666; }
+.sbq_breadcrumb a:hover { color: #225599; }
+.sbq_breadcrumb b { color: #333; font-weight: normal; }
 /*------sbq_page_num------*/
 .sbq_page_num { float: left; position: relative; left: 50%; }
 .sbq_page_num ul { float: left; position: relative; right: 50%; }
@@ -121,11 +126,30 @@ input,
 .sidebar_second .sbq_sidebar_list_02 { float: left; width: 100%; margin: 0px 0px 15px 0px; border-top: 2px #1575D5 solid; }
 .sidebar_second .sbq_sidebar_list_02 .sbq_head { float: left; width: 240px; height: 32px; line-height: 32px; padding: 0px 9px; border-left: 1px #E5E5E5 solid; border-right: 1px #E5E5E5 solid; border-bottom: 1px #E5E5E5 solid; }
 .sidebar_second .sbq_sidebar_list_02 .sbq_title { font-size: 14px; font-weight: bold; }
-.sidebar_second .sbq_sidebar_list_02 ul { float: left; width: 240px; padding: 5px 9px; border-left: 1px #E5E5E5 solid; border-right: 1px #E5E5E5 solid; border-bottom: 1px #E5E5E5 solid; }
+.sidebar_second .sbq_sidebar_list_02 ul,
+.sidebar_second .sbq_sidebar_list_02 .sbq_content { float: left; width: 240px; padding: 5px 9px; border-left: 1px #E5E5E5 solid; border-right: 1px #E5E5E5 solid; border-bottom: 1px #E5E5E5 solid; }
 .sidebar_second .sbq_sidebar_list_02 ul li { float: left; width: 100%; line-height: 22px; padding: 2px 0px; }
 .sidebar_second .sbq_sidebar_list_02 ul li a { color: #225599; }
 .sidebar_second .sbq_sidebar_list_02 ul li a:hover { text-decoration: underline; }
 .sidebar_second .sbq_sidebar_list_02 ul li .sidebar_num { color: #999; margin: 0px 0px 0px 5px; display: inline-block; }
+/*sbq_sidebar_list_02 IMG*/
+.sidebar_second .sbq_sidebar_list_02 .sbq_item .sbq_num { float: left; width: 20px; height: 20px; line-height: 20px; margin: 0px; border-radius: 2px; background: #ccc; overflow: hidden; color: #FFF; font-size: 12px; text-align: center; font-family: "Arial"; }
+.sidebar_second .sbq_sidebar_list_02 .sbq_item.on .sbq_num { background: #4491DD; }
+.sidebar_second .sbq_sidebar_list_02 .sbq_item.active .sbq_num { margin: 22px 0px 0px 0px; }
+.sidebar_second .sbq_sidebar_list_02 .sbq_item { float: left; width: 100%; padding: 5px 0px; }
+.sidebar_second .sbq_sidebar_list_02 .sbq_item+.sbq_item { border-top: 1px #CCCCCC dotted; }
+.sidebar_second .sbq_sidebar_list_02 .sbq_item .sbq_img { float: left; width: 80px; height: 64px; margin: 0px 0px 0px 5px; overflow: hidden; display: none; }
+.sidebar_second .sbq_sidebar_list_02 .sbq_item.active .sbq_img { display: block; }
+.sidebar_second .sbq_sidebar_list_02 .sbq_item .sbq_img img { float: left; width: 80px; height: 64px; overflow: hidden; }
+.sidebar_second .sbq_sidebar_list_02 .sbq_item .sbq_wrap { float: left; width: 215px; margin: 0px 0px 0px 5px; }
+.sidebar_second .sbq_sidebar_list_02 .sbq_item.active .sbq_wrap { width: 130px; }
+.sidebar_second .sbq_sidebar_list_02 .sbq_item .sbq_title { float: left; width: 100%; height: 20px; line-height: 20px; margin: 0px; overflow: hidden; font-size: 12px; }
+.sidebar_second .sbq_sidebar_list_02 .sbq_item.active .sbq_title { height: 44px; line-height: 22px; margin: 0px 0px 2px 0px; font-size: 14px; }
+.sidebar_second .sbq_sidebar_list_02 .sbq_item .sbq_title a { color: #225599; font-weight: bold; }
+/*.sidebar_second .sbq_sidebar_list_02 .sbq_wrap .sbq_title a span { color: #666; font-size: 12px; display: inline; }*/
+.sidebar_second .sbq_sidebar_list_02 .sbq_item .sbq_phone { float: left; width: 100%; height: 20px; line-height: 20px; font-family: "Arial"; overflow: hidden; display: none; }
+.sidebar_second .sbq_sidebar_list_02 .sbq_item.active .sbq_phone { display: block; }
+.sidebar_second .sbq_sidebar_list_02 .sbq_item .sbq_phone span { float: left; color: #666; }
 /*sidebar_list_03*/
 .sidebar_second .sbq_sidebar_list_03 { float: left; width: 100%; padding: 15px 0px 10px 0px; border-top: 1px solid #EEEEEE; }
 .sidebar_second .sbq_sidebar_list_03 .sbq_head { float: left; width: 100%; height: 24px; line-height: 24px; margin: 0px 0px 10px 0px; overflow: hidden; font-size: 14px; font-weight: bold; }
@@ -146,6 +170,15 @@ input,
 .sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_follow { float: left; width: auto; }
 .sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_follow a { float: left; height: 20px; line-height: 20px; padding: 0px 0px 0px 17px; color: #999999; background: url(../image/sbq_reply_actions_icon.png) no-repeat; background-position: left -44px; }
 .sidebar_second .sbq_sidebar_list_03 .sbq_content .sbq_follow a:hover { color: #698EBF; text-decoration: underline; background-position: left -66px; }
+/*sbq_sidebar_list_04*/
+.sidebar_second .sbq_sidebar_list_04 { float: left; width: 100%; margin: 0px 0px 15px 0px; }
+.sidebar_second .sbq_sidebar_list_04 .sbq_head { float: left; width: 240px; height: 32px; line-height: 32px; padding: 0px 9px; border: 1px #E5E5E5 solid; background: #F6F6F6; }
+.sidebar_second .sbq_sidebar_list_04 .sbq_title { font-size: 14px; font-weight: bold; }
+.sidebar_second .sbq_sidebar_list_04 ul { float: left; width: 240px; padding: 5px 9px; border-left: 1px #E5E5E5 solid; border-right: 1px #E5E5E5 solid; border-bottom: 1px #E5E5E5 solid; }
+.sidebar_second .sbq_sidebar_list_04 ul li { float: left; width: 100%; height: 22px; line-height: 22px; padding: 2px 0px; overflow: hidden; }
+.sidebar_second .sbq_sidebar_list_04 ul li a { color: #225599; }
+.sidebar_second .sbq_sidebar_list_04 ul li a:hover { text-decoration: underline; }
+.sidebar_second .sbq_sidebar_list_04 ul li .sidebar_num { color: #999; margin: 0px 0px 0px 5px; display: inline-block; }
 /*sbq_winner_list*/
 .sidebar_second .sbq_winner_list { float: left; width: 100%; padding: 15px 0px 10px 0px; border-top: 1px solid #EEEEEE; }
 .sidebar_second .sbq_winner_list .sbq_head { float: left; width: 100%; height: 24px; line-height: 24px; margin: 0px 0px 6px 0px; overflow: hidden; font-size: 14px; font-weight: bold; }
@@ -161,7 +194,7 @@ input,
 .sidebar_second .sbq_badge ul li { float: left; width: 20px; height: 20px; margin: 0px 3px 3px 0px; }
 .sidebar_second .sbq_badge ul li img { float: left; width: 20px; height: 20px; }
 /*---sidebar_first---*/
-.sidebar_first { float: left; width: 220px; margin: 0px 20px 0px 0px; overflow: hidden; }
+.sidebar_first { float: left; width: 260px; margin: 0px 20px 0px 0px; overflow: hidden; }
 /*sbq_blog_user*/
 .sidebar_second .sbq_blog_user { float: left; width: 100%; margin: 0px 0px 20px 0px; }
 .sidebar_second .sbq_blog_user .sbq_user_pic,

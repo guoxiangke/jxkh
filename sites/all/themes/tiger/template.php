@@ -162,6 +162,10 @@ function tiger_preprocess_page(&$variables) {
   if ($variables['logged_in'] && arg(0) == 'user' && in_array('edit', arg())) {
     drupal_add_css(path_to_theme() . "/css/form.css", array('group' => CSS_THEME));
   }
+  // blog list page
+  if (arg(0) == 'blog') {
+    drupal_add_css(path_to_theme() . "/css/user.css", array('group' => CSS_THEME));
+  }
   // blog detial page
   if (isset($variables['node']) && $variables['node']->type == 'blog') {
     global $user;
@@ -738,8 +742,8 @@ function tiger_preprocess_page(&$variables) {
       global $user;
       drupal_add_css(path_to_theme() . "/css/user.css", array('group' => CSS_THEME));
       $variables['theme_hook_suggestions'][] = 'page__user';
-      $variables['page']['content']['system_main']['#prefix'] = '<div class="sbq_user_pm"><div class="sbq_pm">';
-      $variables['page']['content']['system_main']['#suffix'] = '</div></div>';
+      $variables['page']['content']['system_main']['#prefix'] = '<div class="sbq_user_pm"><div class="sbq_pm"><div class="sbq_pm_wrap"></div><div class="sbq_pm_editor">';
+      $variables['page']['content']['system_main']['#suffix'] = '</div></div></div>';
       $account = $user;
       $variables['account'] = $account;
       if (module_exists('sbq_commons')) {
@@ -862,6 +866,19 @@ function tiger_preprocess_page(&$variables) {
       }
     }
   }
+  // weixin
+  if (arg(0) == 'weixin') {
+    drupal_add_css(path_to_theme() . "/css/weixin.css", array('group' => CSS_THEME));
+    $variables['theme_hook_suggestions'][] = 'page__weixin';
+    if (arg(1) == 'articles') {
+      drupal_add_css(path_to_theme() . "/css/news.css", array('group' => CSS_THEME));
+    } else {
+      $variables['page']['sidebar_second'] = FALSE;
+    }
+  }
+  if (isset($variables['node']) && $variables['node']->type == 'weixin') {
+    drupal_add_css(path_to_theme() . "/css/news.css", array('group' => CSS_THEME));
+  }
 }
 
 function tiger_preprocess_views_view(&$vars) {
@@ -977,7 +994,8 @@ function tiger_preprocess_node(&$variables) {
     'friend_activities',
     'red_list',
     'black_list',
-    'doctor_legend'
+    'doctor_legend',
+    'weixin'
   );
   if (in_array($variables['type'], $news_array)) {
     drupal_add_css(path_to_theme() . "/css/news.css", array('group' => CSS_THEME));
@@ -1260,10 +1278,10 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
       $form['profile_doctor_profile']['field_introduction']['#suffix'] = '</div>';
 
       // profile_doctor_private_profile
-      if (isset($form['profile_doctor_private_profile']['field_phone_number'])) {
-        $form['profile_doctor_private_profile']['field_phone_number']['#prefix'] = '<div class="sbq_form_01">';
-        $form['profile_doctor_private_profile']['field_phone_number']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
-        $form['profile_doctor_private_profile']['field_phone_number']['#suffix'] = '</div>';
+      if (isset($form['profile_doctor_private_profile']['field_phone'])) {
+        $form['profile_doctor_private_profile']['field_phone']['#prefix'] = '<div class="sbq_form_01">';
+        $form['profile_doctor_private_profile']['field_phone']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
+        $form['profile_doctor_private_profile']['field_phone']['#suffix'] = '</div>';
       }
       if (isset($form['profile_doctor_private_profile']['field_doctor_hospital_phone'])) {
         $form['profile_doctor_private_profile']['field_doctor_hospital_phone']['#prefix'] = '<div class="sbq_form_01">';
@@ -1463,10 +1481,10 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
           $form['profile_doctor_profile']['field_patient_diseases']['#suffix'] = '</div>';
         }
         // profile_doctor_private_profile
-        if (isset($form['profile_doctor_private_profile']['field_phone_number'])) {
-          $form['profile_doctor_private_profile']['field_phone_number']['#prefix'] = '<div class="sbq_form_01">';
-          $form['profile_doctor_private_profile']['field_phone_number']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
-          $form['profile_doctor_private_profile']['field_phone_number']['#suffix'] = '</div>';
+        if (isset($form['profile_doctor_private_profile']['field_phone'])) {
+          $form['profile_doctor_private_profile']['field_phone']['#prefix'] = '<div class="sbq_form_01">';
+          $form['profile_doctor_private_profile']['field_phone']['und'][0]['value']['#attributes']['class'][] = 'sbq_input_01';
+          $form['profile_doctor_private_profile']['field_phone']['#suffix'] = '</div>';
         }
         if (isset($form['profile_doctor_private_profile']['field_doctor_hospital_phone'])) {
           $form['profile_doctor_private_profile']['field_doctor_hospital_phone']['#prefix'] = '<div class="sbq_form_01">';
@@ -1685,6 +1703,7 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
 
       $form['field_message_voice']['#prefix'] = '<div class="sbq_hide">';
       $form['field_message_voice']['#suffix'] = '</div>';
+      $form['actions']['submit']['#value'] = '发送';
     } elseif (in_array('new', arg())) {
       $form['#prefix'] = '';
       $form['#suffix'] = '';
@@ -1707,6 +1726,7 @@ function tiger_form_alter(&$form, &$form_state, $form_id) {
 
       $form['field_message_voice']['#prefix'] = '<div class="sbq_hide">';
       $form['field_message_voice']['#suffix'] = '</div>';
+      $form['actions']['submit']['#value'] = '发送';
     }
   } elseif ($form_id == 'sbq_center_opendays_form') {
     $form['#prefix'] = '<div class="hospital_order_setting"><div class="sbq_wrap"><div class="sbq_head">预约设置</div>';
@@ -1815,7 +1835,8 @@ function tiger_menu_tree($variables) {
  * Implements hook_html_head_alter().
  */
 function tiger_html_head_alter(&$head_elements) {
-  unset($head_elements['system_meta_generator']);
+  unset($head_elements['metatag_generator']);
+
 }
 
 function tiger_preprocess_user_picture(&$variables) {
@@ -1869,4 +1890,27 @@ function tiger_preprocess_privatemsg_view(&$vars) {
   if ($user->uid == $message->author->uid) {
     $vars['self'] = TRUE;
   }
+}
+
+/**
+ * http://www.jiathis.com/send/?webid=shareID&url=$siteUrl&title=$siteTitle&uid=$uid 
+ * shareID 分享ID参数代表你要分享到哪个站点的ID编号, 可以通过这个文档查询：分享网站ID清单 
+ * $siteUrl 参数代表你要分享的网站链接地址，可以通过动态程序调用 
+ * $siteTitle 参数代表你要分享的网站页面标题，可以通过动态程序调用，也可自定义。
+ * $uid(非必须) 代表你注册JiaThis的会员UID，可以登录网站后查到您的UID，用于数据统计。
+ */
+function jiathis_html_custom($siteUrl, $siteTitle, $uid = '91212', $webid_array = array()) {
+  drupal_add_js('http://v3.jiathis.com/code_mini/jia.js', 'external');
+  $webid_array = array('tsina','tqq');//,'weixin','renren','qzone'
+  $output = '<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">';
+  foreach ($webid_array as $key => $shareID) {
+    $output .= '<a target="_blank" class="jiathis_button_'.$shareID.'" href="http://www.jiathis.com/send/?webid='.$shareID.'&url='.$siteUrl.'&title='.$siteTitle.'&uid='.$uid.'"><span class="jiathis_txt jtico jtico_'.$shareID.'"></span></a>';     
+  }
+  // <!--a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a-->
+  //
+  return $output .= '
+  </div>  
+  <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=91212" charset="utf-8"></script>
+<!-- JiaThis Button END -->';
 }
