@@ -169,7 +169,6 @@ function theme_sbq_user_relationships_process_status($variables) {
   $li = '';
   foreach ($variables['relationships'] as $relationship) {
     $row = sbq_user_relationships_user_action($relationship, $variables['account']);
-    dpm($relationship);
     if ($variables['type'] == 'sent') {
       $li .= '<li><div class="sbq_text">请求' . $row['user']->name . '成为你的好友</div><div class="sbq_actions message_' . $relationship->rid . '">' . $row[1] . '</div></li>';
     } elseif ($variables['type'] == 'received') {

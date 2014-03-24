@@ -51,6 +51,7 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
 <?php endforeach; ?>
 <?php $node = node_load($nid); ?>
 <?php $follow_link = flag_create_link('follow', $nid); ?>
+<?php $bookmarks_link = flag_create_link('books', $nid); ?>
 <div class="sbq_question_item">
   <h2 class="sbq_title"><?php print $title; ?></h2>
   <div class="votes"><a href="/question/<?php print $nid; ?>"><span class="count"><?php print $fields['field_computed_answers']->content; ?></span></a></div>
@@ -63,10 +64,17 @@ If the variable contains markup, edit the View, go to "FORMAT", "Show:" and clic
         <?php if (strlen(trim($follow_link)) > 0) {?>
         <li class="sbq_follow_btn"><?php print $follow_link; ?></li>
         <?php }?>
-        <?php if ($node->comment_count > 0) {?>
+        <?php if (1||$node->comment_count > 0) {?>
           <li class="sbq_reply_btn"><?php print l("回复($node->comment_count)",'node/'.$nid); ?></li>
         <?php }?>
         <li class="sbq-share"><span class="sbq-share-click">分享到</span><?php echo jiathis_html_custom(url(NULL, array('absolute' => TRUE)) . (variable_get('clean_url', 0) ? '' : '?q=').'/node/'.$nid, "伤不起问答:".$node->title, $uid = '91212', $webid_array = array())?></li>
+        <li><?php  //flag_create_link('bookmarks', $nid); 
+          // $flag = flagging_load('bookmarks', $reset = FALSE);
+          //echo $flag->theme($flag->is_flagged($entity_id) ? 'unflag' : 'flag', $entity_id, array('needs_wrapping_element' => TRUE));
+        ?></li>
+        <?php if (strlen(trim($bookmarks_link)) > 0) {?>
+        <li class="sbq_follow_btn"><?php print $bookmarks_link; ?></li>
+        <?php }?>
         <li><?php print $published_at; ?></li>
         <?php if(!empty($edit_node)): ?>
         <li class="sbq_edit"><?php print $edit_node; ?></li>
