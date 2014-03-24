@@ -6,8 +6,8 @@
 define('SBQ_CENTER_EXPERT_TID', 24749);
 define('SBQ_CENTER_VISIT_TID', 24752);
 define('SBQ_CENTER_PLAN_TID', 24753);
-define('SBQ_RANKING_NEWS_RED_TID', 24888);
-define('SBQ_RANKING_NEWS_BLACK_TID', 24889);
+define('SBQ_RANKING_NEWS_RED_TID', 25359);
+define('SBQ_RANKING_NEWS_BLACK_TID', 25360);
 /**
  * hook_preprocess_page
  *
