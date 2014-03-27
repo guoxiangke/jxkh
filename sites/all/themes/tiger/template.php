@@ -889,6 +889,9 @@ function tiger_preprocess_page(&$variables) {
   if (arg(0) == 'ranking') {
     drupal_add_css(path_to_theme() . "/css/ranking.css", array('group' => CSS_THEME));
   }
+  if (isset($variables['node']) && $variables['node']->type == 'hospital') {
+    drupal_add_css(path_to_theme() . "/css/ranking.css", array('group' => CSS_THEME));
+  }
 }
 
 function tiger_preprocess_views_view(&$vars) {
