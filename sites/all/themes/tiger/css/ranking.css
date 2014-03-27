@@ -107,29 +107,119 @@
 .sbq_ranking_hospital_final .sbq_info .sbq_img img { width: 240px; height: 160px; overflow: hidden; }
 /*sbq_summary*/
 .sbq_ranking_hospital_final .sbq_summary { float: left; width: 410px; margin: 0px 0px 0px 10px; }
-.sbq_ranking_hospital_final .sbq_summary ul { float: left; width: 330px; line-height: 26px; }
-.sbq_ranking_hospital_final .sbq_summary li { float: left; width: 100%; font-size: 12px; word-break: break-all; word-wrap: break-word; }
-.sbq_ranking_hospital_final .sbq_summary li a { word-break: break-all; word-wrap: break-word; }
-.sbq_ranking_hospital_final .sbq_summary span { color: #666; }
+.sbq_ranking_hospital_final .sbq_summary ul { float: left; width: 330px; line-height: 32px; }
+.sbq_ranking_hospital_final .sbq_summary li { float: left; width: 100%; font-size: 14px; word-break: break-all; word-wrap: break-word; }
+.sbq_ranking_hospital_final .sbq_summary li a { color: #225599; font-family: Arial; word-break: break-all; word-wrap: break-word; }
+.sbq_ranking_hospital_final .sbq_summary li a:hover { text-decoration: underline; }
+.sbq_ranking_hospital_final .sbq_summary span { color: #999; }
 /*sbq_score*/
-.sbq_ranking_hospital_final .sbq_score { float: left; width: 70px; margin: 0px 0px 0px 10px; text-align: center; }
-.sbq_ranking_hospital_final .sbq_score b { float: left; width: 100%; line-height: 60px; text-align: center; color: #1575D5; font-size: 34px; background: #EFF6FA; font-family: Arial; }
-.sbq_ranking_hospital_final .sbq_score span { float: left; width: 100%; line-height: 24px; text-align: center; color: #FFF; font-size: 12px; background: #1575D5; }
-.sbq_ranking_hospital_final .sbq_score a { float: left; width: 68px; line-height: 24px; margin: 5px 0px 0px 0px; border-radius: 2px; color: #FFFFFF; border: 1px #0D6EB8 solid; background: #1575D5; box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.196) inset, 0px 1px 0px rgba(0, 0, 0, 0.196); }
+.sbq_ranking_hospital_final .sbq_summary .sbq_score { float: left; width: 70px; margin: 0px 0px 0px 10px; text-align: center; }
+.sbq_ranking_hospital_final .sbq_summary .sbq_score b { float: left; width: 100%; line-height: 60px; text-align: center; color: #1575D5; font-size: 34px; background: #EFF6FA; font-family: Arial; }
+.sbq_ranking_hospital_final .sbq_summary .sbq_score span { float: left; width: 100%; line-height: 24px; text-align: center; color: #FFF; font-size: 12px; background: #1575D5; }
+.sbq_ranking_hospital_final .sbq_summary .sbq_score a { float: left; width: 68px; line-height: 24px; margin: 5px 0px 0px 0px; border-radius: 2px; color: #FFFFFF; border: 1px #0D6EB8 solid; background: #1575D5; box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.196) inset, 0px 1px 0px rgba(0, 0, 0, 0.196); }
 /*sbq_wrap*/
 .sbq_ranking_hospital_final .sbq_wrap { float: left; width: 650px; margin: 15px 0px 0px 0px; padding: 10px 14px; border: 1px #e5e5e5 solid; }
 .sbq_ranking_hospital_final .sbq_wrap .sbq_head { float: left; width: 100%; line-height: 32px; border-bottom: 1px #e5e5e5 solid; }
+.sbq_ranking_hospital_final .sbq_wrap:hover .sbq_head .sbq_edit { display: block; }
 .sbq_ranking_hospital_final .sbq_wrap .sbq_title { float: left; font-size: 18px; color: #225599; }
+.sbq_ranking_hospital_final .sbq_wrap .sbq_title b { color: #666; font-size: 14px; font-weight: normal; }
+.sbq_ranking_hospital_final .sbq_wrap .sbq_edit { float: right; display: none; }
+.sbq_ranking_hospital_final .sbq_wrap .sbq_edit a { color: #225599; }
 .sbq_ranking_hospital_final .sbq_wrap .sbq_content { float: left; width: 100%; padding: 10px 0px 0px 0px; }
-.sbq_ranking_hospital_final .sbq_wrap.sbq_departments .sbq_content dl { float: left; width: 100%; line-height: 26px; padding: 5px 0px; font-size: 14px; }
-.sbq_ranking_hospital_final .sbq_wrap.sbq_departments .sbq_content dl+dl { border-top: 1px #E5E5E5 dashed; }
-.sbq_ranking_hospital_final .sbq_wrap.sbq_departments .sbq_content dt { float: left; width: 110px; text-align: center; }
-.sbq_ranking_hospital_final .sbq_wrap.sbq_departments .sbq_content dd { float: left; width: 540px; font-size: 12px; }
-.sbq_ranking_hospital_final .sbq_wrap.sbq_departments .sbq_content dd a { color: #225599; }
-.sbq_ranking_hospital_final .sbq_wrap.sbq_departments .sbq_content dd a:hover { text-decoration: underline; }
-.sbq_ranking_hospital_final .sbq_wrap.sbq_departments .sbq_content dd b { margin: 0px 2px; color: #ff9900; font-family: Arial; }
-.sbq_ranking_hospital_final .sbq_wrap.sbq_departments .sbq_content dd span { float: left; width: 175px; margin: 0px 5px 0px 0px; }
-.sbq_ranking_hospital_final .sbq_wrap.sbq_departments .sbq_content dd em { color: #999; font-style: normal; white-space: nowrap; }
+/*sbq_departments*/
+.sbq_ranking_hospital_final .sbq_wrap.sbq_departments dl { float: left; width: 100%; line-height: 26px; padding: 5px 0px; font-size: 14px; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_departments dl+dl { border-top: 1px #E5E5E5 dashed; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_departments dt { float: left; width: 110px; text-align: center; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_departments dd { float: left; width: 540px; font-size: 12px; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_departments dd a { color: #225599; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_departments dd a:hover { text-decoration: underline; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_departments dd b { margin: 0px 2px; color: #ff9900; font-family: Arial; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_departments dd span { float: left; width: 175px; margin: 0px 5px 0px 0px; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_departments dd em { color: #999; font-style: normal; white-space: nowrap; }
+/*sbq_text*/
+.sbq_ranking_hospital_final .sbq_wrap.sbq_text .sbq_content { font-size: 14px; line-height: 26px; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_text .sbq_content b { font-weight: bold; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_text .sbq_content p { padding: 0px 0px 22px 0px; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_text .sbq_content u { text-decoration: underline; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_text .sbq_content em { font-style: italic; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_text .sbq_content img { max-width: 600px; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_text .sbq_content .rtecenter { text-align: center; }
+/*sbq_details*/
+.sbq_ranking_hospital_final .sbq_wrap.sbq_details .sbq_content { font-size: 14px; line-height: 30px; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_details dl { float: left; width: 50%; overflow: hidden; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_details dl.all { float: left; width: 100%; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_details dl.all dd { float: left; width: 560px; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_details dt { float: left; width: 90px; font-weight: bold; text-align: right; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_details dd { float: left; width: 235px; word-break: break-all; word-wrap: break-word; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_details dd a { color: #225599; font-family: Arial; word-break: break-all; word-wrap: break-word; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_details dd a:hover { text-decoration: underline; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_details dd em { height: 30px; line-height: 30px; margin: 0px 0px 0px 5px; padding: 0px 0px 0px 18px; background: url(../image/edit_error.png) no-repeat; background-position: left 0px; color: #c7c7c7; font-style: normal; cursor: pointer; display: none; font-weight: bold; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_details dd em:hover { background-position: left -30px; color: #1575D5; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_details dd:hover em { display: inline-block; }
+/*sbq_score_form*/
+.sbq_ranking_hospital_final .sbq_score_info { float: left; width: 100%; margin: 10px 0px 0px 0px; }
+.sbq_ranking_hospital_final .sbq_score_info .sbq_score { float: left; width: 70px; margin: 26px 0px 0px 0px; text-align: center; }
+.sbq_ranking_hospital_final .sbq_score_info .sbq_score b { float: left; width: 100%; line-height: 60px; text-align: center; color: #1575D5; font-size: 34px; background: #EFF6FA; font-family: Arial; }
+.sbq_ranking_hospital_final .sbq_score_info .sbq_score span { float: left; width: 100%; line-height: 24px; text-align: center; color: #FFF; font-size: 12px; background: #1575D5; }
+.sbq_ranking_hospital_final .sbq_score_info .sbq_left { float: left; width: 600px; margin: 0px 10px 0px 0px; }
+/*sbq_answer_form*/
+.sbq_ranking_hospital_final .sbq_score_form { float: left; width: 600px; margin: 0px 0px 0px 0px; line-height: 22px; font-size: 12px; }
+.sbq_ranking_hospital_final .sbq_score_form label { float: left; height: 26px; line-height: 26px; font-size: 14px; font-weight: bold; color: #666; }
+.sbq_ranking_hospital_final .sbq_score_form label .form-required { display: none; }
+.sbq_ranking_hospital_final .sbq_score_form .cke_bottom,
+.sbq_ranking_hospital_final .sbq_score_form .ckeditor_links,
+.sbq_ranking_hospital_final .sbq_score_form .element-invisible { display: none !important; }
+.sbq_ranking_hospital_final .sbq_score_form .form-actions { float: right; width: 70px; height: 30px; margin: 10px 0px 0px 0px; position: relative; }
+.sbq_ranking_hospital_final .sbq_score_form .form-actions input { float: left; width: 70px; height: 30px; line-height: 34px; margin: 0px; padding: 0px; border-radius: 3px; border: 1px #0D6EB8 solid; background: #1575d5; font-size: 14px; color: #FFF; overflow: hidden; }
+.sbq_ranking_hospital_final .sbq_score_form .form-actions .ajax-progress { float: left; width: 72px; height: 32px; overflow: hidden; position: absolute; top: -1px; left: -1px; }
+.sbq_ranking_hospital_final .sbq_score_form .form-actions .ajax-progress .throbber { display: none; }
+.sbq_ranking_hospital_final .sbq_score_form .form-actions .ajax-progress .message { float: left; width: 70px; height: 32px; line-height: 34px; border-radius: 3px; border: 1px #818181 solid; background: #999; color: #FFF; font-size: 14px; text-align: center; overflow: hidden; }
+.sbq_ranking_hospital_final .sbq_score_form .form-textarea-wrapper textarea { float: left; width: 580px; min-height: 24px; line-height: 24px; margin: 0px; padding: 5px 9px; border: 1px #CCC solid; background: #FFF; box-shadow: 0px 1px 3px #CCC inset; border-radius: 3px; resize: none; overflow: hidden; color: #333; font-size: 14px; }
+.sbq_ranking_hospital_final .sbq_score_form_radio { float: left; margin: 10px 0px 0px 0px; }
+.sbq_ranking_hospital_final .sbq_score_form_radio .form-radios { float: left; font-size: 12px; }
+.sbq_ranking_hospital_final .sbq_score_form_radio .form-type-radios > label { display: none; }
+.sbq_ranking_hospital_final .sbq_score_form_radio .form-type-radio { float: left; margin: 0px 5px 0px 0px; }
+.sbq_ranking_hospital_final .sbq_score_form_radio .form-type-radio label { line-height: 22px; padding: 0px 0px 0px 18px; color: #333; font-size: 12px; font-weight: normal; background: url(../image/sbq_sore.png) no-repeat; }
+.sbq_ranking_hospital_final .sbq_score_form_radio .form-type-radio label.good { background-position: left 0px; }
+.sbq_ranking_hospital_final .sbq_score_form_radio .form-type-radio label.normal { background-position: left -22px; }
+.sbq_ranking_hospital_final .sbq_score_form_radio .form-type-radio label.bad { background-position: left -44px; }
+.sbq_ranking_hospital_final .sbq_score_form_radio input { float: left; width: 14px; height: 14px; margin: 4px 2px 0px 2px; }
+/*------messages------*/
+.sbq_ranking_hospital_final .messages.warning { display: none; }
+.sbq_ranking_hospital_final .messages.error { width: 100%; line-height: 22px; margin: 0px 0px 5px 0px; color: #900; }
+.sbq_ranking_hospital_final .messages .element-invisible { display: none; }
+/*sbq_score_num*/
+.sbq_ranking_hospital_final .sbq_score_num { float: right; margin: 8px 0px 0px 0px; }
+.sbq_ranking_hospital_final .sbq_score_num li { float: left; height: 22px; line-height: 22px; margin: 0px 0px 0px 5px; }
+.sbq_ranking_hospital_final .sbq_score_num li b { margin: 0px 2px; color: #1575D5; font-family: Arial; }
+.sbq_ranking_hospital_final .sbq_score_num li.good,
+.sbq_ranking_hospital_final .sbq_score_num li.normal,
+.sbq_ranking_hospital_final .sbq_score_num li.bad { padding: 0px 0px 0px 18px; background: url(../image/sbq_sore.png) no-repeat; }
+.sbq_ranking_hospital_final .sbq_score_num li.good { background-position: left 0px; }
+.sbq_ranking_hospital_final .sbq_score_num li.normal { background-position: left -22px; }
+.sbq_ranking_hospital_final .sbq_score_num li.bad { background-position: left -44px; }
+/*sbq_score_list*/
+.sbq_ranking_hospital_final .sbq_wrap.sbq_score_list .sbq_content { padding: 0px; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_score_list .sbq_score_item { float: left; width: 100%; padding: 10px 0px; border-bottom: 1px #E5E5E5 dotted; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_score_list .sbq_user_pic,
+.sbq_ranking_hospital_final .sbq_wrap.sbq_score_list .sbq_user_pic img { float: left; width: 40px; height: 40px; overflow: hidden; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_score_list .sbq_right { float: left; width: 600px; margin: 0px 0px 0px 10px; }
+.sbq_ranking_hospital_final .sbq_score_list .sbq_user_name { float: left; height: 22px; line-height: 22px; font-size: 12px; font-weight: bold; }
+.sbq_ranking_hospital_final .sbq_score_list .sbq_user_name a { color: #225599; }
+.sbq_ranking_hospital_final .sbq_score_list .sbq_user_name a:hover { text-decoration: underline; }
+.sbq_ranking_hospital_final .sbq_score_list .sbq_score { float: right; height: 22px; line-height: 22px; padding: 0px 0px 0px 18px; background: url(../image/sbq_sore.png) no-repeat; }
+.sbq_ranking_hospital_final .sbq_score_list .sbq_score.good { background-position: left 0px; }
+.sbq_ranking_hospital_final .sbq_score_list .sbq_score.normal { background-position: left -22px; }
+.sbq_ranking_hospital_final .sbq_score_list .sbq_score.bad { background-position: left -44px; }
+.sbq_ranking_hospital_final .sbq_score_list .sbq_text { float: left; width: 100%; line-height: 26px; margin: 0px 0px; font-size: 14px; word-break: break-all; word-wrap: break-word; }
+.sbq_ranking_hospital_final .sbq_score_list .sbq_date { float: left; width: 100%; height: 22px; line-height: 22px; color: #999; font-family: Arial; }
+.sbq_ranking_hospital_final .sbq_score_list .sbq_page_num { margin: 10px 0px; }
+/*sbq_address*/
+.sbq_ranking_hospital_final .sbq_wrap.sbq_address .sbq_content { padding: 0px; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_address ul { float: left; width: 100%; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_address ul li { clear: both; line-height: 40px; padding: 0px 10px; font-size: 14px; border-bottom: 1px #CCCCCC dotted; word-break: break-all; word-wrap: break-word; }
+.sbq_ranking_hospital_final .sbq_wrap.sbq_address ul li span { font-weight: bold; }
+.sbq_ranking_hospital_final #dituContent { border: none !important; }
 /*------sbq_ranking_news_list------*/
 .sbq_ranking_news_list { float: left; width: 100%; }
 .sbq_ranking_news_list .sbq_nav { float: left; width: 100%; height: 34px; overflow: hidden; }

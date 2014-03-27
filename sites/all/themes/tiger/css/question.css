@@ -79,7 +79,7 @@
 .sbq_question_final .sbq_answer { float: left; width: 100%; }
 /*sbq_answer_form*/
 .sbq_question_final .sbq_answer_form { float: left; width: 630px; margin: 0px 0px 0px 50px; line-height: 22px; font-size: 12px; }
-.sbq_question_final .sbq_answer_form label { height: 26px; line-height: 26px; font-size: 14px; font-weight: bold; color: #666; }
+.sbq_question_final .sbq_answer_form label { float: left; height: 26px; line-height: 26px; font-size: 14px; font-weight: bold; color: #666; }
 .sbq_question_final .sbq_answer_form label .form-required { display: none; }
 .sbq_question_final .sbq_answer_form .cke_bottom,
 .sbq_question_final .sbq_answer_form .ckeditor_links,

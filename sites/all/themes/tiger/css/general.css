@@ -37,7 +37,6 @@ input,
 .form-item-pass,
 .confirmation,
 .sbq_step,
-.sbq_findpwd .sbq_text,
 .sbq_event_btn,
 .sbq_pm,
 .sbq_pm textarea,
@@ -84,6 +83,7 @@ input,
 .body { float: left; width: 100%; padding: 20px 0px 30px 0px; }
 .body .main { width: 960px; margin: 0 auto; }
 .body .content { float: left; width: 680px; }
+.body .sbq_none { float: left; width: 100%; line-height: 24px; color: #666; text-align: center; }
 /*sbq_breadcrumb*/
 .sbq_breadcrumb { float: left; width: 100%; line-height: 20px; margin: 0px 0px 10px 0px; color: #666; }
 .sbq_breadcrumb a { color: #666; }
@@ -229,7 +229,7 @@ input,
 .sbq_comment_list .sbq_comment_item .sbq_content .sbq_user_name a { color: #225599; }
 .sbq_comment_list .sbq_comment_item .sbq_content .sbq_user_pic img { float: left; width: 24px; height: 24px; border: none; border-radius: 2px; overflow: hidden; }
 .sbq_comment_list .sbq_comment_item .sbq_title { float: left; width: 100%; line-height: 30px; font-size: 14px; word-break: break-all; word-wrap: break-word; }
-.sbq_comment_list .sbq_comment_item .sbq_text { float: left; width: 100%; line-height: 24px; padding: 5px 0px; font-size: 14px; word-break: break-all; word-wrap: break-word; }
+.sbq_comment_list .sbq_comment_item .sbq_text { float: left; width: 100%; line-height: 26px; padding: 5px 0px; font-size: 14px; word-break: break-all; word-wrap: break-word; }
 /*sbq_reply_wrap*/
 .sbq_comment_list .sbq_comment_item .sbq_reply_wrap { float: left; width: 578px; margin: -1px 0px 10px 0px; border: 1px #ddd solid; border-radius: 4px; display: none; }
 /*sbq_reply_list*/
