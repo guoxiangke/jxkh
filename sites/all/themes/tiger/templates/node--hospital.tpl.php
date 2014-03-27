@@ -108,8 +108,8 @@ $edit_path = '/node/' . $node->nid . '/edit';
         <?php if (isset($content['field_hospital_phone'])):?>
         <li><span>联系电话：</span><?php print $content['field_hospital_phone']['#items'][0]['safe_value']; ?></li>
         <?php endif;?>
-        <?php if (isset($content['field_hospital_website'])):?>
-        <li><span>医院网址：</span><?php print $content['field_hospital_website']['#items'][0]['safe_value']; ?></li>
+        <?php if (isset($content['field_hospital_site'])):?>
+        <li><span>医院网址：</span><a href="<?php print $content['field_hospital_site']['#items'][0]['value']; ?>"><?php print $content['field_hospital_site']['#items'][0]['value']; ?></a></li>
         <?php endif;?>
       </ul>
       <div class="sbq_score">
@@ -176,10 +176,10 @@ $edit_path = '/node/' . $node->nid . '/edit';
         <dd><?php print render($content['field_hospital_care']); ?></dd>
       </dl>
       <?php endif;?>
-      <?php if (isset($content['field_hospital_website'])):?>
+      <?php if (isset($content['field_hospital_site'])):?>
       <dl>
         <dt>医院网址：</dt>
-        <dd><?php print render($content['field_hospital_website']); ?></dd>
+        <dd><?php print render($content['field_hospital_site']); ?></dd>
       </dl>
       <?php endif;?>
       <?php if (isset($content['field_hospital_address'])):?>
