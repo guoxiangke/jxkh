@@ -202,6 +202,17 @@ jQuery(function($) {
  */
 Drupal.behaviors.tiger = {
   attach: function (context, settings) {
+
+    // Ranking list page
+    $(".sbq_ranking_news_list .sbq_prev").click(function(){
+      $("#views_slideshow_controls_text_previous_ranking_list-page").click();
+      return false;
+    });
+    $(".sbq_ranking_news_list .sbq_next").click(function(){
+      $("#views_slideshow_controls_text_next_ranking_list-page").click();
+      return false;
+    });
+
     $('.sbq_pm_list .messages').ready(function(){
       setTimeout(function(){
         $('.sbq_pm_list .messages').hide();
@@ -321,7 +332,32 @@ Drupal.behaviors.tiger = {
    //    }
 
    // });
+  $('form [type=submit]').click(function(e){
+    $('form input[name*=field_phone]').each(function(){
+      value = $(this).val();
+      var partten = /^0?1[3|4|5|8][0-9]\d{8}$/;
+      if(!partten.test(value)) {
+        e.preventDefault();
+        alert('手机号码填写不正确!');
+        $(this).focus();
+      }
+    });
+  });
 
+
+  $('.sbq_question_list_inner a.views-more-link').click(function(e){
+    e.preventDefault();
+    $(this).parent('.sbq_text').hide('fast').parents('.sbq_content').children('.sbq_text_all').slideDown();
+  });
+
+  $('.sbq_question_list_inner a.views-less-link').click(function(e){
+    e.preventDefault();
+    $(this).parent('.sbq_text').hide('fast').parents('.sbq_content').children('.sbq_text_less').slideDown();
+  });
+
+  $('.sbq-share').hover(function(){
+    $(this).children('.jiathis_style').toggle();
+  });
 
   }
 };

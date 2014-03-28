@@ -214,6 +214,7 @@ define('SBQ_CENTER_EDU_ARTICLE_TID', 24705);
 </div>
 <div class="sbq_hospital_nav">
   <ul>
+    <li><?php print l('网站首页', '<front>'); ?></li>
     <li<?php print $menu_index_active; ?>><?php print l('医院首页', 'center/'.$center_id.'/index'); ?></li>
     <li<?php print $menu_reservation_active; ?>><?php print l('预约就诊', 'center/'.$center_id.'/reservation'); ?></li>
     <?php if ($logged_in): ?>

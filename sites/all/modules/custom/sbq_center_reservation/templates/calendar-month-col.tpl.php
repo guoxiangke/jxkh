@@ -39,7 +39,11 @@ global $user;
                   } elseif ($user->uid > 0 && (!$is_current_month['am']['is_full'])) {
                     echo ' <a href="/center/' . arg(1) . '/reservation/created?date=' . $item['date'] . ' 10:00" class="sbq_add">预约</a>';
                   } else {
-                    echo '<a href="/user/login?destination=center/' . arg(1) . '/reservation" class="sbq_add">预约</a>';
+                     $parm = http_build_query(array(
+                        'destination'=>"center/". arg(1) . "/reservation/created?date=".$item['date'] . ' 10:00',
+                    ));
+                    echo '<a href="/user/login?'.$parm.'" class="sbq_add">预约</a>';
+                   
                   }
                 } else {
                   echo '<a class="sbq_full">停诊</a>';
@@ -58,7 +62,10 @@ global $user;
                   } elseif ($user->uid > 0 && (!$is_current_month['pm']['is_full'])) {
                     echo ' <a href="/center/' . arg(1) . '/reservation/created?date=' . $item['date'] . ' 14:00" class="sbq_add">预约</a>';
                   } else {
-                    echo '<a href="/user/login?destination=center/' . arg(1) . '/reservation" class="sbq_add">预约</a>';
+                    $parm = http_build_query(array(
+                        'destination'=>"center/". arg(1) . "/reservation/created?date=".$item['date'] . ' 14:00',
+                    ));
+                    echo '<a href="/user/login?'.$parm.'" class="sbq_add">预约</a>';
                   }
                 } else {
                   echo '<a class="sbq_full">停诊</a>';

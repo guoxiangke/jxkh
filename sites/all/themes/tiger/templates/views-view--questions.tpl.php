@@ -53,7 +53,8 @@
             . '<a href="'.url('questions/tagged/').'?field_tags_tid='.$tag_title.'">'
             . '<span class="sbq_tit">'.$tag_title.'</span>'
             . '<span class="sbq_num">'.$tag_count.'</span>'
-            . '</a>';
+            . '</a>'
+            . '</li>';
         }
       }
     }
