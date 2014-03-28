@@ -79,7 +79,7 @@
 .sbq_question_final .sbq_answer { float: left; width: 100%; }
 /*sbq_answer_form*/
 .sbq_question_final .sbq_answer_form { float: left; width: 630px; margin: 0px 0px 0px 50px; line-height: 22px; font-size: 12px; }
-.sbq_question_final .sbq_answer_form label { height: 26px; line-height: 26px; font-size: 14px; font-weight: bold; color: #666; }
+.sbq_question_final .sbq_answer_form label { float: left; height: 26px; line-height: 26px; font-size: 14px; font-weight: bold; color: #666; }
 .sbq_question_final .sbq_answer_form label .form-required { display: none; }
 .sbq_question_final .sbq_answer_form .cke_bottom,
 .sbq_question_final .sbq_answer_form .ckeditor_links,
@@ -150,3 +150,5 @@
 .sbq_answer_form .messages.warning { display: none; }
 .sbq_answer_form .messages.error { width: 100%; line-height: 22px; margin: 0px 0px 5px 0px; color: #900; }
 .sbq_answer_form .messages .element-invisible { display: none; }
+/*vertical-tabs*/
+.sbq_question_final .sbq_answer_form .vertical-tabs .form-textarea-wrapper textarea { width: 405px; }

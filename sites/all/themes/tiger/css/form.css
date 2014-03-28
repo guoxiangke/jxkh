@@ -15,14 +15,15 @@
 .sbq_form_wrap input[type="email"] { float: left; width: 200px; height: 34px; line-height: 34px; margin: 0px; padding: 0px 9px; border: 1px #dddddd solid; background: url(../image/input_bg_01.png) repeat-x; }
 .sbq_form_wrap input[type="text"]:focus,
 .sbq_form_wrap input[type="password"]:focus,
-.sbq_form_wrap input[type="email"]:focus { border: 1px #3385d6 solid; box-shadow: 0px 0px 2px #3385d6; }
-.sbq_form_wrap input.error { border: 1px #E6393D solid !important; box-shadow: 0px 0px 2px #E6393D; }
+.sbq_form_wrap input[type="email"]:focus { border: 1px #3385d6 solid !important; box-shadow: 0px 0px 2px #3385d6; }
 /*textarea*/
 .sbq_form_wrap .sbq_form_01 .grippie { display: none; }
 .sbq_form_wrap .sbq_form_01 textarea { float: left; width: 398px; padding: 10px; height: 66px; line-height: 22px; border: 1px #dddddd solid; resize: none; overflow: hidden; }
-.sbq_form_wrap .sbq_form_01 textarea:focus { border: 1px #3385d6 solid; box-shadow: 0px 0px 2px #3385d6; }
+.sbq_form_wrap .sbq_form_01 textarea:focus { border: 1px #3385d6 solid !important; box-shadow: 0px 0px 2px #3385d6; }
+.sbq_form_wrap input.error,
+.sbq_form_wrap textarea.error { border: 1px #E6393D solid !important; box-shadow: 0px 0px 2px #E6393D; }
 /*select*/
-.sbq_form_wrap select { float: left; height: 22px; line-height: 22px; margin: 7px 5px 0px 0px; vertical-align: middle; }
+.sbq_form_wrap select { float: left; height: 24px; line-height: 24px; margin: 7px 5px 0px 0px; vertical-align: middle; }
 /*.sbq_form_01 select { float: left; height: 24px; line-height: 24px; margin: 4px 0px 0px 0px; }*/
 /*sbq_file_01*/
 .sbq_form_wrap input[type="file"] { float: left; width: 220px; height: 36px; line-height: 32px; margin: 0px; padding: 0px; border: 1px #DDDDDD solid; }
@@ -35,6 +36,8 @@
 .sbq_checkbox_01 { float: left; line-height: 26px; padding: 5px 0px 5px 120px; }
 .sbq_checkbox_01 input { float: left; height: 26px; line-height: 26px; }
 .sbq_checkbox_01 label { float: left; width: auto; height: 26px; line-height: 26px; margin: 0px 5px; }
+.sbq_checkbox_01 label a { margin: 0px 1px; color: #225599; }
+.sbq_checkbox_01 label a:hover { text-decoration: underline; }
 /*botton*/
 .sbq_form_wrap .sbq_botton_01 { float: left; width: 100%; padding: 10px 0px; }
 .sbq_form_wrap .sbq_botton_01 .sbq_btn { float: left; width: 80px; height: 36px; line-height: 36px; padding: 0px; border: none; border-radius: 3px; background: #1575D5; color: #FFF; font-size: 14px; }
@@ -89,11 +92,16 @@
 /*field-name-field-department*/
 .sbq_form_wrap .field-name-field-department input { display: none; }
 /*autocomplete*/
-.sbq_form_wrap #autocomplete { float: left; /*width: 218px !important;*/ min-height: 30px; margin: 0px; border-left: 1px #eee solid; border-right: 1px #eee solid; border-bottom: 1px #eee solid; position: absolute; z-index: 10; display: block !important; background: url(../image/loading.gif) 50% 50% no-repeat #FFF; overflow: hidden; }
+.sbq_form_wrap #autocomplete { float: left; /*width: 218px !important;*/ min-height: 30px; margin: 0px; border-left: 1px #eee solid; border-right: 1px #eee solid; border-bottom: 1px #eee solid; position: absolute; z-index: 10; background: url(../image/loading.gif) 50% 50% no-repeat #FFF; overflow: hidden; }
 .sbq_form_wrap #autocomplete ul { float: left; width: 100%; }
 .sbq_form_wrap #autocomplete li { clear: both; padding: 0px 9px; line-height: 30px; background: #EFF6FA; color: #698EBF; cursor: pointer; }
 .sbq_form_wrap #autocomplete li:hover { background: #698EBF; color: #FFF; }
 .sbq_form_wrap .sbq_form_01 .element-invisible { display: none!important; }
+/*autocomplete2*/
+.sbq_form_wrap .autocomplete { float: left; width: 218px; min-height: 30px; margin: 0px; border-left: 1px #eee solid; border-right: 1px #eee solid; border-bottom: 1px #eee solid; z-index: 10; background: url(../image/loading.gif) 50% 50% no-repeat #FFF; overflow: hidden; position: absolute; top: 46px; left: 120px; }
+.sbq_form_wrap .autocomplete ul { float: left; width: 100%; }
+.sbq_form_wrap .autocomplete li { clear: both; padding: 0px 9px; line-height: 30px; background: #EFF6FA; color: #698EBF; cursor: pointer; }
+.sbq_form_wrap .autocomplete li:hover { background: #698EBF; color: #FFF; }
 /*field-name-field-birthday*/
 .sbq_form_wrap .field-name-field-birthday { float: left; width: 100%; }
 .sbq_form_wrap .field-name-field-birthday label { display: none; }
@@ -108,6 +116,7 @@
 .sbq_tips .sbq_tips_error { float: left; height: 24px; padding: 5px; border: 1px #E6393D solid; background: #FEF5F1; color: #E6393D; overflow: hidden; }
 .sbq_tips .sbq_tips_pass { float: left; height: 24px; padding: 5px; border: 1px #009900 solid; background: #F8FFF0; color: #009900; overflow: hidden; }
 .sbq_tips .sbq_tips_text { float: left; height: 24px; padding: 6px; color: #666; overflow: hidden; }
+.sbq_tips.textarea { width: 500px; margin: 5px 0px 0px 120px; }
 /*captcha*/
 .captcha { float: left; width: 100%; padding: 10px 0px; font-size: 14px; position: relative; border: none; }
 .captcha legend,

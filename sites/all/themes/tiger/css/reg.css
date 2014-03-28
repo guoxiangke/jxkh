@@ -1,5 +1,7 @@
 .body { float: left; width: 100%; }
 .body .main { width: 680px; margin: 0 auto; }
+.sbq_reg_content .sbq_text { font-family: "Microsoft Yahei", "微软雅黑", "Arial" !important; }
+.sbq_form_wrap label { width: 160px; }
 /*------sbq_login------*/
 .sbq_login .sbq_form_01 { float: left; width: 100%; padding: 10px 0px; font-size: 14px; position: relative; }
 .sbq_login .sbq_form_01 label,
@@ -13,19 +15,21 @@
 /*sbq_input_01*/
 .sbq_login .sbq_form_01 .sbq_input_01 { float: left; width: 200px; height: 34px; line-height: 34px; padding: 0px 9px; border: 1px #dddddd solid; background: url(../image/input_bg_01.png) repeat-x; }
 .sbq_login .sbq_form_01 .sbq_input_01:focus { border: 1px #3385d6 solid !important; box-shadow: 0px 0px 2px #3385d6; }
-.sbq_login input.error { border: 1px #E6393D solid !important; box-shadow: 0px 0px 2px #E6393D; }
+input.error,
+textarea.error { border: 1px #E6393D solid !important; box-shadow: 0px 0px 2px #E6393D; }
 .sbq_login .form-required { display: none; }
 /*sbq_botton_01*/
 .sbq_botton_01 { float: left; width: 100%; padding: 10px 0px; }
-.sbq_login_btn { float: left; width: 80px; height: 36px; line-height: 36px; padding: 0px; border: none; border-radius: 3px; background: #1575D5; color: #FFF; font-size: 14px; }
-.sbq_botton_01 .ajax-progress { float: left; width: 80px; height: 36px; position: relative; left: -80px; overflow: hidden; }
+.sbq_login_btn { float: left; height: 36px; line-height: 36px; padding: 0px 15px; border: none; border-radius: 3px; background: #1575D5; color: #FFF; font-size: 14px; }
+.sbq_botton_01 .ajax-progress { float: left; height: 36px; padding: 0px 19px; position: relative; left: -80px; overflow: hidden; }
 .sbq_botton_01 .ajax-progress .throbber { display: none; }
 .sbq_botton_01 .ajax-progress .message { float: left; width: 80px; height: 36px; line-height: 36px; border-radius: 3px; background: #999; color: #FFF; font-size: 14px; text-align: center; }
 .sbq_link { float: left; height: 36px; line-height: 36px; margin: 0px 0px 0px 5px; }
 .sbq_link a { color: #225599; }
 .sbq_checkbox_01 { float: left; line-height: 26px; padding: 5px 0px 5px 120px; }
+.sbq_reg_content .sbq_checkbox_01 { padding: 5px 0px 5px 170px; }
 .sbq_checkbox_01 input { float: left; height: 26px; line-height: 26px; }
-.sbq_checkbox_01 label { float: left; height: 26px; line-height: 26px; margin: 0px 5px; }
+.sbq_checkbox_01 label { float: left; width: auto; height: 26px; line-height: 26px; margin: 0px 5px; }
 /*------sbq_reg------*/
 .sbq_reg { width: 680px; margin: 0 auto; }
 .sbq_reg_nav { float: left; width: 100%; height: 50px; background: url(../image/sbq_reg_head_bg1.png) repeat-x; }
@@ -35,7 +39,7 @@
 .sbq_reg_nav .sbq_reg_u { background-position: center 0px; }
 .sbq_reg_nav .sbq_reg_d { background-position: center -50px; }
 .sbq_reg_nav .sbq_reg_l { background-position: center -100px; }
-.sbq_reg .sbq_reg_content { float: left; width: 100%; padding: 15px 0px; background: #fcfcfc; }
+.sbq_reg .sbq_reg_content { float: left; width: 100%; padding: 30px 0px; background: #fcfcfc; }
 /*------sbq_findpwd------*/
 .sbq_findpwd { width: 680px; margin: 0 auto; }
 .sbq_findpwd .sbq_findpwd_nav { float: left; width: 100%; height: 50px; background: url(../image/sbq_findpwd_bg.png) left no-repeat; }
@@ -56,17 +60,15 @@
 .sbq_step ul .cur span { background-position: -22px 0px; background-position: -60px -60px; }
 .sbq_step em { float: left; width: 100px; height: 20px; line-height: 20px; position: absolute; top: 35px; left: -35px; color: #666666; text-align: center; font-style: normal; }
 .sbq_step b { float: left; width: 100px; height: 32px; line-height: 16px; position: absolute; top: 55px; left: -35px; color: #CCC; text-align: center; font-weight: normal; }
-.sbq_findpwd .sbq_text { float: left; width: 100%; line-height: 22px; padding: 30px 0px; text-align: center; font-size: 14px; }
+.sbq_reg_content .sbq_text { float: left; width: 100%; line-height: 22px; padding: 30px 0px; text-align: center; font-size: 14px; }
 .sbq_findpwd .sbq_text a:hover { color: #225599; text-decoration: underline; }
 /*.sbq_findpwd .sbq_form_wrap label { width: 160px; }
 .sbq_findpwd .sbq_form_01 .sbq_tips { width: 260px; }
 .sbq_findpwd .sbq_form_wrap .password-strength,
 .sbq_findpwd .sbq_form_wrap .password-confirm { margin: 0px 15px 0px 0px; }*/
 /*sbq_tips*/
-.sbq_form_01 .sbq_tips { clear: both; width: 310px; line-height: 24px; margin: 0px 0px 0px 10px; font-size: 12px; display: inline-block; }
-.sbq_form_01 .sbq_tips_error { float: left; max-height: 310px; height: 24px; padding: 5px; border: 1px #E6393D solid; background: #FEF5F1; color: #E6393D; overflow: hidden; }
-.sbq_form_01 .sbq_tips_pass { float: left; max-height: 310px; height: 24px; padding: 5px; border: 1px #009900 solid; background: #F8FFF0; color: #009900; overflow: hidden; }
-.sbq_form_01 .sbq_tips_text { float: left; max-height: 310px; height: 24px; padding: 6px; color: #666; overflow: hidden; }
+.sbq_form_01 .sbq_tips { width: 260px; }
+.sbq_tips.textarea { width: 420px; margin: 5px 0px 0px 170px; }
 /*captcha*/
 .captcha { float: left; width: 100%; padding: 10px 0px; font-size: 14px; position: relative; border: none; }
 .captcha legend,
@@ -84,3 +86,5 @@
 .sbq_login_thirdpart .item-list { float: right; height: 20px; line-height: 20px; margin: 0px 10px 0px 0px; }
 .sbq_login_thirdpart .item-list li { float: left; width: 20px; height: 20px; overflow: hidden; margin: 0px 3px 0px 0px; }
 .sbq_login_thirdpart .item-list li img { float: left; width: 20px; height: 20px; overflow: hidden; }
+/*autocomplete2*/
+.sbq_form_wrap .autocomplete { left: 170px; }
