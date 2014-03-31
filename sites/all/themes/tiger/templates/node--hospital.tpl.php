@@ -82,9 +82,19 @@
 
 $image_path = file_create_url($node->field_image['und'][0]['uri']);
 $edit_path = '/node/' . $node->nid . '/edit';
+$node_path = l('医院概述', 'node/' . $node->nid);
 ?>
 
-
+<div class="sbq_hospital_head">
+  <div class="sbq_nav">
+    <ul>
+      <li class="active"><?php print $node_path; ?></li>
+      <li><a href="ranking_hospital_score.html">患者评价</a></li>
+      <li><a href="#">交通路线</a></li>
+    </ul>
+    <div class="add_hospital"><?php print l('提交医院', 'node/add/hospital'); ?></div>
+  </div>
+</div>
 <div class="sbq_ranking_hospital_final">
   <div class="sbq_title"><?php print $title; ?></div>
   <div class="sbq_info">
@@ -114,7 +124,7 @@ $edit_path = '/node/' . $node->nid . '/edit';
       </ul>
       <div class="sbq_score">
         <span>好评指数</span>
-        <b><?php print render($content['field_rank_result']); ?></b>
+        <b><?php print $content['field_rank_result']['#items'][0]['value']; ?></b>
         <a href="#">查看评价</a>
       </div>
     </div>
@@ -206,8 +216,12 @@ $edit_path = '/node/' . $node->nid . '/edit';
         // We hide the comments and links now so that we can render them later.
         hide($content['comments']);
         hide($content['links']);
+        hide($content['field_rank_result']);
+        hide($content['field_image']);
         print render($content);
       ?>
     </div>
   </div>
+  <?php print render($content['links']); ?>
+  <?php print render($content['comments']); ?>
 </div>
