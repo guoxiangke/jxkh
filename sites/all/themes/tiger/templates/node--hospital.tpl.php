@@ -98,7 +98,7 @@ $node_path = l('医院概述', 'node/' . $node->nid);
 <div class="sbq_ranking_hospital_final">
   <div class="sbq_title"><?php print $title; ?></div>
   <div class="sbq_info">
-    
+
     <?php if ($image_path):?>
     <div class="sbq_img">
       <img src="<?php print $image_path; ?>"  alt="" width="240" height="160" border="0"/>
